@@ -26,13 +26,13 @@ combined with a 20px browser default. Design evidence: docs/roleplay-workspace.m
 
 Native amd64 and ARM64 release jobs passed HTTP and heartbeat checks. Anonymous
 manifests, empty-auth Podman pull, local startup, and version checks passed.
-Published-image CSS matched the source; browser checks confirmed icon sizing,
-creative tools off, and one new-story transcript. Exact release evidence and
-digest: docs/container-releases.md.
+Published-image workspace modules and CSS matched the source. Browser checks
+confirmed desktop/phone layout, voice opt-in, tools initially off, and one new-story
+transcript. Exact release evidence and digest: docs/container-releases.md.
 
 ## Environment
 
-Published-image preview: 8006. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,
+Published-image preview: 8007. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,
 port 8002. Settings writes isolated; cleanup uses native owners.
 
 ## Known gaps

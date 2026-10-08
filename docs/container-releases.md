@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.6`.
+2. Create a version tag on that commit, such as `v1.19.7`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.6` | The exact GitHub Release tag |
+| `v1.19.7` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.6` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.7` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -89,10 +89,33 @@ Use the workflow's digest reference when you need to pin the exact published ima
 
 ## Verified release
 
+[Release v1.19.7](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.7)
+was published by [automatic release run 37839974023](https://github.com/Nulifyer/SillyTavern/actions/runs/37839974023).
+Both native architecture jobs passed server startup checks. Anonymous registry
+requests verified that version, full-commit, and `latest` tags share this digest:
+
+```text
+sha256:8cd19c09d5e0322eefcf2885cc1b3f1d044ba6e4699f2ef82e5c258ffd92a22b
+```
+
+OCI labels identify source commit `12e97ded6c020177fee4a51fee75e13242ffe63c`.
+An anonymous Podman pull with an empty auth file succeeded.
+The pulled image started locally on port 8007, served HTTP 200, reported version
+1.19.7 through `/version`, and passed the native heartbeat health check.
+Served workspace CSS, coordinator, settings owner, creative-tool owner, and native
+image adapter matched source bytes. Desktop and phone browser checks confirmed
+the new profile/chat flow, voice off and direct opt-in/disable, automatic image tools off, scene details, and exactly
+one new transcript.
+The release workflow passed; inherited upstream bot and npm jobs skipped on the fork.
+
+## Previous releases
+
+### v1.19.6
+
 [Release v1.19.6](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.6)
 was published by [automatic release run 37735911482](https://github.com/Nulifyer/SillyTavern/actions/runs/37735911482).
 Both native architecture jobs passed server startup checks. Anonymous registry
-requests verified that version, full-commit, and `latest` tags share this digest:
+requests verified at publication that version, full-commit, and `latest` tags shared this digest:
 
 ```text
 sha256:d741b5615207f510dd3410fe6a937222db26111444e51033f699b89acd79ef9f
@@ -105,7 +128,7 @@ The pulled image started locally on port 8006, served HTTP 200, reported version
 The served workspace CSS matched the verified source byte for byte.
 The upstream bot workflows skipped cleanly on the fork after their repository guards.
 
-### Previous release
+### v1.19.3
 
 [Release v1.19.3](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.3)
 was published by [automatic release run 37718961147](https://github.com/Nulifyer/SillyTavern/actions/runs/37718961147).
