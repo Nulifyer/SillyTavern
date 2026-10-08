@@ -872,9 +872,10 @@ export function resultCheckStatus() {
  * @param {number} id The ID of the character to switch to.
  * @param {object} [options] Options for the switch.
  * @param {boolean} [options.switchMenu=true] Whether to switch the right menu to the character edit menu if the character is already selected.
+ * @param {boolean} [options.newChat=false] Start a new chat without loading or saving the character's previous default chat.
  * @returns {Promise<void>} A promise that resolves when the character is switched.
  */
-export async function selectCharacterById(id, { switchMenu = true } = {}) {
+export async function selectCharacterById(id, { switchMenu = true, newChat = false } = {}) {
     if (characters[id] === undefined) {
         return;
     }
@@ -900,13 +901,21 @@ export async function selectCharacterById(id, { switchMenu = true } = {}) {
             selected_button = 'character_edit';
             setCharacterId(id);
             chat_metadata = {};
-            await getChat();
+            if (newChat) {
+                await unshallowCharacter(this_chid);
+                setCharacterName(characters[this_chid].name);
+                select_selected_character(this_chid);
+                await doNewChat();
+            } else {
+                await getChat();
+            }
         }
     } else {
         //if clicked on character that was already selected
         switchMenu && (selected_button = 'character_edit');
         await unshallowCharacter(this_chid);
-        select_selected_character(this_chid, { switchMenu });
+        select_selected_character(this_chid, { switchMenu: switchMenu || newChat });
+        if (newChat) await doNewChat();
     }
 }
 

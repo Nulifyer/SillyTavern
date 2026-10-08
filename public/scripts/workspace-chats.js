@@ -1,5 +1,5 @@
 import {
-    characters, closeCurrentChat, deleteCharacterChatByName, doNewChat, getCurrentChatId,
+    characters, closeCurrentChat, deleteCharacterChatByName, getCurrentChatId,
     getRequestHeaders, isGenerating, openCharacterChat, renameGroupOrCharacterChat,
     saveSettingsDebounced, selectCharacterById, setActiveCharacter, setActiveGroup, this_chid,
 } from '../script.js';
@@ -66,14 +66,14 @@ export class WorkspaceChats {
         return { group, avatar, file_name, key, archived: archivedIds().has(key) };
     }
 
-    async select(entity) {
+    async select(entity, { newChat = false } = {}) {
         requireIdle();
         if (entity.kind === 'group') {
-            await openGroupById(entity.id);
+            await openGroupById(entity.id, { newChat });
             if (String(selected_group) !== String(entity.id)) throw new Error('The current story is still saving. Try again shortly.');
             setActiveGroup(entity.id);
         } else {
-            await selectCharacterById(characterId(entity.id), { switchMenu: false });
+            await selectCharacterById(characterId(entity.id), { switchMenu: false, newChat });
             if (selected_group || characters[this_chid]?.avatar !== entity.id) throw new Error('The current story is still saving. Try again shortly.');
             setActiveCharacter(entity.id);
         }
@@ -93,8 +93,7 @@ export class WorkspaceChats {
         if (title.trim() && (await this.list()).some(record => record.entityKey === entity.key && equalsIgnoreCaseAndAccents(record.title, title.trim()))) {
             throw new Error('A story with that title already exists. Choose another title or continue it from the character profile.');
         }
-        await this.select(entity);
-        await doNewChat();
+        await this.select(entity, { newChat: true });
         if (title.trim()) await this.rename(this.current(), title.trim());
     }
 

@@ -16,8 +16,11 @@ Manifest and OCI labels establish the digest, architectures, and source.
 - npm --prefix tests run test:unit
 - cd tests && ST_BASE_URL=http://127.0.0.1:8002 npx playwright test workspace.e2e.js --workers=1
 
-October 7: lint, 411 units, 14 browsers passed, including suffix rename and delayed
-image generation. Responsive widths: 320/390/768. Shared preview inspected.
+October 7: lint, 411 units, 16 browsers passed, including single-transcript creation,
+creative-tool defaults and persistence, suffix rename, and delayed image generation.
+Responsive widths: 320/390/768 with both creative tools enabled. Shared preview inspected.
+Workflow syntax passed with actionlint; inherited bot shell scripts retain upstream
+ShellCheck warnings. Bot jobs skip cleanly in runs 37721742189 and 37721742045.
 Run 37718961147 passed native amd64/ARM64 HTTP and heartbeat checks.
 Anonymous manifests, empty-auth Podman pull, local startup, and version passed.
 Digest: docs/container-releases.md.

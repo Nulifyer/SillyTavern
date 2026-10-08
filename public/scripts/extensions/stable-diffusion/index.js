@@ -231,6 +231,7 @@ const defaultStyles = [
 const placeholderVae = 'Automatic';
 
 const defaultSettings = {
+    enabled: false,
     source: sources.extras,
 
     // CFG Scale
@@ -373,7 +374,7 @@ const isVideo = (/** @type {string} */ format) => VIDEO_EXTENSIONS.includes(Stri
  * @param {string} type Type of the generation
  */
 function processTriggers(chat, _, abort, type) {
-    if (type === 'quiet') {
+    if (type === 'quiet' || !extension_settings.sd.enabled) {
         return;
     }
 
@@ -525,6 +526,7 @@ async function loadSettings() {
     $('#sd_restore_faces').prop('checked', extension_settings.sd.restore_faces);
     $('#sd_enable_hr').prop('checked', extension_settings.sd.enable_hr);
     $('#sd_adetailer_face').prop('checked', extension_settings.sd.adetailer_face);
+    $('#sd_enabled').prop('checked', extension_settings.sd.enabled);
     $('#sd_refine_mode').prop('checked', extension_settings.sd.refine_mode);
     $('#sd_multimodal_captioning').prop('checked', extension_settings.sd.multimodal_captioning);
     $('#sd_auto_url').val(extension_settings.sd.auto_url);
@@ -2988,6 +2990,10 @@ function ensureSelectionExists(setting, selector) {
  * @throws {Error} If the prompt or image generation fails
  */
 async function generatePicture(initiator, args, trigger, message, callback) {
+    if (!extension_settings.sd.enabled) {
+        toastr.info('Turn on image generation in Settings to create an image.');
+        return;
+    }
     if (!trigger || trigger.trim().length === 0) {
         console.log('Trigger word empty, aborting');
         return;
@@ -5450,7 +5456,7 @@ function applyCommandArguments(args) {
 }
 
 function registerFunctionTool() {
-    if (!extension_settings.sd.function_tool) {
+    if (!extension_settings.sd.enabled || !extension_settings.sd.function_tool) {
         return ToolManager.unregisterFunctionTool('GenerateImage');
     }
 
@@ -5486,6 +5492,7 @@ function registerFunctionTool() {
 
 /** Generate through the configured image provider without interpreting a prompt as slash commands. */
 export async function generateWorkspaceImage(prompt) {
+    if (!extension_settings.sd.enabled) throw new Error('Turn on image generation in Settings first.');
     if (!isValidState()) throw new Error('Configure an image provider in Image settings before generating an illustration.');
     return generatePicture(initiators.interactive, {}, prompt);
 }
@@ -5826,6 +5833,11 @@ export async function init() {
     $('#sd_restore_faces').on('input', onRestoreFacesInput);
     $('#sd_enable_hr').on('input', onHighResFixInput);
     $('#sd_adetailer_face').on('change', onADetailerFaceChange);
+    $('#sd_enabled').on('change', function () {
+        extension_settings.sd.enabled = this.checked;
+        registerFunctionTool();
+        saveSettingsDebounced();
+    });
     $('#sd_refine_mode').on('input', onRefineModeInput);
     $('#sd_character_prompt').on('input', onCharacterPromptInput);
     $('#sd_character_negative_prompt').on('input', onCharacterNegativePromptInput);

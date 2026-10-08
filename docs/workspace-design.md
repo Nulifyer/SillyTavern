@@ -84,6 +84,26 @@ with its visible workspace button.
 
 ## Ownership and compatibility
 
+Starting a story asks the native character or group owner to create it directly.
+It does not load the previous default transcript first. Loading a missing default
+previously saved an unwanted second story. Workspace casts have no transcript
+until the user starts their first story.
+
+Voice and image generation default to off. Settings exposes separate controls
+backed by the native extension settings, not separate workspace preferences.
+Turning voice off stops playback. Turning images off blocks generation commands,
+interactive triggers, and image function tools. Existing media stays readable.
+Previously saved voice choices remain in effect.
+
+Desktop controls use 13px labels with 36px primary targets and 32px small targets.
+Mobile controls use 44px targets. Unitless line heights keep labels and padding
+proportional. Dropdowns and settings headers use solid dark backgrounds.
+These choices follow the [MDN box model](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Box_model),
+[MDN line-height guidance](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/line-height),
+and [W3C target-size guidance](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html).
+The frontend uses native HTML controls, CSS, ES modules, and the existing jQuery
+owners. No additional UI framework is required for these changes.
+
 | File | Responsibility |
 | --- | --- |
 | `public/scripts/workspace.js` | Views, navigation, focus, dialogs, native action dispatch, and layout preference |

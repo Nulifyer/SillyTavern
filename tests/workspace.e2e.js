@@ -41,6 +41,12 @@ async function currentAction(page, action) {
     await page.locator(`#workspace-header-menu [data-workspace-action="${action}"]`).click();
 }
 
+async function enableTool(page, name) {
+    await navigate(page, 'settings-page');
+    await page.getByRole('checkbox', { name, exact: true }).check();
+    await page.locator('.workspace-return-chat').click();
+}
+
 test.beforeEach(async ({ page }) => {
     let savedSettings;
     await page.route('**/api/settings/get', async route => {
@@ -55,6 +61,10 @@ test.beforeEach(async ({ page }) => {
             settings.active_group = null;
             settings.power_user.auto_connect = false;
             settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true', workspaceArchivedChats: '[]' };
+            settings.extension_settings.tts = { ...settings.extension_settings.tts };
+            settings.extension_settings.sd = { ...settings.extension_settings.sd };
+            delete settings.extension_settings.tts.enabled;
+            delete settings.extension_settings.sd.enabled;
         }
         body.settings = JSON.stringify(settings);
         await route.fulfill({ response, json: body });
@@ -135,6 +145,30 @@ test('new stories preserve previous transcripts and profile history resumes the 
     const records = await api(page, '/api/chats/recent', {});
     expect(records.some(record => record.file_name === `${second}.jsonl`)).toBe(true);
     await expect(page.locator('#send_textarea')).toBeFocused();
+});
+
+test('starting a fresh character creates exactly one transcript, with or without a title', async ({ page }, testInfo) => {
+    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+    const source = await page.evaluate(async () => (await import('/script.js')).characters[0].avatar);
+    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: source });
+    const character = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} fresh` });
+    await page.evaluate(async () => (await import('/script.js')).getCharacters());
+    const before = await api(page, '/api/chats/recent', {});
+    for (const title of [`${prefix} first`, '']) {
+        await navigate(page, 'characters');
+        await page.locator('.workspace-library-card').filter({ hasText: `${prefix} fresh` }).click();
+        await page.getByRole('button', { name: 'Start new story', exact: true }).click();
+        await page.locator('dialog[open] .popup-input').fill(title);
+        await page.locator('dialog[open] .popup-button-ok').click();
+        await expect(page.locator('#send_textarea')).toBeVisible();
+        const current = await page.evaluate(async () => (await import('/script.js')).getCurrentChatId());
+        expect(current).toBeTruthy();
+        if (title) expect(current).toBe(title);
+        const records = (await api(page, '/api/chats/recent', {})).filter(record => record.avatar === character.avatar);
+        expect(records).toHaveLength(title ? 1 : 2);
+        expect(records.some(record => record.file_name === `${current}.jsonl`)).toBe(true);
+    }
+    expect((await api(page, '/api/chats/recent', {})).filter(record => record.avatar !== character.avatar)).toEqual(before);
 });
 
 test('archive persists, excludes active lists, reads without editing, and restores the same transcript', async ({ page }, testInfo) => {
@@ -244,6 +278,7 @@ test('search opens character profiles and a fixture model generates through the 
 test('image tools use the native provider and treat custom prompts as text', async ({ page }, testInfo) => {
     const title = `Workspace e2e ${testInfo.testId}-${runId} image`;
     await startStory(page, title);
+    await enableTool(page, 'Image generation');
     let sentPrompt = '';
     let finishImage;
     const imageReady = new Promise(resolve => finishImage = resolve);
@@ -284,6 +319,7 @@ test('voice tools narrate the latest native reply with the configured System voi
             setTimeout(() => utterance.dispatchEvent(new Event('end')), 10);
         } });
     });
+    await enableTool(page, 'Voice narration');
     await page.locator('[data-workspace-action="voice"]').click();
     if (await page.getByRole('button', { name: 'Enable narration', exact: true }).count()) {
         await page.getByRole('button', { name: 'Enable narration', exact: true }).click();
@@ -297,6 +333,45 @@ test('voice tools narrate the latest native reply with the configured System voi
     await page.getByRole('button', { name: 'Read latest reply', exact: true }).click();
     await expect.poll(async () => page.evaluate(() => window.__workspaceSpoken.join(' ')), { timeout: 20000 }).toContain('forest');
     await page.keyboard.press('Escape');
+});
+
+test('creative tools start off, persist opt-in, and native controls can turn them off', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} opt-in`;
+    await startStory(page, title);
+    await expect(page.locator('#workspace-image-button')).toBeHidden();
+    await expect(page.locator('#workspace-voice-button')).toBeHidden();
+    expect(await page.evaluate(async () => {
+        const { generateWorkspaceImage } = await import('/scripts/extensions/stable-diffusion/index.js');
+        try { await generateWorkspaceImage('A forest'); return 'allowed'; } catch (error) { return error.message; }
+    })).toContain('Turn on image generation');
+    await navigate(page, 'settings-page');
+    await expect(page.getByRole('checkbox', { name: 'Voice narration', exact: true })).not.toBeChecked();
+    await expect(page.getByRole('checkbox', { name: 'Image generation', exact: true })).not.toBeChecked();
+    const saved = page.waitForResponse(response => response.url().endsWith('/api/settings/save') && response.request().postDataJSON().extension_settings.sd.enabled);
+    for (const name of ['Voice narration', 'Image generation']) await page.getByRole('checkbox', { name, exact: true }).check();
+    await expect.poll(async () => page.evaluate(async () => {
+        const { extension_settings } = await import('/scripts/extensions.js');
+        return extension_settings.tts.enabled && extension_settings.sd.enabled;
+    })).toBe(true);
+    await saved;
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await navigate(page, 'settings-page');
+    for (const name of ['Voice narration', 'Image generation']) await expect(page.getByRole('checkbox', { name, exact: true })).toBeChecked();
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ hasText: title }).locator('.workspace-scene-open').click();
+    await expect(page.locator('#workspace-image-button')).toBeVisible();
+    await expect(page.locator('#workspace-voice-button')).toBeVisible();
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="image-settings"]').click();
+    await page.locator('#sd_enabled').uncheck();
+    await expect(page.locator('#workspace-image-button')).toBeHidden();
+    await page.keyboard.press('Escape');
+    await page.locator('.workspace-settings [data-workspace-action="voice-settings"]').click();
+    await page.locator('#tts_enabled').uncheck();
+    await expect(page.locator('#workspace-voice-button')).toBeHidden();
+    await page.keyboard.press('Escape');
+    for (const name of ['Voice narration', 'Image generation']) await expect(page.getByRole('checkbox', { name, exact: true })).not.toBeChecked();
 });
 
 test('cast creation selects real characters and opens a group story', async ({ page }, testInfo) => {
@@ -319,6 +394,9 @@ test('cast creation selects real characters and opens a group story', async ({ p
     await expect(page.locator('#workspace-chat-subtitle')).toHaveText(`${prefix} group-scene`, { timeout: 20000 });
     await expect(page.locator('#workspace-cast-button')).toBeVisible();
     expect(await page.evaluate(async () => (await import('/scripts/group-chats.js')).selected_group)).toBeTruthy();
+    const groupId = await page.evaluate(async () => (await import('/scripts/group-chats.js')).selected_group);
+    expect((await api(page, '/api/chats/recent', {})).filter(record => record.group === groupId)).toHaveLength(1);
+    expect(await page.evaluate(async id => (await import('/scripts/group-chats.js')).groups.find(group => group.id === id).chats, groupId)).toEqual([`${prefix} group-scene`]);
     await page.route('**/api/chats/group/delete', route => route.fulfill({ status: 500, json: { error: true } }), { times: 1 });
     await currentAction(page, 'delete-chat');
     await page.locator('dialog[open] .popup-button-ok').click();
@@ -337,6 +415,8 @@ for (const width of [320, 390, 768]) {
         await expect(page.locator('#sheld')).not.toHaveAttribute('inert');
         await expect(page.locator('.workspace-library-grid')).toBeVisible();
         await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} phone`);
+        await enableTool(page, 'Image generation');
+        await enableTool(page, 'Voice narration');
         for (const selector of ['#workspace-header', '#sheld', '#form_sheld', '.workspace-composer-tools']) {
             const bounds = await page.locator(selector).boundingBox();
             expect(bounds.x).toBeGreaterThanOrEqual(0);

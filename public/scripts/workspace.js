@@ -2,6 +2,7 @@ import {
     characters, doNavbarIconClick, isGenerating, name1, name2, online_status, unshallowCharacter,
 } from '../script.js';
 import { eventSource, event_types } from './events.js';
+import { extension_settings } from './extensions.js';
 import { createGroupWithMembers, groups, selected_group } from './group-chats.js';
 import { translate } from './i18n.js';
 import { callGenericPopup, POPUP_RESULT, POPUP_TYPE } from './popup.js';
@@ -107,6 +108,10 @@ function renderPage() {
     const focusedAction = container.contains(active) && active?.dataset.workspaceAction ? JSON.stringify(active.dataset) : null;
     const scrollTop = container.scrollTop;
     state.entities = entities();
+    state.creativeTools = {
+        voice: Boolean(extension_settings.tts?.enabled), image: Boolean(extension_settings.sd?.enabled),
+        voiceAvailable: Boolean(document.getElementById('tts_enabled')), imageAvailable: Boolean(document.getElementById('sd_enabled')),
+    };
     container.replaceChildren(renderWorkspaceView(state));
     if (transcripts.current() && state.view !== 'chat') {
         const currentEntity = currentCharacter();
@@ -184,6 +189,9 @@ function refreshSidebar() {
 }
 
 function refreshWorkspace() {
+    document.body.classList.toggle('workspace-images-enabled', Boolean(extension_settings.sd?.enabled));
+    document.getElementById('workspace-image-button').hidden = !extension_settings.sd?.enabled;
+    document.getElementById('workspace-voice-button').hidden = !extension_settings.tts?.enabled;
     state.entities = entities();
     const current = transcripts.current();
     const entity = currentCharacter();
@@ -532,7 +540,11 @@ export function initWorkspace() {
     restore.id = 'workspace-restore';
     document.body.append(restore);
     const toolbar = element('div', 'workspace-only workspace-composer-tools');
-    toolbar.append(button('Image', 'image', {}, 'workspace-tool-button', 'fa-image'), button('Voice', 'voice', {}, 'workspace-tool-button', 'fa-volume-high'));
+    const image = button('Image', 'image', {}, 'workspace-tool-button', 'fa-image');
+    image.id = 'workspace-image-button';
+    const voice = button('Voice', 'voice', {}, 'workspace-tool-button', 'fa-volume-high');
+    voice.id = 'workspace-voice-button';
+    toolbar.append(image, voice);
     const cast = button('Cast', 'current-profile', {}, 'workspace-tool-button', 'fa-users');
     cast.id = 'workspace-cast-button';
     toolbar.append(cast);
@@ -567,6 +579,22 @@ export function initWorkspace() {
     });
     document.addEventListener('input', event => {
         if (event.target.id === 'workspace-view-search') { state.query = event.target.value; renderPage(); }
+    });
+    document.addEventListener('change', event => {
+        const target = event.target;
+        if (!(target instanceof HTMLInputElement)) return;
+        if (target.dataset.workspaceCapability) {
+            const native = document.getElementById(target.dataset.workspaceCapability === 'voice' ? 'tts_enabled' : 'sd_enabled');
+            if (native && native.checked !== target.checked) native.click();
+        }
+        if (target.dataset.workspaceCapability || ['tts_enabled', 'sd_enabled'].includes(target.id)) {
+            refreshWorkspace();
+            if (state.view === 'settings-page') {
+                const capability = target.dataset.workspaceCapability;
+                renderPage();
+                if (capability) document.querySelector(`[data-workspace-capability="${capability}"]`).focus();
+            }
+        }
     });
     document.getElementById('workspace-search-button').addEventListener('click', openSearch);
     document.getElementById('workspace-menu').addEventListener('click', () => setMobileNavigation(!document.body.classList.contains('workspace-nav-open')));

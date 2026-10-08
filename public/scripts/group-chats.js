@@ -2013,9 +2013,11 @@ function updateFavButtonState(state) {
 /**
  * Opens a group chat by its ID and updates the UI accordingly.
  * @param {string} groupId ID of the group to open
+ * @param {object} [options] Opening options
+ * @param {boolean} [options.newChat=false] Start a new chat without loading the default transcript.
  * @returns {Promise<boolean>} Whether the group was opened
  */
-export async function openGroupById(groupId) {
+export async function openGroupById(groupId, { newChat = false } = {}) {
     if (isChatSaving) {
         toastr.info(t`Please wait until the chat is saved before switching characters.`, t`Your chat is still saving...`);
         return false;
@@ -2039,7 +2041,12 @@ export async function openGroupById(groupId) {
             selected_group = groupId;
             setEditedMessageId(undefined);
             updateChatMetadata({}, true);
-            await getGroupChat(groupId);
+            if (newChat || !groups.find(group => group.id === groupId).chat_id) await createNewGroupChat(groupId);
+            else await getGroupChat(groupId);
+            return true;
+        }
+        if (newChat) {
+            await createNewGroupChat(groupId);
             return true;
         }
     }
@@ -2113,8 +2120,8 @@ async function createGroup(options = {}) {
         generation_mode: fromWorkspace ? group_generation_mode.SWAP : generationMode,
         disabled_members: [],
         fav: fromWorkspace ? false : fav_grp_checked,
-        chat_id: chatName,
-        chats: chats,
+        chat_id: fromWorkspace ? '' : chatName,
+        chats: fromWorkspace ? [] : chats,
         auto_mode_delay: fromWorkspace ? DEFAULT_AUTO_MODE_DELAY : autoModeDelay,
     };
 

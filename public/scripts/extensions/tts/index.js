@@ -902,7 +902,7 @@ function loadSettings() {
 
 const defaultSettings = {
     voiceMap: '',
-    ttsEnabled: false,
+    enabled: false,
     currentProvider: 'ElevenLabs',
     auto_generation: true,
     narrate_user: false,
@@ -943,6 +943,7 @@ function onEnableClick() {
     extension_settings.tts.enabled = $('#tts_enabled').is(
         ':checked',
     );
+    if (!extension_settings.tts.enabled) resetTtsPlayback();
     updateUiAudioPlayState();
     saveSettingsDebounced();
     $('body').toggleClass('tts', extension_settings.tts.enabled);

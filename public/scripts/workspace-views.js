@@ -239,9 +239,29 @@ function profile(state) {
     return page;
 }
 
-function settings() {
+function settings(state) {
     const page = element('div', 'workspace-page workspace-settings');
     page.append(pageHeading('Make this space yours', 'Set up your models and creative tools, then return to the story.'));
+    const tools = element('section', 'workspace-capabilities');
+    tools.setAttribute('aria-label', 'Optional creative tools');
+    tools.append(element('h2', '', 'Creative tools'), element('p', '', 'Voice and image generation start off. Turn on the tools you want to use.'));
+    for (const [kind, title, description] of [
+        ['voice', 'Voice narration', 'Read character replies with your configured voices.'],
+        ['image', 'Image generation', 'Create character portraits and scene illustrations.'],
+    ]) {
+        const label = element('label', 'workspace-capability');
+        const text = element('span');
+        text.append(element('strong', '', title), element('small', '', description));
+        const toggle = element('input');
+        toggle.type = 'checkbox';
+        toggle.setAttribute('aria-label', title);
+        toggle.dataset.workspaceCapability = kind;
+        toggle.checked = state.creativeTools[kind];
+        toggle.disabled = !state.creativeTools[`${kind}Available`];
+        label.append(text, toggle);
+        tools.append(label);
+    }
+    page.append(tools);
     const grid = element('div', 'workspace-settings-grid');
     for (const setting of workspaceSettings.filter(item => item.id !== 'character-editor')) {
         const tile = button('', setting.id, {}, 'workspace-settings-item');
@@ -259,6 +279,6 @@ export function renderWorkspaceView(state) {
     if (state.view === 'characters') return library(state);
     if (state.view === 'profile') return profile(state);
     if (state.view === 'archive') return conversations(state, true);
-    if (state.view === 'settings-page') return settings();
+    if (state.view === 'settings-page') return settings(state);
     return conversations(state, false);
 }

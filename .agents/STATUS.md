@@ -2,21 +2,23 @@
 
 ## Project state
 
-Complete. Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Release v1.19.3 and public GHCR image are verified.
+Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
+Release v1.19.3 is published. The follow-up fixes are verified and ready for v1.19.4.
 
 ## Current batch
 
-None. Delivery is complete.
+Create one story per action, tighten control sizing, make creative tools opt-in,
+and guard upstream bot jobs that fail without their GitHub App credentials.
 
 ## In progress
 
-No pending changes. Published source: 1061f87fbd0a98114e90eac49071c534f91914c2.
-Preview runs from the published image on port 8003.
+Application changes are ready to commit. CI guards are pushed at 6ccf6fca8.
+Regression source preview is on port 8002.
+Published source remains 1061f87fbd0a98114e90eac49071c534f91914c2 on port 8003.
 
 ## Next action
 
-None. Implementation and release delivery are complete.
+Commit the verified application fixes and publish v1.19.4, then verify its image.
 
 ## Blockers
 
@@ -24,6 +26,6 @@ None.
 
 ## Verification
 
-Lint, 411 units, 14 browsers; widths 320/390/768. Run 37718961147 passed native
-amd64/arm64 startup. Anonymous manifests, empty-auth Podman pull, local HTTP,
-version, and heartbeat passed. Digest is in docs/container-releases.md.
+Lint, 411 units, and 16 browser tests passed. Widths: 320/390/768.
+Workflow syntax passed. New bot runs skipped cleanly after the CI guard push.
+Desktop and 390px Settings were inspected; extension headers have no gradients.
