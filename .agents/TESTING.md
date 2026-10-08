@@ -17,6 +17,9 @@ Manifest and OCI labels establish the digest, architectures, and source.
 - cd tests && ST_BASE_URL=http://127.0.0.1:8002 npx playwright test workspace.e2e.js --workers=1
 
 The v1.19.7 redesign passed lint, all 411 unit tests, and all 20 browser cases.
+The v1.19.8 correction passed the full 20-case browser suite with all settings
+categories checked at 1280/390/320px. Five final settings, phone popup-priority,
+and enlarged-font cases also passed after the last Escape guard update.
 Coverage includes pending-reply return through four story entry points, stable
 message/composer nodes during streamed replies, manual scene images with automatic
 tools off, voice opt-in/persistence, exact story lifecycle, casts, all settings

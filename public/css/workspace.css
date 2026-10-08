@@ -540,7 +540,9 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
     .workspace-settings-content { padding: 24px 16px 64px; }
     .workspace-ui .workspace-mounted-panel .menu_button { min-height: 44px; }
     .workspace-ui #WorldInfo .flex-container:has(> #world_editor_select) { flex-wrap: wrap; }
-    .workspace-ui #WorldInfo #world_editor_select { flex: 1 1 100%; width: 100%; order: -1; }
+    .workspace-ui #WorldInfo #world_editor_select + .select2-container { flex: 1 1 100%; width: 100% !important; order: -1; }
+    .workspace-ui .workspace-mounted-panel .select2-selection--single { min-height: max(44px, var(--ws-control-height)); height: auto; display: flex; align-items: center; }
+    .workspace-ui .workspace-mounted-panel .select2-selection--single .select2-selection__arrow { height: 100%; }
     .workspace-ui #WorldInfo .flex-container:has(> #world_editor_select) > small { display: none; }
     .workspace-header-actions #workspace-generation-status { display: none; }
 }

@@ -624,11 +624,12 @@ export function initWorkspace() {
     document.addEventListener('keydown', event => {
         if (!document.body.classList.contains('workspace-ui') || event.isComposing) return;
         if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k' && !document.querySelector('dialog[open]')) { event.preventDefault(); openSearch(); } else if (event.key === 'Escape' && !document.querySelector('dialog[open]')) {
+            if ($('.select2-dropdown').is(':visible')) return;
             if (document.body.classList.contains('workspace-nav-open')) {
                 event.preventDefault(); event.stopImmediatePropagation(); setMobileNavigation(false); document.getElementById('workspace-menu').focus();
             } else if (settingsPanel.active && !$('.edit_textarea, .reasoning_edit_textarea, #select_chat_popup').is(':visible')) {
                 event.preventDefault(); event.stopImmediatePropagation(); void closeDrawers().then(() => { refreshWorkspace(); focusContent(); });
-            } else if (document.body.classList.contains('workspace-inspecting')) {
+            } else if (!settingsPanel.active && document.body.classList.contains('workspace-inspecting')) {
                 event.preventDefault(); event.stopImmediatePropagation(); document.body.classList.remove('workspace-inspecting'); refreshWorkspace(); document.getElementById('workspace-header-portrait').focus();
             }
         } else if (event.key === 'Tab' && (document.body.classList.contains('workspace-nav-open') || (document.body.classList.contains('workspace-inspecting') && matchMedia('(max-width: 900px)').matches))) {

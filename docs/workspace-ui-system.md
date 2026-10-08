@@ -87,3 +87,9 @@ visible as an opt-in toggle. Scene illustration is a direct manual request.
 
 The context boundary has a text label when older messages leave model context.
 The first-message boundary is hidden because it does not identify omitted history.
+
+Select2 owns the visible replacement for some native selects. Mobile layout targets
+its container beside the hidden native input. Lorebook selection uses a full row,
+with edit/import actions below it. Escape dismisses the native dropdown before
+closing the category workspace. The browser check inspects the visible picker,
+not the hidden select or only the outer panel width.

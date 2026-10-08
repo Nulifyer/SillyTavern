@@ -7,7 +7,7 @@ Release v1.19.7 is published and verified. `latest` points to its multiarch imag
 
 ## Current batch
 
-The cohesive roleplay screen redesign is complete.
+Correct the enhanced lorebook picker on narrow phones, then publish v1.19.8.
 
 ## In progress
 
@@ -17,7 +17,7 @@ Screen contracts and research: docs/roleplay-workspace.md.
 
 ## Next action
 
-None. Requested work is complete.
+Publish v1.19.8, then verify its public image and latest alias.
 
 ## Blockers
 

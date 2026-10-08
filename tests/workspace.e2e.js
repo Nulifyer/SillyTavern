@@ -274,7 +274,7 @@ test('settings keep every native area reachable with Escape and focus restoratio
 test('every settings category uses one control tree and fits desktop and phone', async ({ page }, testInfo) => {
     const categories = ['connection', 'generation', 'persona', 'world', 'image-settings', 'voice-settings', 'settings', 'backgrounds', 'prompts', 'extensions', 'character-editor'];
     const nativeIds = await page.evaluate(() => [...document.querySelectorAll('.drawer-content input[id],.drawer-content select[id],.drawer-content textarea[id]')].map(e => e.id));
-    for (const width of [1280, 390]) {
+    for (const width of [1280, 390, 320]) {
         await page.setViewportSize({ width, height: 844 });
         await navigate(page, 'settings-page');
         for (const category of categories) {
@@ -291,6 +291,15 @@ test('every settings category uses one control tree and fits desktop and phone',
             const done = await page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]').boundingBox();
             expect(done.x + done.width).toBeLessThanOrEqual(width + 1);
             expect(done.y).toBeGreaterThanOrEqual(0);
+            if (category === 'world' && width < 900) {
+                const picker = page.locator('#world_editor_select + .select2-container');
+                const pickerBounds = await picker.boundingBox();
+                expect(pickerBounds.width).toBeGreaterThanOrEqual(width - 64);
+                await expect(picker.locator('.select2-selection')).toHaveCSS('height', '44px');
+                await picker.click();
+                await expect(page.locator('.select2-dropdown')).toBeVisible();
+                await page.keyboard.press('Escape');
+            }
             await page.screenshot({ path: testInfo.outputPath(`settings-${category}-${width}.png`) });
             await page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]').click();
             if (category === 'character-editor') await navigate(page, 'settings-page');
@@ -613,6 +622,13 @@ for (const width of [320, 390, 768]) {
             return e.contains(document.elementFromPoint(bounds.x + 5, bounds.y + 5));
         })).toBe(true);
         await page.screenshot({ path: testInfo.outputPath(`workspace-inspector-${width}.png`) });
+        await page.locator('#workspace-scene-info [data-workspace-action="world"]').click();
+        await page.locator('#world_editor_select + .select2-container').click();
+        await expect(page.locator('.select2-dropdown')).toBeVisible();
+        await page.keyboard.press('Escape');
+        await expect(page.locator('.select2-dropdown')).toBeHidden();
+        await expect(page.locator('#workspace-settings-shell')).toBeVisible();
+        await page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]').click();
         await page.locator('[data-workspace-action="close-inspector"]').click();
         await enableTool(page, 'Image generation');
         await enableTool(page, 'Voice narration');

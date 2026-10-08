@@ -132,7 +132,9 @@ Check 320/390/768px layouts, enlarged fonts, keyboard focus, and reduced-height 
 ## Verified redesign
 
 On October 8, 2026, lint, all 411 unit tests, and all 20 workspace browser cases passed.
-The native settings control IDs survived every category at 1280px and 390px. Phone
+The native settings control IDs survived every category at 1280px and 390px.
+The v1.19.8 follow-up extends every category to 320px and checks the visible
+Select2 lorebook picker width and native Escape behavior. Phone
 flows passed at 320/390/768px, including larger text and reduced-height layouts.
 The scene fixture generated exactly one provider request and one media message with
 automatic image tools off and prompt review enabled. Voice opt-in persisted and native
