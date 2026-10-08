@@ -82,6 +82,11 @@ fit a single column. Focus outlines, reduced motion, safe-area spacing, and brow
 zoom remain available. Classic layout can be selected in Settings and restored
 with its visible workspace button.
 
+The workspace composer scopes the native size tokens to 16px icons and 32px
+desktop controls. Phone controls use 44px touch targets with the same icon size.
+Its single-line desktop form is 48px tall; additional lines grow through the
+native textarea sizing. Native owners retain generation and script control visibility.
+
 ## Ownership and compatibility
 
 Starting a story asks the native character or group owner to create it directly.

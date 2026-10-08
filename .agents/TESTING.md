@@ -25,6 +25,11 @@ Run 37721950185 passed native amd64/ARM64 HTTP and heartbeat checks for v1.19.4.
 Anonymous manifests, empty-auth Podman pull, local startup, and version passed.
 Digest: docs/container-releases.md.
 
+October 8: lint, 411 units, and 16 browsers passed for composer sizing.
+The delayed model fixture checks stop visibility and 32px desktop controls;
+responsive cases check 44px phone controls with 16px icons. Multiline input grows.
+Desktop and 390px screenshots were inspected in the shared preview.
+
 ## Environment
 
 Published-image preview: 8004. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,

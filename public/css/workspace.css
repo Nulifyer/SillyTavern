@@ -150,15 +150,22 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-ui #chat .avatar img { border-radius: inherit; box-shadow: none; }
 .workspace-ui #chat .mes_buttons { color: var(--ws-muted); }
 .workspace-ui #chat .mes[is_system="true"] { color: var(--ws-muted); }
-.workspace-ui #form_sheld { flex-shrink: 0; width: min(820px, calc(100% - 48px)); padding-top: 12px; margin: 0 auto; background: var(--ws-base); }
-.workspace-ui #send_form { border: 1px solid #49536b; border-radius: 12px; background: #202635; backdrop-filter: none; padding: 9px; box-shadow: 0 6px 24px #00000015; }
+.workspace-ui #form_sheld {
+    --bottomFormIconSize: 16px;
+    --bottomFormBlockPadding: 0px;
+    --bottomFormBlockSize: var(--ws-control-small);
+    flex-shrink: 0; width: min(820px, calc(100% - 48px)); padding-top: 12px; margin: 0 auto; background: var(--ws-base);
+}
+.workspace-ui #send_form { border: 1px solid #49536b; border-radius: 12px; background: #202635; backdrop-filter: none; padding: 6px; box-shadow: 0 6px 24px #00000015; }
 .workspace-ui #send_form:focus-within { border-color: var(--ws-accent); }
-.workspace-ui #send_textarea { background: transparent; color: var(--ws-text); font-size: 14px; line-height: 1.6; min-height: 44px; padding: 11px 6px; text-align: left; }
+.workspace-ui #nonQRFormItems { align-items: center; line-height: 1; }
+.workspace-ui #send_form .mes_stop { width: var(--bottomFormBlockSize); height: var(--bottomFormBlockSize); padding: 0; align-items: center; justify-content: center; }
+.workspace-ui #send_textarea { background: transparent; color: var(--ws-text); font-size: 14px; line-height: 1.5; min-height: var(--bottomFormBlockSize); padding: 5px 6px; text-align: left; }
 .workspace-ui #send_textarea::placeholder { color: #acb7cc; }
 .workspace-ui #send_textarea { text-align: left !important; }
 .workspace-ui #send_form:has(#send_textarea:focus-visible) { outline-color: var(--ws-accent); }
-.workspace-ui #send_but { background: var(--ws-accent); color: #242036; border-radius: 8px; width: 38px; height: 38px; align-self: center; opacity: 1; font-size: 15px; }
-.workspace-ui #options_button { color: var(--ws-muted); font-size: 17px; }
+.workspace-ui #send_but { background: var(--ws-accent); color: #242036; border-radius: 8px; align-self: center; opacity: 1; }
+.workspace-ui #options_button { color: var(--ws-muted); }
 .workspace-ui #workspace-composer-hint { margin: 9px 0 15px; font-size: 10px; text-align: center; color: var(--ws-muted); white-space: normal; }
 
 .workspace-ui .drawer-content {
@@ -317,7 +324,7 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-icon-button > span { display: none; }
 .workspace-ui #workspace-header-portrait { min-width: 36px; min-height: 42px; }
 .workspace-composer-tools { display: flex; align-items: center; flex-wrap: wrap; gap: 4px; padding-bottom: 8px; }
-.workspace-tool-button { display: inline-flex; align-items: center; gap: 7px; min-height: var(--ws-control-small); padding: 5px 8px; line-height: 1.4; border: 0; border-radius: 7px; background: transparent; color: var(--ws-muted); font-size: 11px; }
+.workspace-tool-button { display: inline-flex; align-items: center; gap: 7px; min-height: var(--ws-control-small); padding: 5px 8px; line-height: 1.4; border: 0; border-radius: 7px; background: transparent; color: var(--ws-muted); font-size: 12px; }
 .workspace-tool-button:hover { color: var(--ws-text); background: var(--ws-surface); }
 .workspace-composer-persona { max-width: 160px; }
 .workspace-composer-persona span { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
@@ -409,7 +416,6 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
     .workspace-ui.workspace-nav-open #workspace-sidebar { transform: translateX(0); visibility: visible; }
     .workspace-ui #workspace-header { gap: 12px; padding: 0 16px; padding-top: env(safe-area-inset-top); }
     .workspace-ui #workspace-menu { display: inline-grid; }
-    .workspace-ui #send_but { width: 44px; height: 44px; }
     .workspace-search { min-height: 44px; }
     .workspace-page-search input { font-size: 16px; }
     .workspace-nav-item { min-height: 44px; }

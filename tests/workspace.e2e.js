@@ -256,7 +256,12 @@ test('search opens character profiles and a fixture model generates through the 
     await expect(page.locator('.workspace-profile-intro h1')).toHaveText('Seraphina');
     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} model`);
     await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
-    await page.route('**/api/backends/chat-completions/generate', route => route.fulfill({ json: { choices: [{ message: { content: 'The forest path opens before you.' } }] } }));
+    let finishReply;
+    const replyReady = new Promise(resolve => finishReply = resolve);
+    await page.route('**/api/backends/chat-completions/generate', async route => {
+        await replyReady;
+        return route.fulfill({ json: { choices: [{ message: { content: 'The forest path opens before you.' } }] } });
+    });
     await page.locator('.workspace-composer-tools [data-workspace-action="connection"]').click();
     await page.locator('#chat_completion_source').selectOption('custom');
     await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
@@ -269,10 +274,30 @@ test('search opens character profiles and a fixture model generates through the 
     await page.locator('#stream_toggle').uncheck();
     await page.keyboard.press('Escape');
     await page.getByRole('button', { name: 'Back to Seraphina', exact: true }).click();
+    await expect(page.locator('#mes_stop')).toBeHidden();
+    for (const selector of ['#options_button', '#extensionsMenuButton', '#send_but']) {
+        await expect(page.locator(selector)).toHaveCSS('font-size', '16px');
+        const bounds = await page.locator(selector).boundingBox();
+        expect(bounds.width).toBe(32);
+        expect(bounds.height).toBe(32);
+    }
+    await page.locator('#send_textarea').fill('Which path should we take?');
+    const singleLine = await page.locator('#send_form').boundingBox();
+    expect(singleLine.height).toBeLessThanOrEqual(50);
+    await page.locator('#send_textarea').fill('Which path should we take?\nThe forest is quiet.\nI watch the trees.');
+    await expect.poll(async () => (await page.locator('#send_form').boundingBox()).height).toBeGreaterThan(singleLine.height + 30);
     await page.locator('#send_textarea').fill('Which path should we take?');
     await page.locator('#send_but').click();
+    await expect(page.locator('#mes_stop')).toBeVisible();
+    await expect(page.locator('#mes_stop i')).toHaveCSS('font-size', '16px');
+    const stop = await page.locator('#mes_stop').boundingBox();
+    expect(stop.width).toBe(32);
+    expect(stop.height).toBe(32);
+    finishReply();
     await expect(page.locator('#chat .mes[is_user="true"] .mes_text')).toContainText('Which path should we take?');
     await expect(page.locator('#chat .mes_text').last()).toContainText('The forest path opens before you.', { timeout: 20000 });
+    await expect(page.locator('#mes_stop')).toBeHidden();
+    await expect(page.locator('#send_but')).toBeVisible();
 });
 
 test('image tools use the native provider and treat custom prompts as text', async ({ page }, testInfo) => {
@@ -415,6 +440,12 @@ for (const width of [320, 390, 768]) {
         await expect(page.locator('#sheld')).not.toHaveAttribute('inert');
         await expect(page.locator('.workspace-library-grid')).toBeVisible();
         await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} phone`);
+        for (const selector of ['#options_button', '#extensionsMenuButton']) {
+            await expect(page.locator(selector)).toHaveCSS('font-size', '16px');
+            const bounds = await page.locator(selector).boundingBox();
+            expect(bounds.width).toBe(44);
+            expect(bounds.height).toBe(44);
+        }
         await enableTool(page, 'Image generation');
         await enableTool(page, 'Voice narration');
         for (const selector of ['#workspace-header', '#sheld', '#form_sheld', '.workspace-composer-tools']) {

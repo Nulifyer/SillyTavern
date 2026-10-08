@@ -3,20 +3,21 @@
 ## Project state
 
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Release v1.19.4 is published and verified. `latest` points to its multi-architecture image.
+Release v1.19.4 is published. `latest` points to its multi-architecture image.
 
 ## Current batch
 
-None. The follow-up fixes and release are complete.
+Normalize native composer sizing after the user's screenshot showed an oversized wand.
 
 ## In progress
 
-Published source: 2221fd52600fd69d41994dafe56da9ca82de444d.
-The actual published-image preview runs on port 8004. Regression source is on 8002.
+Workspace CSS now scopes native composer size tokens: 16px icons, 32px desktop
+controls, and 44px phone controls. Browser regressions check multiline growth and
+native generation stop visibility. Desktop and phone rendering passed verification.
 
 ## Next action
 
-None. Requested work is complete.
+Publish v1.19.5 and verify the resulting public image and latest alias.
 
 ## Blockers
 
@@ -24,9 +25,9 @@ None.
 
 ## Verification
 
-Lint, 411 units, and 16 browser tests passed. Widths: 320/390/768.
-Workflow syntax passed. New bot runs skipped cleanly after the CI guard push.
-Desktop and 390px Settings were inspected; extension headers have no gradients.
-Release run 37721950185 passed both native startup checks and publication.
-Anonymous manifests, empty-auth Podman pull, local HTTP, version, and heartbeat passed.
-The image digest is in docs/container-releases.md.
+Computed styles on v1.19.4 confirmed 28.5px wand and stop icons beside a 17px menu
+and 14px text. The current source preview is on 8002; published v1.19.4 is on 8004.
+
+Lint, 411 unit tests, and 16 browser tests passed. Native generation stop visibility,
+multiline growth, and 320/390/768px control dimensions passed. Desktop and 390px
+screenshots were inspected in the shared preview.
