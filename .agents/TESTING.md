@@ -31,11 +31,12 @@ Native amd64 and ARM64 release jobs passed HTTP and heartbeat checks. Anonymous
 manifests, empty-auth Podman pull, local startup, and version checks passed.
 Published-image workspace modules and CSS matched the source. Browser checks
 confirmed desktop/phone layout, voice opt-in, tools initially off, and one new-story
-transcript. Exact release evidence and digest: docs/container-releases.md.
+transcript in v1.19.7. The v1.19.8 image confirmed the corrected 320px picker and
+native dropdown Escape behavior. Exact release evidence and digest: docs/container-releases.md.
 
 ## Environment
 
-Published-image preview: 8007. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,
+Published-image preview: 8008. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,
 port 8002. Settings writes isolated; cleanup uses native owners.
 
 ## Known gaps
