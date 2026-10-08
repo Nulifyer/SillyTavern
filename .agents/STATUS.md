@@ -3,22 +3,20 @@
 ## Project state
 
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Release v1.19.3 is published. The follow-up fixes are verified and ready for v1.19.4.
+Release v1.19.4 is published and verified. `latest` points to its multi-architecture image.
 
 ## Current batch
 
-Create one story per action, tighten control sizing, make creative tools opt-in,
-and guard upstream bot jobs that fail without their GitHub App credentials.
+None. The follow-up fixes and release are complete.
 
 ## In progress
 
-Application changes are ready to commit. CI guards are pushed at 6ccf6fca8.
-Regression source preview is on port 8002.
-Published source remains 1061f87fbd0a98114e90eac49071c534f91914c2 on port 8003.
+Published source: 2221fd52600fd69d41994dafe56da9ca82de444d.
+The actual published-image preview runs on port 8004. Regression source is on 8002.
 
 ## Next action
 
-Commit the verified application fixes and publish v1.19.4, then verify its image.
+None. Requested work is complete.
 
 ## Blockers
 
@@ -29,3 +27,6 @@ None.
 Lint, 411 units, and 16 browser tests passed. Widths: 320/390/768.
 Workflow syntax passed. New bot runs skipped cleanly after the CI guard push.
 Desktop and 390px Settings were inspected; extension headers have no gradients.
+Release run 37721950185 passed both native startup checks and publication.
+Anonymous manifests, empty-auth Podman pull, local HTTP, version, and heartbeat passed.
+The image digest is in docs/container-releases.md.

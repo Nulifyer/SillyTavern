@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.3`.
+2. Create a version tag on that commit, such as `v1.19.4`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.3` | The exact GitHub Release tag |
+| `v1.19.4` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.3` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.4` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -88,6 +88,23 @@ it, and recreate the service.
 Use the workflow's digest reference when you need to pin the exact published image.
 
 ## Verified release
+
+[Release v1.19.4](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.4)
+was published by [automatic release run 37721950185](https://github.com/Nulifyer/SillyTavern/actions/runs/37721950185).
+Both native architecture jobs passed server startup checks. Anonymous registry
+requests verified that version, full-commit, and `latest` tags share this digest:
+
+```text
+sha256:f869ac5c633cbbeede08b5291665121e096e1fc7a8364992e1eddcb669680f4b
+```
+
+OCI labels identify source commit `2221fd52600fd69d41994dafe56da9ca82de444d`.
+An anonymous Podman pull with an empty auth file succeeded.
+The pulled image started locally on port 8004, served HTTP 200, reported version
+1.19.4, and passed the native heartbeat health check.
+The upstream bot workflows skipped cleanly on the fork after their repository guards.
+
+### Previous release
 
 [Release v1.19.3](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.3)
 was published by [automatic release run 37718961147](https://github.com/Nulifyer/SillyTavern/actions/runs/37718961147).
