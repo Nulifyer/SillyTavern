@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.5`.
+2. Create a version tag on that commit, such as `v1.19.6`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.5` | The exact GitHub Release tag |
+| `v1.19.6` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.5` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.6` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -89,19 +89,20 @@ Use the workflow's digest reference when you need to pin the exact published ima
 
 ## Verified release
 
-[Release v1.19.5](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.5)
-was published by [automatic release run 37734130880](https://github.com/Nulifyer/SillyTavern/actions/runs/37734130880).
+[Release v1.19.6](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.6)
+was published by [automatic release run 37735911482](https://github.com/Nulifyer/SillyTavern/actions/runs/37735911482).
 Both native architecture jobs passed server startup checks. Anonymous registry
 requests verified that version, full-commit, and `latest` tags share this digest:
 
 ```text
-sha256:c97f9573bb84b913b7c9eb2c899019c2cc14e2ec5a6b2fab7e34ea70af00688c
+sha256:d741b5615207f510dd3410fe6a937222db26111444e51033f699b89acd79ef9f
 ```
 
-OCI labels identify source commit `8a5b914947f5212c23eed6b34e39d1bf8f5bd12d`.
+OCI labels identify source commit `78e7ac9aff0d002848c302c413a49d101170a577`.
 An anonymous Podman pull with an empty auth file succeeded.
-The pulled image started locally on port 8005, served HTTP 200, reported version
-1.19.5, and passed the native heartbeat health check.
+The pulled image started locally on port 8006, served HTTP 200, reported version
+1.19.6, and passed the native heartbeat health check.
+The served workspace CSS matched the verified source byte for byte.
 The upstream bot workflows skipped cleanly on the fork after their repository guards.
 
 ### Previous release

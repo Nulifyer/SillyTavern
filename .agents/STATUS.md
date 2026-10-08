@@ -3,21 +3,21 @@
 ## Project state
 
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Release v1.19.5 is published and verified. `latest` points to its image.
+Release v1.19.6 is published and verified. `latest` points to its multiarch image.
 
 ## Current batch
 
-Apply a source-backed UI system after studying Primer and Radix guidance and CSS.
+None. The composer fix and UI-system pass are complete.
 
 ## In progress
 
-Shared type roles replace unrelated font sizes. Controls scale with text preferences.
-Utility titles, primary-action hierarchy, spacing, and mobile cascade order are revised.
-Sources, product choices, and audit corrections are in docs/workspace-ui-system.md.
+Published source: 78e7ac9aff0d002848c302c413a49d101170a577.
+Published-image preview: 8006. Regression source: 8002.
+UI sizing rules and research sources: docs/workspace-ui-system.md.
 
 ## Next action
 
-Publish v1.19.6 and verify its public image and latest alias.
+None. Requested work is complete.
 
 ## Blockers
 
@@ -25,8 +25,11 @@ None.
 
 ## Verification
 
-v1.19.5 run 37734130880 passed both native startup checks and publication.
+Lint and 17 browser tests passed, with final phone target checks at 320/390/768px.
+Native 150% font preference and a 20px browser default passed together.
+Desktop library/profile/settings and phone profile/composer screenshots were inspected.
+Release run 37735911482 passed both native startup checks and publication.
 Anonymous manifests, empty-auth Podman pull, HTTP, version, and heartbeat passed.
-Lint and all 17 browser tests passed. Updated mobile/profile target checks and
-the combined native/browser font preference check passed after the final adjustment.
-Desktop library/profile and 390px profile/composer screenshots were inspected.
+Served CSS matched the source byte for byte. The published-image browser confirmed
+matching icon sizes, creative tools off, and one transcript for a new story.
+Digest and release evidence: docs/container-releases.md.
