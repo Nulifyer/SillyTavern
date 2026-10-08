@@ -84,8 +84,10 @@ with its visible workspace button.
 
 The workspace composer scopes the native size tokens to 16px icons and 32px
 desktop controls. Phone controls use 44px touch targets with the same icon size.
-Its single-line desktop form is 48px tall; additional lines grow through the
-native textarea sizing. Native owners retain generation and script control visibility.
+At default font preferences its single-line desktop form is 48px tall; additional
+lines grow through the native textarea sizing. Typography and controls follow
+[the workspace UI system](workspace-ui-system.md). Native owners retain generation
+and script control visibility.
 
 ## Ownership and compatibility
 
@@ -100,9 +102,9 @@ Turning voice off stops playback. Turning images off blocks generation commands,
 interactive triggers, and image function tools. Existing media stays readable.
 Previously saved voice choices remain in effect.
 
-Desktop controls use 13px labels with 36px primary targets and 32px small targets.
-Mobile controls use 44px targets. Unitless line heights keep labels and padding
-proportional. Dropdowns and settings headers use solid dark backgrounds.
+Desktop controls use 14px labels with 32px minimum targets.
+Mobile controls use 44px minimum targets. Both grow with font preferences.
+Unitless line heights keep labels and padding proportional. Dropdowns and settings headers use solid dark backgrounds.
 These choices follow the [MDN box model](https://developer.mozilla.org/en-US/docs/Learn_web_development/Core/Styling_basics/Box_model),
 [MDN line-height guidance](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/Properties/line-height),
 and [W3C target-size guidance](https://www.w3.org/WAI/WCAG22/Understanding/target-size-enhanced.html).

@@ -147,7 +147,7 @@ function library(state) {
     page.append(pageHeading('Choose your next character', 'Meet someone new, return to a familiar character, or bring a cast together.', [
         button('Import card', 'import-character', {}, 'workspace-button', 'fa-file-import'),
         button('Create character', 'create-character', {}, 'workspace-button', 'fa-plus'),
-        button('Create cast', 'create-cast', {}, 'workspace-button workspace-primary', 'fa-users'),
+        button('Create cast', 'create-cast', {}, 'workspace-button', 'fa-users'),
     ]));
     const toolbar = element('div', 'workspace-library-toolbar');
     toolbar.append(search(state.query, 'Search characters, descriptions, and tags'));

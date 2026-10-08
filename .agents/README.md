@@ -2,6 +2,7 @@
 
 Read PLAN.md, DECISIONS.md, STATUS.md, then TESTING.md when resuming work.
 STATUS.md owns the current batch and one next action.
+UI sizing and research sources are in docs/workspace-ui-system.md.
 
 ## Maintenance rules
 

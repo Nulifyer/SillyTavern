@@ -30,9 +30,13 @@ The delayed model fixture checks stop visibility and 32px desktop controls;
 responsive cases check 44px phone controls with 16px icons. Multiline input grows.
 Desktop and 390px screenshots were inspected in the shared preview.
 
+The UI-system pass passed lint and 17 browser cases, including the native 150%
+font preference with a 20px browser default. Final phone/profile target checks
+passed at 320/390/768px. Sources and sizing roles: docs/workspace-ui-system.md.
+
 ## Environment
 
-Published-image preview: 8004. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,
+Published-image preview: 8005. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,
 port 8002. Settings writes isolated; cleanup uses native owners.
 
 ## Known gaps

@@ -3,21 +3,21 @@
 ## Project state
 
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Release v1.19.4 is published. `latest` points to its multi-architecture image.
+Release v1.19.5 is published and verified. `latest` points to its image.
 
 ## Current batch
 
-Normalize native composer sizing after the user's screenshot showed an oversized wand.
+Apply a source-backed UI system after studying Primer and Radix guidance and CSS.
 
 ## In progress
 
-Workspace CSS now scopes native composer size tokens: 16px icons, 32px desktop
-controls, and 44px phone controls. Browser regressions check multiline growth and
-native generation stop visibility. Desktop and phone rendering passed verification.
+Shared type roles replace unrelated font sizes. Controls scale with text preferences.
+Utility titles, primary-action hierarchy, spacing, and mobile cascade order are revised.
+Sources, product choices, and audit corrections are in docs/workspace-ui-system.md.
 
 ## Next action
 
-Publish v1.19.5 and verify the resulting public image and latest alias.
+Publish v1.19.6 and verify its public image and latest alias.
 
 ## Blockers
 
@@ -25,9 +25,8 @@ None.
 
 ## Verification
 
-Computed styles on v1.19.4 confirmed 28.5px wand and stop icons beside a 17px menu
-and 14px text. The current source preview is on 8002; published v1.19.4 is on 8004.
-
-Lint, 411 unit tests, and 16 browser tests passed. Native generation stop visibility,
-multiline growth, and 320/390/768px control dimensions passed. Desktop and 390px
-screenshots were inspected in the shared preview.
+v1.19.5 run 37734130880 passed both native startup checks and publication.
+Anonymous manifests, empty-auth Podman pull, HTTP, version, and heartbeat passed.
+Lint and all 17 browser tests passed. Updated mobile/profile target checks and
+the combined native/browser font preference check passed after the final adjustment.
+Desktop library/profile and 390px profile/composer screenshots were inspected.

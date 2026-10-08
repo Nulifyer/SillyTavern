@@ -446,6 +446,9 @@ for (const width of [320, 390, 768]) {
             expect(bounds.width).toBe(44);
             expect(bounds.height).toBe(44);
         }
+        const profileTarget = await page.locator('#workspace-header-portrait').boundingBox();
+        expect(profileTarget.width).toBe(44);
+        expect(profileTarget.height).toBe(44);
         await enableTool(page, 'Image generation');
         await enableTool(page, 'Voice narration');
         for (const selector of ['#workspace-header', '#sheld', '#form_sheld', '.workspace-composer-tools']) {
@@ -473,6 +476,39 @@ for (const width of [320, 390, 768]) {
         expect(panel.x + panel.width).toBeLessThanOrEqual(width);
     });
 }
+
+test('native font preferences and browser text sizing keep phone controls usable', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} large text`);
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="settings"]').click();
+    await page.locator('#font_scale').evaluate(input => {
+        input.value = '1.5';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
+    });
+    await expect.poll(() => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--fontScale').trim())).toBe('1.5');
+    await page.keyboard.press('Escape');
+    await page.getByRole('button', { name: 'Back to Seraphina', exact: true }).click();
+    await page.setViewportSize({ width: 390, height: 844 });
+    // Simulate a larger browser default independently of the native font preference.
+    await page.evaluate(() => document.documentElement.style.fontSize = '20px');
+    await expect(page.locator('#send_textarea')).toHaveCSS('font-size', '30px');
+    await page.locator('#send_textarea').fill('A larger text preference\nstill leaves room to write.');
+    for (const selector of ['#workspace-header', '#workspace-header-portrait', '#workspace-new-story', '#form_sheld', '#send_textarea', '#options_button', '#extensionsMenuButton']) {
+        const bounds = await page.locator(selector).boundingBox();
+        expect(bounds.x).toBeGreaterThanOrEqual(0);
+        expect(bounds.x + bounds.width).toBeLessThanOrEqual(391);
+        expect(bounds.y + bounds.height).toBeLessThanOrEqual(845);
+    }
+    for (const selector of ['#options_button', '#extensionsMenuButton']) {
+        const bounds = await page.locator(selector).boundingBox();
+        expect(bounds.width).toBeGreaterThanOrEqual(44);
+        expect(bounds.height).toBeGreaterThanOrEqual(44);
+    }
+    await navigate(page, 'settings-page');
+    await expect(page.getByRole('checkbox', { name: 'Voice narration', exact: true })).toBeVisible();
+    expect(await page.locator('#workspace-view').evaluate(view => view.scrollWidth <= view.clientWidth)).toBe(true);
+});
 
 test('classic preference survives reload and can be restored', async ({ page }) => {
     await navigate(page, 'settings-page');
