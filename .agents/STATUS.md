@@ -2,26 +2,27 @@
 
 ## Project state
 
-Fork: https://github.com/Nulifyer/SillyTavern. Local branch feat/cohesive-workspace;
-published branch release. Roleplay workspace implemented. v1.19.0 is public in GHCR.
+v1.19.1 published automatically in run 37716598748. amd64/arm64 manifests,
+anonymous pull access, and CI HTTP/heartbeat passed.
 
 ## Current batch
 
-Verify and publish the roleplay workspace as v1.19.1.
+Publish v1.19.2 with exact archive identifiers for titles ending in .jsonl.
 
 ## In progress
 
-Local container build and visual inspection. Release workflow is active.
+Suffix regression reproduced lost archive state; normalization fixed at the API
+boundary. Lint and 14 browser checks passed. Documentation edits are task-owned.
 
 ## Next action
 
-Finish container smoke checks, commit, and verify automatic release publishing.
+Commit the verified patch, publish v1.19.2, and inspect its image digest.
 
 ## Blockers
 
-None. Automatic triggering still needs a new release observation.
+None.
 
 ## Verification
 
-Lint, 411 unit tests, 14 browser tests passed. Final rename and delayed-image
-regressions passed. Responsive checks cover 320, 390, and 768 pixels.
+v1.19.1: lint, 411 units, 14 browsers, Podman checks, and visual inspection passed.
+Responsive widths: 320, 390, 768.
