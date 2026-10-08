@@ -39,6 +39,11 @@ To retry a build, open the workflow and select **Run workflow**. Enter an existi
 published release tag. Draft releases and tags without a published release are rejected.
 The workflow uses `GITHUB_TOKEN` with `packages: write`; no registry secret is required.
 The upstream npm publishing workflow is disabled for forks.
+Upstream issue, pull request, and merge-conflict bot jobs run only in
+`SillyTavern/SillyTavern`. The fork does not have the upstream GitHub App credentials.
+Runs 37719493332 and 37719493429 failed at token creation because `appId` was missing.
+Repository guards prevent those inherited jobs from failing on fork pushes.
+The fork's lint, unit-test, and release-container jobs remain available.
 
 ## Allow your homelab to pull the image
 
