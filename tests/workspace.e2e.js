@@ -160,7 +160,7 @@ test('archive persists, excludes active lists, reads without editing, and restor
 });
 
 test('rename follows archived identity and deletion requires confirmation without recreating the file', async ({ page }, testInfo) => {
-    const original = `Workspace e2e ${testInfo.testId}-${runId} original`;
+    const original = `Workspace e2e ${testInfo.testId}-${runId} original.jsonl`;
     const renamed = `Workspace e2e ${testInfo.testId}-${runId} renamed`;
     await startStory(page, original);
     await currentAction(page, 'archive-chat');

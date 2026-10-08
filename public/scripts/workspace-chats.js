@@ -10,7 +10,7 @@ import { equalsIgnoreCaseAndAccents, timestampToMoment } from './utils.js';
 const archiveKey = 'workspaceArchivedChats';
 
 function identity(record) {
-    return JSON.stringify([record.group ? 'group' : 'character', String(record.group || record.avatar), record.file_name.replace(/\.jsonl$/, '')]);
+    return JSON.stringify([record.group ? 'group' : 'character', String(record.group || record.avatar), record.file_name]);
 }
 
 function archivedIds() {
@@ -109,10 +109,10 @@ export class WorkspaceChats {
     }
 
     renamed({ avatarId, groupId, oldFileName, newFileName }) {
-        const oldKey = identity({ avatar: avatarId, group: groupId, file_name: oldFileName });
+        const oldKey = identity({ avatar: avatarId, group: groupId, file_name: oldFileName.replace(/\.jsonl$/, '') });
         const ids = archivedIds();
         if (!ids.delete(oldKey)) return;
-        ids.add(identity({ avatar: avatarId, group: groupId, file_name: newFileName }));
+        ids.add(identity({ avatar: avatarId, group: groupId, file_name: newFileName.replace(/\.jsonl$/, '') }));
         accountStorage.setItem(archiveKey, JSON.stringify([...ids]));
     }
 
