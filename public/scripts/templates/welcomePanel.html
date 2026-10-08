@@ -1,4 +1,18 @@
 <div class="welcomePanel">
+    <section class="workspace-only workspace-home-intro">
+        <div class="workspace-home-symbol" aria-hidden="true"><i class="fa-solid fa-feather-pointed"></i></div>
+        <h1 data-i18n="Make room for a new story.">Make room for a new story.</h1>
+        <p data-i18n="Choose a character to start a conversation. Build the world around it as you go.">Choose a character to start a conversation. Build the world around it as you go.</p>
+        <div class="workspace-home-actions">
+            <button class="workspace-button workspace-primary" type="button" data-workspace-action="characters"><i class="fa-solid fa-address-card" aria-hidden="true"></i><span data-i18n="Explore characters">Explore characters</span></button>
+            <button class="openTemporaryChat workspace-button" type="button"><i class="fa-regular fa-comment" aria-hidden="true"></i><span data-i18n="Temporary Chat">Temporary Chat</span></button>
+        </div>
+    </section>
+    <section class="workspace-only workspace-home-library">
+        <div class="workspace-home-section-heading"><h2 data-i18n="Your characters">Your characters</h2><button type="button" data-workspace-action="characters" data-i18n="View library">View library</button></div>
+        <div class="workspace-home-characters"></div>
+    </section>
+    <div class="workspace-only workspace-setup-note"><i class="fa-solid fa-plug" aria-hidden="true"></i><span class="workspace-setup-status" data-i18n="One more thing: connect a model to get replies.">One more thing: connect a model to get replies.</span><button type="button" data-workspace-action="connection" data-i18n="Connections">Connections</button></div>
     <div class="welcomeHeaderTitle">
         <img src="img/logo.png" alt="SillyTavern Logo" data-i18n="[alt]SillyTavern Logo" class="welcomeHeaderLogo">
         <span class="welcomeHeaderVersionDisplay">{{version}}</span>
@@ -42,11 +56,12 @@
             <div class="noRecentChat">
                 <i class="fa-solid fa-comment-dots"></i>
                 <span data-i18n="No recent chats">No recent chats</span>
+                <small class="workspace-only" data-i18n="Your conversations will appear here. Choose a character to begin.">Your conversations will appear here. Choose a character to begin.</small>
             </div>
         {{/if}}
         {{#each chats}}
             {{#with this}}
-            <div class="recentChat {{#if hidden}}hidden{{/if}} {{#if is_group}}group{{/if}}" data-file="{{chat_name}}" data-avatar="{{avatar}}" data-group="{{group}}">
+            <div class="recentChat {{#if hidden}}hidden{{/if}} {{#if is_group}}group{{/if}}" role="button" tabindex="0" data-file="{{chat_name}}" data-avatar="{{avatar}}" data-group="{{group}}">
                 {{#if pinned}}
                     <div class="recentChatPinned">
                         <i class="fa-solid fa-thumbtack fa-fw fa-xs" title="Pinned chat" data-i18n="[title]Pinned chat"></i>

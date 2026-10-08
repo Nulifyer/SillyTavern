@@ -5,12 +5,12 @@
     <title>SillyTavern</title>
     <base href="/">
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1, maximum-scale=1.0, user-scalable=no, interactive-widget=resizes-content">
+    <meta name="viewport" content="width=device-width, viewport-fit=cover, initial-scale=1, interactive-widget=resizes-content">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="darkreader-lock">
     <meta name="robots" content="noindex, nofollow" />
-    <meta name="theme-color" content="#333">
+    <meta name="theme-color" content="#171b26">
     <style>
         /* Put critical CSS here. The rest should go in stylesheets. */
         body {
@@ -43,14 +43,50 @@
     <link rel="stylesheet" type="text/css" href="css/select2-overrides.css">
     <link rel="stylesheet" type="text/css" href="css/mobile-styles.css">
     <link rel="stylesheet" type="text/css" href="css/macros.css">
+    <link rel="stylesheet" type="text/css" href="css/workspace.css">
     <link rel="stylesheet" type="text/css" href="css/user.css">
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <!-- Scripts are loaded at the end of the body to improve page load speed -->
 </head>
 
-<body class="no-blur">
+<body class="no-blur workspace-ui">
     <div id="preloader"></div>
     <div id="bg1"></div>
+    <a class="workspace-only workspace-skip" href="#send_textarea" data-i18n="Skip to message">Skip to message</a>
+    <button id="workspace-scrim" class="workspace-only" type="button" aria-label="Close navigation" data-i18n="[aria-label]Close navigation" hidden></button>
+    <aside id="workspace-sidebar" class="workspace-only" aria-label="Workspace" data-i18n="[aria-label]Workspace">
+        <a class="workspace-brand" href="#" data-workspace-action="home">
+            <img src="img/logo.png" alt="" width="32" height="32">
+            <span>SillyTavern<small data-i18n="Your story starts here">Your story starts here</small></span>
+        </a>
+        <button id="workspace-search-button" class="workspace-search" type="button">
+            <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
+            <span data-i18n="Find anything">Find anything</span><kbd>Ctrl K</kbd>
+        </button>
+        <nav id="workspace-navigation" aria-label="Main navigation" data-i18n="[aria-label]Main navigation"></nav>
+        <section class="workspace-characters">
+            <div class="workspace-section-heading"><span data-i18n="Your characters">Your characters</span><button type="button" data-workspace-action="characters" aria-label="Browse characters" data-i18n="[aria-label]Browse characters"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div>
+            <div id="workspace-character-list"></div>
+        </section>
+        <div class="workspace-sidebar-footer">
+            <button class="workspace-connection" type="button" data-workspace-action="connection"><span class="workspace-status-dot"></span><span><strong id="workspace-connection-label" data-i18n="Connect a model">Connect a model</strong><small id="workspace-connection-detail" data-i18n="Set up an API to start chatting">Set up an API to start chatting</small></span><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
+            <button class="workspace-persona" type="button" data-workspace-action="persona"><span class="workspace-persona-avatar"><i class="fa-solid fa-user" aria-hidden="true"></i></span><span><strong id="workspace-persona-name"></strong><small data-i18n="Manage persona">Manage persona</small></span><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></button>
+        </div>
+    </aside>
+    <header id="workspace-header" class="workspace-only">
+        <button id="workspace-menu" class="workspace-icon-button" type="button" aria-label="Open navigation" aria-controls="workspace-sidebar" aria-expanded="false" data-i18n="[aria-label]Open navigation"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+        <div class="workspace-header-title"><strong id="workspace-chat-title" data-i18n="Workspace">Workspace</strong><span id="workspace-chat-subtitle" data-i18n="A place for your characters and conversations">A place for your characters and conversations</span></div>
+        <div class="workspace-header-actions">
+            <button class="workspace-icon-button" id="workspace-history" type="button" data-workspace-action="history" aria-label="Chat history" title="Chat history" data-i18n="[aria-label]Chat history;[title]Chat history"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></button>
+            <button class="workspace-button" type="button" data-workspace-action="characters"><i class="fa-solid fa-plus" aria-hidden="true"></i><span data-i18n="New conversation">New conversation</span></button>
+        </div>
+    </header>
+    <dialog id="workspace-command" class="workspace-only" aria-labelledby="workspace-command-title">
+        <div class="workspace-command-heading"><h2 id="workspace-command-title" data-i18n="Find anything">Find anything</h2><button class="workspace-icon-button" type="button" data-workspace-action="close-search" aria-label="Close search" data-i18n="[aria-label]Close search"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button></div>
+        <label class="workspace-search-input"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i><input id="workspace-command-input" type="search" placeholder="Search characters and tools" aria-label="Search characters and tools" data-i18n="[placeholder]Search characters and tools;[aria-label]Search characters and tools" autocomplete="off"></label>
+        <div id="workspace-command-results" aria-live="polite"></div>
+        <p class="workspace-command-hint" data-i18n="Use arrow keys to browse. Enter to open. Escape to close.">Use arrow keys to browse. Enter to open. Escape to close.</p>
+    </dialog>
     <div id="character_context_menu" class="hidden">
         <ul>
             <li><button id="character_context_menu_favorite" data-i18n="Favorite">Favorite</button></li>
