@@ -1,7 +1,8 @@
 # SillyTavern workspace
 
-The fork adds a dark workspace around SillyTavern's existing chat and settings controls.
-The primary flow is to choose a character, connect a model, and continue a conversation.
+The fork adds a dark character roleplay workspace.
+The primary flow is library → character profile → new or existing scene.
+[Roleplay workspace](roleplay-workspace.md) contains the user stories and reference review.
 The classic layout remains available in Settings.
 
 ## Existing UI and UX map
@@ -43,104 +44,91 @@ Character portraits provide the strongest visual identity. Navigation and contro
 | Accent | `#c0b7ff` | Primary actions, active navigation, focus |
 
 Noto Sans uses the app's existing local font files for controls and chat.
-Georgia gives the home headline a literary voice without an external font request.
+Georgia gives library and profile headings a literary voice without an external font request.
 Chat text uses a 1.8 line height and an 820px maximum conversation column, including avatars and controls.
-
-```text
-Desktop
-+-------------------+-----------------------------------------------+
-| SillyTavern        | Conversation name              History  New  |
-| Find anything     +-----------------------------------------------+
-| Workspace         |                                               |
-| Characters        | Home: start, characters, connection, recent   |
-|                   | Chat: readable messages and existing actions  |
-| World info        |                                               |
-| Personas          |       Existing settings panel opens here      |
-|                   |                                               |
-| Generation        |                                               |
-| Connections       +-----------------------------------------------+
-| Prompt formatting | Message composer                              |
-| Extensions        | Connection guidance or send shortcut          |
-| Backgrounds       +-----------------------------------------------+
-| Settings          |
-| Your characters   |
-| Model / persona   |
-+-------------------+
-
-Phone
-+-----------------------------------+
-| Menu   Conversation   History New |
-+-----------------------------------+
-| Home or conversation              |
-|                                   |
-| Settings open in a full-width     |
-| panel with a title and close      |
-| control.                          |
-+-----------------------------------+
-| Message composer                  |
-+-----------------------------------+
-```
-
-Content is left aligned. The home page starts with an invitation to choose a character.
-It uses actual character data and existing recent chats, rather than invented examples or activity counts.
-The sidebar groups conversations, creative tools, and configuration.
-An initial review removed a dashboard-style metrics header because those metrics would not help users start chatting.
 
 ## Implemented behavior
 
-- Persistent named navigation replaces the icon-only bar in workspace mode.
-- Desktop settings open in titled panels. The close button and Escape return users to the conversation.
-- The character library keeps search, sorting, tags, import, editing, and group controls.
-- Create, Import, and New group have visible text labels.
-- Sidebar shortcuts and home cards select actual characters through `selectCharacterById()`.
-- The home page keeps existing recent chat, pin, rename, delete, and temporary chat handlers.
-- Connection guidance reflects the existing `online_status` value. It does not perform a separate connection check.
-- The header exposes chat history and new chat actions through their existing handlers.
-- Ctrl/Cmd+K opens a searchable list of tools and characters. Arrow keys and Enter select results.
-- Phone navigation uses an overlay, keyboard focus containment, Escape, and an inert conversation while open.
-- Focus outlines, reduced motion, safe-area spacing, and browser zoom remain available.
-- Settings saves the layout preference in account storage. A restore button is visible in classic mode.
-- Existing custom themes and movable panel settings are available through classic mode.
+The sidebar exposes Chats, Characters, and Archive, with recent stories and a
+Settings link. The character library searches names, descriptions, and tags and
+filters characters, casts, and favorites. Cards open profiles without replacing
+the active transcript or its unsent draft.
 
-The default home assistant help text is hidden until the user sends a message.
-A character assigned as the home assistant remains visible.
-Selected background images remain subtle in the workspace so conversation text stays readable.
+Profiles offer Continue and Start new story before scenario, opening message, and
+card details. New stories keep existing transcripts and reject duplicate titles
+before changing the current scene. Scene rows identify the character or cast,
+show the title, preview, and activity date, and resume that exact transcript.
+
+Contextual menus rename, archive, restore, or delete scenes. Archive state stores
+identifiers in account settings; transcript files stay in their existing locations.
+Archived stories remain readable and disable the composer until restored.
+Deletion defaults to keeping the story and closes an active transcript before
+calling its native deletion owner.
+
+Cast creation selects real library characters. Native group settings retain
+member management and reply behavior. Image controls offer scene illustration,
+portrait, and custom prompts through the existing image extension. Custom prompts
+are text, including characters that resemble slash commands. Voice controls use
+the native narration queue and refresh voice assignments when opened or enabled.
+
+Settings groups model connection, generation, persona, world info, image, voice,
+appearance, prompt formatting, and extensions. Each destination opens its native
+controls in a titled panel. Escape and close restore focus. Ctrl/Cmd+K searches
+characters, scenes, and settings.
+
+On phones, navigation overlays the page with focus containment and an inert
+background. Library, profiles, cast selection, lists, settings, and composer tools
+fit a single column. Focus outlines, reduced motion, safe-area spacing, and browser
+zoom remain available. Classic layout can be selected in Settings and restored
+with its visible workspace button.
 
 ## Ownership and compatibility
 
-`public/scripts/workspace.js` owns shell navigation, search, presentation state, and the layout preference.
-`public/css/workspace.css` owns workspace tokens and scoped layout rules.
-`public/index.html` owns the shell's static landmarks and search dialog.
-`public/scripts/templates/welcomePanel.html` owns the home layout.
-`public/script.js` initializes the shell after existing controls and account settings are ready.
+| File | Responsibility |
+| --- | --- |
+| `public/scripts/workspace.js` | Views, navigation, focus, dialogs, native action dispatch, and layout preference |
+| `public/scripts/workspace-views.js` | Library, profiles, scene rows, contextual menus, and settings presentation |
+| `public/scripts/workspace-chats.js` | Transcript indexing, archive identifiers, and adapters to native chat actions |
+| `public/css/workspace.css` | Scoped tokens, desktop layout, and responsive rules |
+| `public/index.html` | Static landmarks and dialogs |
+| `public/script.js` | Startup and native character and transcript actions |
 
-The shell does not create another character store, chat API, provider configuration, or generation pipeline.
-It delegates to existing functions and event handlers. It preserves existing control IDs and extension insertion points.
-New labels use the existing translation mechanism. Languages without translations fall back to English.
+The workspace preserves native control IDs and extension insertion points.
+Characters, transcripts, providers, image generation, and TTS keep their existing
+owners. No second transcript database or generation pipeline is introduced.
 
-Third-party extensions can inject their own styles and markup. Arbitrary third-party extension compatibility is not guaranteed.
-Use the classic layout when an extension expects movable drawers or replaces the page's layout.
-Future changes should update the shell's destination table instead of adding separate navigation logic.
+The recent-chat endpoint enumerates files. Index refreshes are debounced around
+lifecycle events rather than token rendering. Large libraries may eventually need
+a server index. Arbitrary third-party styles and movable-panel replacements need
+separate compatibility checks; classic layout remains available. New workspace
+labels fall back to English where translations are unavailable.
 
 ## Verification
 
-Start the app with `npm ci` and `npm start -- --autorun false`.
-Install test dependencies with `npm ci --prefix tests`.
-Install Chromium with `npx --prefix tests playwright install chromium`.
+Install dependencies with `npm ci` and `npm ci --prefix tests`.
+Use a disposable data directory for browser regressions:
 
-Run:
+```sh
+node server.js --port 8002 --dataRoot /tmp/sillytavern-workspace-e2e-data --browserLaunchEnabled false
+```
+
+In another terminal:
 
 ```sh
 npm run lint
 npm --prefix tests run test:unit
 cd tests
-npx playwright test workspace.e2e.js --workers=1
+npx playwright install chromium
+ST_BASE_URL=http://127.0.0.1:8002 npx playwright test workspace.e2e.js --workers=1
 ```
 
-The workspace tests use the running local server. They isolate settings writes with route fixtures.
-They cover drawer navigation, character selection, history, search, phone layout, and classic layout restoration.
-An intercepted model response verifies connection state, message submission, and reply rendering through the existing generation pipeline.
-They use the app's bundled character. They do not require or verify a live paid model response.
+Browser tests isolate settings saves and clean up only their own transcripts and
+characters. They exercise native persistence, scene creation and duplicate titles,
+exact resumption, archive/restore, rename/delete and failed operations, settings,
+search, casts, image generation, narration, and classic layout. Responsive cases
+cover 320, 390, and 768 CSS pixels and a reduced-height composer viewport.
 
-Verified on October 7, 2026: repository lint passed, all 411 unit tests passed, and all seven workspace browser tests passed.
-The shared browser also confirmed the desktop conversation, phone character library, search dialog, and classic layout switch.
+Model, image, and speech outputs use controlled fixtures. These checks verify the
+native integration paths and do not establish paid-provider responses or audible
+speech quality. The shared T3 Code preview supplies desktop and phone visual
+inspection. Exact delivery evidence is recorded in `.agents/TESTING.md`.

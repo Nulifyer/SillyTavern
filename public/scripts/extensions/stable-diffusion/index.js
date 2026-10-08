@@ -5484,6 +5484,12 @@ function registerFunctionTool() {
     });
 }
 
+/** Generate through the configured image provider without interpreting a prompt as slash commands. */
+export async function generateWorkspaceImage(prompt) {
+    if (!isValidState()) throw new Error('Configure an image provider in Image settings before generating an illustration.');
+    return generatePicture(initiators.interactive, {}, prompt);
+}
+
 export async function init() {
     await addSDGenButtons();
 

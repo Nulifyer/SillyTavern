@@ -1361,7 +1361,7 @@ async function delChat(chatfile) {
  * Deletes a character chat by its name.
  * @param {string} characterId Character ID to delete chat for
  * @param {string} fileName Name of the chat file to delete (without .jsonl extension)
- * @returns {Promise<void>} A promise that resolves when the chat is deleted.
+ * @returns {Promise<boolean>} Whether the chat was deleted.
  */
 export async function deleteCharacterChatByName(characterId, fileName) {
     // Make sure all the data is loaded.
@@ -1371,7 +1371,7 @@ export async function deleteCharacterChatByName(characterId, fileName) {
     const character = characters[characterId];
     if (!character) {
         console.warn(`Character with ID ${characterId} not found.`);
-        return;
+        return false;
     }
 
     const response = await fetch('/api/chats/delete', {
@@ -1385,7 +1385,7 @@ export async function deleteCharacterChatByName(characterId, fileName) {
 
     if (!response.ok) {
         console.error('Failed to delete chat for character.');
-        return;
+        return false;
     }
 
     if (fileName === character.chat) {
@@ -1401,6 +1401,7 @@ export async function deleteCharacterChatByName(characterId, fileName) {
     }
 
     await eventSource.emit(event_types.CHAT_DELETED, fileName);
+    return true;
 }
 
 export async function replaceCurrentChat() {
@@ -10656,6 +10657,7 @@ export async function doNewChat({ deleteCurrentChat = false } = {}) {
  * @param {string} param.oldFileName Old name of the chat (no JSONL extension)
  * @param {string} param.newFileName New name for the chat (no JSONL extension)
  * @param {boolean} [param.loader=true] Whether to show loader during the operation
+ * @returns {Promise<string|undefined>} The accepted title, or undefined if renaming failed or was cancelled.
  */
 export async function renameGroupOrCharacterChat({ characterId, groupId, oldFileName, newFileName, loader: showLoader }) {
     const currentChatId = getCurrentChatId();
@@ -10715,8 +10717,9 @@ export async function renameGroupOrCharacterChat({ characterId, groupId, oldFile
             await reloadCurrentChat();
         }
 
-        const eventData = { avatarId: body.avatar_url, groupId, oldFileName: body.original_file, newFileName: body.renamed_file };
+        const eventData = { avatarId: body.avatar_url, groupId, oldFileName: body.original_file, newFileName: `${newFileName}.jsonl` };
         await eventSource.emit(event_types.CHAT_RENAMED, eventData);
+        return newFileName;
     } catch {
         await delay(500);
         await callGenericPopup('An error has occurred. Chat was not renamed.', POPUP_TYPE.TEXT);

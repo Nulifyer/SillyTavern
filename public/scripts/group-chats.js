@@ -2084,13 +2084,14 @@ function filterGroupMemberList() {
     groupMembersFilter.setFilterData(FILTER_TYPES.SEARCH, searchValue);
 }
 
-async function createGroup() {
-    let name = $('#rm_group_chat_name').val().toString();
+async function createGroup(options = {}) {
+    const fromWorkspace = Array.isArray(options.members);
+    let name = fromWorkspace ? options.name : $('#rm_group_chat_name').val().toString();
     let allowSelfResponses = !!$('#rm_group_allow_self_responses').prop('checked');
     let activationStrategy = Number($('#rm_group_activation_strategy').find(':selected').val()) ?? group_activation_strategy.NATURAL;
     let generationMode = Number($('#rm_group_generation_mode').find(':selected').val()) ?? group_generation_mode.SWAP;
     let autoModeDelay = Number($('#rm_group_automode_delay').val()) ?? DEFAULT_AUTO_MODE_DELAY;
-    const members = newGroupMembers;
+    const members = fromWorkspace ? options.members : newGroupMembers;
     const memberNames = characters.filter(x => members.includes(x.avatar)).map(x => x.name).join(', ');
 
     if (!name) {
@@ -2105,16 +2106,16 @@ async function createGroup() {
     const groupCreateModel = {
         name: name,
         members: members,
-        avatar_url: isValidImageUrl(avatarUrl) ? avatarUrl : default_avatar,
-        allow_self_responses: allowSelfResponses,
-        hideMutedSprites: hideMutedSprites,
-        activation_strategy: activationStrategy,
-        generation_mode: generationMode,
+        avatar_url: !fromWorkspace && isValidImageUrl(avatarUrl) ? avatarUrl : default_avatar,
+        allow_self_responses: fromWorkspace ? false : allowSelfResponses,
+        hideMutedSprites: fromWorkspace ? false : hideMutedSprites,
+        activation_strategy: fromWorkspace ? group_activation_strategy.NATURAL : activationStrategy,
+        generation_mode: fromWorkspace ? group_generation_mode.SWAP : generationMode,
         disabled_members: [],
-        fav: fav_grp_checked,
+        fav: fromWorkspace ? false : fav_grp_checked,
         chat_id: chatName,
         chats: chats,
-        auto_mode_delay: autoModeDelay,
+        auto_mode_delay: fromWorkspace ? DEFAULT_AUTO_MODE_DELAY : autoModeDelay,
     };
 
     const createGroupResponse = await fetch('/api/groups/create', {
@@ -2128,8 +2129,17 @@ async function createGroup() {
         const data = await createGroupResponse.json();
         createTagMapFromList('#groupTagList', data.id);
         await getCharacters();
-        select_rm_info('group_create', data.id);
+        if (!fromWorkspace) select_rm_info('group_create', data.id);
+        return data;
     }
+    if (fromWorkspace) throw new Error('Could not create the cast. Check the server connection and try again.');
+}
+
+/** Create a roleplay cast through the same group owner used by the native editor. */
+export async function createGroupWithMembers(name, members) {
+    const uniqueMembers = [...new Set(members)].filter(avatar => characters.some(character => character.avatar === avatar));
+    if (uniqueMembers.length < 2) throw new Error('Choose at least two characters for your cast.');
+    return createGroup({ name: name.trim(), members: uniqueMembers });
 }
 
 /**
@@ -2242,10 +2252,8 @@ export async function renameGroupChat(groupId, oldChatId, newChatId) {
 export async function deleteGroupChatByName(groupId, chatName) {
     const group = groups.find(x => x.id === groupId);
     if (!group || !group.chats.includes(chatName)) {
-        return;
+        return false;
     }
-
-    group.chats.splice(group.chats.indexOf(chatName), 1);
 
     const response = await fetch('/api/chats/group/delete', {
         method: 'POST',
@@ -2256,8 +2264,10 @@ export async function deleteGroupChatByName(groupId, chatName) {
     if (!response.ok) {
         toastr.error(t`Check the server connection and reload the page to prevent data loss.`, t`Group chat could not be deleted`);
         console.error('Group chat could not be deleted');
-        return;
+        return false;
     }
+
+    group.chats.splice(group.chats.indexOf(chatName), 1);
 
     // If the deleted chat was the current chat, switch to the last chat in the group
     if (group.chat_id === chatName) {
@@ -2267,6 +2277,7 @@ export async function deleteGroupChatByName(groupId, chatName) {
 
     await editGroup(groupId, true, true);
     await eventSource.emit(event_types.GROUP_CHAT_DELETED, chatName);
+    return true;
 }
 
 /**

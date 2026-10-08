@@ -63,22 +63,26 @@
             <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
             <span data-i18n="Find anything">Find anything</span><kbd>Ctrl K</kbd>
         </button>
+        <button class="workspace-button workspace-primary workspace-new-story" type="button" data-workspace-action="characters"><i class="fa-solid fa-plus" aria-hidden="true"></i><span>New story</span></button>
         <nav id="workspace-navigation" aria-label="Main navigation" data-i18n="[aria-label]Main navigation"></nav>
         <section class="workspace-characters">
-            <div class="workspace-section-heading"><span data-i18n="Your characters">Your characters</span><button type="button" data-workspace-action="characters" aria-label="Browse characters" data-i18n="[aria-label]Browse characters"><i class="fa-solid fa-plus" aria-hidden="true"></i></button></div>
+            <div class="workspace-section-heading"><span>Recent stories</span><button type="button" data-workspace-action="chats" aria-label="View all stories"><i class="fa-solid fa-arrow-right" aria-hidden="true"></i></button></div>
             <div id="workspace-character-list"></div>
         </section>
         <div class="workspace-sidebar-footer">
+            <button id="workspace-settings-link" class="workspace-nav-item" type="button" data-workspace-action="settings-page"><i class="fa-solid fa-gear" aria-hidden="true"></i><span>Settings</span></button>
             <button class="workspace-connection" type="button" data-workspace-action="connection"><span class="workspace-status-dot"></span><span><strong id="workspace-connection-label" data-i18n="Connect a model">Connect a model</strong><small id="workspace-connection-detail" data-i18n="Set up an API to start chatting">Set up an API to start chatting</small></span><i class="fa-solid fa-chevron-right" aria-hidden="true"></i></button>
             <button class="workspace-persona" type="button" data-workspace-action="persona"><span class="workspace-persona-avatar"><i class="fa-solid fa-user" aria-hidden="true"></i></span><span><strong id="workspace-persona-name"></strong><small data-i18n="Manage persona">Manage persona</small></span><i class="fa-solid fa-ellipsis" aria-hidden="true"></i></button>
         </div>
     </aside>
     <header id="workspace-header" class="workspace-only">
         <button id="workspace-menu" class="workspace-icon-button" type="button" aria-label="Open navigation" aria-controls="workspace-sidebar" aria-expanded="false" data-i18n="[aria-label]Open navigation"><i class="fa-solid fa-bars" aria-hidden="true"></i></button>
+        <button id="workspace-header-portrait" class="workspace-icon-button" type="button" data-workspace-action="current-profile" aria-label="Character profile" hidden></button>
         <div class="workspace-header-title"><strong id="workspace-chat-title" data-i18n="Workspace">Workspace</strong><span id="workspace-chat-subtitle" data-i18n="A place for your characters and conversations">A place for your characters and conversations</span></div>
         <div class="workspace-header-actions">
-            <button class="workspace-icon-button" id="workspace-history" type="button" data-workspace-action="history" aria-label="Chat history" title="Chat history" data-i18n="[aria-label]Chat history;[title]Chat history"><i class="fa-solid fa-clock-rotate-left" aria-hidden="true"></i></button>
-            <button class="workspace-button" type="button" data-workspace-action="characters"><i class="fa-solid fa-plus" aria-hidden="true"></i><span data-i18n="New conversation">New conversation</span></button>
+            <button class="workspace-icon-button" id="workspace-history" type="button" data-workspace-action="history" aria-label="Character and stories" title="Character and stories"><i class="fa-solid fa-address-card" aria-hidden="true"></i></button>
+            <button id="workspace-new-story" class="workspace-button" type="button" data-workspace-action="characters" aria-label="New story"><i class="fa-solid fa-plus" aria-hidden="true"></i><span>New story</span></button>
+            <div id="workspace-header-menu"></div>
         </div>
     </header>
     <dialog id="workspace-command" class="workspace-only" aria-labelledby="workspace-command-title">
@@ -7535,14 +7539,15 @@
                         <option value="en">English</option>
                     </select>
                 </div>
-                <b data-i18n="SillyTavern is aimed at advanced users.">
-                    SillyTavern is aimed at advanced users.
+                <b data-i18n="A space for your characters and stories.">
+                    A space for your characters and stories.
                 </b>
-                <ul class="justifyLeft marginTopBot5">
-                    <li><span data-i18n="welcome_message_part_1">Read the</span> <a href="https://docs.sillytavern.app/" target="_blank" data-i18n="welcome_message_part_2">Official Documentation</a><span data-i18n="welcome_message_part_3">.</span></li>
-                    <li><span data-i18n="welcome_message_part_4">Type</span> <code>/help</code> <span data-i18n="welcome_message_part_5">in chat for commands and macros.</span></li>
-                    <li><span data-i18n="welcome_message_part_6">Join the</span> <a href="https://discord.gg/sillytavern" data-i18n="Discord server" target="_blank">Discord server</a> <span data-i18n="welcome_message_part_7">for info and announcements.</span></li>
-                </ul>
+                <ol class="justifyLeft marginTopBot5">
+                    <li data-i18n="Choose a character and read their profile.">Choose a character and read their profile.</li>
+                    <li data-i18n="Start a new story or continue an existing scene.">Start a new story or continue an existing scene.</li>
+                    <li data-i18n="Connect a model in Settings to write replies together.">Connect a model in Settings to write replies together.</li>
+                </ol>
+                <p class="justifyLeft"><a href="https://docs.sillytavern.app/" target="_blank" data-i18n="Official Documentation">Official Documentation</a> · <a href="https://discord.gg/sillytavern" data-i18n="Discord server" target="_blank">Discord server</a></p>
                 <div class="expander"></div>
                 <div class="textAlignCenter">
                     <h3 data-i18n="Looking for AI characters?">
@@ -7567,11 +7572,11 @@
                     Your Persona
                 </h3>
                 <div class="justifyLeft margin-bot-10px">
-                    <span data-i18n="Before you get started, you must select a persona name.">
-                        Before you get started, you must select a persona name.
+                    <span data-i18n="Choose the name your characters will know you by.">
+                        Choose the name your characters will know you by.
                     </span>
                     <br>
-                    <span data-i18n="welcome_message_part_8">This can be changed at any time via the</span> <code><i class="fa-solid fa-face-smile"></i></code> <span data-i18n="welcome_message_part_9">icon.</span>
+                    <span data-i18n="You can change your persona in Settings at any time.">You can change your persona in Settings at any time.</span>
                 </div>
                 <h4 data-i18n="Persona Name:">Persona Name:</h4>
             </div>
