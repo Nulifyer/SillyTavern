@@ -1,9 +1,8 @@
 services:
   sillytavern:
-    build: ..
     container_name: sillytavern
     hostname: sillytavern
-    image: ghcr.io/sillytavern/sillytavern:latest
+    image: ghcr.io/nulifyer/sillytavern:${SILLYTAVERN_IMAGE_TAG:-latest}
     environment:
       - NODE_ENV=production
       - FORCE_COLOR=1
