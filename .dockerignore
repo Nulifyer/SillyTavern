@@ -1,6 +1,7 @@
 # --- Git & CI ---
 .git
 .github
+.agents
 .gitignore
 
 # --- Docker ---
@@ -29,6 +30,8 @@
 /tests
 
 # --- Sensitive Info ---
+/config.yaml
+/whitelist.txt
 **/.env*
 **/*.pem
 **/certs

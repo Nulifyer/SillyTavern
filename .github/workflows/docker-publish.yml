@@ -101,6 +101,39 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
+      - name: Verify published platforms and server startup
+        env:
+          IMAGE: ${{ steps.release.outputs.image }}
+          DIGEST: ${{ steps.build.outputs.digest }}
+        run: |
+          set -euo pipefail
+          docker buildx imagetools inspect "$IMAGE@$DIGEST" --raw > "$RUNNER_TEMP/image-index.json"
+          jq -e '[.manifests[].platform | select(.os == "linux") | .architecture] | contains(["amd64", "arm64"])' "$RUNNER_TEMP/image-index.json"
+          docker run --detach --name sillytavern-release-smoke \
+            --env SILLYTAVERN_HEARTBEATINTERVAL=5 "$IMAGE@$DIGEST" --browserLaunchEnabled false
+          ready=false
+          for attempt in $(seq 1 40); do
+            echo "Checking server startup ($attempt/40)"
+            if docker exec sillytavern-release-smoke node --input-type=module -e '
+              const response = await fetch("http://127.0.0.1:8000/");
+              const html = await response.text();
+              if (response.status !== 200 || !html.includes("workspace-sidebar")) process.exit(1);
+            ' > /dev/null 2>&1; then
+              ready=true
+              break
+            fi
+            sleep 2
+          done
+          if [[ "$ready" != true ]]; then
+            docker logs sillytavern-release-smoke
+            exit 1
+          fi
+          docker exec sillytavern-release-smoke node src/healthcheck.js
+
+      - name: Remove smoke test container
+        if: always()
+        run: docker rm --force sillytavern-release-smoke > /dev/null 2>&1 || true
+
       - name: Summarize published image
         env:
           IMAGE: ${{ steps.release.outputs.image }}

@@ -7,7 +7,7 @@ Each build checks out the release tag, rather than the current `release` branch.
 ## Publish a release
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.0`.
+2. Create a version tag on that commit, such as `v1.19.1`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -17,10 +17,12 @@ Do not move published tags. Create a new tag for a new build.
 
 The workflow publishes one image index with `linux/amd64` and `linux/arm64` builds.
 Docker and Podman select the matching architecture when they pull the image.
+The workflow inspects both manifest entries and starts the amd64 image to check
+HTTP startup and the enabled heartbeat health check.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.0` | The exact GitHub Release tag |
+| `v1.19.1` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -35,10 +37,10 @@ The upstream npm publishing workflow is disabled for forks.
 
 ## Allow your homelab to pull the image
 
-GitHub Container Registry initially creates packages with private visibility.
-For anonymous pulls, open the [package settings](https://github.com/users/Nulifyer/packages/container/sillytavern/settings)
-after the first successful build and change the package visibility to **Public**.
-The source repository is already public.
+The first release of this fork was verified with an anonymous registry request.
+Your homelab can pull the image without a registry login.
+If package visibility changes, open the [package settings](https://github.com/users/Nulifyer/packages/container/sillytavern/settings)
+and select **Public** to allow anonymous pulls.
 
 If you keep the package private, create a personal access token with `read:packages`.
 Use it with `docker login ghcr.io --username Nulifyer --password-stdin` on the homelab.
@@ -63,7 +65,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.0` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.1` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
