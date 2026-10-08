@@ -78,5 +78,23 @@ docker compose -f docker/docker-compose.yml pull
 docker compose -f docker/docker-compose.yml up -d
 ```
 
-To roll back, select a previous release tag, pull it, and recreate the service.
+To roll back, select a previous image tag whose publish workflow succeeded, pull
+it, and recreate the service.
 Use the workflow's digest reference when you need to pin the exact published image.
+
+## Verified release
+
+[Release v1.19.3](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.3)
+was published by [automatic release run 37718961147](https://github.com/Nulifyer/SillyTavern/actions/runs/37718961147).
+Both native amd64 and ARM64 jobs passed HTTP startup and heartbeat checks.
+Anonymous manifest requests and a Podman pull with an empty auth file succeeded.
+The release, latest, and commit tags share one digest.
+
+```text
+Commit: 1061f87fbd0a98114e90eac49071c534f91914c2
+Image: ghcr.io/nulifyer/sillytavern@sha256:a23610767e7c217cc152a5ea82699599b7c000487f3362a9add4367f461028d2
+```
+
+v1.19.2's emulated ARM build stopped after QEMU reported an illegal instruction.
+That attempt was cancelled and its tag retained. Use v1.19.3 for this workspace,
+or v1.19.1 when selecting the previous successfully published image.

@@ -2,8 +2,8 @@
 
 ## Evidence standard
 
-Fixtures verify native integrations, not paid-provider responses or audible quality.
-Manifest inspection establishes published architectures and digest.
+Fixtures verify integrations, not paid-provider responses or audible quality.
+Manifest and OCI labels establish the digest, architectures, and source.
 
 ## Fast checks
 
@@ -15,17 +15,18 @@ Manifest inspection establishes published architectures and digest.
 
 - npm --prefix tests run test:unit
 - cd tests && ST_BASE_URL=http://127.0.0.1:8002 npx playwright test workspace.e2e.js --workers=1
-- Podman build, HTTP startup, enabled heartbeat, and shared T3 Code visual inspection.
 
-October 7: lint, 411 units, 14 browser cases passed. Final sanitized rename and
-delayed-image regressions passed. Mobile widths: 320, 390, 768.
+October 7: lint, 411 units, 14 browsers passed, including suffix rename and delayed
+image generation. Responsive widths: 320/390/768. Shared preview inspected.
+Run 37718961147 passed native amd64/ARM64 HTTP and heartbeat checks.
+Anonymous manifests, empty-auth Podman pull, local startup, and version passed.
+Digest: docs/container-releases.md.
 
 ## Environment
 
-Native preview: 8000. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,
-port 8002. Settings writes are isolated. Cleanup uses native transcript owners.
+Published-image preview: 8003. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,
+port 8002. Settings writes isolated; cleanup uses native owners.
 
 ## Known gaps
 
-No live paid-provider or audible speech checks. ARM images build in CI;
-this host executes amd64.
+No live paid-provider or audible speech-quality checks.

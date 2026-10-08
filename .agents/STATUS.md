@@ -2,21 +2,21 @@
 
 ## Project state
 
-Roleplay UI and archive suffix fix verified. v1.19.1 published successfully.
-v1.19.2 build cancelled after QEMU crashed; its tag remains unchanged.
+Complete. Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
+Release v1.19.3 and public GHCR image are verified.
 
 ## Current batch
 
-Publish v1.19.3 using native architecture runners.
+None. Delivery is complete.
 
 ## In progress
 
-Workflow builds and starts amd64/arm64 images separately, then merges the index.
-Actionlint and diff checks passed. Cancelled log retained in /tmp/sillytavern-v1.19.2-cancelled-build.log.
+No pending changes. Published source: 1061f87fbd0a98114e90eac49071c534f91914c2.
+Preview runs from the published image on port 8003.
 
 ## Next action
 
-Commit the workflow, publish v1.19.3, and verify both native startup checks.
+None. Implementation and release delivery are complete.
 
 ## Blockers
 
@@ -24,5 +24,6 @@ None.
 
 ## Verification
 
-Lint, 411 units, 14 browsers passed. Mobile widths: 320, 390, 768.
-Desktop/phone and Podman checks passed for the redesign.
+Lint, 411 units, 14 browsers; widths 320/390/768. Run 37718961147 passed native
+amd64/arm64 startup. Anonymous manifests, empty-auth Podman pull, local HTTP,
+version, and heartbeat passed. Digest is in docs/container-releases.md.
