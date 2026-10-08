@@ -272,7 +272,7 @@ import { getContext } from './scripts/st-context.js';
 import { extractReasoningFromData, extractReasoningSignatureFromData, initReasoning, parseReasoningInSwipes, PromptReasoning, ReasoningHandler, removeReasoningFromString, updateReasoningUI } from './scripts/reasoning.js';
 import { accountStorage } from './scripts/util/AccountStorage.js';
 import { initWelcomeScreen, openPermanentAssistantChat, openPermanentAssistantCard, getPermanentAssistantAvatar } from './scripts/welcome-screen.js';
-import { initWorkspace } from './scripts/workspace.js';
+import { initWorkspace, openWorkspacePanel } from './scripts/workspace.js';
 import { initDataMaid } from './scripts/data-maid.js';
 import { clearItemizedPrompts, deleteItemizedPromptForMessage, deleteItemizedPrompts, findItemizedPromptSet, initItemizedPrompts, itemizedParams, itemizedPrompts, loadItemizedPrompts, promptItemize, replaceItemizedPromptText, saveItemizedPrompts, swapItemizedPrompts } from './scripts/itemized-prompts.js';
 import { getSystemMessageByType, initSystemMessages, SAFETY_CHAT, sendSystemMessage, system_message_types, system_messages } from './scripts/system-messages.js';
@@ -10965,6 +10965,7 @@ function doDrawerOpenClick() {
  * @returns {Promise<void>}
  */
 export async function doNavbarIconClick() {
+    if (openWorkspacePanel($(this).closest('.drawer').attr('id'))) return;
     const icon = $(this).find('.drawer-icon');
     const drawer = $(this).parent().find('.drawer-content');
     const drawerWasOpenAlready = $(this).parent().find('.drawer-content').hasClass('openDrawer');

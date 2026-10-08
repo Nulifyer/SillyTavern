@@ -12,7 +12,10 @@
 - Build and start containers on native amd64 and arm64 runners. An emulated ARM
   build hit a QEMU illegal instruction after compilation in run 37717246139.
 - Use the T3 Code collaborative browser for visual inspection.
-- Voice and images default off. Workspace toggles use native extension settings.
+- Voice defaults off and has a visible chat toggle using native TTS settings.
+- Scene images are one manual request. Automatic image tools remain off by default.
+- Settings use persistent categories and task sections with one mounted native control tree.
+- Returning to the active story is allowed during generation and preserves its mounted transcript.
 - Use compact desktop controls, larger mobile touch targets, and flat dropdown surfaces.
 - Restrict upstream GitHub App bot jobs to the upstream repository.
 

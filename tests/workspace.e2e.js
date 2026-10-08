@@ -31,7 +31,7 @@ async function startStory(page, title) {
     await page.getByRole('button', { name: 'Start new story', exact: true }).click();
     await page.locator('dialog[open] .popup-input').fill(title);
     await page.locator('dialog[open] .popup-button-ok').click();
-    await expect(page.locator('#workspace-chat-subtitle')).toHaveText(title, { timeout: 20000 });
+    await expect(page.locator('#workspace-chat-title')).toHaveText(title, { timeout: 20000 });
     await expect(page.locator('#send_textarea')).toBeVisible();
     await expect.poll(async () => (await api(page, '/api/chats/recent', {})).some(record => record.file_name === `${title}.jsonl`)).toBe(true);
 }
@@ -42,9 +42,12 @@ async function currentAction(page, action) {
 }
 
 async function enableTool(page, name) {
-    await navigate(page, 'settings-page');
-    await page.getByRole('checkbox', { name, exact: true }).check();
-    await page.locator('.workspace-return-chat').click();
+    if (name === 'Voice narration' && await page.locator('#workspace-voice-button').getAttribute('aria-pressed') === 'false') await page.locator('#workspace-voice-button').click();
+}
+
+async function returnToChat(page) {
+    if (!await page.locator('#workspace-active-story').isVisible()) await page.locator('#workspace-menu').click();
+    await page.locator('#workspace-active-story').click();
 }
 
 test.beforeEach(async ({ page }) => {
@@ -127,7 +130,7 @@ test('new stories preserve previous transcripts and profile history resumes the 
     await page.locator('#send_textarea').fill('An unsent turn stays here.');
     await navigate(page, 'characters');
     await expect(page.locator('#send_textarea')).toHaveValue('An unsent turn stays here.');
-    await page.getByRole('button', { name: 'Back to Seraphina', exact: true }).click();
+    await returnToChat(page);
     await expect(page.locator('#send_textarea')).toHaveValue('An unsent turn stays here.');
     await page.locator('#send_textarea').fill('');
     await profile(page);
@@ -141,7 +144,7 @@ test('new stories preserve previous transcripts and profile history resumes the 
     const row = page.locator('.workspace-profile .workspace-scene-row').filter({ has: page.locator('.workspace-scene-text strong', { hasText: first }) });
     await expect(row).toBeVisible();
     await row.locator('.workspace-scene-open').click();
-    await expect(page.locator('#workspace-chat-subtitle')).toHaveText(first);
+    await expect(page.locator('#workspace-chat-title')).toHaveText(first);
     const records = await api(page, '/api/chats/recent', {});
     expect(records.some(record => record.file_name === `${second}.jsonl`)).toBe(true);
     await expect(page.locator('#send_textarea')).toBeFocused();
@@ -212,7 +215,7 @@ test('rename follows archived identity and deletion requires confirmation withou
     await currentAction(page, 'delete-chat');
     await expect(page.locator('dialog[open]')).toContainText(renamed);
     await page.keyboard.press('Enter');
-    await expect(page.locator('#workspace-chat-subtitle')).toHaveText(renamed);
+    await expect(page.locator('#workspace-chat-title')).toHaveText(renamed);
     expect((await api(page, '/api/chats/recent', {})).some(record => record.file_name === `${renamed}.jsonl`)).toBe(true);
     await currentAction(page, 'delete-chat');
     await page.locator('dialog[open] .popup-button-ok').click();
@@ -241,11 +244,60 @@ test('settings keep every native area reachable with Escape and focus restoratio
         await page.locator(`.workspace-settings [data-workspace-action="${action}"]`).click();
         await expect(page.locator(`#${panel}`)).toBeVisible();
         await expect(page.locator('.drawer-content.openDrawer')).toHaveCount(1);
-        await expect(page.locator(`#${panel} .workspace-panel-close`)).toBeFocused();
+        await expect(page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]')).toBeFocused();
+        await expect(page.locator(`#workspace-settings-shell #${panel}`)).toHaveCount(1);
         await page.keyboard.press('Escape');
         await expect(page.locator(`#${panel}`)).toBeHidden();
         await expect(page.locator('#workspace-view')).toBeFocused();
     }
+    // Native extensions call this handler with a jQuery object as `this`.
+    await page.evaluate(async () => {
+        const { doNavbarIconClick } = await import('/script.js');
+        await doNavbarIconClick.call($('#sys-settings-button > .drawer-toggle'));
+    });
+    await expect(page.locator('#workspace-settings-shell #rm_api_block')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await page.evaluate(async () => {
+        const { doNavbarIconClick } = await import('/script.js');
+        await doNavbarIconClick.call($('#extensions-settings-button > .drawer-toggle'));
+    });
+    await expect(page.locator('.workspace-settings-heading h1')).toHaveText('Extensions');
+    await expect(page.locator('#workspace-settings-shell .workspace-extension-path')).toHaveCount(0);
+    await page.keyboard.press('Escape');
+    await page.evaluate(async () => {
+        const { doNavbarIconClick } = await import('/script.js');
+        await doNavbarIconClick.call($('#rightNavHolder > .drawer-toggle'));
+    });
+    await expect(page.locator('.workspace-library-grid')).toBeVisible();
+});
+
+test('every settings category uses one control tree and fits desktop and phone', async ({ page }, testInfo) => {
+    const categories = ['connection', 'generation', 'persona', 'world', 'image-settings', 'voice-settings', 'settings', 'backgrounds', 'prompts', 'extensions', 'character-editor'];
+    const nativeIds = await page.evaluate(() => [...document.querySelectorAll('.drawer-content input[id],.drawer-content select[id],.drawer-content textarea[id]')].map(e => e.id));
+    for (const width of [1280, 390]) {
+        await page.setViewportSize({ width, height: 844 });
+        await navigate(page, 'settings-page');
+        for (const category of categories) {
+            if (category === 'character-editor') {
+                await profile(page);
+                await page.getByRole('button', { name: 'Edit character', exact: true }).click();
+            } else await page.locator(`.workspace-settings [data-workspace-action="${category}"]`).click();
+            const panel = page.locator('.workspace-mounted-panel');
+            await expect(panel).toHaveCount(1);
+            const bounds = await panel.boundingBox();
+            expect(bounds.x).toBeGreaterThanOrEqual(0);
+            expect(bounds.x + bounds.width).toBeLessThanOrEqual(width + 1);
+            expect(await panel.evaluate(e => e.scrollWidth <= e.clientWidth + 1)).toBe(true);
+            const done = await page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]').boundingBox();
+            expect(done.x + done.width).toBeLessThanOrEqual(width + 1);
+            expect(done.y).toBeGreaterThanOrEqual(0);
+            await page.screenshot({ path: testInfo.outputPath(`settings-${category}-${width}.png`) });
+            await page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]').click();
+            if (category === 'character-editor') await navigate(page, 'settings-page');
+        }
+    }
+    const after = await page.evaluate(() => [...document.querySelectorAll('.drawer-content input[id],.drawer-content select[id],.drawer-content textarea[id]')].map(e => e.id));
+    expect(after.sort()).toEqual(nativeIds.sort());
 });
 
 test('search opens character profiles and a fixture model generates through the native composer', async ({ page }, testInfo) => {
@@ -262,7 +314,7 @@ test('search opens character profiles and a fixture model generates through the 
         await replyReady;
         return route.fulfill({ json: { choices: [{ message: { content: 'The forest path opens before you.' } }] } });
     });
-    await page.locator('.workspace-composer-tools [data-workspace-action="connection"]').click();
+    await page.locator('.workspace-model-chip').click();
     await page.locator('#chat_completion_source').selectOption('custom');
     await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
     await page.locator('#custom_model_id').fill('workspace-fixture');
@@ -273,9 +325,9 @@ test('search opens character profiles and a fixture model generates through the 
     await page.locator('.workspace-settings [data-workspace-action="generation"]').click();
     await page.locator('#stream_toggle').uncheck();
     await page.keyboard.press('Escape');
-    await page.getByRole('button', { name: 'Back to Seraphina', exact: true }).click();
+    await returnToChat(page);
     await expect(page.locator('#mes_stop')).toBeHidden();
-    for (const selector of ['#options_button', '#extensionsMenuButton', '#send_but']) {
+    for (const selector of ['#send_but']) {
         await expect(page.locator(selector)).toHaveCSS('font-size', '16px');
         const bounds = await page.locator(selector).boundingBox();
         expect(bounds.width).toBe(32);
@@ -293,11 +345,65 @@ test('search opens character profiles and a fixture model generates through the 
     const stop = await page.locator('#mes_stop').boundingBox();
     expect(stop.width).toBe(32);
     expect(stop.height).toBe(32);
+    const title = await page.locator('#workspace-chat-title').textContent();
+    await page.locator('#send_textarea').fill('A draft for my next turn');
+    await page.evaluate(() => {
+        window.__workspaceMessageNode = document.querySelector('#chat .mes');
+        document.getElementById('chat').scrollTop = 48;
+        window.__workspaceChatScroll = document.getElementById('chat').scrollTop;
+    });
+    await navigate(page, 'chats');
+    await page.locator('#workspace-character-list .workspace-scene-row').filter({ hasText: title }).locator('.workspace-scene-open').click();
+    await expect(page.locator('#mes_stop')).toBeVisible();
+    await expect(page.locator('#send_textarea')).toHaveValue('A draft for my next turn');
+    expect(await page.evaluate(() => window.__workspaceMessageNode === document.querySelector('#chat .mes'))).toBe(true);
+    expect(await page.evaluate(() => document.getElementById('chat').scrollTop)).toBe(await page.evaluate(() => window.__workspaceChatScroll));
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ hasText: title }).locator('.workspace-scene-open').click();
+    await expect(page.locator('#mes_stop')).toBeVisible();
+    await page.locator('#workspace-history').click();
+    await page.locator('.workspace-profile .workspace-scene-row').filter({ hasText: title }).locator('.workspace-scene-open').click();
+    await expect(page.locator('#mes_stop')).toBeVisible();
+    await navigate(page, 'characters');
+    await page.keyboard.press('Control+k');
+    await page.locator('#workspace-command-input').fill(title);
+    await page.locator('#workspace-command-results [data-workspace-action="open-chat"]').click();
+    await expect(page.locator('#mes_stop')).toBeVisible();
+    await expect(page.locator('#send_textarea')).toHaveValue('A draft for my next turn');
+    expect(await page.evaluate(() => window.__workspaceMessageNode === document.querySelector('#chat .mes'))).toBe(true);
     finishReply();
     await expect(page.locator('#chat .mes[is_user="true"] .mes_text')).toContainText('Which path should we take?');
     await expect(page.locator('#chat .mes_text').last()).toContainText('The forest path opens before you.', { timeout: 20000 });
     await expect(page.locator('#mes_stop')).toBeHidden();
     await expect(page.locator('#send_but')).toBeVisible();
+});
+
+test('native streamed replies keep the composer and character identity mounted', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} streamed`);
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
+    await page.route('**/api/backends/chat-completions/generate', route => {
+        expect(route.request().postDataJSON().stream).toBe(true);
+        const chunks = ['The clearing ', 'is quiet. ', 'Seraphina lights a lantern.'];
+        const body = chunks.map(content => `data: ${JSON.stringify({ choices: [{ index: 0, delta: { content } }] })}\n\n`).join('') + 'data: [DONE]\n\n';
+        return route.fulfill({ status: 200, contentType: 'text/event-stream', body });
+    });
+    await page.locator('.workspace-model-chip').click();
+    await page.locator('#chat_completion_source').selectOption('custom');
+    await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
+    await page.locator('#custom_model_id').fill('workspace-fixture');
+    await page.locator('#api_button_openai').click();
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+    await page.keyboard.press('Escape');
+    await page.evaluate(() => {
+        window.__workspaceComposer = document.getElementById('send_textarea');
+        window.__workspaceVoice = document.getElementById('workspace-voice-button');
+        window.__workspacePortrait = document.querySelector('#workspace-header-portrait img');
+    });
+    await page.locator('#send_textarea').fill('What do you see?');
+    await page.locator('#send_but').click();
+    await expect(page.locator('#chat .mes_text').last()).toContainText('The clearing is quiet. Seraphina lights a lantern.', { timeout: 20000 });
+    await expect(page.locator('#mes_stop')).toBeHidden();
+    expect(await page.evaluate(() => window.__workspaceComposer === document.getElementById('send_textarea') && window.__workspaceVoice === document.getElementById('workspace-voice-button') && window.__workspacePortrait === document.querySelector('#workspace-header-portrait img'))).toBe(true);
 });
 
 test('image tools use the native provider and treat custom prompts as text', async ({ page }, testInfo) => {
@@ -319,6 +425,7 @@ test('image tools use the native provider and treat custom prompts as text', asy
         extension_settings.sd.model = 'dall-e-3';
         secret_state.api_key_openai = true;
     });
+    await page.locator('.workspace-creative-menu summary').click();
     await page.locator('[data-workspace-action="image"]').click();
     await page.locator('#workspace-image-prompt').fill('A moonlit forest | /newchat');
     await page.locator('[data-workspace-action="generate-custom-image"]').click();
@@ -330,8 +437,61 @@ test('image tools use the native provider and treat custom prompts as text', asy
     finishImage();
     await expect(page.locator('#workspace-tools')).not.toBeVisible({ timeout: 20000 });
     expect(sentPrompt).toContain('/newchat');
-    await expect(page.locator('#workspace-chat-subtitle')).toHaveText(title);
+    await expect(page.locator('#workspace-chat-title')).toHaveText(title);
     await expect.poll(async () => page.evaluate(async () => (await import('/script.js')).chat.some(message => message.extra?.media?.some(media => typeof media.url === 'string')))).toBe(true);
+});
+
+test('one scene click generates one native illustration with automatic tools off', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} scene image`;
+    await startStory(page, title);
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
+    let sceneRequests = 0;
+    await page.route('**/api/backends/chat-completions/generate', route => {
+        sceneRequests++;
+        expect(JSON.stringify(route.request().postDataJSON())).toContain('brief recap of recent events');
+        return route.fulfill({ json: { choices: [{ message: { content: 'forest clearing, pink-haired guardian, warm lantern light' } }] } });
+    });
+    await page.locator('.workspace-model-chip').click();
+    await page.locator('#chat_completion_source').selectOption('custom');
+    await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
+    await page.locator('#custom_model_id').fill('workspace-fixture');
+    await page.locator('#api_button_openai').click();
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+    await page.keyboard.press('Escape');
+    await page.evaluate(async () => {
+        const { extension_settings } = await import('/scripts/extensions.js');
+        const { secret_state } = await import('/scripts/secrets.js');
+        extension_settings.sd.source = 'openai';
+        extension_settings.sd.model = 'dall-e-3';
+        extension_settings.sd.enabled = false;
+        extension_settings.sd.refine_mode = true;
+        secret_state.api_key_openai = true;
+    });
+    let imageRequests = 0;
+    let finishImage;
+    const imageReady = new Promise(resolve => finishImage = resolve);
+    await page.route('**/api/openai/generate-image', async route => {
+        imageRequests++;
+        expect(route.request().postDataJSON().prompt).toContain('forest clearing');
+        await imageReady;
+        return route.fulfill({ json: { data: [{ b64_json: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jS1kAAAAASUVORK5CYII=' }] } });
+    });
+    await page.locator('#workspace-image-button').click();
+    await expect.poll(() => imageRequests).toBe(1);
+    await expect(page.locator('#workspace-image-button')).toBeDisabled();
+    await expect(page.locator('#workspace-tools')).not.toBeVisible();
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ hasText: title }).locator('.workspace-scene-open').click();
+    await expect(page.locator('#workspace-image-status')).toContainText('Creating a scene illustration');
+    expect(await page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.sd.enabled)).toBe(false);
+    finishImage();
+    await expect(page.locator('#workspace-image-status')).toContainText('Illustration added', { timeout: 20000 });
+    await expect(page.locator('#workspace-image-button')).toBeEnabled();
+    expect(sceneRequests).toBe(1);
+    expect(imageRequests).toBe(1);
+    expect(await page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.sd.enabled)).toBe(false);
+    expect(await page.evaluate(async () => (await import('/script.js')).getCurrentChatId())).toBe(title);
+    await expect.poll(async () => page.evaluate(async () => (await import('/script.js')).chat.filter(message => message.extra?.media?.length).length)).toBe(1);
 });
 
 test('voice tools narrate the latest native reply with the configured System voice', async ({ page }, testInfo) => {
@@ -345,58 +505,40 @@ test('voice tools narrate the latest native reply with the configured System voi
         } });
     });
     await enableTool(page, 'Voice narration');
-    await page.locator('[data-workspace-action="voice"]').click();
-    if (await page.getByRole('button', { name: 'Enable narration', exact: true }).count()) {
-        await page.getByRole('button', { name: 'Enable narration', exact: true }).click();
-    }
-    await page.locator('#workspace-tools [data-workspace-action="voice-settings"]').click();
+    await page.locator('.workspace-creative-menu summary').click();
+    await page.locator('.workspace-creative-menu [data-workspace-action="voice-settings"]').click();
     await page.locator('#tts_provider').selectOption('System');
     await page.locator('#tts_refresh').click();
     await page.locator('#tts_voicemap_char_Seraphina_voice').selectOption({ label: 'System Default Voice' });
     await page.keyboard.press('Escape');
-    await page.locator('[data-workspace-action="voice"]').click();
+    await page.locator('.workspace-creative-menu summary').click();
     await page.getByRole('button', { name: 'Read latest reply', exact: true }).click();
     await expect.poll(async () => page.evaluate(() => window.__workspaceSpoken.join(' ')), { timeout: 20000 }).toContain('forest');
     await page.keyboard.press('Escape');
 });
 
-test('creative tools start off, persist opt-in, and native controls can turn them off', async ({ page }, testInfo) => {
-    const title = `Workspace e2e ${testInfo.testId}-${runId} opt-in`;
+test('chat voice is opt-in and persists; manual images do not enable automatic tools', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} opt in`;
     await startStory(page, title);
-    await expect(page.locator('#workspace-image-button')).toBeHidden();
-    await expect(page.locator('#workspace-voice-button')).toBeHidden();
-    expect(await page.evaluate(async () => {
-        const { generateWorkspaceImage } = await import('/scripts/extensions/stable-diffusion/index.js');
-        try { await generateWorkspaceImage('A forest'); return 'allowed'; } catch (error) { return error.message; }
-    })).toContain('Turn on image generation');
-    await navigate(page, 'settings-page');
-    await expect(page.getByRole('checkbox', { name: 'Voice narration', exact: true })).not.toBeChecked();
-    await expect(page.getByRole('checkbox', { name: 'Image generation', exact: true })).not.toBeChecked();
-    const saved = page.waitForResponse(response => response.url().endsWith('/api/settings/save') && response.request().postDataJSON().extension_settings.sd.enabled);
-    for (const name of ['Voice narration', 'Image generation']) await page.getByRole('checkbox', { name, exact: true }).check();
-    await expect.poll(async () => page.evaluate(async () => {
-        const { extension_settings } = await import('/scripts/extensions.js');
-        return extension_settings.tts.enabled && extension_settings.sd.enabled;
-    })).toBe(true);
-    await saved;
+    await expect(page.locator('#workspace-image-button')).toBeVisible();
+    await expect(page.locator('#workspace-voice-button')).toHaveAttribute('aria-pressed', 'false');
+    const save = page.waitForResponse(response => response.url().endsWith('/api/settings/save') && response.request().postDataJSON().extension_settings?.tts?.enabled === true);
+    await page.locator('#workspace-voice-button').click();
+    await expect(page.locator('#workspace-voice-button')).toHaveAttribute('aria-pressed', 'true');
+    await save;
+    await expect.poll(async () => page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.tts.enabled)).toBe(true);
     await page.reload();
     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
-    await navigate(page, 'settings-page');
-    for (const name of ['Voice narration', 'Image generation']) await expect(page.getByRole('checkbox', { name, exact: true })).toBeChecked();
     await navigate(page, 'chats');
     await page.locator('.workspace-conversations .workspace-scene-row').filter({ hasText: title }).locator('.workspace-scene-open').click();
-    await expect(page.locator('#workspace-image-button')).toBeVisible();
-    await expect(page.locator('#workspace-voice-button')).toBeVisible();
-    await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="image-settings"]').click();
-    await page.locator('#sd_enabled').uncheck();
-    await expect(page.locator('#workspace-image-button')).toBeHidden();
-    await page.keyboard.press('Escape');
-    await page.locator('.workspace-settings [data-workspace-action="voice-settings"]').click();
-    await page.locator('#tts_enabled').uncheck();
-    await expect(page.locator('#workspace-voice-button')).toBeHidden();
-    await page.keyboard.press('Escape');
-    for (const name of ['Voice narration', 'Image generation']) await expect(page.getByRole('checkbox', { name, exact: true })).not.toBeChecked();
+    await expect(page.locator('#workspace-voice-button')).toHaveAttribute('aria-pressed', 'true');
+    await page.locator('#workspace-voice-button').click();
+    await expect(page.locator('#workspace-voice-button')).toHaveAttribute('aria-pressed', 'false');
+    await expect.poll(async () => page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.sd.enabled)).toBe(false);
+    await page.locator('#workspace-image-button').click();
+    await expect(page.locator('#workspace-image-status')).toContainText('Image settings');
+    await expect(page.locator('#workspace-image-button')).toBeEnabled();
+    await expect.poll(async () => page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.sd.enabled)).toBe(false);
 });
 
 test('cast creation selects real characters and opens a group story', async ({ page }, testInfo) => {
@@ -416,8 +558,10 @@ test('cast creation selects real characters and opens a group story', async ({ p
     await page.getByRole('button', { name: 'Start new story', exact: true }).click();
     await page.locator('dialog[open] .popup-input').fill(`${prefix} group-scene`);
     await page.locator('dialog[open] .popup-button-ok').click();
-    await expect(page.locator('#workspace-chat-subtitle')).toHaveText(`${prefix} group-scene`, { timeout: 20000 });
-    await expect(page.locator('#workspace-cast-button')).toBeVisible();
+    await expect(page.locator('#workspace-chat-title')).toHaveText(`${prefix} group-scene`, { timeout: 20000 });
+    await page.locator('#workspace-header-portrait').click();
+    await expect(page.locator('#workspace-scene-info')).toContainText('Cast reply order & members');
+    await page.locator('[data-workspace-action="close-inspector"]').click();
     expect(await page.evaluate(async () => (await import('/scripts/group-chats.js')).selected_group)).toBeTruthy();
     const groupId = await page.evaluate(async () => (await import('/scripts/group-chats.js')).selected_group);
     expect((await api(page, '/api/chats/recent', {})).filter(record => record.group === groupId)).toHaveLength(1);
@@ -440,15 +584,36 @@ for (const width of [320, 390, 768]) {
         await expect(page.locator('#sheld')).not.toHaveAttribute('inert');
         await expect(page.locator('.workspace-library-grid')).toBeVisible();
         await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} phone`);
+        const tools = page.locator('.workspace-creative-menu summary');
+        await tools.click();
         for (const selector of ['#options_button', '#extensionsMenuButton']) {
             await expect(page.locator(selector)).toHaveCSS('font-size', '16px');
             const bounds = await page.locator(selector).boundingBox();
-            expect(bounds.width).toBe(44);
-            expect(bounds.height).toBe(44);
+            expect(bounds.width).toBeGreaterThanOrEqual(44);
+            expect(bounds.height).toBeGreaterThanOrEqual(44);
+            expect(bounds.x).toBeGreaterThanOrEqual(0);
+            expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
         }
+        await page.locator('#options_button').click();
+        await expect(page.locator('#options')).toBeVisible();
+        await page.locator('#send_textarea').click({ position: { x: 8, y: 8 } });
+        await expect(page.locator('#options')).toBeHidden();
+        await page.locator('#extensionsMenuButton').click();
+        await expect(page.locator('#extensionsMenu')).toBeVisible();
+        await page.locator('#send_textarea').click({ position: { x: 8, y: 8 } });
+        await expect(page.locator('#extensionsMenu')).toBeHidden();
+        await tools.click();
         const profileTarget = await page.locator('#workspace-header-portrait').boundingBox();
         expect(profileTarget.width).toBe(44);
         expect(profileTarget.height).toBe(44);
+        await page.locator('#workspace-header-portrait').click();
+        const inspectorHeading = page.locator('#workspace-scene-info .workspace-tools-heading h2');
+        expect(await inspectorHeading.evaluate(e => {
+            const bounds = e.getBoundingClientRect();
+            return e.contains(document.elementFromPoint(bounds.x + 5, bounds.y + 5));
+        })).toBe(true);
+        await page.screenshot({ path: testInfo.outputPath(`workspace-inspector-${width}.png`) });
+        await page.locator('[data-workspace-action="close-inspector"]').click();
         await enableTool(page, 'Image generation');
         await enableTool(page, 'Voice narration');
         for (const selector of ['#workspace-header', '#sheld', '#form_sheld', '.workspace-composer-tools']) {
@@ -456,14 +621,13 @@ for (const width of [320, 390, 768]) {
             expect(bounds.x).toBeGreaterThanOrEqual(0);
             expect(bounds.x + bounds.width).toBeLessThanOrEqual(width + 1);
         }
+        await page.locator('.workspace-creative-menu summary').click();
         await page.locator('[data-workspace-action="image"]').click();
         const dialog = await page.locator('#workspace-tools').boundingBox();
         expect(dialog.x).toBeGreaterThanOrEqual(0);
         expect(dialog.x + dialog.width).toBeLessThanOrEqual(width);
         await page.keyboard.press('Escape');
-        await page.locator('[data-workspace-action="voice"]').click();
-        await expect(page.locator('#workspace-tools')).toContainText('Hear your characters');
-        await page.keyboard.press('Escape');
+        await expect(page.locator('#workspace-voice-button')).toHaveAttribute('aria-pressed', 'true');
         await page.screenshot({ path: testInfo.outputPath(`workspace-chat-${width}.png`) });
         await page.setViewportSize({ width, height: 480 });
         const composer = await page.locator('#form_sheld').boundingBox();
@@ -488,13 +652,14 @@ test('native font preferences and browser text sizing keep phone controls usable
     });
     await expect.poll(() => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--fontScale').trim())).toBe('1.5');
     await page.keyboard.press('Escape');
-    await page.getByRole('button', { name: 'Back to Seraphina', exact: true }).click();
+    await returnToChat(page);
     await page.setViewportSize({ width: 390, height: 844 });
     // Simulate a larger browser default independently of the native font preference.
     await page.evaluate(() => document.documentElement.style.fontSize = '20px');
     await expect(page.locator('#send_textarea')).toHaveCSS('font-size', '30px');
     await page.locator('#send_textarea').fill('A larger text preference\nstill leaves room to write.');
-    for (const selector of ['#workspace-header', '#workspace-header-portrait', '#workspace-new-story', '#form_sheld', '#send_textarea', '#options_button', '#extensionsMenuButton']) {
+    await page.locator('.workspace-creative-menu summary').click();
+    for (const selector of ['#workspace-header', '#workspace-header-portrait', '#form_sheld', '#send_textarea', '#options_button', '#extensionsMenuButton']) {
         const bounds = await page.locator(selector).boundingBox();
         expect(bounds.x).toBeGreaterThanOrEqual(0);
         expect(bounds.x + bounds.width).toBeLessThanOrEqual(391);
@@ -506,6 +671,7 @@ test('native font preferences and browser text sizing keep phone controls usable
         expect(bounds.height).toBeGreaterThanOrEqual(44);
     }
     await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings-creative summary').click();
     await expect(page.getByRole('checkbox', { name: 'Voice narration', exact: true })).toBeVisible();
     expect(await page.locator('#workspace-view').evaluate(view => view.scrollWidth <= view.clientWidth)).toBe(true);
 });
@@ -519,10 +685,16 @@ test('classic preference survives reload and can be restored', async ({ page }) 
     await expect(page.locator('body')).not.toHaveClass(/workspace-ui/);
     await expect(page.locator('#workspace-sidebar')).toBeHidden();
     await expect(page.locator('#top-settings-holder .drawer-toggle').first()).toBeVisible();
+    await expect(page.locator('#leftSendForm #options_button')).toHaveCount(1);
+    await expect(page.locator('#leftSendForm #extensionsMenuButton')).toHaveCount(1);
     await page.reload();
     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
     await expect(page.locator('body')).not.toHaveClass(/workspace-ui/);
+    await expect(page.locator('#leftSendForm #options_button')).toHaveCount(1);
+    await expect(page.locator('#leftSendForm #extensionsMenuButton')).toHaveCount(1);
     await page.locator('#workspace-restore').click();
     await expect(page.locator('body')).toHaveClass(/workspace-ui/);
     await expect(page.locator('#workspace-sidebar')).toBeVisible();
+    await expect(page.locator('.workspace-creative-menu #options_button')).toHaveCount(1);
+    await expect(page.locator('.workspace-creative-menu #extensionsMenuButton')).toHaveCount(1);
 });

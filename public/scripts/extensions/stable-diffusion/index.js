@@ -2986,11 +2986,12 @@ function ensureSelectionExists(setting, selector) {
  * @param {string} trigger Subject trigger word
  * @param {string} [message] Chat message
  * @param {function} [callback] Callback function
+ * @param {{manual?: boolean}} [options] Explicit workspace requests can run with automatic image tools off.
  * @returns {Promise<string|undefined>} Image path
  * @throws {Error} If the prompt or image generation fails
  */
-async function generatePicture(initiator, args, trigger, message, callback) {
-    if (!extension_settings.sd.enabled) {
+async function generatePicture(initiator, args, trigger, message, callback, { manual = false } = {}) {
+    if (!extension_settings.sd.enabled && !manual) {
         toastr.info('Turn on image generation in Settings to create an image.');
         return;
     }
@@ -3054,7 +3055,7 @@ async function generatePicture(initiator, args, trigger, message, callback) {
         const combineNegatives = (prefix) => { negativePromptPrefix = combinePrefixes(negativePromptPrefix, prefix); };
 
         // generate the text prompt for the image
-        let prompt = await getPrompt(generationType, message, trigger, quietPrompt, combineNegatives);
+        let prompt = await getPrompt(generationType, message, trigger, quietPrompt, combineNegatives, { refine: !(manual && generationType === generationMode.SCENARIO) });
         console.log('Processed image prompt:', prompt);
 
         // Extension hook for prompt processing
@@ -3166,9 +3167,10 @@ function restoreOriginalDimensions(savedParams) {
  * @param {string} trigger A trigger string to use for the image generation.
  * @param {string} quietPrompt A quiet prompt to use for the image generation.
  * @param {function} combineNegatives A function that combines the negative prompt with other prompts.
+ * @param {{refine?: boolean}} [options] Whether to offer the configured prompt-review dialog.
  * @returns {Promise<string>} - A promise that resolves when the prompt generation completes.
  */
-async function getPrompt(generationType, message, trigger, quietPrompt, combineNegatives) {
+async function getPrompt(generationType, message, trigger, quietPrompt, combineNegatives, { refine = true } = {}) {
     let prompt;
     console.log('getPrompt: Generation mode', generationType, 'triggered with', trigger);
     switch (generationType) {
@@ -3192,7 +3194,7 @@ async function getPrompt(generationType, message, trigger, quietPrompt, combineN
         prompt = generateFreeModePrompt(prompt.trim(), combineNegatives);
     }
 
-    if (generationType !== generationMode.FREE) {
+    if (generationType !== generationMode.FREE && refine) {
         prompt = await refinePrompt(prompt);
     }
 
@@ -5492,9 +5494,8 @@ function registerFunctionTool() {
 
 /** Generate through the configured image provider without interpreting a prompt as slash commands. */
 export async function generateWorkspaceImage(prompt) {
-    if (!extension_settings.sd.enabled) throw new Error('Turn on image generation in Settings first.');
     if (!isValidState()) throw new Error('Configure an image provider in Image settings before generating an illustration.');
-    return generatePicture(initiators.interactive, {}, prompt);
+    return generatePicture(initiators.interactive, {}, prompt, undefined, undefined, { manual: true });
 }
 
 export async function init() {

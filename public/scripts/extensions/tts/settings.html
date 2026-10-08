@@ -14,7 +14,9 @@
                 </select>
                 <input id="tts_refresh" data-i18n="[value]tts_refresh" class="menu_button" type="submit" value="Reload" />
             </div>
-            <div>
+            <details open class="workspace-advanced-creative">
+                <summary class="workspace-only">Playback &amp; narration preferences</summary>
+                <div>
                 <label class="checkbox_label" for="tts_enabled">
                     <input type="checkbox" id="tts_enabled" name="tts_enabled">
                     <small data-i18n="tts_enabled">Enabled</small>
@@ -79,6 +81,7 @@
                     <small id="tts_regex_warning" class="warning" data-i18n="Invalid regex pattern.">Invalid regex pattern.</small>
                 </div>
             </div>
+            </details>
             <div id="playback_rate_block" class="range-block">
                 <hr>
                 <div class="range-block-title justifyLeft">

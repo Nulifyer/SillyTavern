@@ -3,21 +3,21 @@
 ## Project state
 
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Release v1.19.6 is published and verified. `latest` points to its multiarch image.
+The roleplay screen redesign is implemented. Latest published release is v1.19.6.
 
 ## Current batch
 
-None. The composer fix and UI-system pass are complete.
+Verify and publish the cohesive story workspace as v1.19.7.
 
 ## In progress
 
-Published source: 78e7ac9aff0d002848c302c413a49d101170a577.
-Published-image preview: 8006. Regression source: 8002.
-UI sizing rules and research sources: docs/workspace-ui-system.md.
+Source preview and disposable regression data: port 8002.
+Screen contracts and research: docs/roleplay-workspace.md.
+Previous image preview: port 8006.
 
 ## Next action
 
-None. Requested work is complete.
+Publish v1.19.7, then verify its public image and latest alias.
 
 ## Blockers
 
@@ -25,11 +25,7 @@ None.
 
 ## Verification
 
-Lint and 17 browser tests passed, with final phone target checks at 320/390/768px.
-Native 150% font preference and a 20px browser default passed together.
-Desktop library/profile/settings and phone profile/composer screenshots were inspected.
-Release run 37735911482 passed both native startup checks and publication.
-Anonymous manifests, empty-auth Podman pull, HTTP, version, and heartbeat passed.
-Served CSS matched the source byte for byte. The published-image browser confirmed
-matching icon sizes, creative tools off, and one transcript for a new story.
-Digest and release evidence: docs/container-releases.md.
+Lint, 411 unit tests, and all 20 browser cases passed.
+Desktop and 320/390/768px phone controls, enlarged text, and native menu restoration passed.
+Desktop and phone screen layouts were inspected with the collaborative browser.
+Exact release evidence belongs in docs/container-releases.md.

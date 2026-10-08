@@ -81,6 +81,8 @@ export class WorkspaceChats {
     }
 
     async open(record) {
+        // Returning to the mounted transcript is navigation, even during a reply.
+        if (this.current()?.key === record.key) return;
         await this.select({ kind: record.group ? 'group' : 'character', id: record.group || record.avatar });
         if (getCurrentChatId() !== record.file_name) {
             if (record.group) await openGroupChat(record.group, record.file_name);

@@ -16,10 +16,13 @@ Manifest and OCI labels establish the digest, architectures, and source.
 - npm --prefix tests run test:unit
 - cd tests && ST_BASE_URL=http://127.0.0.1:8002 npx playwright test workspace.e2e.js --workers=1
 
-The v1.19.6 UI-system pass passed lint and 17 browser cases. Final phone/profile
-checks passed at 320/390/768px, including a reduced-height viewport. The native
-150% font preference and a 20px browser default passed together. Composer v1.19.5
-also passed all 411 unit tests. Sources and sizing roles: docs/workspace-ui-system.md.
+The v1.19.7 redesign passed lint, all 411 unit tests, and all 20 browser cases.
+Coverage includes pending-reply return through four story entry points, stable
+message/composer nodes during streamed replies, manual scene images with automatic
+tools off, voice opt-in/persistence, exact story lifecycle, casts, all settings
+categories, native menu entry points, and classic restoration.
+Phone checks cover 320/390/768px, reduced height, and the native 150% font preference
+combined with a 20px browser default. Design evidence: docs/roleplay-workspace.md.
 
 Native amd64 and ARM64 release jobs passed HTTP and heartbeat checks. Anonymous
 manifests, empty-auth Podman pull, local startup, and version checks passed.

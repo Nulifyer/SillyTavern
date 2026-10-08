@@ -10,10 +10,14 @@
             <div class="inline-drawer-icon fa-solid fa-circle-chevron-down down"></div>
         </div>
         <div class="inline-drawer-content">
+            <details open class="workspace-advanced-creative">
+                <summary class="workspace-only">Automatic tools &amp; prompt processing</summary>
             <label for="sd_enabled" class="checkbox_label">
                 <input id="sd_enabled" type="checkbox" />
-                <span>Enable image generation</span>
+                <span class="workspace-classic-label">Enable image generation</span>
+                <span class="workspace-only">Enable automatic image tools</span>
             </label>
+            <p class="workspace-only">Illustrate scene works without this. Enable these tools only for image commands, triggers, and model tools.</p>
             <label for="sd_refine_mode" class="checkbox_label" data-i18n="[title]sd_refine_mode" title="Allow to edit prompts manually before sending them to generation API">
                 <input id="sd_refine_mode" type="checkbox" />
                 <span data-i18n="sd_refine_mode_txt">Edit prompts before generation</span>
@@ -43,6 +47,7 @@
                 <input id="sd_minimal_prompt_processing" type="checkbox" />
                 <span data-i18n="sd_minimal_prompt_processing_txt">Minimal response prompt processing</span>
             </label>
+            </details>
             <label for="sd_source" data-i18n="Source">Source</label>
             <select id="sd_source" class="text_pole">
                 <option value="aimlapi">AI/ML API</option>

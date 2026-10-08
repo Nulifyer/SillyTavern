@@ -39,7 +39,7 @@ export function button(label, action, data = {}, className = 'workspace-button',
 }
 
 export function plainText(value = '') {
-    return String(value).replace(/<[^>]*>/g, '').replace(/\{\{char\}\}/gi, '').trim();
+    return String(value).replace(/<[^>]*>/g, '').replace(/\{\{char\}\}/gi, '').replace(/[*`]/g, '').trim();
 }
 
 export function portrait(entity, className = '') {
@@ -103,7 +103,7 @@ export function entityCard(entity) {
 }
 
 export function chatRow(record, entity, compact = false) {
-    const row = element('div', compact ? 'workspace-scene-row workspace-scene-compact' : 'workspace-scene-row');
+    const row = element('article', compact ? 'workspace-scene-row workspace-scene-compact' : 'workspace-scene-row');
     row.dataset.chatKey = record.key;
     const open = button('', 'open-chat', { chat: record.key }, 'workspace-scene-open');
     open.replaceChildren(portrait(entity, 'workspace-scene-portrait'));
@@ -113,6 +113,10 @@ export function chatRow(record, entity, compact = false) {
     open.append(text);
     open.setAttribute('aria-label', `Continue ${record.title} with ${entity.name}`);
     row.append(open);
+    if (record.current) {
+        row.classList.add('workspace-current-story');
+        text.append(element('span', 'workspace-story-state', record.generating ? 'Writing reply…' : 'Open story'));
+    }
     if (!compact) {
         const date = element('time', 'workspace-scene-date');
         if (Number.isFinite(record.updated) && record.updated > 0) {
@@ -142,12 +146,15 @@ export function chatMenu(record) {
     return details;
 }
 
+function decorateRecord(record, state) {
+    return { ...record, current: record.key === state.currentKey, generating: record.key === state.currentKey && state.generating };
+}
+
 function library(state) {
     const page = element('div', 'workspace-page workspace-library');
-    page.append(pageHeading('Choose your next character', 'Meet someone new, return to a familiar character, or bring a cast together.', [
+    page.append(pageHeading('Characters', 'Choose who shares your next story.', [
         button('Import card', 'import-character', {}, 'workspace-button', 'fa-file-import'),
-        button('Create character', 'create-character', {}, 'workspace-button', 'fa-plus'),
-        button('Create cast', 'create-cast', {}, 'workspace-button', 'fa-users'),
+        button('Create character', 'create-character', {}, 'workspace-button workspace-primary', 'fa-plus'),
     ]));
     const toolbar = element('div', 'workspace-library-toolbar');
     toolbar.append(search(state.query, 'Search characters, descriptions, and tags'));
@@ -161,6 +168,9 @@ function library(state) {
     page.append(toolbar);
     const query = state.query.toLocaleLowerCase();
     const matches = state.entities.filter(entity => (state.filter !== 'characters' || entity.kind === 'character') && (state.filter !== 'groups' || entity.kind === 'group') && (state.filter !== 'favorites' || entity.favorite) && `${entity.name} ${entity.description} ${entity.tags.join(' ')}`.toLocaleLowerCase().includes(query));
+    const heading = element('div', 'workspace-collection-heading');
+    heading.append(element('p', '', `${matches.length} ${matches.length === 1 ? 'character or cast' : 'characters and casts'}`), button('Create cast', 'create-cast', {}, 'workspace-back-link', 'fa-users'));
+    page.append(heading);
     const cards = element('div', 'workspace-library-grid');
     cards.append(...matches.map(entityCard));
     page.append(matches.length ? cards : empty('No characters match', 'Try a different search or import a character card.', button('Import a card', 'import-character')));
@@ -169,18 +179,30 @@ function library(state) {
 
 function conversations(state, archived) {
     const page = element('div', 'workspace-page workspace-conversations');
-    page.append(pageHeading(archived ? 'Archived stories' : 'Your stories', archived ? 'Keep finished scenes here. Restore any story when you want to return.' : 'Pick up a scene where you left off, or begin something new.', archived ? [] : [button('New story', 'characters', {}, 'workspace-button workspace-primary', 'fa-plus')]));
-    page.append(search(state.query, 'Search stories and characters'));
+    page.append(pageHeading(archived ? 'Archive' : 'Stories', archived ? 'Finished scenes, kept for whenever you want to return.' : 'Continue a conversation or start a new scene.', archived ? [] : [button('New story', 'characters', {}, 'workspace-button workspace-primary', 'fa-plus')]));
+    const toolbar = element('div', 'workspace-library-toolbar');
+    toolbar.append(search(state.query, 'Search stories and characters'));
+    if (archived) toolbar.append(button('Active stories', 'chats', {}, 'workspace-back-link', 'fa-comment'));
+    else toolbar.append(button('View archive', 'archive', {}, 'workspace-back-link', 'fa-box-archive'));
+    page.append(toolbar);
     const query = state.query.toLocaleLowerCase();
     const records = state.chats.filter(record => record.archived === archived && `${record.title} ${record.entity.name} ${plainText(record.mes)}`.toLocaleLowerCase().includes(query));
     const list = element('div', 'workspace-scene-list');
+    let previousGroup;
     for (const record of records) {
         const entity = state.entities.find(item => item.key === record.entityKey);
-        if (entity) list.append(chatRow(record, entity));
+        if (!entity) continue;
+        const days = (Date.now() - record.updated) / 86400000;
+        const group = days < 1 ? 'Today' : days < 7 ? 'This week' : 'Earlier stories';
+        if (group !== previousGroup) {
+            list.append(element('h2', 'workspace-story-date-group', group));
+            previousGroup = group;
+        }
+        list.append(chatRow(decorateRecord(record, state), entity));
     }
     if (state.loading && !records.length) page.append(element('p', 'workspace-loading', 'Loading your stories…'));
     else if (state.error) page.append(empty('Your stories could not load', state.error, button('Try again', 'refresh-chats')));
-    else page.append(records.length ? list : empty(archived ? 'No archived stories' : 'Your next story is waiting', state.query ? 'Try a different title or character name.' : archived ? 'Archive a scene from its menu to keep it here without deleting it.' : 'Choose a character, read their premise, and start a scene.', archived ? null : button('Choose a character', 'characters', {}, 'workspace-button workspace-primary')));
+    else page.append(records.length ? list : empty(archived ? 'No archived stories' : 'Start your first story', state.query ? 'Try a different title or character name.' : archived ? 'Archive a story from its menu to keep it here. You can restore it later.' : 'Choose a character and read their premise before beginning.', archived ? null : button('Choose a character', 'characters', {}, 'workspace-button workspace-primary')));
     return page;
 }
 
@@ -188,18 +210,17 @@ function profile(state) {
     const entity = state.entities.find(item => item.key === state.entityKey);
     if (!entity) return empty('This character is no longer available', 'Return to your library to choose another character.', button('Characters', 'characters'));
     const page = element('div', 'workspace-page workspace-profile');
-    page.append(button('Characters', 'characters', {}, 'workspace-back-link', 'fa-arrow-left'));
-    const hero = element('div', 'workspace-profile-hero');
-    hero.append(portrait(entity, 'workspace-profile-portrait'));
-    const text = element('div', 'workspace-profile-intro');
-    text.append(element('h1', '', entity.name), element('p', '', entity.description || 'A character ready for your next story.'));
+    page.append(button('All characters', 'characters', {}, 'workspace-back-link', 'fa-arrow-left'));
+    const layout = element('div', 'workspace-profile-layout');
+    const identity = element('aside', 'workspace-profile-identity');
+    identity.append(portrait(entity, 'workspace-profile-portrait'));
+    const intro = element('div', 'workspace-profile-intro');
+    intro.append(element('h1', '', entity.name), element('p', '', entity.description || 'A character ready for your next story.'));
     const controls = element('div', 'workspace-profile-actions');
-    const histories = state.chats.filter(record => record.entityKey === entity.key);
-    const recent = histories.find(record => !record.archived);
-    if (recent) controls.append(button('Continue latest story', 'open-chat', { chat: recent.key }, 'workspace-button workspace-primary', 'fa-play'));
-    controls.append(button('Start new story', 'start-story', { entity: entity.key }, recent ? 'workspace-button' : 'workspace-button workspace-primary', 'fa-plus'));
-    controls.append(button(entity.kind === 'group' ? 'Edit cast' : 'Edit character', 'edit-entity', { entity: entity.key }, 'workspace-button', 'fa-pen'));
-    text.append(controls);
+    controls.append(button('Start new story', 'start-story', { entity: entity.key }, 'workspace-button workspace-primary', 'fa-plus'));
+    controls.append(button(entity.kind === 'group' ? 'Edit cast' : 'Edit character', 'edit-entity', { entity: entity.key }, 'workspace-back-link', 'fa-pen'));
+    intro.append(controls);
+    identity.append(intro);
     if (entity.kind === 'group') {
         const members = element('div', 'workspace-profile-cast');
         for (const member of entity.members) {
@@ -207,22 +228,35 @@ function profile(state) {
             memberButton.prepend(portrait(member));
             members.append(memberButton);
         }
-        text.append(members);
+        identity.append(element('h2', '', 'Cast members'), members);
     }
-    hero.append(text);
-    page.append(hero);
-    const details = element('div', 'workspace-profile-details');
+    const content = element('div', 'workspace-profile-content');
     const data = entity.raw.data || entity.raw;
+    const premise = element('section', 'workspace-profile-premise');
     if (entity.kind === 'character') {
-        for (const [label, value] of [['The scenario', data.scenario], ['Opening message', data.first_mes], ['Character card details', data.description]]) {
-            if (!value) continue;
-            const section = element('details', 'workspace-profile-detail');
-            section.append(element('summary', '', label), element('p', '', String(value).replace(/<[^>]*>/g, '').replace(/\{\{char\}\}/gi, entity.name).replace(/\{\{user\}\}/gi, name1 || 'You')));
-            details.append(section);
+        const format = value => String(value).replace(/<[^>]*>/g, '').replace(/\{\{char\}\}/gi, entity.name).replace(/\{\{user\}\}/gi, name1 || 'You');
+        if (data.scenario) premise.append(element('h2', '', 'The premise'), element('p', '', format(data.scenario)));
+        if (data.first_mes) {
+            const opening = element('details', 'workspace-profile-detail');
+            opening.append(element('summary', '', 'Opening message'), element('p', '', format(data.first_mes)));
+            premise.append(opening);
+        }
+        if (data.description) {
+            const card = element('details', 'workspace-profile-detail');
+            card.append(element('summary', '', 'Full character description'), element('p', '', format(data.description)));
+            premise.append(card);
         }
     }
+    if (premise.childElementCount) content.append(premise);
+    const histories = state.chats.filter(record => record.entityKey === entity.key);
+    const recent = histories.find(record => !record.archived);
+    if (recent) {
+        const resume = element('section', 'workspace-profile-resume');
+        resume.append(element('h2', '', 'Pick up where you left off'), element('strong', '', recent.title), element('p', '', plainText(recent.mes) || 'Your story is ready to continue.'), button('Continue latest story', 'open-chat', { chat: recent.key }, 'workspace-button', 'fa-play'));
+        content.prepend(resume);
+    }
     const heading = element('div', 'workspace-profile-history-heading');
-    heading.append(element('h2', '', `Stories with ${entity.name}`));
+    heading.append(element('h2', '', 'Story history'));
     const tabs = element('div', 'workspace-filters');
     for (const [id, label] of [['active', 'Active'], ['archived', 'Archived']]) {
         const tab = button(label, 'profile-scope', { scope: id }, 'workspace-filter');
@@ -230,24 +264,51 @@ function profile(state) {
         tabs.append(tab);
     }
     heading.append(tabs);
-    page.append(heading);
+    content.append(heading);
     const records = histories.filter(record => record.archived === (state.profileScope === 'archived'));
     const list = element('div', 'workspace-scene-list');
-    list.append(...records.map(record => chatRow(record, entity)));
-    page.append(records.length ? list : empty(state.profileScope === 'archived' ? 'No archived stories with this character' : 'A fresh beginning', state.profileScope === 'archived' ? 'Finished scenes will appear here when you archive them.' : 'Start a new story to write your first scene together.'));
-    if (details.childElementCount) page.append(details);
+    list.append(...records.map(record => chatRow(decorateRecord(record, state), entity)));
+    content.append(records.length ? list : empty(state.profileScope === 'archived' ? 'No archived stories' : 'Your first scene together', state.profileScope === 'archived' ? 'Archived scenes with this character will appear here.' : 'Start a new story when you are ready.'));
+    layout.append(identity, content);
+    page.append(layout);
     return page;
 }
 
 function settings(state) {
     const page = element('div', 'workspace-page workspace-settings');
-    page.append(pageHeading('Make this space yours', 'Set up your models and creative tools, then return to the story.'));
+    page.append(pageHeading('Settings', 'Configure your writing tools without losing your place in the story.'));
+    const layout = element('div', 'workspace-settings-overview');
+    const main = element('div');
+    for (const [heading, ids] of [
+        ['Writing', ['connection', 'generation', 'prompts']],
+        ['Your story world', ['persona', 'world', 'backgrounds']],
+        ['Workspace', ['settings', 'extensions']],
+    ]) {
+        const section = element('section', 'workspace-settings-group');
+        section.append(element('h2', '', heading));
+        for (const id of ids) {
+            const setting = workspaceSettings.find(item => item.id === id);
+            const row = button('', id, {}, 'workspace-settings-item');
+            row.replaceChildren(icon(setting.icon));
+            const text = element('span');
+            text.append(element('strong', '', setting.label), element('small', '', setting.description));
+            row.append(text, icon('fa-chevron-right'));
+            section.append(row);
+        }
+        main.append(section);
+    }
+    const creative = element('aside', 'workspace-settings-creative');
+    creative.append(element('h2', '', 'Voice & images'), element('p', '', 'Turn Voice on in the chat to hear replies. Illustrate scene creates one image when you click it.'));
+    for (const id of ['voice-settings', 'image-settings']) {
+        const setting = workspaceSettings.find(item => item.id === id);
+        creative.append(button(setting.label, id, {}, 'workspace-button', setting.icon));
+    }
     const tools = element('section', 'workspace-capabilities');
     tools.setAttribute('aria-label', 'Optional creative tools');
-    tools.append(element('h2', '', 'Creative tools'), element('p', '', 'Voice and image generation start off. Turn on the tools you want to use.'));
+    tools.append(element('h3', '', 'Automatic tools'), element('p', '', 'Advanced extension behavior. Scene illustrations do not require automatic image tools.'));
     for (const [kind, title, description] of [
-        ['voice', 'Voice narration', 'Read character replies with your configured voices.'],
-        ['image', 'Image generation', 'Create character portraits and scene illustrations.'],
+        ['voice', 'Voice narration', 'The same voice toggle as the chat screen.'],
+        ['image', 'Automatic image tools', 'Allow image commands, triggers, and model tools. Off by default.'],
     ]) {
         const label = element('label', 'workspace-capability');
         const text = element('span');
@@ -261,17 +322,11 @@ function settings(state) {
         label.append(text, toggle);
         tools.append(label);
     }
-    page.append(tools);
-    const grid = element('div', 'workspace-settings-grid');
-    for (const setting of workspaceSettings.filter(item => item.id !== 'character-editor')) {
-        const tile = button('', setting.id, {}, 'workspace-settings-item');
-        tile.replaceChildren(icon(setting.icon));
-        const text = element('span');
-        text.append(element('strong', '', translate(setting.label)), element('small', '', translate(setting.description)));
-        tile.append(text, icon('fa-chevron-right'));
-        grid.append(tile);
-    }
-    page.append(grid);
+    const advanced = element('details', 'workspace-profile-detail');
+    advanced.append(element('summary', '', 'Automatic tool preferences'), tools);
+    creative.append(advanced);
+    layout.append(main, creative);
+    page.append(layout);
     return page;
 }
 
