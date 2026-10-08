@@ -2,21 +2,21 @@
 
 ## Project state
 
-v1.19.1 published automatically in run 37716598748. amd64/arm64 manifests,
-anonymous pull access, and CI HTTP/heartbeat passed.
+Roleplay UI and archive suffix fix verified. v1.19.1 published successfully.
+v1.19.2 build cancelled after QEMU crashed; its tag remains unchanged.
 
 ## Current batch
 
-Publish v1.19.2 with exact archive identifiers for titles ending in .jsonl.
+Publish v1.19.3 using native architecture runners.
 
 ## In progress
 
-Suffix regression reproduced lost archive state; normalization fixed at the API
-boundary. Lint and 14 browser checks passed. Documentation edits are task-owned.
+Workflow builds and starts amd64/arm64 images separately, then merges the index.
+Actionlint and diff checks passed. Cancelled log retained in /tmp/sillytavern-v1.19.2-cancelled-build.log.
 
 ## Next action
 
-Commit the verified patch, publish v1.19.2, and inspect its image digest.
+Commit the workflow, publish v1.19.3, and verify both native startup checks.
 
 ## Blockers
 
@@ -24,5 +24,5 @@ None.
 
 ## Verification
 
-v1.19.1: lint, 411 units, 14 browsers, Podman checks, and visual inspection passed.
-Responsive widths: 320, 390, 768.
+Lint, 411 units, 14 browsers passed. Mobile widths: 320, 390, 768.
+Desktop/phone and Podman checks passed for the redesign.

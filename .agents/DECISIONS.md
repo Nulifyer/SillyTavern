@@ -9,6 +9,8 @@
 - Publish containers only from published GitHub Releases, with manual rebuilds of
   existing published releases. Prereleases do not move latest.
 - Use ghcr.io/nulifyer/sillytavern for the fork and support amd64 and arm64.
+- Build and start containers on native amd64 and arm64 runners. An emulated ARM
+  build hit a QEMU illegal instruction after compilation in run 37717246139.
 - Use the T3 Code collaborative browser for visual inspection.
 
 ## Open decisions

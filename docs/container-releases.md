@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.2`.
+2. Create a version tag on that commit, such as `v1.19.3`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -20,12 +20,14 @@ Do not move published tags. Create a new tag for a new build.
 
 The workflow publishes one image index with `linux/amd64` and `linux/arm64` builds.
 Docker and Podman select the matching architecture when they pull the image.
-The workflow inspects both manifest entries and starts the amd64 image to check
-HTTP startup and the enabled heartbeat health check.
+Each architecture builds on its own native GitHub runner. Both images must pass
+HTTP startup and the enabled heartbeat check before the workflow combines them
+into the release image index. Architecture staging tags use `sha-<commit>-<arch>`;
+use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.2` | The exact GitHub Release tag |
+| `v1.19.3` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -68,7 +70,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.2` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.3` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
