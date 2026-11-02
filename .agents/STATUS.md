@@ -3,25 +3,38 @@
 ## Project state
 
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Published v1.19.8 source: 88e6ea7a242e8ea03c5404c35e2a2d2edc8f7248.
-The November 2 UI repair and Juiced setup release is in progress.
+Published and verified v1.19.9 source: 9ab8d2cedec44448c7f8ea49c4dfba5c8799ebf1.
+Release workflow 41404996482 passed native amd64/arm64 startup and publication.
+Image index: sha256:1aeffc008478d6923152ae4dc61eb3115c56e97d0da3cb3a62b8cc17f4be33bf.
 
 ## Active tasks
 
-- [UI repair and Juiced release](work/ui-juiced-release.md), owned by the SillyTavern project thread. Owns source, tests, publication and release-image acceptance.
+No active tasks. [Completed UI repair and Juiced release](work/ui-juiced-release.md).
+Homelab owns the later production update. Production stack69 and shared test85
+were never accessed or changed by this task.
 
 ## Next action
 
-Finish the independent dictation-category regression, commit v1.19.9, then publish and verify the pulled release image.
+Homelab can deploy the immutable v1.19.9 index using the handoff in
+docs/container-releases.md, preserving production volume identities and taking
+the normal private backup. Configure optional services through the user's UI.
 
 ## Blockers
 
-None. Production stack69 and all its data remain outside scope. Homelab owns the later production update.
+None. Do not infer broad audio-format support from the deployed FUTO backend;
+the documented 16 kHz WAV gap belongs to Juiced. Physical microphone hardware
+and audible quality remain unqualified.
 
 ## Verification
 
-Reproduced disappearing Settings controls on unmodified v1.19.8 in a fresh local container. The shared outside-click handler closed mounted panels after section clicks. The new regression fails before the repair and passes at 1280/390/320px after it. All 25 controlled browser cases pass, with the live case run separately. Final category ownership checks remain in progress after separating dictation from the optional TTS extension. Lint and all 423 unit tests pass.
+Lint, 423 unit tests, actionlint, continuity validation and all 27 browser cases
+passed. The 27 cases passed against both committed source and the actual pulled
+GHCR image. Real Juiced streaming story chat, independent writer/image, decoded
+speech and transcription passed. Settings survived native save/reload and local
+container restart; explicit native reconnect passed. Eighteen selected source
+files match the tag. Stock sd.cpp backend also matches v1.19.8 bytes.
 
-Real Juiced discovery from the local container returned enabled chat/image/speech/transcription models and 67 backend voices. Real streaming chat, separate writer/image, speech and transcription pass. Final released-image acceptance remains outstanding. Evidence: docs/evidence/ui-juiced-20261102/.
-
-The accepted uncommitted input retains the optional Connection Manager image writer, editable instructions and output budget. Current-chat generation remains the default. The stock sd.cpp image backend is unchanged. Historical stack85 used a persistent writer overlay; it is not release-image evidence. This task uses only fresh local volumes.
+Local verified preview: http://127.0.0.1:8014, container st-ui-release-20261102,
+five fresh synthetic named volumes, no source overlays. Baseline/dev containers
+are stopped. Exact index/architecture identities, workflow and rollback are in
+docs/container-releases.md. Evidence: docs/evidence/ui-juiced-20261102/.

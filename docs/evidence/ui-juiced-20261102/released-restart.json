@@ -1,0 +1,33 @@
+{
+  "container": "st-ui-release-20261102",
+  "version": "1.19.9",
+  "heartbeat": "passed",
+  "browserReload": "passed",
+  "afterRestartMatchesPriorSettings": true,
+  "settings": {
+    "url": "https://juiced.swarm.nulteck.com",
+    "chat": {
+      "model": "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL",
+      "url": "https://juiced.swarm.nulteck.com/v1"
+    },
+    "writer": "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+    "image": {
+      "source": "sdcpp",
+      "url": "https://juiced.swarm.nulteck.com",
+      "model": "z-image-turbo-nsfw-v2-GGUF-Q8_0",
+      "automatic": false
+    },
+    "speech": {
+      "provider": "OpenAI Compatible",
+      "model": "kokoro-v1",
+      "voices": 67,
+      "voice": "af_heart",
+      "enabled": false
+    },
+    "dictation": {
+      "endpoint": "https://juiced.swarm.nulteck.com/v1/audio/transcriptions",
+      "model": "asr4all-l-gptq-Q8_0"
+    },
+    "profileCount": 1
+  }
+}

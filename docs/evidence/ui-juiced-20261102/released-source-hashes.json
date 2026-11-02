@@ -1,0 +1,67 @@
+{
+  "container": "st-ui-release-20261102",
+  "image": "ghcr.io/nulifyer/sillytavern@sha256:1aeffc008478d6923152ae4dc61eb3115c56e97d0da3cb3a62b8cc17f4be33bf",
+  "imageId": "3b805f92c7e2b268aeeb56414de3bf25026dedda4737b52652f6f011b1c66803",
+  "platform": "linux/amd64",
+  "mounts": [
+    {
+      "name": "st-ui-release-20261102-backups",
+      "type": "volume",
+      "destination": "/home/node/app/backups"
+    },
+    {
+      "name": "st-ui-release-20261102-config",
+      "type": "volume",
+      "destination": "/home/node/app/config"
+    },
+    {
+      "name": "st-ui-release-20261102-data",
+      "type": "volume",
+      "destination": "/home/node/app/data"
+    },
+    {
+      "name": "st-ui-release-20261102-plugins",
+      "type": "volume",
+      "destination": "/home/node/app/plugins"
+    },
+    {
+      "name": "st-ui-release-20261102-extensions",
+      "type": "volume",
+      "destination": "/home/node/app/public/scripts/extensions/third-party"
+    }
+  ],
+  "sourceOverlays": false,
+  "version": {
+    "agent": "SillyTavern:1.19.9:Cohee#1207",
+    "pkgVersion": "1.19.9",
+    "gitRevision": null,
+    "gitBranch": null,
+    "commitDate": null,
+    "isLatest": true
+  },
+  "nativeHeartbeat": "passed",
+  "tag": "v1.19.9",
+  "source": "9ab8d2cedec44448c7f8ea49c4dfba5c8799ebf1",
+  "hashes": {
+    "public/css/workspace.css": "10b1574a007536ab3daf06c7e4f00bf8c38909aeae6a8d8c63c5ae00bf9b65af",
+    "public/script.js": "d49726ef7e712dd3d1864fb04d44d5eccf35e3d2d373eff3d26d57f744a0c543",
+    "public/scripts/audio-recording.js": "5e4c9674f88504f5dc984a3a613f9162b9296e812f05e57a1c9aa7e1cd9f9dfa",
+    "public/scripts/dictation.js": "3f6f5e809b1fea5ed4e79869078c5ecc83e5eefa3b7f6bf5055eca3e069d021e",
+    "public/scripts/extensions/connection-manager/index.js": "965949ec7f298623e6c1f9d7c2c489ff4e804f8c9c1d6ea191712469befa2daa",
+    "public/scripts/extensions/shared.js": "c47f6e04f1df4df101c2f7f8f35121520f87cf39b4d4ce133e9019871a32b232",
+    "public/scripts/extensions/stable-diffusion/index.js": "be559a32ce5bb37546ca634c859d35e82a74950e07f710df1d07d370fefff049",
+    "public/scripts/extensions/stable-diffusion/settings.html": "c14cb561cfdc3a775114b970b61bb5816a087e1bc07eeabf410c8dae9f39dca2",
+    "public/scripts/extensions/tts/index.js": "f8c16ffa4277015a3d970442b3e751aecd02a81e16736b00ed0de45b8ddf96a3",
+    "public/scripts/extensions/tts/openai-compatible.js": "030b90e54a6035b4e6f942f642cdde61f1f485e5bb630783e8bb6c9b0efe995c",
+    "public/scripts/openai.js": "07f60200e1069c32dd20214da91dd0f6aa6f70f38f1b2b4c1ab265f6f017a95f",
+    "public/scripts/service-connections.js": "ea69c4f0cef5a082a4d1e7276d284766635d1468e7d89891f2d7f520678db307",
+    "public/scripts/workspace-settings.js": "59bea4e00e52a9abf24cf091d69e8d80acef7e06ac0e72442e6c1d13d0c27bb9",
+    "public/scripts/workspace-tools.js": "daee6212703fda6eca2a12907461d7e7eef3f6f722f12f7ac502ae323ecbd984",
+    "public/scripts/workspace-views.js": "edfcddadbe3fed251cad4bbd53383b20e869566bd2592049141fe0aee848e9a7",
+    "src/endpoints/openai.js": "4ab41c5a9a9d3d39f19efb955813fcd356c84bbbf4b8859063d7ac428da6ee85",
+    "package.json": "4faf921ee5f124d2eeec74c3af5528d8038d5ae25f728b281e986226bd2b45c1",
+    "src/endpoints/stable-diffusion.js": "15439fdffd839815ef7adcaa39806738c4e4503db8bbb697b337e905dfb4ed43"
+  },
+  "allMatchTaggedSource": true,
+  "stockImageHandlerMatchesV1_19_8": true
+}

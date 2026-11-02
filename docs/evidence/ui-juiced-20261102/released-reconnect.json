@@ -1,0 +1,6 @@
+{
+  "method": "After local release-container restart and browser reload: Verify & discover, then Use selected model for the restored story selection. Auto-connect preference remains unchanged.",
+  "label": "Model connected",
+  "discovery": "Connected to Juiced. Select a model for each service you want to use. Only enabled models are listed.",
+  "model": "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL"
+}

@@ -11,7 +11,8 @@ share that Docker network. A local test container cannot assume that DNS name.
 Choose each optional service and click Use selected model. The setup writes the
 existing native provider settings. It does not enable or reconfigure models on
 Juiced. Disabled models do not appear. Enable them on the model server, then
-repeat discovery. No model catalog or voice list is maintained in this fork.
+repeat discovery. Discovery reads models and voices from the server. This fork
+does not ship a Juiced model registry.
 
 | Task | Native owner and address |
 | --- | --- |

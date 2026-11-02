@@ -50,8 +50,13 @@ native dropdown Escape behavior. Exact release evidence and digest: docs/contain
 
 ## Environment
 
-Published-image preview: 8008. Disposable regression data: /tmp/sillytavern-workspace-e2e-data,
-port 8002. Settings writes isolated; cleanup uses native owners.
+Current verified release preview: http://127.0.0.1:8014, Podman container
+st-ui-release-20261102 with five fresh synthetic named volumes and no overlays.
+Baseline 8012 and source 8013 containers are stopped. Browser settings writes are
+isolated; cleanup uses native owners and only the run-specific synthetic prefix.
+All 27 browser cases passed against source and the actual v1.19.9 image.
+Historical regression data at /tmp/sillytavern-workspace-e2e-data and port 8002
+is not the current acceptance environment.
 
 ## Known gaps
 

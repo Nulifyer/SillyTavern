@@ -1,0 +1,6 @@
+{
+  "url": "http://127.0.0.1:8014/",
+  "consoleErrors": [],
+  "networkFailures": [],
+  "note": "Collaborative clean-profile setup, native save and reload; automated failure cases are recorded separately."
+}

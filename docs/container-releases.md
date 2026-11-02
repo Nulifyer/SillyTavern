@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.8`.
+2. Create a version tag on that commit, such as `v1.19.9`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.8` | The exact GitHub Release tag |
+| `v1.19.9` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.8` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.9` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -89,19 +89,105 @@ Use the workflow's digest reference when you need to pin the exact published ima
 
 ## Verified release
 
-### v1.19.9 candidate
+### v1.19.9
 
-The candidate fixes Settings controls disappearing after section clicks and the
-first Connection Manager profile failing to appear in extension dropdowns.
-One-server service discovery configures native chat, optional image writer,
-sd.cpp images, TTS and independent dictation. Setup and migration instructions
-are in [model-services.md](model-services.md).
+[Release v1.19.9](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.9)
+was published from source `9ab8d2cedec44448c7f8ea49c4dfba5c8799ebf1` by
+[workflow 41404996482](https://github.com/Nulifyer/SillyTavern/actions/runs/41404996482).
+Both native amd64/arm64 build, HTTP startup and enabled heartbeat gates passed.
+Anonymous registry requests verified that `v1.19.9`, the full-source tag and
+`latest` share this immutable image index:
 
-Source checks passed lint, 423 unit tests, the 25-case controlled browser suite,
-focused category checks and real Juiced streaming chat, separate writer/image,
-speech and transcription. Dictation is independent of the optional TTS extension.
-Evidence: [November 2 UI/Juiced checks](evidence/ui-juiced-20261102/).
-Publication and verification of the pulled release image remain pending.
+```text
+ghcr.io/nulifyer/sillytavern@sha256:1aeffc008478d6923152ae4dc61eb3115c56e97d0da3cb3a62b8cc17f4be33bf
+```
+
+Architecture manifests:
+
+- linux/amd64: `sha256:1ffeb88b9a12c44b68f4599a4c22d42d385b48e84acdbd29c5abd69fe2116d0b`
+- linux/arm64: `sha256:8d09f7dd4f1ca371c9dc6aee66e076b1c4a66ca77fda736089729ad838c54984`
+
+OCI labels on both architectures identify the tagged source and version.
+An empty-auth Podman pull succeeded. The actual amd64 image ran locally at
+`http://127.0.0.1:8014` with five fresh named volumes and no source overlays.
+It reported version 1.19.9 and passed enabled native heartbeat. Eighteen selected
+source/config files matched the tag, including the stock image backend, which
+also matches v1.19.8 byte-for-byte.
+
+Source lint and all 423 unit tests passed. All 27 browser cases passed against
+both committed source and the actual GHCR image. Coverage includes every
+Settings category at 1280/390/320px, section and popup ownership, navigation,
+story lifecycle, keyboard, pending requests, failure/retry, stale discovery,
+synthetic settings preservation/reload, independent dictation with TTS disabled,
+and larger-text/reduced-height mobile flows. Real Juiced checks used streaming
+story chat, an independent writer, one neutral scene image, browser-decoded
+speech and speech-to-transcription draft insertion. The browser never sent that
+transcript as a chat message. No page errors were captured in the real flow.
+ARM64 passed native startup gates; full browser/service acceptance ran on amd64.
+
+[Evidence](evidence/ui-juiced-20261102/) includes before/after render screenshots,
+source/released browser logs, live request summaries, native save/reload proof,
+manifest/OCI labels, workflow jobs and selected source hashes. Browser coverage uses Chromium desktop/mobile viewports. Physical microphone
+hardware, audible quality and paid providers were not qualified.
+
+#### Homelab handoff
+
+Production endpoint7 stack69 and its data were never accessed or updated by this
+task. Shared test stack85 was also untouched. Homelab owns the later update.
+Before deploying, take the normal private config/data backup, preserve all
+existing volume identities and mount paths, and change only the image reference
+under the existing deployment/network contract. Do not mount test data into
+production. No chat or character format migration was introduced.
+
+If stack85 is reused to verify this release, remove its old three-file writer
+source overlay using its owning Homelab procedure before testing. An overlay can
+mask defects in the published image. Preserve the test volume identities and any
+user-added test work. This local verification used no overlays.
+
+For connection setup, follow [model-services.md](model-services.md). Enter
+`https://juiced.swarm.nulteck.com` once in Models & connections, then Verify &
+discover. Select only the services wanted. Native settings and saved profiles
+remain the configuration owners. Tested selections:
+
+- Story: `TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL`, 16K context, streaming,
+  thinking off through native Additional Parameters. Test replies used 128 output
+  tokens; setup preserves the user's explicit response/sampling preferences.
+- Optional writer: `Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0`, 512 output
+  tokens, thinking off. Current chat remains the default. Instructions/budget
+  stay editable in Image generation. The story model remains selected.
+- Images: stock stable-diffusion.cpp at the root URL, model
+  `z-image-turbo-nsfw-v2-GGUF-Q8_0`. The neutral fixture explicitly selected
+  512px, 8 steps, CFG 1, Euler/Simple. Setup does not overwrite sampling.
+- Narration: OpenAI Compatible, `kokoro-v1`, `af_heart`. Discovery returned 67
+  backend voices. Voice remains opt-in and preserves previous explicit choices.
+- Dictation: `asr4all-l-gptq-Q8_0`. Microphone and audio-file decoding send mono
+  16 kHz PCM WAV; text goes into the draft for review, never automatic sending.
+
+The service is key-free for this LAN deployment. No credentials were requested,
+fabricated for runtime access or copied from another deployment. Other providers
+retain their native key settings. No Juiced runtimes, model policies or caches
+were reconfigured. Generic OpenAI-compatible servers retain chat discovery and
+native optional-service settings.
+
+The deployed FUTO service rejected unnormalized speech WAV with HTTP 400,
+`Use 16 kHz WAV, 1-8 channels, maximum 120 seconds`. The exact reproducible server
+compatibility gap is in `transcription-format-gap.json`. Generic browser audio
+encoding passes; Juiced owns support for other OpenAI input formats. This release
+adds no Juiced-specific inference proxy or alternate image adapter. sd.cpp remains
+a txt2img subset without img2img, hires, scripts or server-side image saving.
+Persistent cache qualification still requires the documented stable session
+header; setup does not add it or change cache policies.
+
+Rollback pin:
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:201db6d8f386bd366064ca1cc7d0e8b51da9b442cb53d539b7b72ee330ef0085
+```
+
+That is the verified v1.19.8 index. Pull/recreate with the same production volume
+identities and no source overlays. Retain the pre-update settings/data backup.
+Do not restore old backups over newly written chats without the owner's recovery
+plan. The older image does not expose the new separate-writer/dictation UI.
 
 ### Writer integration trial before v1.19.9
 
@@ -129,6 +215,8 @@ Before production use, publish through the normal workflow above, remove the
 test overlay and verify the released image itself. Preserve production volumes
 and make private connection-setting changes in the user's UI. Local FUTO
 microphone dictation still needs a configurable transcription endpoint.
+
+### v1.19.8
 
 [Release v1.19.8](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.8)
 was published by [automatic release run 37842068836](https://github.com/Nulifyer/SillyTavern/actions/runs/37842068836).

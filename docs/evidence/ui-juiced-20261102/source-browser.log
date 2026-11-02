@@ -1,0 +1,56 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --reporter=line
+(node:1166915) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 27 tests using 1 worker
+
+(node:1166936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1166936) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1166936) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/27] workspace.e2e.js:175:1 › library browsing shows profiles without opening or replacing a story
+[2/27] workspace.e2e.js:194:1 › new stories preserve previous transcripts and profile history resumes the exact scene
+[3/27] workspace.e2e.js:229:1 › starting a fresh character creates exactly one transcript, with or without a title
+[4/27] workspace.e2e.js:264:1 › archive persists, excludes active lists, reads without editing, and restores the same transcript
+[5/27] workspace.e2e.js:295:1 › rename follows archived identity and deletion requires confirmation without recreating the file
+[6/27] workspace.e2e.js:332:1 › failed deletion keeps the story and reports the server failure
+[7/27] workspace.e2e.js:350:1 › settings keep every native area reachable with Escape and focus restoration
+[8/27] workspace.e2e.js:391:1 › every settings category uses one control tree and fits desktop and phone
+[9/27] workspace.e2e.js:438:1 › settings sections, blank space and external dialogs never close mounted controls
+[10/27] workspace.e2e.js:524:1 › dictation settings remain available when the optional TTS extension is disabled
+[11/27] workspace.e2e.js:562:1 › one server configures native services and survives reload without replacing sampling or profiles
+[12/27] workspace.e2e.js:704:1 › service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server
+[13/27] workspace.e2e.js:766:1 › dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change
+[14/27] workspace.e2e.js:829:1 › image writer preserves scene context and story model through failure and retry
+[15/27] workspace.e2e.js:915:1 › live Juiced services use native providers from the tested container
+workspace.e2e.js:915:1 › live Juiced services use native providers from the tested container
+Live Juiced: discover and configure native providers
+
+Live Juiced: streaming story reply
+
+Live Juiced: configure image sampling and generate scene
+
+Live Juiced: synthesize and decode speech
+
+Live Juiced: transcribe speech into draft
+
+[16/27] workspace.e2e.js:1144:1 › search opens character profiles and a fixture model generates through the native composer
+[17/27] workspace.e2e.js:1245:1 › native streamed replies keep the composer and character identity mounted
+[18/27] workspace.e2e.js:1293:1 › image tools use the native provider and treat custom prompts as text
+[19/27] workspace.e2e.js:1341:1 › one scene click generates one native illustration with automatic tools off
+[20/27] workspace.e2e.js:1423:1 › voice tools narrate the latest native reply with the configured System voice
+[21/27] workspace.e2e.js:1458:1 › chat voice is opt-in and persists; manual images do not enable automatic tools
+[22/27] workspace.e2e.js:1487:1 › cast creation selects real characters and opens a group story
+[23/27] workspace.e2e.js:1543:3 › roleplay pages and composer stay within a 320px viewport
+[24/27] workspace.e2e.js:1543:3 › roleplay pages and composer stay within a 390px viewport
+[25/27] workspace.e2e.js:1543:3 › roleplay pages and composer stay within a 768px viewport
+[26/27] workspace.e2e.js:1638:1 › native font preferences and browser text sizing keep phone controls usable
+[27/27] workspace.e2e.js:1684:1 › classic preference survives reload and can be restored
+  27 passed (3.8m)
