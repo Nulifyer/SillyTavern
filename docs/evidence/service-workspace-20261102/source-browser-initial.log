@@ -1,0 +1,134 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1
+(node:1390932) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 33 tests using 1 worker
+
+(node:1390945) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1390945) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1390945) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 workspace.e2e.js:219:1 › library browsing shows profiles without opening or replacing a story (3.1s)
+  ✓   2 workspace.e2e.js:238:1 › new stories preserve previous transcripts and profile history resumes the exact scene (6.5s)
+  ✓   3 workspace.e2e.js:273:1 › starting a fresh character creates exactly one transcript, with or without a title (4.8s)
+  ✓   4 workspace.e2e.js:308:1 › archive persists, excludes active lists, reads without editing, and restores the same transcript (7.8s)
+  ✓   5 workspace.e2e.js:339:1 › rename follows archived identity and deletion requires confirmation without recreating the file (6.4s)
+  ✓   6 workspace.e2e.js:376:1 › failed deletion keeps the story and reports the server failure (4.4s)
+  ✓   7 workspace.e2e.js:394:1 › settings keep every native area reachable with Escape and focus restoration (5.4s)
+  ✓   8 workspace.e2e.js:436:1 › every settings category uses one control tree and fits desktop and phone (18.6s)
+  ✓   9 workspace.e2e.js:483:1 › settings sections, blank space and external dialogs never close mounted controls (9.1s)
+Settings mutation: 1280px connection
+Settings mutation: 1280px generation
+Settings mutation: 1280px prompts
+Settings mutation: 1280px persona
+Settings mutation: 1280px world
+Settings mutation: 1280px backgrounds
+Settings mutation: 1280px voice-settings
+Settings mutation: 1280px dictation-settings
+Settings mutation: 1280px image-settings
+Settings mutation: 1280px settings
+Settings mutation: 1280px extensions
+Settings mutation: 390px connection
+Settings mutation: 390px generation
+Settings mutation: 390px prompts
+Settings mutation: 390px persona
+Settings mutation: 390px world
+Settings mutation: 390px backgrounds
+Settings mutation: 390px voice-settings
+Settings mutation: 390px dictation-settings
+Settings mutation: 390px image-settings
+Settings mutation: 390px settings
+Settings mutation: 390px extensions
+Settings mutation: 320px connection
+Settings mutation: 320px generation
+Settings mutation: 320px prompts
+Settings mutation: 320px persona
+Settings mutation: 320px world
+Settings mutation: 320px backgrounds
+Settings mutation: 320px voice-settings
+Settings mutation: 320px dictation-settings
+Settings mutation: 320px image-settings
+Settings mutation: 320px settings
+Settings mutation: 320px extensions
+  ✓  10 workspace.e2e.js:534:1 › settings changes and late saves preserve every category through direct navigation (11.9s)
+  ✓  11 workspace.e2e.js:680:1 › dictation settings remain available when the optional TTS extension is disabled (5.3s)
+  ✓  12 workspace.e2e.js:718:1 › one server configures native services and survives reload without replacing sampling or profiles (8.8s)
+  ✓  13 workspace.e2e.js:863:1 › discovered context uses configured capacity, preserves manual overrides and survives reload (7.0s)
+  ✓  14 workspace.e2e.js:942:1 › service prompt editors save native values and composer nodes survive classic round trips (6.6s)
+  ✓  15 workspace.e2e.js:990:3 › fresh compatible connection migrates context preference (5.4s)
+  ✓  16 workspace.e2e.js:990:3 › existing explicit compatible connection migrates context preference (5.4s)
+  ✓  17 workspace.e2e.js:1039:1 › service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server (3.8s)
+  ✓  18 workspace.e2e.js:1103:1 › dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change (4.7s)
+  ✓  19 workspace.e2e.js:1166:1 › image writer preserves scene context and story model through failure and retry (4.4s)
+  -  20 workspace.e2e.js:1252:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting
+  -  21 workspace.e2e.js:1389:1 › live Juiced services use native providers from the tested container
+  ✓  22 workspace.e2e.js:1651:1 › search opens character profiles and a fixture model generates through the native composer (5.6s)
+  ✓  23 workspace.e2e.js:1753:1 › native streamed replies keep the composer and character identity mounted (4.8s)
+  ✓  24 workspace.e2e.js:1802:1 › image tools use the native provider and treat custom prompts as text (4.2s)
+  ✓  25 workspace.e2e.js:1850:1 › one scene click generates one native illustration with automatic tools off (5.1s)
+  ✓  26 workspace.e2e.js:1933:1 › voice tools narrate the latest native reply with the configured System voice (4.6s)
+  ✓  27 workspace.e2e.js:1968:1 › chat voice is opt-in and persists; manual images do not enable automatic tools (7.8s)
+  ✓  28 workspace.e2e.js:1997:1 › cast creation selects real characters and opens a group story (4.3s)
+  ✘  29 workspace.e2e.js:2053:3 › roleplay pages and composer stay within a 320px viewport (14.3s)
+(node:1393373) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1393373) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1393373) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  30 workspace.e2e.js:2053:3 › roleplay pages and composer stay within a 390px viewport (6.0s)
+  ✓  31 workspace.e2e.js:2053:3 › roleplay pages and composer stay within a 768px viewport (6.0s)
+  ✓  32 workspace.e2e.js:2148:1 › native font preferences and browser text sizing keep phone controls usable (4.5s)
+  ✓  33 workspace.e2e.js:2192:1 › classic preference survives reload and can be restored (6.2s)
+
+
+  1) workspace.e2e.js:2053:3 › roleplay pages and composer stay within a 320px viewport ────────────
+
+    TimeoutError: locator.click: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('#send_textarea')
+        - locator resolved to <textarea name="text" class="mdHotkeys" id="send_textarea" autocomplete="off" aria-label="Message" no_connection_text="Not connected to API!" aria-describedby="workspace-composer-hint" connected_text="Type a message, or /? for help" placeholder="Write your next turn with Seraphina…" data-i18n="[no_connection_text]Not connected to API!;[connected_text]Type a message, or /? for help"></textarea>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div tabindex="0" role="button" id="options_button" title="More chat tools" aria-label="Chat actions" class="fa-solid fa-bars interactable">…</div> from <div class="workspace-only workspace-composer-tools">…</div> subtree intercepts pointer events
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is visible, enabled and stable
+          - scrolling into view if needed
+          - done scrolling
+          - <div tabindex="0" role="button" id="options_button" title="More chat tools" aria-label="Chat actions" class="fa-solid fa-bars interactable">…</div> from <div class="workspace-only workspace-composer-tools">…</div> subtree intercepts pointer events
+        - retrying click action
+          - waiting 100ms
+        19 × waiting for element to be visible, enabled and stable
+           - element is visible, enabled and stable
+           - scrolling into view if needed
+           - done scrolling
+           - <div tabindex="0" role="button" id="options_button" title="More chat tools" aria-label="Chat actions" class="fa-solid fa-bars interactable">…</div> from <div class="workspace-only workspace-composer-tools">…</div> subtree intercepts pointer events
+         - retrying click action
+           - waiting 500ms
+
+
+      1389 |             const bounds = await page.locator(selector).boundingBox();
+      1390 |             expect(bounds.width).toBeGreaterThanOrEqual(44);
+    > 1391 |             expect(bounds.height).toBeGreaterThanOrEqual(44);
+           |                                              ^
+      1392 |             expect(bounds.x).toBeGreaterThanOrEqual(0);
+      1393 |             expect(bounds.x + bounds.width).toBeLessThanOrEqual(width);
+      1394 |         }
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1391:46
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workspace.e2e.js-roleplay--5e3b2-tay-within-a-320px-viewport/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/workspace.e2e.js-roleplay--5e3b2-tay-within-a-320px-viewport/error-context.md
+
+  1 failed
+    workspace.e2e.js:2053:3 › roleplay pages and composer stay within a 320px viewport ─────────────
+  2 skipped
+  30 passed (3.5m)

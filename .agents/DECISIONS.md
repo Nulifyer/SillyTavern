@@ -30,3 +30,11 @@ None.
 
 The initial shell's many configuration navigation entries and immediate character
 chat selection are superseded by profile and scene workflows.
+
+## Service workspace, November 2, 2026
+
+- Settings opens Servers directly and preserves the underlying story; no second settings overview.
+- Group service setup and real prompts around existing native DOM owners; restore those nodes in classic layout.
+- New compatible connections use configured `context_length` when available, never the training maximum as runtime capacity. Existing explicit limits migrate as manual; direct edits and explicit presets disable automatic sizing.
+- Adapt T3 Code's composer shell in plain DOM/CSS with its MIT notice. Preserve the native textarea, form, send/stop ancestry and extension controls.
+- Native compatible vision shares the story server address and uses its own model. Retrieval retains its current extension provider controls; do not overwrite the shared text-completion URL to automate embeddings.

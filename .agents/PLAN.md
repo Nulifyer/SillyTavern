@@ -13,6 +13,9 @@ with homelab images published from GitHub Releases.
 - Image generation and TTS use existing capabilities with nearby configuration.
 - Desktop and phone flows pass browser checks.
 - Published GitHub Releases build their tagged commits for amd64 and arm64 in GHCR.
+- Model service sections keep connection, relevant prompts and common tuning together, with one server discovery area and no repeated settings overview.
+- New compatible connections use reported context/capabilities where available; existing explicit settings and optional overrides are preserved.
+- Chat/composer presentation may reuse T3 Code UI code with attribution while retaining SillyTavern's native behavior and product scope.
 
 ## Scope
 

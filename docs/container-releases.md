@@ -87,6 +87,16 @@ To roll back, select a previous image tag whose publish workflow succeeded, pull
 it, and recreate the service.
 Use the workflow's digest reference when you need to pin the exact published image.
 
+## v1.19.10 delivery in progress
+
+The service workspace source adds one server hub, service-specific native prompts
+and model settings, reported context with explicit overrides, and an attributed
+T3 Code composer adaptation. Setup/migration: [model-services.md](model-services.md).
+Publication and pulled-image verification must finish before this is a Homelab
+update handoff. Production69 and shared test85 are not deployment targets for
+this thread. The verified rollback remains v1.19.9 below, with existing volumes
+preserved and a pre-update backup retained.
+
 ## Verified release
 
 ### v1.19.9

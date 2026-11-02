@@ -1,0 +1,356 @@
+[
+  {
+    "case": "workspace.e2e.js-archive-p-2dc88-estores-the-same-transcript",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:8013/api/settings/save",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-cast-crea-e6ff9-ers-and-opens-a-group-story",
+    "pageErrors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "Group chat could not be deleted",
+      "Workspace action failed Error: The story could not be deleted. Check the server connection and try again.\n    at WorkspaceChats.remove (http://127.0.0.1:8013/scripts/workspace-chats.js:135:29)\n    at async handleAction (http://127.0.0.1:8013/scripts/workspace.js:462:26)"
+    ],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-chat-voic-6d59b--not-enable-automatic-tools",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:8013/api/settings/save",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-classic-p-1254d--reload-and-can-be-restored",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/api/settings/save",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-dictation-87e18-l-TTS-extension-is-disabled",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-dictation-ecf36-and-cancels-on-story-change",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-discovere-3569a-errides-and-survives-reload",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/api/settings/save",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-every-set-a1c61--and-fits-desktop-and-phone",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-existing--48e7f-migrates-context-preference",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-failed-de-51488--reports-the-server-failure",
+    "pageErrors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+      "Failed to delete chat for character.",
+      "Workspace action failed Error: The story could not be deleted. Check the server connection and try again.\n    at WorkspaceChats.remove (http://127.0.0.1:8013/scripts/workspace-chats.js:135:29)\n    at async handleAction (http://127.0.0.1:8013/scripts/workspace.js:462:26)"
+    ],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-fresh-com-dc666-migrates-context-preference",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/api/settings/save",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-image-too-4f6af-reat-custom-prompts-as-text",
+    "pageErrors": [],
+    "consoleErrors": [
+      "Workspace action failed Error: Wait for the current illustration to finish before changing stories.\n    at handleAction (http://127.0.0.1:8013/scripts/workspace.js:416:15)\n    at http://127.0.0.1:8013/scripts/workspace.js:599:58"
+    ],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-image-wri-401d9-l-through-failure-and-retry",
+    "pageErrors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    ],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-library-b-a295a-pening-or-replacing-a-story",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-live-Juic-268aa-gh-native-prompt-formatting",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-live-Juic-9aff6-s-from-the-tested-container",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-native-fo-4c14f--keep-phone-controls-usable",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-native-st-a586b--character-identity-mounted",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:8013/api/ping",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-new-stori-29f89-ory-resumes-the-exact-scene",
+    "pageErrors": [],
+    "consoleErrors": [
+      "Workspace action failed Error: A story with that title already exists. Choose another title or continue it from the character profile.\n    at WorkspaceChats.start (http://127.0.0.1:8013/scripts/workspace-chats.js:96:19)\n    at async startStory (http://127.0.0.1:8013/scripts/workspace.js:356:5)"
+    ],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-one-scene-6a33a-on-with-automatic-tools-off",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:8013/api/ping",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-one-serve-910f3-lacing-sampling-or-profiles",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/api/settings/save",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:8013/api/quick-replies/save",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-rename-fo-e8742-without-recreating-the-file",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-roleplay--37f47-tay-within-a-390px-viewport",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-roleplay--5b866-tay-within-a-768px-viewport",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-roleplay--5e3b2-tay-within-a-320px-viewport",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-search-op-ae169-through-the-native-composer",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      },
+      {
+        "url": "http://127.0.0.1:8013/api/ping",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-service-p-c0aa7-survive-classic-round-trips",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-service-s-a84be-cannot-replace-a-new-server",
+    "pageErrors": [],
+    "consoleErrors": [
+      "Failed to load resource: the server responded with a status of 502 (Bad Gateway)",
+      "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    ],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/api/openai/custom/discover",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-settings--24ac5-ever-close-mounted-controls",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-settings--c57e3-y-through-direct-navigation",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-settings--e28e7-scape-and-focus-restoration",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": []
+  },
+  {
+    "case": "workspace.e2e.js-starting--02938-ipt-with-or-without-a-title",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  },
+  {
+    "case": "workspace.e2e.js-voice-too-54823-the-configured-System-voice",
+    "pageErrors": [],
+    "consoleErrors": [],
+    "failedRequests": [
+      {
+        "url": "http://127.0.0.1:8013/img/ai4.png",
+        "error": "net::ERR_ABORTED"
+      }
+    ]
+  }
+]

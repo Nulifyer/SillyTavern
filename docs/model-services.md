@@ -1,6 +1,6 @@
 # Connect model services
 
-Open Settings, then Models & connections. Enter the Juiced server root or its
+Open **Settings > Servers**. Enter the Juiced server root or its
 OpenAI `/v1` base and choose Verify & discover. Discovery checks the connection
 from the SillyTavern server, so the address must be reachable from its container.
 
@@ -8,7 +8,7 @@ For the current LAN/VPN deployment, enter `https://juiced.swarm.nulteck.com`.
 The same-network address `http://juiced:8080` works only when both containers
 share that Docker network. A local test container cannot assume that DNS name.
 
-Choose each optional service and click Use selected model. The setup writes the
+Open a service section, choose its model and click **Use model**. The setup writes the
 existing native provider settings. It does not enable or reconfigure models on
 Juiced. Disabled models do not appear. Enable them on the model server, then
 repeat discovery. Discovery reads models and voices from the server. This fork
@@ -21,6 +21,49 @@ does not ship a Juiced model registry.
 | Images | Stable-diffusion.cpp, server root without `/v1` |
 | Voice narration | OpenAI Compatible TTS, `/v1/audio/speech` |
 | Dictation | Compatible transcription, `/v1/audio/transcriptions` |
+| Vision & captions | Native custom captioning, story server `/v1`, separate vision model and prompt |
+| Retrieval | Native Vector Storage extension; inspect its provider settings |
+
+## Service sections and context size
+
+**Story replies** has three tabs: Model connection, Reply controls and Story
+prompts. Reply controls keeps native response length, temperature, context and
+sampling. Story prompts exposes the native prompt manager. Character cards and
+lore can contribute further instructions. Text completion templates remain
+expandable for providers that need them.
+
+New compatible connections default to **Use discovered context size**. The app
+uses the selected model's positive integer `context_length`, representing the
+server's configured capacity. It does not use `max_context_window`, which may
+be the larger training maximum. For example, the observed Qwen3.5-2B deployment
+reports 16,384 configured tokens and 262,144 maximum tokens; automatic sizing
+uses 16,384. Input and reply tokens share this budget. This is metadata, not a
+capacity benchmark or a guarantee that every prompt fits.
+
+Existing compatible connections without this preference retain their saved
+context limit. Turn automatic sizing on to adopt the reported limit. Changing
+the native context field in Reply controls or loading a preset with an explicit
+context budget turns it off. Switching models
+updates the limit only while automatic sizing is on. If capacity is absent,
+the app keeps the current budget and says that no limit was reported. Other
+sampling and output limits remain explicit; discovery never guesses them.
+
+**Image prompts** edits the real native templates by purpose, including scene
+and portrait prompts. Current chat model remains the default. Selecting an
+optional separate writer reveals its instructions and output budget. **Images**
+keeps size, steps, CFG, sampler, scheduler and prompt prefixes with image model
+selection. Existing native provider and profile forms remain expandable rather
+than repeated in the primary setup.
+
+**Speech** discovers voices for its selected model. **Dictation** has its own
+model and endpoint override. Neither audio API has a chat-style system prompt.
+**Vision & captions** exposes a separate vision model and the native caption
+prompt. Native custom vision shares the story server address, so connect Story
+replies to that server first; applying vision never replaces the story model.
+**Retrieval** exposes the existing Vector Storage settings. Juiced currently
+reports no enabled embeddings model. Selecting an embedding service is not
+automated: native compatible retrieval currently shares the text-completion
+server setting, so this UI does not overwrite that unrelated setting.
 
 ### Connected, but the first reply fails
 
@@ -30,7 +73,8 @@ messages. The error `System message must be at the beginning` means its chat
 template rejected a later system instruction. Native post-history instructions
 can produce that message order even on the first reply.
 
-Open **Settings > Models & connections**. Under **Custom (OpenAI-compatible)**,
+Open **Settings > Story replies > Model connection**, then expand
+**Other providers and connection profiles**. Under **Custom (OpenAI-compatible)**,
 set **Prompt Post-Processing** to **Semi-strict (alternating roles; with tools)**,
 then return to the story and retry. This existing native setting retains the
 opening system message, converts later system messages to user messages, and
@@ -53,7 +97,7 @@ Story replies and the image writer are independent selections. Current chat mode
 is the default writer. A separate writer receives character descriptions,
 scenarios and the last eight non-system messages. Descriptions/scenarios are
 bounded to 3000 characters each, and each message to 2000. Writer instructions
-and maximum output tokens remain editable in Image generation. Direct image
+and maximum output tokens remain editable in **Image prompts**. Direct image
 prompts bypass the writer. The compatible writer sends thinking-off through
 the native Additional Parameters mechanism.
 
@@ -67,7 +111,7 @@ Voice discovery lists the voices the selected speech backend actually returns.
 Choose a voice before applying the speech connection. Existing character voice
 mappings stay saved. Narration remains off until Voice is enabled in the story.
 If discovery fails because a model is not loaded, load it on the server and
-re-select the model to retry. Other providers retain their native key settings.
+choose **Retry voices**. Other providers retain their native key settings.
 The current Juiced LAN runtime needs no key.
 
 Dictation requires HTTPS or localhost and browser microphone permission. Click
@@ -81,15 +125,17 @@ there. Compatible transcription uses the saved Custom OpenAI key when present.
 
 ## Existing settings and migration
 
-Existing settings load without a conversion or provider reset. Discovery alone
-does not change their native connections. Apply only the services you want to
+Existing settings load without a conversion or provider reset. Discovery does not change their native connections. Automatic context sizing,
+when explicitly enabled, can refresh the native context budget from metadata. Apply only the services you want to
 change. Existing Connection Manager profiles remain saved. Applying the same
 writer model/address reuses its profile rather than adding another copy.
 
 The setup stores only the discovery address as a preference. Models, voices,
 provider endpoints and generation settings stay with their native owners.
-Reloading clears the discovered list. Verify & discover refreshes it from the
-server and restores selections that are still available.
+The first service page opened after reload refreshes the saved server address
+once. **Servers > Verify & discover** retries or refreshes it. This read-only
+refresh restores selections that are still available; unavailable saved models
+show a message without replacing the native setting.
 
 Generic OpenAI-compatible servers can use chat-model discovery. Servers that do
 not advertise Juiced service discovery keep their native image/audio settings.

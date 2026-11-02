@@ -173,6 +173,7 @@ const textCompletionModels = [
 
 let biasCache = undefined;
 export let model_list = [];
+let customModelListUrl = '';
 
 export const chat_completion_sources = {
     OPENAI: 'openai',
@@ -504,6 +505,7 @@ const default_settings = {
     names_behavior: character_names_behavior.DEFAULT,
     continue_postfix: continue_postfix_types.SPACE,
     custom_prompt_post_processing: custom_prompt_post_processing_types.NONE,
+    custom_context_auto: true,
     show_thoughts: true,
     reasoning_effort: reasoning_effort_types.auto,
     verbosity: verbosity_levels.auto,
@@ -2065,6 +2067,7 @@ function saveModelList(data) {
     }
 
     if (oai_settings.chat_completion_source == chat_completion_sources.CUSTOM) {
+        customModelListUrl = oai_settings.custom_url.replace(/\/$/, '');
         $('.model_custom_select').empty();
         $('.model_custom_select').append('<option value="">None</option>');
         model_list.forEach((model) => {
@@ -2079,6 +2082,7 @@ function saveModelList(data) {
         if (!oai_settings.custom_model && model_list.length > 0) {
             $('#model_custom_select').val(model_list[0].id).trigger('change');
         }
+        applyCustomModelContext();
     }
 
     if (oai_settings.chat_completion_source == chat_completion_sources.AIMLAPI) {
@@ -4337,6 +4341,10 @@ function loadOpenAISettings(data, settings) {
 
     migrateChatCompletionSettings(settings);
 
+    // Existing compatible configurations retain their explicitly saved budget.
+    // New connections can use the configured limit reported by model discovery.
+    if (settings.custom_context_auto === undefined && settings.custom_url) settings.custom_context_auto = false;
+
     for (const key of Object.keys(default_settings)) {
         oai_settings[key] = settings[key] ?? default_settings[key];
         const settingToUpdate = Object.values(settingsToUpdate).find(([_, k]) => k === key);
@@ -5043,6 +5051,8 @@ function onSettingsPresetChange() {
             $('.model_custom_select').empty();
         }
 
+        // Choosing a preset's explicit context budget is a manual override.
+        if (preset.openai_max_context !== undefined && oai_settings.chat_completion_source === chat_completion_sources.CUSTOM) oai_settings.custom_context_auto = false;
         for (const [key, [selector, setting, isCheckbox, isConnection]] of Object.entries(settingsToUpdate)) {
             if (isConnection && !oai_settings.bind_preset_to_connection) {
                 continue;
@@ -6755,12 +6765,43 @@ function updateFeatureSupportFlags() {
 }
 
 /** Configure only the compatible connection. Sampling and saved profiles stay intact. */
-export function configureCustomConnection(url, model) {
+export function configureCustomConnection(url, model, { models, automaticContext } = {}) {
     $('#main_api').val('openai').trigger('change');
     $('#custom_api_url_text').val(url).trigger('input');
-    $('#custom_model_id').val(model).trigger('input');
     $('#chat_completion_source').val(chat_completion_sources.CUSTOM).trigger('change');
+    $('#custom_model_id').val(model).trigger('input');
+    if (typeof automaticContext === 'boolean') oai_settings.custom_context_auto = automaticContext;
+    if (models) saveModelList(models);
+    applyCustomModelContext();
     $('#api_button_openai').trigger('click');
+}
+
+/** Read configured capacity from the native model list. Training limits are informational. */
+export function getCustomModelContext() {
+    const matches = oai_settings.chat_completion_source === chat_completion_sources.CUSTOM && customModelListUrl === oai_settings.custom_url.replace(/\/$/, '');
+    const model = matches ? model_list.find(model => model.id === oai_settings.custom_model) : null;
+    const context = Number.isSafeInteger(model?.context_length) && model.context_length > 0 ? model.context_length : null;
+    return { model: oai_settings.custom_model, context, automatic: oai_settings.custom_context_auto, current: oai_settings.openai_max_context };
+}
+
+/** Refresh the native catalog only for the compatible connection it describes. */
+export function refreshCustomModelMetadata(url, models) {
+    if (oai_settings.chat_completion_source === chat_completion_sources.CUSTOM && oai_settings.custom_url.replace(/\/$/, '') === url.replace(/\/$/, '')) saveModelList(models);
+}
+
+/** Apply discovery to the native budget only while the user has chosen Automatic. */
+export function applyCustomModelContext(automatic) {
+    if (typeof automatic === 'boolean') oai_settings.custom_context_auto = automatic;
+    const info = getCustomModelContext();
+    if (oai_settings.chat_completion_source === chat_completion_sources.CUSTOM && info.automatic && info.context) {
+        const changed = oai_settings.openai_max_context !== info.context;
+        oai_settings.openai_max_context = info.context;
+        $('#openai_max_context').attr('max', Math.max(info.context, Number($('#openai_max_context').attr('max')) || 0)).val(info.context);
+        $('#openai_max_context_counter').val(info.context);
+        if (changed) saveSettingsDebounced();
+    }
+    if (typeof automatic === 'boolean') saveSettingsDebounced();
+    return getCustomModelContext();
 }
 
 export function initOpenAI() {
@@ -6830,13 +6871,17 @@ export function initOpenAI() {
         saveSettingsDebounced();
     });
 
-    $('#openai_max_context').on('input', function () {
+    $('#openai_max_context').on('input', function (event) {
+        if (event.originalEvent) oai_settings.custom_context_auto = false;
         oai_settings.openai_max_context = Number($(this).val());
         $('#openai_max_context_counter').val(`${$(this).val()}`);
         calculateOpenRouterCost();
         calculateElectronHubCost();
         calculateChutesCost();
         saveSettingsDebounced();
+    });
+    $('#openai_max_context_counter').on('input', function (event) {
+        if (event.originalEvent) oai_settings.custom_context_auto = false;
     });
 
     $('#openai_max_tokens').on('input', function () {
@@ -7095,6 +7140,7 @@ export function initOpenAI() {
 
     $('#custom_model_id').on('input', function () {
         oai_settings.custom_model = String($(this).val());
+        applyCustomModelContext();
         saveSettingsDebounced();
     });
 

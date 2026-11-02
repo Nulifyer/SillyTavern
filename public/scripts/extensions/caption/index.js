@@ -16,6 +16,19 @@ export { MODULE_NAME };
 
 const MODULE_NAME = 'caption';
 
+/** Use the existing compatible caption service with its own model, preserving story selection. */
+export function configureCompatibleCaption(model) {
+    extension_settings.caption.source = 'multimodal';
+    extension_settings.caption.multimodal_api = 'custom';
+    extension_settings.caption.multimodal_model = 'custom_custom';
+    extension_settings.caption.custom_model = model;
+    $('#caption_source').val('multimodal').trigger('change');
+    $('#caption_multimodal_api').val('custom').trigger('change');
+    $('#caption_multimodal_model').val('custom_custom').trigger('change');
+    $('#caption_custom_model').val(model).trigger('input');
+    saveSettingsDebounced();
+}
+
 const PROMPT_DEFAULT = 'What\'s in this image?';
 const TEMPLATE_DEFAULT = '[{{user}} sends {{char}} a picture that contains: {{caption}}]';
 const GOOGLE_MODEL_MIGRATIONS = new Map([

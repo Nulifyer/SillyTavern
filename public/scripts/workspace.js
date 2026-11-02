@@ -8,6 +8,7 @@ import { createGroupWithMembers, groups, selected_group } from './group-chats.js
 import { callGenericPopup, POPUP_RESULT, POPUP_TYPE } from './popup.js';
 import { shouldSendOnEnter } from './RossAscends-mods.js';
 import { accountStorage } from './util/AccountStorage.js';
+import { getChatCompletionModel, oai_settings } from './openai.js';
 import { WorkspaceChats } from './workspace-chats.js';
 import { WorkspaceSettings } from './workspace-settings.js';
 import { WorkspaceTools } from './workspace-tools.js';
@@ -101,6 +102,7 @@ async function openDrawer(action, trigger) {
     returnFocus = trigger || document.activeElement;
     setMobileNavigation(false);
     if (!document.body.classList.contains('workspace-ui')) {
+        if (!destination.drawer) return;
         await doNavbarIconClick.call(document.querySelector(`#${destination.drawer} > .drawer-toggle`));
         return;
     }
@@ -127,10 +129,6 @@ function renderPage() {
     state.entities = entities();
     state.currentKey = transcripts.current()?.key;
     state.generating = isGenerating();
-    state.creativeTools = {
-        voice: Boolean(extension_settings.tts?.enabled), image: Boolean(extension_settings.sd?.enabled),
-        voiceAvailable: Boolean(document.getElementById('tts_enabled')), imageAvailable: Boolean(document.getElementById('sd_enabled')),
-    };
     const next = element('section');
     next.append(renderWorkspaceView(state));
     morphdom(container, next, {
@@ -247,7 +245,9 @@ function refreshWorkspace() {
     document.getElementById('workspace-persona-name').textContent = name1 || 'Your persona';
     document.getElementById('workspace-connection-label').textContent = connected ? 'Model connected' : 'Connect a model';
     document.getElementById('workspace-connection-detail').textContent = connected ? online_status : 'Set up an API to write replies';
-    document.getElementById('workspace-model-chip').textContent = connected ? 'Model connected' : 'Connect model';
+    const modelLabel = connected && document.getElementById('main_api').value === 'openai' ? getChatCompletionModel(oai_settings) : connected ? online_status : 'Choose model';
+    document.getElementById('workspace-model-chip').textContent = modelLabel;
+    document.getElementById('workspace-model-chip').parentElement.title = modelLabel;
     const activeStory = document.getElementById('workspace-active-story');
     activeStory.hidden = !current || state.view === 'chat';
     activeStory.querySelector('strong').textContent = current?.file_name || '';
@@ -418,7 +418,8 @@ async function handleAction(action, target) {
     const dialog = document.getElementById('workspace-tools');
     const record = target.dataset.chat ? state.chats.find(item => item.key === target.dataset.chat) || (currentRecord()?.key === target.dataset.chat ? currentRecord() : null) : null;
     const entity = state.entities.find(item => item.key === target.dataset.entity);
-    if (['home', 'characters', 'chats', 'archive', 'settings-page'].includes(action)) return showView(action === 'home' ? 'chats' : action);
+    if (action === 'settings-page') return openDrawer('servers', target.element);
+    if (['home', 'characters', 'chats', 'archive'].includes(action)) return showView(action === 'home' ? 'chats' : action);
     if (workspaceSettings.some(item => item.id === action)) {
         dialog.close();
         return openDrawer(action, target.element);
@@ -521,6 +522,14 @@ function openSearch() {
 
 function applyLayout(enabled) {
     if (!enabled) settingsPanel.restore();
+    else {
+        // Classic drawers cannot remain above the workspace after a live switch.
+        for (const panel of document.querySelectorAll('#top-settings-holder .drawer-content.openDrawer')) {
+            panel.classList.replace('openDrawer', 'closedDrawer');
+        }
+        for (const icon of document.querySelectorAll('#top-settings-holder .openIcon')) icon.classList.replace('openIcon', 'closedIcon');
+    }
+    settingsPanel.setLayout(enabled);
     document.body.classList.toggle('workspace-ui', enabled);
     creativeTools.setLayout(enabled);
     setMobileNavigation(false);
@@ -557,8 +566,8 @@ export function initWorkspace() {
     const restore = button('Use workspace layout', 'restore-workspace', {}, 'workspace-restore menu_button', 'fa-table-columns');
     restore.id = 'workspace-restore';
     document.body.append(restore);
-    settingsPanel.init();
     creativeTools.init();
+    settingsPanel.init();
     const inspector = element('aside', 'workspace-only workspace-scene-info');
     inspector.id = 'workspace-scene-info';
     inspector.setAttribute('aria-label', 'Scene details');
@@ -572,11 +581,11 @@ export function initWorkspace() {
     for (const [id, label] of [['rm_button_create', 'Create'], ['character_import_button', 'Import'], ['rm_button_group_chats', 'New group']]) document.getElementById(id).append(element('span', 'workspace-only workspace-action-label', label));
     layoutToggle.addEventListener('change', () => { accountStorage.setItem('workspaceLayout', String(layoutToggle.checked)); applyLayout(layoutToggle.checked); });
     document.addEventListener('click', event => {
-        const target = event.target instanceof Element ? event.target.closest('[data-workspace-action]') : null;
+        const target = event.target instanceof Element ? event.target.closest('[data-workspace-action], [data-service-destination]') : null;
         if (!target) return;
         event.preventDefault();
         if (target.disabled) return;
-        const action = target.dataset.workspaceAction;
+        const action = target.dataset.workspaceAction || target.dataset.serviceDestination;
         const command = document.getElementById('workspace-command');
         if (command.open && action !== 'close-search') command.close();
         document.querySelectorAll('.workspace-scene-menu[open]').forEach(menu => menu.open = false);
@@ -596,18 +605,7 @@ export function initWorkspace() {
     document.addEventListener('change', event => {
         const target = event.target;
         if (!(target instanceof HTMLInputElement)) return;
-        if (target.dataset.workspaceCapability) {
-            const native = document.getElementById(target.dataset.workspaceCapability === 'voice' ? 'tts_enabled' : 'sd_enabled');
-            if (native && native.checked !== target.checked) native.click();
-        }
-        if (target.dataset.workspaceCapability || ['tts_enabled', 'sd_enabled'].includes(target.id)) {
-            refreshWorkspace();
-            if (state.view === 'settings-page') {
-                const capability = target.dataset.workspaceCapability;
-                renderPage();
-                if (capability) document.querySelector(`[data-workspace-capability="${capability}"]`).focus();
-            }
-        }
+        if (['tts_enabled', 'sd_enabled'].includes(target.id)) refreshWorkspace();
     });
     document.getElementById('workspace-search-button').addEventListener('click', openSearch);
     document.getElementById('workspace-menu').addEventListener('click', () => setMobileNavigation(!document.body.classList.contains('workspace-nav-open')));

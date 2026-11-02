@@ -11,17 +11,17 @@ export class WorkspaceSettings {
     }
 
     init() {
-        new ServiceConnections().init();
-        this.root = element('section', 'workspace-only workspace-settings-shell');
+        this.services = new ServiceConnections();
+        this.services.init();
+        this.root = element('section', 'workspace-only workspace-settings workspace-settings-shell');
         this.root.id = 'workspace-settings-shell';
         this.root.hidden = true;
         const rail = element('nav', 'workspace-settings-rail');
         rail.setAttribute('aria-label', 'Settings categories');
         rail.append(element('h2', '', 'Settings'));
         for (const [label, ids] of [
-            ['Writing', ['connection', 'generation', 'prompts']],
+            ['Model services', ['servers', 'connection', 'image-writer', 'image-settings', 'voice-settings', 'dictation-settings', 'vision-settings', 'embeddings-settings']],
             ['Story world', ['persona', 'world', 'backgrounds']],
-            ['Creative tools', ['voice-settings', 'dictation-settings', 'image-settings']],
             ['Workspace', ['settings', 'extensions', 'character-editor']],
         ]) {
             const group = element('div', 'workspace-settings-category');
@@ -43,16 +43,38 @@ export class WorkspaceSettings {
         this.close = button('Done', 'close-panel', {}, 'workspace-button', 'fa-check');
         header.append(text, this.close);
         this.host = element('div', 'workspace-settings-host');
+        this.storyTabs = element('nav', 'workspace-service-tabs');
+        this.storyTabs.setAttribute('aria-label', 'Story model settings');
+        for (const [id, label] of [['connection', 'Model connection'], ['generation', 'Reply controls'], ['prompts', 'Story prompts']]) {
+            const tab = button(label, id, {}, 'workspace-filter');
+            tab.dataset.serviceDestination = id;
+            delete tab.dataset.workspaceAction;
+            this.storyTabs.append(tab);
+        }
         this.sections = element('nav', 'workspace-settings-sections');
         this.sections.setAttribute('aria-label', 'Settings sections');
         this.sections.hidden = true;
-        content.append(header, this.sections, this.host);
+        content.append(header, this.storyTabs, this.sections, this.host);
         this.root.append(rail, content);
         document.getElementById('sheld').prepend(this.root);
         for (const setting of workspaceSettings) {
             const panel = document.getElementById(setting.panel);
+            if (!panel) continue;
             if (!this.origins.has(panel)) this.origins.set(panel, { parent: panel.parentNode, next: panel.nextSibling });
         }
+        this.promptManager = document.getElementById('completion_prompt_manager');
+        this.promptOrigin = { parent: this.promptManager.parentNode, next: this.promptManager.nextSibling };
+        this.promptHelp = element('p', 'workspace-only service-note', 'These are the instructions assembled for story replies. Character cards and lore can add further instructions. Select a prompt to inspect or edit it.');
+        const formatting = document.getElementById('AdvancedFormatting');
+        this.templateControls = element('details', 'service-native-controls service-template-controls');
+        this.templateControls.open = true;
+        this.templateControls.append(element('summary', 'workspace-only', 'Text completion templates and tokenization'), ...formatting.childNodes);
+        formatting.append(this.templateControls);
+    }
+
+    setLayout(workspace) {
+        this.services.setLayout(workspace);
+        if (!workspace) this.templateControls.open = true;
     }
 
     async open(id) {
@@ -60,7 +82,7 @@ export class WorkspaceSettings {
         if (!setting) return;
         this.restore();
         this.active = id;
-        this.heading.textContent = setting.label;
+        this.heading.textContent = ['generation', 'prompts'].includes(id) ? 'Story replies' : setting.label;
         this.description.textContent = setting.description;
         const panel = document.getElementById(setting.panel);
         panel.querySelectorAll('.workspace-advanced-creative').forEach(details => details.open = false);
@@ -73,7 +95,7 @@ export class WorkspaceSettings {
         this.root.querySelectorAll('[data-workspace-action]').forEach(control => {
             if (control.dataset.workspaceAction === 'close-panel') return;
             if (control.dataset.workspaceAction === 'character-editor') control.hidden = id !== 'character-editor';
-            const selected = control.dataset.workspaceAction === id;
+            const selected = control.dataset.workspaceAction === (['generation', 'prompts'].includes(id) ? 'connection' : id);
             control.classList.toggle('active', selected);
             if (selected) control.setAttribute('aria-current', 'page');
             else control.removeAttribute('aria-current');
@@ -94,14 +116,34 @@ export class WorkspaceSettings {
                 }
                 const toggle = section.querySelector('.inline-drawer-toggle');
                 if (toggle && !$(section.querySelector('.inline-drawer-content')).is(':visible')) toggle.click();
-            } else toastr.info('This extension is not loaded. Enable it in Extensions to use this tool.');
+            } else {
+                panel.classList.add('workspace-extension-section');
+                this.extensionBranches.push(panel);
+                this.empty = element('p', 'service-empty', 'This extension is not loaded. Enable it in Extensions to configure this service.');
+                this.host.append(this.empty);
+            }
         }
-        this.configureSections(id, panel);
+        const chatPrompts = id === 'prompts' && document.getElementById('main_api').value === 'openai';
+        if (!chatPrompts) this.configureSections(id, panel);
+        else { this.sections.replaceChildren(); this.sections.hidden = true; }
+        this.storyTabs.hidden = !['connection', 'generation', 'prompts'].includes(id);
+        this.storyTabs.querySelectorAll('button').forEach(tab => tab.setAttribute('aria-pressed', String(tab.dataset.serviceDestination === id)));
+        if (id === 'prompts') {
+            this.templateControls.open = !chatPrompts;
+            this.templateControls.dataset.primary = String(!chatPrompts);
+            if (chatPrompts) panel.prepend(this.promptHelp, this.promptManager);
+        }
+        this.services.opened(id);
         this.root.querySelector('.workspace-settings-content').scrollTop = 0;
         this.close.focus();
     }
 
     restore() {
+        this.empty?.remove();
+        this.promptHelp?.remove();
+        if (this.promptOrigin && this.promptManager.parentNode !== this.promptOrigin.parent) {
+            this.promptOrigin.parent.insertBefore(this.promptManager, this.promptOrigin.next?.parentNode === this.promptOrigin.parent ? this.promptOrigin.next : null);
+        }
         for (const node of this.sectionNodes) node.classList.remove('workspace-section-hidden');
         this.sectionNodes = [];
         for (const branch of this.extensionBranches) branch.classList.remove('workspace-extension-path', 'workspace-extension-section');

@@ -155,3 +155,24 @@ Native streamed replies kept the composer and character portrait mounted.
 Desktop and phone library, profile, Stories, Archive, chat, scene details, cast picker,
 settings categories, and editor layouts were inspected. Checks use controlled providers;
 they do not establish paid-provider output quality or audible speech quality.
+
+## Service workspace and composer, November 2
+
+Settings now opens directly to Servers and keeps the current story mounted.
+Service destinations own model selection and relevant native prompts. Story
+replies groups connection, reply controls and the prompt manager in three tabs.
+Image prompts separates native purpose templates from optional writer-only
+instructions. Provider/profile forms remain expandable. The redundant settings
+overview and its duplicated creative-tool toggles were removed.
+
+The composer adapts T3 Code's shell, editor surface, footer and context strip
+from commit `6f41364805e31a1f8d59c18c7cc451630cd9265d`. It moves the existing
+SillyTavern form, textarea and actions rather than creating another editor.
+Send/stop stay inside their native form ancestry. The model name appears in the
+footer; native draft, stream, extension menu and classic-layout owners remain.
+Assistant text has a flat reading surface and user messages have a quieter
+right-aligned bubble. Source and MIT notice: [ui-source-notices.md](ui-source-notices.md).
+
+Context sizing and migration follow [model-services.md](model-services.md).
+Reported runtime capacity takes precedence over training maximum only while
+Automatic is enabled. Existing explicit limits remain manual.

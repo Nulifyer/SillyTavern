@@ -1,0 +1,22 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep live Juiced --output=/tmp/st-source-live-final
+(node:1395450) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:1395466) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1395466) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1395466) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:1260:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting (10.9s)
+Live Juiced: discover and configure native providers
+Live Juiced: streaming story reply
+Live Juiced: configure image sampling and generate scene
+Live Juiced: configure vision and caption the synthetic scene
+Live Juiced: synthesize and decode speech
+Live Juiced: transcribe speech into draft
+  ✓  2 workspace.e2e.js:1397:1 › live Juiced services use native providers from the tested container (1.2m)
+
+  2 passed (1.4m)

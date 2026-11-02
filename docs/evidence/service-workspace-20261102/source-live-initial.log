@@ -1,0 +1,104 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep live Juiced|320px viewport|service setup --output=/tmp/st-source-live-results
+(node:1393811) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:1393827) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1393827) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1393827) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:1039:1 › service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server (3.9s)
+  ✘  2 workspace.e2e.js:1260:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting (13.5s)
+(node:1394098) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1394098) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1394098) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Live Juiced: discover and configure native providers
+Live Juiced: streaming story reply
+Live Juiced: configure image sampling and generate scene
+Live Juiced: configure vision and caption the synthetic scene
+Live Juiced: synthesize and decode speech
+Live Juiced: transcribe speech into draft
+  ✘  3 workspace.e2e.js:1397:1 › live Juiced services use native providers from the tested container (2.7m)
+(node:1395152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1395152) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1395152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  4 workspace.e2e.js:2061:3 › roleplay pages and composer stay within a 320px viewport (6.1s)
+
+
+  1) workspace.e2e.js:1260:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting
+
+    TimeoutError: locator.selectOption: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('#custom_prompt_post_processing')
+        - locator resolved to <select class="text_pole" id="custom_prompt_post_processing" title="Applies additional processing to the prompt before sending it to the API." data-i18n="[title]Applies additional processing to the prompt before sending it to the API.">…</select>
+      - attempting select option action
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+        - waiting 20ms
+        2 × waiting for element to be visible and enabled
+          - element is not visible
+        - retrying select option action
+          - waiting 100ms
+        20 × waiting for element to be visible and enabled
+           - element is not visible
+         - retrying select option action
+           - waiting 500ms
+
+
+      883 |     await page.locator('#service-chat-apply').click();
+      884 |     await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected', { timeout: 30000 });
+    > 885 |     await page.locator('#custom_prompt_post_processing').selectOption('');
+          |                                                          ^
+      886 |     await settingsCategory(page, 'connection');
+      887 |     await page.locator('#customize_additional_parameters').click();
+      888 |     await page.locator('dialog[open] #custom_include_body').fill('chat_template_kwargs:\n  enable_thinking: false');
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:885:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-source-live-results/workspace.e2e.js-live-Juic-268aa-gh-native-prompt-formatting/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-source-live-results/workspace.e2e.js-live-Juic-268aa-gh-native-prompt-formatting/error-context.md
+
+  2) workspace.e2e.js:1397:1 › live Juiced services use native providers from the tested container ─
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('#dictation-settings [role="status"]')
+    Expected substring: "Transcript added"
+    Error: strict mode violation: locator('#dictation-settings [role="status"]') resolved to 2 elements:
+        1) <p role="status" class="service-status">Saved. This service uses the selected model. Test…</p> aka locator('#service-transcribe-row').getByText('Saved. This service uses the')
+        2) <p role="status" class="service-status">Preparing audio…</p> aka getByLabel('Dictation', { exact: true }).getByText('Preparing audio…')
+
+    Call log:
+      - Expect "toContainText" with timeout 120000ms
+      - waiting for locator('#dictation-settings [role="status"]')
+
+
+      1079 |     console.log('Live Juiced: transcribe speech into draft');
+      1080 |     await page.locator('#dictation-file').setInputFiles({ name: 'neutral-speech.wav', mimeType: 'audio/wav', buffer: Buffer.from(audio.base64, 'base64') });
+    > 1081 |     await expect(page.locator('#dictation-settings [role="status"]')).toContainText('Transcript added', { timeout: 120000 });
+           |                                                                       ^
+      1082 |     const transcriptionSeconds = (Date.now() - transcriptionStart) / 1000;
+      1083 |     await page.keyboard.press('Escape');
+      1084 |     await returnToChat(page);
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1081:71
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-source-live-results/workspace.e2e.js-live-Juic-9aff6-s-from-the-tested-container/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-source-live-results/workspace.e2e.js-live-Juic-9aff6-s-from-the-tested-container/error-context.md
+
+  2 failed
+    workspace.e2e.js:1260:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting
+    workspace.e2e.js:1397:1 › live Juiced services use native providers from the tested container ──
+  2 passed (3.2m)

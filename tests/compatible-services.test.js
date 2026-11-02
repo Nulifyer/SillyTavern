@@ -59,6 +59,12 @@ describe('compatible service discovery and transcription', () => {
         expect(fetchMock.mock.calls.map(call => call[0])).toEqual(['http://fixture.example/.well-known/juiced.json', 'http://fixture.example/v1/models']);
     });
 
+    test('discovery preserves reported context limits without forwarding runtime internals', async () => {
+        fetchMock.mockResolvedValueOnce({ ok: false, status: 404 }).mockResolvedValueOnce(json({ data: [{ id: 'context-model', context_length: 16384, max_context_window: 262144, max_output_tokens: 2048, labels: ['chat', null], recipe_options: { secret: 'synthetic-private-value' } }] }));
+        const result = await post({ url: 'https://fixture.example' });
+        expect((await result.json()).services.chat.models).toEqual([{ id: 'context-model', context_length: 16384, max_context_window: 262144, max_output_tokens: 2048, labels: ['chat'] }]);
+    });
+
     test.each(['file:///tmp/fixture', 'https://user:secret@fixture.example', 'https://fixture.example?key=secret', 'invalid'])('rejects unsafe or ambiguous URL %s', async url => {
         const result = await post({ url });
         expect(result.status).toBe(400);

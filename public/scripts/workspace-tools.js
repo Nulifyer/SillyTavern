@@ -1,6 +1,7 @@
 import { extension_settings } from './extensions.js';
 import { button, element } from './workspace-views.js';
 import { Dictation } from './dictation.js';
+import { ComposerSurface } from './composer-surface.js';
 
 /** Scene actions use native providers; the toolbar stays mounted while replies stream. */
 export class WorkspaceTools {
@@ -22,6 +23,7 @@ export class WorkspaceTools {
         const microphone = element('button', 'workspace-tool-button workspace-dictation');
         microphone.type = 'button';
         microphone.id = 'workspace-dictation';
+        microphone.setAttribute('aria-label', 'Dictate');
         microphone.append(element('i', 'fa-solid fa-microphone'), element('span', '', 'Dictate'));
         toolbar.append(this.image, this.voice, microphone);
         const more = element('details', 'workspace-scene-menu workspace-creative-menu');
@@ -40,10 +42,20 @@ export class WorkspaceTools {
             button('Model settings', 'connection', {}, 'workspace-menu-action', 'fa-plug'),
         );
         more.append(summary, menu);
+        const placeMenu = () => {
+            if (!more.open) return;
+            menu.style.translate = '';
+            const bounds = menu.getBoundingClientRect();
+            const shift = Math.max(12 - bounds.left, Math.min(0, innerWidth - 12 - bounds.right));
+            menu.style.translate = `${shift}px 0`;
+        };
+        more.addEventListener('toggle', placeMenu);
+        window.addEventListener('resize', placeMenu);
         toolbar.append(more);
-        const model = button('', 'connection', {}, 'workspace-tool-button workspace-model-chip', 'fa-circle');
+        const model = button('', 'connection', {}, 'workspace-tool-button workspace-model-chip', 'fa-microchip');
+        model.setAttribute('aria-label', 'Story model settings');
         model.querySelector('span').id = 'workspace-model-chip';
-        toolbar.append(model);
+        toolbar.prepend(model);
         document.getElementById('form_sheld').append(toolbar);
         // Preserve native menu anchors and handlers in the secondary tools menu.
         for (const [id, label] of [['options_button', 'Chat actions'], ['extensionsMenuButton', 'Extension tools']]) {
@@ -66,9 +78,11 @@ export class WorkspaceTools {
         document.getElementById('form_sheld').prepend(this.status);
         this.dictation = new Dictation();
         this.dictation.init(microphone);
+        this.composer = new ComposerSurface(toolbar);
     }
 
     setLayout(workspace) {
+        this.composer.setLayout(workspace);
         for (const [control, origin] of this.menuOrigins) {
             if (workspace) this.menu.append(control);
             else origin.parent.insertBefore(control, origin.next?.parentNode === origin.parent ? origin.next : null);

@@ -230,6 +230,8 @@ const defaultStyles = [
 
 const placeholderVae = 'Automatic';
 
+const defaultWriterInstructions = 'Write a concrete visual description for an image model. Preserve the requested scene, subjects, actions and appearance. Latest scene details take precedence over older descriptions. Return only the image prompt.';
+
 const defaultSettings = {
     enabled: false,
     source: sources.extras,
@@ -544,7 +546,7 @@ async function loadSettings() {
     } else {
         $('#sd_prompt_writer_profile').prop('disabled', true);
     }
-    $('#sd_prompt_writer_instructions').val(extension_settings.sd.prompt_writer_instructions);
+    $('#sd_prompt_writer_instructions').val(extension_settings.sd.prompt_writer_instructions || defaultWriterInstructions);
     $('#sd_prompt_writer_max_tokens').val(extension_settings.sd.prompt_writer_max_tokens);
     $('#sd_vlad_url').val(extension_settings.sd.vlad_url);
     $('#sd_vlad_auth').val(extension_settings.sd.vlad_auth);
@@ -3358,7 +3360,7 @@ async function generatePrompt(quietPrompt) {
             const result = await ConnectionManagerRequestService.sendRequest(
                 extension_settings.sd.prompt_writer_profile,
                 [
-                    { role: 'system', content: extension_settings.sd.prompt_writer_instructions || 'Write a concrete visual description for an image model. Preserve the requested scene, subjects, actions and appearance. Latest scene details take precedence over older descriptions. Return only the image prompt.' },
+                    { role: 'system', content: extension_settings.sd.prompt_writer_instructions || defaultWriterInstructions },
                     { role: 'user', content: `Scene context:\n${JSON.stringify(scene)}\n\nImage request:\n${quietPrompt}` },
                 ],
                 extension_settings.sd.prompt_writer_max_tokens,

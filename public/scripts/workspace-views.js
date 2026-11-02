@@ -2,17 +2,21 @@ import { getThumbnailUrl, name1 } from '../script.js';
 import { translate } from './i18n.js';
 
 export const workspaceSettings = [
-    { id: 'connection', label: 'Models & connections', icon: 'fa-plug', description: 'Choose the model and provider that write your characters’ replies.', drawer: 'sys-settings-button', panel: 'rm_api_block' },
+    { id: 'servers', label: 'Servers', icon: 'fa-server', description: 'Connect once. Discover the models and capabilities available to each service.', panel: 'model-service-settings' },
+    { id: 'connection', label: 'Story replies', icon: 'fa-comment', description: 'Choose the model that writes the story, then tune its replies and instructions.', drawer: 'sys-settings-button', panel: 'rm_api_block' },
     { id: 'generation', label: 'Writing & replies', icon: 'fa-sliders', description: 'Reply length, creativity, context limits, and generation presets.', drawer: 'ai-config-button', panel: 'left-nav-panel' },
     { id: 'persona', label: 'Your persona', icon: 'fa-user', description: 'Choose who you are in the story, with a name, portrait, and description.', drawer: 'persona-management-button', panel: 'PersonaManagement' },
     { id: 'world', label: 'World & lore', icon: 'fa-book-atlas', description: 'Build places, history, and lorebooks for your characters.', drawer: 'WI-SP-button', panel: 'WorldInfo' },
-    { id: 'image-settings', label: 'Image generation', icon: 'fa-image', description: 'Connect an image provider and tune portraits and scene illustrations.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '.sd_settings' },
-    { id: 'voice-settings', label: 'Voice & narration', icon: 'fa-volume-high', description: 'Choose a speech provider, assign character voices, and set playback behavior.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '#tts_container' },
+    { id: 'image-writer', label: 'Image prompts', icon: 'fa-pen-nib', description: 'Choose an optional prompt-writing model and edit the instructions it receives.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '.sd_writer_settings' },
+    { id: 'image-settings', label: 'Images', icon: 'fa-image', description: 'Choose an image model, adjust generation settings and edit image prompts.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '.sd_image_settings' },
+    { id: 'voice-settings', label: 'Speech', icon: 'fa-volume-high', description: 'Choose a speech model and voice. Narration uses story text, not a separate chat prompt.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '#tts_container' },
     { id: 'dictation-settings', label: 'Dictation', icon: 'fa-microphone', description: 'Connect a transcription service and add microphone or audio-file transcripts to your draft.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '#dictation-settings' },
     { id: 'settings', label: 'Appearance & behavior', icon: 'fa-gear', description: 'Reading preferences, account controls, and the classic layout.', drawer: 'user-settings-button', panel: 'user-settings-block' },
     { id: 'backgrounds', label: 'Scene backgrounds', icon: 'fa-panorama', description: 'Choose the backdrop for your stories.', drawer: 'backgrounds-button', panel: 'Backgrounds' },
     { id: 'prompts', label: 'Advanced prompts', icon: 'fa-align-left', description: 'System prompts, instruction templates, and context formatting.', drawer: 'advanced-formatting-button', panel: 'AdvancedFormatting' },
     { id: 'extensions', label: 'Extensions', icon: 'fa-cubes', description: 'Manage additional tools and their full configuration.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block' },
+    { id: 'vision-settings', label: 'Vision & captions', icon: 'fa-eye', description: 'Choose a vision model and edit the instructions used to describe images.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '.caption_settings' },
+    { id: 'embeddings-settings', label: 'Retrieval', icon: 'fa-database', description: 'Configure embeddings and retrieval through the Vector Storage extension.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '.vectors_settings' },
     { id: 'character-editor', label: 'Character editor', icon: 'fa-address-card', description: 'Create, import, tag, and edit character cards and group behavior.', drawer: 'rightNavHolder', panel: 'right-nav-panel' },
 ];
 
@@ -275,66 +279,9 @@ function profile(state) {
     return page;
 }
 
-function settings(state) {
-    const page = element('div', 'workspace-page workspace-settings');
-    page.append(pageHeading('Settings', 'Configure your writing tools without losing your place in the story.'));
-    const layout = element('div', 'workspace-settings-overview');
-    const main = element('div');
-    for (const [heading, ids] of [
-        ['Writing', ['connection', 'generation', 'prompts']],
-        ['Your story world', ['persona', 'world', 'backgrounds']],
-        ['Workspace', ['settings', 'extensions']],
-    ]) {
-        const section = element('section', 'workspace-settings-group');
-        section.append(element('h2', '', heading));
-        for (const id of ids) {
-            const setting = workspaceSettings.find(item => item.id === id);
-            const row = button('', id, {}, 'workspace-settings-item');
-            row.replaceChildren(icon(setting.icon));
-            const text = element('span');
-            text.append(element('strong', '', setting.label), element('small', '', setting.description));
-            row.append(text, icon('fa-chevron-right'));
-            section.append(row);
-        }
-        main.append(section);
-    }
-    const creative = element('aside', 'workspace-settings-creative');
-    creative.append(element('h2', '', 'Creative tools'), element('p', '', 'Turn Voice on in the chat to hear replies. Illustrate scene creates one image when you click it. Dictation adds text to your draft.'));
-    for (const id of ['voice-settings', 'dictation-settings', 'image-settings']) {
-        const setting = workspaceSettings.find(item => item.id === id);
-        creative.append(button(setting.label, id, {}, 'workspace-button', setting.icon));
-    }
-    const tools = element('section', 'workspace-capabilities');
-    tools.setAttribute('aria-label', 'Optional creative tools');
-    tools.append(element('h3', '', 'Automatic tools'), element('p', '', 'Advanced extension behavior. Scene illustrations do not require automatic image tools.'));
-    for (const [kind, title, description] of [
-        ['voice', 'Voice narration', 'The same voice toggle as the chat screen.'],
-        ['image', 'Automatic image tools', 'Allow image commands, triggers, and model tools. Off by default.'],
-    ]) {
-        const label = element('label', 'workspace-capability');
-        const text = element('span');
-        text.append(element('strong', '', title), element('small', '', description));
-        const toggle = element('input');
-        toggle.type = 'checkbox';
-        toggle.setAttribute('aria-label', title);
-        toggle.dataset.workspaceCapability = kind;
-        toggle.checked = state.creativeTools[kind];
-        toggle.disabled = !state.creativeTools[`${kind}Available`];
-        label.append(text, toggle);
-        tools.append(label);
-    }
-    const advanced = element('details', 'workspace-profile-detail');
-    advanced.append(element('summary', '', 'Automatic tool preferences'), tools);
-    creative.append(advanced);
-    layout.append(main, creative);
-    page.append(layout);
-    return page;
-}
-
 export function renderWorkspaceView(state) {
     if (state.view === 'characters') return library(state);
     if (state.view === 'profile') return profile(state);
     if (state.view === 'archive') return conversations(state, true);
-    if (state.view === 'settings-page') return settings(state);
     return conversations(state, false);
 }

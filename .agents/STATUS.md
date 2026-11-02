@@ -9,58 +9,34 @@ Image index: sha256:1aeffc008478d6923152ae4dc61eb3115c56e97d0da3cb3a62b8cc17f4be
 
 ## Active tasks
 
-No active tasks. [Shared-screen follow-up](work/shared-screen-lifecycle.md)
-confirmed the affected instance is still v1.19.8. The
-[earlier UI repair and Juiced release](work/ui-juiced-release.md) is published.
-Homelab owns the later production update. Production stack69 and shared test85
-were never accessed or changed by this task.
+[Model service workspace and chat surface](work/service-workspace.md) is active.
+v1.19.10 source is implemented: one server hub, native service sections/prompts,
+automatic configured context with migration/manual overrides, and a T3-derived
+composer using the original form/editor/action nodes. No framework migration.
 
 ## Next action
 
-Homelab can deploy the immutable v1.19.9 index using docs/container-releases.md,
-preserving production volume identities and taking the normal private backup.
-User confirmed their affected page is v1.19.8. Production and test85 were not
-updated by this thread; publication alone did not deliver the fix to that page.
+Commit and publish v1.19.10 through GitHub Release, then pull
+and browser-test its actual GHCR image with five fresh synthetic volumes and no
+overlays. Return the immutable handoff for Homelab's later update.
 
 ## Blockers
 
-None. Do not infer broad audio-format support from the deployed FUTO backend;
-the documented 16 kHz WAV gap belongs to Juiced. Physical microphone hardware
-and audible quality remain unqualified.
+None. Production69 and shared test85 remain untouched. Physical microphone and
+audible quality remain unqualified. Retrieval retains native provider setup;
+no enabled embeddings model is currently reported by Juiced.
 
 ## Verification
 
-Lint, 423 unit tests, actionlint, continuity validation and all 27 browser cases
-passed. The 27 cases passed against both committed source and the actual pulled
-GHCR image. Real Juiced streaming story chat, independent writer/image, decoded
-speech and transcription passed. Settings survived native save/reload and local
-container restart; explicit native reconnect passed. Eighteen selected source
-files match the tag. Stock sd.cpp backend also matches v1.19.8 bytes.
+424 unit tests, lint, actionlint and continuity validation pass. Source browser
+coverage passed all31 controlled cases across the full30-pass run and corrected
+320px rerun; voice failure/retry passed separately. Both live cases pass, including the first-reply template failure/recovery,
+independent writer/image, Ornith vision caption, 28 voices, decoded Kokoro speech
+and dictation inserted without sending. Browser diagnostics report no page errors.
+Published-image verification remains pending.
 
-Local verified preview: http://127.0.0.1:8014, container st-ui-release-20261102,
-five fresh synthetic named volumes, no source overlays. Baseline/dev containers
-are stopped. Exact index/architecture identities, workflow and rollback are in
-docs/container-releases.md. Evidence: docs/evidence/ui-juiced-20261102/.
-
-## First-reply follow-up
-
-User reported the Jinja error `System message must be at the beginning`, then
-confirmed it occurs on the first reply. Their selected model remains unknown.
-Reproduced the exact error locally with Qwen3.5-2B and native post-history
-instructions. Native Prompt Post-Processing `semi_tools` resolves the tested
-case on v1.19.9, including save/reload, exact-story retry and 390px settings.
-Evidence: docs/evidence/first-reply-formatting-20261102/. No application code,
-image, server template or production settings were changed. The added live
-regression covers a message-order/model combination absent from the original
-27 cases. Steps and preset persistence caveat are in docs/model-services.md.
-Next user action: apply that native setting and retry. Homelab's later image
-handoff remains v1.19.9; no new container is required for this correction.
-
-## Shared-screen follow-up
-
-User confirmed v1.19.8 after reporting that image settings still disappear.
-The actual v1.19.9 image passed 27 browser cases with 2 live-service cases
-skipped. New coverage includes 33 category/control checkpoints at 1280/390/320px,
-direct category-rail switching and a delayed save completing after navigation.
-All 12 category screenshots were inspected at those widths. No new application
-change or release was needed. Evidence: docs/evidence/shared-screen-lifecycle-20261102/.
+Source preview: http://127.0.0.1:8013, st-ui-dev-20261102, four synthetic named
+volumes plus read-only public/src overlays. Prior actual v1.19.9 preview remains
+on8014. User last reported v1.19.8; this thread never deployed production.
+Evidence: docs/evidence/service-workspace-20261102/.
+Historical release, first-reply and shared-screen proofs remain in docs/evidence/.

@@ -38,7 +38,7 @@ export class Dictation {
         settings.append(element('h3', '', 'Microphone dictation'), element('p', '', 'Use a compatible transcription service to add text to your draft. Dictation never sends messages. Microphone access requires HTTPS or localhost and browser permission. Audio is sent as mono 16 kHz WAV. You can also transcribe an audio file up to 120 seconds long.'));
         this.endpoint = this.input(settings, 'dictation-endpoint', 'Transcription endpoint');
         this.model = this.input(settings, 'dictation-model', 'Transcription model');
-        settings.append(element('small', '', 'Uses the Custom OpenAI provider key when one is saved. Key-free servers need no key. Choose discovered models in Models & connections.'));
+        settings.append(element('small', '', 'Uses the Custom OpenAI provider key when one is saved. Key-free servers need no key. Choose discovered models in Settings > Dictation.'));
         const label = element('label', '', 'Transcribe audio into the current story draft');
         const upload = element('input', 'text_pole');
         upload.type = 'file';
@@ -46,6 +46,8 @@ export class Dictation {
         upload.id = 'dictation-file';
         label.htmlFor = upload.id;
         this.fileStatus = element('p', 'service-status');
+        this.fileStatus.id = 'dictation-file-status';
+        upload.setAttribute('aria-describedby', this.fileStatus.id);
         this.fileStatus.setAttribute('role', 'status');
         upload.addEventListener('change', async () => {
             const file = upload.files?.[0];

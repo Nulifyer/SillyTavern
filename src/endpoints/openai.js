@@ -783,7 +783,14 @@ custom.post('/discover', async (request, response) => {
             try {
                 const data = await get(`${base}/models${juiced ? `?service=${service}` : ''}`);
                 if (!Array.isArray(data.data)) throw new Error('Server did not return an OpenAI model list.');
-                services[service] = { models: data.data.filter(model => typeof model.id === 'string').map(model => ({ id: model.id, labels: model.labels || [] })) };
+                services[service] = { models: data.data.filter(model => typeof model.id === 'string').map(model => {
+                    const discovered = { id: model.id, labels: Array.isArray(model.labels) ? model.labels.filter(label => typeof label === 'string') : [] };
+                    // Keep reported limits, not backend arguments, paths or credentials.
+                    for (const key of ['context_length', 'max_context_window', 'max_output_tokens']) {
+                        if (Number.isSafeInteger(model[key]) && model[key] > 0) discovered[key] = model[key];
+                    }
+                    return discovered;
+                }) };
             } catch (error) {
                 services[service] = { models: [], error: error.message };
             }

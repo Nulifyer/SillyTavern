@@ -21,6 +21,25 @@ async function navigate(page, action) {
     await page.locator(selector).click();
 }
 
+async function settingsCategory(page, category, native = true) {
+    if (!await page.locator('#workspace-settings-shell').isVisible()) await navigate(page, 'settings-page');
+    if (['generation', 'prompts'].includes(category)) {
+        await page.locator('.workspace-settings-rail [data-workspace-action="connection"]').click();
+        await page.locator(`.workspace-service-tabs [data-service-destination="${category}"]`).click();
+    } else await page.locator(`.workspace-settings-rail [data-workspace-action="${category}"]`).click();
+    if (native) {
+        const controls = page.locator('.workspace-settings-host .service-native-controls');
+        for (let i = 0; i < await controls.count(); i++) {
+            const control = controls.nth(i);
+            if (!await control.evaluate(node => node.open) && await control.locator(':scope > summary').isVisible()) await control.locator(':scope > summary').click();
+        }
+    }
+}
+
+async function serviceCategory(page, service) {
+    return settingsCategory(page, { chat: 'connection', writer: 'image-writer', images: 'image-settings', speak: 'voice-settings', transcribe: 'dictation-settings', vision: 'vision-settings' }[service], false);
+}
+
 async function profile(page) {
     await navigate(page, 'characters');
     await page.locator('.workspace-library-card').first().click();
@@ -47,11 +66,17 @@ async function enableTool(page, name) {
 }
 
 async function returnToChat(page) {
+    if (await page.locator('#send_textarea').isVisible()) return;
     if (!await page.locator('#workspace-active-story').isVisible()) await page.locator('#workspace-menu').click();
     await page.locator('#workspace-active-story').click();
 }
 
 test.beforeEach(async ({ page }) => {
+    page.setDefaultTimeout(10000);
+    page.workspaceDiagnostics = { pageErrors: [], consoleErrors: [], failedRequests: [] };
+    page.on('pageerror', error => page.workspaceDiagnostics.pageErrors.push(error.message));
+    page.on('console', message => { if (message.type() === 'error') page.workspaceDiagnostics.consoleErrors.push(message.text()); });
+    page.on('requestfailed', request => page.workspaceDiagnostics.failedRequests.push({ url: request.url(), error: request.failure()?.errorText }));
     let savedSettings;
     await page.route('**/api/settings/get', async route => {
         const response = await route.fetch();
@@ -65,6 +90,7 @@ test.beforeEach(async ({ page }) => {
             settings.active_group = null;
             settings.power_user.auto_connect = false;
             settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true', workspaceArchivedChats: '[]' };
+            settings.extension_settings.serviceConnections = { url: '' };
             settings.extension_settings.tts = { ...settings.extension_settings.tts };
             settings.extension_settings.sd = { ...settings.extension_settings.sd };
             // Fixture runs must not inherit a reachable live provider from the
@@ -90,6 +116,8 @@ test.beforeEach(async ({ page }) => {
 
 test.afterEach(async ({ page }, testInfo) => {
     if (page.isClosed()) return;
+    fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+    expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
     const records = await api(page, '/api/chats/recent', {});
@@ -247,9 +275,10 @@ test('settings keep every native area reachable with Escape and focus restoratio
         ['settings', 'user-settings-block'], ['backgrounds', 'Backgrounds'], ['prompts', 'AdvancedFormatting'], ['extensions', 'rm_extensions_block'],
     ];
     for (const [action, panel] of destinations) {
-        await page.locator(`.workspace-settings [data-workspace-action="${action}"]`).click();
+        await settingsCategory(page, action);
         await expect(page.locator(`#${panel}`)).toBeVisible();
         await expect(page.locator('.drawer-content.openDrawer')).toHaveCount(1);
+        await page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]').focus();
         await expect(page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]')).toBeFocused();
         await expect(page.locator(`#workspace-settings-shell #${panel}`)).toHaveCount(1);
         await page.keyboard.press('Escape');
@@ -278,7 +307,7 @@ test('settings keep every native area reachable with Escape and focus restoratio
 });
 
 test('every settings category uses one control tree and fits desktop and phone', async ({ page }, testInfo) => {
-    const categories = ['connection', 'generation', 'persona', 'world', 'image-settings', 'voice-settings', 'dictation-settings', 'settings', 'backgrounds', 'prompts', 'extensions', 'character-editor'];
+    const categories = ['servers', 'image-writer', 'vision-settings', 'embeddings-settings', 'connection', 'generation', 'persona', 'world', 'image-settings', 'voice-settings', 'dictation-settings', 'settings', 'backgrounds', 'prompts', 'extensions', 'character-editor'];
     const nativeIds = await page.evaluate(() => [...document.querySelectorAll('.drawer-content input[id],.drawer-content select[id],.drawer-content textarea[id]')].map(e => e.id));
     for (const width of [1280, 390, 320]) {
         await page.setViewportSize({ width, height: 844 });
@@ -287,7 +316,7 @@ test('every settings category uses one control tree and fits desktop and phone',
             if (category === 'character-editor') {
                 await profile(page);
                 await page.getByRole('button', { name: 'Edit character', exact: true }).click();
-            } else await page.locator(`.workspace-settings [data-workspace-action="${category}"]`).click();
+            } else await settingsCategory(page, category, false);
             const panel = page.locator('.workspace-mounted-panel');
             await expect(panel).toHaveCount(1);
             const bounds = await panel.boundingBox();
@@ -325,9 +354,9 @@ test('settings sections, blank space and external dialogs never close mounted co
         for (const [category, sections] of [
             ['generation', ['Presets', 'Advanced sampling & prompts', 'Replies']],
             ['settings', ['Interaction', 'Reading & appearance']],
-            ['prompts', ['Context & stopping', 'Instruction template', 'System prompt']],
+
         ]) {
-            await page.locator(`.workspace-settings [data-workspace-action="${category}"]`).click();
+            await settingsCategory(page, category);
             const panel = page.locator('.workspace-mounted-panel');
             const original = await panel.elementHandle();
             for (let pass = 0; pass < 2; pass++) {
@@ -390,7 +419,7 @@ test('settings changes and late saves preserve every category through direct nav
             await page.locator('#openai_max_tokens').fill('128');
             await page.locator('#stream_toggle').check();
         }],
-        ['prompts', '#sysprompt_content', async () => page.locator('#sysprompt_content').fill('Describe a neutral red teapot and blue book.')],
+        ['prompts', '#completion_prompt_manager', async () => page.locator('.workspace-service-tabs [data-service-destination="prompts"]').click()],
         ['persona', '#persona_description_position', async () => page.locator('#persona_show_notifications').click()],
         ['world', '#world_info_search', async () => page.locator('#world_info_search').fill('Synthetic forest')],
         ['backgrounds', '#background_fitting', async () => {
@@ -421,12 +450,12 @@ test('settings changes and late saves preserve every category through direct nav
         ['extensions', '#extensions_notify_updates', async () => page.locator('#extensions_notify_updates').click()],
     ];
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'connection');
     for (const width of [1280, 390, 320]) {
         await page.setViewportSize({ width, height: 844 });
         for (const [category, control, change] of cases) {
             console.log(`Settings mutation: ${width}px ${category}`);
-            await page.locator(`.workspace-settings-rail [data-workspace-action="${category}"]`).click();
+            await settingsCategory(page, category);
             const panel = await page.locator('.workspace-mounted-panel').elementHandle();
             await change();
             if (width === 1280 && category === 'connection') await saveStarted;
@@ -476,7 +505,7 @@ test('dictation settings remain available when the optional TTS extension is dis
     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
     await expect(page.locator('#tts_enabled')).toHaveCount(0);
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="dictation-settings"]').click();
+    await settingsCategory(page, 'dictation-settings');
     await expect(page.locator('#dictation-endpoint')).toBeVisible();
     await expect(page.locator('#dictation-file')).toBeEnabled();
     await page.locator('#dictation-endpoint').fill('https://synthetic.example/v1/audio/transcriptions');
@@ -486,7 +515,7 @@ test('dictation settings remain available when the optional TTS extension is dis
 
 async function serviceSetup(page) {
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'servers');
     await page.locator('#service-server-url').fill('https://synthetic.example/v1');
     await page.locator('#service-discover').click();
     await expect(page.locator('#service-discovery-status')).toContainText('Connected to Juiced');
@@ -512,20 +541,25 @@ test('one server configures native services and survives reload without replacin
     for (const width of [1280, 390]) {
         await page.setViewportSize({ width, height: 844 });
         await serviceSetup(page);
+        await serviceCategory(page, 'chat');
         await page.locator('#service-chat-model').selectOption('story-fixture');
         await page.locator('#service-chat-apply').click();
         await expect(page.locator('#service-chat-row')).toContainText('Saved.');
+        await serviceCategory(page, 'writer');
         await page.locator('#service-writer-model').selectOption('writer-fixture');
         await page.locator('#service-writer-apply').click();
         await expect(page.locator('#service-writer-row')).toContainText('Saved.');
+        await serviceCategory(page, 'images');
         await page.locator('#service-images-model').selectOption('image-fixture');
         await page.locator('#service-images-apply').click();
         await expect(page.locator('#service-images-row')).toContainText('Saved.');
+        await serviceCategory(page, 'speak');
         await page.locator('#service-speak-model').selectOption('speech-fixture');
         await expect(page.locator('#service-speak-voice option')).toHaveCount(2);
         await page.locator('#service-speak-voice').selectOption('voice-b');
         await page.locator('#service-speak-apply').click();
         await expect(page.locator('#service-speak-row')).toContainText('Saved.');
+        await serviceCategory(page, 'transcribe');
         await page.locator('#service-transcribe-model').selectOption('transcription-fixture');
         await page.locator('#service-transcribe-apply').click();
         await expect(page.locator('#service-transcribe-row')).toContainText('Saved.');
@@ -548,22 +582,146 @@ test('one server configures native services and survives reload without replacin
     await page.reload();
     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'servers');
     await expect(page.locator('#service-server-url')).toHaveValue('https://synthetic.example');
-    await expect(page.locator('#service-chat-model')).toHaveCount(0);
-    await page.locator('#service-discover').click();
     await expect(page.locator('#service-chat-model')).toHaveValue('story-fixture');
     await expect(page.locator('#service-writer-model')).toHaveValue('writer-fixture');
     expect(discoveryCalls).toBe(3);
 });
 
+test('discovered context uses configured capacity, preserves manual overrides and survives reload', async ({ page }, testInfo) => {
+    const data = serviceFixture();
+    data.services.chat.models = [{ id: 'story-fixture', context_length: 16384, max_context_window: 262144 }, { id: 'writer-fixture', context_length: 32768 }, { id: 'unknown-fixture' }];
+    await page.route('**/api/openai/custom/discover', route => route.fulfill({ json: data }));
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: data.services.chat.models } }));
+    await page.evaluate(async () => {
+        const { oai_settings } = await import('/scripts/openai.js');
+        oai_settings.custom_context_auto = true;
+    });
+    await serviceSetup(page);
+    await serviceCategory(page, 'chat');
+    await page.locator('#service-chat-model').selectOption('story-fixture');
+    await page.locator('#service-chat-apply').click();
+    await expect(page.locator('#service-chat-context')).toContainText('16,384');
+    await expect(page.locator('#service-chat-auto-context')).toBeChecked();
+    expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.openai_max_context)).toBe(16384);
+    await settingsCategory(page, 'generation');
+    await page.locator('#openai_max_context_counter').fill('8192');
+    await page.locator('#openai_max_context_counter').press('Tab');
+    await serviceCategory(page, 'chat');
+    await expect(page.locator('#service-chat-auto-context')).not.toBeChecked();
+    await page.locator('#service-chat-model').selectOption('writer-fixture');
+    await page.locator('#service-chat-apply').click();
+    await expect(page.locator('#service-chat-context')).toContainText('Custom: 8,192');
+    await page.locator('#service-chat-auto-context').check();
+    await expect(page.locator('#service-chat-context')).toContainText('Automatic: 32,768');
+    await page.locator('#service-chat-model').selectOption('unknown-fixture');
+    await page.locator('#service-chat-apply').click();
+    await expect(page.locator('#service-chat-context')).toContainText('not reported');
+    expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.openai_max_context)).toBe(32768);
+    await page.locator('#service-chat-model').selectOption('story-fixture');
+    await page.locator('#service-chat-apply').click();
+    await page.evaluate(async () => await (await import('/script.js')).saveSettings());
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await serviceCategory(page, 'chat');
+    await expect(page.locator('#service-chat-context')).toContainText('Automatic: 16,384');
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.screenshot({ path: testInfo.outputPath('discovered-context-phone.png') });
+    const ids = await page.locator('#service-chat-auto-context').count();
+    expect(ids).toBe(1);
+    await settingsCategory(page, 'generation');
+    await page.locator('[data-workspace-action="settings-section"][data-section="Presets"]').click();
+    await page.evaluate(async () => { (await import('/scripts/openai.js')).oai_settings.bind_preset_to_connection = false; });
+    await page.locator('#settings_preset_openai').selectOption({ index: 0 });
+    await page.evaluate(async () => await (await import('/scripts/openai.js')).getPresetApplicationPromise());
+    await serviceCategory(page, 'chat');
+    await expect(page.locator('#service-chat-auto-context')).not.toBeChecked();
+});
+
+test('service prompt editors save native values and composer nodes survive classic round trips', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} prompts`);
+    const editor = await page.locator('#send_textarea').elementHandle();
+    const form = await page.locator('#send_form').elementHandle();
+    await page.locator('#send_textarea').fill('A synthetic draft with a blue book.');
+    await settingsCategory(page, 'prompts', false);
+    const manager = await page.locator('#completion_prompt_manager').elementHandle();
+    await page.locator('.completion_prompt_manager_prompt[data-pm-identifier="main"] .prompt-manager-edit-action').click();
+    await page.locator('#completion_prompt_manager_popup_entry_form_prompt').fill('Write the next neutral scene with {{char}} and {{user}}.');
+    await page.locator('#completion_prompt_manager_popup_entry_form_save').click();
+    await expect(page.locator('#completion_prompt_manager_popup')).toBeHidden();
+    await expect(page.locator('.workspace-mounted-panel')).toBeVisible();
+    await settingsCategory(page, 'image-writer', false);
+    await page.locator('#service-image-prompt-purpose').selectOption('sd_prompt_2');
+    await page.locator('#sd_prompt_2').fill('Preserve the current blue book and red teapot.');
+    await page.locator('#service-image-prompt-purpose').selectOption('sd_prompt_0');
+    await expect(page.locator('#sd_prompt_2')).toBeHidden();
+    await page.locator('#service-image-prompt-purpose').selectOption('sd_prompt_2');
+    await expect(page.locator('#sd_prompt_2')).toHaveValue('Preserve the current blue book and red teapot.');
+    await page.screenshot({ path: testInfo.outputPath('image-prompts.png') });
+    await settingsCategory(page, 'settings');
+    await page.locator('#workspace-layout-toggle').uncheck();
+    await expect(page.locator('body')).not.toHaveClass(/workspace-ui/);
+    expect(await editor.evaluate(node => node === document.getElementById('send_textarea'))).toBe(true);
+    expect(await form.evaluate(node => node === document.getElementById('send_form') && node.parentElement.id === 'form_sheld')).toBe(true);
+    expect(await manager.evaluate(node => node.parentElement.id !== 'AdvancedFormatting')).toBe(true);
+    await page.locator('#user-settings-button > .drawer-toggle').click();
+    await page.locator('#workspace-layout-toggle').check();
+    await expect(page.locator('body')).toHaveClass(/workspace-ui/);
+    await returnToChat(page);
+    await expect(page.locator('#send_textarea')).toHaveValue('A synthetic draft with a blue book.');
+    await settingsCategory(page, 'prompts', false);
+    await page.locator('.completion_prompt_manager_prompt[data-pm-identifier="main"] .prompt-manager-edit-action').click();
+    await expect(page.locator('#completion_prompt_manager_popup_entry_form_prompt')).toHaveValue('Write the next neutral scene with {{char}} and {{user}}.');
+    await page.locator('#completion_prompt_manager_popup_entry_form_close').click();
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.screenshot({ path: testInfo.outputPath('story-prompts-phone.png') });
+});
+
+for (const existing of [false, true]) {
+    test(`${existing ? 'existing explicit' : 'fresh'} compatible connection migrates context preference`, async ({ page }) => {
+        await page.route('**/api/settings/get', async route => {
+            const response = await route.fetch();
+            const body = await response.json();
+            const settings = JSON.parse(body.settings);
+            settings.firstRun = false;
+            settings.main_api = 'openai';
+            settings.oai_settings.custom_url = existing ? 'https://synthetic.example/v1' : '';
+            settings.oai_settings.custom_model = 'story-fixture';
+            settings.oai_settings.chat_completion_source = 'custom';
+            settings.oai_settings.openai_max_context = 8192;
+            delete settings.oai_settings.custom_context_auto;
+            settings.extension_settings.serviceConnections = { url: '' };
+            settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true' };
+            body.settings = JSON.stringify(settings);
+            await route.fulfill({ response, json: body });
+        });
+        await page.reload();
+        await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+        const data = serviceFixture();
+        data.services.chat.models[0].context_length = 16384;
+        await page.route('**/api/openai/custom/discover', route => route.fulfill({ json: data }));
+        await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: data.services.chat.models } }));
+        await serviceSetup(page);
+        await serviceCategory(page, 'chat');
+        if (existing) await expect(page.locator('#service-chat-auto-context')).not.toBeChecked();
+        else await expect(page.locator('#service-chat-auto-context')).toBeChecked();
+        await page.locator('#service-chat-model').selectOption('story-fixture');
+        await page.locator('#service-chat-apply').click();
+        expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.openai_max_context)).toBe(existing ? 8192 : 16384);
+    });
+}
+
 test('service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server', async ({ page }) => {
     let attempt = 0;
+    let voiceAttempts = 0;
     let finishSlow;
     const slow = new Promise(resolve => finishSlow = resolve);
     await page.route('**/api/openai/custom/discover', async route => {
         const body = route.request().postDataJSON();
-        if (body.voice_model) return route.fulfill({ status: 409, json: { error: 'Load the speech model before listing its voices' } });
+        if (body.voice_model) return voiceAttempts++ === 0
+            ? route.fulfill({ status: 409, json: { error: 'Load the speech model before listing its voices' } })
+            : route.fulfill({ json: { voices: ['voice-retry-fixture'] } });
         if (body.url.includes('slow')) { await slow; return route.fulfill({ json: serviceFixture() }).catch(() => {}); }
         if (attempt++ === 0) return route.fulfill({ status: 502, json: { error: 'Synthetic connection failure' } });
         const data = serviceFixture();
@@ -571,16 +729,21 @@ test('service setup reports failure, missing capability and voice errors; stale 
         return route.fulfill({ json: data });
     });
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'servers');
     await page.locator('#service-server-url').fill('https://synthetic.example');
     await page.locator('#service-discover').click();
     await expect(page.locator('#service-discovery-status')).toContainText('Synthetic connection failure');
     await page.locator('#service-discover').click();
-    await expect(page.locator('#service-transcribe-row')).toContainText('No enabled models');
+    await expect(page.locator('#service-transcribe-row')).toContainText(/No enabled models|not enabled on this server/);
     await expect(page.locator('#service-transcribe-apply')).toBeDisabled();
+    await serviceCategory(page, 'speak');
     await page.locator('#service-speak-model').selectOption('speech-fixture');
     await expect(page.locator('#service-speak-row')).toContainText('Load the speech model');
     await expect(page.locator('#service-speak-apply')).toBeDisabled();
+    await page.locator('#service-speak-retry').click();
+    await expect(page.locator('#service-speak-voice')).toHaveValue('voice-retry-fixture');
+    await expect(page.locator('#service-speak-apply')).toBeEnabled();
+    await settingsCategory(page, 'servers');
     await page.locator('#service-server-url').fill('https://slow.example');
     await page.locator('#service-discover').click();
     await expect(page.locator('#service-discovery-status')).toContainText('Checking connection');
@@ -588,7 +751,7 @@ test('service setup reports failure, missing capability and voice errors; stale 
     await navigate(page, 'characters');
     await expect(page.locator('.workspace-library-grid')).toBeVisible();
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'servers');
     await page.locator('#service-server-url').fill('https://new.example');
     finishSlow();
     await expect(page.locator('#service-discovery-status')).toContainText('Verify this address');
@@ -711,13 +874,15 @@ test('live Juiced first reply with post-history instructions recovers through na
         if (request.url().endsWith('/api/backends/chat-completions/generate')) requests.push(request.postDataJSON());
     });
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'servers');
     await page.locator('#service-server-url').fill(process.env.ST_JUICED_URL);
     await page.locator('#service-discover').click();
-    await expect(page.locator('#service-chat-model')).toBeVisible({ timeout: 30000 });
+    await expect(page.locator('#service-discovery-status')).toContainText('Connected to Juiced', { timeout: 30000 });
+    await serviceCategory(page, 'chat');
     await page.locator('#service-chat-model').selectOption(model);
     await page.locator('#service-chat-apply').click();
     await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected', { timeout: 30000 });
+    await settingsCategory(page, 'connection');
     await page.locator('#custom_prompt_post_processing').selectOption('');
     await page.locator('#customize_additional_parameters').click();
     await page.locator('dialog[open] #custom_include_body').fill('chat_template_kwargs:\n  enable_thinking: false');
@@ -744,13 +909,13 @@ test('live Juiced first reply with post-history instructions recovers through na
     const failedResponse = await page.locator('.toast-error').last().innerText();
     expect(requests[0].messages.slice(1).some(message => message.role === 'system')).toBe(true);
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'connection');
     await page.locator('#custom_prompt_post_processing').selectOption({ label: 'Semi-strict (alternating roles; with tools)' });
     await page.evaluate(async () => await (await import('/script.js')).saveSettings());
     await page.reload();
     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'connection');
     await expect(page.locator('#custom_prompt_post_processing')).toHaveValue('semi_tools');
     await page.locator('#api_button_openai').click();
     await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
@@ -770,7 +935,7 @@ test('live Juiced first reply with post-history instructions recovers through na
     await page.screenshot({ path: testInfo.outputPath('first-reply-formatting-recovered.png') });
     await page.setViewportSize({ width: 390, height: 844 });
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'connection');
     await page.locator('#custom_prompt_post_processing').scrollIntoViewIfNeeded();
     await expect(page.locator('#custom_prompt_post_processing')).toBeVisible();
     await expect(page.locator('#custom_prompt_post_processing')).toHaveValue('semi_tools');
@@ -799,28 +964,31 @@ test('live Juiced services use native providers from the tested container', asyn
     const start = Date.now();
     console.log('Live Juiced: discover and configure native providers');
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await settingsCategory(page, 'servers');
     await page.locator('#service-server-url').fill(process.env.ST_JUICED_URL);
     await page.locator('#service-discover').click();
     await expect(page.locator('#service-discovery-status')).toContainText('Connected to Juiced', { timeout: 60000 });
-    const discovered = await page.locator('.service-results select').evaluateAll(selects => selects.map(select => ({ id: select.id, options: [...select.options].map(option => option.value) })));
+    const discovered = await page.locator('.service-setup select').evaluateAll(selects => selects.map(select => ({ id: select.id, options: [...select.options].map(option => option.value) })));
     for (const [service, model] of [['chat', storyModel], ['writer', writerModel], ['images', 'z-image-turbo-nsfw-v2-GGUF-Q8_0'], ['transcribe', 'asr4all-l-gptq-Q8_0']]) {
+        await serviceCategory(page, service);
         await page.locator(`#service-${service}-model`).selectOption(model);
         await page.locator(`#service-${service}-apply`).click();
         await expect(page.locator(`#service-${service}-row`)).toContainText('Saved.', { timeout: 30000 });
     }
+    await serviceCategory(page, 'speak');
     await page.locator('#service-speak-model').selectOption('kokoro-v1');
     await expect(page.locator('#service-speak-voice')).toBeEnabled({ timeout: 30000 });
     const voices = await page.locator('#service-speak-voice option').allTextContents();
     await page.locator('#service-speak-voice').selectOption('af_heart');
     await page.locator('#service-speak-apply').click();
     await expect(page.locator('#service-speak-row')).toContainText('Saved.');
+    await settingsCategory(page, 'connection');
     await page.locator('#customize_additional_parameters').click();
     await page.locator('dialog[open] #custom_include_body').fill('chat_template_kwargs:\n  enable_thinking: false');
     await page.locator('dialog[open] .popup-button-ok').click();
     await page.keyboard.press('Escape');
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="generation"]').click();
+    await settingsCategory(page, 'generation');
     await page.locator('#oai_max_context_unlocked').check();
     await page.locator('#openai_max_context_counter').fill('16384');
     await page.locator('#openai_max_context_counter').press('Tab');
@@ -843,13 +1011,14 @@ test('live Juiced services use native providers from the tested container', asyn
     const chatSeconds = (Date.now() - start) / 1000;
     console.log('Live Juiced: configure image sampling and generate scene');
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="image-settings"]').click();
+    await settingsCategory(page, 'image-settings');
     for (const [id, value] of [['sd_width', '512'], ['sd_height', '512'], ['sd_steps', '8'], ['sd_scale', '1']]) {
         await page.locator(`#${id}_value`).fill(value);
         await page.locator(`#${id}_value`).press('Tab');
     }
     await page.locator('#sd_sampler').selectOption('euler');
     await page.locator('#sd_scheduler').selectOption('simple');
+    await settingsCategory(page, 'image-writer');
     await page.locator('#sd_prompt_writer_instructions').fill('Write a neutral, nonexplicit image prompt. Preserve the latest red teapot and blue book, current location, character identity and actions. Return only the image prompt.');
     await page.locator('#sd_prompt_writer_max_tokens').fill('512');
     await page.keyboard.press('Escape');
@@ -866,6 +1035,25 @@ test('live Juiced services use native providers from the tested container', asyn
     expect(requests.filter(request => request.path.endsWith('/sd/sdcpp/generate'))).toHaveLength(1);
     await page.screenshot({ path: testInfo.outputPath('live-story-image-desktop.png') });
     const speechStart = Date.now();
+    console.log('Live Juiced: configure vision and caption the synthetic scene');
+    await settingsCategory(page, 'vision-settings', false);
+    const visionModel = await page.locator('#service-vision-model option').evaluateAll(options => options.map(option => option.value).find(value => value.startsWith('Ornith-')));
+    expect(visionModel).toBeTruthy();
+    await page.locator('#service-vision-model').selectOption(visionModel);
+    await page.locator('#service-vision-apply').click();
+    await expect(page.locator('#service-vision-row')).toContainText('Saved.');
+    await page.locator('#caption_prompt').fill('Briefly describe the visible objects and colors in this neutral scene.');
+    await page.keyboard.press('Escape');
+    const caption = await page.evaluate(async () => {
+        const image = document.querySelector('#chat .mes[is_user="false"] img.mes_img');
+        const blob = await (await fetch(image.src)).blob();
+        const encoded = await new Promise(resolve => { const reader = new FileReader(); reader.onload = () => resolve(reader.result); reader.readAsDataURL(blob); });
+        const { getMultimodalCaption } = await import('/scripts/extensions/shared.js');
+        const { extension_settings } = await import('/scripts/extensions.js');
+        return getMultimodalCaption(encoded, extension_settings.caption.prompt);
+    });
+    expect(caption.length).toBeGreaterThan(10);
+    expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.custom_model)).toBe(storyModel);
     console.log('Live Juiced: synthesize and decode speech');
     const audio = await page.evaluate(async () => {
         const { getRequestHeaders } = await import('/script.js');
@@ -886,11 +1074,11 @@ test('live Juiced services use native providers from the tested container', asyn
     await page.locator('#send_textarea').fill(draft);
     const messageCount = await page.locator('#chat .mes').count();
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="dictation-settings"]').click();
+    await settingsCategory(page, 'dictation-settings');
     const transcriptionStart = Date.now();
     console.log('Live Juiced: transcribe speech into draft');
     await page.locator('#dictation-file').setInputFiles({ name: 'neutral-speech.wav', mimeType: 'audio/wav', buffer: Buffer.from(audio.base64, 'base64') });
-    await expect(page.locator('#dictation-settings [role="status"]')).toContainText('Transcript added', { timeout: 120000 });
+    await expect(page.locator('#dictation-file-status')).toContainText('Transcript added', { timeout: 120000 });
     const transcriptionSeconds = (Date.now() - transcriptionStart) / 1000;
     await page.keyboard.press('Escape');
     await returnToChat(page);
@@ -900,7 +1088,7 @@ test('live Juiced services use native providers from the tested container', asyn
     expect(await page.locator('#chat .mes').count()).toBe(messageCount);
     await page.setViewportSize({ width: 390, height: 844 });
     await page.screenshot({ path: testInfo.outputPath('live-story-mobile.png') });
-    const summary = { server: process.env.ST_JUICED_URL, base: process.env.ST_BASE_URL, discovered, voices, storyModel, writerModel, storyText, transcriptDraft, audio: { type: audio.type, bytes: audio.bytes, duration: audio.duration }, seconds: { chatAndSetup: chatSeconds, writerAndImage: imageSeconds, speech: speechSeconds, transcription: transcriptionSeconds }, requests, errors };
+    const summary = { server: process.env.ST_JUICED_URL, base: process.env.ST_BASE_URL, discovered, voices, storyModel, writerModel, visionModel, caption, storyText, transcriptDraft, audio: { type: audio.type, bytes: audio.bytes, duration: audio.duration }, seconds: { chatAndSetup: chatSeconds, writerAndImage: imageSeconds, speech: speechSeconds, transcription: transcriptionSeconds }, requests, errors };
     fs.writeFileSync(testInfo.outputPath('live-juiced-summary.json'), JSON.stringify(summary, null, 2));
     await testInfo.attach('live-juiced-summary.json', { body: JSON.stringify(summary, null, 2), contentType: 'application/json' });
     await testInfo.attach('neutral-speech.wav', { body: Buffer.from(audio.base64, 'base64'), contentType: 'audio/wav' });
@@ -922,6 +1110,7 @@ test('search opens character profiles and a fixture model generates through the 
         return route.fulfill({ json: { choices: [{ message: { content: 'The forest path opens before you.' } }] } });
     });
     await page.locator('.workspace-model-chip').click();
+    await settingsCategory(page, 'connection');
     await page.locator('#chat_completion_source').selectOption('custom');
     await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
     await page.locator('#custom_model_id').fill('workspace-fixture');
@@ -929,7 +1118,7 @@ test('search opens character profiles and a fixture model generates through the 
     await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
     await page.keyboard.press('Escape');
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="generation"]').click();
+    await settingsCategory(page, 'generation');
     await page.locator('#stream_toggle').uncheck();
     await page.keyboard.press('Escape');
     await returnToChat(page);
@@ -942,8 +1131,8 @@ test('search opens character profiles and a fixture model generates through the 
     }
     await page.locator('#send_textarea').fill('Which path should we take?');
     const singleLine = await page.locator('#send_form').boundingBox();
-    expect(singleLine.height).toBeLessThanOrEqual(50);
-    await page.locator('#send_textarea').fill('Which path should we take?\nThe forest is quiet.\nI watch the trees.');
+    expect(singleLine.height).toBeLessThanOrEqual(160);
+    await page.locator('#send_textarea').fill('Which path should we take?\nThe forest is quiet.\nI watch the trees.\nA blue book sits nearby.\nThe teapot is red.\nWe wait.');
     await expect.poll(async () => (await page.locator('#send_form').boundingBox()).height).toBeGreaterThan(singleLine.height + 30);
     await page.locator('#send_textarea').fill('Which path should we take?');
     await page.locator('#send_but').click();
@@ -995,6 +1184,7 @@ test('native streamed replies keep the composer and character identity mounted',
         return route.fulfill({ status: 200, contentType: 'text/event-stream', body });
     });
     await page.locator('.workspace-model-chip').click();
+    await settingsCategory(page, 'connection');
     await page.locator('#chat_completion_source').selectOption('custom');
     await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
     await page.locator('#custom_model_id').fill('workspace-fixture');
@@ -1059,6 +1249,7 @@ test('one scene click generates one native illustration with automatic tools off
         return route.fulfill({ json: { choices: [{ message: { content: 'forest clearing, pink-haired guardian, warm lantern light' } }] } });
     });
     await page.locator('.workspace-model-chip').click();
+    await settingsCategory(page, 'connection');
     await page.locator('#chat_completion_source').selectOption('custom');
     await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
     await page.locator('#custom_model_id').fill('workspace-fixture');
@@ -1203,11 +1394,13 @@ for (const width of [320, 390, 768]) {
         }
         await page.locator('#options_button').click();
         await expect(page.locator('#options')).toBeVisible();
-        await page.locator('#send_textarea').click({ position: { x: 8, y: 8 } });
+        // The phone tools popover covers the editor's upper area. Click its exposed lower edge.
+        await page.locator('#send_textarea').click({ position: { x: 8, y: (await page.locator('#send_textarea').boundingBox()).height - 4 } });
         await expect(page.locator('#options')).toBeHidden();
         await page.locator('#extensionsMenuButton').click();
         await expect(page.locator('#extensionsMenu')).toBeVisible();
-        await page.locator('#send_textarea').click({ position: { x: 8, y: 8 } });
+        // The phone tools popover covers the editor's upper area. Click its exposed lower edge.
+        await page.locator('#send_textarea').click({ position: { x: 8, y: (await page.locator('#send_textarea').boundingBox()).height - 4 } });
         await expect(page.locator('#extensionsMenu')).toBeHidden();
         await tools.click();
         const profileTarget = await page.locator('#workspace-header-portrait').boundingBox();
@@ -1248,7 +1441,7 @@ for (const width of [320, 390, 768]) {
         expect(composer.y + composer.height).toBeLessThanOrEqual(481);
         await expect(page.locator('#send_textarea')).toBeVisible();
         await navigate(page, 'settings-page');
-        await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+        await settingsCategory(page, 'connection');
         const panel = await page.locator('#rm_api_block').boundingBox();
         expect(panel.x).toBeGreaterThanOrEqual(0);
         expect(panel.x + panel.width).toBeLessThanOrEqual(width);
@@ -1258,7 +1451,7 @@ for (const width of [320, 390, 768]) {
 test('native font preferences and browser text sizing keep phone controls usable', async ({ page }, testInfo) => {
     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} large text`);
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="settings"]').click();
+    await settingsCategory(page, 'settings');
     await page.locator('#font_scale').evaluate(input => {
         input.value = '1.5';
         input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -1285,14 +1478,15 @@ test('native font preferences and browser text sizing keep phone controls usable
         expect(bounds.height).toBeGreaterThanOrEqual(44);
     }
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings-creative summary').click();
-    await expect(page.getByRole('checkbox', { name: 'Voice narration', exact: true })).toBeVisible();
+    await settingsCategory(page, 'voice-settings');
+    await page.locator('#tts_settings .workspace-advanced-creative summary').click();
+    await expect(page.locator('#tts_enabled')).toBeVisible();
     expect(await page.locator('#workspace-view').evaluate(view => view.scrollWidth <= view.clientWidth)).toBe(true);
 });
 
 test('classic preference survives reload and can be restored', async ({ page }) => {
     await navigate(page, 'settings-page');
-    await page.locator('.workspace-settings [data-workspace-action="settings"]').click();
+    await settingsCategory(page, 'settings');
     const save = page.waitForResponse(response => response.url().endsWith('/api/settings/save') && response.request().postDataJSON().accountStorage?.workspaceLayout === 'false');
     await page.locator('#workspace-layout-toggle').uncheck();
     await save;
