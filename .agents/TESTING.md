@@ -58,6 +58,22 @@ All 27 browser cases passed against source and the actual v1.19.9 image.
 Historical regression data at /tmp/sillytavern-workspace-e2e-data and port 8002
 is not the current acceptance environment.
 
+## Shared-screen follow-up
+
+The current controlled suite has 27 browser cases plus 2 opt-in live cases.
+All 27 controlled cases passed on the actual v1.19.9 image after the user
+reported remaining disappearance. The user then confirmed the affected page
+is v1.19.8. Evidence: docs/evidence/shared-screen-lifecycle-20261102/.
+
+The new `settings changes and late saves` case changes native controls in 11
+categories at 1280/390/320px and switches through the active category rail.
+It holds a settings save across navigation to Image generation. It verifies
+the same native panel/control tree survives all 33 checkpoints. Existing
+cases cover the character editor, all settings sections, dialogs, keyboard,
+stories, profiles, archive, pending generation, reload and classic restoration.
+Screenshots of all 12 settings categories at all three widths were inspected.
+The original disappearing-panel case is also rerun on the local v1.19.8 image.
+
 ## First-reply template regression
 
 The first-reply template regression is a separate opt-in live case:

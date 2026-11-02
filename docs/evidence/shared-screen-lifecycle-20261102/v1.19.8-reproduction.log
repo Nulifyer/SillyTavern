@@ -1,0 +1,52 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep settings sections, blank space --reporter=line
+(node:1303347) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:1303363) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1303363) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1303363) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] workspace.e2e.js:438:1 › settings sections, blank space and external dialogs never close mounted controls
+  1) workspace.e2e.js:438:1 › settings sections, blank space and external dialogs never close mounted controls
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator:  locator('.workspace-mounted-panel')
+    Expected: visible
+    Received: hidden
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.workspace-mounted-panel')
+        9 × locator resolved to <div id="left-nav-panel" aria-label="Writing & replies" class="drawer-content fillLeft workspace-mounted-panel closedDrawer">…</div>
+          - unexpected value "hidden"
+
+
+      334 |                 for (const section of sections) {
+      335 |                     await page.locator('#workspace-settings-shell').getByRole('button', { name: section, exact: true }).click();
+    > 336 |                     await expect(panel).toBeVisible();
+          |                                         ^
+      337 |                     await expect(panel).toHaveClass(/openDrawer/);
+      338 |                     await expect.poll(() => original.evaluate(node => node.isConnected && node === document.querySelector('.workspace-mounted-panel'))).toBe(true);
+      339 |                     await expect(panel.locator('.workspace-section-hidden')).not.toHaveCount(0);
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:336:41
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workspace.e2e.js-settings--24ac5-ever-close-mounted-controls/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/workspace.e2e.js-settings--24ac5-ever-close-mounted-controls/error-context.md
+
+
+  1 failed
+    workspace.e2e.js:438:1 › settings sections, blank space and external dialogs never close mounted controls

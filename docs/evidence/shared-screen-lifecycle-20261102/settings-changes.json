@@ -1,0 +1,203 @@
+{
+  "checkpoints": [
+    {
+      "width": 1280,
+      "category": "connection",
+      "control": "#custom_model_id",
+      "panel": "rm_api_block"
+    },
+    {
+      "width": 1280,
+      "category": "generation",
+      "control": "#openai_max_tokens",
+      "panel": "left-nav-panel"
+    },
+    {
+      "width": 1280,
+      "category": "prompts",
+      "control": "#sysprompt_content",
+      "panel": "AdvancedFormatting"
+    },
+    {
+      "width": 1280,
+      "category": "persona",
+      "control": "#persona_description_position",
+      "panel": "PersonaManagement"
+    },
+    {
+      "width": 1280,
+      "category": "world",
+      "control": "#world_info_search",
+      "panel": "WorldInfo"
+    },
+    {
+      "width": 1280,
+      "category": "backgrounds",
+      "control": "#background_fitting",
+      "panel": "Backgrounds"
+    },
+    {
+      "width": 1280,
+      "category": "voice-settings",
+      "control": "#tts_provider",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 1280,
+      "category": "dictation-settings",
+      "control": "#dictation-model",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 1280,
+      "category": "image-settings",
+      "control": "#sd_source",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 1280,
+      "category": "settings",
+      "control": "#avatar_style",
+      "panel": "user-settings-block"
+    },
+    {
+      "width": 1280,
+      "category": "extensions",
+      "control": "#extensions_notify_updates",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 390,
+      "category": "connection",
+      "control": "#custom_model_id",
+      "panel": "rm_api_block"
+    },
+    {
+      "width": 390,
+      "category": "generation",
+      "control": "#openai_max_tokens",
+      "panel": "left-nav-panel"
+    },
+    {
+      "width": 390,
+      "category": "prompts",
+      "control": "#sysprompt_content",
+      "panel": "AdvancedFormatting"
+    },
+    {
+      "width": 390,
+      "category": "persona",
+      "control": "#persona_description_position",
+      "panel": "PersonaManagement"
+    },
+    {
+      "width": 390,
+      "category": "world",
+      "control": "#world_info_search",
+      "panel": "WorldInfo"
+    },
+    {
+      "width": 390,
+      "category": "backgrounds",
+      "control": "#background_fitting",
+      "panel": "Backgrounds"
+    },
+    {
+      "width": 390,
+      "category": "voice-settings",
+      "control": "#tts_provider",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 390,
+      "category": "dictation-settings",
+      "control": "#dictation-model",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 390,
+      "category": "image-settings",
+      "control": "#sd_source",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 390,
+      "category": "settings",
+      "control": "#avatar_style",
+      "panel": "user-settings-block"
+    },
+    {
+      "width": 390,
+      "category": "extensions",
+      "control": "#extensions_notify_updates",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 320,
+      "category": "connection",
+      "control": "#custom_model_id",
+      "panel": "rm_api_block"
+    },
+    {
+      "width": 320,
+      "category": "generation",
+      "control": "#openai_max_tokens",
+      "panel": "left-nav-panel"
+    },
+    {
+      "width": 320,
+      "category": "prompts",
+      "control": "#sysprompt_content",
+      "panel": "AdvancedFormatting"
+    },
+    {
+      "width": 320,
+      "category": "persona",
+      "control": "#persona_description_position",
+      "panel": "PersonaManagement"
+    },
+    {
+      "width": 320,
+      "category": "world",
+      "control": "#world_info_search",
+      "panel": "WorldInfo"
+    },
+    {
+      "width": 320,
+      "category": "backgrounds",
+      "control": "#background_fitting",
+      "panel": "Backgrounds"
+    },
+    {
+      "width": 320,
+      "category": "voice-settings",
+      "control": "#tts_provider",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 320,
+      "category": "dictation-settings",
+      "control": "#dictation-model",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 320,
+      "category": "image-settings",
+      "control": "#sd_source",
+      "panel": "rm_extensions_block"
+    },
+    {
+      "width": 320,
+      "category": "settings",
+      "control": "#avatar_style",
+      "panel": "user-settings-block"
+    },
+    {
+      "width": 320,
+      "category": "extensions",
+      "control": "#extensions_notify_updates",
+      "panel": "rm_extensions_block"
+    }
+  ],
+  "errors": []
+}

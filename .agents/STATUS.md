@@ -9,15 +9,18 @@ Image index: sha256:1aeffc008478d6923152ae4dc61eb3115c56e97d0da3cb3a62b8cc17f4be
 
 ## Active tasks
 
-No active tasks. [Completed UI repair and Juiced release](work/ui-juiced-release.md).
+No active tasks. [Shared-screen follow-up](work/shared-screen-lifecycle.md)
+confirmed the affected instance is still v1.19.8. The
+[earlier UI repair and Juiced release](work/ui-juiced-release.md) is published.
 Homelab owns the later production update. Production stack69 and shared test85
 were never accessed or changed by this task.
 
 ## Next action
 
-Homelab can deploy the immutable v1.19.9 index using the handoff in
-docs/container-releases.md, preserving production volume identities and taking
-the normal private backup. Configure optional services through the user's UI.
+Homelab can deploy the immutable v1.19.9 index using docs/container-releases.md,
+preserving production volume identities and taking the normal private backup.
+User confirmed their affected page is v1.19.8. Production and test85 were not
+updated by this thread; publication alone did not deliver the fix to that page.
 
 ## Blockers
 
@@ -52,3 +55,12 @@ regression covers a message-order/model combination absent from the original
 27 cases. Steps and preset persistence caveat are in docs/model-services.md.
 Next user action: apply that native setting and retry. Homelab's later image
 handoff remains v1.19.9; no new container is required for this correction.
+
+## Shared-screen follow-up
+
+User confirmed v1.19.8 after reporting that image settings still disappear.
+The actual v1.19.9 image passed 27 browser cases with 2 live-service cases
+skipped. New coverage includes 33 category/control checkpoints at 1280/390/320px,
+direct category-rail switching and a delayed save completing after navigation.
+All 12 category screenshots were inspected at those widths. No new application
+change or release was needed. Evidence: docs/evidence/shared-screen-lifecycle-20261102/.

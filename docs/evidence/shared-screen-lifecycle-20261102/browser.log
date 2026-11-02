@@ -1,0 +1,115 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --reporter=line
+(node:1299301) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 29 tests using 1 worker
+
+(node:1299314) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1299314) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1299314) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/29] workspace.e2e.js:175:1 › library browsing shows profiles without opening or replacing a story
+[2/29] workspace.e2e.js:194:1 › new stories preserve previous transcripts and profile history resumes the exact scene
+[3/29] workspace.e2e.js:229:1 › starting a fresh character creates exactly one transcript, with or without a title
+[4/29] workspace.e2e.js:264:1 › archive persists, excludes active lists, reads without editing, and restores the same transcript
+[5/29] workspace.e2e.js:295:1 › rename follows archived identity and deletion requires confirmation without recreating the file
+[6/29] workspace.e2e.js:332:1 › failed deletion keeps the story and reports the server failure
+[7/29] workspace.e2e.js:350:1 › settings keep every native area reachable with Escape and focus restoration
+[8/29] workspace.e2e.js:391:1 › every settings category uses one control tree and fits desktop and phone
+[9/29] workspace.e2e.js:438:1 › settings sections, blank space and external dialogs never close mounted controls
+[10/29] workspace.e2e.js:489:1 › settings changes and late saves preserve every category through direct navigation
+workspace.e2e.js:489:1 › settings changes and late saves preserve every category through direct navigation
+Settings mutation: 1280px connection
+
+Settings mutation: 1280px generation
+
+Settings mutation: 1280px prompts
+
+Settings mutation: 1280px persona
+
+Settings mutation: 1280px world
+
+Settings mutation: 1280px backgrounds
+
+Settings mutation: 1280px voice-settings
+
+Settings mutation: 1280px dictation-settings
+
+Settings mutation: 1280px image-settings
+
+Settings mutation: 1280px settings
+
+Settings mutation: 1280px extensions
+
+Settings mutation: 390px connection
+
+Settings mutation: 390px generation
+
+Settings mutation: 390px prompts
+
+Settings mutation: 390px persona
+
+Settings mutation: 390px world
+
+Settings mutation: 390px backgrounds
+
+Settings mutation: 390px voice-settings
+
+Settings mutation: 390px dictation-settings
+
+Settings mutation: 390px image-settings
+
+Settings mutation: 390px settings
+
+Settings mutation: 390px extensions
+
+Settings mutation: 320px connection
+
+Settings mutation: 320px generation
+
+Settings mutation: 320px prompts
+
+Settings mutation: 320px persona
+
+Settings mutation: 320px world
+
+Settings mutation: 320px backgrounds
+
+Settings mutation: 320px voice-settings
+
+Settings mutation: 320px dictation-settings
+
+Settings mutation: 320px image-settings
+
+Settings mutation: 320px settings
+
+Settings mutation: 320px extensions
+
+[11/29] workspace.e2e.js:629:1 › dictation settings remain available when the optional TTS extension is disabled
+[12/29] workspace.e2e.js:667:1 › one server configures native services and survives reload without replacing sampling or profiles
+[13/29] workspace.e2e.js:809:1 › service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server
+[14/29] workspace.e2e.js:871:1 › dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change
+[15/29] workspace.e2e.js:934:1 › image writer preserves scene context and story model through failure and retry
+[16/29] workspace.e2e.js:1020:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting
+[17/29] workspace.e2e.js:1155:1 › live Juiced services use native providers from the tested container
+[18/29] workspace.e2e.js:1384:1 › search opens character profiles and a fixture model generates through the native composer
+[19/29] workspace.e2e.js:1485:1 › native streamed replies keep the composer and character identity mounted
+[20/29] workspace.e2e.js:1533:1 › image tools use the native provider and treat custom prompts as text
+[21/29] workspace.e2e.js:1581:1 › one scene click generates one native illustration with automatic tools off
+[22/29] workspace.e2e.js:1663:1 › voice tools narrate the latest native reply with the configured System voice
+[23/29] workspace.e2e.js:1698:1 › chat voice is opt-in and persists; manual images do not enable automatic tools
+[24/29] workspace.e2e.js:1727:1 › cast creation selects real characters and opens a group story
+[25/29] workspace.e2e.js:1783:3 › roleplay pages and composer stay within a 320px viewport
+[26/29] workspace.e2e.js:1783:3 › roleplay pages and composer stay within a 390px viewport
+[27/29] workspace.e2e.js:1783:3 › roleplay pages and composer stay within a 768px viewport
+[28/29] workspace.e2e.js:1878:1 › native font preferences and browser text sizing keep phone controls usable
+[29/29] workspace.e2e.js:1924:1 › classic preference survives reload and can be restored
+  2 skipped
+  27 passed (2.8m)

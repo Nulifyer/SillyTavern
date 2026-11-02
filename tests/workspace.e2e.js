@@ -358,6 +358,97 @@ test('settings sections, blank space and external dialogs never close mounted co
     expect(failures).toEqual([]);
 });
 
+test('settings changes and late saves preserve every category through direct navigation', async ({ page }, testInfo) => {
+    test.setTimeout(180000);
+    page.setDefaultTimeout(7000);
+    const errors = [];
+    const checkpoints = [];
+    page.on('pageerror', error => errors.push(error.message));
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'synthetic-story' }] } }));
+    await page.route('**/api/sd/sdcpp/models', route => route.fulfill({ json: { data: [{ id: 'synthetic-image' }] } }));
+    // Hold a real settings save across category changes. Completion must not
+    // restore a stale panel or remove the mounted controls.
+    let releaseSave;
+    let pendingSave;
+    let delayedRequest;
+    const saveGate = new Promise(resolve => releaseSave = resolve);
+    const saveStarted = new Promise(resolve => pendingSave = resolve);
+    await page.route('**/api/settings/save', async route => {
+        delayedRequest = route.request();
+        pendingSave();
+        await saveGate;
+        await route.fallback();
+    }, { times: 1 });
+    const cases = [
+        ['connection', '#custom_model_id', async () => {
+            await page.locator('#chat_completion_source').selectOption('custom');
+            await page.locator('#custom_api_url_text').fill('https://synthetic.example/v1');
+            await page.locator('#custom_model_id').fill('synthetic-story');
+            await page.locator('#custom_prompt_post_processing').selectOption('semi_tools');
+        }],
+        ['generation', '#openai_max_tokens', async () => {
+            await page.locator('#openai_max_tokens').fill('128');
+            await page.locator('#stream_toggle').check();
+        }],
+        ['prompts', '#sysprompt_content', async () => page.locator('#sysprompt_content').fill('Describe a neutral red teapot and blue book.')],
+        ['persona', '#persona_description_position', async () => page.locator('#persona_show_notifications').click()],
+        ['world', '#world_info_search', async () => page.locator('#world_info_search').fill('Synthetic forest')],
+        ['backgrounds', '#background_fitting', async () => {
+            const select = page.locator('#background_fitting');
+            await select.selectOption({ index: 1 });
+        }],
+        ['voice-settings', '#tts_provider', async () => {
+            await page.locator('#tts_provider').selectOption('System');
+            await page.locator('#tts_settings .workspace-advanced-creative summary').click();
+            await page.locator('#tts_narrate_user').click();
+        }],
+        ['dictation-settings', '#dictation-model', async () => {
+            await page.locator('#dictation-endpoint').fill('https://synthetic.example/v1/audio/transcriptions');
+            await page.locator('#dictation-model').fill('synthetic-transcription');
+        }],
+        ['image-settings', '#sd_source', async () => {
+            await page.locator('#sd_source').selectOption('sdcpp');
+            await page.locator('#sd_sdcpp_url').fill('https://synthetic.example');
+            await page.locator('#sd_models_refresh').click();
+            await page.locator('#sd_model').selectOption('synthetic-image');
+            await page.locator('#sd_sampler').selectOption('euler');
+            await page.locator('#sd_scheduler').selectOption('simple');
+            await page.locator('#sd_steps_value').fill('8');
+            await page.locator('#sd_steps_value').press('Tab');
+            await page.locator('#sd_swap_dimensions').click();
+        }],
+        ['settings', '#avatar_style', async () => page.locator('#avatar_style').selectOption({ index: 1 })],
+        ['extensions', '#extensions_notify_updates', async () => page.locator('#extensions_notify_updates').click()],
+    ];
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    for (const width of [1280, 390, 320]) {
+        await page.setViewportSize({ width, height: 844 });
+        for (const [category, control, change] of cases) {
+            console.log(`Settings mutation: ${width}px ${category}`);
+            await page.locator(`.workspace-settings-rail [data-workspace-action="${category}"]`).click();
+            const panel = await page.locator('.workspace-mounted-panel').elementHandle();
+            await change();
+            if (width === 1280 && category === 'connection') await saveStarted;
+            if (width === 1280 && category === 'image-settings') {
+                const saved = page.waitForResponse(response => response.request() === delayedRequest);
+                releaseSave();
+                expect((await saved).ok()).toBe(true);
+            }
+            await expect(page.locator('#workspace-settings-shell')).toBeVisible();
+            await expect(page.locator('.workspace-mounted-panel')).toHaveCount(1);
+            await expect(page.locator(control)).toBeVisible();
+            expect(await panel.evaluate(node => node.isConnected && node === document.querySelector('.workspace-mounted-panel'))).toBe(true);
+            await page.locator(control).scrollIntoViewIfNeeded();
+            checkpoints.push({ width, category, control, panel: await panel.getAttribute('id') });
+            if (category === 'image-settings') await page.screenshot({ path: testInfo.outputPath(`changed-image-settings-${width}.png`) });
+        }
+    }
+    releaseSave();
+    fs.writeFileSync(testInfo.outputPath('settings-changes.json'), JSON.stringify({ checkpoints, errors }, null, 2));
+    expect(errors).toEqual([]);
+});
+
 function serviceFixture() {
     return {
         root: 'https://synthetic.example', base: 'https://synthetic.example/v1', juiced: true,

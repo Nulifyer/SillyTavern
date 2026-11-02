@@ -1,0 +1,32 @@
+{
+  "container": "st-ui-release-20261102",
+  "imageDigest": "sha256:1aeffc008478d6923152ae4dc61eb3115c56e97d0da3cb3a62b8cc17f4be33bf",
+  "image": "ghcr.io/nulifyer/sillytavern@sha256:1aeffc008478d6923152ae4dc61eb3115c56e97d0da3cb3a62b8cc17f4be33bf",
+  "mounts": [
+    {
+      "type": "volume",
+      "name": "st-ui-release-20261102-backups",
+      "destination": "/home/node/app/backups"
+    },
+    {
+      "type": "volume",
+      "name": "st-ui-release-20261102-config",
+      "destination": "/home/node/app/config"
+    },
+    {
+      "type": "volume",
+      "name": "st-ui-release-20261102-data",
+      "destination": "/home/node/app/data"
+    },
+    {
+      "type": "volume",
+      "name": "st-ui-release-20261102-plugins",
+      "destination": "/home/node/app/plugins"
+    },
+    {
+      "type": "volume",
+      "name": "st-ui-release-20261102-extensions",
+      "destination": "/home/node/app/public/scripts/extensions/third-party"
+    }
+  ]
+}

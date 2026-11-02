@@ -1,0 +1,54 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep settings sections, blank space --reporter=line
+(node:1302968) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:1302991) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1302991) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1302991) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] workspace.e2e.js:438:1 › settings sections, blank space and external dialogs never close mounted controls
+  1) workspace.e2e.js:438:1 › settings sections, blank space and external dialogs never close mounted controls
+
+    Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8012/
+    Call log:
+      - navigating to "http://127.0.0.1:8012/", waiting until "load"
+
+
+      83 |         await route.fulfill({ json: { result: 'ok' } });
+      84 |     });
+    > 85 |     await page.goto('/');
+         |                ^
+      86 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      87 |     await navigate(page, 'characters');
+      88 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:85:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      91 | test.afterEach(async ({ page }, testInfo) => {
+      92 |     if (page.isClosed()) return;
+    > 93 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+         |                ^
+      94 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      95 |     const records = await api(page, '/api/chats/recent', {});
+      96 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:93:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    test-results/workspace.e2e.js-settings--24ac5-ever-close-mounted-controls/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: test-results/workspace.e2e.js-settings--24ac5-ever-close-mounted-controls/error-context.md
+
+
+  1 failed
+    workspace.e2e.js:438:1 › settings sections, blank space and external dialogs never close mounted controls

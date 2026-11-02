@@ -1,0 +1,86 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep settings changes and late saves --reporter=line
+(node:1304869) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:1304885) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1304885) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1304885) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] workspace.e2e.js:489:1 › settings changes and late saves preserve every category through direct navigation
+workspace.e2e.js:489:1 › settings changes and late saves preserve every category through direct navigation
+Settings mutation: 1280px connection
+
+Settings mutation: 1280px generation
+
+Settings mutation: 1280px prompts
+
+Settings mutation: 1280px persona
+
+Settings mutation: 1280px world
+
+Settings mutation: 1280px backgrounds
+
+Settings mutation: 1280px voice-settings
+
+Settings mutation: 1280px dictation-settings
+
+Settings mutation: 1280px image-settings
+
+Settings mutation: 1280px settings
+
+Settings mutation: 1280px extensions
+
+Settings mutation: 390px connection
+
+Settings mutation: 390px generation
+
+Settings mutation: 390px prompts
+
+Settings mutation: 390px persona
+
+Settings mutation: 390px world
+
+Settings mutation: 390px backgrounds
+
+Settings mutation: 390px voice-settings
+
+Settings mutation: 390px dictation-settings
+
+Settings mutation: 390px image-settings
+
+Settings mutation: 390px settings
+
+Settings mutation: 390px extensions
+
+Settings mutation: 320px connection
+
+Settings mutation: 320px generation
+
+Settings mutation: 320px prompts
+
+Settings mutation: 320px persona
+
+Settings mutation: 320px world
+
+Settings mutation: 320px backgrounds
+
+Settings mutation: 320px voice-settings
+
+Settings mutation: 320px dictation-settings
+
+Settings mutation: 320px image-settings
+
+Settings mutation: 320px settings
+
+Settings mutation: 320px extensions
+
+  1 passed (11.1s)

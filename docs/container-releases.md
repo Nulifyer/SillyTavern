@@ -139,6 +139,15 @@ alone does not check story-prompt compatibility. See the
 [first-reply evidence](evidence/first-reply-formatting-20261102/).
 This configuration correction needs no replacement image or tag.
 
+Shared-screen follow-up: the user confirmed their affected page is v1.19.8.
+The v1.19.9 image then passed the expanded 27-case controlled browser suite;
+the 2 live cases were skipped in this follow-up because inference code did not
+change. The original release's live evidence remains above. Added coverage
+changes settings across 33 category/viewport checkpoints and completes a delayed
+save after navigation. All 12 categories were visually inspected at
+1280/390/320px. See [follow-up evidence](evidence/shared-screen-lifecycle-20261102/).
+No new image is required. The affected instance needs the existing v1.19.9 fix.
+
 #### Homelab handoff
 
 Production endpoint7 stack69 and its data were never accessed or updated by this
