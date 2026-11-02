@@ -22,6 +22,33 @@ does not ship a Juiced model registry.
 | Voice narration | OpenAI Compatible TTS, `/v1/audio/speech` |
 | Dictation | Compatible transcription, `/v1/audio/transcriptions` |
 
+### Connected, but the first reply fails
+
+Discovery verifies available services and models; it does not submit a story
+prompt. A model can therefore appear connected and still reject the assembled
+messages. The error `System message must be at the beginning` means its chat
+template rejected a later system instruction. Native post-history instructions
+can produce that message order even on the first reply.
+
+Open **Settings > Models & connections**. Under **Custom (OpenAI-compatible)**,
+set **Prompt Post-Processing** to **Semi-strict (alternating roles; with tools)**,
+then return to the story and retry. This existing native setting retains the
+opening system message, converts later system messages to user messages, and
+merges adjacent messages with the same role. It preserves their text and order,
+but later instructions have user-role priority. It does not change the selected
+model, sampling, chat files or server template. Tools remain supported by the
+converter; the selected model must also support them.
+
+The exact error and recovery were reproduced with `Qwen3.5-2B` on the published
+v1.19.9 image using a neutral first-turn story and a native post-history
+instruction. This setting is already available in v1.19.9; no container update
+is required. It is an explicit per-configuration choice, not a forced setting
+for every model. A preset or Connection Manager profile that loads another
+preset can restore its own prompt-processing value; save the compatible value
+in that preset if you use it.
+
+### Optional services
+
 Story replies and the image writer are independent selections. Current chat model
 is the default writer. A separate writer receives character descriptions,
 scenarios and the last eight non-system messages. Descriptions/scenarios are

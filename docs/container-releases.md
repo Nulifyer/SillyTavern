@@ -130,6 +130,15 @@ source/released browser logs, live request summaries, native save/reload proof,
 manifest/OCI labels, workflow jobs and selected source hashes. Browser coverage uses Chromium desktop/mobile viewports. Physical microphone
 hardware, audible quality and paid providers were not qualified.
 
+First-reply follow-up: `Qwen3.5-2B` rejects a later system message from native
+post-history instructions with `System message must be at the beginning`.
+The existing **Semi-strict (alternating roles; with tools)** prompt-processing
+setting resolves the reproduced case on this exact release image. Discovery
+alone does not check story-prompt compatibility. See the
+[connection steps](model-services.md#connected-but-the-first-reply-fails) and
+[first-reply evidence](evidence/first-reply-formatting-20261102/).
+This configuration correction needs no replacement image or tag.
+
 #### Homelab handoff
 
 Production endpoint7 stack69 and its data were never accessed or updated by this

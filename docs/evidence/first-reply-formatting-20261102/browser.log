@@ -1,0 +1,19 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep first reply with post-history --reporter=line
+(node:1255674) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+[1A[2K(node:1255689) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:1255689) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+[1A[2K(node:1255689) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/1] workspace.e2e.js:915:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting
+[1A[2K  1 passed (10.8s)

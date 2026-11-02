@@ -58,6 +58,17 @@ All 27 browser cases passed against source and the actual v1.19.9 image.
 Historical regression data at /tmp/sillytavern-workspace-e2e-data and port 8002
 is not the current acceptance environment.
 
+## First-reply template regression
+
+The first-reply template regression is a separate opt-in live case:
+`cd tests && ST_BASE_URL=http://127.0.0.1:8014 ST_JUICED_URL=https://juiced.swarm.nulteck.com npx playwright test workspace.e2e.js --workers=1 --grep 'first reply with post-history'`.
+It reproduces Qwen3.5-2B's late-system Jinja error with native post-history
+instructions, applies native `semi_tools`, reloads, reopens the same synthetic
+story and retries. It checks the saved setting at 390px. Evidence lives in
+docs/evidence/first-reply-formatting-20261102/. Discovery success alone does
+not prove a model accepts every story prompt. Earlier 27-case acceptance did
+not cover this message-order/model combination.
+
 ## Known gaps
 
 No live paid-provider, physical microphone or audible speech-quality checks.

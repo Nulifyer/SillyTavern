@@ -604,6 +604,91 @@ test('image writer preserves scene context and story model through failure and r
     expect(await page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.sd.enabled)).toBe(false);
 });
 
+test('live Juiced first reply with post-history instructions recovers through native prompt formatting', async ({ page }, testInfo) => {
+    test.skip(!process.env.ST_JUICED_URL, 'Set ST_JUICED_URL only for an authorized synthetic live run.');
+    test.setTimeout(180000);
+    const model = 'Qwen3.5-2B';
+    const title = `Workspace e2e ${testInfo.testId}-${runId} role-format`;
+    const requests = [];
+    const pageErrors = [];
+    const consoleErrors = [];
+    const networkErrors = [];
+    page.on('pageerror', error => pageErrors.push(error.message));
+    page.on('console', message => { if (message.type() === 'error') consoleErrors.push(message.text()); });
+    page.on('requestfailed', request => networkErrors.push({ path: new URL(request.url()).pathname, error: request.failure()?.errorText }));
+    page.on('request', request => {
+        if (request.url().endsWith('/api/backends/chat-completions/generate')) requests.push(request.postDataJSON());
+    });
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await page.locator('#service-server-url').fill(process.env.ST_JUICED_URL);
+    await page.locator('#service-discover').click();
+    await expect(page.locator('#service-chat-model')).toBeVisible({ timeout: 30000 });
+    await page.locator('#service-chat-model').selectOption(model);
+    await page.locator('#service-chat-apply').click();
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected', { timeout: 30000 });
+    await page.locator('#custom_prompt_post_processing').selectOption('');
+    await page.locator('#customize_additional_parameters').click();
+    await page.locator('dialog[open] #custom_include_body').fill('chat_template_kwargs:\n  enable_thinking: false');
+    await page.locator('dialog[open] .popup-button-ok').click();
+    await page.evaluate(async () => {
+        const { oai_settings } = await import('/scripts/openai.js');
+        oai_settings.stream_openai = true;
+        oai_settings.openai_max_tokens = 64;
+        // A native post-history instruction creates a later system message even
+        // on the first reply. No chat-template override or server patch is used.
+        oai_settings.prompts.find(prompt => prompt.identifier === 'jailbreak').content = 'Keep the red teapot and blue book in the scene. Answer in one short sentence.';
+        for (const order of oai_settings.prompt_order) {
+            const instruction = order.order.find(prompt => prompt.identifier === 'jailbreak');
+            if (instruction) instruction.enabled = true;
+        }
+    });
+    await page.keyboard.press('Escape');
+    await startStory(page, title);
+    await page.locator('#send_textarea').fill('In this neutral scene a red teapot sits beside a blue book. What is beside the teapot?');
+    await page.locator('#send_but').click();
+    await expect(page.locator('.toast-error')).toContainText('System message must be at the beginning', { timeout: 60000 });
+    await expect(page.locator('#mes_stop')).toBeHidden({ timeout: 60000 });
+    await page.screenshot({ path: testInfo.outputPath('first-reply-template-error.png') });
+    const failedResponse = await page.locator('.toast-error').last().innerText();
+    expect(requests[0].messages.slice(1).some(message => message.role === 'system')).toBe(true);
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await page.locator('#custom_prompt_post_processing').selectOption({ label: 'Semi-strict (alternating roles; with tools)' });
+    await page.evaluate(async () => await (await import('/script.js')).saveSettings());
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await expect(page.locator('#custom_prompt_post_processing')).toHaveValue('semi_tools');
+    await page.locator('#api_button_openai').click();
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+    await page.keyboard.press('Escape');
+    // Reload deliberately lands on the library. Reopen this exact synthetic
+    // transcript rather than assuming the previous in-memory chat is mounted.
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ hasText: title }).locator('.workspace-scene-open').click();
+    // Retry the same first turn with the send button; it has no generated reply.
+    await page.locator('#send_but').click();
+    await expect.poll(() => requests.length, { timeout: 30000 }).toBe(2);
+    await expect(page.locator('#mes_stop')).toBeHidden({ timeout: 60000 });
+    const reply = await page.locator('#chat .mes[is_user="false"]').last().innerText();
+    expect(reply.toLowerCase()).toContain('book');
+    expect(requests[1].custom_prompt_post_processing).toBe('semi_tools');
+    expect(requests[1].model).toBe(model);
+    await page.screenshot({ path: testInfo.outputPath('first-reply-formatting-recovered.png') });
+    await page.setViewportSize({ width: 390, height: 844 });
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await page.locator('#custom_prompt_post_processing').scrollIntoViewIfNeeded();
+    await expect(page.locator('#custom_prompt_post_processing')).toBeVisible();
+    await expect(page.locator('#custom_prompt_post_processing')).toHaveValue('semi_tools');
+    await page.screenshot({ path: testInfo.outputPath('prompt-formatting-mobile.png') });
+    const summary = { base: process.env.ST_BASE_URL, server: process.env.ST_JUICED_URL, model, failedResponse, reply, requests: requests.map(request => ({ model: request.model, processing: request.custom_prompt_post_processing, roles: request.messages.map(message => message.role), messages: request.messages })), pageErrors, consoleErrors, networkErrors };
+    fs.writeFileSync(testInfo.outputPath('first-reply-formatting.json'), JSON.stringify(summary, null, 2));
+    expect(pageErrors).toEqual([]);
+});
+
 test('live Juiced services use native providers from the tested container', async ({ page }, testInfo) => {
     test.skip(!process.env.ST_JUICED_URL, 'Set ST_JUICED_URL only for an authorized synthetic live run.');
     test.setTimeout(600000);
