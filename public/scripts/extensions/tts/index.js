@@ -1045,6 +1045,19 @@ function updateRegexPatternWarning() {
 // TTS Provider //
 //##############//
 
+/** Configure the existing compatible provider; narration remains an explicit opt-in. */
+export async function configureCompatibleTts(endpoint, model, voices, voice) {
+    const provider = 'OpenAI Compatible';
+    const previous = extension_settings.tts[provider] || {};
+    const map = typeof previous.voiceMap === 'string' ? parseVoiceMap(previous.voiceMap) : { ...previous.voiceMap };
+    map[DEFAULT_VOICE_MARKER] = voice;
+    extension_settings.tts[provider] = { ...previous, provider_endpoint: endpoint, model, available_voices: voices, voiceMap: map };
+    if (typeof ttsProvider?.dispose === 'function') ttsProvider.dispose();
+    $('#tts_provider').val(provider);
+    await loadTtsProvider(provider);
+    saveSettingsDebounced();
+}
+
 async function loadTtsProvider(provider) {
     //Clear the current config and add new config
     $('#tts_provider_settings').html('');

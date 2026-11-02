@@ -1,0 +1,31 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep live Juiced|dictation handles --reporter=line
+(node:1158277) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+[1A[2K(node:1158293) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:1158293) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+[1A[2K(node:1158293) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/2] workspace.e2e.js:718:1 › dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change
+[1A[2K[2/2] workspace.e2e.js:781:1 › live Juiced services use native providers from the tested container
+[1A[2Kworkspace.e2e.js:781:1 › live Juiced services use native providers from the tested container
+Live Juiced: discover and configure native providers
+
+[1A[2KLive Juiced: streaming story reply
+
+[1A[2KLive Juiced: configure image sampling and generate scene
+
+[1A[2KLive Juiced: synthesize and decode speech
+
+[1A[2KLive Juiced: transcribe speech into draft
+
+[1A[2K  2 passed (1.1m)

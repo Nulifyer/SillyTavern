@@ -1,4 +1,5 @@
 import { test, expect } from '@playwright/test';
+import fs from 'node:fs';
 
 test.use({ channel: 'chromium', video: 'off', viewport: { width: 1280, height: 800 } });
 test.setTimeout(90000);
@@ -66,6 +67,11 @@ test.beforeEach(async ({ page }) => {
             settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true', workspaceArchivedChats: '[]' };
             settings.extension_settings.tts = { ...settings.extension_settings.tts };
             settings.extension_settings.sd = { ...settings.extension_settings.sd };
+            // Fixture runs must not inherit a reachable live provider from the
+            // synthetic container used for opt-in service acceptance.
+            settings.extension_settings.tts.currentProvider = 'System';
+            settings.extension_settings.sd.source = 'extras';
+            settings.extension_settings.sd.prompt_writer_profile = '';
             delete settings.extension_settings.tts.enabled;
             delete settings.extension_settings.sd.enabled;
         }
@@ -237,7 +243,7 @@ test('settings keep every native area reachable with Escape and focus restoratio
     await navigate(page, 'settings-page');
     const destinations = [
         ['connection', 'rm_api_block'], ['generation', 'left-nav-panel'], ['persona', 'PersonaManagement'],
-        ['world', 'WorldInfo'], ['image-settings', 'rm_extensions_block'], ['voice-settings', 'rm_extensions_block'],
+        ['world', 'WorldInfo'], ['image-settings', 'rm_extensions_block'], ['voice-settings', 'rm_extensions_block'], ['dictation-settings', 'rm_extensions_block'],
         ['settings', 'user-settings-block'], ['backgrounds', 'Backgrounds'], ['prompts', 'AdvancedFormatting'], ['extensions', 'rm_extensions_block'],
     ];
     for (const [action, panel] of destinations) {
@@ -272,7 +278,7 @@ test('settings keep every native area reachable with Escape and focus restoratio
 });
 
 test('every settings category uses one control tree and fits desktop and phone', async ({ page }, testInfo) => {
-    const categories = ['connection', 'generation', 'persona', 'world', 'image-settings', 'voice-settings', 'settings', 'backgrounds', 'prompts', 'extensions', 'character-editor'];
+    const categories = ['connection', 'generation', 'persona', 'world', 'image-settings', 'voice-settings', 'dictation-settings', 'settings', 'backgrounds', 'prompts', 'extensions', 'character-editor'];
     const nativeIds = await page.evaluate(() => [...document.querySelectorAll('.drawer-content input[id],.drawer-content select[id],.drawer-content textarea[id]')].map(e => e.id));
     for (const width of [1280, 390, 320]) {
         await page.setViewportSize({ width, height: 844 });
@@ -307,6 +313,422 @@ test('every settings category uses one control tree and fits desktop and phone',
     }
     const after = await page.evaluate(() => [...document.querySelectorAll('.drawer-content input[id],.drawer-content select[id],.drawer-content textarea[id]')].map(e => e.id));
     expect(after.sort()).toEqual(nativeIds.sort());
+});
+
+test('settings sections, blank space and external dialogs never close mounted controls', async ({ page }, testInfo) => {
+    const failures = [];
+    page.on('pageerror', error => failures.push(error.message));
+    const ids = await page.locator('.drawer-content input[id], .drawer-content select[id]').evaluateAll(nodes => nodes.map(node => node.id).sort());
+    for (const width of [1280, 390, 320]) {
+        await page.setViewportSize({ width, height: 844 });
+        await navigate(page, 'settings-page');
+        for (const [category, sections] of [
+            ['generation', ['Presets', 'Advanced sampling & prompts', 'Replies']],
+            ['settings', ['Interaction', 'Reading & appearance']],
+            ['prompts', ['Context & stopping', 'Instruction template', 'System prompt']],
+        ]) {
+            await page.locator(`.workspace-settings [data-workspace-action="${category}"]`).click();
+            const panel = page.locator('.workspace-mounted-panel');
+            const original = await panel.elementHandle();
+            for (let pass = 0; pass < 2; pass++) {
+                for (const section of sections) {
+                    await page.locator('#workspace-settings-shell').getByRole('button', { name: section, exact: true }).click();
+                    await expect(panel).toBeVisible();
+                    await expect(panel).toHaveClass(/openDrawer/);
+                    await expect.poll(() => original.evaluate(node => node.isConnected && node === document.querySelector('.workspace-mounted-panel'))).toBe(true);
+                    await expect(panel.locator('.workspace-section-hidden')).not.toHaveCount(0);
+                }
+            }
+            await page.locator('.workspace-settings-heading h1').click();
+            await expect(panel).toBeVisible();
+            await page.evaluate(async () => {
+                const { callGenericPopup, POPUP_TYPE } = await import('/scripts/popup.js');
+                void callGenericPopup('Synthetic settings dialog', POPUP_TYPE.INPUT, 'Draft');
+            });
+            await page.locator('dialog[open] .popup-input').fill('Edited draft');
+            await page.locator('dialog[open] .popup-button-ok').click();
+            await expect(page.locator('dialog[open]')).toHaveCount(0);
+            await expect(panel).toBeVisible();
+            await page.screenshot({ path: testInfo.outputPath(`sections-${category}-${width}.png`) });
+            await page.keyboard.press('Escape');
+            await expect(panel).toHaveCount(0);
+        }
+    }
+    expect(await page.locator('.drawer-content input[id], .drawer-content select[id]').evaluateAll(nodes => nodes.map(node => node.id).sort())).toEqual(ids);
+    expect(failures).toEqual([]);
+});
+
+function serviceFixture() {
+    return {
+        root: 'https://synthetic.example', base: 'https://synthetic.example/v1', juiced: true,
+        services: {
+            chat: { models: [{ id: 'story-fixture' }, { id: 'writer-fixture' }] },
+            images: { models: [{ id: 'image-fixture' }] },
+            speak: { models: [{ id: 'speech-fixture' }] },
+            transcribe: { models: [{ id: 'transcription-fixture' }] },
+        },
+        protocols: [{ id: 'automatic1111', features: ['txt2img'] }],
+    };
+}
+
+test('dictation settings remain available when the optional TTS extension is disabled', async ({ page }) => {
+    await page.route('**/api/settings/get', async route => {
+        const response = await route.fetch();
+        const body = await response.json();
+        const settings = JSON.parse(body.settings);
+        settings.firstRun = false;
+        settings.extension_settings.disabledExtensions = [...new Set([...settings.extension_settings.disabledExtensions, 'tts'])];
+        body.settings = JSON.stringify(settings);
+        await route.fulfill({ response, json: body });
+    });
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await expect(page.locator('#tts_enabled')).toHaveCount(0);
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="dictation-settings"]').click();
+    await expect(page.locator('#dictation-endpoint')).toBeVisible();
+    await expect(page.locator('#dictation-file')).toBeEnabled();
+    await page.locator('#dictation-endpoint').fill('https://synthetic.example/v1/audio/transcriptions');
+    await page.locator('#dictation-model').fill('transcription-fixture');
+    expect(await page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.dictation)).toMatchObject({ model: 'transcription-fixture', endpoint: 'https://synthetic.example/v1/audio/transcriptions' });
+});
+
+async function serviceSetup(page) {
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await page.locator('#service-server-url').fill('https://synthetic.example/v1');
+    await page.locator('#service-discover').click();
+    await expect(page.locator('#service-discovery-status')).toContainText('Connected to Juiced');
+}
+
+test('one server configures native services and survives reload without replacing sampling or profiles', async ({ page }) => {
+    let discoveryCalls = 0;
+    await page.route('**/api/openai/custom/discover', route => {
+        if (!route.request().postDataJSON().voice_model) discoveryCalls++;
+        return route.fulfill({ json: route.request().postDataJSON().voice_model ? { voices: ['voice-a', 'voice-b'] } : serviceFixture() });
+    });
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'story-fixture' }, { id: 'writer-fixture' }] } }));
+    await page.route('**/api/sd/sdcpp/models', route => route.fulfill({ json: { data: [{ id: 'image-fixture' }] } }));
+    const previous = await page.evaluate(async () => {
+        const { oai_settings } = await import('/scripts/openai.js');
+        const { extension_settings } = await import('/scripts/extensions.js');
+        extension_settings.sd.steps = 13;
+        extension_settings.sd.scale = 2.5;
+        extension_settings.sd.prompt_writer_instructions = 'Preserve the scene and the blue book.';
+        extension_settings.sd.prompt_writer_max_tokens = 384;
+        return { temp: oai_settings.temp_openai, profiles: structuredClone(extension_settings.connectionManager.profiles), tts: extension_settings.tts.enabled, sd: extension_settings.sd.enabled };
+    });
+    for (const width of [1280, 390]) {
+        await page.setViewportSize({ width, height: 844 });
+        await serviceSetup(page);
+        await page.locator('#service-chat-model').selectOption('story-fixture');
+        await page.locator('#service-chat-apply').click();
+        await expect(page.locator('#service-chat-row')).toContainText('Saved.');
+        await page.locator('#service-writer-model').selectOption('writer-fixture');
+        await page.locator('#service-writer-apply').click();
+        await expect(page.locator('#service-writer-row')).toContainText('Saved.');
+        await page.locator('#service-images-model').selectOption('image-fixture');
+        await page.locator('#service-images-apply').click();
+        await expect(page.locator('#service-images-row')).toContainText('Saved.');
+        await page.locator('#service-speak-model').selectOption('speech-fixture');
+        await expect(page.locator('#service-speak-voice option')).toHaveCount(2);
+        await page.locator('#service-speak-voice').selectOption('voice-b');
+        await page.locator('#service-speak-apply').click();
+        await expect(page.locator('#service-speak-row')).toContainText('Saved.');
+        await page.locator('#service-transcribe-model').selectOption('transcription-fixture');
+        await page.locator('#service-transcribe-apply').click();
+        await expect(page.locator('#service-transcribe-row')).toContainText('Saved.');
+        await page.keyboard.press('Escape');
+    }
+    const configured = await page.evaluate(async () => {
+        const { oai_settings } = await import('/scripts/openai.js');
+        const { extension_settings: settings } = await import('/scripts/extensions.js');
+        return { chat: { model: oai_settings.custom_model, url: oai_settings.custom_url, temp: oai_settings.temp_openai }, sd: settings.sd, tts: settings.tts, stt: settings.dictation, profiles: settings.connectionManager.profiles };
+    });
+    expect(configured.chat).toEqual({ model: 'story-fixture', url: 'https://synthetic.example/v1', temp: previous.temp });
+    expect(configured.sd).toMatchObject({ source: 'sdcpp', sdcpp_url: 'https://synthetic.example', model: 'image-fixture', steps: 13, scale: 2.5, prompt_writer_max_tokens: 384, prompt_writer_instructions: 'Preserve the scene and the blue book.', enabled: previous.sd });
+    expect(configured.profiles).toHaveLength(previous.profiles.length + 1);
+    expect(configured.profiles.slice(0, previous.profiles.length)).toEqual(previous.profiles);
+    expect(configured.profiles.find(profile => profile.id === configured.sd.prompt_writer_profile)).toMatchObject({ model: 'writer-fixture', 'api-url': 'https://synthetic.example/v1', api: 'custom' });
+    expect(configured.tts).toMatchObject({ enabled: previous.tts, currentProvider: 'OpenAI Compatible', 'OpenAI Compatible': { model: 'speech-fixture', available_voices: ['voice-a', 'voice-b'], voiceMap: { '[Default Voice]': 'voice-b' } } });
+    expect(configured.stt).toMatchObject({ model: 'transcription-fixture', endpoint: 'https://synthetic.example/v1/audio/transcriptions' });
+    await expect.poll(async () => (await page.evaluate(() => document.querySelector('#openai_compatible_model')?.value))).toBe('speech-fixture');
+    await page.evaluate(async () => await (await import('/script.js')).saveSettings());
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await expect(page.locator('#service-server-url')).toHaveValue('https://synthetic.example');
+    await expect(page.locator('#service-chat-model')).toHaveCount(0);
+    await page.locator('#service-discover').click();
+    await expect(page.locator('#service-chat-model')).toHaveValue('story-fixture');
+    await expect(page.locator('#service-writer-model')).toHaveValue('writer-fixture');
+    expect(discoveryCalls).toBe(3);
+});
+
+test('service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server', async ({ page }) => {
+    let attempt = 0;
+    let finishSlow;
+    const slow = new Promise(resolve => finishSlow = resolve);
+    await page.route('**/api/openai/custom/discover', async route => {
+        const body = route.request().postDataJSON();
+        if (body.voice_model) return route.fulfill({ status: 409, json: { error: 'Load the speech model before listing its voices' } });
+        if (body.url.includes('slow')) { await slow; return route.fulfill({ json: serviceFixture() }).catch(() => {}); }
+        if (attempt++ === 0) return route.fulfill({ status: 502, json: { error: 'Synthetic connection failure' } });
+        const data = serviceFixture();
+        data.services.transcribe = { models: [] };
+        return route.fulfill({ json: data });
+    });
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await page.locator('#service-server-url').fill('https://synthetic.example');
+    await page.locator('#service-discover').click();
+    await expect(page.locator('#service-discovery-status')).toContainText('Synthetic connection failure');
+    await page.locator('#service-discover').click();
+    await expect(page.locator('#service-transcribe-row')).toContainText('No enabled models');
+    await expect(page.locator('#service-transcribe-apply')).toBeDisabled();
+    await page.locator('#service-speak-model').selectOption('speech-fixture');
+    await expect(page.locator('#service-speak-row')).toContainText('Load the speech model');
+    await expect(page.locator('#service-speak-apply')).toBeDisabled();
+    await page.locator('#service-server-url').fill('https://slow.example');
+    await page.locator('#service-discover').click();
+    await expect(page.locator('#service-discovery-status')).toContainText('Checking connection');
+    await page.keyboard.press('Escape');
+    await navigate(page, 'characters');
+    await expect(page.locator('.workspace-library-grid')).toBeVisible();
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await page.locator('#service-server-url').fill('https://new.example');
+    finishSlow();
+    await expect(page.locator('#service-discovery-status')).toContainText('Verify this address');
+    await expect(page.locator('#service-chat-model')).toHaveCount(0);
+    await expect(page.locator('#service-server-url')).toHaveValue('https://new.example');
+    await page.locator('#service-discover').click();
+    await expect(page.locator('#service-chat-model option')).toHaveCount(3);
+    await expect(page.locator('.workspace-mounted-panel')).toBeVisible();
+});
+
+test('dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} dictation`);
+    await page.evaluate(async () => {
+        const { configureDictation } = await import('/scripts/dictation.js');
+        configureDictation('https://synthetic.example/v1/audio/transcriptions', 'transcription-fixture');
+        navigator.mediaDevices.getUserMedia = async () => { throw new DOMException('Denied', 'NotAllowedError'); };
+    });
+    await page.locator('#workspace-dictation').click();
+    await expect(page.locator('#dictation-status')).toContainText('Microphone permission denied');
+    let requests = 0;
+    await page.route('**/api/openai/custom/transcribe-audio', route => {
+        requests++;
+        const body = route.request().postDataBuffer();
+        const wav = body.indexOf('RIFF');
+        expect(wav).toBeGreaterThan(0);
+        expect(body.readUInt32LE(wav + 24)).toBe(16000);
+        expect(body.readUInt16LE(wav + 22)).toBe(1);
+        expect(body.readUInt16LE(wav + 34)).toBe(16);
+        return route.fulfill({ json: { text: 'A blue book beside a red teapot.' } });
+    });
+    await page.evaluate(() => {
+        navigator.mediaDevices.getUserMedia = async () => {
+            const context = new AudioContext();
+            const destination = context.createMediaStreamDestination();
+            const oscillator = context.createOscillator();
+            oscillator.connect(destination);
+            oscillator.start();
+            window.syntheticAudioContext = context;
+            return destination.stream;
+        };
+    });
+    const messages = await page.locator('#chat .mes').count();
+    await page.locator('#send_textarea').fill('Draft remains');
+    await page.locator('#workspace-dictation').click();
+    await expect(page.locator('#dictation-status')).toContainText('Listening');
+    await expect.poll(() => page.evaluate(() => window.syntheticAudioContext.currentTime)).toBeGreaterThan(0.2);
+    await page.locator('#workspace-dictation').click();
+    await expect(page.locator('#dictation-status')).toContainText('Transcript added');
+    await expect(page.locator('#send_textarea')).toHaveValue('Draft remains A blue book beside a red teapot.');
+    expect(await page.locator('#chat .mes').count()).toBe(messages);
+    expect(requests).toBe(1);
+    await page.evaluate(async () => { await (await import('/script.js')).eventSource.emit((await import('/script.js')).event_types.CHAT_CHANGED); });
+    await page.locator('#workspace-dictation').click();
+    await expect(page.locator('#dictation-status')).toContainText('Listening');
+    await page.evaluate(async () => { await (await import('/script.js')).eventSource.emit((await import('/script.js')).event_types.CHAT_CHANGED); });
+    await expect(page.locator('#dictation-status')).toContainText('Story changed');
+    await expect(page.locator('#workspace-dictation')).toHaveAttribute('aria-pressed', 'false');
+    expect(requests).toBe(1);
+});
+
+test('image writer preserves scene context and story model through failure and retry', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} writer retry`);
+    await page.evaluate(async () => {
+        const { extension_settings: settings } = await import('/scripts/extensions.js');
+        const { oai_settings } = await import('/scripts/openai.js');
+        const { saveCompatibleProfile } = await import('/scripts/extensions/connection-manager/index.js');
+        const { configureImageWriter } = await import('/scripts/extensions/stable-diffusion/index.js');
+        oai_settings.custom_model = 'unchanged-story-model';
+        settings.sd.source = 'sdcpp';
+        settings.sd.sdcpp_url = 'https://synthetic.example';
+        settings.sd.model = 'image-fixture';
+        settings.sd.enabled = false;
+        settings.sd.prompt_writer_max_tokens = 384;
+        settings.sd.prompt_writer_instructions = 'Keep the red teapot, blue book and current action.';
+        configureImageWriter(await saveCompatibleProfile('Synthetic writer', 'https://synthetic.example/v1', 'writer-fixture'));
+        const context = SillyTavern.getContext();
+        context.chat.push({ name: 'Storyteller', is_user: true, mes: 'I place the red teapot beside the blue book in the workshop.' });
+    });
+    let writers = 0, images = 0;
+    await page.route('**/api/backends/chat-completions/generate', route => {
+        writers++;
+        const body = route.request().postDataJSON();
+        expect(body).toMatchObject({ model: 'writer-fixture', max_tokens: 384 });
+        expect(JSON.stringify(body.messages)).toContain('red teapot beside the blue book');
+        expect(JSON.stringify(body.messages)).toContain('Seraphina');
+        expect(JSON.stringify(body.messages)).toContain('current action');
+        expect(JSON.parse(body.custom_include_body)).toEqual({ chat_template_kwargs: { enable_thinking: false } });
+        return route.fulfill(writers === 1 ? { status: 503, json: { error: { message: 'Synthetic writer unavailable' } } } : { json: { choices: [{ message: { content: 'A red teapot beside a blue book in a sunlit workshop.' } }] } });
+    });
+    await page.route('**/api/sd/sdcpp/generate', route => {
+        images++;
+        expect(route.request().postDataJSON().prompt).toContain('red teapot beside a blue book');
+        return route.fulfill({ json: { images: ['iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jS1kAAAAASUVORK5CYII='] } });
+    });
+    await page.locator('#workspace-image-button').click();
+    await expect(page.locator('#workspace-image-status')).toContainText('API request failed');
+    await expect(page.locator('#workspace-image-button')).toBeEnabled();
+    expect(images).toBe(0);
+    await page.locator('#workspace-image-button').click();
+    await expect(page.locator('#workspace-image-status')).toContainText('Illustration added');
+    expect(writers).toBe(2);
+    expect(images).toBe(1);
+    expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.custom_model)).toBe('unchanged-story-model');
+    expect(await page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.sd.enabled)).toBe(false);
+});
+
+test('live Juiced services use native providers from the tested container', async ({ page }, testInfo) => {
+    test.skip(!process.env.ST_JUICED_URL, 'Set ST_JUICED_URL only for an authorized synthetic live run.');
+    test.setTimeout(600000);
+    page.setDefaultTimeout(15000);
+    const storyModel = 'TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL';
+    const writerModel = 'Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0';
+    const requests = [];
+    const errors = [];
+    page.on('pageerror', error => errors.push(error.message));
+    page.on('request', request => {
+        if (!/\/api\/(?:backends\/chat-completions\/generate|sd\/sdcpp\/generate|openai\/custom\/)/.test(request.url())) return;
+        const type = request.headers()['content-type'] || '';
+        if (!type.includes('application/json')) { requests.push({ path: new URL(request.url()).pathname, multipart: true }); return; }
+        const body = request.postDataJSON();
+        requests.push({ path: new URL(request.url()).pathname, model: body.model, stream: body.stream, max_tokens: body.max_tokens, custom_url: body.custom_url, url: body.url, width: body.width, height: body.height, steps: body.steps, cfg_scale: body.cfg_scale, sampler: body.sampler_name, scheduler: body.scheduler, custom_include_body: body.custom_include_body });
+    });
+    const start = Date.now();
+    console.log('Live Juiced: discover and configure native providers');
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="connection"]').click();
+    await page.locator('#service-server-url').fill(process.env.ST_JUICED_URL);
+    await page.locator('#service-discover').click();
+    await expect(page.locator('#service-discovery-status')).toContainText('Connected to Juiced', { timeout: 60000 });
+    const discovered = await page.locator('.service-results select').evaluateAll(selects => selects.map(select => ({ id: select.id, options: [...select.options].map(option => option.value) })));
+    for (const [service, model] of [['chat', storyModel], ['writer', writerModel], ['images', 'z-image-turbo-nsfw-v2-GGUF-Q8_0'], ['transcribe', 'asr4all-l-gptq-Q8_0']]) {
+        await page.locator(`#service-${service}-model`).selectOption(model);
+        await page.locator(`#service-${service}-apply`).click();
+        await expect(page.locator(`#service-${service}-row`)).toContainText('Saved.', { timeout: 30000 });
+    }
+    await page.locator('#service-speak-model').selectOption('kokoro-v1');
+    await expect(page.locator('#service-speak-voice')).toBeEnabled({ timeout: 30000 });
+    const voices = await page.locator('#service-speak-voice option').allTextContents();
+    await page.locator('#service-speak-voice').selectOption('af_heart');
+    await page.locator('#service-speak-apply').click();
+    await expect(page.locator('#service-speak-row')).toContainText('Saved.');
+    await page.locator('#customize_additional_parameters').click();
+    await page.locator('dialog[open] #custom_include_body').fill('chat_template_kwargs:\n  enable_thinking: false');
+    await page.locator('dialog[open] .popup-button-ok').click();
+    await page.keyboard.press('Escape');
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="generation"]').click();
+    await page.locator('#oai_max_context_unlocked').check();
+    await page.locator('#openai_max_context_counter').fill('16384');
+    await page.locator('#openai_max_context_counter').press('Tab');
+    expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.openai_max_context)).toBe(16384);
+    await page.locator('#openai_max_tokens').fill('128');
+    await page.locator('#stream_toggle').check();
+    await page.keyboard.press('Escape');
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} live`);
+    console.log('Live Juiced: streaming story reply');
+    await page.locator('#send_textarea').fill('We are in a sunlit workshop. On the table there is a red teapot beside a blue book. Describe only this quiet scene in two short sentences.');
+    const chatResponse = page.waitForResponse(response => response.url().endsWith('/api/backends/chat-completions/generate'), { timeout: 180000 });
+    await page.locator('#send_but').click();
+    await expect(page.locator('#mes_stop')).toBeVisible();
+    await navigate(page, 'characters');
+    await returnToChat(page);
+    expect((await chatResponse).status()).toBe(200);
+    await expect(page.locator('#mes_stop')).toBeHidden({ timeout: 180000 });
+    const storyText = await page.locator('#chat .mes[is_user="false"]').last().innerText();
+    expect(storyText.length).toBeGreaterThan(30);
+    const chatSeconds = (Date.now() - start) / 1000;
+    console.log('Live Juiced: configure image sampling and generate scene');
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="image-settings"]').click();
+    for (const [id, value] of [['sd_width', '512'], ['sd_height', '512'], ['sd_steps', '8'], ['sd_scale', '1']]) {
+        await page.locator(`#${id}_value`).fill(value);
+        await page.locator(`#${id}_value`).press('Tab');
+    }
+    await page.locator('#sd_sampler').selectOption('euler');
+    await page.locator('#sd_scheduler').selectOption('simple');
+    await page.locator('#sd_prompt_writer_instructions').fill('Write a neutral, nonexplicit image prompt. Preserve the latest red teapot and blue book, current location, character identity and actions. Return only the image prompt.');
+    await page.locator('#sd_prompt_writer_max_tokens').fill('512');
+    await page.keyboard.press('Escape');
+    await returnToChat(page);
+    const imageStart = Date.now();
+    await page.locator('#workspace-image-button').click();
+    await navigate(page, 'characters');
+    await returnToChat(page);
+    await expect(page.locator('#workspace-image-status')).toContainText('Illustration added', { timeout: 240000 });
+    const imageSeconds = (Date.now() - imageStart) / 1000;
+    expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.custom_model)).toBe(storyModel);
+    expect(requests.filter(request => request.path.endsWith('/chat-completions/generate')).map(request => request.model)).toEqual([storyModel, writerModel]);
+    expect(requests.find(request => request.model === writerModel)).toMatchObject({ max_tokens: 512, custom_include_body: '{"chat_template_kwargs":{"enable_thinking":false}}' });
+    expect(requests.filter(request => request.path.endsWith('/sd/sdcpp/generate'))).toHaveLength(1);
+    await page.screenshot({ path: testInfo.outputPath('live-story-image-desktop.png') });
+    const speechStart = Date.now();
+    console.log('Live Juiced: synthesize and decode speech');
+    const audio = await page.evaluate(async () => {
+        const { getRequestHeaders } = await import('/script.js');
+        const { extension_settings } = await import('/scripts/extensions.js');
+        const settings = extension_settings.tts['OpenAI Compatible'];
+        const response = await fetch('/api/openai/custom/generate-voice', { method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ provider_endpoint: settings.provider_endpoint, model: settings.model, voice: 'af_heart', input: 'The red teapot is beside the blue book.', response_format: 'wav' }) });
+        if (!response.ok) throw new Error(`Speech HTTP ${response.status}`);
+        const blob = await response.blob();
+        const media = document.createElement('audio');
+        media.src = URL.createObjectURL(blob);
+        await new Promise((resolve, reject) => { media.onloadedmetadata = resolve; media.onerror = reject; });
+        const bytes = new Uint8Array(await blob.arrayBuffer());
+        return { base64: btoa(Array.from(bytes, byte => String.fromCharCode(byte)).join('')), type: blob.type, duration: media.duration, bytes: bytes.length };
+    });
+    expect(audio.duration).toBeGreaterThan(1);
+    const speechSeconds = (Date.now() - speechStart) / 1000;
+    const draft = 'My draft.';
+    await page.locator('#send_textarea').fill(draft);
+    const messageCount = await page.locator('#chat .mes').count();
+    await navigate(page, 'settings-page');
+    await page.locator('.workspace-settings [data-workspace-action="dictation-settings"]').click();
+    const transcriptionStart = Date.now();
+    console.log('Live Juiced: transcribe speech into draft');
+    await page.locator('#dictation-file').setInputFiles({ name: 'neutral-speech.wav', mimeType: 'audio/wav', buffer: Buffer.from(audio.base64, 'base64') });
+    await expect(page.locator('#dictation-settings [role="status"]')).toContainText('Transcript added', { timeout: 120000 });
+    const transcriptionSeconds = (Date.now() - transcriptionStart) / 1000;
+    await page.keyboard.press('Escape');
+    await returnToChat(page);
+    const transcriptDraft = await page.locator('#send_textarea').inputValue();
+    expect(transcriptDraft).toContain(draft);
+    expect(transcriptDraft.toLowerCase()).toContain('teapot');
+    expect(await page.locator('#chat .mes').count()).toBe(messageCount);
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.screenshot({ path: testInfo.outputPath('live-story-mobile.png') });
+    const summary = { server: process.env.ST_JUICED_URL, base: process.env.ST_BASE_URL, discovered, voices, storyModel, writerModel, storyText, transcriptDraft, audio: { type: audio.type, bytes: audio.bytes, duration: audio.duration }, seconds: { chatAndSetup: chatSeconds, writerAndImage: imageSeconds, speech: speechSeconds, transcription: transcriptionSeconds }, requests, errors };
+    fs.writeFileSync(testInfo.outputPath('live-juiced-summary.json'), JSON.stringify(summary, null, 2));
+    await testInfo.attach('live-juiced-summary.json', { body: JSON.stringify(summary, null, 2), contentType: 'application/json' });
+    await testInfo.attach('neutral-speech.wav', { body: Buffer.from(audio.base64, 'base64'), contentType: 'audio/wav' });
+    expect(errors).toEqual([]);
 });
 
 test('search opens character profiles and a fixture model generates through the native composer', async ({ page }, testInfo) => {

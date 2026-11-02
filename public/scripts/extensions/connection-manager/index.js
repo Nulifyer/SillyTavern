@@ -29,6 +29,20 @@ const DEFAULT_SETTINGS = {
     selectedProfile: null,
 };
 
+/** Save an independent compatible profile without selecting it or changing story settings. */
+export async function saveCompatibleProfile(name, url, model) {
+    if (extension_settings.disabledExtensions.includes(MODULE_NAME)) throw new Error('Enable Connection Manager in Extensions first.');
+    const profiles = extension_settings.connectionManager.profiles;
+    const existing = profiles.find(profile => profile.mode === 'cc' && profile.api === 'custom' && profile['api-url'] === url && profile.model === model);
+    if (existing) return existing.id;
+    const profile = { id: uuidv4(), name: getUniqueName(name, value => profiles.some(item => item.name === value)), mode: 'cc', api: 'custom', 'api-url': url, model, exclude: [] };
+    profiles.push(profile);
+    renderConnectionProfiles(document.getElementById('connection_profiles'));
+    saveSettingsDebounced();
+    await eventSource.emit(event_types.CONNECTION_PROFILE_CREATED, profile);
+    return profile.id;
+}
+
 // Commands that can record an empty value into the profile
 const ALLOW_EMPTY = [
     'stop-strings',

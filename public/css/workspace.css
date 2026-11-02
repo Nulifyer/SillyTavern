@@ -179,6 +179,16 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-ui #workspace-composer-hint { margin: 9px 0 15px; font-size: var(--ws-font-meta); text-align: center; color: var(--ws-muted); white-space: normal; }
 
 /* Settings use a full category workspace, with a single native control tree. */
+.service-connections { width: 100%; min-width: 0; padding-bottom: 24px; border-bottom: 1px solid var(--ws-border, #343d50); }
+.service-connections h2 { font-size: 1.15em; }
+.service-connections p, .service-connections small { line-height: 1.5; overflow-wrap: anywhere; }
+.service-connection-row { display: grid; grid-template-columns: minmax(0, 1fr); gap: 8px; padding-block: 16px; border-top: 1px solid var(--ws-border, #343d50); }
+.service-connections .menu_button { width: fit-content; max-width: 100%; }
+.service-connections :is(select, input) { width: 100%; min-width: 0; }
+.service-status { font-size: 0.9em; color: var(--ws-muted, inherit); }
+.dictation-settings { display: grid; gap: 8px; margin-top: 24px; padding-top: 16px; border-top: 1px solid var(--ws-border, #343d50); }
+.workspace-dictation[aria-pressed="true"] { color: var(--ws-accent); background: #2e2b46; }
+@media (max-width: 600px) { .workspace-dictation span { display: none; } }
 .workspace-settings-shell { position: absolute; inset: 0; z-index: 4; display: grid; grid-template-columns: 208px minmax(0, 1fr); background: var(--ws-base); }
 .workspace-ui.workspace-configuring #workspace-view { display: none; }
 .workspace-ui.workspace-configuring :is(#chat, #form_sheld) { display: none !important; }

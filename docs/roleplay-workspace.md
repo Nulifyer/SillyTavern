@@ -116,6 +116,16 @@ remain available in expandable sections. Classic layout restores native menu anc
 `workspace-tools.js` owns scene-action presentation and the manual-image busy state.
 `workspace-views.js` owns browsing-page structure. `workspace.js` coordinates navigation and events.
 
+Classic drawer auto-close handlers exclude workspace-mounted panels. Clicking a
+Settings section, heading, dialog or dropdown must not change panel visibility.
+Done, Escape, category navigation and layout restoration use WorkspaceSettings.
+
+Models & connections includes one-server service discovery. ServiceConnections
+owns transient setup presentation and the discovery address preference. Native
+owners apply each chosen connection. Dictation owns microphone/file decoding and
+draft insertion. See [model service setup](model-services.md) for endpoints,
+optional services, migration and limits.
+
 The native recent-chat endpoint enumerates transcript files. Large libraries may need a
 server index later. Do not perform per-message index requests while a reply streams.
 

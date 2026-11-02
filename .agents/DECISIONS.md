@@ -15,6 +15,9 @@
 - Voice defaults off and has a visible chat toggle using native TTS settings.
 - Scene images are one manual request. Automatic image tools remain off by default.
 - Settings use persistent categories and task sections with one mounted native control tree.
+- WorkspaceSettings alone closes workspace-mounted panels. Classic outside-click and drawer toggles exclude those panels.
+- Service setup discovers transient metadata and applies choices through native chat, Connection Manager, image, TTS and dictation owners. It does not persist another model registry or add an inference proxy.
+- Dictation sends mono 16 kHz PCM WAV, inserts draft text without sending, and cancels when story identity changes.
 - Returning to the active story is allowed during generation and preserves its mounted transcript.
 - Use compact desktop controls, larger mobile touch targets, and flat dropdown surfaces.
 - Restrict upstream GitHub App bot jobs to the upstream repository.

@@ -6754,6 +6754,15 @@ function updateFeatureSupportFlags() {
     }
 }
 
+/** Configure only the compatible connection. Sampling and saved profiles stay intact. */
+export function configureCustomConnection(url, model) {
+    $('#main_api').val('openai').trigger('change');
+    $('#custom_api_url_text').val(url).trigger('input');
+    $('#custom_model_id').val(model).trigger('input');
+    $('#chat_completion_source').val(chat_completion_sources.CUSTOM).trigger('change');
+    $('#api_button_openai').trigger('click');
+}
+
 export function initOpenAI() {
     SlashCommandParser.addCommandObject(SlashCommand.fromProps({
         name: 'proxy',

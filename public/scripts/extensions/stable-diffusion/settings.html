@@ -48,6 +48,15 @@
                 <span data-i18n="sd_minimal_prompt_processing_txt">Minimal response prompt processing</span>
             </label>
             </details>
+            <label for="sd_prompt_writer_profile">Image prompt writer</label>
+            <select id="sd_prompt_writer_profile" class="text_pole">
+                <option value="">Current chat model</option>
+            </select>
+            <small>Used for scene descriptions and extended prompts. A separate profile keeps your story model selected. Context includes character descriptions and the last eight messages. Direct prompts bypass the writer.</small>
+            <label for="sd_prompt_writer_instructions">Image writer instructions</label>
+            <textarea id="sd_prompt_writer_instructions" class="text_pole" rows="5" placeholder="System instructions for the separate image prompt writer"></textarea>
+            <label for="sd_prompt_writer_max_tokens">Maximum writer output tokens</label>
+            <input id="sd_prompt_writer_max_tokens" class="text_pole" type="number" min="64" max="4096" step="64" value="512" />
             <label for="sd_source" data-i18n="Source">Source</label>
             <select id="sd_source" class="text_pole">
                 <option value="aimlapi">AI/ML API</option>

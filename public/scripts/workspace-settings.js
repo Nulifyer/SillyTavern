@@ -1,4 +1,5 @@
 import { button, element, workspaceSettings } from './workspace-views.js';
+import { ServiceConnections } from './service-connections.js';
 
 /** One mounted copy of each native settings panel, presented as a category workspace. */
 export class WorkspaceSettings {
@@ -10,6 +11,7 @@ export class WorkspaceSettings {
     }
 
     init() {
+        new ServiceConnections().init();
         this.root = element('section', 'workspace-only workspace-settings-shell');
         this.root.id = 'workspace-settings-shell';
         this.root.hidden = true;
@@ -19,7 +21,7 @@ export class WorkspaceSettings {
         for (const [label, ids] of [
             ['Writing', ['connection', 'generation', 'prompts']],
             ['Story world', ['persona', 'world', 'backgrounds']],
-            ['Creative tools', ['voice-settings', 'image-settings']],
+            ['Creative tools', ['voice-settings', 'dictation-settings', 'image-settings']],
             ['Workspace', ['settings', 'extensions', 'character-editor']],
         ]) {
             const group = element('div', 'workspace-settings-category');

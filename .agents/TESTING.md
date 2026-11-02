@@ -15,6 +15,20 @@ Manifest and OCI labels establish the digest, architectures, and source.
 
 - npm --prefix tests run test:unit
 - cd tests && ST_BASE_URL=http://127.0.0.1:8002 npx playwright test workspace.e2e.js --workers=1
+- cd tests && ST_BASE_URL=http://127.0.0.1:8013 ST_JUICED_URL=https://juiced.swarm.nulteck.com npx playwright test workspace.e2e.js --workers=1 --grep 'live Juiced'
+
+The live case is opt-in. Use only a fresh synthetic local container. It exercises
+enabled Skyfall story chat, the independent Hauhau writer, one neutral sd.cpp
+image, Kokoro speech and ASR transcription. It writes live-juiced-summary.json
+and desktop/mobile screenshots under its test output directory. Copy evidence
+before another Playwright run replaces test-results. It does not change model
+policies or runtime configuration. For release acceptance, run against the pulled
+release image with fresh volumes and no source overlays.
+
+The November 2 regression reproduces Settings section-click disappearance on
+unmodified v1.19.8. Service cases cover the first saved profile, native setting
+preservation/reload, failure/retry, stale discovery, missing capabilities, writer
+context and retry, microphone denial and cancellation, and real PCM audio format.
 
 The v1.19.7 redesign passed lint, all 411 unit tests, and all 20 browser cases.
 The v1.19.8 correction passed the full 20-case browser suite with all settings
@@ -41,4 +55,6 @@ port 8002. Settings writes isolated; cleanup uses native owners.
 
 ## Known gaps
 
-No live paid-provider or audible speech-quality checks.
+No live paid-provider, physical microphone or audible speech-quality checks.
+The synthetic microphone case tests browser recording, encoding and permission
+failure. Real speech is decoded in the browser and transcribed by Juiced.

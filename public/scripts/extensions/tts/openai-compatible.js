@@ -61,7 +61,7 @@ class OpenAICompatibleTtsProvider {
         }
 
         // Only accept keys defined in defaultSettings
-        this.settings = this.defaultSettings;
+        this.settings = structuredClone(this.defaultSettings);
 
         for (const key in settings) {
             if (key in this.settings) {
@@ -74,7 +74,7 @@ class OpenAICompatibleTtsProvider {
         $('#openai_compatible_tts_endpoint').val(this.settings.provider_endpoint);
         $('#openai_compatible_tts_endpoint').on('input', () => { this.onSettingsChange(); });
 
-        $('#openai_compatible_model').val(this.defaultSettings.model);
+        $('#openai_compatible_model').val(this.settings.model);
         $('#openai_compatible_model').on('input', () => { this.onSettingsChange(); });
 
         $('#openai_compatible_tts_voices').val(this.settings.available_voices.join());
@@ -112,7 +112,7 @@ class OpenAICompatibleTtsProvider {
     }
 
     async onRefreshClick() {
-        return;
+        await this.checkReady();
     }
 
     async getVoice(voiceName) {

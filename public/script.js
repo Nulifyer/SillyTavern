@@ -10972,7 +10972,7 @@ export async function doNavbarIconClick() {
     const targetDrawerID = $(this).parent().find('.drawer-content').attr('id');
 
     if (!drawerWasOpenAlready) {
-        const $openDrawers = $('.openDrawer:not(.pinnedOpen)');
+        const $openDrawers = $('.openDrawer').not('.pinnedOpen, .workspace-mounted-panel');
         const $openIcons = $('.openIcon:not(.drawerPinnedOpen)');
         for (const iconEl of $openIcons) {
             $(iconEl).toggleClass('closedIcon openIcon');
@@ -12196,7 +12196,9 @@ jQuery(async function () {
         // This autocloses open drawers that are not pinned if a click happens inside the app which does not target them.
         const targetParentHasOpenDrawer = clickTarget.parents('.openDrawer').length;
         if (!clickTarget.hasClass('drawer-icon') && !clickTarget.hasClass('openDrawer')) {
-            const $openDrawers = $('.openDrawer').not('.pinnedOpen');
+            // WorkspaceSettings owns mounted panels until Done, Escape, or navigation.
+            // Section buttons, dialogs and dropdowns can be outside the native panel.
+            const $openDrawers = $('.openDrawer').not('.pinnedOpen, .workspace-mounted-panel');
             if ($openDrawers.length && targetParentHasOpenDrawer === 0) {
                 // Toggle icon and drawer classes
                 $('.openIcon').not('.drawerPinnedOpen').toggleClass('closedIcon openIcon');

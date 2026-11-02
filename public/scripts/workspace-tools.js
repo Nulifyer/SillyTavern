@@ -1,5 +1,6 @@
 import { extension_settings } from './extensions.js';
 import { button, element } from './workspace-views.js';
+import { Dictation } from './dictation.js';
 
 /** Scene actions use native providers; the toolbar stays mounted while replies stream. */
 export class WorkspaceTools {
@@ -18,7 +19,11 @@ export class WorkspaceTools {
         this.voice.id = 'workspace-voice-button';
         this.voice.setAttribute('aria-label', 'Voice narration');
         this.voice.setAttribute('aria-pressed', 'false');
-        toolbar.append(this.image, this.voice);
+        const microphone = element('button', 'workspace-tool-button workspace-dictation');
+        microphone.type = 'button';
+        microphone.id = 'workspace-dictation';
+        microphone.append(element('i', 'fa-solid fa-microphone'), element('span', '', 'Dictate'));
+        toolbar.append(this.image, this.voice, microphone);
         const more = element('details', 'workspace-scene-menu workspace-creative-menu');
         const summary = element('summary', 'workspace-icon-button');
         summary.setAttribute('aria-label', 'Chat tools and options');
@@ -30,6 +35,7 @@ export class WorkspaceTools {
             button('Read latest reply', 'read-reply', {}, 'workspace-menu-action', 'fa-play'),
             button('Play / pause voice', 'voice-playback', {}, 'workspace-menu-action', 'fa-pause'),
             button('Voice settings', 'voice-settings', {}, 'workspace-menu-action', 'fa-volume-high'),
+            button('Dictation settings', 'dictation-settings', {}, 'workspace-menu-action', 'fa-microphone'),
             button('Image settings', 'image-settings', {}, 'workspace-menu-action', 'fa-image'),
             button('Model settings', 'connection', {}, 'workspace-menu-action', 'fa-plug'),
         );
@@ -58,6 +64,8 @@ export class WorkspaceTools {
         this.status.setAttribute('role', 'status');
         this.status.hidden = true;
         document.getElementById('form_sheld').prepend(this.status);
+        this.dictation = new Dictation();
+        this.dictation.init(microphone);
     }
 
     setLayout(workspace) {
@@ -68,6 +76,7 @@ export class WorkspaceTools {
     }
 
     update(generating, archived) {
+        this.dictation.update(generating || archived);
         const enabled = Boolean(extension_settings.tts?.enabled);
         this.voice.setAttribute('aria-pressed', String(enabled));
         this.voice.querySelector('span').textContent = enabled ? 'Voice on' : 'Voice off';

@@ -8,6 +8,7 @@ export const workspaceSettings = [
     { id: 'world', label: 'World & lore', icon: 'fa-book-atlas', description: 'Build places, history, and lorebooks for your characters.', drawer: 'WI-SP-button', panel: 'WorldInfo' },
     { id: 'image-settings', label: 'Image generation', icon: 'fa-image', description: 'Connect an image provider and tune portraits and scene illustrations.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '.sd_settings' },
     { id: 'voice-settings', label: 'Voice & narration', icon: 'fa-volume-high', description: 'Choose a speech provider, assign character voices, and set playback behavior.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '#tts_container' },
+    { id: 'dictation-settings', label: 'Dictation', icon: 'fa-microphone', description: 'Connect a transcription service and add microphone or audio-file transcripts to your draft.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '#dictation-settings' },
     { id: 'settings', label: 'Appearance & behavior', icon: 'fa-gear', description: 'Reading preferences, account controls, and the classic layout.', drawer: 'user-settings-button', panel: 'user-settings-block' },
     { id: 'backgrounds', label: 'Scene backgrounds', icon: 'fa-panorama', description: 'Choose the backdrop for your stories.', drawer: 'backgrounds-button', panel: 'Backgrounds' },
     { id: 'prompts', label: 'Advanced prompts', icon: 'fa-align-left', description: 'System prompts, instruction templates, and context formatting.', drawer: 'advanced-formatting-button', panel: 'AdvancedFormatting' },
@@ -298,8 +299,8 @@ function settings(state) {
         main.append(section);
     }
     const creative = element('aside', 'workspace-settings-creative');
-    creative.append(element('h2', '', 'Voice & images'), element('p', '', 'Turn Voice on in the chat to hear replies. Illustrate scene creates one image when you click it.'));
-    for (const id of ['voice-settings', 'image-settings']) {
+    creative.append(element('h2', '', 'Creative tools'), element('p', '', 'Turn Voice on in the chat to hear replies. Illustrate scene creates one image when you click it. Dictation adds text to your draft.'));
+    for (const id of ['voice-settings', 'dictation-settings', 'image-settings']) {
         const setting = workspaceSettings.find(item => item.id === id);
         creative.append(button(setting.label, id, {}, 'workspace-button', setting.icon));
     }

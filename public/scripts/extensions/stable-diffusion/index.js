@@ -44,7 +44,7 @@ import {
 import { getMessageTimeStamp, humanizedDateTime } from '../../RossAscends-mods.js';
 import { SECRET_KEYS, secret_state } from '../../secrets.js';
 import { getNovelAnlas, getNovelUnlimitedImageGeneration, loadNovelSubscriptionData } from '../../nai-settings.js';
-import { getMultimodalCaption } from '../shared.js';
+import { ConnectionManagerRequestService, getMultimodalCaption } from '../shared.js';
 import { SlashCommandParser } from '../../slash-commands/SlashCommandParser.js';
 import { SlashCommand } from '../../slash-commands/SlashCommand.js';
 import {
@@ -291,6 +291,9 @@ const defaultSettings = {
 
     // stable-diffusion.cpp settings
     sdcpp_url: 'http://127.0.0.1:1234',
+    prompt_writer_profile: '',
+    prompt_writer_instructions: '',
+    prompt_writer_max_tokens: 512,
 
     vlad_url: 'http://localhost:7860',
     vlad_auth: '',
@@ -532,6 +535,17 @@ async function loadSettings() {
     $('#sd_auto_url').val(extension_settings.sd.auto_url);
     $('#sd_auto_auth').val(extension_settings.sd.auto_auth);
     $('#sd_sdcpp_url').val(extension_settings.sd.sdcpp_url);
+    if (!extension_settings.disabledExtensions.includes('connection-manager')) {
+        ConnectionManagerRequestService.handleDropdown('#sd_prompt_writer_profile', extension_settings.sd.prompt_writer_profile, profile => {
+            extension_settings.sd.prompt_writer_profile = profile?.id || '';
+            saveSettingsDebounced();
+        });
+        $('#sd_prompt_writer_profile option[value=""]').text('Current chat model');
+    } else {
+        $('#sd_prompt_writer_profile').prop('disabled', true);
+    }
+    $('#sd_prompt_writer_instructions').val(extension_settings.sd.prompt_writer_instructions);
+    $('#sd_prompt_writer_max_tokens').val(extension_settings.sd.prompt_writer_max_tokens);
     $('#sd_vlad_url').val(extension_settings.sd.vlad_url);
     $('#sd_vlad_auth').val(extension_settings.sd.vlad_auth);
     $('#sd_drawthings_url').val(extension_settings.sd.drawthings_url);
@@ -1131,6 +1145,29 @@ function onSwapDimensionsClick() {
     extension_settings.sd.height = h;
     $('#sd_width').val(w).trigger('input');
     $('#sd_height').val(h).trigger('input');
+    saveSettingsDebounced();
+}
+
+/** Use the native sd.cpp settings without changing explicit image sampling. */
+export async function configureSdcppConnection(url, model) {
+    extension_settings.sd.sdcpp_url = url;
+    extension_settings.sd.source = sources.sdcpp;
+    extension_settings.sd.model = model;
+    $('#sd_sdcpp_url').val(url);
+    $('#sd_source').val(sources.sdcpp);
+    toggleSourceControls();
+    await loadSettingOptions();
+    // Discovery can fail independently of a chosen model; retain the explicit selection.
+    extension_settings.sd.model = model;
+    if (!$('#sd_model option').toArray().some(option => option.value === model)) $('#sd_model').append(new Option(model, model));
+    $('#sd_model').val(model);
+    saveSettingsDebounced();
+}
+
+/** Select an independent prompt writer, preserving its instructions and output budget. */
+export function configureImageWriter(profileId) {
+    extension_settings.sd.prompt_writer_profile = profileId;
+    $('#sd_prompt_writer_profile').val(profileId).trigger('change');
     saveSettingsDebounced();
 }
 
@@ -3299,9 +3336,45 @@ function getUserAvatarUrl() {
  */
 async function generatePrompt(quietPrompt) {
     const toast = toastr.info('Generating image prompt with an LLM...', 'Image Generation');
-    const reply = await generateQuietPrompt({ quietPrompt });
-    const processedReply = processReply(reply);
-    toastr.clear(toast);
+    let processedReply;
+    try {
+        if (extension_settings.sd.prompt_writer_profile) {
+            const context = getContext();
+            const group = context.groups.find(item => String(item.id) === String(context.groupId));
+            const characters = group
+                ? context.characters.filter(character => group.members.includes(character.avatar))
+                : [context.characters[context.characterId]].filter(Boolean);
+            const scene = {
+                characters: characters.map(character => ({
+                    name: character.name,
+                    description: (character.description || '').slice(0, 3000),
+                    scenario: (character.scenario || '').slice(0, 3000),
+                })),
+                recent_messages: context.chat.filter(message => !message.is_system).slice(-8).map(message => ({
+                    speaker: message.name,
+                    text: String(message.mes || '').slice(0, 2000),
+                })),
+            };
+            const result = await ConnectionManagerRequestService.sendRequest(
+                extension_settings.sd.prompt_writer_profile,
+                [
+                    { role: 'system', content: extension_settings.sd.prompt_writer_instructions || 'Write a concrete visual description for an image model. Preserve the requested scene, subjects, actions and appearance. Latest scene details take precedence over older descriptions. Return only the image prompt.' },
+                    { role: 'user', content: `Scene context:\n${JSON.stringify(scene)}\n\nImage request:\n${quietPrompt}` },
+                ],
+                extension_settings.sd.prompt_writer_max_tokens,
+                { includePreset: false, includeInstruct: false },
+                ConnectionManagerRequestService.getProfile(extension_settings.sd.prompt_writer_profile)?.api === 'custom'
+                    ? { custom_include_body: JSON.stringify({ chat_template_kwargs: { enable_thinking: false } }) }
+                    : {},
+            );
+            processedReply = result.content?.trim();
+        } else {
+            const reply = await generateQuietPrompt({ quietPrompt });
+            processedReply = processReply(reply);
+        }
+    } finally {
+        toastr.clear(toast);
+    }
 
     if (!processedReply) {
         toastr.error('Prompt generation produced no text. Make sure you\'re using a valid instruct template and try again', 'Image Generation');
@@ -5847,6 +5920,14 @@ export async function init() {
     $('#sd_auto_auth').on('input', onAutoAuthInput);
     $('#sd_sdcpp_validate').on('click', validateSdcppUrl);
     $('#sd_sdcpp_url').on('input', onSdcppUrlInput);
+    $('#sd_prompt_writer_instructions').on('input', function () {
+        extension_settings.sd.prompt_writer_instructions = String($(this).val());
+        saveSettingsDebounced();
+    });
+    $('#sd_prompt_writer_max_tokens').on('input', function () {
+        extension_settings.sd.prompt_writer_max_tokens = Math.max(64, Math.min(4096, Number($(this).val()) || 512));
+        saveSettingsDebounced();
+    });
     $('#sd_drawthings_validate').on('click', validateDrawthingsUrl);
     $('#sd_drawthings_url').on('input', onDrawthingsUrlInput);
     $('#sd_drawthings_auth').on('input', onDrawthingsAuthInput);

@@ -719,6 +719,9 @@ export class ConnectionManagerRequestService {
             }
 
             const group = groups[CONNECT_API_MAP[profile.api].selected];
+            // Empty groups are not mounted initially. The first saved profile
+            // must attach its group before consumers can select the new option.
+            if (!dropdown[0].contains(group)) dropdown.append(group);
             const option = document.createElement('option');
             option.value = profile.id;
             option.textContent = profile.name;
@@ -741,7 +744,8 @@ export class ConnectionManagerRequestService {
             }
 
             const group = groups[CONNECT_API_MAP[newProfile.api].selected];
-            const oldOption = group.querySelector(`option[value="${oldProfile.id}"]`);
+            if (!dropdown[0].contains(group)) dropdown.append(group);
+            const oldOption = dropdown[0].querySelector(`option[value="${oldProfile.id}"]`);
             if (oldOption) {
                 oldOption.remove();
             }

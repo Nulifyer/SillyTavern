@@ -1,0 +1,12 @@
+{
+  "server": "https://juiced.swarm.nulteck.com",
+  "path": "/v1/audio/transcriptions",
+  "model": "asr4all-l-gptq-Q8_0",
+  "fixture": "Kokoro kokoro-v1 af_heart speech: The red teapot is beside the blue book.",
+  "request": "multipart file from /v1/audio/speech response_format=wav, model=asr4all-l-gptq-Q8_0",
+  "upstream_status": 400,
+  "upstream_error": "FUTO transcription failed: {\"error\":\"Use 16 kHz WAV, 1-8 channels, maximum 120 seconds\"}",
+  "owner": "Juiced protocol compatibility; hand off to Homelab",
+  "client_behavior": "Generic dictation capture and file decoding sends mono 16 kHz 16-bit PCM WAV to every compatible provider. No Juiced-specific inference path.",
+  "result": "The real speech-to-transcription browser flow passed after generic audio encoding. Arbitrary uploaded formats are limited to formats the browser can decode."
+}

@@ -89,6 +89,47 @@ Use the workflow's digest reference when you need to pin the exact published ima
 
 ## Verified release
 
+### v1.19.9 candidate
+
+The candidate fixes Settings controls disappearing after section clicks and the
+first Connection Manager profile failing to appear in extension dropdowns.
+One-server service discovery configures native chat, optional image writer,
+sd.cpp images, TTS and independent dictation. Setup and migration instructions
+are in [model-services.md](model-services.md).
+
+Source checks passed lint, 423 unit tests, the 25-case controlled browser suite,
+focused category checks and real Juiced streaming chat, separate writer/image,
+speech and transcription. Dictation is independent of the optional TTS extension.
+Evidence: [November 2 UI/Juiced checks](evidence/ui-juiced-20261102/).
+Publication and verification of the pulled release image remain pending.
+
+### Writer integration trial before v1.19.9
+
+The working source adds an optional Connection Manager image-writer profile with
+editable system instructions and output budget. Juiced v0.5.0 now serves the
+existing sd.cpp image protocol directly. The temporary OpenAI image transport
+patch, format selector and five format-only tests were removed after real image
+acceptance. The backend image handler is identical to published v1.19.8.
+Current-chat prompt generation remains the default. No additional proxy is required.
+
+This trial used uncommitted, unpublished source. The fresh homelab test at
+https://sillytavern-test.swarm.nulteck.com uses v1.19.8 with a persistent source
+overlay. It does not mount production data. Focused lint and all411 remaining
+unit tests passed after transport removal. The unchanged backend produced a
+neutral512px image through Juiced in26.29s. Earlier chat, TTS, caption and browser
+scene→writer→image checks remain dated evidence of the writer trial.
+The full browser regression suite was not rerun for this patch.
+
+Evidence and production migration instructions are owned by
+`/home/nulifyer/Projects/Homelab/docs/juiced-deployment.md`, with request/response
+artifacts under `docs/evidence/sillytavern-juiced-test/` in that repository.
+The current protocol migration and source hashes are in
+`docs/evidence/juiced-compatibility/` in Homelab.
+Before production use, publish through the normal workflow above, remove the
+test overlay and verify the released image itself. Preserve production volumes
+and make private connection-setting changes in the user's UI. Local FUTO
+microphone dictation still needs a configurable transcription endpoint.
+
 [Release v1.19.8](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.8)
 was published by [automatic release run 37842068836](https://github.com/Nulifyer/SillyTavern/actions/runs/37842068836).
 Both native architecture jobs passed server startup checks. Anonymous requests

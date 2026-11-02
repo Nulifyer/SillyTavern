@@ -753,6 +753,51 @@ router.post('/generate-video', async (request, response) => {
 
 const custom = express.Router();
 
+// Discovery belongs to the compatible provider, beside its inference handlers.
+// Results are transient. Native chat/image/voice settings remain their own owners.
+custom.post('/discover', async (request, response) => {
+    try {
+        const url = new URL(request.body.url);
+        if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password || url.search || url.hash) {
+            return response.status(400).json({ error: 'Enter an HTTP or HTTPS server URL without credentials, query or fragment.' });
+        }
+        const root = url.href.replace(/\/$/, '').replace(/\/v1(?:\/audio\/(?:speech|transcriptions))?$/, '');
+        const base = `${root}/v1`;
+        const key = readSecret(request.user.directories, request.body.voice_model ? SECRET_KEYS.CUSTOM_OPENAI_TTS : SECRET_KEYS.CUSTOM);
+        const headers = key ? { Authorization: `Bearer ${key}` } : {};
+        const get = async (target) => {
+            const result = await fetch(target, { headers, signal: AbortSignal.timeout(15000), redirect: 'error' });
+            if (!result.ok) throw new Error(`Server returned HTTP ${result.status}. Check the address, enabled models and provider key.`);
+            return await result.json();
+        };
+        if (request.body.voice_model) {
+            const data = await get(`${base}/audio/voices?model=${encodeURIComponent(request.body.voice_model)}`);
+            if (!Array.isArray(data.voices) || !data.voices.every(voice => typeof voice === 'string')) throw new Error('Server did not return a voice list. Use the native provider settings for manual voices.');
+            return response.json({ voices: [...new Set(data.voices)] });
+        }
+        const manifest = await get(`${root}/.well-known/juiced.json`).catch(() => null);
+        const juiced = manifest?.name === 'Juiced';
+        const services = {};
+        const kinds = juiced ? ['chat', 'images', 'speak', 'transcribe', 'embeddings'] : ['chat'];
+        await Promise.all(kinds.map(async service => {
+            try {
+                const data = await get(`${base}/models${juiced ? `?service=${service}` : ''}`);
+                if (!Array.isArray(data.data)) throw new Error('Server did not return an OpenAI model list.');
+                services[service] = { models: data.data.filter(model => typeof model.id === 'string').map(model => ({ id: model.id, labels: model.labels || [] })) };
+            } catch (error) {
+                services[service] = { models: [], error: error.message };
+            }
+        }));
+        if (!Object.values(services).some(service => service.models.length)) {
+            return response.status(502).json({ error: services.chat?.error || 'No enabled models found. Enable a model on the server, then retry.' });
+        }
+        const protocols = juiced ? await get(`${base}/juiced/protocols`).catch(() => null) : null;
+        return response.json({ root, base, juiced, services, protocols: protocols?.protocols || [] });
+    } catch (error) {
+        return response.status(400).json({ error: error instanceof TypeError ? 'Enter a valid server URL. Check network reachability and TLS.' : error.message });
+    }
+});
+
 custom.post('/generate-voice', async (request, response) => {
     try {
         const key = readSecret(request.user.directories, SECRET_KEYS.CUSTOM_OPENAI_TTS);
@@ -785,7 +830,7 @@ custom.post('/generate-voice', async (request, response) => {
         }
 
         const buffer = await result.arrayBuffer();
-        response.setHeader('Content-Type', 'audio/mpeg');
+        response.setHeader('Content-Type', result.headers.get('content-type') || 'audio/mpeg');
         return response.send(Buffer.from(buffer));
     } catch (error) {
         console.error('OpenAI TTS generation failed', error);
@@ -799,16 +844,17 @@ router.use('/custom', custom);
  * Creates a transcribe-audio endpoint handler for a given provider.
  * @param {object} config - Provider configuration
  * @param {string} config.secretKey - The SECRET_KEYS enum value for the provider
- * @param {string} config.apiUrl - The transcription API endpoint URL
+ * @param {string | ((request: import('express').Request) => string)} config.apiUrl - The transcription API endpoint URL
  * @param {string} config.providerName - Display name for logging
+ * @param {boolean} [config.requireKey=true] - Whether the provider requires a key
  * @returns {import('express').RequestHandler} Express request handler
  */
-function createTranscribeHandler({ secretKey, apiUrl, providerName }) {
+function createTranscribeHandler({ secretKey, apiUrl, providerName, requireKey = true }) {
     return async (request, response) => {
         try {
             const key = readSecret(request.user.directories, secretKey);
 
-            if (!key) {
+            if (requireKey && !key) {
                 console.warn(`No ${providerName} key found`);
                 return response.sendStatus(400);
             }
@@ -818,22 +864,27 @@ function createTranscribeHandler({ secretKey, apiUrl, providerName }) {
                 return response.sendStatus(400);
             }
 
+            const endpoint = typeof apiUrl === 'function' ? apiUrl(request) : apiUrl;
+            const target = new URL(endpoint);
+            if (!['http:', 'https:'].includes(target.protocol) || target.username || target.password) return response.sendStatus(400);
+
             console.info(`Processing audio file with ${providerName}`, request.file.path);
             const formData = new FormData();
-            formData.append('file', fs.createReadStream(request.file.path), { filename: 'audio.wav', contentType: 'audio/wav' });
+            formData.append('file', fs.createReadStream(request.file.path), { filename: request.file.originalname || 'audio.wav', contentType: request.file.mimetype || 'audio/wav' });
             formData.append('model', request.body.model);
 
             if (request.body.language) {
                 formData.append('language', request.body.language);
             }
 
-            const result = await fetch(apiUrl, {
+            const result = await fetch(target, {
                 method: 'POST',
                 headers: {
-                    'Authorization': `Bearer ${key}`,
+                    ...(key ? { Authorization: `Bearer ${key}` } : {}),
                     ...formData.getHeaders(),
                 },
                 body: formData,
+                signal: AbortSignal.timeout(120000),
             });
 
             if (!result.ok) {
@@ -842,16 +893,23 @@ function createTranscribeHandler({ secretKey, apiUrl, providerName }) {
                 return response.status(500).send(text);
             }
 
-            fs.unlinkSync(request.file.path);
             const data = await result.json();
-            console.debug(`${providerName} transcription response`, data);
             return response.json(data);
         } catch (error) {
             console.error(`${providerName} transcription failed`, error);
             response.status(500).send('Internal server error');
+        } finally {
+            if (request.file?.path) fs.rmSync(request.file.path, { force: true });
         }
     };
 }
+
+custom.post('/transcribe-audio', createTranscribeHandler({
+    secretKey: SECRET_KEYS.CUSTOM,
+    apiUrl: request => request.body.endpoint,
+    providerName: 'OpenAI-compatible',
+    requireKey: false,
+}));
 
 router.post('/transcribe-audio', createTranscribeHandler({
     secretKey: SECRET_KEYS.OPENAI,
