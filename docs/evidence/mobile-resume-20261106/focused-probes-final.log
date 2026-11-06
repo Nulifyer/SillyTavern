@@ -1,0 +1,20 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep pending native recovery save|foreground retry --output=/tmp/st-resume-final-probes --reporter=line
+(node:533988) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:534057) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:534057) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:534057) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] workspace.e2e.js:2489:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings
+[2/2] workspace.e2e.js:2674:1 › a pending native recovery save does not keep the connection check busy
+  2 passed (23.9s)

@@ -132,6 +132,26 @@ describe('flattenSchema', () => {
 });
 
 describe('forwardFetchResponse', () => {
+    test('forwards the first SSE event before EOF and fails the downstream on upstream reset', async () => {
+        const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
+        const upstream = new PassThrough();
+        const response = createMockExpressResponse();
+        response.socket = new PassThrough();
+        response.setHeader = jest.fn();
+        const firstToken = once(response, 'data');
+        await forwardFetchResponse(new Response(upstream, { headers: { 'Content-Type': 'text/event-stream' } }), response);
+        upstream.write('data: first token\n\n');
+        expect((await firstToken)[0].toString()).toBe('data: first token\n\n');
+        expect(response.writableFinished).toBe(false);
+        expect(response.setHeader).toHaveBeenCalledWith('Content-Type', 'text/event-stream');
+        expect(response.setHeader).toHaveBeenCalledWith('Cache-Control', 'no-cache, no-transform');
+        const closed = once(response, 'close');
+        upstream.destroy(new Error('Synthetic upstream reset'));
+        await closed;
+        expect(response.writableFinished).toBe(false);
+        expect(warnSpy).toHaveBeenCalledWith('Upstream streaming response ended unexpectedly.');
+    });
+
     test('should log JSON error bodies and return the original body for non-2xx streaming responses', async () => {
         const warnSpy = jest.spyOn(console, 'warn').mockImplementation(() => undefined);
         const body = JSON.stringify({ error: { message: 'Forbidden by upstream policy' }, detail: 'policy_denied' });

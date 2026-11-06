@@ -2,49 +2,42 @@
 
 ## Project state
 
-Published and verifiedv1.19.15, sourcef7dcc34e95690561d607ae779a0c218cea5944e4.
-Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Workflow42298436889 passed native amd64/arm64 startup/heartbeat and publication.
+Latest verified release is v1.19.15, source f7dcc34e95690561d607ae779a0c218cea5944e4.
 Image index: `sha256:28c8a422df7b9ad588a9308c74ea73bacd3744919bd50b19056e18be981b92a7`.
+Published branch: release. Production69 and shared85 remain untouched.
 
 ## Active tasks
 
-None. Mobile portrait/Pixel9ProXL follow-up is complete. The earlier
-[full workspace review](work/full-workspace-review.md) and
-[service workspace task](work/service-workspace.md) remain complete.
+Mobile tab suspension/reconnection [follow-up](work/mobile-resume.md). Native draft ownership now checkpoints
+per user/character or cast/story; native streaming owners retain partial text and
+clean up interrupted requests. Foreground checks must preserve explicit provider
+settings and never replay inference. Dictation cancels a hidden microphone session.
+All edits remain uncommitted pending full source acceptance. Focused transport-loss proof passed.
 
 ## Next action
 
-Homelab owns the later deployment using
-[handoff](../docs/evidence/mobile-portraits-20261106/handoff.md).
-Production69 and shared85 were never accessed or changed. Never deploy from
-this thread. Preserve all existing volume identities and record the actual
-pre-update image/private backup. Reload browser tabs after image recreation.
+Commit/publish v1.19.16 through a GitHub Release, await native multiarch workflow,
+then run the full63-case suite on the pulled image with five fresh volumes and
+no overlays. Source runtime files are frozen. Never deploy production here.
 
 ## Verification
 
-Actualv1.19.15 on8022 st-mobile-portraits-release-20261106 passed45browser cases
-in6.2minutes, including both live Juiced cases, zero skips/uncaught page errors.
-Five fresh synthetic volumes/no overlays,24tagged runtime-file matches,
-version/heartbeat/HTTPS200 passed. Final focused capture rerun passed; the18state
-Android/mobile/touch/DPR3 portrait matrix covers Pixel9ProXL portrait/landscape,
-reduced heights and normal/150% native text. Final renders were inspected.
-Source2focused cases,424units, root lint/actionlint passed; test lint0errors/
-24warnings. Continuity validator passed. Runtime source is unchanged after tag.
-Evidence: docs/evidence/mobile-portraits-20261106/.
-
-Priorv1.19.14 full visual review/persistence proof remains in
-[handoff](../docs/evidence/full-workspace-review-20261106/handoff.md).
-No settings-schema, chat-format or inference code changed in this follow-up.
+425units/root lint/actionlint pass. Test lint has0errors/28warnings. Source full
+run61/63 passed, zero uncaught errors. The legacy fixture now seeds its key before
+reload; navigation budget is30s with all readiness assertions retained. Final4
+focused cases passed after those test corrections and keyboard activation repair.
+Earlier12 repeated owner checks passed, including both multi-choice EOF outcomes,
+foreground retry/dry-run/APP_READY retention and the prior navigation timeout.
+Both real Juiced cases passed in the full source run. Published-image acceptance
+is required before final handoff. Evidence: docs/evidence/mobile-resume-20261106/.
 
 ## Blockers
 
-None.
+None external. Publication and full actual-image acceptance remain open.
 
 ## Limits
 
-Pixel sizing is browser emulation, not physical-device qualification. Paid
-provider inference, physical microphone and audible quality remain unqualified.
-ARM64 has native startup/heartbeat proof; full browser/live acceptance ran on
-amd64. No Juiced model policy, runtime or cache was changed. Retrieval retains
-native provider setup; the last discovery reported no enabled embeddings model.
+CDP freeze/active and controlled HTTP failures are browser simulations, not physical
+phone lock qualification. Actual OS tab discard cannot reattach the original HTTP
+inference; recovery must preserve local text and require explicit user action.
+No Juiced runtime, policy or cache changes. No production data access.

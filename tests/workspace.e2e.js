@@ -1,5 +1,6 @@
 import { test, expect, devices } from '@playwright/test';
 import fs from 'node:fs';
+import { createServer } from 'node:http';
 
 test.use({ channel: 'chromium', video: 'off', viewport: { width: 1280, height: 800 } });
 test.setTimeout(90000);
@@ -85,6 +86,7 @@ async function returnToChat(page) {
 
 test.beforeEach(async ({ page }) => {
     page.setDefaultTimeout(10000);
+    page.setDefaultNavigationTimeout(30000);
     page.workspaceDiagnostics = { pageErrors: [], consoleErrors: [], failedRequests: [] };
     page.on('pageerror', error => page.workspaceDiagnostics.pageErrors.push(error.message));
     page.on('console', message => { if (message.type() === 'error') page.workspaceDiagnostics.consoleErrors.push(message.text()); });
@@ -129,6 +131,7 @@ test.beforeEach(async ({ page }) => {
 
 test.afterEach(async ({ page }, testInfo) => {
     if (page.isClosed()) return;
+    if (page.workspaceRecoveryRoutes) fs.writeFileSync(testInfo.outputPath('recovery-events.json'), JSON.stringify({ routes: page.workspaceRecoveryRoutes, browser: await page.evaluate(() => window.__recoveryTrace) }, null, 2));
     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
@@ -1032,7 +1035,11 @@ test('dictation handles permission failure and retry, preserves drafts, never se
     await page.locator('#workspace-dictation').click();
     await expect(page.locator('#dictation-status')).toContainText('Microphone permission denied');
     let requests = 0;
-    await page.route('**/api/openai/custom/transcribe-audio', route => {
+    let releaseTranscript, transcriptRequested, transcriptDelivered;
+    const transcriptHeld = new Promise(resolve => releaseTranscript = resolve);
+    const transcriptStarted = new Promise(resolve => transcriptRequested = resolve);
+    const transcriptFinished = new Promise(resolve => transcriptDelivered = resolve);
+    await page.route('**/api/openai/custom/transcribe-audio', async route => {
         requests++;
         const body = route.request().postDataBuffer();
         const wav = body.indexOf('RIFF');
@@ -1040,7 +1047,10 @@ test('dictation handles permission failure and retry, preserves drafts, never se
         expect(body.readUInt32LE(wav + 24)).toBe(16000);
         expect(body.readUInt16LE(wav + 22)).toBe(1);
         expect(body.readUInt16LE(wav + 34)).toBe(16);
-        return route.fulfill({ json: { text: 'A blue book beside a red teapot.' } });
+        transcriptRequested();
+        await transcriptHeld;
+        await route.fulfill({ json: { text: 'A blue book beside a red teapot.' } });
+        transcriptDelivered();
     });
     await page.evaluate(() => {
         navigator.mediaDevices.getUserMedia = async () => {
@@ -1059,6 +1069,11 @@ test('dictation handles permission failure and retry, preserves drafts, never se
     await expect(page.locator('#dictation-status')).toContainText('Listening');
     await expect.poll(() => page.evaluate(() => window.syntheticAudioContext.currentTime)).toBeGreaterThan(0.2);
     await page.locator('#workspace-dictation').click();
+    await transcriptStarted;
+    const pause = await freezePage(page);
+    releaseTranscript();
+    await transcriptFinished;
+    await resumePage(page, pause);
     await expect(page.locator('#dictation-status')).toContainText('Transcript added');
     await expect(page.locator('#send_textarea')).toHaveValue('Draft remains A blue book beside a red teapot.');
     expect(await page.locator('#chat .mes').count()).toBe(messages);
@@ -1450,6 +1465,504 @@ test('search opens character profiles and a fixture model generates through the 
     await expect(page.locator('#send_but')).toBeVisible();
 });
 
+async function connectRecoveryFixture(page, url = 'http://127.0.0.1:12345/v1', streaming = true) {
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
+    await settingsCategory(page, 'connection');
+    await page.locator('#chat_completion_source').selectOption('custom');
+    await page.locator('#custom_api_url_text').fill(url);
+    await page.locator('#custom_model_id').fill('workspace-fixture');
+    await page.locator('#api_button_openai').click();
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+    await settingsCategory(page, 'generation');
+    await page.locator('#stream_toggle').setChecked(streaming);
+    await page.keyboard.press('Escape');
+}
+
+async function freezePage(page) {
+    const cdp = await page.context().newCDPSession(page);
+    await page.evaluate(() => {
+        window.__freezeObserved = false;
+        document.addEventListener('freeze', () => { window.__freezeObserved = true; }, { once: true });
+    });
+    // Playwright normally forces every page visible, which prevents lifecycle freezing.
+    // The override belongs to Playwright's original CDP session, so changing it
+    // on a second session does not disable it. This test-only in-process seam
+    // restores real visibility/freeze semantics; it never changes application code.
+    cdp.nativeSession = page._connection.toImpl(page).delegate._mainFrameSession._client;
+    await cdp.nativeSession.send('Emulation.setFocusEmulationEnabled', { enabled: false });
+    cdp.backgroundTab = await page.context().newPage();
+    await cdp.backgroundTab.bringToFront();
+    await expect.poll(() => page.evaluate(() => document.visibilityState)).toBe('hidden');
+    await cdp.send('Page.setWebLifecycleState', { state: 'frozen' });
+    await expect.poll(async () => (await cdp.send('Runtime.evaluate', { expression: 'window.__freezeObserved' })).result.value).toBe(true);
+    return cdp;
+}
+
+async function resumePage(page, cdp) {
+    await cdp.send('Page.setWebLifecycleState', { state: 'active' });
+    await page.bringToFront();
+    await cdp.backgroundTab.close();
+    await cdp.nativeSession.send('Emulation.setFocusEmulationEnabled', { enabled: true });
+}
+
+test('mobile draft survives a frozen tab and reload without leaking into another story', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} suspended draft`;
+    await startStory(page, title);
+    await page.setViewportSize({ width: 448, height: 921 });
+    await page.locator('#send_textarea').fill('My unsent lantern scene stays private to this story.');
+    const cdp = await freezePage(page);
+    await resumePage(page, cdp);
+    await expect(page.locator('#send_textarea')).toHaveValue('My unsent lantern scene stays private to this story.');
+    await page.evaluate(async () => (await import('/script.js')).saveSettings());
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
+    await expect(page.locator('#send_textarea')).toHaveValue('My unsent lantern scene stays private to this story.');
+    await page.screenshot({ path: testInfo.outputPath('resumed-draft.png') });
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} other story`);
+    await expect(page.locator('#send_textarea')).toHaveValue('');
+});
+
+test('a healthy reply completed while frozen resumes once and preserves the next draft', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} frozen reply`);
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
+    let releaseReply, requested, delivered;
+    const replyReady = new Promise(resolve => releaseReply = resolve);
+    const requestReady = new Promise(resolve => requested = resolve);
+    const responseDelivered = new Promise(resolve => delivered = resolve);
+    let requests = 0;
+    await page.route('**/api/backends/chat-completions/generate', async route => {
+        requests++;
+        requested();
+        await replyReady;
+        await route.fulfill({ contentType: 'text/event-stream', body: 'data: {"choices":[{"index":0,"delta":{"content":"The lantern stayed lit while the phone slept."}}]}\n\ndata: [DONE]\n\n' });
+        delivered();
+    });
+    await settingsCategory(page, 'connection');
+    await page.locator('#chat_completion_source').selectOption('custom');
+    await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
+    await page.locator('#custom_model_id').fill('workspace-fixture');
+    await page.locator('#api_button_openai').click();
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+    await settingsCategory(page, 'generation');
+    await page.locator('#stream_toggle').check();
+    await page.keyboard.press('Escape');
+    await page.locator('#send_textarea').fill('Describe the lantern.');
+    await page.locator('#send_but').click();
+    await requestReady;
+    await page.locator('#send_textarea').fill('My next turn is still a draft.');
+    const cdp = await freezePage(page);
+    releaseReply();
+    await responseDelivered;
+    await resumePage(page, cdp);
+    await expect(page.locator('#chat .mes_text').last()).toHaveText('The lantern stayed lit while the phone slept.');
+    await expect(page.locator('#mes_stop')).toBeHidden();
+    await expect(page.locator('#send_textarea')).toHaveValue('My next turn is still a draft.');
+    expect(requests).toBe(1);
+});
+
+for (const loss of ['reset', 'early-eof']) {
+    test(`a ${loss} stream after freeze preserves partial text without success actions or replay`, async ({ page }, testInfo) => {
+        const title = `Workspace e2e ${testInfo.testId}-${runId} interrupted`;
+        await startStory(page, title);
+        let upstream, requests = 0;
+        const server = createServer((request, response) => {
+            request.resume();
+            if (request.url !== '/v1/chat/completions') { response.writeHead(404).end(); return; }
+            requests++;
+            upstream = response;
+            response.writeHead(200, { 'content-type': 'text/event-stream', 'cache-control': 'no-cache' });
+            response.write('data: {"choices":[{"index":0,"delta":{"content":"A partial lantern reply remains recoverable."}}]}\n\n');
+        });
+        await new Promise(resolve => server.listen(0, '0.0.0.0', resolve));
+        try {
+            await connectRecoveryFixture(page, `http://host.containers.internal:${server.address().port}/v1`);
+            await page.evaluate(async () => {
+                window.__receivedOnFailure = 0;
+                const { eventSource, event_types } = await import('/script.js');
+                eventSource.on(event_types.MESSAGE_RECEIVED, () => window.__receivedOnFailure++);
+            });
+            await page.locator('#send_textarea').fill('Describe the lantern.');
+            await page.locator('#send_but').click();
+            await expect(page.locator('#chat .mes_text').last()).toContainText('partial lantern reply', { timeout: 20000 });
+            await page.locator('#send_textarea').fill('My next draft stays separate.');
+            // A failed native save must not delete the local checkpoint.
+            await page.route('**/api/chats/save', route => route.fulfill({ status: 503, json: { error: 'Synthetic save outage' } }));
+            const cdp = await freezePage(page);
+            if (loss === 'reset') upstream.destroy();
+            else upstream.end();
+            await resumePage(page, cdp);
+            await expect(page.locator('#mes_stop')).toBeHidden({ timeout: 20000 });
+            await expect(page.locator('#workspace-generation-status')).toBeHidden();
+            await expect(page.locator('#send_textarea')).toHaveValue('My next draft stays separate.');
+            await expect(page.locator('#browser-recovery')).toContainText('interrupted');
+            expect(await page.evaluate(() => window.__receivedOnFailure)).toBe(0);
+            expect(requests).toBe(1);
+            await page.evaluate(async () => (await import('/script.js')).saveSettings());
+            await page.reload();
+            await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+            await navigate(page, 'chats');
+            await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
+            await expect(page.locator('#send_textarea')).toHaveValue('My next draft stays separate.');
+            await expect(page.locator('#browser-recovery')).toContainText('interrupted');
+            await page.locator('#browser-recovery summary').click();
+            await expect(page.getByRole('textbox', { name: 'Recovered partial reply', exact: true })).toHaveValue('A partial lantern reply remains recoverable.');
+            const add = page.getByRole('button', { name: 'Add recovered text to draft', exact: true });
+            if (loss === 'early-eof') await add.press('Enter');
+            else await add.click();
+            await expect(page.locator('#send_textarea')).toHaveValue('My next draft stays separate.\n\nA partial lantern reply remains recoverable.');
+            expect(requests).toBe(1);
+            await page.setViewportSize({ width: 448, height: 921 });
+            await page.screenshot({ path: testInfo.outputPath('interrupted-reply-recovered.png') });
+        } finally {
+            server.closeAllConnections();
+            await new Promise(resolve => server.close(resolve));
+        }
+    });
+}
+
+for (const complete of [true, false]) {
+    test(`a multi-choice stream with ${complete ? 'all finish reasons' : 'only one finish reason'} handles EOF correctly`, async ({ page }, testInfo) => {
+        await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} multi EOF`);
+        await connectRecoveryFixture(page);
+        await page.evaluate(async () => { (await import('/scripts/openai.js')).oai_settings.n = 2; });
+        await page.evaluate(async () => { window.__successEvents = 0; const script = await import('/script.js'); script.eventSource.on(script.event_types.MESSAGE_RECEIVED, () => window.__successEvents++); });
+        await page.route('**/api/backends/chat-completions/generate', route => {
+            expect(route.request().postDataJSON().n).toBe(2);
+            const chunks = [
+                { choices: [{ index: 0, delta: { content: 'The primary lantern reply.' }, finish_reason: 'stop' }] },
+                { choices: [{ index: 1, delta: { content: 'The alternative lantern reply.' }, finish_reason: complete ? 'stop' : null }] },
+            ];
+            return route.fulfill({ contentType: 'text/event-stream', body: chunks.map(chunk => `data: ${JSON.stringify(chunk)}\n\n`).join('') });
+        });
+        await page.locator('#send_textarea').fill('Describe two lantern replies.');
+        await page.locator('#send_but').click();
+        await expect(page.locator('#chat .mes_text').last()).toHaveText('The primary lantern reply.');
+        await expect(page.locator('#mes_stop')).toBeHidden();
+        expect(await page.evaluate(() => window.__successEvents)).toBe(complete ? 1 : 0);
+        if (complete) {
+            await expect(page.locator('#browser-recovery')).toBeHidden();
+            expect(await page.evaluate(async () => (await import('/script.js')).chat.at(-1).swipes)).toContain('The alternative lantern reply.');
+        } else await expect(page.locator('#browser-recovery')).toContainText('interrupted');
+    });
+}
+
+test('foreground retry coalesces events, refreshes CSRF and preserves explicit model settings', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} resume checks`);
+    await connectRecoveryFixture(page);
+    page.workspaceRecoveryRoutes = [];
+    await page.evaluate(() => {
+        window.__recoveryTrace = [];
+        const root = document.getElementById('browser-recovery');
+        new MutationObserver(() => window.__recoveryTrace.push({ at: performance.now(), hidden: root.hidden, busy: root.getAttribute('aria-busy'), message: root.querySelector('p').textContent })).observe(root, { childList: true, subtree: true, attributes: true, characterData: true });
+    });
+    await page.evaluate(async () => {
+        const { oai_settings } = await import('/scripts/openai.js');
+        oai_settings.openai_max_context = 12288;
+        oai_settings.temp_openai = 0.85;
+    });
+    const before = await page.evaluate(async () => JSON.stringify((await import('/scripts/openai.js')).oai_settings));
+    const modelOptions = () => page.locator('.model_custom_select').evaluateAll(nodes => nodes.map(node => ({ value: node.value, options: [...node.options].map(option => [option.value, option.textContent, option.selected]) })));
+    const optionsBefore = await modelOptions();
+    expect(optionsBefore.some(select => select.options.length > 0)).toBe(true);
+    let pings = 0, checks = 0, csrf = 0, finishPing;
+    const pending = new Promise(resolve => finishPing = resolve);
+    await page.route('**/api/ping', async route => {
+        pings++;
+        page.workspaceRecoveryRoutes.push({ kind: 'initial-ping', count: pings });
+        if (pings === 1) { await pending; await route.fulfill({ status: 403 }); }
+        else await route.fulfill({ status: 204 });
+    });
+    await page.route('**/csrf-token', async route => { csrf++; await route.fulfill({ response: await route.fetch() }); });
+    await page.route('**/api/backends/chat-completions/status', async route => { checks++; await route.fulfill({ json: { data: [{ id: 'different-first-model', context_length: 4096 }] } }); });
+    await page.locator('#send_textarea').fill('Unsent draft during connection checks.');
+    await page.evaluate(() => { for (let i = 0; i < 5; i++) { window.dispatchEvent(new Event('online')); document.dispatchEvent(new Event('resume')); } });
+    await expect.poll(() => pings).toBe(1);
+    finishPing();
+    await expect.poll(() => checks).toBe(1);
+    await expect(page.locator('#browser-recovery')).not.toHaveAttribute('aria-busy', 'true');
+    expect(pings).toBe(2);
+    expect(csrf).toBe(1);
+    expect(await modelOptions()).toEqual(optionsBefore);
+    expect(await page.evaluate(async () => JSON.stringify((await import('/scripts/openai.js')).oai_settings))).toBe(before);
+    await expect(page.locator('#send_textarea')).toHaveValue('Unsent draft during connection checks.');
+    // HTTP200 is not the native app heartbeat contract; expose retry inline.
+    await page.route('**/api/ping', route => { page.workspaceRecoveryRoutes.push({ kind: 'outage-ping', status: 200 }); return route.fulfill({ status: 200, body: 'Synthetic login page' }); });
+    await page.evaluate(() => window.dispatchEvent(new Event('offline')));
+    await page.getByRole('button', { name: 'Retry connection', exact: true }).click();
+    await expect(page.locator('#browser-recovery')).toContainText('app server is unavailable');
+    // APP_READY can arrive after the user has already opened a story and checked
+    // connectivity. It must not erase a newer failure/retry state.
+    await page.evaluate(async () => { const script = await import('/script.js'); await script.eventSource.emit(script.event_types.APP_READY); });
+    await expect(page.locator('#browser-recovery')).toContainText('app server is unavailable');
+    await page.evaluate(async () => { const script = await import('/script.js'); await script.eventSource.emit(script.event_types.GENERATION_STARTED, 'quiet', {}, true); });
+    await expect(page.locator('#browser-recovery')).toContainText('app server is unavailable');
+    await page.setViewportSize({ width: 448, height: 400 });
+    await page.screenshot({ path: testInfo.outputPath('foreground-outage-phone-keyboard.png') });
+    await page.route('**/api/ping', route => { page.workspaceRecoveryRoutes.push({ kind: 'retry-ping', status: 204 }); return route.fulfill({ status: 204 }); });
+    await page.getByRole('button', { name: 'Retry connection', exact: true }).click();
+    await expect(page.locator('#browser-recovery')).toBeHidden();
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+    expect(await modelOptions()).toEqual(optionsBefore);
+    expect(await page.evaluate(async () => JSON.stringify((await import('/scripts/openai.js')).oai_settings))).toBe(before);
+});
+
+test('an unresponsive foreground heartbeat times out and can be retried without sending a reply', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} resume timeout`);
+    await connectRecoveryFixture(page);
+    let release, pings = 0, replies = 0;
+    const held = new Promise(resolve => release = resolve);
+    await page.route('**/api/ping', async route => { pings++; if (pings === 1) await held; await route.fulfill({ status: 204 }); });
+    await page.route('**/api/backends/chat-completions/generate', route => { replies++; return route.abort(); });
+    await page.locator('#send_textarea').fill('My draft through a timed-out check.');
+    await page.evaluate(() => window.dispatchEvent(new Event('offline')));
+    await page.getByRole('button', { name: 'Retry connection', exact: true }).click();
+    await expect(page.getByRole('button', { name: 'Retry connection', exact: true })).toBeDisabled();
+    await expect(page.locator('#browser-recovery')).toContainText('Connection check could not finish', { timeout: 15000 });
+    release();
+    await page.getByRole('button', { name: 'Retry connection', exact: true }).click();
+    await expect(page.locator('#browser-recovery')).toBeHidden();
+    await expect(page.locator('#send_textarea')).toHaveValue('My draft through a timed-out check.');
+    expect(pings).toBe(2);
+    expect(replies).toBe(0);
+});
+
+test('a pending native recovery save does not keep the connection check busy', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} pending recovery save`);
+    await connectRecoveryFixture(page);
+    await expect.poll(() => page.evaluate(async () => (await import('/script.js')).isChatSaving)).toBe(false);
+    let release, requested;
+    const held = new Promise(resolve => release = resolve);
+    const started = new Promise(resolve => requested = resolve);
+    await page.route('**/api/chats/save', async route => { requested(); await held; await route.continue(); });
+    await page.evaluate(async () => {
+        const script = await import('/script.js');
+        const recovery = await import('/scripts/browser-recovery.js');
+        recovery.checkpointStreamingReply(0, script.chat[0].mes, 'interrupted');
+        recovery.reportGenerationInterrupted();
+    });
+    try {
+        await page.getByRole('button', { name: 'Retry connection', exact: true }).click();
+        await started;
+        await expect(page.locator('#browser-recovery')).not.toHaveAttribute('aria-busy', 'true');
+        await page.locator('#send_textarea').fill('My draft while the native save waits.');
+        await expect(page.locator('#send_textarea')).toHaveValue('My draft while the native save waits.');
+        expect(await page.evaluate(async () => (await import('/script.js')).isChatSaving)).toBe(true);
+    } finally { release(); }
+    await expect.poll(() => page.evaluate(async () => (await import('/script.js')).isChatSaving)).toBe(false);
+});
+
+test('a delayed read-only foreground check cannot reconnect a changed provider', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} stale resume`);
+    await connectRecoveryFixture(page);
+    let release, requested;
+    const held = new Promise(resolve => release = resolve);
+    const started = new Promise(resolve => requested = resolve);
+    await page.route('**/api/backends/chat-completions/status', async route => { requested(); await held; await route.fulfill({ json: { data: [{ id: 'stale-model' }] } }); });
+    await page.evaluate(() => { window.__readonlyCheck = import('/scripts/openai.js').then(module => module.refreshChatCompletionStatus(new AbortController().signal)); });
+    await started;
+    await page.evaluate(async () => {
+        const script = await import('/script.js');
+        const { oai_settings } = await import('/scripts/openai.js');
+        oai_settings.custom_model = 'new-manual-model';
+        oai_settings.custom_url = 'http://127.0.0.1:23456/v1';
+        script.setOnlineStatus('no_connection');
+    });
+    release();
+    expect(await page.evaluate(() => window.__readonlyCheck)).toBe(false);
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Connect a model');
+    expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.custom_model)).toBe('new-manual-model');
+});
+
+test('story drafts survive rapid switching and rename while the native recovery preference is respected', async ({ page }, testInfo) => {
+    const first = `Workspace e2e ${testInfo.testId}-${runId} draft A`;
+    const second = `Workspace e2e ${testInfo.testId}-${runId} draft B`;
+    await startStory(page, first);
+    await page.locator('#send_textarea').fill('First story unsent text.');
+    await startStory(page, second);
+    await expect(page.locator('#send_textarea')).toHaveValue('');
+    await page.locator('#send_textarea').fill('Second story unsent text.');
+    for (const title of [first, second, first]) {
+        await navigate(page, 'chats');
+        await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
+        await expect(page.locator('#send_textarea')).toHaveValue(title === first ? 'First story unsent text.' : 'Second story unsent text.');
+    }
+    const renamed = `${first} renamed`;
+    await renameCurrentStory(page, renamed);
+    await expect(page.locator('#send_textarea')).toHaveValue('First story unsent text.');
+    await page.evaluate(async () => { (await import('/scripts/power-user.js')).power_user.restore_user_input = false; await (await import('/script.js')).saveSettings(); });
+    await page.locator('#send_textarea').fill('Recovery is off for this text.');
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: renamed }) }).locator('.workspace-scene-open').click();
+    await expect(page.locator('#send_textarea')).toHaveValue('');
+});
+
+test('legacy draft recovery is explicit and blocked browser storage retains text in this tab', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} legacy draft`;
+    await startStory(page, title);
+    await page.evaluate(async () => {
+        const { getCurrentUserHandle } = await import('/scripts/user.js');
+        localStorage.setItem(`${getCurrentUserHandle()}_userInput`, 'Older native saved text.');
+        await (await import('/script.js')).saveSettings();
+    });
+    // An upgrade finds this key at startup. Do not rely on a later unrelated
+    // rendering event after injecting a key into an already initialized page.
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
+    await page.locator('#send_textarea').fill('Current draft.');
+    await page.getByRole('button', { name: 'Restore older saved draft', exact: true }).press('Enter');
+    await expect(page.locator('#send_textarea')).toHaveValue('Current draft.\n\nOlder native saved text.');
+    await expect(page.getByRole('button', { name: 'Restore older saved draft', exact: true })).toBeHidden();
+    await page.evaluate(() => {
+        for (const method of ['getItem', 'setItem', 'removeItem']) {
+            const native = Storage.prototype[method];
+            Storage.prototype[method] = function(key, ...args) {
+                if (key.startsWith('st-recovery:')) throw new DOMException('Synthetic storage denial', 'SecurityError');
+                return native.call(this, key, ...args);
+            };
+        }
+    });
+    await page.locator('#send_textarea').fill('This tab still holds my text.');
+    await expect(page.locator('#browser-recovery')).toContainText('Browser storage is unavailable');
+    await page.evaluate(() => { document.dispatchEvent(new Event('freeze')); document.dispatchEvent(new Event('resume')); });
+    await expect(page.locator('#send_textarea')).toHaveValue('This tab still holds my text.');
+    await expect(page.locator('#browser-recovery')).toContainText('copy your text before reloading');
+});
+
+test('identical story filenames on different characters never share a recovered draft', async ({ page }, testInfo) => {
+    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+    const title = `${prefix} same filename`;
+    await startStory(page, title);
+    const original = await page.evaluate(async () => (await import('/script.js')).characters[(await import('/script.js')).this_chid].avatar);
+    await page.locator('#send_textarea').fill('Only the original character gets this draft.');
+    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: original });
+    const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} companion` });
+    await page.evaluate(async avatar => {
+        const script = await import('/script.js');
+        await script.getCharacters();
+        await script.selectCharacterById(script.characters.findIndex(character => character.avatar === avatar), { newChat: true });
+    }, companion.avatar);
+    await returnToChat(page);
+    await renameCurrentStory(page, title);
+    await expect(page.locator('#send_textarea')).toHaveValue('');
+    await page.locator('#send_textarea').fill('Only the companion gets this draft.');
+    await page.evaluate(async ({ avatar, title }) => {
+        const script = await import('/script.js');
+        await script.selectCharacterById(script.characters.findIndex(character => character.avatar === avatar));
+        await script.openCharacterChat(title);
+    }, { avatar: original, title });
+    await expect(page.locator('#send_textarea')).toHaveValue('Only the original character gets this draft.');
+});
+
+test('quiet prompt callers keep rejection on transport failure without automatic retry', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} quiet failure`);
+    await connectRecoveryFixture(page, undefined, false);
+    let requests = 0;
+    await page.route('**/api/backends/chat-completions/generate', route => { requests++; return route.abort('failed'); });
+    const result = await page.evaluate(async () => {
+        try { await (await import('/script.js')).generateQuietPrompt({ quietPrompt: 'Describe a blue book.' }); return 'resolved'; }
+        catch (error) { return error.name; }
+    });
+    expect(result).toBe('NetworkError');
+    expect(requests).toBe(1);
+    await expect(page.locator('#mes_stop')).toBeHidden();
+});
+
+test('a late microphone permission result after suspension is stopped and never transcribed', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} paused microphone`);
+    await page.evaluate(async () => {
+        (await import('/scripts/dictation.js')).configureDictation('https://synthetic.example/v1/audio/transcriptions', 'transcription-fixture');
+        window.__permissions = [];
+        navigator.mediaDevices.getUserMedia = () => new Promise(resolve => {
+            const destination = new AudioContext().createMediaStreamDestination();
+            window.__permissions.push({ stream: destination.stream, allow: () => resolve(destination.stream) });
+        });
+    });
+    let requests = 0;
+    await page.route('**/api/openai/custom/transcribe-audio', route => { requests++; return route.fulfill({ json: { text: 'Must not be inserted.' } }); });
+    await page.locator('#send_textarea').fill('My unsent microphone draft.');
+    await page.locator('#workspace-dictation').click();
+    await expect(page.locator('#dictation-status')).toContainText('Allow microphone access');
+    const cdp = await freezePage(page);
+    await resumePage(page, cdp);
+    await expect(page.locator('#dictation-status')).toContainText('Recording stopped');
+    // Retry before the old permission result arrives. A stale result must not
+    // clear the newer permission request's pending ownership.
+    await page.locator('#workspace-dictation').click();
+    await expect(page.locator('#dictation-status')).toContainText('Allow microphone access');
+    await page.evaluate(() => window.__permissions[0].allow());
+    await expect.poll(() => page.evaluate(() => window.__permissions[0].stream.getTracks().every(track => track.readyState === 'ended'))).toBe(true);
+    const secondPause = await freezePage(page);
+    await resumePage(page, secondPause);
+    await page.evaluate(() => window.__permissions[1].allow());
+    await expect(page.locator('#dictation-status')).toContainText('Recording stopped');
+    await expect.poll(() => page.evaluate(() => window.__permissions[1].stream.getTracks().every(track => track.readyState === 'ended'))).toBe(true);
+    await expect(page.locator('#workspace-dictation')).toHaveAttribute('aria-pressed', 'false');
+    await expect(page.locator('#send_textarea')).toHaveValue('My unsent microphone draft.');
+    expect(requests).toBe(0);
+});
+
+test('a completed reply stays recoverable until the native save succeeds', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} save retry`;
+    await startStory(page, title);
+    await connectRecoveryFixture(page);
+    let failSave = false;
+    await page.route('**/api/chats/save', async route => failSave ? route.fulfill({ status: 503, json: { error: 'Synthetic save outage' } }) : route.continue());
+    await page.route('**/api/backends/chat-completions/generate', async route => {
+        failSave = true;
+        await route.fulfill({ contentType: 'text/event-stream', body: 'data: {"choices":[{"index":0,"delta":{"content":"A completed reply waiting to be saved."},"finish_reason":"stop"}]}\n\ndata: [DONE]\n\n' });
+    });
+    await page.locator('#send_textarea').fill('Describe the lantern.');
+    await page.locator('#send_but').click();
+    await expect(page.locator('#mes_stop')).toBeHidden();
+    await expect(page.locator('#browser-recovery')).toContainText('could not be confirmed saved');
+    expect(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('st-recovery:reply:')).length)).toBe(1);
+    failSave = false;
+    await page.evaluate(async () => (await import('/script.js')).saveChatConditional());
+    expect(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('st-recovery:reply:')).length)).toBe(0);
+    await page.evaluate(async () => (await import('/script.js')).saveSettings());
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
+    await expect(page.locator('#chat .mes_text').last()).toHaveText('A completed reply waiting to be saved.');
+    await expect(page.locator('#browser-recovery')).toBeHidden();
+});
+
+test('two replies with failed native saves both survive reload as recovery text', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} unsaved replies`;
+    await startStory(page, title);
+    await connectRecoveryFixture(page);
+    let requests = 0, failSave = false;
+    await page.route('**/api/chats/save', route => failSave ? route.fulfill({ status: 503, json: { error: 'Synthetic save outage' } }) : route.continue());
+    await page.route('**/api/backends/chat-completions/generate', route => {
+        requests++;
+        failSave = true;
+        return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ index: 0, delta: { content: `Recovered lantern reply ${requests}.` }, finish_reason: 'stop' }] })}\n\ndata: [DONE]\n\n` });
+    });
+    for (const turn of [1, 2]) {
+        await page.locator('#send_textarea').fill(`Describe lantern ${turn}.`);
+        await page.locator('#send_but').click();
+        await expect(page.locator('#chat .mes_text').last()).toHaveText(`Recovered lantern reply ${turn}.`);
+        await expect(page.locator('#mes_stop')).toBeHidden();
+        await expect(page.locator('#browser-recovery')).toContainText('could not be confirmed saved');
+    }
+    await page.evaluate(async () => (await import('/script.js')).saveSettings());
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
+    await page.locator('#browser-recovery summary').click();
+    const recovered = page.getByRole('textbox', { name: 'Recovered partial reply', exact: true });
+    await expect(recovered).toHaveValue(/Recovered lantern reply 1\.[\s\S]+Recovered lantern reply 2\./);
+    expect(requests).toBe(2);
+});
+
 for (const streaming of [false, true]) {
     test(`stopping a pending ${streaming ? 'streamed' : 'nonstreamed'} reply restores the composer and preserves its next draft`, async ({ page }, testInfo) => {
         await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} stop`);
@@ -1487,59 +2000,67 @@ for (const streaming of [false, true]) {
     });
 }
 
-test('stopping a two-member cast reply cancels the queue and preserves its next draft', async ({ page }, testInfo) => {
-    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
-    const avatar = await page.evaluate(async () => (await import('/script.js')).characters[0].avatar);
-    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: avatar });
-    const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} companion` });
-    await page.evaluate(async () => (await import('/script.js')).getCharacters());
-    const group = await page.evaluate(async ({ name, members }) => (await import('/scripts/group-chats.js')).createGroupWithMembers(name, members), { name: `${prefix} cast`, members: [avatar, companion.avatar] });
-    await navigate(page, 'characters');
-    await page.locator('.workspace-library-card').filter({ hasText: `${prefix} cast` }).click();
-    await page.getByRole('button', { name: 'Start new story', exact: true }).click();
-    await expect(page.locator('#send_textarea')).toBeVisible();
-    await renameCurrentStory(page, `${prefix} group-stop`);
-    await page.locator('#workspace-header-portrait').click();
-    await page.locator('#workspace-scene-info [data-workspace-action="edit-entity"]').click();
-    await page.locator('#rm_group_activation_strategy').selectOption('1');
-    expect(await page.evaluate(async id => (await import('/scripts/group-chats.js')).groups.find(group => group.id === id).activation_strategy, group.id)).toBe(1);
-    await page.keyboard.press('Escape');
-    await returnToChat(page);
-    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
-    let finishReply, requested;
-    const replyReady = new Promise(resolve => finishReply = resolve);
-    const firstRequest = new Promise(resolve => requested = resolve);
-    let requests = 0;
-    await page.route('**/api/backends/chat-completions/generate', async route => {
-        requests++;
-        requested();
-        await replyReady;
-        await route.fulfill({ json: { choices: [{ message: { content: 'Cancelled cast text must not appear.' } }] } });
+for (const castOutcome of ['stop', 'network loss']) {
+    test(`a two-member cast handles ${castOutcome} without advancing the queue or losing its next draft`, async ({ page }, testInfo) => {
+        const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+        const avatar = await page.evaluate(async () => (await import('/script.js')).characters[0].avatar);
+        const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: avatar });
+        const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} companion` });
+        await page.evaluate(async () => (await import('/script.js')).getCharacters());
+        const group = await page.evaluate(async ({ name, members }) => (await import('/scripts/group-chats.js')).createGroupWithMembers(name, members), { name: `${prefix} cast`, members: [avatar, companion.avatar] });
+        await navigate(page, 'characters');
+        await page.locator('.workspace-library-card').filter({ hasText: `${prefix} cast` }).click();
+        await page.getByRole('button', { name: 'Start new story', exact: true }).click();
+        await expect(page.locator('#send_textarea')).toBeVisible();
+        await renameCurrentStory(page, `${prefix} group-stop`);
+        await page.locator('#workspace-header-portrait').click();
+        await page.locator('#workspace-scene-info [data-workspace-action="edit-entity"]').click();
+        await page.locator('#rm_group_activation_strategy').selectOption('1');
+        expect(await page.evaluate(async id => (await import('/scripts/group-chats.js')).groups.find(group => group.id === id).activation_strategy, group.id)).toBe(1);
+        await page.keyboard.press('Escape');
+        await returnToChat(page);
+        await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
+        let finishReply, requested;
+        const replyReady = new Promise(resolve => finishReply = resolve);
+        const firstRequest = new Promise(resolve => requested = resolve);
+        let requests = 0;
+        await page.route('**/api/backends/chat-completions/generate', async route => {
+            requests++;
+            requested();
+            await replyReady;
+            if (castOutcome === 'network loss') await route.abort('failed');
+            else await route.fulfill({ json: { choices: [{ message: { content: 'Cancelled cast text must not appear.' } }] } });
+        });
+        await settingsCategory(page, 'connection');
+        await page.locator('#chat_completion_source').selectOption('custom');
+        await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
+        await page.locator('#custom_model_id').fill('workspace-fixture');
+        await page.locator('#api_button_openai').click();
+        await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+        await settingsCategory(page, 'generation');
+        await page.locator('#stream_toggle').uncheck();
+        await page.keyboard.press('Escape');
+        await page.locator('#send_textarea').fill('Describe the library together.');
+        await page.locator('#send_but').click();
+        await firstRequest;
+        await page.locator('#send_textarea').fill('My next cast draft.');
+        if (castOutcome === 'stop') await page.locator('#mes_stop').click();
+        else {
+            const cdp = await freezePage(page);
+            finishReply();
+            await resumePage(page, cdp);
+        }
+        await expect.poll(() => page.evaluate(async () => (await import('/script.js')).isGenerating())).toBe(false);
+        await expect(page.locator('#send_but')).toBeVisible();
+        await expect(page.locator('#send_textarea')).toHaveValue('My next cast draft.');
+        finishReply();
+        await expect(page.locator('#workspace-generation-status')).toBeHidden();
+        await expect(page.locator('#workspace-image-button')).toBeEnabled();
+        expect(requests).toBe(1);
+        await expect(page.locator('#chat')).not.toContainText('Cancelled cast text must not appear.');
+        await page.screenshot({ path: testInfo.outputPath('stopped-cast-queue.png') });
     });
-    await settingsCategory(page, 'connection');
-    await page.locator('#chat_completion_source').selectOption('custom');
-    await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
-    await page.locator('#custom_model_id').fill('workspace-fixture');
-    await page.locator('#api_button_openai').click();
-    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
-    await settingsCategory(page, 'generation');
-    await page.locator('#stream_toggle').uncheck();
-    await page.keyboard.press('Escape');
-    await page.locator('#send_textarea').fill('Describe the library together.');
-    await page.locator('#send_but').click();
-    await firstRequest;
-    await page.locator('#send_textarea').fill('My next cast draft.');
-    await page.locator('#mes_stop').click();
-    await expect.poll(() => page.evaluate(async () => (await import('/script.js')).isGenerating())).toBe(false);
-    await expect(page.locator('#send_but')).toBeVisible();
-    await expect(page.locator('#send_textarea')).toHaveValue('My next cast draft.');
-    finishReply();
-    await expect(page.locator('#workspace-generation-status')).toBeHidden();
-    await expect(page.locator('#workspace-image-button')).toBeEnabled();
-    expect(requests).toBe(1);
-    await expect(page.locator('#chat')).not.toContainText('Cancelled cast text must not appear.');
-    await page.screenshot({ path: testInfo.outputPath('stopped-cast-queue.png') });
-});
+}
 
 test('native streamed replies keep the composer and character identity mounted', async ({ page }, testInfo) => {
     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} streamed`);
@@ -1635,24 +2156,32 @@ test('one scene click generates one native illustration with automatic tools off
         secret_state.api_key_openai = true;
     });
     let imageRequests = 0;
-    let finishImage;
+    let finishImage, imageDelivered;
     const imageReady = new Promise(resolve => finishImage = resolve);
+    const imageFinished = new Promise(resolve => imageDelivered = resolve);
     await page.route('**/api/openai/generate-image', async route => {
         imageRequests++;
         expect(route.request().postDataJSON().prompt).toContain('forest clearing');
         await imageReady;
-        return route.fulfill({ json: { data: [{ b64_json: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jS1kAAAAASUVORK5CYII=' }] } });
+        await route.fulfill({ json: { data: [{ b64_json: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jS1kAAAAASUVORK5CYII=' }] } });
+        imageDelivered();
     });
+    await page.locator('#send_textarea').fill('My draft while the illustration finishes.');
     await page.locator('#workspace-image-button').click();
     await expect.poll(() => imageRequests).toBe(1);
     await expect(page.locator('#workspace-image-button')).toBeDisabled();
-    await expect(page.locator('#workspace-tools')).not.toBeVisible();
+    await expect(page.locator('#workspace-tools')).toBeHidden();
     await navigate(page, 'chats');
     await page.locator('.workspace-conversations .workspace-scene-row').filter({ hasText: title }).locator('.workspace-scene-open').click();
     await expect(page.locator('#workspace-image-status')).toContainText('Creating a scene illustration');
     expect(await page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.sd.enabled)).toBe(false);
+    await expect(page.locator('#send_textarea')).toHaveValue('My draft while the illustration finishes.');
+    const pause = await freezePage(page);
     finishImage();
+    await imageFinished;
+    await resumePage(page, pause);
     await expect(page.locator('#workspace-image-status')).toContainText('Illustration added', { timeout: 20000 });
+    await expect(page.locator('#send_textarea')).toHaveValue('My draft while the illustration finishes.');
     await expect(page.locator('#workspace-image-button')).toBeEnabled();
     expect(sceneRequests).toBe(1);
     expect(imageRequests).toBe(1);

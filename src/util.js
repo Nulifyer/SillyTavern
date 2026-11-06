@@ -761,7 +761,20 @@ export async function forwardFetchResponse(from, to) {
     }
 
     if (from.body && to.socket) {
+        // Preserve SSE framing and prevent compression middleware/proxies from
+        // buffering small tokens until the upstream response ends.
+        const contentType = from.headers.get('content-type') || '';
+        if (!to.headersSent && contentType.toLowerCase().startsWith('text/event-stream')) {
+            to.setHeader('Content-Type', contentType);
+            to.setHeader('Cache-Control', 'no-cache, no-transform');
+        }
         from.body.pipe(to);
+        from.body.on('error', () => {
+            // A reset must fail the client read rather than crash the server or
+            // masquerade as successful EOF after partial output.
+            console.warn('Upstream streaming response ended unexpectedly.');
+            to.destroy();
+        });
 
         to.socket.on('close', function () {
             if (from.body instanceof Readable) from.body.destroy(); // Close the remote stream

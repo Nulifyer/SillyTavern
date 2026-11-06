@@ -1,0 +1,52 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep foreground retry --output=/tmp/st-resume-dry-run-before --reporter=line
+(node:526796) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:526819) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:526819) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:526819) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] workspace.e2e.js:2489:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings
+  1) workspace.e2e.js:2489:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('#browser-recovery')
+    Expected substring: "app server is unavailable"
+    Received string:    "Retry connectionRecovered reply textAdd recovered text to draftDismiss recovered textRestore older saved draft"
+    Timeout: 5000ms
+
+    Call log:
+      - Expect "toContainText" with timeout 5000ms
+      - waiting for locator('#browser-recovery')
+        9 × locator resolved to <section hidden="" id="browser-recovery" aria-label="Connection and text recovery">…</section>
+          - unexpected value "Retry connectionRecovered reply textAdd recovered text to draftDismiss recovered textRestore older saved draft"
+
+
+      1695 |     await expect(page.locator('#browser-recovery')).toContainText('app server is unavailable');
+      1696 |     await page.evaluate(async () => { const script = await import('/script.js'); await script.eventSource.emit(script.event_types.GENERATION_STARTED, 'quiet', {}, true); });
+    > 1697 |     await expect(page.locator('#browser-recovery')).toContainText('app server is unavailable');
+           |                                                     ^
+      1698 |     await page.setViewportSize({ width: 448, height: 400 });
+      1699 |     await page.screenshot({ path: testInfo.outputPath('foreground-outage-phone-keyboard.png') });
+      1700 |     await page.route('**/api/ping', route => { page.workspaceRecoveryRoutes.push({ kind: 'retry-ping', status: 204 }); return route.fulfill({ status: 204 }); });
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1697:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-resume-dry-run-before/workspace.e2e.js-foregroun-07ef8-ves-explicit-model-settings/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-resume-dry-run-before/workspace.e2e.js-foregroun-07ef8-ves-explicit-model-settings/error-context.md
+
+
+  1 failed
+    workspace.e2e.js:2489:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings

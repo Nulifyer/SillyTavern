@@ -30,23 +30,10 @@ unmodified v1.19.8. Service cases cover the first saved profile, native setting
 preservation/reload, failure/retry, stale discovery, missing capabilities, writer
 context and retry, microphone denial and cancellation, and real PCM audio format.
 
-The v1.19.7 redesign passed lint, all 411 unit tests, and all 20 browser cases.
-The v1.19.8 correction passed the full 20-case browser suite with all settings
-categories checked at 1280/390/320px. Five final settings, phone popup-priority,
-and enlarged-font cases also passed after the last Escape guard update.
-Coverage includes pending-reply return through four story entry points, stable
-message/composer nodes during streamed replies, manual scene images with automatic
-tools off, voice opt-in/persistence, exact story lifecycle, casts, all settings
-categories, native menu entry points, and classic restoration.
-Phone checks cover 320/390/768px, reduced height, and the native 150% font preference
-combined with a 20px browser default. Design evidence: docs/roleplay-workspace.md.
-
-Native amd64 and ARM64 release jobs passed HTTP and heartbeat checks. Anonymous
-manifests, empty-auth Podman pull, local startup, and version checks passed.
-Published-image workspace modules and CSS matched the source. Browser checks
-confirmed desktop/phone layout, voice opt-in, tools initially off, and one new-story
-transcript in v1.19.7. The v1.19.8 image confirmed the corrected 320px picker and
-native dropdown Escape behavior. Exact release evidence and digest: docs/container-releases.md.
+Earlier v1.19.7/8 verification and immutable digests are recorded in
+[container releases](../docs/container-releases.md). The current suite retains
+those story lifecycle, voice opt-in, tools-off, streamed node identity, native
+menu/dropdown, settings, phone/enlarged-text and classic-layout regressions.
 
 ## Message portrait follow-up
 
@@ -126,3 +113,22 @@ not cover this message-order/model combination.
 No live paid-provider, physical microphone or audible speech-quality checks.
 The synthetic microphone case tests browser recording, encoding and permission
 failure. Real speech is decoded in the browser and transcribed by Juiced.
+
+## Mobile lifecycle follow-up
+
+The recovery cases assert actual document hidden/freeze before resuming. Playwright
+normally forces every page visible. The test-only freezePage helper disables that
+focus override on Playwright's original CDP session, opens another tab and asserts
+the browser events. It restores the original page and emulation after resume.
+This uses Playwright's in-process test seam; if its internals change, fail rather
+than silently replacing real suspension with a synthetic event.
+
+Run the full workspace suite with ST_JUICED_URL set for both live cases. Recovery
+coverage includes healthy paused chat/image/transcription requests; reset and early
+EOF; local partial text after save503/reload; several unsaved replies; exact native
+save acknowledgment; cast queue/Stop and quiet rejection; per-character/story draft
+isolation/rename and opt-out; blocked storage/legacy recovery; coalesced status,
+CSRF, stale provider rejection, dropdown preservation, timeout/retry; two pending
+microphone permissions; mobile/reduced keyboard height and enlarged text.
+Physical phone lock remains unqualified. Actual-image acceptance requires five
+fresh synthetic volumes and no source overlays. Never test production data here.

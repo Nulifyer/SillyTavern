@@ -1,0 +1,22 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep legacy draft recovery|completed reply stays|stream after freeze --output=/tmp/st-resume-final-keyboard --reporter=line
+(node:554994) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:555019) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:555019) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:555019) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/4] workspace.e2e.js:2348:3 › a reset stream after freeze preserves partial text without success actions or replay
+[2/4] workspace.e2e.js:2348:3 › a early-eof stream after freeze preserves partial text without success actions or replay
+[3/4] workspace.e2e.js:2787:1 › legacy draft recovery is explicit and blocked browser storage retains text in this tab
+[4/4] workspace.e2e.js:2947:1 › a completed reply stays recoverable until the native save succeeds
+  4 passed (51.1s)

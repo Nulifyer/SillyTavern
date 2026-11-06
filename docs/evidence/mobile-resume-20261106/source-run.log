@@ -1,0 +1,231 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --output=/tmp/st-resume-source-accepted --reporter=line,json
+(node:536187) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 63 tests using 1 worker
+
+(node:536210) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:536210) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:536210) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/63] workspace.e2e.js:236:1 › library browsing shows profiles without opening or replacing a story
+[2/63] workspace.e2e.js:259:1 › history failure stays visible in profiles and archive while known stories remain usable
+[3/63] workspace.e2e.js:299:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+[4/63] workspace.e2e.js:338:1 › character portrait and native actions stay above tags and notes at every size
+[5/63] workspace.e2e.js:396:1 › new stories preserve previous transcripts and profile history resumes the exact scene
+[6/63] workspace.e2e.js:422:1 › starting a character story is immediate, creates one transcript and can be renamed afterward
+[7/63] workspace.e2e.js:461:1 › archive persists, excludes active lists, reads without editing, and restores the same transcript
+[8/63] workspace.e2e.js:492:1 › rename follows archived identity and deletion requires confirmation without recreating the file
+[9/63] workspace.e2e.js:529:1 › failed deletion keeps the story and reports the server failure
+[10/63] workspace.e2e.js:547:1 › settings keep every native area reachable with Escape and focus restoration
+[11/63] workspace.e2e.js:589:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace
+[12/63] workspace.e2e.js:688:1 › every settings category uses one control tree and fits desktop and phone
+[13/63] workspace.e2e.js:735:1 › settings sections, blank space and external dialogs never close mounted controls
+[14/63] workspace.e2e.js:786:1 › every settings destination keeps controls reachable with enlarged phone text
+[15/63] workspace.e2e.js:860:1 › settings changes and late saves preserve every category through direct navigation
+workspace.e2e.js:860:1 › settings changes and late saves preserve every category through direct navigation
+Settings mutation: 1280px connection
+
+Settings mutation: 1280px generation
+
+Settings mutation: 1280px prompts
+
+Settings mutation: 1280px persona
+
+Settings mutation: 1280px world
+
+Settings mutation: 1280px backgrounds
+
+Settings mutation: 1280px voice-settings
+
+Settings mutation: 1280px dictation-settings
+
+Settings mutation: 1280px image-settings
+
+Settings mutation: 1280px settings
+
+Settings mutation: 1280px extensions
+
+Settings mutation: 390px connection
+
+Settings mutation: 390px generation
+
+Settings mutation: 390px prompts
+
+Settings mutation: 390px persona
+
+Settings mutation: 390px world
+
+Settings mutation: 390px backgrounds
+
+Settings mutation: 390px voice-settings
+
+Settings mutation: 390px dictation-settings
+
+Settings mutation: 390px image-settings
+
+Settings mutation: 390px settings
+
+Settings mutation: 390px extensions
+
+Settings mutation: 320px connection
+
+Settings mutation: 320px generation
+
+Settings mutation: 320px prompts
+
+Settings mutation: 320px persona
+
+Settings mutation: 320px world
+
+Settings mutation: 320px backgrounds
+
+Settings mutation: 320px voice-settings
+
+Settings mutation: 320px dictation-settings
+
+Settings mutation: 320px image-settings
+
+Settings mutation: 320px settings
+
+Settings mutation: 320px extensions
+
+[16/63] workspace.e2e.js:1006:1 › dictation settings remain available when the optional TTS extension is disabled
+[17/63] workspace.e2e.js:1044:1 › discovered selectors distinguish unapplied choices and follow native provider changes
+[18/63] workspace.e2e.js:1091:1 › vision discovery follows the native current-story-model option
+[19/63] workspace.e2e.js:1133:1 › one server configures native services and survives reload without replacing sampling or profiles
+[20/63] workspace.e2e.js:1278:1 › discovered context uses configured capacity, preserves manual overrides and survives reload
+[21/63] workspace.e2e.js:1357:1 › service prompt editors save native values and composer nodes survive classic round trips
+[22/63] workspace.e2e.js:1405:3 › fresh compatible connection migrates context preference
+[23/63] workspace.e2e.js:1405:3 › existing explicit compatible connection migrates context preference
+[24/63] workspace.e2e.js:1454:1 › service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server
+[25/63] workspace.e2e.js:1526:1 › dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change
+[26/63] workspace.e2e.js:1601:1 › image writer preserves scene context and story model through failure and retry
+[27/63] workspace.e2e.js:1687:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting
+[28/63] workspace.e2e.js:1827:1 › live Juiced services use native providers from the tested container
+workspace.e2e.js:1827:1 › live Juiced services use native providers from the tested container
+Live Juiced: discover and configure native providers
+
+Live Juiced: streaming story reply
+
+Live Juiced: configure image sampling and generate scene
+
+Live Juiced: configure vision and caption the synthetic scene
+
+Live Juiced: synthesize and decode speech
+
+Live Juiced: transcribe speech into draft
+
+[29/63] workspace.e2e.js:2089:1 › search opens character profiles and a fixture model generates through the native composer
+[30/63] workspace.e2e.js:2267:1 › mobile draft survives a frozen tab and reload without leaking into another story
+[31/63] workspace.e2e.js:2298:1 › a healthy reply completed while frozen resumes once and preserves the next draft
+[32/63] workspace.e2e.js:2347:3 › a reset stream after freeze preserves partial text without success actions or replay
+[33/63] workspace.e2e.js:2347:3 › a early-eof stream after freeze preserves partial text without success actions or replay
+[34/63] workspace.e2e.js:2441:3 › a multi-choice stream with all finish reasons handles EOF correctly
+[35/63] workspace.e2e.js:2441:3 › a multi-choice stream with only one finish reason handles EOF correctly
+[36/63] workspace.e2e.js:2489:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings
+[37/63] workspace.e2e.js:2631:1 › an unresponsive foreground heartbeat times out and can be retried without sending a reply
+[38/63] workspace.e2e.js:2674:1 › a pending native recovery save does not keep the connection check busy
+[39/63] workspace.e2e.js:2709:1 › a delayed read-only foreground check cannot reconnect a changed provider
+[40/63] workspace.e2e.js:2746:1 › story drafts survive rapid switching and rename while the native recovery preference is respected
+[41/63] workspace.e2e.js:2785:1 › legacy draft recovery is explicit and blocked browser storage retains text in this tab
+  1) workspace.e2e.js:2785:1 › legacy draft recovery is explicit and blocked browser storage retains text in this tab
+
+    TimeoutError: locator.click: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for getByRole('button', { name: 'Restore older saved draft', exact: true })
+
+
+      1807 |     });
+      1808 |     await page.locator('#send_textarea').fill('Current draft.');
+    > 1809 |     await page.getByRole('button', { name: 'Restore older saved draft', exact: true }).click();
+           |                                                                                        ^
+      1810 |     await expect(page.locator('#send_textarea')).toHaveValue('Current draft.\n\nOlder native saved text.');
+      1811 |     await expect(page.getByRole('button', { name: 'Restore older saved draft', exact: true })).toBeHidden();
+      1812 |     await page.evaluate(() => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1809:88
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-resume-source-accepted/workspace.e2e.js-legacy-dr-5aa25-ge-retains-text-in-this-tab/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-resume-source-accepted/workspace.e2e.js-legacy-dr-5aa25-ge-retains-text-in-this-tab/error-context.md
+
+
+(node:545370) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:545370) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:545370) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[42/63] workspace.e2e.js:2825:1 › identical story filenames on different characters never share a recovered draft
+[43/63] workspace.e2e.js:2864:1 › quiet prompt callers keep rejection on transport failure without automatic retry
+[44/63] workspace.e2e.js:2888:1 › a late microphone permission result after suspension is stopped and never transcribed
+[45/63] workspace.e2e.js:2933:1 › a completed reply stays recoverable until the native save succeeds
+  2) workspace.e2e.js:2933:1 › a completed reply stays recoverable until the native save succeeds ──
+
+    TimeoutError: page.reload: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for navigation until "load"
+        - navigated to "http://127.0.0.1:8024/"
+
+
+      1918 |     expect(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('st-recovery:reply:')).length)).toBe(0);
+      1919 |     await page.evaluate(async () => (await import('/script.js')).saveSettings());
+    > 1920 |     await page.reload();
+           |                ^
+      1921 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      1922 |     await navigate(page, 'chats');
+      1923 |     await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1920:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-resume-source-accepted/workspace.e2e.js-a-complet-7f1b5-il-the-native-save-succeeds/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-resume-source-accepted/workspace.e2e.js-a-complet-7f1b5-il-the-native-save-succeeds/error-context.md
+
+
+(node:547457) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:547457) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:547457) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[46/63] workspace.e2e.js:2975:1 › two replies with failed native saves both survive reload as recovery text
+[47/63] workspace.e2e.js:3032:3 › stopping a pending nonstreamed reply restores the composer and preserves its next draft
+[48/63] workspace.e2e.js:3032:3 › stopping a pending streamed reply restores the composer and preserves its next draft
+[49/63] workspace.e2e.js:3088:3 › a two-member cast handles stop without advancing the queue or losing its next draft
+[50/63] workspace.e2e.js:3088:3 › a two-member cast handles network loss without advancing the queue or losing its next draft
+[51/63] workspace.e2e.js:3180:1 › native streamed replies keep the composer and character identity mounted
+[52/63] workspace.e2e.js:3231:1 › image tools use the native provider and treat custom prompts as text
+[53/63] workspace.e2e.js:3279:1 › one scene click generates one native illustration with automatic tools off
+[54/63] workspace.e2e.js:3370:1 › voice tools narrate the latest native reply with the configured System voice
+[55/63] workspace.e2e.js:3405:1 › chat voice is opt-in and persists; manual images do not enable automatic tools
+[56/63] workspace.e2e.js:3434:1 › cast creation selects real characters and opens a group story
+[57/63] workspace.e2e.js:3491:3 › roleplay pages and composer stay within a 320px viewport
+[58/63] workspace.e2e.js:3491:3 › roleplay pages and composer stay within a 390px viewport
+[59/63] workspace.e2e.js:3491:3 › roleplay pages and composer stay within a 448px viewport
+[60/63] workspace.e2e.js:3491:3 › roleplay pages and composer stay within a 768px viewport
+[61/63] workspace.e2e.js:3603:3 › Pixel 9 Pro XL portrait sizing › message portraits fit their containers and stay clear of text across screen and font sizes
+[62/63] workspace.e2e.js:3694:1 › native font preferences and browser text sizing keep phone controls usable
+[63/63] workspace.e2e.js:3767:1 › classic preference survives reload and can be restored
+  2 failed
+    workspace.e2e.js:2785:1 › legacy draft recovery is explicit and blocked browser storage retains text in this tab
+    workspace.e2e.js:2933:1 › a completed reply stays recoverable until the native save succeeds ───
+  61 passed (8.8m)

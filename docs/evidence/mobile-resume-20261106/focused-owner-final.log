@@ -1,0 +1,50 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --repeat-each=3 --grep foreground retry|multi-choice stream|service prompt editors --output=/tmp/st-resume-final-owner-checks --reporter=line
+(node:530024) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+(node:530047) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:530047) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:530047) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/12] workspace.e2e.js:1357:1 › service prompt editors save native values and composer nodes survive classic round trips
+[2/12] workspace.e2e.js:2441:3 › a multi-choice stream with all finish reasons handles EOF correctly
+[3/12] workspace.e2e.js:2441:3 › a multi-choice stream with only one finish reason handles EOF correctly
+[4/12] workspace.e2e.js:2489:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings
+(node:530988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:530988) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:530988) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[5/12] workspace.e2e.js:1357:1 › service prompt editors save native values and composer nodes survive classic round trips
+[6/12] workspace.e2e.js:2441:3 › a multi-choice stream with all finish reasons handles EOF correctly
+[7/12] workspace.e2e.js:2441:3 › a multi-choice stream with only one finish reason handles EOF correctly
+[8/12] workspace.e2e.js:2489:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings
+(node:531627) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:531627) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:531627) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[9/12] workspace.e2e.js:1357:1 › service prompt editors save native values and composer nodes survive classic round trips
+[10/12] workspace.e2e.js:2441:3 › a multi-choice stream with all finish reasons handles EOF correctly
+[11/12] workspace.e2e.js:2441:3 › a multi-choice stream with only one finish reason handles EOF correctly
+[12/12] workspace.e2e.js:2489:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings
+  12 passed (1.2m)

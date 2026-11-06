@@ -652,7 +652,7 @@ export function initWorkspace() {
     matchMedia('(max-width: 900px)').addEventListener('change', () => { setMobileNavigation(false); refreshWorkspace(); });
     eventSource.on(event_types.CHAT_RENAMED, data => { transcripts.renamed(data); scheduleChats(); });
     for (const event of [event_types.CHAT_DELETED, event_types.GROUP_CHAT_DELETED, event_types.GROUP_UPDATED, event_types.CHARACTER_DELETED, event_types.CHARACTER_EDITED, event_types.GENERATION_ENDED]) eventSource.on(event, scheduleChats);
-    for (const event of [event_types.ONLINE_STATUS_CHANGED, event_types.SETTINGS_UPDATED, event_types.GENERATION_STARTED, event_types.GENERATION_AFTER_DATA, event_types.GENERATION_ENDED, event_types.GENERATION_STOPPED]) eventSource.on(event, refreshWorkspace);
+    for (const event of [event_types.ONLINE_STATUS_CHANGED, event_types.SETTINGS_UPDATED, event_types.GENERATION_STARTED, event_types.GENERATION_AFTER_DATA, event_types.GENERATION_ENDED, event_types.GENERATION_STOPPED, event_types.GROUP_WRAPPER_STARTED, event_types.GROUP_WRAPPER_FINISHED]) eventSource.on(event, refreshWorkspace);
     eventSource.on(event_types.CHARACTER_PAGE_LOADED, () => { if (state.view !== 'chat') renderPage(); refreshWorkspace(); });
     eventSource.on(event_types.CHAT_CHANGED, () => {
         if (state.view === 'chat' && !transcripts.current()) state.view = 'chats';

@@ -47,7 +47,6 @@ import { debounce_timeout, SWIPE_SOURCE } from './constants.js';
 
 import { Popup } from './popup.js';
 import { accountStorage } from './util/AccountStorage.js';
-import { getCurrentUserHandle } from './user.js';
 import { kai_settings } from './kai-settings.js';
 
 var RPanelPin = document.getElementById('rm_button_panel_pin');
@@ -452,27 +451,6 @@ function OpenNavPanels() {
         }
     }
 }
-
-const getUserInputKey = () => getCurrentUserHandle() + '_userInput';
-
-function restoreUserInput() {
-    if (!power_user.restore_user_input) {
-        console.debug('restoreUserInput disabled');
-        return;
-    }
-
-    const userInput = localStorage.getItem(getUserInputKey());
-    if (userInput) {
-        $('#send_textarea').val(userInput)[0].dispatchEvent(new Event('input', { bubbles: true }));
-    }
-}
-
-function saveUserInput() {
-    const userInput = String($('#send_textarea').val());
-    localStorage.setItem(getUserInputKey(), userInput);
-    console.debug('User Input -- ', userInput);
-}
-const saveUserInputDebounced = debounce(saveUserInput);
 
 // Make the DIV element draggable:
 
@@ -892,8 +870,6 @@ export function initRossMods() {
     }
 
     sendTextArea.addEventListener('input', () => {
-        saveUserInputDebounced();
-
         if (cssAutofit) {
             // Unset modifications made with a manual resize
             sendTextArea.style.height = 'auto';
@@ -908,8 +884,6 @@ export function initRossMods() {
         if (needsDebounce) autoFitSendTextAreaDebounced();
         else autoFitSendTextArea();
     });
-
-    restoreUserInput();
 
     // Swipe gestures (see: https://www.npmjs.com/package/swiped-events)
     document.addEventListener('swiped-left', function (e) {

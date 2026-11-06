@@ -1,0 +1,66 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep mobile draft survives|healthy reply completed --output=/tmp/st-resume-baseline-confirmed --reporter=line
+(node:479882) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:479930) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:479930) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:479930) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] workspace.e2e.js:2251:1 › mobile draft survives a frozen tab and reload without leaking into another story
+  1) workspace.e2e.js:2251:1 › mobile draft survives a frozen tab and reload without leaking into another story
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  locator('#send_textarea')
+    Expected: "My unsent lantern scene stays private to this story."
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for locator('#send_textarea')
+        2 × locator resolved to <textarea name="text" class="mdHotkeys" id="send_textarea" autocomplete="off" aria-label="Message" placeholder="Write your next turn…" no_connection_text="Not connected to API!" aria-describedby="workspace-composer-hint" connected_text="Type a message, or /? for help" data-i18n="[no_connection_text]Not connected to API!;[connected_text]Type a message, or /? for help"></textarea>
+          - unexpected value ""
+        7 × locator resolved to <textarea name="text" class="mdHotkeys" id="send_textarea" autocomplete="off" aria-label="Message" no_connection_text="Not connected to API!" aria-describedby="workspace-composer-hint" connected_text="Type a message, or /? for help" placeholder="Write your next turn with Seraphina…" data-i18n="[no_connection_text]Not connected to API!;[connected_text]Type a message, or /? for help"></textarea>
+          - unexpected value ""
+
+
+      1505 |     await navigate(page, 'chats');
+      1506 |     await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
+    > 1507 |     await expect(page.locator('#send_textarea')).toHaveValue('My unsent lantern scene stays private to this story.');
+           |                                                  ^
+      1508 |     await page.screenshot({ path: testInfo.outputPath('resumed-draft.png') });
+      1509 |     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} other story`);
+      1510 |     await expect(page.locator('#send_textarea')).toHaveValue('');
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1507:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-resume-baseline-confirmed/workspace.e2e.js-mobile-dr-ad16d--leaking-into-another-story/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-resume-baseline-confirmed/workspace.e2e.js-mobile-dr-ad16d--leaking-into-another-story/error-context.md
+
+
+(node:480289) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:480289) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:480289) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/2] workspace.e2e.js:2282:1 › a healthy reply completed while frozen resumes once and preserves the next draft
+  1 failed
+    workspace.e2e.js:2251:1 › mobile draft survives a frozen tab and reload without leaking into another story
+  1 passed (18.6s)

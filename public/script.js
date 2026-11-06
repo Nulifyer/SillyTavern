@@ -273,6 +273,7 @@ import { extractReasoningFromData, extractReasoningSignatureFromData, initReason
 import { accountStorage } from './scripts/util/AccountStorage.js';
 import { initWelcomeScreen, openPermanentAssistantChat, openPermanentAssistantCard, getPermanentAssistantAvatar } from './scripts/welcome-screen.js';
 import { initWorkspace, openWorkspacePanel } from './scripts/workspace.js';
+import { captureRecoverySave, checkpointStreamingReply, initBrowserRecovery, reportGenerationInterrupted } from './scripts/browser-recovery.js';
 import { initDataMaid } from './scripts/data-maid.js';
 import { clearItemizedPrompts, deleteItemizedPromptForMessage, deleteItemizedPrompts, findItemizedPromptSet, initItemizedPrompts, itemizedParams, itemizedPrompts, loadItemizedPrompts, promptItemize, replaceItemizedPromptText, saveItemizedPrompts, swapItemizedPrompts } from './scripts/itemized-prompts.js';
 import { getSystemMessageByType, initSystemMessages, SAFETY_CHAT, sendSystemMessage, system_message_types, system_messages } from './scripts/system-messages.js';
@@ -630,6 +631,7 @@ export let extension_prompts = {};
 export let main_api;// = "kobold";
 let abortController = new AbortController();
 const USER_STOP_REASON = 'Clicked stop button';
+const CONNECTION_INTERRUPTED_REASON = 'Reply connection interrupted';
 
 //css
 var css_send_form_display = $('<div id=send_form></div>').css('display');
@@ -690,6 +692,21 @@ export async function pingServer() {
         console.error('Error pinging server', error);
         return false;
     }
+}
+
+/** Revalidate this app session on foreground return without changing provider settings. */
+export async function refreshServerConnection(signal) {
+    const ping = () => fetch('/api/ping', { method: 'POST', headers: getRequestHeaders({ omitContentType: true }), cache: 'no-store', signal });
+    let response = await ping();
+    if (response.status === 403) {
+        const csrf = await fetch('/csrf-token', { cache: 'no-store', signal });
+        if (!csrf.ok) return false;
+        const data = await csrf.json();
+        if (typeof data.token !== 'string' || !data.token) return false;
+        token = data.token;
+        response = await ping();
+    }
+    return response.status === 204;
 }
 
 //MARK: firstLoadInit
@@ -784,6 +801,7 @@ async function firstLoadInit() {
     initItemizedPrompts();
     initAccessibility();
     initWorkspace();
+    initBrowserRecovery();
     initSwipePicker();
     addDebugFunctions();
     doDailyExtensionUpdatesCheck();
@@ -3765,7 +3783,7 @@ class StreamingProcessor {
      * @param {Object} options - Additional options for finalization.
      * @param {boolean} options.unlockUI - Whether to unlock the generation UI.
      */
-    async finalizeIntermediaryMessage(messageId, text, { unlockUI = true }) {
+    async finalizeIntermediaryMessage(messageId, text, { unlockUI = true, interrupted = false }) {
         await this.onProgressStreaming(messageId, text, true);
         const messageElement = chatElement.find(`.mes[mesid="${messageId}"]`);
         const message = chat[messageId];
@@ -3808,10 +3826,10 @@ class StreamingProcessor {
             this.markUIGenStopped();
         }
 
-        if (this.type !== 'impersonate') {
+        if (!interrupted && this.type !== 'impersonate') {
             await eventSource.emit(event_types.MESSAGE_RECEIVED, this.messageId, this.type);
             await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, this.messageId, this.type);
-        } else {
+        } else if (!interrupted) {
             await eventSource.emit(event_types.IMPERSONATE_READY, text);
         }
 
@@ -3819,28 +3837,20 @@ class StreamingProcessor {
     }
 
     async onFinishStreaming(messageId, text) {
-        await this.finalizeIntermediaryMessage(messageId, text, { unlockUI: true });
+        await this.finalizeIntermediaryMessage(messageId, text, { unlockUI: false });
+        if (this.type !== 'impersonate') checkpointStreamingReply(messageId, chat[messageId]?.mes || text, 'complete');
+        try { await saveChatConditional(); } finally { this.markUIGenStopped(); }
 
         const isAborted = this.abortController.signal.aborted;
         if (!isAborted && power_user.auto_swipe && generatedTextFiltered(text)) {
             return await swipe(null, SWIPE_DIRECTION.RIGHT, { source: SWIPE_SOURCE.AUTO_SWIPE, repeated: true, forceMesId: chat.length - 1 });
         }
-        await saveChatConditional();
-
         playMessageSound();
     }
 
     onErrorStreaming() {
         this.abortController.abort();
         this.isStopped = true;
-
-        this.markUIGenStopped();
-
-        const noEmitTypes = ['swipe', 'impersonate', 'continue'];
-        if (!noEmitTypes.includes(this.type)) {
-            eventSource.emit(event_types.MESSAGE_RECEIVED, this.messageId, this.type);
-            eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, this.messageId, this.type);
-        }
     }
 
     setFirstSwipe(messageId) {
@@ -3884,6 +3894,7 @@ class StreamingProcessor {
 
         try {
             const sw = new Stopwatch(1000 / power_user.streaming_fps);
+            sw.lastAction = 0; // Render the first token even if the next token is delayed.
             const timestamps = [];
             for await (const { text, swipes, logprobs, toolCalls, state } of this.generator()) {
                 const now = Date.now();
@@ -3897,6 +3908,7 @@ class StreamingProcessor {
 
                 this.toolCalls = toolCalls;
                 this.result = text;
+                if (!isImpersonate) checkpointStreamingReply(this.messageId, this.continueMessage + text);
                 this.swipes = Array.from(swipes ?? []);
                 if (logprobs) {
                     this.messageLogprobs.push(...(Array.isArray(logprobs) ? logprobs : [logprobs]));
@@ -4315,7 +4327,8 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
     if (!(abortController && signal)) {
         abortController = new AbortController();
     }
-    const requestSignal = abortController.signal;
+    const requestController = abortController;
+    const requestSignal = signal || requestController.signal;
 
     // OpenAI doesn't need instruct mode. Use OAI main prompt instead.
     const isInstruct = power_user.instruct.enabled && main_api !== 'openai';
@@ -5420,6 +5433,21 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
             }
 
             const isStreamFinished = streamingProcessor && !streamingProcessor.isStopped && streamingProcessor.isFinished;
+            if (streamingProcessor?.isStopped) {
+                const interrupted = streamingProcessor;
+                // Abort the shared cast queue too. Interruption is not a normal
+                // completion and must not run tools, auto-swipe or auto-continue.
+                requestController.abort(CONNECTION_INTERRUPTED_REASON);
+                await interrupted.finalizeIntermediaryMessage(interrupted.messageId, getMessage, { unlockUI: false, interrupted: true });
+                if (type !== 'impersonate') checkpointStreamingReply(interrupted.messageId, chat[interrupted.messageId]?.mes || getMessage, 'interrupted');
+                try { await saveChatConditional(); } finally {
+                    interrupted.markUIGenStopped();
+                    streamingProcessor = null;
+                    reportGenerationInterrupted();
+                }
+                if (is_group_generating) throw new DOMException('The cast reply connection was interrupted.', 'NetworkError');
+                return '';
+            }
             const isStreamWithToolCalls = streamingProcessor && Array.isArray(streamingProcessor.toolCalls) && streamingProcessor.toolCalls.length;
             if (canPerformToolCalls && isStreamFinished && isStreamWithToolCalls) {
                 const lastMessage = chat[chat.length - 1];
@@ -5611,7 +5639,13 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
         streamingProcessor = null;
         // Interactive Stop is a completed cancellation, not a failed reply.
         // Quiet callers retain their rejection contract for prompt/tool requests.
-        if (type !== 'quiet' && requestSignal.aborted && requestSignal.reason === USER_STOP_REASON) return '';
+        if (type !== 'quiet' && exception?.name === 'NetworkError') {
+            if (is_group_generating) throw exception;
+            requestController.abort(CONNECTION_INTERRUPTED_REASON);
+            reportGenerationInterrupted();
+            return '';
+        }
+        if (type !== 'quiet' && requestSignal.aborted && [USER_STOP_REASON, CONNECTION_INTERRUPTED_REASON].includes(requestSignal.reason)) return '';
         console.log(exception);
         throw exception;
     }
@@ -7440,6 +7474,7 @@ export async function saveChat({ chatName, withMetadata, mesId, force = false, c
         : (mesId !== undefined && mesId >= 0 && mesId < chat.length)
             ? chat.slice(0, Number(mesId) + 1)
             : chat.slice();
+    const acknowledgeRecovery = captureRecoverySave({ avatar: characters[this_chid].avatar, fileName, messages: trimmedChat });
 
     /** @type {ChatHeader} */
     const chatHeader = {
@@ -7464,6 +7499,7 @@ export async function saveChat({ chatName, withMetadata, mesId, force = false, c
         const result = await fetch('/api/chats/save', saveChatRequest);
 
         if (result.ok) {
+            acknowledgeRecovery();
             return;
         }
 

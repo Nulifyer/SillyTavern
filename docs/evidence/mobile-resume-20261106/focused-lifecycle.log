@@ -1,0 +1,25 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep late microphone permission|healthy reply completed|mobile draft|stream after freeze|two-member cast --output=/tmp/st-resume-confirmed-lifecycle --reporter=line
+(node:479668) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 7 tests using 1 worker
+
+(node:479691) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:479691) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:479691) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/7] workspace.e2e.js:2251:1 › mobile draft survives a frozen tab and reload without leaking into another story
+[2/7] workspace.e2e.js:2282:1 › a healthy reply completed while frozen resumes once and preserves the next draft
+[3/7] workspace.e2e.js:2331:3 › a reset stream after freeze preserves partial text without success actions or replay
+[4/7] workspace.e2e.js:2331:3 › a early-eof stream after freeze preserves partial text without success actions or replay
+[5/7] workspace.e2e.js:2629:1 › a late microphone permission result after suspension is stopped and never transcribed
+[6/7] workspace.e2e.js:2762:3 › a two-member cast handles stop without advancing the queue or losing its next draft
+[7/7] workspace.e2e.js:2762:3 › a two-member cast handles network loss without advancing the queue or losing its next draft
+  7 passed (44.3s)

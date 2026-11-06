@@ -185,3 +185,25 @@ changing their values. All controls shows section groups together. Existing
 provider-specific visibility still applies. Classic layout remains available
 for native drawer pinning and custom themes, alongside advanced access inside
 the workspace.
+
+## Returning to a mobile tab
+
+Returning after a phone lock or tab switch checks app connectivity without sending
+another prompt. Healthy requests may finish after the browser resumes. A broken
+reply connection stops the writing state and cast queue. Received text remains
+available beside the composer, with an explicit action to add it to the draft.
+The app never resends an interrupted reply automatically.
+
+The native Restore unsent input preference controls browser text recovery. Drafts
+belong to one user, character or cast, and story. Renaming a story carries its draft.
+An older global draft has an explicit recovery button because it has no story ID.
+Several unsaved replies remain recoverable; successful native saves acknowledge
+only the exact matching completed text. Recovery does not replace a server chat.
+If browser storage is blocked, the app keeps text in this tab and asks the user to
+copy it before reloading. Closing or clearing that browser storage removes local
+recovery. A discarded tab cannot reconnect to its former HTTP inference request.
+
+Recording and pending microphone permission stop when the tab becomes hidden or
+frozen. Dictation stays opt-in and requires another explicit recording action.
+An already submitted transcription can complete after resume. Image completion
+uses the same native request and does not generate a second illustration.

@@ -131,3 +131,12 @@ Chat portraits size the image to its avatar box: 38×46px on desktop and
 Regression checks compare the image, box, name and text bounds, including
 Pixel 9 Pro XL portrait/landscape and enlarged text; panel width alone cannot
 detect an image overflowing inside a correctly sized message.
+
+## Recovery beside the composer
+
+Connection failures and recovered text appear above the existing composer. Keep
+the message readable, Retry explicit, and recovered reply text behind a details
+control. Adding recovered text appends to the existing draft and focuses it; it
+never sends. Recovery controls have 44px phone targets. The region scrolls within
+28dvh so a reduced keyboard viewport retains the composer. Check collapsed and
+expanded states at 448×921, 448×400 and 320px with enlarged text.

@@ -79,6 +79,12 @@ export class Dictation {
         button.addEventListener('click', () => void this.toggle());
         eventSource.on(event_types.CHAT_CHANGED, () => { if (this.active) this.cancel('Story changed. Dictation cancelled. Retry in the intended story.'); });
         window.addEventListener('pagehide', () => this.cancel());
+        document.addEventListener('visibilitychange', () => {
+            if (document.visibilityState === 'hidden' && (this.stream || this.microphonePending)) this.cancel('Recording stopped when the tab was hidden. Retry dictation when ready.');
+        });
+        document.addEventListener('freeze', () => {
+            if (this.stream || this.microphonePending) this.cancel('Recording stopped when the tab was suspended. Retry dictation when ready.');
+        });
     }
 
     input(parent, id, title) {
@@ -121,6 +127,7 @@ export class Dictation {
 
     cancel(message) {
         this.sequence++;
+        this.microphonePending = false;
         this.request?.abort();
         if (this.recorder?.state === 'recording') this.recorder.stop();
         this.stopTracks();
@@ -146,8 +153,10 @@ export class Dictation {
             if (!window.isSecureContext || !navigator.mediaDevices?.getUserMedia) throw new Error('Microphone access needs HTTPS or localhost. Reopen this app securely, then retry.');
             if (!window.MediaRecorder) throw new Error('This browser cannot record audio. Use an audio file in Dictation settings.');
             this.show('Allow microphone access, then speak. Stop dictation adds text to your draft.');
+            this.microphonePending = true;
             const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
             if (sequence !== this.sequence) { stream.getTracks().forEach(track => track.stop()); return; }
+            this.microphonePending = false;
             this.stream = stream;
             const mimeType = ['audio/webm;codecs=opus', 'audio/mp4', 'audio/ogg;codecs=opus'].find(type => MediaRecorder.isTypeSupported(type));
             const recorder = new MediaRecorder(stream, mimeType ? { mimeType } : undefined);
@@ -173,6 +182,7 @@ export class Dictation {
             this.timer = setTimeout(() => { if (recorder.state === 'recording') { recorder.stop(); this.stopTracks(); } }, 60000);
         } catch (error) {
             if (sequence !== this.sequence) return;
+            this.microphonePending = false;
             this.stopTracks();
             this.active = false;
             this.show(error.name === 'NotAllowedError' ? 'Microphone permission denied. Allow access in your browser, then retry, or use an audio file in Dictation settings.' : error.message);

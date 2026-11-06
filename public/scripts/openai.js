@@ -24,6 +24,7 @@ import {
     main_api,
     name1,
     name2,
+    online_status,
     resultCheckStatus,
     saveSettingsDebounced,
     setOnlineStatus,
@@ -3150,12 +3151,18 @@ async function sendOpenAIRequest(type, messages, signal, { jsonSchema = null } =
     await eventSource.emit(event_types.CHAT_COMPLETION_SETTINGS_READY, generate_data);
 
     const generate_url = '/api/backends/chat-completions/generate';
-    const response = await fetch(generate_url, {
-        method: 'POST',
-        body: JSON.stringify(generate_data),
-        headers: getRequestHeaders(),
-        signal: signal,
-    });
+    let response;
+    try {
+        response = await fetch(generate_url, {
+            method: 'POST',
+            body: JSON.stringify(generate_data),
+            headers: getRequestHeaders(),
+            signal: signal,
+        });
+    } catch (error) {
+        if (signal.aborted) throw error;
+        throw new DOMException('The reply connection was interrupted.', 'NetworkError');
+    }
 
     if (!response.ok) {
         tryParseStreamingError(response, await response.text());
@@ -3170,13 +3177,29 @@ async function sendOpenAIRequest(type, messages, signal, { jsonSchema = null } =
             const swipes = [];
             const toolCalls = [];
             const state = { reasoning: '', images: [], signature: '', toolSignatures: {} };
+            const needsCompletion = [chat_completion_sources.CUSTOM, chat_completion_sources.OPENAI].includes(generate_data.chat_completion_source);
+            const completedChoices = new Set();
+            const expectedChoices = canMultiSwipe ? Number(generate_data.n) : 1;
+            const finished = () => completedChoices.size === expectedChoices;
             while (true) {
-                const { done, value } = await reader.read();
-                if (done) return;
+                let event;
+                try { event = await reader.read(); } catch (error) {
+                    if (needsCompletion && finished() && !signal.aborted) return;
+                    throw error;
+                }
+                const { done, value } = event;
+                if (done) {
+                    if (needsCompletion && !finished()) throw new Error('The reply stream ended before completion.');
+                    return;
+                }
                 const rawData = value.data;
                 if (rawData === '[DONE]') return;
                 tryParseStreamingError(response, rawData);
                 const parsed = JSON.parse(rawData);
+                for (const choice of parsed?.choices || []) {
+                    const index = choice.index ?? 0;
+                    if (choice.finish_reason && Number.isInteger(index) && index >= 0 && index < expectedChoices) completedChoices.add(index);
+                }
 
                 if (canMultiSwipe && Array.isArray(parsed?.choices) && parsed?.choices?.[0]?.index > 0) {
                     const swipeIndex = parsed.choices[0].index - 1;
@@ -4464,7 +4487,9 @@ function setToolReasoningControls() {
     $('#openrouter_interleaved_thinking_disabled_hint').toggle(!isEnabled);
 }
 
-async function getStatusOpen() {
+async function getStatusOpen({ readOnly = false, signal = abortStatusCheck.signal } = {}) {
+    const settingsSnapshot = JSON.stringify(oai_settings);
+    const isCurrent = () => !signal.aborted && main_api === 'openai' && settingsSnapshot === JSON.stringify(oai_settings);
     const noValidateSources = [
         chat_completion_sources.CLAUDE,
         chat_completion_sources.AI21,
@@ -4474,6 +4499,7 @@ async function getStatusOpen() {
         chat_completion_sources.MINIMAX,
     ];
     if (noValidateSources.includes(oai_settings.chat_completion_source)) {
+        if (readOnly) return false;
         let status = t`Key saved; press \"Test Message\" to verify.`;
         setOnlineStatus(status);
         updateFeatureSupportFlags();
@@ -4509,12 +4535,12 @@ async function getStatusOpen() {
         chat_completion_sources.ZAI,
         chat_completion_sources.MOONSHOT,
     ];
-    if (oai_settings.reverse_proxy && validateProxySources.includes(oai_settings.chat_completion_source)) {
+    if (!readOnly && oai_settings.reverse_proxy && validateProxySources.includes(oai_settings.chat_completion_source)) {
         await validateReverseProxy();
     }
 
     if (oai_settings.chat_completion_source === chat_completion_sources.CUSTOM) {
-        $('.model_custom_select').empty();
+        if (!readOnly) $('.model_custom_select').empty();
         data.custom_url = oai_settings.custom_url;
         data.custom_include_headers = substituteParams(oai_settings.custom_include_headers);
     }
@@ -4542,7 +4568,7 @@ async function getStatusOpen() {
     }
 
     const canBypass = (oai_settings.chat_completion_source === chat_completion_sources.OPENAI && oai_settings.bypass_status_check) || oai_settings.chat_completion_source === chat_completion_sources.CUSTOM;
-    if (canBypass) {
+    if (canBypass && !readOnly) {
         setOnlineStatus(t`Status check bypassed`);
     }
 
@@ -4551,7 +4577,7 @@ async function getStatusOpen() {
             method: 'POST',
             headers: getRequestHeaders(),
             body: JSON.stringify(data),
-            signal: abortStatusCheck.signal,
+            signal,
             cache: 'no-cache',
         });
 
@@ -4560,8 +4586,14 @@ async function getStatusOpen() {
         }
 
         const responseData = await response.json();
+        if (readOnly && !isCurrent()) return false;
+        if (readOnly && 'error' in responseData) {
+            setOnlineStatus('no_connection');
+            resultCheckStatus();
+            return false;
+        }
 
-        if ('data' in responseData && Array.isArray(responseData.data)) {
+        if (!readOnly && 'data' in responseData && Array.isArray(responseData.data)) {
             saveModelList(responseData.data);
         }
         if (!('error' in responseData)) {
@@ -4571,15 +4603,22 @@ async function getStatusOpen() {
             setOnlineStatus(t`Status check bypassed`);
         }
     } catch (error) {
+        if (readOnly && !isCurrent()) return false;
         console.error(error);
 
-        if (!canBypass) {
+        if (readOnly || !canBypass) {
             setOnlineStatus('no_connection');
         }
     }
 
     updateFeatureSupportFlags();
-    return resultCheckStatus();
+    resultCheckStatus();
+    return online_status !== 'no_connection';
+}
+
+/** Foreground checks update connectivity, never model lists, profiles, sampling or secrets. */
+export function refreshChatCompletionStatus(signal) {
+    return getStatusOpen({ readOnly: true, signal });
 }
 
 /**

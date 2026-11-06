@@ -1,0 +1,507 @@
+{
+  "phase": "source-candidate",
+  "stats": {
+    "startTime": "2026-11-06T22:41:24.022Z",
+    "duration": 546999.614,
+    "expected": 58,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "library browsing shows profiles without opening or replacing a story",
+      "status": "passed",
+      "milliseconds": 3152,
+      "retry": 0
+    },
+    {
+      "title": "history failure stays visible in profiles and archive while known stories remain usable",
+      "status": "passed",
+      "milliseconds": 4484,
+      "retry": 0
+    },
+    {
+      "title": "native character editor owns Escape before its settings page and audio upload works by keyboard",
+      "status": "passed",
+      "milliseconds": 4239,
+      "retry": 0
+    },
+    {
+      "title": "character portrait and native actions stay above tags and notes at every size",
+      "status": "passed",
+      "milliseconds": 8769,
+      "retry": 0
+    },
+    {
+      "title": "new stories preserve previous transcripts and profile history resumes the exact scene",
+      "status": "passed",
+      "milliseconds": 5762,
+      "retry": 0
+    },
+    {
+      "title": "starting a character story is immediate, creates one transcript and can be renamed afterward",
+      "status": "passed",
+      "milliseconds": 4445,
+      "retry": 0
+    },
+    {
+      "title": "archive persists, excludes active lists, reads without editing, and restores the same transcript",
+      "status": "passed",
+      "milliseconds": 7911,
+      "retry": 0
+    },
+    {
+      "title": "rename follows archived identity and deletion requires confirmation without recreating the file",
+      "status": "passed",
+      "milliseconds": 6524,
+      "retry": 0
+    },
+    {
+      "title": "failed deletion keeps the story and reports the server failure",
+      "status": "passed",
+      "milliseconds": 4373,
+      "retry": 0
+    },
+    {
+      "title": "settings keep every native area reachable with Escape and focus restoration",
+      "status": "passed",
+      "milliseconds": 5533,
+      "retry": 0
+    },
+    {
+      "title": "advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace",
+      "status": "passed",
+      "milliseconds": 10114,
+      "retry": 0
+    },
+    {
+      "title": "every settings category uses one control tree and fits desktop and phone",
+      "status": "passed",
+      "milliseconds": 18801,
+      "retry": 0
+    },
+    {
+      "title": "settings sections, blank space and external dialogs never close mounted controls",
+      "status": "passed",
+      "milliseconds": 9132,
+      "retry": 0
+    },
+    {
+      "title": "every settings destination keeps controls reachable with enlarged phone text",
+      "status": "passed",
+      "milliseconds": 7253,
+      "retry": 0
+    },
+    {
+      "title": "settings changes and late saves preserve every category through direct navigation",
+      "status": "passed",
+      "milliseconds": 11035,
+      "retry": 0
+    },
+    {
+      "title": "dictation settings remain available when the optional TTS extension is disabled",
+      "status": "passed",
+      "milliseconds": 5159,
+      "retry": 0
+    },
+    {
+      "title": "discovered selectors distinguish unapplied choices and follow native provider changes",
+      "status": "passed",
+      "milliseconds": 16274,
+      "retry": 0
+    },
+    {
+      "title": "vision discovery follows the native current-story-model option",
+      "status": "passed",
+      "milliseconds": 5730,
+      "retry": 0
+    },
+    {
+      "title": "one server configures native services and survives reload without replacing sampling or profiles",
+      "status": "passed",
+      "milliseconds": 9257,
+      "retry": 0
+    },
+    {
+      "title": "discovered context uses configured capacity, preserves manual overrides and survives reload",
+      "status": "passed",
+      "milliseconds": 7877,
+      "retry": 0
+    },
+    {
+      "title": "service prompt editors save native values and composer nodes survive classic round trips",
+      "status": "failed",
+      "milliseconds": 33776,
+      "retry": 0
+    },
+    {
+      "title": "fresh compatible connection migrates context preference",
+      "status": "passed",
+      "milliseconds": 6233,
+      "retry": 0
+    },
+    {
+      "title": "existing explicit compatible connection migrates context preference",
+      "status": "passed",
+      "milliseconds": 5645,
+      "retry": 0
+    },
+    {
+      "title": "service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server",
+      "status": "passed",
+      "milliseconds": 4076,
+      "retry": 0
+    },
+    {
+      "title": "dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change",
+      "status": "passed",
+      "milliseconds": 4852,
+      "retry": 0
+    },
+    {
+      "title": "image writer preserves scene context and story model through failure and retry",
+      "status": "passed",
+      "milliseconds": 4693,
+      "retry": 0
+    },
+    {
+      "title": "live Juiced first reply with post-history instructions recovers through native prompt formatting",
+      "status": "passed",
+      "milliseconds": 10642,
+      "retry": 0
+    },
+    {
+      "title": "live Juiced services use native providers from the tested container",
+      "status": "passed",
+      "milliseconds": 71605,
+      "retry": 0
+    },
+    {
+      "title": "search opens character profiles and a fixture model generates through the native composer",
+      "status": "passed",
+      "milliseconds": 6241,
+      "retry": 0
+    },
+    {
+      "title": "mobile draft survives a frozen tab and reload without leaking into another story",
+      "status": "passed",
+      "milliseconds": 8038,
+      "retry": 0
+    },
+    {
+      "title": "a healthy reply completed while frozen resumes once and preserves the next draft",
+      "status": "passed",
+      "milliseconds": 4896,
+      "retry": 0
+    },
+    {
+      "title": "a reset stream after freeze preserves partial text without success actions or replay",
+      "status": "passed",
+      "milliseconds": 7802,
+      "retry": 0
+    },
+    {
+      "title": "a early-eof stream after freeze preserves partial text without success actions or replay",
+      "status": "passed",
+      "milliseconds": 8813,
+      "retry": 0
+    },
+    {
+      "title": "foreground retry coalesces events, refreshes CSRF and preserves explicit model settings",
+      "status": "failed",
+      "milliseconds": 13467,
+      "retry": 0
+    },
+    {
+      "title": "an unresponsive foreground heartbeat times out and can be retried without sending a reply",
+      "status": "passed",
+      "milliseconds": 19390,
+      "retry": 0
+    },
+    {
+      "title": "a delayed read-only foreground check cannot reconnect a changed provider",
+      "status": "passed",
+      "milliseconds": 26584,
+      "retry": 0
+    },
+    {
+      "title": "story drafts survive rapid switching and rename while the native recovery preference is respected",
+      "status": "passed",
+      "milliseconds": 9294,
+      "retry": 0
+    },
+    {
+      "title": "legacy draft recovery is explicit and blocked browser storage retains text in this tab",
+      "status": "passed",
+      "milliseconds": 5517,
+      "retry": 0
+    },
+    {
+      "title": "identical story filenames on different characters never share a recovered draft",
+      "status": "passed",
+      "milliseconds": 5038,
+      "retry": 0
+    },
+    {
+      "title": "quiet prompt callers keep rejection on transport failure without automatic retry",
+      "status": "passed",
+      "milliseconds": 4675,
+      "retry": 0
+    },
+    {
+      "title": "a late microphone permission result after suspension is stopped and never transcribed",
+      "status": "passed",
+      "milliseconds": 4073,
+      "retry": 0
+    },
+    {
+      "title": "a completed reply stays recoverable until the native save succeeds",
+      "status": "passed",
+      "milliseconds": 7694,
+      "retry": 0
+    },
+    {
+      "title": "two replies with failed native saves both survive reload as recovery text",
+      "status": "passed",
+      "milliseconds": 7972,
+      "retry": 0
+    },
+    {
+      "title": "stopping a pending nonstreamed reply restores the composer and preserves its next draft",
+      "status": "passed",
+      "milliseconds": 5152,
+      "retry": 0
+    },
+    {
+      "title": "stopping a pending streamed reply restores the composer and preserves its next draft",
+      "status": "passed",
+      "milliseconds": 5028,
+      "retry": 0
+    },
+    {
+      "title": "a two-member cast handles stop without advancing the queue or losing its next draft",
+      "status": "passed",
+      "milliseconds": 5201,
+      "retry": 0
+    },
+    {
+      "title": "a two-member cast handles network loss without advancing the queue or losing its next draft",
+      "status": "passed",
+      "milliseconds": 5117,
+      "retry": 0
+    },
+    {
+      "title": "native streamed replies keep the composer and character identity mounted",
+      "status": "passed",
+      "milliseconds": 5084,
+      "retry": 0
+    },
+    {
+      "title": "image tools use the native provider and treat custom prompts as text",
+      "status": "passed",
+      "milliseconds": 4225,
+      "retry": 0
+    },
+    {
+      "title": "one scene click generates one native illustration with automatic tools off",
+      "status": "passed",
+      "milliseconds": 5244,
+      "retry": 0
+    },
+    {
+      "title": "voice tools narrate the latest native reply with the configured System voice",
+      "status": "passed",
+      "milliseconds": 6439,
+      "retry": 0
+    },
+    {
+      "title": "chat voice is opt-in and persists; manual images do not enable automatic tools",
+      "status": "passed",
+      "milliseconds": 7893,
+      "retry": 0
+    },
+    {
+      "title": "cast creation selects real characters and opens a group story",
+      "status": "passed",
+      "milliseconds": 4594,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 320px viewport",
+      "status": "passed",
+      "milliseconds": 6145,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 390px viewport",
+      "status": "passed",
+      "milliseconds": 6200,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 448px viewport",
+      "status": "passed",
+      "milliseconds": 6040,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 768px viewport",
+      "status": "passed",
+      "milliseconds": 6067,
+      "retry": 0
+    },
+    {
+      "title": "native font preferences and browser text sizing keep phone controls usable",
+      "status": "passed",
+      "milliseconds": 5117,
+      "retry": 0
+    },
+    {
+      "title": "classic preference survives reload and can be restored",
+      "status": "passed",
+      "milliseconds": 6284,
+      "retry": 0
+    },
+    {
+      "title": "message portraits fit their containers and stay clear of text across screen and font sizes",
+      "status": "passed",
+      "milliseconds": 7047,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "case": "workspace.e2e.js-cast-crea-e6ff9-ers-and-opens-a-group-story",
+      "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "case": "workspace.e2e.js-cast-crea-e6ff9-ers-and-opens-a-group-story",
+      "message": "Group chat could not be deleted"
+    },
+    {
+      "case": "workspace.e2e.js-cast-crea-e6ff9-ers-and-opens-a-group-story",
+      "message": "Workspace action failed Error: The story could not be deleted. Check the server connection and try again.\n    at WorkspaceChats.remove (http://127.0.0.1:8018/scripts/workspace-chats.js:135:29)\n    at async handleAction (http://127.0.0.1:8018/scripts/workspace.js:467:26)"
+    },
+    {
+      "case": "workspace.e2e.js-image-too-4f6af-reat-custom-prompts-as-text",
+      "message": "Workspace action failed Error: Wait for the current illustration to finish before changing stories.\n    at handleAction (http://127.0.0.1:8018/scripts/workspace.js:421:15)\n    at http://127.0.0.1:8018/scripts/workspace.js:610:58"
+    },
+    {
+      "case": "workspace.e2e.js-a-two-mem-43bf8-ue-or-losing-its-next-draft",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "case": "workspace.e2e.js-two-repli-c1a45-ive-reload-as-recovery-text",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "case": "workspace.e2e.js-two-repli-c1a45-ive-reload-as-recovery-text",
+      "message": "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8018/script.js:7509:19)\n    at async saveChatConditional (http://127.0.0.1:8018/script.js:9481:13)\n    at async StreamingProcessor.onFinishStreaming (http://127.0.0.1:8018/script.js:3842:15)\n    at async finishGenerating (http://127.0.0.1:8018/script.js:5482:17)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8018/script.js:1795:22)\n    at async SimpleMutex.update (http://127.0.0.1:8018/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8018/script.js:11217:9)"
+    },
+    {
+      "case": "workspace.e2e.js-two-repli-c1a45-ive-reload-as-recovery-text",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "case": "workspace.e2e.js-two-repli-c1a45-ive-reload-as-recovery-text",
+      "message": "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8018/script.js:7509:19)\n    at async saveChatConditional (http://127.0.0.1:8018/script.js:9481:13)\n    at async sendMessageAsUser (http://127.0.0.1:8018/script.js:5966:9)\n    at async Generate (http://127.0.0.1:8018/script.js:4480:13)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8018/script.js:1795:22)\n    at async SimpleMutex.update (http://127.0.0.1:8018/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8018/script.js:11217:9)"
+    },
+    {
+      "case": "workspace.e2e.js-two-repli-c1a45-ive-reload-as-recovery-text",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "case": "workspace.e2e.js-two-repli-c1a45-ive-reload-as-recovery-text",
+      "message": "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8018/script.js:7509:19)\n    at async saveChatConditional (http://127.0.0.1:8018/script.js:9481:13)\n    at async StreamingProcessor.onFinishStreaming (http://127.0.0.1:8018/script.js:3842:15)\n    at async finishGenerating (http://127.0.0.1:8018/script.js:5482:17)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8018/script.js:1795:22)\n    at async SimpleMutex.update (http://127.0.0.1:8018/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8018/script.js:11217:9)"
+    },
+    {
+      "case": "workspace.e2e.js-a-complet-7f1b5-il-the-native-save-succeeds",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "case": "workspace.e2e.js-a-complet-7f1b5-il-the-native-save-succeeds",
+      "message": "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8018/script.js:7509:19)\n    at async saveChatConditional (http://127.0.0.1:8018/script.js:9481:13)\n    at async StreamingProcessor.onFinishStreaming (http://127.0.0.1:8018/script.js:3842:15)\n    at async finishGenerating (http://127.0.0.1:8018/script.js:5482:17)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8018/script.js:1795:22)\n    at async SimpleMutex.update (http://127.0.0.1:8018/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8018/script.js:11217:9)"
+    },
+    {
+      "case": "workspace.e2e.js-quiet-pro-5331f-ure-without-automatic-retry",
+      "message": "Failed to load resource: net::ERR_FAILED"
+    },
+    {
+      "case": "workspace.e2e.js-foregroun-07ef8-ves-explicit-model-settings",
+      "message": "Failed to load resource: the server responded with a status of 403 (Forbidden)"
+    },
+    {
+      "case": "workspace.e2e.js-a-early-e-9d119-t-success-actions-or-replay",
+      "message": "Error: The reply stream ended before completion.\n    at StreamingProcessor.streamData [as generator] (http://127.0.0.1:8018/scripts/openai.js:3185:61)\n    at async StreamingProcessor.generate (http://127.0.0.1:8018/script.js:3899:73)\n    at async finishGenerating (http://127.0.0.1:8018/script.js:5423:30)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8018/script.js:1795:22)\n    at async SimpleMutex.update (http://127.0.0.1:8018/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8018/script.js:11217:9)"
+    },
+    {
+      "case": "workspace.e2e.js-a-early-e-9d119-t-success-actions-or-replay",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "case": "workspace.e2e.js-a-early-e-9d119-t-success-actions-or-replay",
+      "message": "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8018/script.js:7509:19)\n    at async saveChatConditional (http://127.0.0.1:8018/script.js:9481:13)\n    at async finishGenerating (http://127.0.0.1:8018/script.js:5443:23)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8018/script.js:1795:22)\n    at async SimpleMutex.update (http://127.0.0.1:8018/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8018/script.js:11217:9)"
+    },
+    {
+      "case": "workspace.e2e.js-a-reset-s-00776-t-success-actions-or-replay",
+      "message": "Failed to load resource: net::ERR_INCOMPLETE_CHUNKED_ENCODING"
+    },
+    {
+      "case": "workspace.e2e.js-a-reset-s-00776-t-success-actions-or-replay",
+      "message": "TypeError: network error"
+    },
+    {
+      "case": "workspace.e2e.js-a-reset-s-00776-t-success-actions-or-replay",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "case": "workspace.e2e.js-a-reset-s-00776-t-success-actions-or-replay",
+      "message": "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8018/script.js:7509:19)\n    at async saveChatConditional (http://127.0.0.1:8018/script.js:9481:13)\n    at async finishGenerating (http://127.0.0.1:8018/script.js:5443:23)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8018/script.js:1795:22)\n    at async SimpleMutex.update (http://127.0.0.1:8018/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8018/script.js:11217:9)"
+    },
+    {
+      "case": "workspace.e2e.js-live-Juic-268aa-gh-native-prompt-formatting",
+      "message": "Error: The reply stream ended before completion.\n    at StreamingProcessor.streamData [as generator] (http://127.0.0.1:8018/scripts/openai.js:3185:61)\n    at async StreamingProcessor.generate (http://127.0.0.1:8018/script.js:3899:73)\n    at async finishGenerating (http://127.0.0.1:8018/script.js:5423:30)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8018/script.js:1795:22)\n    at async SimpleMutex.update (http://127.0.0.1:8018/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8018/script.js:11217:9)"
+    },
+    {
+      "case": "workspace.e2e.js-image-wri-401d9-l-through-failure-and-retry",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "case": "workspace.e2e.js-service-s-a84be-cannot-replace-a-new-server",
+      "message": "Failed to load resource: the server responded with a status of 502 (Bad Gateway)"
+    },
+    {
+      "case": "workspace.e2e.js-service-s-a84be-cannot-replace-a-new-server",
+      "message": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    },
+    {
+      "case": "workspace.e2e.js-failed-de-51488--reports-the-server-failure",
+      "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "case": "workspace.e2e.js-failed-de-51488--reports-the-server-failure",
+      "message": "Failed to delete chat for character."
+    },
+    {
+      "case": "workspace.e2e.js-failed-de-51488--reports-the-server-failure",
+      "message": "Workspace action failed Error: The story could not be deleted. Check the server connection and try again.\n    at WorkspaceChats.remove (http://127.0.0.1:8018/scripts/workspace-chats.js:135:29)\n    at async handleAction (http://127.0.0.1:8018/scripts/workspace.js:467:26)"
+    },
+    {
+      "case": "workspace.e2e.js-history-f-f7ab2-known-stories-remain-usable",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "case": "workspace.e2e.js-history-f-f7ab2-known-stories-remain-usable",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "failedRequestsByReason": {
+    "net::ERR_ABORTED": 92,
+    "net::ERR_FAILED": 2,
+    "net::ERR_INCOMPLETE_CHUNKED_ENCODING": 1
+  },
+  "diagnostics": 60,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

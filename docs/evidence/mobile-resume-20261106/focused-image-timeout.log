@@ -1,0 +1,20 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep one scene click|unresponsive foreground --output=/tmp/st-resume-image-timeout --reporter=line
+(node:501116) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:501139) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:501139) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:501139) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] workspace.e2e.js:2534:1 › an unresponsive foreground heartbeat times out and can be retried without sending a reply
+[2/2] workspace.e2e.js:3147:1 › one scene click generates one native illustration with automatic tools off
+  2 passed (21.8s)

@@ -41,3 +41,11 @@ chat selection are superseded by profile and scene workflows.
 - New compatible connections use configured `context_length` when available, never the training maximum as runtime capacity. Existing explicit limits migrate as manual; direct edits and explicit presets disable automatic sizing.
 - Adapt T3 Code's composer shell in plain DOM/CSS with its MIT notice. Preserve the native textarea, form, send/stop ancestry and extension controls.
 - Native compatible vision shares the story server address and uses its own model. Retrieval retains its current extension provider controls; do not overwrite the shared text-completion URL to automate embeddings.
+
+## Browser suspension, November 6, 2026
+
+- Browser recovery owns lifecycle probes and local text checkpoints. Native generation, provider status and transcript save modules retain their operations. No automatic inference replay or background model job service.
+- Keep the native Restore unsent input preference. Store drafts per user, stable character avatar or cast ID, and story filename. Rename carries checkpoints; older global drafts require explicit recovery into the intended story.
+- Retain unacknowledged reply text per message ID/send date. Clear completed records only after an exact native save acknowledgment or matching loaded transcript. Interrupted text remains available until dismissed. Local checkpoints never overwrite a server transcript.
+- Foreground probes coalesce, time out after10seconds and require native ping204. Renew expired CSRF through the native token endpoint. Compatible model checks are read-only and ignore stale provider responses; preserve models, dropdowns, prompts, profiles, context and sampling.
+- Hidden/frozen microphone recording or pending permission is cancelled. An already submitted transcription may finish into its original story draft. Permission results belong to their request sequence.
