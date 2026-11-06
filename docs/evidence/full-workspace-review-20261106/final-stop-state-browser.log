@@ -1,0 +1,16 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep stopping a pending --output=/tmp/st-final-stop-state
+(node:183361) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:183375) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:183375) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:183375) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:2132:3 › stopping a pending nonstreamed reply restores the composer and preserves its next draft (5.1s)
+  ✓  2 workspace.e2e.js:2132:3 › stopping a pending streamed reply restores the composer and preserves its next draft (5.1s)
+
+  2 passed (11.0s)

@@ -161,8 +161,9 @@ test('library browsing shows profiles without opening or replacing a story', asy
     await page.locator('#workspace-view-search').click();
     await page.keyboard.type('Seraphina');
     await expect(page.locator('#workspace-view-search')).toHaveValue('Seraphina');
-    await expect(page.locator('.workspace-library-card')).toHaveCount(1);
-    await page.locator('.workspace-library-card').click();
+    // Other synthetic characters/casts may also mention Seraphina in their
+    // description or members. Select the matching profile by its exact name.
+    await page.getByRole('button', { name: 'Meet Seraphina', exact: true }).click();
     await expect(page.locator('.workspace-profile-intro h1')).toHaveText('Seraphina');
     await expect(page.locator('#send_textarea')).toBeHidden();
     await expect(page.locator('.workspace-profile-detail[open]')).toHaveCount(0);
@@ -715,6 +716,34 @@ test('discovered selectors distinguish unapplied choices and follow native provi
     await expect(page.locator('#service-speak-row')).toContainText('Saved.');
     await page.locator('#service-speak-voice').selectOption('voice-b');
     await expect(page.locator('#service-speak-row')).toContainText('Selection not applied');
+});
+
+test('vision discovery follows the native current-story-model option', async ({ page }, testInfo) => {
+    const data = serviceFixture();
+    data.services.chat.models.push({ id: 'vision-fixture', labels: ['vision'] });
+    await page.route('**/api/openai/custom/discover', route => route.fulfill({ json: data }));
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: data.services.chat.models } }));
+    await serviceSetup(page);
+    await serviceCategory(page, 'chat');
+    await page.locator('#service-chat-model').selectOption('story-fixture');
+    await page.locator('#service-chat-apply').click();
+    await expect(page.locator('#service-chat-row')).toContainText('Saved.');
+    await serviceCategory(page, 'vision');
+    await page.locator('#service-vision-model').selectOption('vision-fixture');
+    await page.locator('#service-vision-apply').click();
+    await expect(page.locator('#service-vision-row')).toContainText('Saved.');
+    await settingsCategory(page, 'vision-settings');
+    await page.locator('#caption_multimodal_model').selectOption('custom_current');
+    expect(await page.evaluate(async () => (await import('/scripts/extensions.js')).extension_settings.caption.multimodal_model)).toBe('custom_current');
+    // The native request owner uses story-fixture in this mode. It is not in
+    // the discovered vision subset, so the separate vision choice must clear.
+    await expect(page.locator('#service-vision-model')).toHaveValue('');
+    await expect(page.locator('#service-vision-row')).not.toContainText('Saved.');
+    await page.screenshot({ path: testInfo.outputPath('vision-native-current-mode.png') });
+    await page.locator('#service-vision-row').scrollIntoViewIfNeeded();
+    await page.screenshot({ path: testInfo.outputPath('vision-derived-current-model.png') });
+    await page.locator('#caption_multimodal_model').selectOption('custom_custom');
+    await expect(page.locator('#service-vision-model')).toHaveValue('vision-fixture');
 });
 
 test('one server configures native services and survives reload without replacing sampling or profiles', async ({ page }) => {
@@ -1342,6 +1371,19 @@ test('search opens character profiles and a fixture model generates through the 
     expect(stop.height).toBe(32);
     const title = await page.locator('#workspace-chat-title').textContent();
     await page.locator('#send_textarea').fill('A draft for my next turn');
+    await page.setViewportSize({ width: 390, height: 844 });
+    await page.locator('#workspace-menu').click();
+    await expect(page.locator('#sheld')).toHaveAttribute('inert', '');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#sheld')).not.toHaveAttribute('inert');
+    await expect(page.locator('#mes_stop')).toBeVisible();
+    await page.locator('#workspace-header-portrait').click();
+    await expect(page.locator('#form_sheld')).toHaveAttribute('inert', '');
+    await page.keyboard.press('Escape');
+    await expect(page.locator('body')).not.toHaveClass(/workspace-inspecting/);
+    await expect(page.locator('#mes_stop')).toBeVisible();
+    await expect(page.locator('#send_textarea')).toHaveValue('A draft for my next turn');
+    await page.setViewportSize({ width: 1280, height: 800 });
     await page.evaluate(() => {
         window.__workspaceMessageNode = document.querySelector('#chat .mes');
         document.getElementById('chat').scrollTop = 48;
@@ -1371,6 +1413,95 @@ test('search opens character profiles and a fixture model generates through the 
     await expect(page.locator('#chat .mes_text').last()).toContainText('The forest path opens before you.', { timeout: 20000 });
     await expect(page.locator('#mes_stop')).toBeHidden();
     await expect(page.locator('#send_but')).toBeVisible();
+});
+
+for (const streaming of [false, true]) {
+    test(`stopping a pending ${streaming ? 'streamed' : 'nonstreamed'} reply restores the composer and preserves its next draft`, async ({ page }, testInfo) => {
+        await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} stop`);
+        await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
+        let finishReply;
+        const replyReady = new Promise(resolve => finishReply = resolve);
+        await page.route('**/api/backends/chat-completions/generate', async route => {
+            await replyReady;
+            if (streaming) await route.fulfill({ contentType: 'text/event-stream', body: 'data: {"choices":[{"index":0,"delta":{"content":"A cancelled reply must not appear."}}]}\n\ndata: [DONE]\n\n' });
+            else await route.fulfill({ json: { choices: [{ message: { content: 'A cancelled reply must not appear.' } }] } });
+        });
+        await settingsCategory(page, 'connection');
+        await page.locator('#chat_completion_source').selectOption('custom');
+        await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
+        await page.locator('#custom_model_id').fill('workspace-fixture');
+        await page.locator('#api_button_openai').click();
+        await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+        await settingsCategory(page, 'generation');
+        await page.locator('#stream_toggle').setChecked(streaming);
+        await page.keyboard.press('Escape');
+        await page.locator('#send_textarea').fill('Describe the blue book.');
+        await page.locator('#send_but').click();
+        await expect(page.locator('#mes_stop')).toBeVisible();
+        await page.locator('#send_textarea').fill('My next draft stays here.');
+        await page.locator('#mes_stop').click();
+        await expect(page.locator('#mes_stop')).toBeHidden();
+        await expect(page.locator('#send_but')).toBeVisible();
+        await expect.poll(() => page.evaluate(async () => (await import('/script.js')).isGenerating())).toBe(false);
+        await expect(page.locator('#workspace-image-button')).toBeEnabled();
+        await expect(page.locator('#workspace-generation-status')).toBeHidden();
+        await expect(page.locator('#send_textarea')).toHaveValue('My next draft stays here.');
+        finishReply();
+        await expect(page.locator('#chat')).not.toContainText('A cancelled reply must not appear.');
+        await page.screenshot({ path: testInfo.outputPath('stopped-reply.png') });
+    });
+}
+
+test('stopping a two-member cast reply cancels the queue and preserves its next draft', async ({ page }, testInfo) => {
+    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+    const avatar = await page.evaluate(async () => (await import('/script.js')).characters[0].avatar);
+    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: avatar });
+    const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} companion` });
+    await page.evaluate(async () => (await import('/script.js')).getCharacters());
+    const group = await page.evaluate(async ({ name, members }) => (await import('/scripts/group-chats.js')).createGroupWithMembers(name, members), { name: `${prefix} cast`, members: [avatar, companion.avatar] });
+    await navigate(page, 'characters');
+    await page.locator('.workspace-library-card').filter({ hasText: `${prefix} cast` }).click();
+    await page.getByRole('button', { name: 'Start new story', exact: true }).click();
+    await expect(page.locator('#send_textarea')).toBeVisible();
+    await renameCurrentStory(page, `${prefix} group-stop`);
+    await page.locator('#workspace-header-portrait').click();
+    await page.locator('#workspace-scene-info [data-workspace-action="edit-entity"]').click();
+    await page.locator('#rm_group_activation_strategy').selectOption('1');
+    expect(await page.evaluate(async id => (await import('/scripts/group-chats.js')).groups.find(group => group.id === id).activation_strategy, group.id)).toBe(1);
+    await page.keyboard.press('Escape');
+    await returnToChat(page);
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
+    let finishReply, requested;
+    const replyReady = new Promise(resolve => finishReply = resolve);
+    const firstRequest = new Promise(resolve => requested = resolve);
+    let requests = 0;
+    await page.route('**/api/backends/chat-completions/generate', async route => {
+        requests++;
+        requested();
+        await replyReady;
+        await route.fulfill({ json: { choices: [{ message: { content: 'Cancelled cast text must not appear.' } }] } });
+    });
+    await settingsCategory(page, 'connection');
+    await page.locator('#chat_completion_source').selectOption('custom');
+    await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
+    await page.locator('#custom_model_id').fill('workspace-fixture');
+    await page.locator('#api_button_openai').click();
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+    await settingsCategory(page, 'generation');
+    await page.locator('#stream_toggle').uncheck();
+    await page.keyboard.press('Escape');
+    await page.locator('#send_textarea').fill('Describe the library together.');
+    await page.locator('#send_but').click();
+    await firstRequest;
+    await page.locator('#send_textarea').fill('My next cast draft.');
+    await page.locator('#mes_stop').click();
+    await expect.poll(() => page.evaluate(async () => (await import('/script.js')).isGenerating())).toBe(false);
+    await expect(page.locator('#send_but')).toBeVisible();
+    await expect(page.locator('#send_textarea')).toHaveValue('My next cast draft.');
+    finishReply();
+    expect(requests).toBe(1);
+    await expect(page.locator('#chat')).not.toContainText('Cancelled cast text must not appear.');
+    await page.screenshot({ path: testInfo.outputPath('stopped-cast-queue.png') });
 });
 
 test('native streamed replies keep the composer and character identity mounted', async ({ page }, testInfo) => {

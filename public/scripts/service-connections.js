@@ -232,7 +232,7 @@ export class ServiceConnections {
         if (id === 'chat') return document.getElementById('main_api').value === 'openai' && oai_settings.chat_completion_source === 'custom' && same(oai_settings.custom_url, base) ? { model: oai_settings.custom_model } : null;
         if (id === 'writer') {
             const profile = extension_settings.connectionManager?.profiles?.find(profile => profile.id === sd?.prompt_writer_profile);
-            return !sd?.prompt_writer_profile ? { model: '' } : profile && same(profile['api-url'], base) ? { model: profile.model } : null;
+            return !sd?.prompt_writer_profile ? { model: '' } : profile?.mode === 'cc' && profile.api === 'custom' && same(profile['api-url'], base) ? { model: profile.model } : null;
         }
         if (id === 'images') return sd?.source === 'sdcpp' && same(sd.sdcpp_url, root) ? { model: sd.model } : null;
         if (id === 'speak') {
@@ -240,7 +240,11 @@ export class ServiceConnections {
             return tts?.currentProvider === 'OpenAI Compatible' && same(settings?.provider_endpoint, `${base}/audio/speech`) ? { model: settings.model, voice: typeof settings.voiceMap === 'object' ? settings.voiceMap?.['[Default Voice]'] : '' } : null;
         }
         if (id === 'transcribe') return same(extension_settings.dictation?.endpoint, `${base}/audio/transcriptions`) ? { model: extension_settings.dictation.model } : null;
-        if (id === 'vision') return caption?.source === 'multimodal' && caption.multimodal_api === 'custom' && same(oai_settings.custom_url, base) ? { model: caption.custom_model } : null;
+        if (id === 'vision' && caption?.source === 'multimodal' && caption.multimodal_api === 'custom' && same(oai_settings.custom_url, base)) {
+            const model = caption.multimodal_model === 'custom_current' ? oai_settings.custom_model
+                : caption.multimodal_model === 'custom_custom' ? caption.custom_model : caption.multimodal_model;
+            return { model };
+        }
         return null;
     }
 
@@ -254,7 +258,7 @@ export class ServiceConnections {
             row.select.value = applied?.model || '';
             if (row.voice && [...row.voice.options].some(option => option.value === applied?.voice)) row.voice.value = applied.voice;
             row.status.textContent = applied
-                ? row.select.value === applied.model ? 'Provider settings updated. The applied model is selected.' : 'The applied model is not enabled on this server. Existing settings are preserved.'
+                ? row.select.value === applied.model ? 'Provider settings updated. The applied model is selected.' : `Applied model ${applied.model} is not in the discovered models for this service. Existing settings are preserved.`
                 : 'This service uses other provider settings. Choose a model to apply this server.';
             row.action.disabled = id !== 'writer' && !row.select.value;
         }
@@ -358,8 +362,6 @@ export class ServiceConnections {
                 sd.configureImageWriter(id);
             });
             writer.row.append(element('small', '', 'Uses the current scene. A separate writer keeps the story model selected and has its own instructions and output budget.'));
-            const profile = extension_settings.connectionManager?.profiles?.find(profile => profile.id === extension_settings.sd?.prompt_writer_profile);
-            if (profile && profile['api-url'] === data.base) writer.select.value = profile.model;
         }
         if (!data.juiced) return;
         const sdSupported = data.protocols.some(protocol => protocol.id === 'automatic1111' && protocol.features?.includes('txt2img'));

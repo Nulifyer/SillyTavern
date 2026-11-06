@@ -629,6 +629,7 @@ export let extension_prompts = {};
 
 export let main_api;// = "kobold";
 let abortController = new AbortController();
+const USER_STOP_REASON = 'Clicked stop button';
 
 //css
 var css_send_form_display = $('<div id=send_form></div>').css('display');
@@ -4314,6 +4315,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
     if (!(abortController && signal)) {
         abortController = new AbortController();
     }
+    const requestSignal = abortController.signal;
 
     // OpenAI doesn't need instruct mode. Use OAI main prompt instead.
     const isInstruct = power_user.instruct.enabled && main_api !== 'openai';
@@ -4362,7 +4364,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
     if (selected_group && !is_group_generating) {
         if (!dryRun) {
             // Returns the promise that generateGroupWrapper returns; resolves when generation is done
-            return generateGroupWrapper(false, type, { quiet_prompt, force_chid, signal: abortController.signal, quietImage, jsonSchema });
+            return generateGroupWrapper(false, type, { quiet_prompt, force_chid, signal: requestSignal, quietImage, jsonSchema }).catch(onError);
         }
 
         const characterIndexMap = new Map(characters.map((char, index) => [char.avatar, index]));
@@ -5606,8 +5608,11 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
         }
 
         unblockGeneration(type);
-        console.log(exception);
         streamingProcessor = null;
+        // Interactive Stop is a completed cancellation, not a failed reply.
+        // Quiet callers retain their rejection contract for prompt/tool requests.
+        if (type !== 'quiet' && requestSignal.aborted && requestSignal.reason === USER_STOP_REASON) return '';
+        console.log(exception);
         throw exception;
     }
 }
@@ -5623,7 +5628,7 @@ export function stopGeneration() {
         stopped = true;
     }
     if (abortController) {
-        abortController.abort('Clicked stop button');
+        abortController.abort(USER_STOP_REASON);
         hideStopButton();
         stopped = true;
     }

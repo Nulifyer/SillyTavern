@@ -1,0 +1,46 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep vision discovery follows --output=/tmp/st-v12-native-vision
+(node:152663) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:152698) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:152698) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:152698) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 workspace.e2e.js:1024:1 › vision discovery follows the native current-story-model option (188ms)
+
+
+  1) workspace.e2e.js:1024:1 › vision discovery follows the native current-story-model option ──────
+
+    Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8019/
+    Call log:
+      - navigating to "http://127.0.0.1:8019/", waiting until "load"
+
+
+      122 |         await route.fulfill({ json: { result: 'ok' } });
+      123 |     });
+    > 124 |     await page.goto('/');
+          |                ^
+      125 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      126 |     await navigate(page, 'characters');
+      127 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:124:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      132 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      133 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 134 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      135 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      136 |     const records = await api(page, '/api/chats/recent', {});
+      137 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:134:16
+
+    Error Context: ../../../../../tmp/st-v12-native-vision/workspace.e2e.js-vision-di-b30fa--current-story-model-option/error-context.md
+
+  1 failed
+    workspace.e2e.js:1024:1 › vision discovery follows the native current-story-model option ───────

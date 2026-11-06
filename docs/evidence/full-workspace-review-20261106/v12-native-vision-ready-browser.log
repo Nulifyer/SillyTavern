@@ -1,0 +1,48 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep vision discovery follows --output=/tmp/st-v12-native-vision-ready
+(node:153600) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:153619) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:153619) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:153619) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 workspace.e2e.js:1024:1 › vision discovery follows the native current-story-model option (10.1s)
+
+
+  1) workspace.e2e.js:1024:1 › vision discovery follows the native current-story-model option ──────
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  locator('#service-vision-model')
+    Expected: ""
+    Received: "vision-fixture"
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for locator('#service-vision-model')
+        9 × locator resolved to <select class="text_pole" id="service-vision-model">…</select>
+          - unexpected value "vision-fixture"
+
+
+      737 |     // The native request owner uses story-fixture in this mode. It is not in
+      738 |     // the discovered vision subset, so the separate vision choice must clear.
+    > 739 |     await expect(page.locator('#service-vision-model')).toHaveValue('');
+          |                                                         ^
+      740 |     await expect(page.locator('#service-vision-row')).not.toContainText('Saved.');
+      741 |     await page.locator('#caption_multimodal_model').selectOption('custom_custom');
+      742 |     await expect(page.locator('#service-vision-model')).toHaveValue('vision-fixture');
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:739:57
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-v12-native-vision-ready/workspace.e2e.js-vision-di-b30fa--current-story-model-option/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-v12-native-vision-ready/workspace.e2e.js-vision-di-b30fa--current-story-model-option/error-context.md
+
+  1 failed
+    workspace.e2e.js:1024:1 › vision discovery follows the native current-story-model option ───────

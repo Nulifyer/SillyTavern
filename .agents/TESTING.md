@@ -50,6 +50,15 @@ native dropdown Escape behavior. Exact release evidence and digest: docs/contain
 
 ## Environment
 
+Pendingv1.19.13 final source:41 browser cases passed in the full run, including
+both live Juiced cases. One inherited search-fixture count assertion failed;
+the corrected exact-name case passed separately. All42 full-run diagnostics
+have zero uncaught page errors. Single streamed/nonstreamed and two-member
+cast Stop, pending keyboard ownership and native vision modes are covered.
+424 units, root lint and actionlint pass; test lint has0errors/24warnings.
+Actual immutable image full42-case acceptance remains pending. See
+full-workspace-review-20261106/source-checks-v13.json and review.md.
+
 The full November6 source review for pendingv1.19.12 passes38 browser cases
 with both real Juiced cases enabled,424 unit tests, lint and actionlint.
 The final run is source-browser-release.log;38 diagnostics have zero uncaught

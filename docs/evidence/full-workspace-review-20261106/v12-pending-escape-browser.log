@@ -1,0 +1,67 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep search opens character profiles --output=/tmp/st-v12-pending-escape
+(node:170725) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:170753) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:170753) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:170753) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 workspace.e2e.js:2010:1 › search opens character profiles and a fixture model generates through the native composer (10.2s)
+
+
+  1) workspace.e2e.js:2010:1 › search opens character profiles and a fixture model generates through the native composer
+
+    Error: expect(locator).not.toHaveAttribute() failed
+
+    Locator:  locator('#sheld')
+    Expected: not have attribute
+    Received: have attribute
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "not toHaveAttribute" with timeout 5000ms
+      - waiting for locator('#sheld')
+        9 × locator resolved to <div inert="" id="sheld">…</div>
+          - unexpected value "attribute present"
+
+
+      1375 |     await expect(page.locator('#sheld')).toHaveAttribute('inert', '');
+      1376 |     await page.keyboard.press('Escape');
+    > 1377 |     await expect(page.locator('#sheld')).not.toHaveAttribute('inert');
+           |                                              ^
+      1378 |     await expect(page.locator('#mes_stop')).toBeVisible();
+      1379 |     await page.locator('#workspace-header-portrait').click();
+      1380 |     await expect(page.locator('#form_sheld')).toHaveAttribute('inert', '');
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1377:46
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "Clicked stop button",
+    + ]
+
+      131 |     if (page.isClosed()) return;
+      132 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+    > 133 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+          |                                                  ^
+      134 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+      135 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      136 |     const records = await api(page, '/api/chats/recent', {});
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:133:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-v12-pending-escape/workspace.e2e.js-search-op-ae169-through-the-native-composer/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-v12-pending-escape/workspace.e2e.js-search-op-ae169-through-the-native-composer/error-context.md
+
+  1 failed
+    workspace.e2e.js:2010:1 › search opens character profiles and a fixture model generates through the native composer

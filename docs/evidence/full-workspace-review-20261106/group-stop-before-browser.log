@@ -1,0 +1,45 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep stopping a two-member --output=/tmp/st-group-stop-before
+(node:191810) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:191824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:191824) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:191824) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+Internal error: step id not found: fixture@118
+  ✘  1 workspace.e2e.js:2187:1 › stopping a two-member cast reply cancels the queue and preserves its next draft (5.6s)
+
+
+  1) workspace.e2e.js:2187:1 › stopping a two-member cast reply cancels the queue and preserves its next draft
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 3
+
+    - Array []
+    + Array [
+    +   "AbortSignal was fired. Group generation stopped",
+    + ]
+
+      131 |     if (page.isClosed()) return;
+      132 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+    > 133 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+          |                                                  ^
+      134 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+      135 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      136 |     const records = await api(page, '/api/chats/recent', {});
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:133:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-group-stop-before/workspace.e2e.js-stopping--46b59-nd-preserves-its-next-draft/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-group-stop-before/workspace.e2e.js-stopping--46b59-nd-preserves-its-next-draft/error-context.md
+
+  1 failed
+    workspace.e2e.js:2187:1 › stopping a two-member cast reply cancels the queue and preserves its next draft

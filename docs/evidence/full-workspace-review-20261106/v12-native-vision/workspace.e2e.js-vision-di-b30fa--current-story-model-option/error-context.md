@@ -1,0 +1,267 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to message" [ref=e3] [cursor=pointer]:
+    - /url: "#send_textarea"
+  - complementary "Workspace" [ref=e4]:
+    - link "SillyTavern" [ref=e5] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e6]: SillyTavern
+    - button "Find anything Ctrl K" [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]: 
+      - generic [ref=e9]: Find anything
+      - generic [ref=e10]: Ctrl K
+    - button "New story" [ref=e11] [cursor=pointer]:
+      - generic [ref=e12]: +
+      - generic [ref=e13]: New story
+    - navigation "Main navigation" [ref=e14]:
+      - button "Stories" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 
+        - generic [ref=e17]: Stories
+      - button "Characters" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: 
+        - generic [ref=e20]: Characters
+      - button "Archive" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Archive
+    - text: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]: Recent stories
+        - button "View all stories" [ref=e27] [cursor=pointer]:
+          - generic [ref=e28]: 
+      - paragraph [ref=e30]: Your stories will appear here. Choose a character to begin.
+    - generic [ref=e31]:
+      - button "Settings" [ref=e32] [cursor=pointer]:
+        - generic [ref=e33]: 
+        - generic [ref=e34]: Settings
+      - text: 
+      - button "Storyteller Manage persona" [ref=e35] [cursor=pointer]:
+        - generic [ref=e37]: 
+        - generic [ref=e38]:
+          - strong [ref=e39]: Storyteller
+          - generic [ref=e40]: Manage persona
+        - generic [ref=e41]: 
+  - banner [ref=e42]:
+    - text: 
+    - generic [ref=e43]:
+      - strong [ref=e44]: Settings
+      - generic [ref=e45]: Vision & captions
+    - generic:  +
+  - text:  
+  - generic:
+    - generic:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items   X                                      
+    - generic:                                                                         
+    - generic:                                                
+    - generic:                 +     
+    - generic:                                    
+    - generic:        +                            
+    - generic: 
+    - generic:                     
+    - generic:                                                      Group is empty.          No characters available                        
+  - generic:                      +                                                                               +    + +                  
+  - generic:                  
+  - generic [ref=e46]:
+    - generic [ref=e47]:
+      - navigation "Settings categories" [ref=e48]:
+        - heading "Settings" [level=2] [ref=e49]
+        - generic [ref=e50]:
+          - heading "Model services" [level=3] [ref=e51]
+          - button "Servers" [ref=e52] [cursor=pointer]:
+            - generic [ref=e53]: 
+            - generic [ref=e54]: Servers
+          - button "Story replies" [ref=e55] [cursor=pointer]:
+            - generic [ref=e56]: 
+            - generic [ref=e57]: Story replies
+          - button "Image prompts" [ref=e58] [cursor=pointer]:
+            - generic [ref=e59]: 
+            - generic [ref=e60]: Image prompts
+          - button "Images" [ref=e61] [cursor=pointer]:
+            - generic [ref=e62]: 
+            - generic [ref=e63]: Images
+          - button "Speech" [ref=e64] [cursor=pointer]:
+            - generic [ref=e65]: 
+            - generic [ref=e66]: Speech
+          - button "Dictation" [ref=e67] [cursor=pointer]:
+            - generic [ref=e68]: 
+            - generic [ref=e69]: Dictation
+          - button "Vision & captions" [ref=e70] [cursor=pointer]:
+            - generic [ref=e71]: 
+            - generic [ref=e72]: Vision & captions
+          - button "Retrieval" [ref=e73] [cursor=pointer]:
+            - generic [ref=e74]: 
+            - generic [ref=e75]: Retrieval
+        - generic [ref=e76]:
+          - heading "Story world" [level=3] [ref=e77]
+          - button "Your persona" [ref=e78] [cursor=pointer]:
+            - generic [ref=e79]: 
+            - generic [ref=e80]: Your persona
+          - button "World & lore" [ref=e81] [cursor=pointer]:
+            - generic [ref=e82]: 
+            - generic [ref=e83]: World & lore
+          - button "Scene backgrounds" [ref=e84] [cursor=pointer]:
+            - generic [ref=e85]: 
+            - generic [ref=e86]: Scene backgrounds
+        - generic [ref=e87]:
+          - heading "Workspace" [level=3] [ref=e88]
+          - button "Appearance & behavior" [ref=e89] [cursor=pointer]:
+            - generic [ref=e90]: 
+            - generic [ref=e91]: Appearance & behavior
+          - button "Extensions" [ref=e92] [cursor=pointer]:
+            - generic [ref=e93]: 
+            - generic [ref=e94]: Extensions
+          - text: 
+      - generic [ref=e95]:
+        - generic [ref=e96]:
+          - generic [ref=e97]:
+            - heading "Vision & captions" [level=1] [ref=e98]
+            - paragraph [ref=e99]: Choose a vision model and edit the instructions used to describe images.
+          - generic [ref=e100]:
+            - generic "Expand native provider settings, sampling, prompt formatting and extension options. Changes only which controls are shown." [ref=e101] [cursor=pointer]:
+              - checkbox "Advanced controls" [ref=e102]
+              - generic [ref=e103]: Advanced controls
+            - button "Done" [ref=e104] [cursor=pointer]:
+              - generic [ref=e105]: 
+              - generic [ref=e106]: Done
+        - generic "Vision & captions" [ref=e108]:
+          - generic [ref=e109]:
+            - text:         +                             +                    
+            - generic [ref=e110]:
+              - text:  +   + +  +     +        +        +        +      
+              - generic [ref=e113]:
+                - text: 
+                - generic [ref=e114]:
+                  - generic [ref=e116]:
+                    - generic [ref=e117]: Vision model
+                    - combobox "Vision model" [ref=e118]:
+                      - option "Choose a model"
+                      - option "vision-fixture" [selected]
+                    - button "Use model" [ref=e119] [cursor=pointer]
+                    - status [ref=e120]: Saved. This service uses the selected model. Test it in your story when ready.
+                    - generic [ref=e121]: Uses the story service’s compatible server with its own vision model and caption prompt below. The story model stays selected.
+                  - group [ref=e122]:
+                    - generic "Advanced vision provider settings and caption preferences" [active] [ref=e123] [cursor=pointer]
+                    - text: Source
+                    - combobox "Source" [ref=e124]:
+                      - option "Local"
+                      - option "Multimodal" [selected]
+                      - option "Extras (deprecated)"
+                      - option "Horde"
+                    - generic [ref=e125]:
+                      - generic [ref=e126]:
+                        - generic [ref=e127]: API
+                        - combobox "API" [ref=e128]:
+                          - option "AI/ML API"
+                          - option "Chutes"
+                          - option "Claude"
+                          - option "Cloudflare Workers AI"
+                          - option "Cohere"
+                          - option "Custom (OpenAI-compatible)" [selected]
+                          - option "Electron Hub"
+                          - option "Google AI Studio"
+                          - option "Google Vertex AI"
+                          - option "Groq"
+                          - option "KoboldCpp"
+                          - option "llama.cpp"
+                          - option "MistralAI"
+                          - option "Moonshot AI"
+                          - option "NanoGPT"
+                          - option "Ollama"
+                          - option "OpenAI"
+                          - option "OpenRouter"
+                          - option "Text Generation WebUI (oobabooga)"
+                          - option "Pollinations"
+                          - option "vLLM"
+                          - option "xAI (Grok)"
+                          - option "Z.AI (GLM)"
+                      - generic [ref=e129]:
+                        - generic [ref=e130]:
+                          - generic [ref=e131]: Model
+                          - button "" [ref=e132] [cursor=pointer]:
+                            - generic [ref=e133]: 
+                        - combobox "Model " [ref=e134]:
+                          - option "[Currently selected]" [selected]
+                          - option "[Custom model]"
+                      - generic [ref=e135]:
+                        - generic [ref=e136]: Model Id (for [Custom model] option)
+                        - textbox "Model Id (for [Custom model] option)" [ref=e137]:
+                          - /placeholder: e.g. gpt-4o
+                          - text: vision-fixture
+                      - generic [ref=e139]: "Hint: Set your API keys and endpoints in the 'API Connections' tab first."
+                    - generic [ref=e140]:
+                      - text: Message Template
+                      - generic [ref=e141]:
+                        - text: (use
+                        - code [ref=e142]: "{{caption}}"
+                        - text: macro)
+                    - 'textbox "Message Template (use {{caption}} macro)" [ref=e143]':
+                      - /placeholder: < Use default >
+                      - text: "[{{user}} sends {{char}} a picture that contains: {{caption}}]"
+                    - generic [ref=e144]:
+                      - checkbox "Automatically caption images " [ref=e145] [cursor=pointer]
+                      - generic [ref=e146]: Automatically caption images
+                      - generic "Automatically caption images when they are pasted into the chat or attached to messages." [ref=e147]: 
+                    - generic [ref=e148]:
+                      - checkbox "Edit captions before saving" [ref=e149] [cursor=pointer]
+                      - generic [ref=e150]: Edit captions before saving
+                    - generic [ref=e151]:
+                      - checkbox "Show captions in chat" [ref=e152] [cursor=pointer]
+                      - generic [ref=e153]: Show captions in chat
+                  - generic [ref=e154]:
+                    - text: Caption Prompt
+                    - textbox "Caption Prompt" [ref=e155]:
+                      - /placeholder: < Use default >
+                      - text: What's in this image?
+                    - generic "Ask for a custom prompt every time an image is captioned." [ref=e156]:
+                      - checkbox "Ask every time" [ref=e157] [cursor=pointer]
+                      - generic [ref=e158]: Ask every time
+              - text:                                      
+    - region "Roleplay workspace" [ref=e159]:
+      - generic [ref=e160]:
+        - generic [ref=e161]:
+          - generic [ref=e162]:
+            - heading "Characters" [level=1] [ref=e163]
+            - paragraph [ref=e164]: Choose who shares your next story.
+          - generic [ref=e165]:
+            - button "Import card" [ref=e166] [cursor=pointer]:
+              - generic [ref=e167]: 
+              - generic [ref=e168]: Import card
+            - button "Create character" [ref=e169] [cursor=pointer]:
+              - generic [ref=e170]: +
+              - generic [ref=e171]: Create character
+        - generic [ref=e172]:
+          - generic [ref=e173]:
+            - generic [ref=e174]: 
+            - searchbox "Search characters, descriptions, and tags" [ref=e175]
+          - generic [ref=e176]:
+            - button "All" [pressed] [ref=e177] [cursor=pointer]
+            - button "Characters" [ref=e178] [cursor=pointer]
+            - button "Casts" [ref=e179] [cursor=pointer]
+            - button "Favorites" [ref=e180] [cursor=pointer]
+        - generic [ref=e181]:
+          - paragraph [ref=e182]: 1 character or cast
+          - button "Create cast" [ref=e183] [cursor=pointer]:
+            - generic [ref=e184]: 
+            - generic [ref=e185]: Create cast
+        - button "Meet Seraphina" [ref=e187] [cursor=pointer]:
+          - generic [ref=e188]:
+            - strong [ref=e189]: Seraphina
+            - generic [ref=e190]: You were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.
+    - text:                                                                                                  
+  - text:                      1  
+  - generic [ref=e191]: 
+  - status [ref=e192]
+  - status [ref=e193]
+  - status [ref=e194]
+  - status [ref=e195]
+  - status [ref=e196]
+  - status [ref=e197]
+  - status [ref=e198]
+  - status [ref=e199]
+  - status [ref=e200]
+  - status [ref=e201]
+  - status [ref=e202]
+  - status [ref=e203]
+  - text:        
+```

@@ -1,0 +1,17 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep vision discovery follows|discovered selectors|one server configures --output=/tmp/st-native-selection-fixed
+(node:154205) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:154224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:154224) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:154224) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:977:1 › discovered selectors distinguish unapplied choices and follow native provider changes (4.5s)
+  ✓  2 workspace.e2e.js:1024:1 › vision discovery follows the native current-story-model option (3.8s)
+  ✓  3 workspace.e2e.js:1059:1 › one server configures native services and survives reload without replacing sampling or profiles (8.8s)
+
+  3 passed (17.6s)

@@ -1,0 +1,139 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to message" [ref=e3] [cursor=pointer]:
+    - /url: "#send_textarea"
+  - complementary "Workspace" [ref=e4]:
+    - link "SillyTavern" [ref=e5] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e6]: SillyTavern
+    - button "Find anything Ctrl K" [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]: 
+      - generic [ref=e9]: Find anything
+      - generic [ref=e10]: Ctrl K
+    - button "New story" [ref=e11] [cursor=pointer]:
+      - generic [ref=e12]: +
+      - generic [ref=e13]: New story
+    - navigation "Main navigation" [ref=e14]:
+      - button "Stories" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 
+        - generic [ref=e17]: Stories
+      - button "Characters" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: 
+        - generic [ref=e20]: Characters
+      - button "Archive" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Archive
+    - text: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]: Recent stories
+        - button "View all stories" [ref=e27] [cursor=pointer]:
+          - generic [ref=e28]: 
+      - generic [ref=e29]:
+        - article [ref=e30]:
+          - button "Continue Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 group-stop with Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 cast" [ref=e31] [cursor=pointer]:
+            - generic [ref=e33]:
+              - strong [ref=e34]: Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 group-stop
+              - generic [ref=e35]: Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 cast
+        - article [ref=e36]:
+          - button "Continue Seraphina - 2026-11-06@12h15m18s883ms with Seraphina" [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]:
+              - strong [ref=e39]: Seraphina - 2026-11-06@12h15m18s883ms
+              - generic [ref=e40]: Seraphina
+        - article [ref=e41]:
+          - button "Continue Seraphina - 2026-11-06@11h52m36s428ms with Seraphina" [ref=e42] [cursor=pointer]:
+            - generic [ref=e43]:
+              - strong [ref=e44]: Seraphina - 2026-11-06@11h52m36s428ms
+              - generic [ref=e45]: Seraphina
+    - generic [ref=e46]:
+      - button "Settings" [ref=e47] [cursor=pointer]:
+        - generic [ref=e48]: 
+        - generic [ref=e49]: Settings
+      - text: 
+      - button "Storyteller Manage persona" [ref=e50] [cursor=pointer]:
+        - generic [ref=e52]: 
+        - generic [ref=e53]:
+          - strong [ref=e54]: Storyteller
+          - generic [ref=e55]: Manage persona
+        - generic [ref=e56]: 
+  - banner [ref=e57]:
+    - text: 
+    - generic [ref=e58]:
+      - strong [ref=e59]: Characters
+      - generic [ref=e60]: Roleplay workspace
+    - generic:  +
+  - text:  
+  - generic:
+    - generic:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items   X                                      
+    - generic:                                                                         
+    - generic:                                                
+    - generic:                 +     
+    - generic:                                    
+    - generic:        +                            
+    - generic:          +                             +                      +   + +  +     +        +        +        +                                               
+    - generic:                     
+    - generic:                                                      Group is empty.          No characters available                          
+  - generic:                      +                                                                               +    + +                  
+  - generic:                  
+  - generic [ref=e61]:
+    - text:               
+    - region "Roleplay workspace" [ref=e62]:
+      - generic [ref=e63]:
+        - generic [ref=e64]:
+          - generic [ref=e65]:
+            - heading "Characters" [level=1] [ref=e66]
+            - paragraph [ref=e67]: Choose who shares your next story.
+          - generic [ref=e68]:
+            - button "Import card" [ref=e69] [cursor=pointer]:
+              - generic [ref=e70]: 
+              - generic [ref=e71]: Import card
+            - button "Create character" [ref=e72] [cursor=pointer]:
+              - generic [ref=e73]: +
+              - generic [ref=e74]: Create character
+        - generic [ref=e75]:
+          - generic [ref=e76]:
+            - generic [ref=e77]: 
+            - searchbox "Search characters, descriptions, and tags" [active] [ref=e78]: Seraphina
+          - generic [ref=e79]:
+            - button "All" [pressed] [ref=e80] [cursor=pointer]
+            - button "Characters" [ref=e81] [cursor=pointer]
+            - button "Casts" [ref=e82] [cursor=pointer]
+            - button "Favorites" [ref=e83] [cursor=pointer]
+        - generic [ref=e84]:
+          - paragraph [ref=e85]: 3 characters and casts
+          - button "Create cast" [ref=e86] [cursor=pointer]:
+            - generic [ref=e87]: 
+            - generic [ref=e88]: Create cast
+        - generic [ref=e89]:
+          - button "Meet Seraphina" [ref=e90] [cursor=pointer]:
+            - generic [ref=e91]:
+              - strong [ref=e92]: Seraphina
+              - generic [ref=e93]: You were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.
+          - button "Meet Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 cast" [ref=e94] [cursor=pointer]:
+            - generic [ref=e96]:
+              - strong [ref=e97]: Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 cast
+              - generic [ref=e98]: Seraphina, Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 companion
+              - generic [ref=e100]: 2 characters
+          - button "Meet Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 companion" [ref=e101] [cursor=pointer]:
+            - generic [ref=e102]:
+              - strong [ref=e103]: Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 companion
+              - generic [ref=e104]: You were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.
+    - text:             |     |     |                                                                                         
+  - text:                      1  
+  - generic [ref=e105]: 
+  - status [ref=e106]
+  - status [ref=e107]
+  - status [ref=e108]
+  - status [ref=e109]
+  - status [ref=e110]
+  - status [ref=e111]
+  - status [ref=e112]
+  - status [ref=e113]
+  - status [ref=e114]
+  - status [ref=e115]
+  - status [ref=e116]
+  - status [ref=e117]
+  - text: 
+```

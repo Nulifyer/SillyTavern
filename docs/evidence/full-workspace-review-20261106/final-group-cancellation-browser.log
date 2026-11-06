@@ -1,0 +1,17 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep stopping a two-member|stopping a (streamed|non-streamed)|fixture model generates|vision --output=/tmp/st-final-group-cancellation
+(node:194383) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:194398) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:194398) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:194398) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:1024:1 › vision discovery follows the native current-story-model option (4.1s)
+  ✓  2 workspace.e2e.js:2010:1 › search opens character profiles and a fixture model generates through the native composer (6.9s)
+  ✓  3 workspace.e2e.js:2187:1 › stopping a two-member cast reply cancels the queue and preserves its next draft (12.6s)
+
+  3 passed (24.3s)

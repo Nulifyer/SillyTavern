@@ -96,3 +96,58 @@ gates remain part of the normal release process.
 
 Text logs normalize terminal escape codes and trailing spaces. Error text, result
 counts and structured browser diagnostics are retained.
+
+## Published-image follow-up
+
+v1.19.12 was published fromc78f9f5e312dfcbbe3df1c02b55456af427a3873 by
+[workflow42263052988](https://github.com/Nulifyer/SillyTavern/actions/runs/42263052988).
+Both native architecture startup gates passed. Its actual pulled image on8019
+has five fresh volumes, no overlays, valid heartbeat and version1.19.12.
+[Registry proof](v12-registry/image-proof.json) records its immutable digests.
+
+An added native-mode check reproduced a further selection defect on that image:
+captioning set to Current story model still showed the old separate vision
+model as Saved. Native request code uses the story model in this mode
+(`extensions/shared.js:111`). The failed assertion and screenshot are retained in
+v12-native-vision-ready-browser.log and v12-native-vision/. The initial attempt
+ran before HTTP readiness and returned ERR_CONNECTION_RESET; the ready retry
+establishes the actual UI defect.
+
+v1.19.13 corrects the derived model for both native caption modes and qualifies
+optional writer profiles by mode/API. It removes a redundant writer-selection
+assignment. Source focused checks pass. v1.19.12 is not the final deployment
+recommendation; its tag is preserved. Final39-case source and published-image
+acceptance are pending.
+
+The pending-reply keyboard extension also reproduced Escape activating Stop
+behind an inert mobile sidebar on the actualv1.19.12 image. It left navigation
+open and produced an uncaught `Clicked stop button` rejection. Native Escape
+ownership now excludes inert ancestors, preserving both sidebar/inspector
+dismissal and the active reply. Explicit Stop had the same uncaught rejection;
+the interactive cancellation owner now completes its cleanup without reporting
+a failed reply. Quiet API callers retain rejection. Source streamed/nonstreamed
+Stop and pending navigation regressions pass; actual final-image acceptance is
+pending. Reproduction logs/screenshots are retained in v12-pending-escape/ and
+v12-stop-reply/.
+
+The independent source critique identified the native cast queue's additional
+cancellation boundary. A two-member list-order regression reproduced uncaught
+`AbortSignal was fired. Group generation stopped` before the correction. Generate
+now handles that delegation through its existing error owner and captures the
+request signal instead of consulting a later mutable controller. Quiet callers
+still reject. The focused three-case native vision/pending navigation/cast Stop
+run passes. The full final42-case source run is in progress.
+
+The final source run's first case inherited the deliberately failed cast-stop
+fixture: its companion and cast also mention Seraphina. Search correctly matched
+all three. The test had assumed one matching card. It now chooses the exact
+Seraphina profile by accessible name. The failure is retained and does not
+establish an application search defect. Fresh actual-image acceptance must use
+the corrected test and pass all42 cases.
+
+The final application source run completed41passes/1search-fixture assertion
+failure in8.4minutes, both real Juiced cases passing. All42diagnostics have zero
+uncaught page errors. The sole failure was the one-result assumption described
+above; an exact-name focused rerun and final actual-image42-case pass are the
+acceptance checks for the corrected fixture. Runtime source hashes remain
+frozen.

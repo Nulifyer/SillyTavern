@@ -1,0 +1,20 @@
+{
+  "pageErrors": [
+    "AbortSignal was fired. Group generation stopped"
+  ],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8018/api/ping",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8018/api/ping",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8018/api/backends/chat-completions/generate",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

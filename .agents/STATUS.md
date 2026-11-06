@@ -13,13 +13,21 @@ Image index: `sha256:6e2a1b345b05c6fa45ff4fe0fa550b2687f2d38b23d830e596aa4b439aa
 
 ## Next action
 
-Finish the fresh full-workspace review and source acceptance for pendingv1.19.12,
-then publish and verify the actual image. Baseline8017 and source8018 have disjoint
+v1.19.12 sourcec78f9f5e312dfcbbe3df1c02b55456af427a3873 is published; workflow
+42263052988 passed both native startup gates and publication. Actual image8019
+reproduced a further advanced-mode state defect: native vision set to current
+story model still displayed the separate model as Saved. This blocks the final
+handoff. v1.19.13 corrects that derived state, qualifies writer profiles, ignores
+inert keyboard targets and completes interactive single/cast Stop cancellation.
+Source41-case pass plus corrected search focused pass complete, both live cases
+passed;42diagnostics zero uncaught errors. Publish immutablev1.19.13 and run
+full42-case acceptance on its actual image before handoff.
+Baseline8017 and source8018 have disjoint
 fresh synthetic volumes. The baseline has no overlays. Independent critique
 captured101 baseline and52 follow-up settings views; supported fixes cover story
 entry, history recovery, native editor ownership, service selection feedback and
 responsive native controls. Source lint,424 unit tests and actionlint pass.
-The38-case frozen source suite with live Juiced passed, with zero uncaught page
+The38-case v1.19.12 frozen source suite with live Juiced passed, with zero uncaught page
 errors. Immediate creation also suppresses duplicate rapid starts from profile
 and header. Publication and actual image acceptance remain. Evidence:
 docs/evidence/full-workspace-review-20261106/ and the active ledger.

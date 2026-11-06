@@ -1,0 +1,18 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep stopping a pending|search opens character profiles|vision discovery follows --output=/tmp/st-final-interaction
+(node:180127) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:180146) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:180146) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:180146) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:1024:1 › vision discovery follows the native current-story-model option (4.1s)
+  ✓  2 workspace.e2e.js:2010:1 › search opens character profiles and a fixture model generates through the native composer (6.5s)
+  ✓  3 workspace.e2e.js:2132:3 › stopping a pending nonstreamed reply restores the composer and preserves its next draft (5.1s)
+  ✓  4 workspace.e2e.js:2132:3 › stopping a pending streamed reply restores the composer and preserves its next draft (5.0s)
+
+  4 passed (21.6s)

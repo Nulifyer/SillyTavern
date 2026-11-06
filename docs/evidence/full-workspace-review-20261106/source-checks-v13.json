@@ -1,0 +1,30 @@
+{
+  "version": "1.19.13",
+  "rootLint": {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  "unit": {
+    "command": "npm --prefix tests run test:unit -- --runInBand",
+    "exitCode": 0,
+    "passed": 424,
+    "suites": 20
+  },
+  "testLint": {
+    "command": "npm --prefix tests run lint",
+    "exitCode": 0,
+    "errors": 0,
+    "warnings": 24
+  },
+  "actionlint": {
+    "command": "/home/nulifyer/go/bin/actionlint .github/workflows/docker-publish.yml",
+    "exitCode": 0
+  },
+  "initialActionlintAttempt": "Bare actionlint was absent from PATH (exit127); absolute installed binary passed.",
+  "browser": {
+    "full": "41 passed, 1 inherited search-fixture assertion failure; both live Juiced cases passed; 42 diagnostics zero uncaught errors",
+    "correctedSearch": "1 passed (3.8s)",
+    "actualImageAcceptance": "pending full 42 cases"
+  },
+  "sourceHashes": "frozen-v13-source.sha256"
+}
