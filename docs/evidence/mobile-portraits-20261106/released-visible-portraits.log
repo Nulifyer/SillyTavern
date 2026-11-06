@@ -1,0 +1,15 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep message portraits --output=/tmp/st-avatar-release-visible
+(node:426028) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:426051) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:426051) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:426051) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:2751:3 › Pixel 9 Pro XL portrait sizing › message portraits fit their containers and stay clear of text across screen and font sizes (7.4s)
+
+  1 passed (8.2s)

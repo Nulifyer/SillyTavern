@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.14`.
+2. Create a version tag on that commit, such as `v1.19.15`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.14` | The exact GitHub Release tag |
+| `v1.19.15` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.14` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.15` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -99,6 +99,41 @@ Its evidence is in `docs/evidence/service-workspace-20261102/`. v1.19.11 adds
 explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
+
+### v1.19.15
+
+[Release v1.19.15](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.15)
+is source `f7dcc34e95690561d607ae779a0c218cea5944e4`.
+[Workflow 42298436889](https://github.com/Nulifyer/SillyTavern/actions/runs/42298436889)
+passed native amd64/arm64 startup, heartbeat and publication gates.
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:28c8a422df7b9ad588a9308c74ea73bacd3744919bd50b19056e18be981b92a7
+```
+
+- linux/amd64: `sha256:0d98b09ee4c92999ee433554595e3d32b2aba48def6ed86220c2bec170f6300d`
+- linux/arm64: `sha256:8e1563d2322f22830f2631f3b398de5efd7293b22b1ab357a82672e8cb6921c4`
+
+Fixes the mobile message portrait rendering at 50×50px inside a 30×38px
+container. The image follows its responsive container and the avatar column
+cannot shrink into text. Pixel 9 Pro XL browser emulation covers portrait,
+landscape, reduced browser/keyboard height, DPR 3 and normal/150% native text.
+No settings-schema or inference code changed.
+
+The actual pulled amd64 image passed all 45 browser cases in 6.2 minutes,
+including both live Juiced cases, with zero uncaught page errors. A final
+focused portrait capture rerun passed. The 18-state Android/touch/DPR3 bounds
+matrix and final normal/enlarged/landscape renders passed inspection. Five
+fresh synthetic volumes, no overlays, 24 tagged runtime-file matches, native
+heartbeat/version and HTTPS Juiced reachability passed. Version/source/latest
+tags and both architecture labels match. Source lint, 424 units and actionlint
+pass; test lint has zero errors and 24 warnings.
+
+[Handoff, evidence and rollback](evidence/mobile-portraits-20261106/handoff.md).
+Homelab owns deployment. Production69 and shared test85 remain untouched.
+Physical Pixel hardware is not qualified. ARM64 has native startup gates;
+full browser/live-service acceptance ran on amd64. Existing connection and
+volume-preservation instructions remain in the v1.19.14 handoff below.
 
 ### v1.19.14
 

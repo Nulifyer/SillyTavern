@@ -125,3 +125,9 @@ The character editor uses a compact portrait followed by native actions, More,
 tags and notes in document flow. On phones, its character name has a full row
 above token statistics. Check existing-character and Create states at normal
 and enlarged text; an empty name must not reserve the existing-character header.
+
+Chat portraits size the image to its avatar box: 38×46px on desktop and
+30×38px on phones. The avatar column must not shrink into message content.
+Regression checks compare the image, box, name and text bounds, including
+Pixel 9 Pro XL portrait/landscape and enlarged text; panel width alone cannot
+detect an image overflowing inside a correctly sized message.

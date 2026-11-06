@@ -48,7 +48,26 @@ confirmed desktop/phone layout, voice opt-in, tools initially off, and one new-s
 transcript in v1.19.7. The v1.19.8 image confirmed the corrected 320px picker and
 native dropdown Escape behavior. Exact release evidence and digest: docs/container-releases.md.
 
+## Message portrait follow-up
+
+Use `--grep 'message portraits|within a 448px'` for the focused regression.
+It checks image containment and text/name separation, including Android/mobile/
+touch at DPR3 in18viewport/font states. Pixel9ProXL uses Chromium448×997 screen,
+448×921 browser height, reduced448×400 height, and997×448/945×396 landscape.
+Native font scales1/1.5 are covered, plus320/390/768/1280 widths. The448px
+roleplay case checks navigation, tools/dialogs, inspector and composer. These are
+emulator profiles, not physical-device qualification. Source2cases pass and
+prior actualv1.19.14 fails the new containment assertion. Actualv1.19.15 passed
+all45cases with both live cases/zero uncaught errors in6.2minutes. Final focused
+visible-portrait rerun passed in8.2seconds. Evidence:
+docs/evidence/mobile-portraits-20261106/.
+
 ## Environment
+
+Latest verifiedv1.19.15 preview: http://127.0.0.1:8022, Podman container
+st-mobile-portraits-release-20261106, five new synthetic volumes/no overlays.
+45browser cases,24runtime-file matches, version/heartbeat/HTTPS and native
+multiarch startup passed. Previousv1.19.14 full review/restart proof follows.
 
 Verifiedv1.19.14 preview: http://127.0.0.1:8021, Podman container
 st-full-review-release14-20261106. Five fresh synthetic named volumes, no source

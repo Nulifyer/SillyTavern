@@ -1845,6 +1845,7 @@ test.describe('Pixel 9 Pro XL portrait sizing', () => {
                 await page.setViewportSize({ width, height });
                 const message = page.locator('#chat .mes[is_user="false"]').first();
                 await message.scrollIntoViewIfNeeded();
+                await page.locator('#chat').evaluate(chat => { chat.scrollTop = 0; });
                 const bounds = await message.evaluate(message => {
                     const box = selector => message.querySelector(selector).getBoundingClientRect().toJSON();
                     return { image: box('.avatar img'), avatar: box('.avatar'), wrapper: box('.mesAvatarWrapper'), name: box('.ch_name'), text: box('.mes_text') };

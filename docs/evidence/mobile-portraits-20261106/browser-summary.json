@@ -1,0 +1,26 @@
+{
+  "version": "1.19.15",
+  "passed": 45,
+  "skipped": 0,
+  "minutes": 6.2,
+  "diagnostics": 45,
+  "pageErrors": 0,
+  "consoleErrors": 12,
+  "failedRequests": 45,
+  "pixelBoundsStates": 18,
+  "pixelDPR": [
+    3
+  ],
+  "consoleNetworkNote": "Retains intentional error/retry/guard fixtures and request cancellation. Per-case diagnostics classify actual errors; zero uncaught errors is not zero console/network events.",
+  "consoleClassification": {
+    "history503": 2,
+    "singleAndCastDelete500AndRecovery": 6,
+    "discovery502AndVoice409": 2,
+    "writer503": 1,
+    "imageInFlightStoryChangeGuard": 1
+  },
+  "failedRequestClassification": {
+    "net::ERR_ABORTED": 45
+  },
+  "finalVisiblePortraitFocusedPass": 1
+}

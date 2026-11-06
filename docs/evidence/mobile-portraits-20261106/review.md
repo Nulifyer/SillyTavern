@@ -28,7 +28,35 @@ These are emulator settings, not measurements from the user's hardware. The
 shared T3 browser separately inspected the source at448x997 CSS pixels. Its
 resize changes CSS size only; the automated Pixel case adds DPR/mobile/touch.
 
-Publication and actualv1.19.15 acceptance are pending. Production69, shared85
+Final publication and actual-image acceptance are recorded below. Production69, shared85
 and all production data remain untouched. Prior live Juiced proof is in the
 v1.19.14 handoff. Final image acceptance will run the full45-case suite, including
 both live cases, from five new synthetic volumes without source overlays.
+
+v1.19.15 sourcef7dcc34e95690561d607ae779a0c218cea5944e4 is published;
+workflow42298436889 running. Root lint,424units and actionlint passed. Test
+lint has0errors/24warnings. Final source Android/touch/DPR3 matrix has18states;
+all448px cases use matching30px image/container widths and20px text gap.
+Actual final-image45-case acceptance remains pending.
+
+## Final accepted image
+
+Workflow42298436889 passed both native architecture startup/heartbeat gates
+and publication. Actualv1.19.15 on8022 passed all45cases in6.2minutes, both
+live Juiced cases, zero skips and zero uncaught page errors. All12console errors
+are deliberate outage/delete/guard fixtures and all45failed requests are
+net::ERR_ABORTED; classification is in browser-summary.json.
+
+The final Android/touch/DPR3 portrait matrix passed18states. The parent inspected
+normal448x997, enlarged448x921 and landscape997x448 renders. Some initial tall
+message screenshots were scrolled below the portrait even though bounds passed;
+a test-only adjustment now scrolls chat to0 before measurement/capture. The
+actual-image focused rerun passed in8.2seconds and its enlarged/landscape captures
+were inspected with the portrait visible. No runtime source changed after tag.
+
+Registry labels on both architectures and matching version/source/latest tags,
+anonymous pull,24tagged runtime-file matches,5fresh volumes/no overlays, native
+heartbeat/version and Juiced HTTPS200 are retained. Stock sd.cpp still matches
+v1.19.8. Pixel emulation is not physical hardware qualification. Production69
+and shared85 remain untouched. Exact release pins/migration/rollback are in
+handoff.md; original broad model-service/persistence proof remains linked there.

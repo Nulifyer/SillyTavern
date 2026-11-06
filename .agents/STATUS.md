@@ -2,48 +2,49 @@
 
 ## Project state
 
-Published and verified v1.19.14, source `06ab7010310dfa174be81d7eefa38ecdc195778c`.
+Published and verifiedv1.19.15, sourcef7dcc34e95690561d607ae779a0c218cea5944e4.
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Workflow42273796301 passed native amd64/arm64 startup/heartbeat and publication.
-Image index: `sha256:5f8324a85c392cb2682b5c0892d7088bcf8687af9148413c1cfbe5336441c24b`.
+Workflow42298436889 passed native amd64/arm64 startup/heartbeat and publication.
+Image index: `sha256:28c8a422df7b9ad588a9308c74ea73bacd3744919bd50b19056e18be981b92a7`.
 
 ## Active tasks
 
-Mobile message portrait overlap follow-up is active. User also requests Pixel9ProXL sizing.
-Source fix constrains avatar images to their container and keeps the avatar column
-from shrinking. Publish/verifyv1.19.15 after focused/source checks. Never touch
-production69/test85. Evidence: docs/evidence/mobile-portraits-20261106/.
-
-[Full workspace review](work/full-workspace-review.md) and the earlier
-[service workspace task](work/service-workspace.md) are complete.
+None. Mobile portrait/Pixel9ProXL follow-up is complete. The earlier
+[full workspace review](work/full-workspace-review.md) and
+[service workspace task](work/service-workspace.md) remain complete.
 
 ## Next action
 
-First finish the v1.19.15 portrait follow-up and actual image acceptance.
 Homelab owns the later deployment using
-[handoff](../docs/evidence/full-workspace-review-20261106/handoff.md).
-Production69 and shared test85 were never accessed or changed. Do not update
-production from this thread. Preserve existing volume identities and take the
-normal private backup; record the actual pre-update image before deployment.
+[handoff](../docs/evidence/mobile-portraits-20261106/handoff.md).
+Production69 and shared85 were never accessed or changed. Never deploy from
+this thread. Preserve all existing volume identities and record the actual
+pre-update image/private backup. Reload browser tabs after image recreation.
 
 ## Verification
 
-Actual pulled amd64 image:43browser cases passed in6.2minutes, including both
-live Juiced cases, zero uncaught page errors. Fresh local8021 container
-st-full-review-release14-20261106 has5synthetic volumes/no overlays,24tagged
-runtime-file matches, version1.19.14, HTTPS Juiced200 and valid native heartbeat.
-Standalone native Save/restart/reload preserved Advanced controls, Qwen3.5-2B,
-manual12288context, temperature0.85, imageSteps20 and voice off.
-Source41controlled cases/2opt-in live skips plus final focused character case
-passed;424units, lint/actionlint pass. Test lint0errors/24warnings.
-Every16settings destination and core story flows reviewed with independent
-baseline/follow-up/final captures; Edit/Create re-review adds28captures/16states.
-Evidence: docs/evidence/full-workspace-review-20261106/.
+Actualv1.19.15 on8022 st-mobile-portraits-release-20261106 passed45browser cases
+in6.2minutes, including both live Juiced cases, zero skips/uncaught page errors.
+Five fresh synthetic volumes/no overlays,24tagged runtime-file matches,
+version/heartbeat/HTTPS200 passed. Final focused capture rerun passed; the18state
+Android/mobile/touch/DPR3 portrait matrix covers Pixel9ProXL portrait/landscape,
+reduced heights and normal/150% native text. Final renders were inspected.
+Source2focused cases,424units, root lint/actionlint passed; test lint0errors/
+24warnings. Continuity validator passed. Runtime source is unchanged after tag.
+Evidence: docs/evidence/mobile-portraits-20261106/.
+
+Priorv1.19.14 full visual review/persistence proof remains in
+[handoff](../docs/evidence/full-workspace-review-20261106/handoff.md).
+No settings-schema, chat-format or inference code changed in this follow-up.
+
+## Blockers
+
+None.
 
 ## Limits
 
-Paid-provider inference, physical microphone, audible quality, administrator
-mutations and every conditional provider form remain unqualified. Retrieval
-retains native setup; Juiced reported no enabled embeddings model. ARM64 has
-native startup/heartbeat proof; full browser/service acceptance ran on amd64.
-No Juiced model policy, runtime or cache configuration was changed.
+Pixel sizing is browser emulation, not physical-device qualification. Paid
+provider inference, physical microphone and audible quality remain unqualified.
+ARM64 has native startup/heartbeat proof; full browser/live acceptance ran on
+amd64. No Juiced model policy, runtime or cache was changed. Retrieval retains
+native provider setup; the last discovery reported no enabled embeddings model.
