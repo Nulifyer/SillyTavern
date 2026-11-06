@@ -1,0 +1,114 @@
+{
+  "source": "78bca3473f897ddf8f8552179296b37155af833f",
+  "version": {
+    "agent": "SillyTavern:1.19.11:Cohee#1207",
+    "pkgVersion": "1.19.11",
+    "gitRevision": null,
+    "gitBranch": null,
+    "commitDate": null,
+    "isLatest": true
+  },
+  "files": [
+    {
+      "file": "package.json",
+      "sha256": "ffbe597a34ca02ea94a2cab0e634fb39e13b0439b79d9cfcbc36205446655448"
+    },
+    {
+      "file": "public/script.js",
+      "sha256": "d49726ef7e712dd3d1864fb04d44d5eccf35e3d2d373eff3d26d57f744a0c543"
+    },
+    {
+      "file": "public/css/workspace.css",
+      "sha256": "ec3d621b98c2da1a98c390491a69763e04251daa42d5dcbf4b34ab877fac852c"
+    },
+    {
+      "file": "public/css/toggle-dependent.css",
+      "sha256": "6bab5c23161a7a2a6d27f2811e6e343e51cf37145f1fa7d87c209240df348695"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "sha256": "cc1440c66be01ea38f5c6b04006b663399c6a88452f6ad394469c9291d24c946"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "sha256": "40ba3c90c43013a0e1c30f5f902382d808646b078802678e7b86cd80ff1739d9"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "sha256": "9f7964dc68a5595558ba38ec12c960615b3844e907c94b38aa9b8e3c225e84a9"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "sha256": "b8c82e47871b280ebd073cef7cc38b0b11e68a57184ec6ec0f07e7d1acb73118"
+    },
+    {
+      "file": "public/scripts/composer-surface.js",
+      "sha256": "d007ce5b4e87adfc7696b80d3534bb257961c9e44c22eb9b60d813072463e2f4"
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "sha256": "816662155bb4c2d6a35fd7a0c8c1a101e38f0d702abdd4990bc6f041d0693d3e"
+    },
+    {
+      "file": "public/scripts/openai.js",
+      "sha256": "77acb2efe6e5d79f053735f033b7bb1d8332e45c1f30a3ee36c1147103b0c873"
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "sha256": "9fcd0dd3887548c8625fcef6ad33d7378d0bd2566e064916c44c43fc2befe82d"
+    },
+    {
+      "file": "public/scripts/extensions/caption/index.js",
+      "sha256": "c4fc4cb3453276a5f3ea218888941e837dc1aad44e955bd20c55e8b48a76ac9e"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/index.js",
+      "sha256": "98dadc2ace7b85b65305a4db3e3fa5560cc6e7ffdcc04a80304bd37c6e30cf70"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/settings.html",
+      "sha256": "c14cb561cfdc3a775114b970b61bb5816a087e1bc07eeabf410c8dae9f39dca2"
+    },
+    {
+      "file": "public/licenses/T3-Code.txt",
+      "sha256": "935d8f2af0c703f9c39517ee57cc4930b19d02d533be930b63f0e82f93614b43"
+    },
+    {
+      "file": "src/endpoints/openai.js",
+      "sha256": "757848a2a4617c44e67eed9c554b7adfadc2d55f93d0938793e4d0125e5c63bc"
+    },
+    {
+      "file": "src/endpoints/stable-diffusion.js",
+      "sha256": "15439fdffd839815ef7adcaa39806738c4e4503db8bbb697b337e905dfb4ed43"
+    }
+  ],
+  "mounts": [
+    {
+      "name": "st-advanced-release-20261106-data",
+      "destination": "/home/node/app/data",
+      "type": "volume"
+    },
+    {
+      "name": "st-advanced-release-20261106-plugins",
+      "destination": "/home/node/app/plugins",
+      "type": "volume"
+    },
+    {
+      "name": "st-advanced-release-20261106-extensions",
+      "destination": "/home/node/app/public/scripts/extensions/third-party",
+      "type": "volume"
+    },
+    {
+      "name": "st-advanced-release-20261106-backups",
+      "destination": "/home/node/app/backups",
+      "type": "volume"
+    },
+    {
+      "name": "st-advanced-release-20261106-config",
+      "destination": "/home/node/app/config",
+      "type": "volume"
+    }
+  ],
+  "overlays": false,
+  "stockSdcppHandlerMatchesV1198": true
+}

@@ -2,39 +2,36 @@
 
 ## Project state
 
+Published and verified v1.19.11, source `78bca3473f897ddf8f8552179296b37155af833f`.
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Published and verified v1.19.9 source: 9ab8d2cedec44448c7f8ea49c4dfba5c8799ebf1.
-Release workflow 41404996482 passed native amd64/arm64 startup and publication.
-Image index: sha256:1aeffc008478d6923152ae4dc61eb3115c56e97d0da3cb3a62b8cc17f4be33bf.
+Workflow42248135919 passed native amd64/arm64 startup and publication gates.
+Image index: `sha256:6e2a1b345b05c6fa45ff4fe0fa550b2687f2d38b23d830e596aa4b439aa76c49`.
 
 ## Active tasks
 
-[Model service workspace and chat surface](work/service-workspace.md) continues.
-User steering November6: simplify presentation and flow, preserve full advanced
-SillyTavern control. Native controls remain, but v1.19.10 labels and collapsed
-sections make access unclear. A persistent Advanced controls option and All
-controls filters are being verified before a new release.
+None. [Service workspace task](work/service-workspace.md) is complete.
 
 ## Next action
 
-Publish v1.19.11 and verify its actual image. Source passed34 browser cases
-including real Juiced services,424 unit tests, lint and actionlint. v1.19.10 is already published; never move its tag.
-Homelab owns deployment. Production69 and shared test85 remain untouched.
+Homelab can use docs/evidence/advanced-controls-20261106/handoff.md for its later
+update, preserving all existing volume identities and retaining the pre-update
+image/backup. Production69 and shared test85 were never accessed or changed here.
+No implementation or release-verification work remains in this batch.
 
 ## Blockers
 
 None. Physical microphone and audible quality remain unqualified. Retrieval
-retains native provider setup; no enabled embeddings model was reported November2.
+retains native provider setup; Juiced reported no enabled embeddings model.
 
 ## Verification
 
-November2 source passed424 unit tests, lint, actionlint, controlled browser cases
-and both live Juiced cases. v1.19.10 publication workflow41521719715 passed both
-native architecture startup gates. Its pulled-image identity and18 source hashes
-were verified. Retained actual-image run has32 passes and1 model-noun assertion
-failure after successful first-reply recovery. The interrupted final rerun result
-is missing, so full published-image acceptance and release handoff are unfinished.
-
-Source preview8013 uses only synthetic test volumes. Original v1.19.10 synthetic
-container8015 is stopped. Evidence: docs/evidence/service-workspace-20261102/.
-Current November6 advanced-controls evidence will be recorded separately.
+34 browser cases passed on source and the actual pulled image, including both
+live Juiced cases. The expanded advanced-controls case covers1280/390/320px,
+provider parameters, sampling edits, formatting, extensions, discovery/apply,
+reload and value preservation. Lint,424 unit tests and actionlint passed.
+The actual image has five synthetic volumes and no overlays, matches18 tagged
+files, reports1.19.11 and reaches Juiced over HTTPS. Standalone restart persistence
+passed. Local synthetic preview:8016, st-advanced-release-20261106.
+Evidence and exact digests: docs/evidence/advanced-controls-20261106/.
+[Service workspace task](work/service-workspace.md) is complete. Its original
+v1.19.10 interrupted verification is retained honestly in the publication record.

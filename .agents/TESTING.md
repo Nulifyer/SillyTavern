@@ -50,17 +50,18 @@ native dropdown Escape behavior. Exact release evidence and digest: docs/contain
 
 ## Environment
 
-Current verified release preview: http://127.0.0.1:8014, Podman container
-st-ui-release-20261102 with five fresh synthetic named volumes and no overlays.
-Baseline 8012 and source 8013 containers are stopped. Browser settings writes are
-isolated; cleanup uses native owners and only the run-specific synthetic prefix.
-All 27 browser cases passed against source and the actual v1.19.9 image.
-Historical regression data at /tmp/sillytavern-workspace-e2e-data and port 8002
-is not the current acceptance environment.
+Verified v1.19.11 preview: http://127.0.0.1:8016, Podman container
+st-advanced-release-20261106, five fresh synthetic named volumes, no overlays.
+All34 browser cases passed with both live cases enabled against source and this
+actual pulled image. Advanced controls has an additional expanded source pass
+at1280/390/320px and a real-settings-API/container-restart persistence check.
+Run standalone persistence checks after the shared synthetic suite completes.
+Exact logs, diagnostics and images: docs/evidence/advanced-controls-20261106/.
+Prior containers and their synthetic volumes remain preserved.
 
 ## Shared-screen follow-up
 
-The current controlled suite has 27 browser cases plus 2 opt-in live cases.
+The November2 follow-up suite had27 controlled browser cases plus2 opt-in live cases.
 All 27 controlled cases passed on the actual v1.19.9 image after the user
 reported remaining disappearance. The user then confirmed the affected page
 is v1.19.8. Evidence: docs/evidence/shared-screen-lifecycle-20261102/.

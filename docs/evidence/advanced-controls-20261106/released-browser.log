@@ -1,0 +1,89 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --output=/tmp/st-advanced-image-results
+(node:40042) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 34 tests using 1 worker
+
+(node:40062) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:40062) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:40062) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 workspace.e2e.js:220:1 › library browsing shows profiles without opening or replacing a story (4.0s)
+  ✓   2 workspace.e2e.js:239:1 › new stories preserve previous transcripts and profile history resumes the exact scene (6.6s)
+  ✓   3 workspace.e2e.js:274:1 › starting a fresh character creates exactly one transcript, with or without a title (5.3s)
+  ✓   4 workspace.e2e.js:309:1 › archive persists, excludes active lists, reads without editing, and restores the same transcript (8.0s)
+  ✓   5 workspace.e2e.js:340:1 › rename follows archived identity and deletion requires confirmation without recreating the file (6.5s)
+  ✓   6 workspace.e2e.js:377:1 › failed deletion keeps the story and reports the server failure (4.4s)
+  ✓   7 workspace.e2e.js:395:1 › settings keep every native area reachable with Escape and focus restoration (5.8s)
+  ✓   8 workspace.e2e.js:437:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace (10.0s)
+  ✓   9 workspace.e2e.js:536:1 › every settings category uses one control tree and fits desktop and phone (19.1s)
+  ✓  10 workspace.e2e.js:583:1 › settings sections, blank space and external dialogs never close mounted controls (9.2s)
+Settings mutation: 1280px connection
+Settings mutation: 1280px generation
+Settings mutation: 1280px prompts
+Settings mutation: 1280px persona
+Settings mutation: 1280px world
+Settings mutation: 1280px backgrounds
+Settings mutation: 1280px voice-settings
+Settings mutation: 1280px dictation-settings
+Settings mutation: 1280px image-settings
+Settings mutation: 1280px settings
+Settings mutation: 1280px extensions
+Settings mutation: 390px connection
+Settings mutation: 390px generation
+Settings mutation: 390px prompts
+Settings mutation: 390px persona
+Settings mutation: 390px world
+Settings mutation: 390px backgrounds
+Settings mutation: 390px voice-settings
+Settings mutation: 390px dictation-settings
+Settings mutation: 390px image-settings
+Settings mutation: 390px settings
+Settings mutation: 390px extensions
+Settings mutation: 320px connection
+Settings mutation: 320px generation
+Settings mutation: 320px prompts
+Settings mutation: 320px persona
+Settings mutation: 320px world
+Settings mutation: 320px backgrounds
+Settings mutation: 320px voice-settings
+Settings mutation: 320px dictation-settings
+Settings mutation: 320px image-settings
+Settings mutation: 320px settings
+Settings mutation: 320px extensions
+  ✓  11 workspace.e2e.js:634:1 › settings changes and late saves preserve every category through direct navigation (12.0s)
+  ✓  12 workspace.e2e.js:780:1 › dictation settings remain available when the optional TTS extension is disabled (5.1s)
+  ✓  13 workspace.e2e.js:818:1 › one server configures native services and survives reload without replacing sampling or profiles (8.8s)
+  ✓  14 workspace.e2e.js:963:1 › discovered context uses configured capacity, preserves manual overrides and survives reload (7.1s)
+  ✓  15 workspace.e2e.js:1042:1 › service prompt editors save native values and composer nodes survive classic round trips (6.8s)
+  ✓  16 workspace.e2e.js:1090:3 › fresh compatible connection migrates context preference (5.5s)
+  ✓  17 workspace.e2e.js:1090:3 › existing explicit compatible connection migrates context preference (5.5s)
+  ✓  18 workspace.e2e.js:1139:1 › service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server (4.0s)
+  ✓  19 workspace.e2e.js:1211:1 › dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change (4.6s)
+  ✓  20 workspace.e2e.js:1274:1 › image writer preserves scene context and story model through failure and retry (4.5s)
+  ✓  21 workspace.e2e.js:1360:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting (10.1s)
+Live Juiced: discover and configure native providers
+Live Juiced: streaming story reply
+Live Juiced: configure image sampling and generate scene
+Live Juiced: configure vision and caption the synthetic scene
+Live Juiced: synthesize and decode speech
+Live Juiced: transcribe speech into draft
+  ✓  22 workspace.e2e.js:1500:1 › live Juiced services use native providers from the tested container (2.6m)
+  ✓  23 workspace.e2e.js:1762:1 › search opens character profiles and a fixture model generates through the native composer (6.2s)
+  ✓  24 workspace.e2e.js:1864:1 › native streamed replies keep the composer and character identity mounted (5.0s)
+  ✓  25 workspace.e2e.js:1913:1 › image tools use the native provider and treat custom prompts as text (4.4s)
+  ✓  26 workspace.e2e.js:1961:1 › one scene click generates one native illustration with automatic tools off (5.4s)
+  ✓  27 workspace.e2e.js:2044:1 › voice tools narrate the latest native reply with the configured System voice (6.5s)
+  ✓  28 workspace.e2e.js:2079:1 › chat voice is opt-in and persists; manual images do not enable automatic tools (8.0s)
+  ✓  29 workspace.e2e.js:2108:1 › cast creation selects real characters and opens a group story (5.0s)
+  ✓  30 workspace.e2e.js:2164:3 › roleplay pages and composer stay within a 320px viewport (6.3s)
+  ✓  31 workspace.e2e.js:2164:3 › roleplay pages and composer stay within a 390px viewport (6.3s)
+  ✓  32 workspace.e2e.js:2164:3 › roleplay pages and composer stay within a 768px viewport (6.1s)
+  ✓  33 workspace.e2e.js:2261:1 › native font preferences and browser text sizing keep phone controls usable (4.7s)
+  ✓  34 workspace.e2e.js:2305:1 › classic preference survives reload and can be restored (6.4s)
+
+  Slow test file: workspace.e2e.js (6.3m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  34 passed (6.3m)

@@ -1,0 +1,43 @@
+{
+  "container": "st-advanced-release-20261106",
+  "base": "http://127.0.0.1:8016",
+  "before": {
+    "advanced": false,
+    "automaticContext": true,
+    "context": 4095,
+    "imageSteps": 20,
+    "model": "",
+    "temperature": 1,
+    "voiceEnabled": false
+  },
+  "saved": {
+    "advanced": "true",
+    "automaticContext": true,
+    "context": 4095,
+    "imageSteps": 20,
+    "model": "",
+    "temperature": 1,
+    "voiceEnabled": false
+  },
+  "selectedValuesUnchanged": true,
+  "overlapObservation": "Initial restart attempt overlapped shared synthetic settings changes during the suite; advanced was false and model was workspace-fixture. Repeated standalone after the suite finished.",
+  "isolatedBefore": {
+    "advanced": "true",
+    "automaticContext": true,
+    "context": 16384,
+    "imageSteps": 20,
+    "model": "Qwen3.5-2B",
+    "temperature": 1,
+    "voiceEnabled": false
+  },
+  "isolatedAfter": {
+    "advanced": "true",
+    "automaticContext": true,
+    "context": 16384,
+    "imageSteps": 20,
+    "model": "Qwen3.5-2B",
+    "temperature": 1,
+    "voiceEnabled": false
+  },
+  "restartVerified": true
+}

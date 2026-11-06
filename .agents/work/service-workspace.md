@@ -1,6 +1,6 @@
 # Model service workspace and chat surface
 
-Status: active
+Status: complete
 Owner: SillyTavern project thread mcp:a1b3f2ea-069d-4f17-8247-e0cab15abe73
 Repository: /home/nulifyer/Projects/SillyTavern
 Base: feat/cohesive-workspace at ee7928fc2
@@ -22,7 +22,7 @@ manual entry; preserve existing explicit settings and provider ownership.
 - [x] Adapt T3 composer/editor/footer/primary-action layout with source and license attribution, retaining native draft, send, stop, transcript, scroll and extension owners.
 - [x] Verify desktop/phone, keyboard, pending requests, repeated navigation, reload, native controls and real Juiced requests with synthetic data.
 - [x] A persistent Advanced controls option exposes native provider settings, sampling, formatting and extension controls within the workspace, without resetting values.
-- [ ] Run required checks, publish and verify the actual immutable container, update handoff without accessing or changing production69/test85.
+- [x] Run required checks, publish and verify the actual immutable container, update handoff without accessing or changing production69/test85.
 
 ## Scope
 
@@ -31,10 +31,10 @@ Out: Coding-agent features, framework migration, duplicate provider registry/inf
 
 ## Current state
 
-Phase: Advanced-control correction passed34 source browser cases including both live cases, plus424 unit tests, lint and actionlint. v1.19.11 publication and actual-image verification pending.
-Dependencies: Local Podman, Juiced HTTPS, project browser and GitHub release access.
-Integration: v1.19.10 is published from bdda669a52be568ecc61729ac566b93d2dafd3cd. Its retained actual-image run passed32 cases and failed1 nondeterministic noun assertion. Final interrupted run has no surviving result; do not claim full acceptance. November2 final records/test correction remain uncommitted and belong to this task.
-Next action: Verify persistent Advanced controls and native capabilities on source, then publish/verify a new immutable release and finish the handoff. Never move v1.19.10.
+Phase: Complete. v1.19.11 source78bca3473f897ddf8f8552179296b37155af833f published and actual image verified.
+Dependencies: None for this batch. Homelab owns later deployment.
+Integration: Workflow42248135919 and both native architecture/startup gates passed. Anonymous pull and18 file matches passed. All34 browser cases passed on source and the pulled image, including live Juiced, plus the expanded advanced regression.424 unit tests, lint and actionlint passed. Standalone restart persistence passed. See docs/evidence/advanced-controls-20261106/handoff.md.
+Next action: Homelab may update later using the immutable handoff. Production69/test85 remain untouched.
 
 ## Decisions
 
@@ -57,9 +57,9 @@ Next action: Verify persistent Advanced controls and native capabilities on sour
 
 | Path or artifact | Change | Verification |
 | --- | --- | --- |
-| public/scripts/service-connections.js, workspace-settings.js | One server hub, native service sections, actual prompt editors | All16 destinations fit1280/390/320; remaining regression in progress |
-| src/endpoints/openai.js, public/scripts/openai.js | Sanitized metadata; automatic configured context and manual override/migration | Focused13 unit tests passed; browser cases in progress |
-| public/scripts/composer-surface.js, CSS | Adapted T3 shell using original form/editor/actions; license notice | Manual desktop/390px inspected; full browser pending |
+| public/scripts/service-connections.js, workspace-settings.js | One server hub, native service sections, actual prompt editors | Native control tree and all destinations verified; actual-image34 cases passed |
+| src/endpoints/openai.js, public/scripts/openai.js | Sanitized metadata; automatic configured context and manual override/migration | 424 unit tests and discovery/context browser cases passed |
+| public/scripts/composer-surface.js, CSS | Adapted T3 shell using original form/editor/actions; license notice | Source and actual-image desktop/phone, stream and classic checks passed |
 
 ## Risks and unknowns
 

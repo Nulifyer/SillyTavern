@@ -1,0 +1,27 @@
+{
+  "tag": "v1.19.11",
+  "source": "78bca3473f897ddf8f8552179296b37155af833f",
+  "image": "ghcr.io/nulifyer/sillytavern",
+  "index": "sha256:6e2a1b345b05c6fa45ff4fe0fa550b2687f2d38b23d830e596aa4b439aa76c49",
+  "architectures": {
+    "amd64": "sha256:942311a7bfe01d76745f207cfa92a5e45ed1ffcc298e1d031b00f19b6a7645b2",
+    "arm64": "sha256:01b3796142d836ba92309a3074a371d2c9ab19857ca8668755a48095f5f1cdcc"
+  },
+  "labels": {
+    "amd64": {
+      "org.opencontainers.image.licenses": "AGPL-3.0",
+      "org.opencontainers.image.revision": "78bca3473f897ddf8f8552179296b37155af833f",
+      "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+      "org.opencontainers.image.version": "v1.19.11"
+    },
+    "arm64": {
+      "org.opencontainers.image.licenses": "AGPL-3.0",
+      "org.opencontainers.image.revision": "78bca3473f897ddf8f8552179296b37155af833f",
+      "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+      "org.opencontainers.image.version": "v1.19.11"
+    }
+  },
+  "commitTagMatches": true,
+  "latestMatches": true,
+  "workflow": "https://github.com/Nulifyer/SillyTavern/actions/runs/42248135919"
+}

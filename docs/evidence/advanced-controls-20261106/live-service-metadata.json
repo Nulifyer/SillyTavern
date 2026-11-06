@@ -1,0 +1,46 @@
+{
+  "server": "https://juiced.swarm.nulteck.com/v1",
+  "services": {
+    "chat": [
+      {
+        "id": "Ornith-1.5-35B-A3B-GGUF-Q6_K",
+        "context_length": 262144,
+        "max_context_window": 262144
+      },
+      {
+        "id": "Qwen3.5-2B",
+        "context_length": 16384,
+        "max_context_window": 262144
+      },
+      {
+        "id": "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+        "context_length": 16384,
+        "max_context_window": 262144
+      },
+      {
+        "id": "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL",
+        "context_length": 32768,
+        "max_context_window": 131072
+      }
+    ],
+    "images": [
+      {
+        "id": "z-image-turbo-nsfw-v2-GGUF-Q8_0",
+        "context_length": 32768
+      }
+    ],
+    "speak": [
+      {
+        "id": "kokoro-v1",
+        "context_length": 32768
+      }
+    ],
+    "transcribe": [
+      {
+        "id": "asr4all-l-gptq-Q8_0",
+        "context_length": 32768
+      }
+    ],
+    "embeddings": []
+  }
+}

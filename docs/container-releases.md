@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.9`.
+2. Create a version tag on that commit, such as `v1.19.11`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.9` | The exact GitHub Release tag |
+| `v1.19.11` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.9` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.11` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -87,26 +87,53 @@ To roll back, select a previous image tag whose publish workflow succeeded, pull
 it, and recreate the service.
 Use the workflow's digest reference when you need to pin the exact published image.
 
-## v1.19.11 delivery in progress
-
-The advanced-controls correction passed source acceptance. It adds a persistent
-Advanced controls switch and All controls filters without changing native values.
-Setup and migration: [model-services.md](model-services.md). Published-image
-acceptance and the immutable Homelab handoff follow publication. Production69
-and shared test85 remain untouched.
-
 ## v1.19.10 publication record
 
 Published source `bdda669a52be568ecc61729ac566b93d2dafd3cd`,
-[workflow41521719715](https://github.com/Nulifyer/SillyTavern/actions/runs/41521719715),
+[workflow 41521719715](https://github.com/Nulifyer/SillyTavern/actions/runs/41521719715),
 image index `sha256:b4c7ed23b175064356b82a709990c5d33873420f47d8848feb2ef41f87f7a10a`.
 Both native architecture startup gates passed. The retained image browser run
-passed32 cases and failed1 literal-model-output assertion after successful
+passed 32 cases and failed 1 literal-model-output assertion after successful
 first-reply recovery. The interrupted final rerun has no surviving result.
 Its evidence is in `docs/evidence/service-workspace-20261102/`. v1.19.11 adds
 explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
+
+### v1.19.11
+
+[Release v1.19.11](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.11)
+is source `78bca3473f897ddf8f8552179296b37155af833f`. [Workflow 42248135919](https://github.com/Nulifyer/SillyTavern/actions/runs/42248135919) passed both native
+amd64/arm64 builds, HTTP startup, heartbeat and multiarch publication gates.
+Anonymous registry requests verified the version, source and latest tags share:
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:6e2a1b345b05c6fa45ff4fe0fa550b2687f2d38b23d830e596aa4b439aa76c49
+```
+
+- linux/amd64: `sha256:942311a7bfe01d76745f207cfa92a5e45ed1ffcc298e1d031b00f19b6a7645b2`
+- linux/arm64: `sha256:01b3796142d836ba92309a3074a371d2c9ab19857ca8668755a48095f5f1cdcc`
+
+An empty-auth Podman pull succeeded. The actual amd64 image passed all 34 browser
+cases, including both real Juiced cases, with zero uncaught page errors. It ran
+on 8016 with five fresh synthetic named volumes and no source overlays. Eighteen
+files match the tag; the stock sd.cpp handler still matches v1.19.8. HTTPS Juiced
+reachability, native heartbeat and version 1.19.11 passed. The Advanced controls
+preference and selected native settings survived a standalone container restart.
+
+The release keeps advanced controls inside the simplified workspace. All controls
+removes section filters; classic layout remains available for native windowing
+and themes. Source checks passed 424 unit tests, lint and actionlint. Real service
+proof covers story streaming, independent writer/image, Ornith captioning,
+67 discovered voices, decoded Kokoro speech and ASR draft insertion without
+sending. Physical microphone and audible quality remain unqualified. Retrieval
+keeps native provider setup; no enabled embeddings model was reported.
+
+[Homelab handoff](evidence/advanced-controls-20261106/handoff.md) contains exact
+setup, migration and rollback steps. Preserve existing volumes and retain the
+actual pre-update image and backup. Verified fallback is v1.19.9 below.
+Production69 and shared test85 were never accessed or changed. Evidence:
+`docs/evidence/advanced-controls-20261106/`.
 
 ### v1.19.9
 
