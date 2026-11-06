@@ -608,3 +608,11 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
     .workspace-ui .service-connections { grid-template-columns: minmax(0, 1fr); }
     .workspace-ui .service-connections #service-discover { width: 100%; }
 }
+
+.workspace-settings-heading .workspace-settings-actions { display: flex; align-items: center; flex: 0 0 auto; flex-wrap: wrap; gap: 12px; }
+.workspace-advanced-toggle { cursor: pointer; font-size: var(--ws-font-ui); min-height: var(--ws-control-height); gap: 8px; }
+@media (max-width: 600px) {
+    .workspace-settings-heading { flex-wrap: wrap; }
+    .workspace-settings-heading > div:first-child { flex-basis: 100%; }
+    .workspace-settings-heading .workspace-settings-actions { width: 100%; justify-content: space-between; }
+}

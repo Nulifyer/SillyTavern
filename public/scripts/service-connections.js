@@ -86,12 +86,12 @@ export class ServiceConnections {
             node = image.querySelector('label[for="sd_source"]');
             const end = image.querySelector('#sd_sampler')?.closest('.flex-container');
             while (node && node !== end) { const next = node.nextSibling; connection.push(node); node = next; }
-            this.adopt('images', image, 'Other image providers and connection settings', connection);
+            this.adopt('images', image, 'Advanced image provider settings', connection);
         }
         const chat = document.getElementById('rm_api_block');
-        this.adopt('chat', chat, 'Other providers and connection profiles', [...chat.childNodes]);
+        this.adopt('chat', chat, 'Advanced provider settings and connection profiles', [...chat.childNodes]);
         const speech = document.querySelector('#tts_settings > .inline-drawer > .inline-drawer-content');
-        if (speech) this.adopt('speak', speech, 'Provider, voice mapping and playback settings', [...speech.childNodes]);
+        if (speech) this.adopt('speak', speech, 'Advanced speech settings, voice mapping and playback', [...speech.childNodes]);
         const dictation = document.getElementById('dictation-settings');
         if (dictation) this.adopt('transcribe', dictation, 'Endpoint and model override', ['dictation-endpoint', 'dictation-model'].flatMap(id => [dictation.querySelector(`label[for="${id}"]`), document.getElementById(id)]));
         const retrieval = document.querySelector('.vectors_settings > .inline-drawer > .inline-drawer-content');
@@ -102,7 +102,7 @@ export class ServiceConnections {
         const vision = document.querySelector('.caption_settings > .inline-drawer > .inline-drawer-content');
         if (vision) {
             const prompt = document.getElementById('caption_prompt_block');
-            this.adopt('vision', vision, 'Other vision providers and caption preferences', [...vision.childNodes].filter(node => node !== prompt));
+            this.adopt('vision', vision, 'Advanced vision provider settings and caption preferences', [...vision.childNodes].filter(node => node !== prompt));
         }
     }
 
@@ -147,7 +147,12 @@ export class ServiceConnections {
     }
 
     setLayout(workspace) {
-        for (const native of this.nativeControls) native.open = !workspace || !this.data;
+        for (const native of this.nativeControls) native.open = !workspace || this.advanced || !this.data;
+    }
+
+    setAdvanced(advanced) {
+        this.advanced = advanced;
+        for (const native of this.nativeControls) native.open = advanced || !this.data;
     }
 
     opened() {
@@ -226,7 +231,7 @@ export class ServiceConnections {
             try {
                 await apply(select.value);
                 status.textContent = 'Saved. This service uses the selected model. Test it in your story when ready.';
-                this.targets.get(id).native.open = false;
+                this.targets.get(id).native.open = Boolean(this.advanced);
                 this.updateContext();
                 this.updateWriter();
             } catch (error) {
@@ -238,7 +243,7 @@ export class ServiceConnections {
         row.append(label, select, action, status);
         const target = this.targets.get(id);
         target.setup.replaceChildren(row);
-        target.native.open = !current || missing;
+        target.native.open = this.advanced || !current || missing;
         return { row, select, action, status };
     }
 

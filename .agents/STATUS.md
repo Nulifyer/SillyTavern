@@ -9,34 +9,32 @@ Image index: sha256:1aeffc008478d6923152ae4dc61eb3115c56e97d0da3cb3a62b8cc17f4be
 
 ## Active tasks
 
-[Model service workspace and chat surface](work/service-workspace.md) is active.
-v1.19.10 source is implemented: one server hub, native service sections/prompts,
-automatic configured context with migration/manual overrides, and a T3-derived
-composer using the original form/editor/action nodes. No framework migration.
+[Model service workspace and chat surface](work/service-workspace.md) continues.
+User steering November6: simplify presentation and flow, preserve full advanced
+SillyTavern control. Native controls remain, but v1.19.10 labels and collapsed
+sections make access unclear. A persistent Advanced controls option and All
+controls filters are being verified before a new release.
 
 ## Next action
 
-Commit and publish v1.19.10 through GitHub Release, then pull
-and browser-test its actual GHCR image with five fresh synthetic volumes and no
-overlays. Return the immutable handoff for Homelab's later update.
+Publish v1.19.11 and verify its actual image. Source passed34 browser cases
+including real Juiced services,424 unit tests, lint and actionlint. v1.19.10 is already published; never move its tag.
+Homelab owns deployment. Production69 and shared test85 remain untouched.
 
 ## Blockers
 
-None. Production69 and shared test85 remain untouched. Physical microphone and
-audible quality remain unqualified. Retrieval retains native provider setup;
-no enabled embeddings model is currently reported by Juiced.
+None. Physical microphone and audible quality remain unqualified. Retrieval
+retains native provider setup; no enabled embeddings model was reported November2.
 
 ## Verification
 
-424 unit tests, lint, actionlint and continuity validation pass. Source browser
-coverage passed all31 controlled cases across the full30-pass run and corrected
-320px rerun; voice failure/retry passed separately. Both live cases pass, including the first-reply template failure/recovery,
-independent writer/image, Ornith vision caption, 28 voices, decoded Kokoro speech
-and dictation inserted without sending. Browser diagnostics report no page errors.
-Published-image verification remains pending.
+November2 source passed424 unit tests, lint, actionlint, controlled browser cases
+and both live Juiced cases. v1.19.10 publication workflow41521719715 passed both
+native architecture startup gates. Its pulled-image identity and18 source hashes
+were verified. Retained actual-image run has32 passes and1 model-noun assertion
+failure after successful first-reply recovery. The interrupted final rerun result
+is missing, so full published-image acceptance and release handoff are unfinished.
 
-Source preview: http://127.0.0.1:8013, st-ui-dev-20261102, four synthetic named
-volumes plus read-only public/src overlays. Prior actual v1.19.9 preview remains
-on8014. User last reported v1.19.8; this thread never deployed production.
-Evidence: docs/evidence/service-workspace-20261102/.
-Historical release, first-reply and shared-screen proofs remain in docs/evidence/.
+Source preview8013 uses only synthetic test volumes. Original v1.19.10 synthetic
+container8015 is stopped. Evidence: docs/evidence/service-workspace-20261102/.
+Current November6 advanced-controls evidence will be recorded separately.

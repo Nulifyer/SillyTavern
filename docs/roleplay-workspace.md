@@ -176,3 +176,13 @@ right-aligned bubble. Source and MIT notice: [ui-source-notices.md](ui-source-no
 Context sizing and migration follow [model-services.md](model-services.md).
 Reported runtime capacity takes precedence over training maximum only while
 Automatic is enabled. Existing explicit limits remain manual.
+
+## Advanced access, November 6
+
+Simplification changes presentation and flow, not the available native settings.
+Settings exposes a persistent Advanced controls switch. It expands provider
+forms, native sampling/formatting sections and extension preferences without
+changing their values. All controls shows section groups together. Existing
+provider-specific visibility still applies. Classic layout remains available
+for native drawer pinning and custom themes, alongside advanced access inside
+the workspace.

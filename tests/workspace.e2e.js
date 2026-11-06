@@ -89,7 +89,7 @@ test.beforeEach(async ({ page }) => {
             settings.active_character = null;
             settings.active_group = null;
             settings.power_user.auto_connect = false;
-            settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true', workspaceArchivedChats: '[]' };
+            settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true', workspaceAdvancedSettings: 'false', workspaceArchivedChats: '[]' };
             settings.extension_settings.serviceConnections = { url: '' };
             settings.extension_settings.tts = { ...settings.extension_settings.tts };
             settings.extension_settings.sd = { ...settings.extension_settings.sd };
@@ -304,6 +304,68 @@ test('settings keep every native area reachable with Escape and focus restoratio
         await doNavbarIconClick.call($('#rightNavHolder > .drawer-toggle'));
     });
     await expect(page.locator('.workspace-library-grid')).toBeVisible();
+});
+
+test('advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace', async ({ page }, testInfo) => {
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'story-fixture' }] } }));
+    await page.route('**/api/openai/custom/discover', route => route.fulfill({ json: serviceFixture() }));
+    await serviceSetup(page);
+    await serviceCategory(page, 'chat');
+    await page.locator('#workspace-advanced-settings').check();
+    await page.locator('#service-chat-model').selectOption('story-fixture');
+    await page.locator('#service-chat-apply').click();
+    await expect(page.locator('#custom_prompt_post_processing')).toBeVisible();
+    const before = await page.evaluate(async () => {
+        const { oai_settings } = await import('/scripts/openai.js');
+        return { temperature: oai_settings.temp_openai, context: oai_settings.openai_max_context, model: oai_settings.custom_model };
+    });
+    await expect(page.locator('#custom_prompt_post_processing')).toBeVisible();
+    await page.locator('#customize_additional_parameters').click();
+    await expect(page.locator('dialog[open] #custom_include_body')).toBeVisible();
+    await page.locator('dialog[open] .popup-button-ok').click();
+    await settingsCategory(page, 'generation', false);
+    for (const id of ['respective-ranges-and-temps', 'respective-presets-block', 'advanced-ai-config-block']) await expect(page.locator(`#${id}`)).toBeVisible();
+    await page.locator('#temp_counter_openai').fill('0.67');
+    await page.locator('#temp_counter_openai').press('Tab');
+    await settingsCategory(page, 'prompts', false);
+    await expect(page.locator('#completion_prompt_manager')).toBeVisible();
+    await expect(page.locator('#sysprompt_content')).toBeVisible();
+    for (const width of [1280, 390, 320]) {
+        await page.setViewportSize({ width, height: 844 });
+        for (const [category, selector] of [['generation', '#temp_openai'], ['prompts', '#completion_prompt_manager'], ['image-settings', '#sd_source'], ['image-writer', '#sd_prompt_writer_profile'], ['voice-settings', '#tts_provider'], ['dictation-settings', '#dictation-model'], ['vision-settings', '#caption_source']]) {
+            await settingsCategory(page, category, false);
+            await expect(page.locator(selector)).toBeVisible();
+            const panel = page.locator('.workspace-mounted-panel');
+            expect(await panel.evaluate(node => node.scrollWidth <= node.clientWidth + 1)).toBe(true);
+            const done = await page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]').boundingBox();
+            expect(done.x + done.width).toBeLessThanOrEqual(width + 1);
+        }
+    }
+    await settingsCategory(page, 'voice-settings', false);
+    await expect(page.locator('#tts_enabled')).toBeVisible();
+    await page.setViewportSize({ width: 320, height: 844 });
+    const toggle = await page.locator('#workspace-advanced-settings').boundingBox();
+    expect(toggle.x).toBeGreaterThanOrEqual(0);
+    expect(toggle.x + toggle.width).toBeLessThanOrEqual(320);
+    await page.screenshot({ path: testInfo.outputPath('advanced-speech-phone.png') });
+    await page.evaluate(async () => await (await import('/script.js')).saveSettings());
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await settingsCategory(page, 'generation', false);
+    await expect(page.locator('#workspace-advanced-settings')).toBeChecked();
+    await expect(page.locator('#temp_openai')).toHaveValue('0.67');
+    await expect(page.locator('#advanced-ai-config-block')).toBeVisible();
+    await page.locator('#workspace-advanced-settings').uncheck();
+    await expect(page.locator('#advanced-ai-config-block')).toBeHidden();
+    await page.locator('.workspace-settings-sections').getByRole('button', { name: 'All controls', exact: true }).click();
+    await expect(page.locator('#advanced-ai-config-block')).toBeVisible();
+    await expect(page.locator('#temp_openai')).toHaveValue('0.67');
+    const after = await page.evaluate(async () => {
+        const { oai_settings } = await import('/scripts/openai.js');
+        return { temperature: oai_settings.temp_openai, context: oai_settings.openai_max_context, model: oai_settings.custom_model };
+    });
+    expect(after).toEqual({ ...before, temperature: 0.67 });
+    expect(await page.locator('#custom_model_id').count()).toBe(1);
 });
 
 test('every settings category uses one control tree and fits desktop and phone', async ({ page }, testInfo) => {
@@ -929,7 +991,10 @@ test('live Juiced first reply with post-history instructions recovers through na
     await expect.poll(() => requests.length, { timeout: 30000 }).toBe(2);
     await expect(page.locator('#mes_stop')).toBeHidden({ timeout: 60000 });
     const reply = await page.locator('#chat .mes[is_user="false"]').last().innerText();
-    expect(reply.toLowerCase()).toContain('book');
+    // Recovery verifies transport, prompt preservation and a rendered reply.
+    // A live model can choose a different object despite the same input.
+    expect(reply.trim().length).toBeGreaterThan(10);
+    expect(requests[1].messages.some(message => typeof message.content === 'string' && message.content.includes('red teapot') && message.content.includes('blue book'))).toBe(true);
     expect(requests[1].custom_prompt_post_processing).toBe('semi_tools');
     expect(requests[1].model).toBe(model);
     await page.screenshot({ path: testInfo.outputPath('first-reply-formatting-recovered.png') });

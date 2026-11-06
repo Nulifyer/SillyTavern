@@ -87,15 +87,24 @@ To roll back, select a previous image tag whose publish workflow succeeded, pull
 it, and recreate the service.
 Use the workflow's digest reference when you need to pin the exact published image.
 
-## v1.19.10 delivery in progress
+## v1.19.11 delivery in progress
 
-The service workspace source adds one server hub, service-specific native prompts
-and model settings, reported context with explicit overrides, and an attributed
-T3 Code composer adaptation. Setup/migration: [model-services.md](model-services.md).
-Publication and pulled-image verification must finish before this is a Homelab
-update handoff. Production69 and shared test85 are not deployment targets for
-this thread. The verified rollback remains v1.19.9 below, with existing volumes
-preserved and a pre-update backup retained.
+The advanced-controls correction passed source acceptance. It adds a persistent
+Advanced controls switch and All controls filters without changing native values.
+Setup and migration: [model-services.md](model-services.md). Published-image
+acceptance and the immutable Homelab handoff follow publication. Production69
+and shared test85 remain untouched.
+
+## v1.19.10 publication record
+
+Published source `bdda669a52be568ecc61729ac566b93d2dafd3cd`,
+[workflow41521719715](https://github.com/Nulifyer/SillyTavern/actions/runs/41521719715),
+image index `sha256:b4c7ed23b175064356b82a709990c5d33873420f47d8848feb2ef41f87f7a10a`.
+Both native architecture startup gates passed. The retained image browser run
+passed32 cases and failed1 literal-model-output assertion after successful
+first-reply recovery. The interrupted final rerun has no surviving result.
+Its evidence is in `docs/evidence/service-workspace-20261102/`. v1.19.11 adds
+explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
 

@@ -1,0 +1,77 @@
+{
+  "tag": "v1.19.10",
+  "source": "bdda669a52be568ecc61729ac566b93d2dafd3cd",
+  "image": "ghcr.io/nulifyer/sillytavern",
+  "index": "sha256:b4c7ed23b175064356b82a709990c5d33873420f47d8848feb2ef41f87f7a10a",
+  "architectures": {
+    "amd64": "sha256:278279d0f1ace3f92834bf3bf7128cc1478be5a44f315c9e01c6f55b5c0d5d01",
+    "arm64": "sha256:ee7b316b22f449a4b5515cda81fafe7fd85fa4e82bca56ada97be5b1f2e673c9"
+  },
+  "labelsByArchitecture": {
+    "amd64": {
+      "org.opencontainers.image.licenses": "AGPL-3.0",
+      "org.opencontainers.image.revision": "bdda669a52be568ecc61729ac566b93d2dafd3cd",
+      "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+      "org.opencontainers.image.version": "v1.19.10"
+    },
+    "arm64": {
+      "org.opencontainers.image.licenses": "AGPL-3.0",
+      "org.opencontainers.image.revision": "bdda669a52be568ecc61729ac566b93d2dafd3cd",
+      "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+      "org.opencontainers.image.version": "v1.19.10"
+    }
+  },
+  "commitTagMatches": true,
+  "latestMatches": true,
+  "workflow": "https://github.com/Nulifyer/SillyTavern/actions/runs/41521719715",
+  "manifest": {
+    "schemaVersion": 2,
+    "mediaType": "application/vnd.oci.image.index.v1+json",
+    "manifests": [
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "digest": "sha256:278279d0f1ace3f92834bf3bf7128cc1478be5a44f315c9e01c6f55b5c0d5d01",
+        "size": 2575,
+        "platform": {
+          "architecture": "amd64",
+          "os": "linux"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "digest": "sha256:14530ffddff629fe782b58f79040d0916b75b8285abf36786fc0a8bc02010da4",
+        "size": 838,
+        "annotations": {
+          "vnd.docker.reference.digest": "sha256:278279d0f1ace3f92834bf3bf7128cc1478be5a44f315c9e01c6f55b5c0d5d01",
+          "vnd.docker.reference.type": "attestation-manifest"
+        },
+        "platform": {
+          "architecture": "unknown",
+          "os": "unknown"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "digest": "sha256:ee7b316b22f449a4b5515cda81fafe7fd85fa4e82bca56ada97be5b1f2e673c9",
+        "size": 2575,
+        "platform": {
+          "architecture": "arm64",
+          "os": "linux"
+        }
+      },
+      {
+        "mediaType": "application/vnd.oci.image.manifest.v1+json",
+        "digest": "sha256:31cf919aadf786e68e41fd50970e5d9f77a7926aa5ba5a743d3cffb5c53c9ebd",
+        "size": 838,
+        "annotations": {
+          "vnd.docker.reference.digest": "sha256:ee7b316b22f449a4b5515cda81fafe7fd85fa4e82bca56ada97be5b1f2e673c9",
+          "vnd.docker.reference.type": "attestation-manifest"
+        },
+        "platform": {
+          "architecture": "unknown",
+          "os": "unknown"
+        }
+      }
+    ]
+  }
+}

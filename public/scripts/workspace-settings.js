@@ -1,5 +1,6 @@
 import { button, element, workspaceSettings } from './workspace-views.js';
 import { ServiceConnections } from './service-connections.js';
+import { accountStorage } from './util/AccountStorage.js';
 
 /** One mounted copy of each native settings panel, presented as a category workspace. */
 export class WorkspaceSettings {
@@ -41,7 +42,20 @@ export class WorkspaceSettings {
         const text = element('div');
         text.append(this.heading, this.description);
         this.close = button('Done', 'close-panel', {}, 'workspace-button', 'fa-check');
-        header.append(text, this.close);
+        const actions = element('div', 'workspace-settings-actions');
+        const advancedLabel = element('label', 'checkbox_label workspace-advanced-toggle');
+        this.advancedToggle = element('input');
+        this.advancedToggle.type = 'checkbox';
+        this.advancedToggle.id = 'workspace-advanced-settings';
+        this.advancedToggle.checked = accountStorage.getItem('workspaceAdvancedSettings') === 'true';
+        advancedLabel.append(this.advancedToggle, element('span', '', 'Advanced controls'));
+        advancedLabel.title = 'Expand native provider settings, sampling, prompt formatting and extension options. Changes only which controls are shown.';
+        actions.append(advancedLabel, this.close);
+        header.append(text, actions);
+        this.advancedToggle.addEventListener('change', () => {
+            accountStorage.setItem('workspaceAdvancedSettings', String(this.advancedToggle.checked));
+            this.applyAdvanced();
+        });
         this.host = element('div', 'workspace-settings-host');
         this.storyTabs = element('nav', 'workspace-service-tabs');
         this.storyTabs.setAttribute('aria-label', 'Story model settings');
@@ -85,7 +99,7 @@ export class WorkspaceSettings {
         this.heading.textContent = ['generation', 'prompts'].includes(id) ? 'Story replies' : setting.label;
         this.description.textContent = setting.description;
         const panel = document.getElementById(setting.panel);
-        panel.querySelectorAll('.workspace-advanced-creative').forEach(details => details.open = false);
+        panel.querySelectorAll('.workspace-advanced-creative').forEach(details => details.open = this.advancedToggle.checked);
         this.host.append(panel);
         panel.classList.remove('closedDrawer');
         panel.classList.add('openDrawer', 'workspace-mounted-panel');
@@ -125,7 +139,7 @@ export class WorkspaceSettings {
         }
         const chatPrompts = id === 'prompts' && document.getElementById('main_api').value === 'openai';
         if (!chatPrompts) this.configureSections(id, panel);
-        else { this.sections.replaceChildren(); this.sections.hidden = true; }
+        else { this.sections.replaceChildren(); this.sections.hidden = true; this.groups = []; }
         this.storyTabs.hidden = !['connection', 'generation', 'prompts'].includes(id);
         this.storyTabs.querySelectorAll('button').forEach(tab => tab.setAttribute('aria-pressed', String(tab.dataset.serviceDestination === id)));
         if (id === 'prompts') {
@@ -133,9 +147,19 @@ export class WorkspaceSettings {
             this.templateControls.dataset.primary = String(!chatPrompts);
             if (chatPrompts) panel.prepend(this.promptHelp, this.promptManager);
         }
+        this.applyAdvanced();
         this.services.opened(id);
         this.root.querySelector('.workspace-settings-content').scrollTop = 0;
         this.close.focus();
+    }
+
+    applyAdvanced() {
+        const advanced = this.advancedToggle.checked;
+        this.services.setAdvanced(advanced);
+        this.root.dataset.advanced = String(advanced);
+        this.host.querySelectorAll('.workspace-advanced-creative').forEach(details => details.open = advanced);
+        if (this.active === 'prompts') this.templateControls.open = advanced || this.templateControls.dataset.primary === 'true';
+        if (this.groups?.length) this.selectSection(advanced ? 'all' : this.groups[0][0]);
     }
 
     restore() {
@@ -183,13 +207,16 @@ export class WorkspaceSettings {
             this.sectionNodes.push(...ids.map(key => panel.querySelector(`#${key}`)).filter(Boolean));
             this.sections.append(button(label, 'settings-section', { section: label }, 'workspace-filter'));
         }
-        if (groups.length) this.selectSection(groups[0][0]);
+        if (groups.length) {
+            this.sections.append(button('All controls', 'settings-section', { section: 'all' }, 'workspace-filter'));
+            this.selectSection(this.advancedToggle.checked ? 'all' : groups[0][0]);
+        }
     }
 
     selectSection(label) {
         const group = this.groups.find(item => item[0] === label);
-        if (!group) return;
-        for (const node of this.sectionNodes) node.classList.toggle('workspace-section-hidden', !group[1].includes(node.id));
+        if (!group && label !== 'all') return;
+        for (const node of this.sectionNodes) node.classList.toggle('workspace-section-hidden', label !== 'all' && !group[1].includes(node.id));
         this.sections.querySelectorAll('button').forEach(control => control.setAttribute('aria-pressed', String(control.dataset.section === label)));
     }
 }

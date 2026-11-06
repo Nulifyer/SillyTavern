@@ -24,6 +24,24 @@ does not ship a Juiced model registry.
 | Vision & captions | Native custom captioning, story server `/v1`, separate vision model and prompt |
 | Retrieval | Native Vector Storage extension; inspect its provider settings |
 
+## Advanced control without leaving the workspace
+
+Every Settings page has an **Advanced controls** switch. It expands the existing
+native provider forms, sampling sections, prompt formatting and extension
+preferences. The preference survives navigation and reload. It changes only
+visibility, never the selected provider, model, prompt, sampling or context
+values. Provider-specific controls still follow the native provider selection.
+
+**All controls** shows each section together in Reply controls and Appearance.
+You can still choose a focused section. Native custom API parameters, keys,
+connection profiles, prompt manager, text-completion templates, image workflows,
+voice mapping and extension controls remain available. Discovery is optional;
+you can configure a provider manually through those forms.
+
+The classic layout is also available in **Appearance & behavior**, by turning
+off **Dark workspace layout**. It retains native floating drawers, pinning and
+custom themes. Advanced parameter access does not require switching layouts.
+
 ## Service sections and context size
 
 **Story replies** has three tabs: Model connection, Reply controls and Story
@@ -74,7 +92,7 @@ template rejected a later system instruction. Native post-history instructions
 can produce that message order even on the first reply.
 
 Open **Settings > Story replies > Model connection**, then expand
-**Other providers and connection profiles**. Under **Custom (OpenAI-compatible)**,
+**Advanced provider settings and connection profiles**. Under **Custom (OpenAI-compatible)**,
 set **Prompt Post-Processing** to **Semi-strict (alternating roles; with tools)**,
 then return to the story and retry. This existing native setting retains the
 opening system message, converts later system messages to user messages, and

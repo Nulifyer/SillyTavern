@@ -5,7 +5,7 @@ Owner: SillyTavern project thread mcp:a1b3f2ea-069d-4f17-8247-e0cab15abe73
 Repository: /home/nulifyer/Projects/SillyTavern
 Base: feat/cohesive-workspace at ee7928fc2
 Project: ../PLAN.md
-Request source: User, November 2, 2026, reduce redundant UI, organize settings by model service with editable prompts, reuse polished T3 Code chat/composer UI, and discover context/capabilities automatically while keeping common overrides.
+Request source: User, November 2, 2026, reduce redundant UI, organize settings by model service with editable prompts, reuse polished T3 Code chat/composer UI, and discover context/capabilities automatically while keeping common overrides. November 6 steering: simplify UI and flow while retaining the full option for advanced settings.
 
 ## Goal
 
@@ -21,6 +21,7 @@ manual entry; preserve existing explicit settings and provider ownership.
 - [x] Reported context is available automatically for new connections; existing explicit limits survive migration and common overrides remain accessible.
 - [x] Adapt T3 composer/editor/footer/primary-action layout with source and license attribution, retaining native draft, send, stop, transcript, scroll and extension owners.
 - [x] Verify desktop/phone, keyboard, pending requests, repeated navigation, reload, native controls and real Juiced requests with synthetic data.
+- [x] A persistent Advanced controls option exposes native provider settings, sampling, formatting and extension controls within the workspace, without resetting values.
 - [ ] Run required checks, publish and verify the actual immutable container, update handoff without accessing or changing production69/test85.
 
 ## Scope
@@ -30,10 +31,10 @@ Out: Coding-agent features, framework migration, duplicate provider registry/inf
 
 ## Current state
 
-Phase: Source acceptance passed; publication and actual-image acceptance pending.
-Dependencies: Local Podman test containers, Juiced HTTPS metadata/inference, T3 browser, GitHub release access.
-Integration: v1.19.9 remains published. Root checkout clean before this task.
-Next action: Finish controlled and live browser coverage for service prompts, context migration/overrides, composer and classic restoration; then publish and verify the immutable image.
+Phase: Advanced-control correction passed34 source browser cases including both live cases, plus424 unit tests, lint and actionlint. v1.19.11 publication and actual-image verification pending.
+Dependencies: Local Podman, Juiced HTTPS, project browser and GitHub release access.
+Integration: v1.19.10 is published from bdda669a52be568ecc61729ac566b93d2dafd3cd. Its retained actual-image run passed32 cases and failed1 nondeterministic noun assertion. Final interrupted run has no surviving result; do not claim full acceptance. November2 final records/test correction remain uncommitted and belong to this task.
+Next action: Verify persistent Advanced controls and native capabilities on source, then publish/verify a new immutable release and finish the handoff. Never move v1.19.10.
 
 ## Decisions
 

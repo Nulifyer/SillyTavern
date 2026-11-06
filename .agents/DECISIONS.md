@@ -4,7 +4,7 @@
 
 - Use the approved dark slate and lavender character workspace.
 - Separate character browsing from entering a transcript.
-- Group advanced controls under Settings while retaining their native owners.
+- Group advanced controls under Settings while retaining their native owners. A persistent Advanced controls switch exposes native settings in the workspace; All controls removes category section filters. Classic layout remains available for native windowing and themes.
 - Archive retains transcript files. Deletion requires confirmation.
 - Publish containers only from published GitHub Releases, with manual rebuilds of
   existing published releases. Prereleases do not move latest.
