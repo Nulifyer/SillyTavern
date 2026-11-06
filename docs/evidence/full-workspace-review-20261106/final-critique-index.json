@@ -1,0 +1,798 @@
+{
+  "sourceUrl": "http://127.0.0.1:8018",
+  "tabId": "tab_4_dfebdf42-64d6-46f6-9748-1374a67d0b39",
+  "scope": "Read-only source/visual review. No implementation edits, provider/model/endpoint changes, story/character mutations, uploads, service generation, production69/test85 access, Juiced policy/cache/runtime changes.",
+  "goal": "Cohesive responsive workspace while preserving native advanced controls.",
+  "shots": [
+    {
+      "name": "connection320-font150-repaired",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58dtxe-efc4be57.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58dtxe-efc4be57.png"
+    },
+    {
+      "name": "generation320-font150-repaired",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58dups-8e00ee57.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58dups-8e00ee57.png"
+    },
+    {
+      "name": "prompts320-font150-repaired",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58dvet-1ab06e2f.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58dvet-1ab06e2f.png"
+    },
+    {
+      "name": "context320-font150-nested-toolbar-unfixed",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58epia-6ac5e978.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58epia-6ac5e978.png"
+    },
+    {
+      "name": "logit-bias320-font150-toolbar-unfixed",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58eq93-32f88b44.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58eq93-32f88b44.png"
+    },
+    {
+      "name": "backgrounds320-font150-repaired",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58f3x0-15648261.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58f3x0-15648261.png"
+    },
+    {
+      "name": "persona320-font150-repaired",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58f4a4-1d26ee52.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58f4a4-1d26ee52.png"
+    },
+    {
+      "name": "appearance320-font150-repaired",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58f4np-9d8355f1.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58f4np-9d8355f1.png"
+    },
+    {
+      "name": "extras320-font150-repaired",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58f50y-a634d6d8.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58f50y-a634d6d8.png"
+    },
+    {
+      "name": "images-helper320-font150-repaired",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58f5ey-d08e2d17.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58f5ey-d08e2d17.png"
+    },
+    {
+      "name": "prompt-manager320-font150-repaired-footer",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58g4xx-0d4c43da.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58g4xx-0d4c43da.png"
+    },
+    {
+      "name": "prompt-manager320-font150-repaired-list",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58g55k-a31eaa89.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58g55k-a31eaa89.png"
+    },
+    {
+      "name": "accepted-connection320-font150",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58kcom-b1fa9dad.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58kcom-b1fa9dad.png"
+    },
+    {
+      "name": "accepted-logit-bias320-font150",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58kdhl-dbe8579f.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58kdhl-dbe8579f.png"
+    },
+    {
+      "name": "accepted-context320-font150",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58ke63-d2aeddaf.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58ke63-d2aeddaf.png"
+    },
+    {
+      "name": "accepted-prompt-list320-font150",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58kexd-1a910623.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58kexd-1a910623.png"
+    },
+    {
+      "name": "appearance320-font150-still-overlapping",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58kfeg-0a42b64d.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58kfeg-0a42b64d.png"
+    },
+    {
+      "name": "accepted-image-helper320-font150",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58kfx4-86655ced.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58kfx4-86655ced.png"
+    },
+    {
+      "name": "accepted-appearance-parent-wrap320-font150",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58o28w-94d34149.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58o28w-94d34149.png"
+    },
+    {
+      "name": "accepted-audio-upload320-font150",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58o2oj-20a3be49.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58o2oj-20a3be49.png"
+    },
+    {
+      "name": "accepted-expanded-context320x420-font150",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58oo6n-65d6d3b1.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58oo6n-65d6d3b1.png"
+    },
+    {
+      "name": "accepted-expanded-context320x420-font150-settled",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58qmci-a577f78f.png",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/final-critique/browser-screenshot-127-0-0-1-mw58qmci-a577f78f.png"
+    }
+  ],
+  "measurements": [
+    {
+      "name": "accepted-connection320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 277
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 0
+        },
+        {
+          "id": "instruct_presets",
+          "width": 0
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 0
+        },
+        {
+          "id": "reasoning_select",
+          "width": 0
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    },
+    {
+      "name": "accepted-logit-bias320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 250.75
+        },
+        {
+          "id": "context_presets",
+          "width": 0
+        },
+        {
+          "id": "instruct_presets",
+          "width": 0
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 0
+        },
+        {
+          "id": "reasoning_select",
+          "width": 0
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 250.75
+        }
+      ]
+    },
+    {
+      "name": "accepted-context320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 277
+        },
+        {
+          "id": "instruct_presets",
+          "width": 277
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 277
+        },
+        {
+          "id": "reasoning_select",
+          "width": 277
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    },
+    {
+      "name": "accepted-prompt-list320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 277
+        },
+        {
+          "id": "instruct_presets",
+          "width": 277
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 277
+        },
+        {
+          "id": "reasoning_select",
+          "width": 277
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    },
+    {
+      "name": "accepted-appearance320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 0
+        },
+        {
+          "id": "instruct_presets",
+          "width": 0
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 0
+        },
+        {
+          "id": "reasoning_select",
+          "width": 0
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    },
+    {
+      "name": "accepted-image-helper320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 0
+        },
+        {
+          "id": "instruct_presets",
+          "width": 0
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 0
+        },
+        {
+          "id": "reasoning_select",
+          "width": 0
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    }
+  ],
+  "resolved": [
+    "Connection Manager select277px at320/native150%; icons44px retained",
+    "Native nested context/instruct/system/reasoning preset selectors277px at320/native150%",
+    "Native OpenAI generation/logit-bias selectors250.75px at320/native150%",
+    "Sampling documentation link positionstatic; does not overlap persistentDone",
+    "Prompt manager names wrap, footer fits; edit/toggle targets44x44 aftermin-width/min-height correction",
+    "Background fitting/uploads fit, two-column gallery retained",
+    "Persona pagination/page-size selector wraps withinviewport",
+    "Extras endpoint/key inputsfit withinviewport",
+    "Images helper no longerclips and has itsown line",
+    "Persistent SAME Done remains visible whenforms scroll",
+    "Appearance parent flex-wrap:wrap verified; heading, language, version each277px fullrow at320/native150%",
+    "Expanded context editor fits320x420/native150%; settled capture shows visible OK; Escape closesdialog and preserves Settings",
+    "Choose audio file is one line,194.34x44px at320/native150%",
+    "Native review font preference restoredto1 beforeclosingtab"
+  ],
+  "open": [],
+  "coverage": "Final targetedmanual320px/native150% repairpass; earlier16-destination390normal/Advanced matrix and representative1280/768 states are indexed in /tmp/st-ux-followup-captures-20261106.json. This is not every button/provider-state qualification.",
+  "providerVisibility": "Final reload already had native OpenAI selected. Reviewer did not change provider. Native promptlist/footer were inspected directly; no prompt mutations or generation ran.",
+  "fixtureContext": "Read /tmp/st-full-review-enlarged-fixed/workspace.e2e.js-every-set-40742-le-with-enlarged-phone-text/enlarged-prompts-320.png separately. It is a mocked-provider native-DOM capture and only shows the top of thatpage.",
+  "status": "Final reviewed states have no remaining supported UI objection. Own preview tab closed.",
+  "finalProofNames": [
+    "accepted-connection320-font150",
+    "accepted-logit-bias320-font150",
+    "accepted-context320-font150",
+    "accepted-prompt-list320-font150",
+    "accepted-appearance-parent-wrap320-font150",
+    "accepted-image-helper320-font150",
+    "backgrounds320-font150-repaired",
+    "persona320-font150-repaired",
+    "extras320-font150-repaired",
+    "accepted-audio-upload320-font150",
+    "accepted-expanded-context320x420-font150-settled"
+  ],
+  "supersededProof": [
+    "context320-font150-nested-toolbar-unfixed",
+    "logit-bias320-font150-toolbar-unfixed",
+    "appearance320-font150-still-overlapping",
+    "accepted-expanded-context320x420-font150"
+  ],
+  "supersededNote": "Earlier captures are retained as defect/transition evidence. Use finalProofNames for the corrected state. The first short-dialog capture caught an unsettled button frame; the settled capture supersedes it.",
+  "browserTransient": "A temporary preview evaluate host disconnect interrupted one optional repeated dialog check; preview_status recovered, and the complete check and font restoration were repeated successfully.",
+  "finalMeasurements": [
+    {
+      "name": "accepted-connection320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 277
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 0
+        },
+        {
+          "id": "instruct_presets",
+          "width": 0
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 0
+        },
+        {
+          "id": "reasoning_select",
+          "width": 0
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    },
+    {
+      "name": "accepted-logit-bias320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 250.75
+        },
+        {
+          "id": "context_presets",
+          "width": 0
+        },
+        {
+          "id": "instruct_presets",
+          "width": 0
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 0
+        },
+        {
+          "id": "reasoning_select",
+          "width": 0
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 250.75
+        }
+      ]
+    },
+    {
+      "name": "accepted-context320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 277
+        },
+        {
+          "id": "instruct_presets",
+          "width": 277
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 277
+        },
+        {
+          "id": "reasoning_select",
+          "width": 277
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    },
+    {
+      "name": "accepted-prompt-list320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        },
+        {
+          "h": 44,
+          "w": 44
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 277
+        },
+        {
+          "id": "instruct_presets",
+          "width": 277
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 277
+        },
+        {
+          "id": "reasoning_select",
+          "width": 277
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    },
+    {
+      "name": "accepted-appearance320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 0
+        },
+        {
+          "id": "instruct_presets",
+          "width": 0
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 0
+        },
+        {
+          "id": "reasoning_select",
+          "width": 0
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    },
+    {
+      "name": "accepted-image-helper320-font150",
+      "overflow": [],
+      "promptTargets": [
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        },
+        {
+          "h": 0,
+          "w": 0
+        }
+      ],
+      "selects": [
+        {
+          "id": "connection_profiles",
+          "width": 0
+        },
+        {
+          "id": "settings_preset_openai",
+          "width": 0
+        },
+        {
+          "id": "context_presets",
+          "width": 0
+        },
+        {
+          "id": "instruct_presets",
+          "width": 0
+        },
+        {
+          "id": "sysprompt_select",
+          "width": 0
+        },
+        {
+          "id": "reasoning_select",
+          "width": 0
+        },
+        {
+          "id": "openai_logit_bias_preset",
+          "width": 0
+        }
+      ]
+    }
+  ],
+  "screenshotMethods": "Manual T3 preview navigation on own source8018 tab; persisted provider alreadyOpenAI at finalreload. No provider setting changed by reviewer. Fixture screenshot was supplementary only.",
+  "repositoryHead": "e5deb86f201a0138f14bced78d502a8c948d307e",
+  "finalFileHashes": {
+    "public/css/workspace.css": "74211e0c33a0c825fefb53e043a2227e426bc3f0108c5ab7cde5205db2c74da2",
+    "public/scripts/workspace-settings.js": "8b830d388a304d8f487c69f2eda4a75a1db1f31cd9539ad43c8a132091d2f4b1",
+    "public/scripts/service-connections.js": "298b9c9c82e489997467f64dcf312f9f1a92651c49f23dae9bb7da6d0ecb8fe5",
+    "public/scripts/dictation.js": "de119fe9dc5acf13be3ef0b576c7ea91cf9c8df158b5798f8ccbd0407b668802",
+    "public/scripts/workspace.js": "7bfa790acbb3d1ff0935740b5c4f3d93eeb238a3928a1374e1218dd58df95fc9"
+  },
+  "tabClosed": true
+}

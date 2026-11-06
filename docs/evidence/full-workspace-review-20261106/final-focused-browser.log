@@ -1,0 +1,44 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep enlarged phone text|advanced controls retain|native streamed replies|browser text sizing|discovered selectors --output=/tmp/st-full-review-final-focused
+(node:129247) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:129266) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:129266) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:129266) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace (10.1s)
+  ✓  2 workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text (7.0s)
+  ✓  3 workspace.e2e.js:972:1 › discovered selectors distinguish unapplied choices and follow native provider changes (4.5s)
+  ✓  4 workspace.e2e.js:2065:1 › native streamed replies keep the composer and character identity mounted (4.9s)
+  ✘  5 workspace.e2e.js:2465:1 › native font preferences and browser text sizing keep phone controls usable (4.7s)
+
+
+  1) workspace.e2e.js:2465:1 › native font preferences and browser text sizing keep phone controls usable
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 321
+    Received:    1168
+
+      1669 |     await expect(page.locator('#send_but')).toBeVisible();
+      1670 |     const send = await page.locator('#send_but').boundingBox();
+    > 1671 |     expect(send.x).toBeGreaterThanOrEqual(0);
+           |                                 ^
+      1672 |     expect(send.x + send.width).toBeLessThanOrEqual(321);
+      1673 |     await page.setViewportSize({ width: 390, height: 844 });
+      1674 |     // Simulate a larger browser default independently of the native font preference.
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1671:33
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-full-review-final-focused/workspace.e2e.js-native-fo-4c14f--keep-phone-controls-usable/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-full-review-final-focused/workspace.e2e.js-native-fo-4c14f--keep-phone-controls-usable/error-context.md
+
+  1 failed
+    workspace.e2e.js:2465:1 › native font preferences and browser text sizing keep phone controls usable
+  4 passed (32.1s)

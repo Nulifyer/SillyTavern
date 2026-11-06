@@ -37,6 +37,7 @@
 **/certs
 
 # --- Documentation ---
+/docs/evidence
 readme*
 *.md
 Update-Instructions.txt

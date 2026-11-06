@@ -1,0 +1,18 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8018/img/ai4.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8018/api/ping",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "blob:http://127.0.0.1:8018/95d4fa4e-2ca5-4e6e-9c14-9050d3d771eb",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

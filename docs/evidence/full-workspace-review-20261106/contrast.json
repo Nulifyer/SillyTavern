@@ -1,0 +1,35 @@
+{
+  "method": "Relative luminance of opaque workspace palette pairs. This does not establish every native provider/theme/disabled control contrast.",
+  "pairs": [
+    {
+      "role": "Body text",
+      "foreground": "#e9edf5",
+      "background": "#171b26",
+      "contrast": 14.655
+    },
+    {
+      "role": "Muted labels",
+      "foreground": "#a2aec5",
+      "background": "#171b26",
+      "contrast": 7.695
+    },
+    {
+      "role": "Input text",
+      "foreground": "#e9edf5",
+      "background": "#121620",
+      "contrast": 15.411
+    },
+    {
+      "role": "Selected navigation",
+      "foreground": "#c0b7ff",
+      "background": "#2e2b46",
+      "contrast": 7.392
+    },
+    {
+      "role": "Primary action text",
+      "foreground": "#232035",
+      "background": "#c0b7ff",
+      "contrast": 8.619
+    }
+  ]
+}

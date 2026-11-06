@@ -1,0 +1,18 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep enlarged phone text|browser text sizing|discovered selectors|native streamed replies --output=/tmp/st-full-review-audit-final
+(node:132561) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:132582) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:132582) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:132582) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text (7.2s)
+  ✓  2 workspace.e2e.js:972:1 › discovered selectors distinguish unapplied choices and follow native provider changes (4.3s)
+  ✓  3 workspace.e2e.js:2065:1 › native streamed replies keep the composer and character identity mounted (4.9s)
+  ✓  4 workspace.e2e.js:2465:1 › native font preferences and browser text sizing keep phone controls usable (5.1s)
+
+  4 passed (22.3s)

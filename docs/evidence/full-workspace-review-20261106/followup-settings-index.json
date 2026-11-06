@@ -1,0 +1,301 @@
+{
+  "sourceUrl": "http://127.0.0.1:8018",
+  "tabId": "tab_4_dfebdf42-64d6-46f6-9748-1374a67d0b39",
+  "phases": [
+    {
+      "name": "first edited-source re-review before persistent Done/header/44px refinements",
+      "shots": [
+        {
+          "name": "servers390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57r5jj-3118d23b.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/servers390-normal-top.png"
+        },
+        {
+          "name": "servers390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57r5zb-49d7a38f.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/servers390-advanced-top.png"
+        },
+        {
+          "name": "connection390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57r6ng-5679c6cd.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/connection390-normal-top.png"
+        },
+        {
+          "name": "connection390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57r75o-d7a3aaf2.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/connection390-advanced-top.png"
+        },
+        {
+          "name": "image-writer390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57r84p-94550512.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/image-writer390-normal-top.png"
+        },
+        {
+          "name": "image-writer390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57r8ww-e3e683d0.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/image-writer390-advanced-top.png"
+        },
+        {
+          "name": "image-settings390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57r9rs-28e7e75a.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/image-settings390-normal-top.png"
+        },
+        {
+          "name": "image-settings390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57rahu-ce09c871.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/image-settings390-advanced-top.png"
+        },
+        {
+          "name": "voice-settings390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57rb8x-96b6285d.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/voice-settings390-normal-top.png"
+        },
+        {
+          "name": "voice-settings390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57rbvi-4ed9c5e6.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/voice-settings390-advanced-top.png"
+        },
+        {
+          "name": "dictation-settings390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57rclp-a5e8db90.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/dictation-settings390-normal-top.png"
+        },
+        {
+          "name": "dictation-settings390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57rd7v-69d4fcc7.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/dictation-settings390-advanced-top.png"
+        },
+        {
+          "name": "vision-settings390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57rdzf-0caae7ed.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/vision-settings390-normal-top.png"
+        },
+        {
+          "name": "vision-settings390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57reke-e9170e26.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/vision-settings390-advanced-top.png"
+        },
+        {
+          "name": "embeddings-settings390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57rfag-59408bd8.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/embeddings-settings390-normal-top.png"
+        },
+        {
+          "name": "embeddings-settings390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57rfxx-3e9519ba.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/embeddings-settings390-advanced-top.png"
+        },
+        {
+          "name": "persona390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s14c-8722581c.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/persona390-normal-top.png"
+        },
+        {
+          "name": "persona390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s1qe-a9f1b472.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/persona390-advanced-top.png"
+        },
+        {
+          "name": "world390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s2ci-dabeb3c0.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/world390-normal-top.png"
+        },
+        {
+          "name": "world390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s2tx-c12eac2a.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/world390-advanced-top.png"
+        },
+        {
+          "name": "backgrounds390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s3l9-55a3d635.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/backgrounds390-normal-top.png"
+        },
+        {
+          "name": "backgrounds390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s420-3e3e9531.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/backgrounds390-advanced-top.png"
+        },
+        {
+          "name": "settings390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s4rw-47202375.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/settings390-normal-top.png"
+        },
+        {
+          "name": "settings390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s58f-0f80ac93.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/settings390-advanced-top.png"
+        },
+        {
+          "name": "extensions390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s5wr-4325a022.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/extensions390-normal-top.png"
+        },
+        {
+          "name": "extensions390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57s6fu-d33602cb.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/extensions390-advanced-top.png"
+        },
+        {
+          "name": "dictation390-keyboard-upload",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57slt5-89fc40d6.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/dictation390-keyboard-upload.png"
+        },
+        {
+          "name": "generation390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57tbm1-e0fc178c.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/generation390-normal-top.png"
+        },
+        {
+          "name": "generation390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57tc34-6294a08f.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/generation390-advanced-top.png"
+        },
+        {
+          "name": "prompts390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57td3j-0edcb19a.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/prompts390-normal-top.png"
+        },
+        {
+          "name": "prompts390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57tdl1-0317be9e.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/prompts390-advanced-top.png"
+        },
+        {
+          "name": "character-editor390-advanced-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57tf16-cbb546aa.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/character-editor390-advanced-top.png"
+        },
+        {
+          "name": "character-editor390-normal-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57ttns-18af8068.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/character-editor390-normal-top.png"
+        },
+        {
+          "name": "advanced-definitions390-beforeEscape",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57tu5m-8913fe8d.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/advanced-definitions390-beforeEscape.png"
+        },
+        {
+          "name": "advanced-definitions390-afterEscape",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57tudb-fb7c3627.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/advanced-definitions390-afterEscape.png"
+        },
+        {
+          "name": "character-editor768-normal",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57u4y8-94f2077d.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/character-editor768-normal.png"
+        },
+        {
+          "name": "character-editor1280-normal",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57u5q2-e5ff07bf.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/character-editor1280-normal.png"
+        },
+        {
+          "name": "image-settings1280-normal",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57uwto-5043ce93.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/image-settings1280-normal.png"
+        },
+        {
+          "name": "dictation-settings1280-normal",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57uxh1-9b012199.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/dictation-settings1280-normal.png"
+        },
+        {
+          "name": "image-settings768-normal",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57uyen-1d0b1264.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/image-settings768-normal.png"
+        },
+        {
+          "name": "image-writer320-font150",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57v13a-c29e73ff.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/0/image-writer320-font150.png"
+        }
+      ]
+    },
+    {
+      "name": "final reload with persistent Done/header/44px targets, before shared wrapping corrections",
+      "shots": [
+        {
+          "name": "connection320-font150-final-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57wmwa-93be7a39.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/connection320-font150-final-top.png"
+        },
+        {
+          "name": "connection320-font150-final-profile-toolbar",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57x1tr-c7d0c6e1.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/connection320-font150-final-profile-toolbar.png"
+        },
+        {
+          "name": "generation320-font150-final-toolbars",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57xv4m-8514d8b5.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/generation320-font150-final-toolbars.png"
+        },
+        {
+          "name": "prompts320-font150-final-toolbars",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57xvsj-44ca176c.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/prompts320-font150-final-toolbars.png"
+        },
+        {
+          "name": "backgrounds320-font150-final-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58082o-0fefb625.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/backgrounds320-font150-final-top.png"
+        },
+        {
+          "name": "persona320-font150-final-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5808eg-a220f497.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/persona320-font150-final-top.png"
+        },
+        {
+          "name": "settings320-font150-final-top",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5808pz-9e6b6ae0.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/settings320-font150-final-top.png"
+        },
+        {
+          "name": "extensions320-font150-final-bottom",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58092h-29d700a6.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/extensions320-font150-final-bottom.png"
+        },
+        {
+          "name": "persona320-font150-final-pagination",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw580oe9-584644ba.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/persona320-font150-final-pagination.png"
+        },
+        {
+          "name": "settings320-font150-final-language-version",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw580ow4-4c83cea2.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/settings320-font150-final-language-version.png"
+        },
+        {
+          "name": "images320-font150-final-overflow-label",
+          "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw580p8d-e4a54f7b.png",
+          "retainedPath": "docs/evidence/full-workspace-review-20261106/followup-settings/1/images320-font150-final-overflow-label.png"
+        }
+      ]
+    }
+  ],
+  "verified": [
+    "All16 destinations rendered390normal+Advanced in first edited-source re-review",
+    "Native Definitions Escape closes popup, preserves settings, restores #advanced_div focus",
+    "Tab5 from Done reaches Choose audio file; Enter opens audio/* chooser; cancelled without upload",
+    "Collapsed native Dictation drawer hides endpoint/model controls",
+    "Create character action readable390/768/1280",
+    "Two-column backgrounds390",
+    "Final persistent Done and Settings/category header verified320font150, including long-form scrolling",
+    "Final44px profile targets measured44px or wider"
+  ],
+  "openFindings": [
+    "Native profile/preset selects collapse32\u201361px wide320font150",
+    "Sampler docs anchor absolute positioning overlaps persistent Done",
+    "Background fitting select18px, Upload offscreen320font150",
+    "Persona pagination clips page-size selector320font150",
+    "Appearance version row forces horizontal overflow320font150",
+    "Extras endpoint/key inputs clip320font150",
+    "Image extended-free-mode helper text squeezes its label and clips320font150"
+  ],
+  "limits": [
+    "Composer untested by this reviewer because no story changes authorized; parent owns composer check",
+    "No provider selections, generation, audio uploads, story or character mutations",
+    "First-pass390matrix predates final touch-target CSS; final larger-text pass identifies new issues and must not be labeled release-approved",
+    "Current native font preference remains1.5 intentionally for follow-up narrow-row verification; no provider values changed"
+  ]
+}

@@ -23,10 +23,12 @@ async function navigate(page, action) {
 
 async function settingsCategory(page, category, native = true) {
     if (!await page.locator('#workspace-settings-shell').isVisible()) await navigate(page, 'settings-page');
+    const primary = ['generation', 'prompts'].includes(category) ? 'connection' : category;
+    if (await page.locator('#workspace-settings-category').isVisible()) await page.locator('#workspace-settings-category').selectOption(primary);
+    else await page.locator(`.workspace-settings-rail [data-workspace-action="${primary}"]`).click();
     if (['generation', 'prompts'].includes(category)) {
-        await page.locator('.workspace-settings-rail [data-workspace-action="connection"]').click();
         await page.locator(`.workspace-service-tabs [data-service-destination="${category}"]`).click();
-    } else await page.locator(`.workspace-settings-rail [data-workspace-action="${category}"]`).click();
+    }
     if (native) {
         const controls = page.locator('.workspace-settings-host .service-native-controls');
         for (let i = 0; i < await controls.count(); i++) {
@@ -49,11 +51,21 @@ async function profile(page) {
 async function startStory(page, title) {
     await profile(page);
     await page.getByRole('button', { name: 'Start new story', exact: true }).click();
+    await expect(page.locator('dialog[open]')).toHaveCount(0);
+    await expect(page.locator('#send_textarea')).toBeVisible();
+    const current = await page.evaluate(async () => (await import('/script.js')).getCurrentChatId());
+    page.workspaceCreatedTitles ||= [];
+    page.workspaceCreatedTitles.push(current);
+    await renameCurrentStory(page, title);
+    await expect.poll(async () => (await api(page, '/api/chats/recent', {})).some(record => record.file_name === `${title}.jsonl`)).toBe(true);
+}
+
+async function renameCurrentStory(page, title) {
+    await currentAction(page, 'rename-chat');
     await page.locator('dialog[open] .popup-input').fill(title);
     await page.locator('dialog[open] .popup-button-ok').click();
     await expect(page.locator('#workspace-chat-title')).toHaveText(title, { timeout: 20000 });
     await expect(page.locator('#send_textarea')).toBeVisible();
-    await expect.poll(async () => (await api(page, '/api/chats/recent', {})).some(record => record.file_name === `${title}.jsonl`)).toBe(true);
 }
 
 async function currentAction(page, action) {
@@ -89,6 +101,7 @@ test.beforeEach(async ({ page }) => {
             settings.active_character = null;
             settings.active_group = null;
             settings.power_user.auto_connect = false;
+            settings.power_user.font_scale = 1;
             settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true', workspaceAdvancedSettings: 'false', workspaceArchivedChats: '[]' };
             settings.extension_settings.serviceConnections = { url: '' };
             settings.extension_settings.tts = { ...settings.extension_settings.tts };
@@ -131,7 +144,7 @@ test.afterEach(async ({ page }, testInfo) => {
                 await script.deleteCharacterChatByName(String(id), record.file_name.replace(/\.jsonl$/, ''));
             }
         }
-    }, records.filter(record => record.file_name.startsWith(prefix)));
+    }, records.filter(record => record.file_name.startsWith(prefix) || page.workspaceCreatedTitles?.includes(record.file_name.replace(/\.jsonl$/, ''))));
     const { groups, characters } = await page.evaluate(async () => {
         const script = await import('/script.js');
         const group = await import('/scripts/group-chats.js');
@@ -157,6 +170,58 @@ test('library browsing shows profiles without opening or replacing a story', asy
     await page.screenshot({ path: testInfo.outputPath('workspace-profile-desktop.png') });
 });
 
+test('history failure stays visible in profiles and archive while known stories remain usable', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} history`;
+    await startStory(page, title);
+    let unavailable = true;
+    await page.route('**/api/chats/recent', route => unavailable
+        ? route.fulfill({ status: 503, json: { error: 'Synthetic history outage' } })
+        : route.continue());
+    await page.locator('#workspace-history').click();
+    await expect(page.locator('.workspace-history [role="alert"]')).toContainText('Could not load your stories');
+    await expect(page.locator('.workspace-profile .workspace-scene-row').filter({ hasText: title })).toBeVisible();
+    await page.locator('[data-workspace-action="profile-scope"][data-scope="archived"]').click();
+    await expect(page.locator('.workspace-history [role="alert"]')).toBeVisible();
+    await expect(page.getByRole('heading', { name: 'No archived stories', exact: true })).toHaveCount(0);
+    await navigate(page, 'archive');
+    await expect(page.locator('.workspace-history [role="alert"]')).toBeVisible();
+    unavailable = false;
+    await page.getByRole('button', { name: 'Try again', exact: true }).click();
+    await expect(page.locator('.workspace-history [role="alert"]')).toHaveCount(0);
+    await expect(page.getByRole('heading', { name: 'No archived stories', exact: true })).toBeVisible();
+    await navigate(page, 'chats');
+    await expect(page.locator('.workspace-conversations .workspace-scene-row').filter({ hasText: title })).toBeVisible();
+});
+
+test('native character editor owns Escape before its settings page and audio upload works by keyboard', async ({ page }) => {
+    await page.getByRole('button', { name: 'Create character', exact: true }).click();
+    await expect(page.locator('#create_button_label')).toContainText('Create character');
+    await page.locator('#advanced_div').click();
+    await expect(page.locator('#character_popup')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#character_popup')).toBeHidden();
+    await expect(page.locator('#workspace-settings-shell')).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(page.locator('#workspace-settings-shell')).toBeHidden();
+    await page.setViewportSize({ width: 390, height: 844 });
+    await settingsCategory(page, 'dictation-settings');
+    await expect(page.getByLabel('Settings category')).toHaveValue('dictation-settings');
+    const choose = page.getByRole('button', { name: 'Choose audio file', exact: true });
+    await choose.focus();
+    const chooser = page.waitForEvent('filechooser');
+    await page.keyboard.press('Enter');
+    await (await chooser).setFiles([]);
+    await expect(choose).toBeFocused();
+    await settingsCategory(page, 'extensions');
+    // The endpoint fields belong to the native dictation drawer's collapse state.
+    const drawer = page.locator('#dictation-settings > .inline-drawer-content');
+    if (await drawer.isVisible()) await page.locator('#dictation-settings > .inline-drawer-toggle').click();
+    await expect(drawer).toBeHidden();
+    await expect(page.locator('#dictation-endpoint')).toBeHidden();
+    await page.locator('#dictation-settings > .inline-drawer-toggle').click();
+    await expect(page.locator('#dictation-endpoint')).toBeVisible();
+});
+
 test('new stories preserve previous transcripts and profile history resumes the exact scene', async ({ page }, testInfo) => {
     const first = `Workspace e2e ${testInfo.testId}-${runId} first`;
     const second = `Workspace e2e ${testInfo.testId}-${runId} second`;
@@ -167,12 +232,6 @@ test('new stories preserve previous transcripts and profile history resumes the 
     await returnToChat(page);
     await expect(page.locator('#send_textarea')).toHaveValue('An unsent turn stays here.');
     await page.locator('#send_textarea').fill('');
-    await profile(page);
-    await page.getByRole('button', { name: 'Start new story', exact: true }).click();
-    await page.locator('dialog[open] .popup-input').fill(first);
-    await page.locator('dialog[open] .popup-button-ok').click();
-    await expect(page.locator('#toast-container')).toContainText('A story with that title already exists');
-    expect(await page.evaluate(async () => (await import('/script.js')).getCurrentChatId())).toBe(first);
     await startStory(page, second);
     await page.locator('#workspace-history').click();
     const row = page.locator('.workspace-profile .workspace-scene-row').filter({ has: page.locator('.workspace-scene-text strong', { hasText: first }) });
@@ -184,26 +243,30 @@ test('new stories preserve previous transcripts and profile history resumes the 
     await expect(page.locator('#send_textarea')).toBeFocused();
 });
 
-test('starting a fresh character creates exactly one transcript, with or without a title', async ({ page }, testInfo) => {
+test('starting a character story is immediate, creates one transcript and can be renamed afterward', async ({ page }, testInfo) => {
     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
     const source = await page.evaluate(async () => (await import('/script.js')).characters[0].avatar);
     const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: source });
     const character = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} fresh` });
     await page.evaluate(async () => (await import('/script.js')).getCharacters());
     const before = await api(page, '/api/chats/recent', {});
-    for (const title of [`${prefix} first`, '']) {
-        await navigate(page, 'characters');
-        await page.locator('.workspace-library-card').filter({ hasText: `${prefix} fresh` }).click();
-        await page.getByRole('button', { name: 'Start new story', exact: true }).click();
-        await page.locator('dialog[open] .popup-input').fill(title);
-        await page.locator('dialog[open] .popup-button-ok').click();
+    for (const index of [1, 2]) {
+        const previous = await page.evaluate(async () => (await import('/script.js')).getCurrentChatId());
+        if (index === 1) {
+            await navigate(page, 'characters');
+            await page.locator('.workspace-library-card').filter({ hasText: `${prefix} fresh` }).click();
+            await page.getByRole('button', { name: 'Start new story', exact: true }).dblclick();
+        } else await page.locator('#workspace-new-story').dblclick();
+        await expect(page.locator('dialog[open]')).toHaveCount(0);
         await expect(page.locator('#send_textarea')).toBeVisible();
+        await expect.poll(() => page.evaluate(async () => (await import('/script.js')).getCurrentChatId())).not.toBe(previous);
+        await expect(page.locator('#workspace-new-story')).toHaveAttribute('aria-busy', 'false');
         const current = await page.evaluate(async () => (await import('/script.js')).getCurrentChatId());
         expect(current).toBeTruthy();
-        if (title) expect(current).toBe(title);
         const records = (await api(page, '/api/chats/recent', {})).filter(record => record.avatar === character.avatar);
-        expect(records).toHaveLength(title ? 1 : 2);
+        expect(records).toHaveLength(index);
         expect(records.some(record => record.file_name === `${current}.jsonl`)).toBe(true);
+        if (index === 1) await renameCurrentStory(page, `${prefix} first`);
     }
     expect((await api(page, '/api/chats/recent', {})).filter(record => record.avatar !== character.avatar)).toEqual(before);
 });
@@ -449,6 +512,43 @@ test('settings sections, blank space and external dialogs never close mounted co
     expect(failures).toEqual([]);
 });
 
+test('every settings destination keeps controls reachable with enlarged phone text', async ({ page }, testInfo) => {
+    test.setTimeout(180000);
+    await page.setViewportSize({ width: 320, height: 568 });
+    await settingsCategory(page, 'settings');
+    await page.locator('#font_scale').evaluate(input => {
+        input.value = '1.5';
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('mouseup', { bubbles: true }));
+    });
+    await page.locator('#workspace-advanced-settings').check();
+    const audit = [];
+    for (const width of [320, 390]) {
+        await page.setViewportSize({ width, height: 568 });
+        for (const category of ['servers', 'connection', 'generation', 'prompts', 'image-writer', 'image-settings', 'voice-settings', 'dictation-settings', 'vision-settings', 'embeddings-settings', 'persona', 'world', 'backgrounds', 'settings', 'extensions', 'character-editor']) {
+            await settingsCategory(page, category, false);
+            const result = await page.locator('.workspace-mounted-panel').evaluate(panel => {
+                const bounds = panel.getBoundingClientRect();
+                const outside = [...panel.querySelectorAll('input,select,button,.menu_button,.editor_maximize')].filter(node => node.getClientRects().length).flatMap(node => {
+                    const box = node.getBoundingClientRect();
+                    return box.left < bounds.left - 1 || box.right > bounds.right + 1 ? [{ id: node.id, class: node.className, left: box.left, right: box.right, width: box.width }] : [];
+                });
+                const done = document.querySelector('[data-workspace-action="close-panel"]');
+                const box = done.getBoundingClientRect();
+                const hit = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+                const narrowPresets = [...panel.querySelectorAll('select[data-preset-manager-for], #openai_logit_bias_preset, #context_presets, #instruct_presets, #sysprompt_select, #reasoning_select')].filter(node => node.getClientRects().length && node.getBoundingClientRect().width < Math.min(200, panel.clientWidth * 0.7)).map(node => ({ id: node.id, width: node.getBoundingClientRect().width }));
+                const smallPromptActions = [...panel.querySelectorAll('.prompt-manager-edit-action, .prompt-manager-toggle-action')].filter(node => node.getClientRects().length).filter(node => { const box = node.getBoundingClientRect(); return box.width < 44 || box.height < 44; }).length;
+                return { client: panel.clientWidth, scroll: panel.scrollWidth, outside, narrowPresets, smallPromptActions, doneUsable: done.contains(hit), profileWidth: document.querySelector('#connection_profiles')?.getBoundingClientRect().width };
+            });
+            audit.push({ width, category, ...result });
+            await page.screenshot({ path: testInfo.outputPath(`enlarged-${category}-${width}.png`) });
+        }
+    }
+    fs.writeFileSync(testInfo.outputPath('enlarged-layout-audit.json'), JSON.stringify(audit, null, 2));
+    expect(audit.filter(item => item.scroll > item.client + 1 || !item.doneUsable || item.narrowPresets.length || item.smallPromptActions)).toEqual([]);
+    expect(audit.filter(item => item.category === 'connection').every(item => item.profileWidth >= item.width - 64)).toBe(true);
+});
+
 test('settings changes and late saves preserve every category through direct navigation', async ({ page }, testInfo) => {
     test.setTimeout(180000);
     page.setDefaultTimeout(7000);
@@ -582,6 +682,40 @@ async function serviceSetup(page) {
     await page.locator('#service-discover').click();
     await expect(page.locator('#service-discovery-status')).toContainText('Connected to Juiced');
 }
+
+test('discovered selectors distinguish unapplied choices and follow native provider changes', async ({ page }) => {
+    await page.route('**/api/openai/custom/discover', route => route.fulfill({ json: route.request().postDataJSON().voice_model ? { voices: ['voice-a', 'voice-b'] } : serviceFixture() }));
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'story-fixture' }, { id: 'writer-fixture' }] } }));
+    await serviceSetup(page);
+    await serviceCategory(page, 'chat');
+    await page.locator('#service-chat-model').selectOption('story-fixture');
+    await page.locator('#service-chat-apply').click();
+    await expect(page.locator('#service-chat-row')).toContainText('Saved.');
+    await page.locator('#service-chat-model').selectOption('writer-fixture');
+    await expect(page.locator('#service-chat-row')).toContainText('Selection not applied');
+    expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.custom_model)).toBe('story-fixture');
+    await settingsCategory(page, 'connection');
+    await page.locator('#custom_model_id').fill('writer-fixture');
+    await serviceCategory(page, 'transcribe');
+    await serviceCategory(page, 'chat');
+    await expect(page.locator('#service-chat-model')).toHaveValue('writer-fixture');
+    await expect(page.locator('#service-chat-row')).toContainText('Provider settings updated');
+    await settingsCategory(page, 'connection');
+    await page.locator('#custom_api_url_text').fill('https://other.synthetic.example/v1');
+    await serviceCategory(page, 'transcribe');
+    await serviceCategory(page, 'chat');
+    await expect(page.locator('#service-chat-model')).toHaveValue('');
+    await expect(page.locator('#service-chat-row')).toContainText('other provider settings');
+    await expect(page.locator('#service-chat-auto-context')).toBeDisabled();
+    await expect(page.locator('#service-chat-context')).toContainText('not the active story connection');
+    await serviceCategory(page, 'speak');
+    await page.locator('#service-speak-model').selectOption('speech-fixture');
+    await expect(page.locator('#service-speak-voice option')).toHaveCount(2);
+    await page.locator('#service-speak-apply').click();
+    await expect(page.locator('#service-speak-row')).toContainText('Saved.');
+    await page.locator('#service-speak-voice').selectOption('voice-b');
+    await expect(page.locator('#service-speak-row')).toContainText('Selection not applied');
+});
 
 test('one server configures native services and survives reload without replacing sampling or profiles', async ({ page }) => {
     let discoveryCalls = 0;
@@ -1255,6 +1389,8 @@ test('native streamed replies keep the composer and character identity mounted',
     await page.locator('#custom_model_id').fill('workspace-fixture');
     await page.locator('#api_button_openai').click();
     await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+    await settingsCategory(page, 'generation');
+    await page.locator('#stream_toggle').check();
     await page.keyboard.press('Escape');
     await page.evaluate(() => {
         window.__workspaceComposer = document.getElementById('send_textarea');
@@ -1419,8 +1555,9 @@ test('cast creation selects real characters and opens a group story', async ({ p
     await expect(page.locator('.workspace-profile-intro h1')).toHaveText(`${prefix} cast`);
     await expect(page.locator('.workspace-profile-cast .workspace-cast-member')).toHaveCount(2);
     await page.getByRole('button', { name: 'Start new story', exact: true }).click();
-    await page.locator('dialog[open] .popup-input').fill(`${prefix} group-scene`);
-    await page.locator('dialog[open] .popup-button-ok').click();
+    await expect(page.locator('dialog[open]')).toHaveCount(0);
+    await expect(page.locator('#send_textarea')).toBeVisible();
+    await renameCurrentStory(page, `${prefix} group-scene`);
     await expect(page.locator('#workspace-chat-title')).toHaveText(`${prefix} group-scene`, { timeout: 20000 });
     await page.locator('#workspace-header-portrait').click();
     await expect(page.locator('#workspace-scene-info')).toContainText('Cast reply order & members');
@@ -1515,6 +1652,14 @@ for (const width of [320, 390, 768]) {
 
 test('native font preferences and browser text sizing keep phone controls usable', async ({ page }, testInfo) => {
     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} large text`);
+    await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
+    await settingsCategory(page, 'connection');
+    await page.locator('#chat_completion_source').selectOption('custom');
+    await page.locator('#custom_api_url_text').fill('http://127.0.0.1:12345/v1');
+    await page.locator('#custom_model_id').fill('workspace-fixture');
+    await page.locator('#api_button_openai').click();
+    await expect(page.locator('#workspace-connection-label')).toHaveText('Model connected');
+    await page.keyboard.press('Escape');
     await navigate(page, 'settings-page');
     await settingsCategory(page, 'settings');
     await page.locator('#font_scale').evaluate(input => {
@@ -1525,6 +1670,18 @@ test('native font preferences and browser text sizing keep phone controls usable
     await expect.poll(() => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--fontScale').trim())).toBe('1.5');
     await page.keyboard.press('Escape');
     await returnToChat(page);
+    await page.setViewportSize({ width: 320, height: 568 });
+    await expect(page.locator('#send_but')).toBeVisible();
+    const send = await page.locator('#send_but').boundingBox();
+    expect(send.x).toBeGreaterThanOrEqual(0);
+    expect(send.x + send.width).toBeLessThanOrEqual(321);
+    await page.locator('.workspace-creative-menu summary').click();
+    const menu = page.locator('.workspace-creative-menu .workspace-action-menu');
+    await expect.poll(() => menu.evaluate(node => node.getBoundingClientRect().top >= document.getElementById('workspace-header').getBoundingClientRect().bottom)).toBe(true);
+    expect(await menu.evaluate(node => node.scrollWidth <= node.clientWidth + 1)).toBe(true);
+    await page.locator('#extensionsMenuButton').scrollIntoViewIfNeeded();
+    await expect(page.locator('#extensionsMenuButton')).toBeInViewport();
+    await page.locator('.workspace-creative-menu summary').click();
     await page.setViewportSize({ width: 390, height: 844 });
     // Simulate a larger browser default independently of the native font preference.
     await page.evaluate(() => document.documentElement.style.fontSize = '20px');

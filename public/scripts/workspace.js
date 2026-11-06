@@ -6,7 +6,7 @@ import { eventSource, event_types } from './events.js';
 import { extension_settings } from './extensions.js';
 import { createGroupWithMembers, groups, selected_group } from './group-chats.js';
 import { callGenericPopup, POPUP_RESULT, POPUP_TYPE } from './popup.js';
-import { shouldSendOnEnter } from './RossAscends-mods.js';
+import { hasNativeEscapeTarget, shouldSendOnEnter } from './RossAscends-mods.js';
 import { accountStorage } from './util/AccountStorage.js';
 import { getChatCompletionModel, oai_settings } from './openai.js';
 import { WorkspaceChats } from './workspace-chats.js';
@@ -20,7 +20,7 @@ import {
 const transcripts = new WorkspaceChats();
 const settingsPanel = new WorkspaceSettings();
 const creativeTools = new WorkspaceTools(refreshWorkspace);
-const state = { view: 'characters', entities: [], chats: [], entityKey: '', query: '', filter: 'all', profileScope: 'active', loading: false, error: '' };
+const state = { view: 'characters', entities: [], chats: [], entityKey: '', query: '', filter: 'all', profileScope: 'active', loading: false, starting: false, error: '' };
 const mainDestinations = [
     { id: 'chats', label: 'Stories', icon: 'fa-comment-dots' },
     { id: 'characters', label: 'Characters', icon: 'fa-address-card' },
@@ -109,7 +109,7 @@ async function openDrawer(action, trigger) {
     await closeDrawers();
     await settingsPanel.open(action);
     if (action === 'voice-settings') await refreshVoices();
-    syncNavigation();
+    refreshWorkspace();
 }
 
 async function refreshVoices() {
@@ -218,30 +218,35 @@ function refreshWorkspace() {
     state.entities = entities();
     const current = transcripts.current();
     const entity = currentCharacter();
+    const inChat = state.view === 'chat' && !settingsPanel.active;
     const connected = online_status !== 'no_connection' && Boolean(online_status);
     document.body.classList.toggle('workspace-connected', connected);
     document.body.classList.toggle('workspace-browsing', state.view !== 'chat');
     const titles = { characters: 'Characters', chats: 'Stories', archive: 'Archive', profile: entity?.name || 'Character profile', 'settings-page': 'Settings' };
-    document.getElementById('workspace-chat-title').textContent = state.view === 'chat' ? current?.file_name || 'Your story' : state.view === 'profile' ? state.entities.find(item => item.key === state.entityKey)?.name || 'Character profile' : titles[state.view];
-    document.getElementById('workspace-chat-subtitle').textContent = state.view === 'chat' ? `${entity?.name || name2 || 'Character'}${selected_group ? ' • Cast story' : ''}` : 'Roleplay workspace';
+    document.getElementById('workspace-chat-title').textContent = settingsPanel.active ? 'Settings' : state.view === 'chat' ? current?.file_name || 'Your story' : state.view === 'profile' ? state.entities.find(item => item.key === state.entityKey)?.name || 'Character profile' : titles[state.view];
+    document.getElementById('workspace-chat-subtitle').textContent = settingsPanel.active ? workspaceSettings.find(item => item.id === settingsPanel.active)?.label : state.view === 'chat' ? `${entity?.name || name2 || 'Character'}${selected_group ? ' • Cast story' : ''}` : 'Roleplay workspace';
     const headingPortrait = document.getElementById('workspace-header-portrait');
-    headingPortrait.hidden = state.view !== 'chat' || !entity;
+    headingPortrait.hidden = !inChat || !entity;
     headingPortrait.setAttribute('aria-expanded', String(state.view === 'chat' && document.body.classList.contains('workspace-inspecting') && !settingsPanel.active));
     if (portraitSignature !== entity?.key) {
         portraitSignature = entity?.key;
         headingPortrait.replaceChildren();
         if (entity) headingPortrait.append(portrait(entity));
     }
-    document.getElementById('workspace-history').hidden = state.view !== 'chat';
+    document.getElementById('workspace-history').hidden = !inChat;
     const headerMenu = document.getElementById('workspace-header-menu');
-    const menuSignature = state.view === 'chat' && current ? JSON.stringify([current.key, current.archived]) : '';
+    const menuSignature = inChat && current ? JSON.stringify([current.key, current.archived]) : '';
     if (headerMenu.dataset.signature !== menuSignature) {
         headerMenu.replaceChildren();
         headerMenu.dataset.signature = menuSignature;
         if (menuSignature) headerMenu.append(chatMenu(currentRecord()));
     }
-    document.getElementById('workspace-new-story').hidden = state.view !== 'chat';
+    document.getElementById('workspace-new-story').hidden = !inChat;
     document.getElementById('workspace-new-story').dataset.workspaceAction = state.view === 'chat' ? 'start-current-story' : 'characters';
+    document.querySelectorAll('[data-workspace-action="start-story"], [data-workspace-action="start-current-story"]').forEach(control => {
+        control.disabled = state.starting;
+        control.setAttribute('aria-busy', String(state.starting));
+    });
     document.getElementById('workspace-persona-name').textContent = name1 || 'Your persona';
     document.getElementById('workspace-connection-label').textContent = connected ? 'Model connected' : 'Connect a model';
     document.getElementById('workspace-connection-detail').textContent = connected ? online_status : 'Set up an API to write replies';
@@ -249,7 +254,7 @@ function refreshWorkspace() {
     document.getElementById('workspace-model-chip').textContent = modelLabel;
     document.getElementById('workspace-model-chip').parentElement.title = modelLabel;
     const activeStory = document.getElementById('workspace-active-story');
-    activeStory.hidden = !current || state.view === 'chat';
+    activeStory.hidden = !current || inChat;
     activeStory.querySelector('strong').textContent = current?.file_name || '';
     activeStory.querySelector('small').textContent = isGenerating() ? 'Reply in progress. Open story' : 'Return to your open story';
     document.getElementById('workspace-generation-status').hidden = !isGenerating();
@@ -304,6 +309,8 @@ async function refreshChats() {
     const request = new AbortController();
     chatRequest = request;
     state.loading = true;
+    state.error = '';
+    if (state.view !== 'chat') renderPage();
     try {
         const records = await transcripts.list(request.signal);
         if (request.signal.aborted) return;
@@ -351,9 +358,7 @@ async function enterChat(record) {
 async function startStory(entity) {
     if (!entity) return;
     if (isGenerating()) throw new Error('Stop the current reply before starting a different story.');
-    const title = await callGenericPopup(popupContent(`A new story with ${entity.name}`, 'Give this scene a title, or leave it blank for an automatic title. Your previous scenes stay in Stories.'), POPUP_TYPE.INPUT, '', { okButton: 'Start story', cancelButton: 'Cancel' });
-    if (typeof title !== 'string') return;
-    await transcripts.start(entity, title);
+    await transcripts.start(entity);
     state.view = 'chat';
     initializedView = true;
     await closeDrawers();
@@ -586,6 +591,12 @@ export function initWorkspace() {
         event.preventDefault();
         if (target.disabled) return;
         const action = target.dataset.workspaceAction || target.dataset.serviceDestination;
+        const startsStory = ['start-story', 'start-current-story'].includes(action);
+        if (startsStory) {
+            if (state.starting || event.detail > 1) return;
+            state.starting = true;
+            refreshWorkspace();
+        }
         const command = document.getElementById('workspace-command');
         if (command.open && action !== 'close-search') command.close();
         document.querySelectorAll('.workspace-scene-menu[open]').forEach(menu => menu.open = false);
@@ -596,7 +607,9 @@ export function initWorkspace() {
         } else {
             // A page may reconcile while this command waits. Capture identity at click time.
             const request = { dataset: { ...target.dataset }, element: target };
-            navigationQueue = navigationQueue.then(() => handleAction(action, request)).catch(showError);
+            navigationQueue = navigationQueue.then(() => handleAction(action, request)).catch(showError).finally(() => {
+                if (startsStory) { state.starting = false; refreshWorkspace(); }
+            });
         }
     });
     document.addEventListener('input', event => {
@@ -622,10 +635,10 @@ export function initWorkspace() {
     document.addEventListener('keydown', event => {
         if (!document.body.classList.contains('workspace-ui') || event.isComposing) return;
         if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k' && !document.querySelector('dialog[open]')) { event.preventDefault(); openSearch(); } else if (event.key === 'Escape' && !document.querySelector('dialog[open]')) {
-            if ($('.select2-dropdown').is(':visible')) return;
+            if (hasNativeEscapeTarget()) return;
             if (document.body.classList.contains('workspace-nav-open')) {
                 event.preventDefault(); event.stopImmediatePropagation(); setMobileNavigation(false); document.getElementById('workspace-menu').focus();
-            } else if (settingsPanel.active && !$('.edit_textarea, .reasoning_edit_textarea, #select_chat_popup').is(':visible')) {
+            } else if (settingsPanel.active) {
                 event.preventDefault(); event.stopImmediatePropagation(); void closeDrawers().then(() => { refreshWorkspace(); focusContent(); });
             } else if (!settingsPanel.active && document.body.classList.contains('workspace-inspecting')) {
                 event.preventDefault(); event.stopImmediatePropagation(); document.body.classList.remove('workspace-inspecting'); refreshWorkspace(); document.getElementById('workspace-header-portrait').focus();

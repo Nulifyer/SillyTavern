@@ -1,0 +1,93 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep history failure|native character editor owns|discovered selectors|starting a character story --output=/tmp/st-full-review-focused
+(node:95439) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:95843) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:95843) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:95843) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 workspace.e2e.js:249:1 › history failure stays visible in profiles and archive while known stories remain usable (7.8s)
+(node:96435) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:96435) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:96435) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 workspace.e2e.js:289:1 › native character editor owns Escape before its settings page and audio upload works by keyboard (9.7s)
+(node:96708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:96708) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:96708) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 workspace.e2e.js:354:1 › starting a character story is immediate, creates one transcript and can be renamed afterward (5.2s)
+  ✓  4 workspace.e2e.js:897:1 › discovered selectors distinguish unapplied choices and follow native provider changes (4.7s)
+
+
+  1) workspace.e2e.js:249:1 › history failure stays visible in profiles and archive while known stories remain usable
+
+    Error: expect(locator).toBeVisible() failed
+
+    Locator: locator('.workspace-scene-row').filter({ hasText: 'Workspace e2e f5948f93a1ec48d2d907-5e6f525f90e9023b9ffc-mw57nsli history' })
+    Expected: visible
+    Error: strict mode violation: locator('.workspace-scene-row').filter({ hasText: 'Workspace e2e f5948f93a1ec48d2d907-5e6f525f90e9023b9ffc-mw57nsli history' }) resolved to 2 elements:
+        1) <article class="workspace-scene-row workspace-scene-compact workspace-current-story" data-chat-key="["character","default_Seraphina.png","Workspace e2e f5948f93a1ec48d2d907-5e6f525f90e9023b9ffc-mw57nsli history"]">…</article> aka getByRole('complementary', { name: 'Workspace' }).getByRole('article')
+        2) <article class="workspace-scene-row workspace-current-story" data-chat-key="["character","default_Seraphina.png","Workspace e2e f5948f93a1ec48d2d907-5e6f525f90e9023b9ffc-mw57nsli history"]">…</article> aka getByRole('region', { name: 'Story list' }).getByRole('article')
+
+    Call log:
+      - Expect "toBeVisible" with timeout 5000ms
+      - waiting for locator('.workspace-scene-row').filter({ hasText: 'Workspace e2e f5948f93a1ec48d2d907-5e6f525f90e9023b9ffc-mw57nsli history' })
+
+
+      190 |     await expect(page.getByRole('heading', { name: 'No archived stories', exact: true })).toBeVisible();
+      191 |     await navigate(page, 'chats');
+    > 192 |     await expect(page.locator('.workspace-scene-row').filter({ hasText: title })).toBeVisible();
+          |                                                                                   ^
+      193 | });
+      194 |
+      195 | test('native character editor owns Escape before its settings page and audio upload works by keyboard', async ({ page }) => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:192:83
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-full-review-focused/workspace.e2e.js-history-f-f7ab2-known-stories-remain-usable/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-full-review-focused/workspace.e2e.js-history-f-f7ab2-known-stories-remain-usable/error-context.md
+
+  2) workspace.e2e.js:289:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+
+    Error: expect(locator).toBeHidden() failed
+
+    Locator:  locator('#dictation-settings > .inline-drawer-content')
+    Expected: hidden
+    Received: visible
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeHidden" with timeout 5000ms
+      - waiting for locator('#dictation-settings > .inline-drawer-content')
+        9 × locator resolved to <div class="inline-drawer-content">…</div>
+          - unexpected value "visible"
+
+
+      216 |     const drawer = page.locator('#dictation-settings > .inline-drawer-content');
+      217 |     await page.locator('#dictation-settings > .inline-drawer-toggle').click();
+    > 218 |     await expect(drawer).toBeHidden();
+          |                          ^
+      219 |     await expect(page.locator('#dictation-endpoint')).toBeHidden();
+      220 |     await page.locator('#dictation-settings > .inline-drawer-toggle').click();
+      221 |     await expect(page.locator('#dictation-endpoint')).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:218:26
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-full-review-focused/workspace.e2e.js-native-ch-f6c7b-io-upload-works-by-keyboard/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-full-review-focused/workspace.e2e.js-native-ch-f6c7b-io-upload-works-by-keyboard/error-context.md
+
+  2 failed
+    workspace.e2e.js:249:1 › history failure stays visible in profiles and archive while known stories remain usable
+    workspace.e2e.js:289:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+  2 passed (31.1s)

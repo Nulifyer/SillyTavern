@@ -1,0 +1,69 @@
+public/scripts/workspace.js:127:    const focusedAction = container.contains(active) && active?.dataset.workspaceAction ? JSON.stringify(active.dataset) : null;
+public/scripts/workspace.js:136:        getNodeKey: node => node.id || node.dataset?.chatKey || (node.dataset?.entity ? `${node.dataset.workspaceAction}:${node.dataset.entity}` : undefined),
+public/scripts/workspace.js:188:        const active = item.dataset.workspaceAction === selected;
+public/scripts/workspace.js:244:    document.getElementById('workspace-new-story').dataset.workspaceAction = state.view === 'chat' ? 'start-current-story' : 'characters';
+public/scripts/workspace.js:279:    const close = button('Close scene details', 'close-inspector', {}, 'workspace-icon-button', 'fa-xmark');
+public/scripts/workspace.js:286:    panel.append(cast, button('Character and stories', 'history', {}, 'workspace-button', 'fa-address-card'));
+public/scripts/workspace.js:290:            const control = button(member.name, 'profile', { entity: member.key }, 'workspace-cast-member');
+public/scripts/workspace.js:294:        panel.append(members, button('Cast reply order & members', 'edit-entity', { entity: entity.key }, 'workspace-button', 'fa-users'));
+public/scripts/workspace.js:296:    panel.append(element('h3', '', 'You in this story'), button(name1 || 'Choose a persona', 'persona', {}, 'workspace-button', 'fa-user'));
+public/scripts/workspace.js:297:    panel.append(element('h3', '', 'Story controls'), button('World & lore', 'world', {}, 'workspace-back-link', 'fa-book-atlas'), button('Writing & replies', 'generation', {}, 'workspace-back-link', 'fa-sliders'), button('Scene background', 'backgrounds', {}, 'workspace-back-link', 'fa-panorama'));
+public/scripts/workspace.js:369:    header.append(element('h2', '', 'Bring a cast together'), button('Close', 'close-tools', {}, 'workspace-icon-button', 'fa-xmark'));
+public/scripts/workspace.js:397:    const create = button('Create cast', 'save-cast', {}, 'workspace-button workspace-primary', 'fa-users');
+public/scripts/workspace.js:501:        results.append(button(item.label, item.id, {}, 'workspace-command-result', item.icon));
+public/scripts/workspace.js:504:        const result = button(entity.name, 'profile', { entity: entity.key }, 'workspace-command-result');
+public/scripts/workspace.js:509:        results.append(button(record.title, 'open-chat', { chat: record.key }, 'workspace-command-result', 'fa-comment'));
+public/scripts/workspace.js:550:    for (const item of mainDestinations) navigation.append(button(item.label, item.id, {}, 'workspace-nav-item', item.icon));
+public/scripts/workspace.js:566:    const restore = button('Use workspace layout', 'restore-workspace', {}, 'workspace-restore menu_button', 'fa-table-columns');
+public/scripts/workspace.js:584:        const target = event.target instanceof Element ? event.target.closest('[data-workspace-action], [data-service-destination]') : null;
+public/scripts/workspace.js:588:        const action = target.dataset.workspaceAction || target.dataset.serviceDestination;
+public/scripts/workspace-views.js:36:export function button(label, action, data = {}, className = 'workspace-button', symbol) {
+public/scripts/workspace-views.js:39:    node.dataset.workspaceAction = action;
+public/scripts/workspace-views.js:96:    const card = button('', 'profile', { entity: entity.key }, 'workspace-library-card');
+public/scripts/workspace-views.js:113:    const open = button('', 'open-chat', { chat: record.key }, 'workspace-scene-open');
+public/scripts/workspace-views.js:133:        if (record.archived) row.append(button('Restore', 'restore-chat', { chat: record.key }, 'workspace-button workspace-small', 'fa-box-open'));
+public/scripts/workspace-views.js:146:        button('Rename', 'rename-chat', { chat: record.key }, 'workspace-menu-action', 'fa-pen'),
+public/scripts/workspace-views.js:147:        button(record.archived ? 'Restore' : 'Archive', record.archived ? 'restore-chat' : 'archive-chat', { chat: record.key }, 'workspace-menu-action', record.archived ? 'fa-box-open' : 'fa-box-archive'),
+public/scripts/workspace-views.js:148:        button('Delete', 'delete-chat', { chat: record.key }, 'workspace-menu-action workspace-danger', 'fa-trash'),
+public/scripts/workspace-views.js:161:        button('Import card', 'import-character', {}, 'workspace-button', 'fa-file-import'),
+public/scripts/workspace-views.js:162:        button('Create character', 'create-character', {}, 'workspace-button workspace-primary', 'fa-plus'),
+public/scripts/workspace-views.js:168:        const filter = button(label, 'library-filter', { filter: id }, 'workspace-filter');
+public/scripts/workspace-views.js:177:    heading.append(element('p', '', `${matches.length} ${matches.length === 1 ? 'character or cast' : 'characters and casts'}`), button('Create cast', 'create-cast', {}, 'workspace-back-link', 'fa-users'));
+public/scripts/workspace-views.js:181:    page.append(matches.length ? cards : empty('No characters match', 'Try a different search or import a character card.', button('Import a card', 'import-character')));
+public/scripts/workspace-views.js:187:    page.append(pageHeading(archived ? 'Archive' : 'Stories', archived ? 'Finished scenes, kept for whenever you want to return.' : 'Continue a conversation or start a new scene.', archived ? [] : [button('New story', 'characters', {}, 'workspace-button workspace-primary', 'fa-plus')]));
+public/scripts/workspace-views.js:190:    if (archived) toolbar.append(button('Active stories', 'chats', {}, 'workspace-back-link', 'fa-comment'));
+public/scripts/workspace-views.js:191:    else toolbar.append(button('View archive', 'archive', {}, 'workspace-back-link', 'fa-box-archive'));
+public/scripts/workspace-views.js:209:    else if (state.error) page.append(empty('Your stories could not load', state.error, button('Try again', 'refresh-chats')));
+public/scripts/workspace-views.js:210:    else page.append(records.length ? list : empty(archived ? 'No archived stories' : 'Start your first story', state.query ? 'Try a different title or character name.' : archived ? 'Archive a story from its menu to keep it here. You can restore it later.' : 'Choose a character and read their premise before beginning.', archived ? null : button('Choose a character', 'characters', {}, 'workspace-button workspace-primary')));
+public/scripts/workspace-views.js:216:    if (!entity) return empty('This character is no longer available', 'Return to your library to choose another character.', button('Characters', 'characters'));
+public/scripts/workspace-views.js:218:    page.append(button('All characters', 'characters', {}, 'workspace-back-link', 'fa-arrow-left'));
+public/scripts/workspace-views.js:225:    controls.append(button('Start new story', 'start-story', { entity: entity.key }, 'workspace-button workspace-primary', 'fa-plus'));
+public/scripts/workspace-views.js:226:    controls.append(button(entity.kind === 'group' ? 'Edit cast' : 'Edit character', 'edit-entity', { entity: entity.key }, 'workspace-back-link', 'fa-pen'));
+public/scripts/workspace-views.js:232:            const memberButton = button(member.name, 'profile', { entity: member.key }, 'workspace-cast-member');
+public/scripts/workspace-views.js:260:        resume.append(element('h2', '', 'Pick up where you left off'), element('strong', '', recent.title), element('p', '', plainText(recent.mes) || 'Your story is ready to continue.'), button('Continue latest story', 'open-chat', { chat: recent.key }, 'workspace-button', 'fa-play'));
+public/scripts/workspace-views.js:267:        const tab = button(label, 'profile-scope', { scope: id }, 'workspace-filter');
+public/scripts/workspace-settings.js:32:                const destination = button(setting.label, id, {}, 'workspace-settings-destination', setting.icon);
+public/scripts/workspace-settings.js:44:        this.close = button('Done', 'close-panel', {}, 'workspace-button', 'fa-check');
+public/scripts/workspace-settings.js:63:            const tab = button(label, id, {}, 'workspace-filter');
+public/scripts/workspace-settings.js:65:            delete tab.dataset.workspaceAction;
+public/scripts/workspace-settings.js:109:        this.root.querySelectorAll('[data-workspace-action]').forEach(control => {
+public/scripts/workspace-settings.js:110:            if (control.dataset.workspaceAction === 'close-panel') return;
+public/scripts/workspace-settings.js:111:            if (control.dataset.workspaceAction === 'character-editor') control.hidden = id !== 'character-editor';
+public/scripts/workspace-settings.js:112:            const selected = control.dataset.workspaceAction === (['generation', 'prompts'].includes(id) ? 'connection' : id);
+public/scripts/workspace-settings.js:208:            this.sections.append(button(label, 'settings-section', { section: label }, 'workspace-filter'));
+public/scripts/workspace-settings.js:211:            this.sections.append(button('All controls', 'settings-section', { section: 'all' }, 'workspace-filter'));
+public/scripts/workspace-tools.js:16:        this.image = button('Illustrate scene', 'generate-scene-image', {}, 'workspace-tool-button', 'fa-image');
+public/scripts/workspace-tools.js:19:        this.voice = button('Voice off', 'toggle-voice', {}, 'workspace-tool-button workspace-voice-toggle', 'fa-volume-xmark');
+public/scripts/workspace-tools.js:36:            button('Portrait or custom image', 'image', {}, 'workspace-menu-action', 'fa-paintbrush'),
+public/scripts/workspace-tools.js:37:            button('Read latest reply', 'read-reply', {}, 'workspace-menu-action', 'fa-play'),
+public/scripts/workspace-tools.js:38:            button('Play / pause voice', 'voice-playback', {}, 'workspace-menu-action', 'fa-pause'),
+public/scripts/workspace-tools.js:39:            button('Voice settings', 'voice-settings', {}, 'workspace-menu-action', 'fa-volume-high'),
+public/scripts/workspace-tools.js:40:            button('Dictation settings', 'dictation-settings', {}, 'workspace-menu-action', 'fa-microphone'),
+public/scripts/workspace-tools.js:41:            button('Image settings', 'image-settings', {}, 'workspace-menu-action', 'fa-image'),
+public/scripts/workspace-tools.js:42:            button('Model settings', 'connection', {}, 'workspace-menu-action', 'fa-plug'),
+public/scripts/workspace-tools.js:55:        const model = button('', 'connection', {}, 'workspace-tool-button workspace-model-chip', 'fa-microchip');
+public/scripts/workspace-tools.js:126:        const close = button('Close', 'close-tools', {}, 'workspace-icon-button', 'fa-xmark');
+public/scripts/workspace-tools.js:130:        content.append(button('Character portrait', 'generate-image', { imagePrompt: 'face' }, 'workspace-button', 'fa-user'));
+public/scripts/workspace-tools.js:138:        content.append(label, button('Generate custom image', 'generate-custom-image', {}, 'workspace-button workspace-primary', 'fa-wand-magic-sparkles'), button('Image settings', 'image-settings', {}, 'workspace-back-link', 'fa-gear'));
+public/scripts/workspace-tools.js:151:        const controls = [...document.querySelectorAll('#workspace-tools [data-workspace-action^="generate-"]')];
+public/scripts/workspace-tools.js:160:            this.status.replaceChildren(element('span', '', error.message), button('Image settings', 'image-settings', {}, 'workspace-back-link'));

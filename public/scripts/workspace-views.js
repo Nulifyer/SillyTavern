@@ -17,7 +17,7 @@ export const workspaceSettings = [
     { id: 'extensions', label: 'Extensions', icon: 'fa-cubes', description: 'Manage additional tools and their full configuration.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block' },
     { id: 'vision-settings', label: 'Vision & captions', icon: 'fa-eye', description: 'Choose a vision model and edit the instructions used to describe images.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '.caption_settings' },
     { id: 'embeddings-settings', label: 'Retrieval', icon: 'fa-database', description: 'Configure embeddings and retrieval through the Vector Storage extension.', drawer: 'extensions-settings-button', panel: 'rm_extensions_block', focus: '.vectors_settings' },
-    { id: 'character-editor', label: 'Character editor', icon: 'fa-address-card', description: 'Create, import, tag, and edit character cards and group behavior.', drawer: 'rightNavHolder', panel: 'right-nav-panel' },
+    { id: 'character-editor', label: 'Character editor', icon: 'fa-address-card', description: 'Create a card or edit character and group details. Existing characters save automatically; use Create character for a new card.', drawer: 'rightNavHolder', panel: 'right-nav-panel' },
 ];
 
 export function element(tag, className = '', text) {
@@ -90,6 +90,26 @@ function empty(title, description, action) {
     node.append(element('h2', '', translate(title)), element('p', '', translate(description)));
     if (action) node.append(action);
     return node;
+}
+
+/** History state is shared by Stories, Archive and character/cast profiles. */
+function history(state, records, list, emptyState) {
+    const region = element('section', 'workspace-history');
+    region.setAttribute('aria-label', 'Story list');
+    region.setAttribute('aria-busy', String(state.loading));
+    if (state.loading) {
+        const status = element('p', 'workspace-history-status', 'Loading your stories…');
+        status.setAttribute('role', 'status');
+        region.append(status);
+    } else if (state.error) {
+        const status = element('div', 'workspace-history-status');
+        status.setAttribute('role', 'alert');
+        status.append(element('p', '', state.error), button('Try again', 'refresh-chats'));
+        region.append(status);
+    }
+    if (records.length) region.append(list);
+    else if (!state.loading && !state.error) region.append(emptyState);
+    return region;
 }
 
 export function entityCard(entity) {
@@ -205,9 +225,7 @@ function conversations(state, archived) {
         }
         list.append(chatRow(decorateRecord(record, state), entity));
     }
-    if (state.loading && !records.length) page.append(element('p', 'workspace-loading', 'Loading your stories…'));
-    else if (state.error) page.append(empty('Your stories could not load', state.error, button('Try again', 'refresh-chats')));
-    else page.append(records.length ? list : empty(archived ? 'No archived stories' : 'Start your first story', state.query ? 'Try a different title or character name.' : archived ? 'Archive a story from its menu to keep it here. You can restore it later.' : 'Choose a character and read their premise before beginning.', archived ? null : button('Choose a character', 'characters', {}, 'workspace-button workspace-primary')));
+    page.append(history(state, records, list, empty(archived ? 'No archived stories' : 'Start your first story', state.query ? 'Try a different title or character name.' : archived ? 'Archive a story from its menu to keep it here. You can restore it later.' : 'Choose a character and read their premise before beginning.', archived ? null : button('Choose a character', 'characters', {}, 'workspace-button workspace-primary'))));
     return page;
 }
 
@@ -222,7 +240,10 @@ function profile(state) {
     const intro = element('div', 'workspace-profile-intro');
     intro.append(element('h1', '', entity.name), element('p', '', entity.description || 'A character ready for your next story.'));
     const controls = element('div', 'workspace-profile-actions');
-    controls.append(button('Start new story', 'start-story', { entity: entity.key }, 'workspace-button workspace-primary', 'fa-plus'));
+    const start = button('Start new story', 'start-story', { entity: entity.key }, 'workspace-button workspace-primary', 'fa-plus');
+    start.disabled = Boolean(state.starting);
+    start.setAttribute('aria-busy', String(Boolean(state.starting)));
+    controls.append(start);
     controls.append(button(entity.kind === 'group' ? 'Edit cast' : 'Edit character', 'edit-entity', { entity: entity.key }, 'workspace-back-link', 'fa-pen'));
     intro.append(controls);
     identity.append(intro);
@@ -273,7 +294,7 @@ function profile(state) {
     const records = histories.filter(record => record.archived === (state.profileScope === 'archived'));
     const list = element('div', 'workspace-scene-list');
     list.append(...records.map(record => chatRow(decorateRecord(record, state), entity)));
-    content.append(records.length ? list : empty(state.profileScope === 'archived' ? 'No archived stories' : 'Your first scene together', state.profileScope === 'archived' ? 'Archived scenes with this character will appear here.' : 'Start a new story when you are ready.'));
+    content.append(history(state, records, list, empty(state.profileScope === 'archived' ? 'No archived stories' : 'Your first scene together', state.profileScope === 'archived' ? 'Archived scenes with this character will appear here.' : 'Start a new story when you are ready.')));
     layout.append(identity, content);
     page.append(layout);
     return page;

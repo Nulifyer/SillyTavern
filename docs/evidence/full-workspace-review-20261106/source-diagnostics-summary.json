@@ -1,0 +1,5 @@
+{
+  "cases": 38,
+  "pageErrors": [],
+  "note": "Console/network diagnostics include intentional fixture failures and aborted navigation requests; these are not asserted to be absent."
+}

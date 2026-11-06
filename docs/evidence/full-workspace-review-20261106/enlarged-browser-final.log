@@ -1,0 +1,87 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep enlarged phone text|advanced controls retain --output=/tmp/st-full-review-enlarged-final
+(node:116044) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:116078) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:116078) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:116078) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace (10.2s)
+  ✘  2 workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text (7.2s)
+
+
+  1) workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 44
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "category": "prompts",
+    +     "client": 288,
+    +     "doneUsable": true,
+    +     "outside": Array [],
+    +     "profileWidth": 0,
+    +     "scroll": 290,
+    +     "width": 320,
+    +   },
+    +   Object {
+    +     "category": "extensions",
+    +     "client": 288,
+    +     "doneUsable": true,
+    +     "outside": Array [
+    +       Object {
+    +         "class": "flex1 heightFitContent text_pole widthNatural",
+    +         "id": "extensions_url",
+    +         "left": 16.046875,
+    +         "right": 343.046875,
+    +         "width": 327,
+    +       },
+    +       Object {
+    +         "class": "flex1 heightFitContent text_pole widthNatural",
+    +         "id": "extensions_api_key",
+    +         "left": 16.046875,
+    +         "right": 343.046875,
+    +         "width": 327,
+    +       },
+    +     ],
+    +     "profileWidth": 0,
+    +     "scroll": 327,
+    +     "width": 320,
+    +   },
+    +   Object {
+    +     "category": "prompts",
+    +     "client": 358,
+    +     "doneUsable": true,
+    +     "outside": Array [],
+    +     "profileWidth": 0,
+    +     "scroll": 360,
+    +     "width": 390,
+    +   },
+    + ]
+
+      539 |     }
+      540 |     fs.writeFileSync(testInfo.outputPath('enlarged-layout-audit.json'), JSON.stringify(audit, null, 2));
+    > 541 |     expect(audit.filter(item => item.scroll > item.client + 1 || !item.doneUsable)).toEqual([]);
+          |                                                                                     ^
+      542 |     expect(audit.filter(item => item.category === 'connection').every(item => item.profileWidth >= item.width - 64)).toBe(true);
+      543 | });
+      544 |
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:541:85
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-full-review-enlarged-final/workspace.e2e.js-every-set-40742-le-with-enlarged-phone-text/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-full-review-enlarged-final/workspace.e2e.js-every-set-40742-le-with-enlarged-phone-text/error-context.md
+
+  1 failed
+    workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text
+  1 passed (18.0s)

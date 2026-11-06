@@ -1,5 +1,10 @@
 import { DOMPurify, Bowser } from '../lib.js';
 
+/** Native editors and popups handle Escape before the workspace underneath. */
+export function hasNativeEscapeTarget() {
+    return $('dialog[open], .select2-dropdown, #curEditTextarea, .reasoning_edit_textarea, #mes_stop, #dialogue_popup, #select_chat_popup, #character_popup, #dialogue_del_mes_cancel').is(':visible');
+}
+
 import {
     characters,
     online_status,

@@ -39,12 +39,16 @@ export class Dictation {
         this.endpoint = this.input(settings, 'dictation-endpoint', 'Transcription endpoint');
         this.model = this.input(settings, 'dictation-model', 'Transcription model');
         settings.append(element('small', '', 'Uses the Custom OpenAI provider key when one is saved. Key-free servers need no key. Choose discovered models in Settings > Dictation.'));
-        const label = element('label', '', 'Transcribe audio into the current story draft');
+        const label = element('p', '', 'Transcribe an audio file into your current story draft. Maximum 120 seconds and 25 MB.');
         const upload = element('input', 'text_pole');
         upload.type = 'file';
         upload.accept = 'audio/*';
         upload.id = 'dictation-file';
-        label.htmlFor = upload.id;
+        this.uploadButton = element('button', 'menu_button menu_button_icon', 'Choose audio file');
+        this.uploadButton.id = 'dictation-choose-file';
+        this.uploadButton.type = 'button';
+        this.uploadButton.addEventListener('click', () => upload.click());
+        upload.setAttribute('aria-label', 'Audio file to transcribe');
         this.fileStatus = element('p', 'service-status');
         this.fileStatus.id = 'dictation-file-status';
         upload.setAttribute('aria-describedby', this.fileStatus.id);
@@ -69,7 +73,7 @@ export class Dictation {
                 }
             }
         });
-        settings.append(label, upload, this.fileStatus);
+        settings.append(label, this.uploadButton, upload, this.fileStatus);
         document.getElementById('extensions_settings2').append(wrapper);
         this.sync();
         button.addEventListener('click', () => void this.toggle());
@@ -102,6 +106,7 @@ export class Dictation {
     update(disabled = this.disabled) {
         this.disabled = disabled;
         this.button.disabled = Boolean(disabled && !this.active);
+        this.uploadButton.disabled = Boolean(disabled || this.active);
         this.button.setAttribute('aria-pressed', String(Boolean(this.active)));
         this.button.setAttribute('aria-label', this.active ? 'Stop dictation' : 'Dictate message');
         this.button.querySelector('i').className = `fa-solid ${this.active ? 'fa-stop' : 'fa-microphone'}`;

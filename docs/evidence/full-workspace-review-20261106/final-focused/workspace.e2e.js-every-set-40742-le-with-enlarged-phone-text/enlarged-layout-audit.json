@@ -1,0 +1,370 @@
+[
+  {
+    "width": 320,
+    "category": "servers",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "connection",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 288
+  },
+  {
+    "width": 320,
+    "category": "generation",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "prompts",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "image-writer",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "image-settings",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "voice-settings",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "dictation-settings",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "vision-settings",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "embeddings-settings",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "persona",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "world",
+    "client": 288,
+    "scroll": 288,
+    "outside": [
+      {
+        "id": "world_editor_select",
+        "class": "select2-hidden-accessible",
+        "left": 21,
+        "right": 341,
+        "width": 320
+      }
+    ],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "backgrounds",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "settings",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "extensions",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 320,
+    "category": "character-editor",
+    "client": 288,
+    "scroll": 288,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "servers",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "connection",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 358
+  },
+  {
+    "width": 390,
+    "category": "generation",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "prompts",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "image-writer",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "image-settings",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "voice-settings",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "dictation-settings",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "vision-settings",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "embeddings-settings",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "persona",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "world",
+    "client": 358,
+    "scroll": 358,
+    "outside": [
+      {
+        "id": "world_editor_select",
+        "class": "select2-hidden-accessible",
+        "left": 21,
+        "right": 411,
+        "width": 390
+      }
+    ],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "backgrounds",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "settings",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "extensions",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  },
+  {
+    "width": 390,
+    "category": "character-editor",
+    "client": 358,
+    "scroll": 358,
+    "outside": [],
+    "narrowPresets": [],
+    "smallPromptActions": 0,
+    "doneUsable": true,
+    "profileWidth": 0
+  }
+]

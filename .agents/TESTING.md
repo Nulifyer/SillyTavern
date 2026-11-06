@@ -50,6 +50,18 @@ native dropdown Escape behavior. Exact release evidence and digest: docs/contain
 
 ## Environment
 
+The full November6 source review for pendingv1.19.12 passes38 browser cases
+with both real Juiced cases enabled,424 unit tests, lint and actionlint.
+The final run is source-browser-release.log;38 diagnostics have zero uncaught
+page errors. Independent baseline/follow-up/final review retains175 captures,
+including all16 destinations, normal/Advanced,320/390/768/1280px,150% text and
+short editors. A new regression checks every category at320/390/150%, native
+selector readability, Done hit-testing and prompt action sizes. Direct character
+and group start, double-click protection, native Escape, keyboard upload,
+history retry, native provider changes and enlarged chat-tools bounds are covered.
+Actualv1.19.12 image verification is pending. Evidence:
+docs/evidence/full-workspace-review-20261106/.
+
 Verified v1.19.11 preview: http://127.0.0.1:8016, Podman container
 st-advanced-release-20261106, five fresh synthetic named volumes, no overlays.
 All34 browser cases passed with both live cases enabled against source and this

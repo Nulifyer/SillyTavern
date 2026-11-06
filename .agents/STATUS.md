@@ -9,14 +9,21 @@ Image index: `sha256:6e2a1b345b05c6fa45ff4fe0fa550b2687f2d38b23d830e596aa4b439aa
 
 ## Active tasks
 
-None. [Service workspace task](work/service-workspace.md) is complete.
+[Full workspace review](work/full-workspace-review.md) is active. User requests a complete manual visual/workflow audit and fixes, including immediate story creation, with an independent critique. [Service workspace task](work/service-workspace.md) remains complete for its narrower scope.
 
 ## Next action
 
-Homelab can use docs/evidence/advanced-controls-20261106/handoff.md for its later
-update, preserving all existing volume identities and retaining the pre-update
-image/backup. Production69 and shared test85 were never accessed or changed here.
-No implementation or release-verification work remains in this batch.
+Finish the fresh full-workspace review and source acceptance for pendingv1.19.12,
+then publish and verify the actual image. Baseline8017 and source8018 have disjoint
+fresh synthetic volumes. The baseline has no overlays. Independent critique
+captured101 baseline and52 follow-up settings views; supported fixes cover story
+entry, history recovery, native editor ownership, service selection feedback and
+responsive native controls. Source lint,424 unit tests and actionlint pass.
+The38-case frozen source suite with live Juiced passed, with zero uncaught page
+errors. Immediate creation also suppresses duplicate rapid starts from profile
+and header. Publication and actual image acceptance remain. Evidence:
+docs/evidence/full-workspace-review-20261106/ and the active ledger.
+Production69 and test85 remain untouched; no Homelab deployment is authorized.
 
 ## Blockers
 

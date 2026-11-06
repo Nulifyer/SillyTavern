@@ -1,0 +1,157 @@
+{
+  "note": "Parent visually inspected these T3 browser captures. Baseline8017 is actual v1.19.11 without overlays; source8018 is the current public/src overlay. sourceTools150After uses a browser CSS fontScale1.5 override; the native preference path is separately tested. Empty/failed intermediate attempts are not completion proof.",
+  "entries": [
+    {
+      "name": "baselineTitleSnapshot",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineTitleSnapshot.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw578xp4-af4412e3.png",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "name": "baselineHistoryFailure",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineHistoryFailure.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57armd-efc21e52.png",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "name": "baselineStories",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineStories.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57as1y-fd39772e.png",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "name": "baselineArchive",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineArchive.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57d5yc-8dea5793.png",
+      "width": 1280,
+      "height": 800
+    },
+    {
+      "name": "baselineArchivePhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineArchivePhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57d6lx-2cd2f25f.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineSearchPhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineSearchPhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57l4xi-49479e29.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineChatPhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineChatPhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57l5u3-b4b24570.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineChatToolsPhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineChatToolsPhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57l6z7-71ec4085.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineImageOptionsPhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineImageOptionsPhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57l7q0-a3ba9eb6.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineInspectorPhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineInspectorPhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57olxo-6c54da30.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineLibraryFavoritesPhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineLibraryFavoritesPhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57onud-8b479662.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineCastPickerPhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineCastPickerPhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57ookz-ddfbd703.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineCharacterCreatePhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineCharacterCreatePhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw57tton-886d7558.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineCastSelectedPhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineCastSelectedPhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw580arb-d2eead2a.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineCastProfilePhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineCastProfilePhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw582ufd-743f6fc7.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "baselineAccountPhone",
+      "url": "http://127.0.0.1:8017/",
+      "path": "docs/evidence/full-workspace-review-20261106/baselineAccountPhone.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58rq43-99ab2c72.png",
+      "width": 390,
+      "height": 844
+    },
+    {
+      "name": "sourceImmediateStory150",
+      "url": "http://127.0.0.1:8018/",
+      "path": "docs/evidence/full-workspace-review-20261106/sourceImmediateStory150.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58jnzz-68c1a88c.png",
+      "width": 320,
+      "height": 568
+    },
+    {
+      "name": "sourceTools150",
+      "url": "http://127.0.0.1:8018/",
+      "path": "docs/evidence/full-workspace-review-20261106/sourceTools150.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw58oaaa-fc732ba7.png",
+      "width": 320,
+      "height": 568
+    },
+    {
+      "name": "sourceTools150After",
+      "url": "http://127.0.0.1:8018/",
+      "path": "docs/evidence/full-workspace-review-20261106/sourceTools150After.png",
+      "capture": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw592sij-15d04dd8.png",
+      "width": 320,
+      "height": 568
+    }
+  ]
+}

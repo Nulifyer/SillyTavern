@@ -45,12 +45,16 @@ export class WorkspaceTools {
         const placeMenu = () => {
             if (!more.open) return;
             menu.style.translate = '';
+            const header = document.getElementById('workspace-header').getBoundingClientRect();
+            menu.style.maxHeight = `${Math.max(44, more.getBoundingClientRect().top - header.bottom - 16)}px`;
             const bounds = menu.getBoundingClientRect();
             const shift = Math.max(12 - bounds.left, Math.min(0, innerWidth - 12 - bounds.right));
             menu.style.translate = `${shift}px 0`;
         };
         more.addEventListener('toggle', placeMenu);
         window.addEventListener('resize', placeMenu);
+        window.visualViewport?.addEventListener('resize', placeMenu);
+        new ResizeObserver(placeMenu).observe(document.getElementById('send_form'));
         toolbar.append(more);
         const model = button('', 'connection', {}, 'workspace-tool-button workspace-model-chip', 'fa-microchip');
         model.setAttribute('aria-label', 'Story model settings');

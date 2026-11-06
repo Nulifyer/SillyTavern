@@ -1,0 +1,16 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep enlarged phone text|advanced controls retain --output=/tmp/st-full-review-enlarged-fixed
+(node:118331) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:118349) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:118349) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:118349) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace (10.2s)
+  ✓  2 workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text (6.9s)
+
+  2 passed (17.7s)

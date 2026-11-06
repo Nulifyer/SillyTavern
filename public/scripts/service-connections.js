@@ -8,6 +8,7 @@ import { element, workspaceSettings } from './workspace-views.js';
 export class ServiceConnections {
     init() {
         this.targets = new Map();
+        this.rows = new Map();
         this.nativeControls = [];
         this.preparePanels();
         this.root = element('section', 'service-connections');
@@ -48,6 +49,11 @@ export class ServiceConnections {
         });
         eventSource.on(event_types.ONLINE_STATUS_CHANGED, () => this.updateContext());
         eventSource.on(event_types.OAI_PRESET_CHANGED_AFTER, () => this.updateContext());
+        eventSource.on(event_types.SETTINGS_UPDATED, () => this.syncSelections());
+        document.addEventListener('change', event => {
+            if (event.target.closest('.service-connection-row')) return;
+            queueMicrotask(() => this.syncSelections());
+        });
         document.addEventListener('input', event => {
             if (['openai_max_context', 'openai_max_context_counter'].includes(event.target.id)) queueMicrotask(() => this.updateContext());
         });
@@ -92,7 +98,7 @@ export class ServiceConnections {
         this.adopt('chat', chat, 'Advanced provider settings and connection profiles', [...chat.childNodes]);
         const speech = document.querySelector('#tts_settings > .inline-drawer > .inline-drawer-content');
         if (speech) this.adopt('speak', speech, 'Advanced speech settings, voice mapping and playback', [...speech.childNodes]);
-        const dictation = document.getElementById('dictation-settings');
+        const dictation = document.querySelector('#dictation-settings > .inline-drawer-content');
         if (dictation) this.adopt('transcribe', dictation, 'Endpoint and model override', ['dictation-endpoint', 'dictation-model'].flatMap(id => [dictation.querySelector(`label[for="${id}"]`), document.getElementById(id)]));
         const retrieval = document.querySelector('.vectors_settings > .inline-drawer > .inline-drawer-content');
         if (retrieval) {
@@ -140,10 +146,17 @@ export class ServiceConnections {
         native.open = true;
         native.append(summary, ...nodes.filter(Boolean));
         parent.prepend(setup);
-        parent.append(native);
+        setup.after(native);
         this.targets.set(id, { setup, native });
         this.nativeControls.push(native);
-        setup.append(element('p', 'service-empty', 'Choose a server in Servers to discover compatible models. Existing provider settings remain available below.'));
+        this.emptySetup(setup);
+    }
+
+    emptySetup(setup) {
+        const link = element('button', 'workspace-back-link', 'Set up a server');
+        link.type = 'button';
+        link.dataset.serviceDestination = 'servers';
+        setup.replaceChildren(link, element('p', 'service-empty', 'Discover models, or configure a provider below.'));
     }
 
     setLayout(workspace) {
@@ -158,12 +171,14 @@ export class ServiceConnections {
     opened() {
         if (!this.data && !this.request && !this.attempted && this.url.value.trim()) void this.discover();
         this.updateContext();
+        this.syncSelections();
     }
 
     clearRows() {
+        this.rows.clear();
         if (this.retrievalStatus) this.retrievalStatus.textContent = 'Verify a server in Servers to check available embedding models.';
         for (const { setup, native } of this.targets.values()) {
-            setup.replaceChildren(element('p', 'service-empty', 'Verify your server in Servers to discover models. You can also configure another provider below.'));
+            this.emptySetup(setup);
             native.open = true;
         }
     }
@@ -206,7 +221,49 @@ export class ServiceConnections {
         }
     }
 
-    row(id, title, service, current, apply) {
+    /** Read applied configuration from native owners; discovery never owns it. */
+    selection(id) {
+        if (!this.data) return null;
+        const { root, base } = this.data;
+        const same = (left, right) => String(left || '').replace(/\/$/, '') === right;
+        const sd = extension_settings.sd;
+        const tts = extension_settings.tts;
+        const caption = extension_settings.caption;
+        if (id === 'chat') return document.getElementById('main_api').value === 'openai' && oai_settings.chat_completion_source === 'custom' && same(oai_settings.custom_url, base) ? { model: oai_settings.custom_model } : null;
+        if (id === 'writer') {
+            const profile = extension_settings.connectionManager?.profiles?.find(profile => profile.id === sd?.prompt_writer_profile);
+            return !sd?.prompt_writer_profile ? { model: '' } : profile && same(profile['api-url'], base) ? { model: profile.model } : null;
+        }
+        if (id === 'images') return sd?.source === 'sdcpp' && same(sd.sdcpp_url, root) ? { model: sd.model } : null;
+        if (id === 'speak') {
+            const settings = tts?.['OpenAI Compatible'];
+            return tts?.currentProvider === 'OpenAI Compatible' && same(settings?.provider_endpoint, `${base}/audio/speech`) ? { model: settings.model, voice: typeof settings.voiceMap === 'object' ? settings.voiceMap?.['[Default Voice]'] : '' } : null;
+        }
+        if (id === 'transcribe') return same(extension_settings.dictation?.endpoint, `${base}/audio/transcriptions`) ? { model: extension_settings.dictation.model } : null;
+        if (id === 'vision') return caption?.source === 'multimodal' && caption.multimodal_api === 'custom' && same(oai_settings.custom_url, base) ? { model: caption.custom_model } : null;
+        return null;
+    }
+
+    syncSelections() {
+        for (const [id, row] of this.rows) {
+            if (row.pending) continue;
+            const applied = this.selection(id);
+            const signature = JSON.stringify(applied);
+            if (signature === row.applied) continue;
+            row.applied = signature;
+            row.select.value = applied?.model || '';
+            if (row.voice && [...row.voice.options].some(option => option.value === applied?.voice)) row.voice.value = applied.voice;
+            row.status.textContent = applied
+                ? row.select.value === applied.model ? 'Provider settings updated. The applied model is selected.' : 'The applied model is not enabled on this server. Existing settings are preserved.'
+                : 'This service uses other provider settings. Choose a model to apply this server.';
+            row.action.disabled = id !== 'writer' && !row.select.value;
+        }
+        this.updateContext();
+    }
+
+    row(id, title, service, apply) {
+        const applied = this.selection(id);
+        const current = applied?.model;
         const row = element('section', 'service-connection-row');
         row.id = `service-${id}-row`;
         const label = element('label', '', title);
@@ -224,12 +281,22 @@ export class ServiceConnections {
         status.setAttribute('role', 'status');
         action.disabled = id !== 'writer' && !select.value;
         select.disabled = !service?.models?.length;
-        select.addEventListener('change', () => action.disabled = id !== 'writer' && !select.value);
+        const controls = { row, select, action, status, applied: JSON.stringify(applied), pending: false };
+        controls.changed = () => {
+            action.disabled = id !== 'writer' && !select.value;
+            status.textContent = 'Selection not applied. Use model to save this service.';
+        };
+        this.rows.set(id, controls);
+        select.addEventListener('change', controls.changed);
         action.addEventListener('click', async () => {
+            controls.pending = true;
             action.disabled = true;
+            select.disabled = true;
+            if (controls.voice) controls.voice.disabled = true;
             status.textContent = 'Applying connection…';
             try {
                 await apply(select.value);
+                controls.applied = JSON.stringify(this.selection(id));
                 status.textContent = 'Saved. This service uses the selected model. Test it in your story when ready.';
                 this.targets.get(id).native.open = Boolean(this.advanced);
                 this.updateContext();
@@ -237,14 +304,19 @@ export class ServiceConnections {
             } catch (error) {
                 status.textContent = `${error.message} Retry or open the provider settings.`;
             } finally {
-                if (row.isConnected) action.disabled = id !== 'writer' && !select.value;
+                controls.pending = false;
+                if (row.isConnected) {
+                    action.disabled = id !== 'writer' && !select.value;
+                    select.disabled = !service?.models?.length;
+                    if (controls.voice) controls.voice.disabled = !controls.voices?.length;
+                }
             }
         });
         row.append(label, select, action, status);
         const target = this.targets.get(id);
         target.setup.replaceChildren(row);
         target.native.open = this.advanced || !current || missing;
-        return { row, select, action, status };
+        return controls;
     }
 
     render(data) {
@@ -260,7 +332,7 @@ export class ServiceConnections {
             link.append(element('span', '', setting.label), element('small', '', available ? `${available} ${available === 1 ? 'model' : 'models'} available` : 'Configure provider'), element('i', 'fa-solid fa-chevron-right'));
             this.results.append(link);
         }
-        const chat = this.row('chat', 'Model', data.services.chat, oai_settings.custom_model, model => configureCustomConnection(data.base, model, { models: data.services.chat.models, automaticContext: this.contextToggle.checked }));
+        const chat = this.row('chat', 'Model', data.services.chat, model => configureCustomConnection(data.base, model, { models: data.services.chat.models, automaticContext: this.contextToggle.checked }));
         const contextLabel = element('label', 'checkbox_label service-context-toggle');
         this.contextToggle = element('input');
         this.contextToggle.type = 'checkbox';
@@ -279,7 +351,7 @@ export class ServiceConnections {
         this.updateContext();
         const imageAvailable = Boolean(document.getElementById('sd_source'));
         if (imageAvailable) {
-            const writer = this.row('writer', 'Optional image prompt writer', data.services.chat, '', async model => {
+            const writer = this.row('writer', 'Optional image prompt writer', data.services.chat, async model => {
                 const sd = await import('./extensions/stable-diffusion/index.js');
                 const { saveCompatibleProfile } = await import('./extensions/connection-manager/index.js');
                 const id = model ? await saveCompatibleProfile(`Image writer ${model}`, data.base, model) : '';
@@ -292,15 +364,14 @@ export class ServiceConnections {
         if (!data.juiced) return;
         const sdSupported = data.protocols.some(protocol => protocol.id === 'automatic1111' && protocol.features?.includes('txt2img'));
         if (imageAvailable && sdSupported) {
-            const image = this.row('images', 'Image generation', data.services.images, extension_settings.sd?.model, async model => {
+            const image = this.row('images', 'Image generation', data.services.images, async model => {
                 const { configureSdcppConnection } = await import('./extensions/stable-diffusion/index.js');
                 await configureSdcppConnection(data.root, model);
             });
             image.row.append(element('small', '', 'Uses stable-diffusion.cpp with the server root. Review size, steps, CFG and sampler in Image generation. Automatic image tools stay as configured.'));
         } else this.results.append(element('p', '', 'Image generation needs the Image Generation extension and an advertised sd.cpp txt2img service.'));
         if (document.getElementById('tts_provider')) {
-            const settings = extension_settings.tts?.['OpenAI Compatible'];
-            const speech = this.row('speak', 'Voice narration', data.services.speak, settings?.model, async model => {
+            const speech = this.row('speak', 'Voice narration', data.services.speak, async model => {
                 if (!speech.voice.value || !speech.voices?.length) throw new Error('Discover voices and choose a voice first.');
                 const { configureCompatibleTts } = await import('./extensions/tts/index.js');
                 await configureCompatibleTts(`${data.base}/audio/speech`, model, speech.voices, speech.voice.value);
@@ -310,6 +381,7 @@ export class ServiceConnections {
             speech.voice.id = 'service-speak-voice';
             label.htmlFor = speech.voice.id;
             speech.voice.disabled = true;
+            speech.voice.addEventListener('change', speech.changed);
             speech.action.disabled = true;
             const retry = element('button', 'menu_button', 'Retry voices');
             retry.type = 'button';
@@ -335,8 +407,7 @@ export class ServiceConnections {
                     if (request.signal.aborted || !speech.row.isConnected) return;
                     speech.voices = result.voices;
                     for (const voice of result.voices) speech.voice.add(new Option(voice, voice));
-                    const map = settings?.voiceMap;
-                    const saved = typeof map === 'object' ? map?.['[Default Voice]'] : '';
+                    const saved = this.selection('speak')?.voice;
                     if (result.voices.includes(saved)) speech.voice.value = saved;
                     speech.voice.disabled = !result.voices.length;
                     speech.action.disabled = !result.voices.length;
@@ -353,12 +424,12 @@ export class ServiceConnections {
             speech.select.addEventListener('change', () => void voices());
             if (speech.select.value) void voices();
         }
-        this.row('transcribe', 'Microphone dictation', data.services.transcribe, extension_settings.dictation?.model, async model => {
+        this.row('transcribe', 'Microphone dictation', data.services.transcribe, async model => {
             const { configureDictation } = await import('./dictation.js');
             configureDictation(`${data.base}/audio/transcriptions`, model);
         }).row.append(element('small', '', 'Dictation inserts text into your draft. It never sends the message. Microphone access needs HTTPS or localhost and browser permission.'));
         if (this.targets.has('vision')) {
-            this.row('vision', 'Vision model', { models: data.services.chat?.models.filter(model => model.labels?.includes('vision')) || [] }, extension_settings.caption?.custom_model, async model => {
+            this.row('vision', 'Vision model', { models: data.services.chat?.models.filter(model => model.labels?.includes('vision')) || [] }, async model => {
                 if (oai_settings.custom_url.replace(/\/$/, '') !== data.base) throw new Error('Connect the story service to this server first. Native custom captioning shares its compatible server address.');
                 const { configureCompatibleCaption } = await import('./extensions/caption/index.js');
                 configureCompatibleCaption(model);
@@ -373,6 +444,11 @@ export class ServiceConnections {
         if (!this.contextStatus) return;
         const info = getCustomModelContext();
         this.contextToggle.checked = Boolean(info.automatic);
+        this.contextToggle.disabled = !this.selection('chat');
+        if (this.contextToggle.disabled) {
+            this.contextStatus.textContent = 'This server is not the active story connection. Use model to apply it; existing context settings are preserved.';
+            return;
+        }
         const format = value => Number(value).toLocaleString();
         this.contextStatus.textContent = info.context
             ? `${info.automatic ? 'Automatic' : 'Custom'}: ${format(info.current)} tokens. Server reports ${format(info.context)} for ${info.model}. Reply tokens share this budget.`

@@ -1,0 +1,163 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep enlarged phone text|advanced controls retain --output=/tmp/st-full-review-enlarged
+(node:112478) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:112502) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:112502) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:112502) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace (7.4s)
+(node:112777) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:112777) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:112777) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  2 workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text (8.2s)
+
+
+  1) workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      395 |             await expect(page.locator(selector)).toBeVisible();
+      396 |             const panel = page.locator('.workspace-mounted-panel');
+    > 397 |             expect(await panel.evaluate(node => node.scrollWidth <= node.clientWidth + 1)).toBe(true);
+          |                                                                                            ^
+      398 |             const done = await page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]').boundingBox();
+      399 |             expect(done.x + done.width).toBeLessThanOrEqual(width + 1);
+      400 |         }
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:397:92
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-full-review-enlarged/workspace.e2e.js-advanced--ebcbb-thout-leaving-the-workspace/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-full-review-enlarged/workspace.e2e.js-advanced--ebcbb-thout-leaving-the-workspace/error-context.md
+
+  2) workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  -  1
+    + Received  + 93
+
+    - Array []
+    + Array [
+    +   Object {
+    +     "category": "generation",
+    +     "client": 288,
+    +     "doneUsable": true,
+    +     "outside": Array [
+    +       Object {
+    +         "class": "menu_button fa-plus-square fa-solid fa-fw interactable",
+    +         "id": "",
+    +         "left": 301.25,
+    +         "right": 345.25,
+    +         "width": 44,
+    +       },
+    +     ],
+    +     "profileWidth": 0,
+    +     "scroll": 337,
+    +     "width": 320,
+    +   },
+    +   Object {
+    +     "category": "prompts",
+    +     "client": 288,
+    +     "doneUsable": true,
+    +     "outside": Array [
+    +       Object {
+    +         "class": "text_pole",
+    +         "id": "completion_prompt_manager_footer_append_prompt",
+    +         "left": -14.75,
+    +         "right": 3.25,
+    +         "width": 18,
+    +       },
+    +       Object {
+    +         "class": "menu_button fa-chain fa-solid fa-fw interactable",
+    +         "id": "",
+    +         "left": 8.5,
+    +         "right": 52.5,
+    +         "width": 44,
+    +       },
+    +     ],
+    +     "profileWidth": 0,
+    +     "scroll": 290,
+    +     "width": 320,
+    +   },
+    +   Object {
+    +     "category": "backgrounds",
+    +     "client": 288,
+    +     "doneUsable": true,
+    +     "outside": Array [
+    +       Object {
+    +         "class": "menu_button menu_button_icon interactable",
+    +         "id": "add_background_button_top",
+    +         "left": 308.96875,
+    +         "right": 352.96875,
+    +         "width": 44,
+    +       },
+    +     ],
+    +     "profileWidth": 0,
+    +     "scroll": 337,
+    +     "width": 320,
+    +   },
+    +   Object {
+    +     "category": "extensions",
+    +     "client": 288,
+    +     "doneUsable": true,
+    +     "outside": Array [
+    +       Object {
+    +         "class": "flex1 heightFitContent text_pole widthNatural",
+    +         "id": "extensions_url",
+    +         "left": 16.046875,
+    +         "right": 343.046875,
+    +         "width": 327,
+    +       },
+    +       Object {
+    +         "class": "flex1 heightFitContent text_pole widthNatural",
+    +         "id": "extensions_api_key",
+    +         "left": 16.046875,
+    +         "right": 343.046875,
+    +         "width": 327,
+    +       },
+    +     ],
+    +     "profileWidth": 0,
+    +     "scroll": 327,
+    +     "width": 320,
+    +   },
+    +   Object {
+    +     "category": "prompts",
+    +     "client": 358,
+    +     "doneUsable": true,
+    +     "outside": Array [],
+    +     "profileWidth": 0,
+    +     "scroll": 360,
+    +     "width": 390,
+    +   },
+    + ]
+
+      539 |     }
+      540 |     fs.writeFileSync(testInfo.outputPath('enlarged-layout-audit.json'), JSON.stringify(audit, null, 2));
+    > 541 |     expect(audit.filter(item => item.scroll > item.client + 1 || !item.doneUsable)).toEqual([]);
+          |                                                                                     ^
+      542 |     expect(audit.filter(item => item.category === 'connection').every(item => item.profileWidth >= item.width - 64)).toBe(true);
+      543 | });
+      544 |
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:541:85
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-full-review-enlarged/workspace.e2e.js-every-set-40742-le-with-enlarged-phone-text/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-full-review-enlarged/workspace.e2e.js-every-set-40742-le-with-enlarged-phone-text/error-context.md
+
+  2 failed
+    workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace
+    workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text

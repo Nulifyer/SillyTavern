@@ -20,6 +20,13 @@ export class WorkspaceSettings {
         const rail = element('nav', 'workspace-settings-rail');
         rail.setAttribute('aria-label', 'Settings categories');
         rail.append(element('h2', '', 'Settings'));
+        const mobileNavigation = element('label', 'workspace-settings-picker');
+        const mobileBar = element('div', 'workspace-settings-mobile');
+        mobileBar.append(mobileNavigation);
+        mobileNavigation.append(element('span', '', 'Settings category'));
+        this.category = element('select', 'text_pole');
+        this.category.id = 'workspace-settings-category';
+        mobileNavigation.append(this.category);
         for (const [label, ids] of [
             ['Model services', ['servers', 'connection', 'image-writer', 'image-settings', 'voice-settings', 'dictation-settings', 'vision-settings', 'embeddings-settings']],
             ['Story world', ['persona', 'world', 'backgrounds']],
@@ -27,14 +34,22 @@ export class WorkspaceSettings {
         ]) {
             const group = element('div', 'workspace-settings-category');
             group.append(element('h3', '', label));
+            const options = document.createElement('optgroup');
+            options.label = label;
             for (const id of ids) {
                 const setting = workspaceSettings.find(item => item.id === id);
                 const destination = button(setting.label, id, {}, 'workspace-settings-destination', setting.icon);
                 destination.hidden = id === 'character-editor';
                 group.append(destination);
+                options.append(new Option(setting.label, id));
             }
             rail.append(group);
+            this.category.append(options);
         }
+        this.category.addEventListener('change', () => {
+            // Reuse the workspace navigation queue and its captured action identity.
+            rail.querySelector(`[data-workspace-action="${this.category.value}"]`)?.click();
+        });
         const content = element('div', 'workspace-settings-content');
         const header = element('header', 'workspace-settings-heading');
         this.heading = element('h1');
@@ -51,6 +66,10 @@ export class WorkspaceSettings {
         advancedLabel.append(this.advancedToggle, element('span', '', 'Advanced controls'));
         advancedLabel.title = 'Expand native provider settings, sampling, prompt formatting and extension options. Changes only which controls are shown.';
         actions.append(advancedLabel, this.close);
+        const mobile = matchMedia('(max-width: 900px)');
+        const placeClose = () => (mobile.matches ? mobileBar : actions).append(this.close);
+        mobile.addEventListener('change', placeClose);
+        placeClose();
         header.append(text, actions);
         this.advancedToggle.addEventListener('change', () => {
             accountStorage.setItem('workspaceAdvancedSettings', String(this.advancedToggle.checked));
@@ -69,7 +88,7 @@ export class WorkspaceSettings {
         this.sections.setAttribute('aria-label', 'Settings sections');
         this.sections.hidden = true;
         content.append(header, this.storyTabs, this.sections, this.host);
-        this.root.append(rail, content);
+        this.root.append(mobileBar, rail, content);
         document.getElementById('sheld').prepend(this.root);
         for (const setting of workspaceSettings) {
             const panel = document.getElementById(setting.panel);
@@ -96,6 +115,7 @@ export class WorkspaceSettings {
         if (!setting) return;
         this.restore();
         this.active = id;
+        this.category.value = ['generation', 'prompts'].includes(id) ? 'connection' : id;
         this.heading.textContent = ['generation', 'prompts'].includes(id) ? 'Story replies' : setting.label;
         this.description.textContent = setting.description;
         const panel = document.getElementById(setting.panel);

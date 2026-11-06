@@ -1,0 +1,145 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --output=/tmp/st-full-review-source-final
+(node:119860) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 38 tests using 1 worker
+
+(node:119878) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:119878) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:119878) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 workspace.e2e.js:231:1 › library browsing shows profiles without opening or replacing a story (3.8s)
+  ✓   2 workspace.e2e.js:250:1 › history failure stays visible in profiles and archive while known stories remain usable (4.3s)
+  ✓   3 workspace.e2e.js:290:1 › native character editor owns Escape before its settings page and audio upload works by keyboard (4.3s)
+  ✓   4 workspace.e2e.js:329:1 › new stories preserve previous transcripts and profile history resumes the exact scene (5.7s)
+  ✓   5 workspace.e2e.js:355:1 › starting a character story is immediate, creates one transcript and can be renamed afterward (4.6s)
+  ✓   6 workspace.e2e.js:389:1 › archive persists, excludes active lists, reads without editing, and restores the same transcript (7.8s)
+  ✓   7 workspace.e2e.js:420:1 › rename follows archived identity and deletion requires confirmation without recreating the file (6.5s)
+  ✓   8 workspace.e2e.js:457:1 › failed deletion keeps the story and reports the server failure (4.3s)
+  ✓   9 workspace.e2e.js:475:1 › settings keep every native area reachable with Escape and focus restoration (5.5s)
+  ✓  10 workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace (10.0s)
+  ✓  11 workspace.e2e.js:616:1 › every settings category uses one control tree and fits desktop and phone (19.2s)
+  ✓  12 workspace.e2e.js:663:1 › settings sections, blank space and external dialogs never close mounted controls (9.0s)
+  ✓  13 workspace.e2e.js:714:1 › every settings destination keeps controls reachable with enlarged phone text (6.9s)
+Settings mutation: 1280px connection
+Settings mutation: 1280px generation
+Settings mutation: 1280px prompts
+Settings mutation: 1280px persona
+Settings mutation: 1280px world
+Settings mutation: 1280px backgrounds
+Settings mutation: 1280px voice-settings
+Settings mutation: 1280px dictation-settings
+Settings mutation: 1280px image-settings
+Settings mutation: 1280px settings
+Settings mutation: 1280px extensions
+Settings mutation: 390px connection
+Settings mutation: 390px generation
+Settings mutation: 390px prompts
+Settings mutation: 390px persona
+Settings mutation: 390px world
+Settings mutation: 390px backgrounds
+Settings mutation: 390px voice-settings
+Settings mutation: 390px dictation-settings
+Settings mutation: 390px image-settings
+Settings mutation: 390px settings
+Settings mutation: 390px extensions
+Settings mutation: 320px connection
+Settings mutation: 320px generation
+Settings mutation: 320px prompts
+Settings mutation: 320px persona
+Settings mutation: 320px world
+Settings mutation: 320px backgrounds
+Settings mutation: 320px voice-settings
+Settings mutation: 320px dictation-settings
+Settings mutation: 320px image-settings
+Settings mutation: 320px settings
+Settings mutation: 320px extensions
+  ✓  14 workspace.e2e.js:778:1 › settings changes and late saves preserve every category through direct navigation (12.0s)
+  ✓  15 workspace.e2e.js:924:1 › dictation settings remain available when the optional TTS extension is disabled (5.1s)
+  ✓  16 workspace.e2e.js:962:1 › discovered selectors distinguish unapplied choices and follow native provider changes (4.4s)
+  ✓  17 workspace.e2e.js:1007:1 › one server configures native services and survives reload without replacing sampling or profiles (8.8s)
+  ✓  18 workspace.e2e.js:1152:1 › discovered context uses configured capacity, preserves manual overrides and survives reload (7.0s)
+  ✓  19 workspace.e2e.js:1231:1 › service prompt editors save native values and composer nodes survive classic round trips (6.8s)
+  ✓  20 workspace.e2e.js:1279:3 › fresh compatible connection migrates context preference (5.6s)
+  ✓  21 workspace.e2e.js:1279:3 › existing explicit compatible connection migrates context preference (5.5s)
+  ✓  22 workspace.e2e.js:1328:1 › service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server (4.0s)
+  ✓  23 workspace.e2e.js:1400:1 › dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change (4.7s)
+  ✓  24 workspace.e2e.js:1463:1 › image writer preserves scene context and story model through failure and retry (4.4s)
+  ✓  25 workspace.e2e.js:1549:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting (11.1s)
+Live Juiced: discover and configure native providers
+Live Juiced: streaming story reply
+Live Juiced: configure image sampling and generate scene
+Live Juiced: configure vision and caption the synthetic scene
+Live Juiced: synthesize and decode speech
+Live Juiced: transcribe speech into draft
+  ✓  26 workspace.e2e.js:1689:1 › live Juiced services use native providers from the tested container (2.9m)
+  ✓  27 workspace.e2e.js:1951:1 › search opens character profiles and a fixture model generates through the native composer (5.9s)
+  ✘  28 workspace.e2e.js:2053:1 › native streamed replies keep the composer and character identity mounted (5.0s)
+(node:126844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:126844) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:126844) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  29 workspace.e2e.js:2102:1 › image tools use the native provider and treat custom prompts as text (4.4s)
+  ✓  30 workspace.e2e.js:2150:1 › one scene click generates one native illustration with automatic tools off (5.8s)
+  ✓  31 workspace.e2e.js:2233:1 › voice tools narrate the latest native reply with the configured System voice (4.7s)
+  ✓  32 workspace.e2e.js:2268:1 › chat voice is opt-in and persists; manual images do not enable automatic tools (8.0s)
+  ✓  33 workspace.e2e.js:2297:1 › cast creation selects real characters and opens a group story (4.6s)
+  ✓  34 workspace.e2e.js:2354:3 › roleplay pages and composer stay within a 320px viewport (6.1s)
+  ✓  35 workspace.e2e.js:2354:3 › roleplay pages and composer stay within a 390px viewport (6.1s)
+  ✓  36 workspace.e2e.js:2354:3 › roleplay pages and composer stay within a 768px viewport (6.6s)
+  ✓  37 workspace.e2e.js:2451:1 › native font preferences and browser text sizing keep phone controls usable (4.7s)
+  ✓  38 workspace.e2e.js:2495:1 › classic preference survives reload and can be restored (6.4s)
+
+
+  1) workspace.e2e.js:2053:1 › native streamed replies keep the composer and character identity mounted
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      1369 | });
+      1370 |
+    > 1371 | test('native streamed replies keep the composer and character identity mounted', async ({ page }, testInfo) => {
+           |                                                       ^
+      1372 |     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} streamed`);
+      1373 |     await page.route('**/api/backends/chat-completions/status', route => route.fulfill({ json: { data: [{ id: 'workspace-fixture' }] } }));
+      1374 |     await page.route('**/api/backends/chat-completions/generate', route => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1371:55
+
+    Error: expect(locator).toContainText(expected) failed
+
+    Locator: locator('#chat .mes_text').last()
+    Expected substring: "The clearing is quiet. Seraphina lights a lantern."
+    Received string:    "What do you see?"
+
+    Call log:
+      - Expect "toContainText" with timeout 20000ms
+      - waiting for locator('#chat .mes_text').last()
+        2 × locator resolved to <div class="mes_text">…</div>
+          - unexpected value "You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.""
+        2 × locator resolved to <div class="mes_text">…</div>
+          - unexpected value "What do you see?"
+
+
+      1389 |         window.__workspaceComposer = document.getElementById('send_textarea');
+      1390 |         window.__workspaceVoice = document.getElementById('workspace-voice-button');
+    > 1391 |         window.__workspacePortrait = document.querySelector('#workspace-header-portrait img');
+           |                                                          ^
+      1392 |     });
+      1393 |     await page.locator('#send_textarea').fill('What do you see?');
+      1394 |     await page.locator('#send_but').click();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1391:58
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-full-review-source-final/workspace.e2e.js-native-st-a586b--character-identity-mounted/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-full-review-source-final/workspace.e2e.js-native-st-a586b--character-identity-mounted/error-context.md
+
+  1 failed
+    workspace.e2e.js:2053:1 › native streamed replies keep the composer and character identity mounted
+  37 passed (6.9m)

@@ -1,0 +1,50 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep roleplay pages and composer|every settings category|native character editor owns|advanced controls retain|larger text --output=/tmp/st-full-review-responsive
+(node:108269) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:108287) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:108287) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:108287) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:290:1 › native character editor owns Escape before its settings page and audio upload works by keyboard (4.4s)
+  ✘  2 workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace (7.3s)
+(node:108622) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:108622) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:108622) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  3 workspace.e2e.js:616:1 › every settings category uses one control tree and fits desktop and phone (21.3s)
+  ✓  4 workspace.e2e.js:2290:3 › roleplay pages and composer stay within a 320px viewport (6.7s)
+  ✓  5 workspace.e2e.js:2290:3 › roleplay pages and composer stay within a 390px viewport (6.5s)
+  ✓  6 workspace.e2e.js:2290:3 › roleplay pages and composer stay within a 768px viewport (6.6s)
+
+
+  1) workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: true
+    Received: false
+
+      395 |             await expect(page.locator(selector)).toBeVisible();
+      396 |             const panel = page.locator('.workspace-mounted-panel');
+    > 397 |             expect(await panel.evaluate(node => node.scrollWidth <= node.clientWidth + 1)).toBe(true);
+          |                                                                                            ^
+      398 |             const done = await page.locator('#workspace-settings-shell [data-workspace-action="close-panel"]').boundingBox();
+      399 |             expect(done.x + done.width).toBeLessThanOrEqual(width + 1);
+      400 |         }
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:397:92
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-full-review-responsive/workspace.e2e.js-advanced--ebcbb-thout-leaving-the-workspace/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-full-review-responsive/workspace.e2e.js-advanced--ebcbb-thout-leaving-the-workspace/error-context.md
+
+  1 failed
+    workspace.e2e.js:517:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace
+  5 passed (54.3s)

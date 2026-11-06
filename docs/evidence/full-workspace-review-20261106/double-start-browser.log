@@ -1,0 +1,40 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep starting a character story --output=/tmp/st-full-review-double-start
+(node:137570) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:137584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:137584) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:137584) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 workspace.e2e.js:355:1 › starting a character story is immediate, creates one transcript and can be renamed afterward (3.8s)
+
+
+  1) workspace.e2e.js:355:1 › starting a character story is immediate, creates one transcript and can be renamed afterward
+
+    Error: expect(received).toHaveLength(expected)
+
+    Expected length: 1
+    Received length: 2
+    Received array:  [{"avatar": "Workspace e2e f5948f93a1ec48d2d907-da4a8af6a9f187ccc940-mw58v9x7 fresh.png", "chat_items": 1, "file_id": "Workspace e2e f5948f93a1ec48d2d907-da4a8af6a9f187ccc940-mw58v9x7 fresh - 2026-11-06@12h24m35s144ms", "file_name": "Workspace e2e f5948f93a1ec48d2d907-da4a8af6a9f187ccc940-mw58v9x7 fresh - 2026-11-06@12h24m35s144ms.jsonl", "file_size": "1.06KB", "last_mes": "2026-11-06T17:24:35.147Z", "match": true, "mes": "*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\""}, {"avatar": "Workspace e2e f5948f93a1ec48d2d907-da4a8af6a9f187ccc940-mw58v9x7 fresh.png", "chat_items": 1, "file_id": "Workspace e2e f5948f93a1ec48d2d907-da4a8af6a9f187ccc940-mw58v9x7 fresh - 2026-11-06@12h24m34s873ms", "file_name": "Workspace e2e f5948f93a1ec48d2d907-da4a8af6a9f187ccc940-mw58v9x7 fresh - 2026-11-06@12h24m34s873ms.jsonl", "file_size": "1.06KB", "last_mes": "2026-11-06T17:24:34.878Z", "match": true, "mes": "*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\""}]
+
+      261 |         expect(current).toBeTruthy();
+      262 |         const records = (await api(page, '/api/chats/recent', {})).filter(record => record.avatar === character.avatar);
+    > 263 |         expect(records).toHaveLength(index);
+          |                         ^
+      264 |         expect(records.some(record => record.file_name === `${current}.jsonl`)).toBe(true);
+      265 |         if (index === 1) await renameCurrentStory(page, `${prefix} first`);
+      266 |     }
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:263:25
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-full-review-double-start/workspace.e2e.js-starting--7c5dc-nd-can-be-renamed-afterward/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-full-review-double-start/workspace.e2e.js-starting--7c5dc-nd-can-be-renamed-afterward/error-context.md
+
+  1 failed
+    workspace.e2e.js:355:1 › starting a character story is immediate, creates one transcript and can be renamed afterward

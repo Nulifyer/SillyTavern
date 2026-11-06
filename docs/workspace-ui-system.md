@@ -93,3 +93,23 @@ its container beside the hidden native input. Lorebook selection uses a full row
 with edit/import actions below it. Escape dismisses the native dropdown before
 closing the category workspace. The browser check inspects the visible picker,
 not the hidden select or only the outer panel width.
+
+## Full workspace review, November6
+
+Phone settings use a grouped native category picker with a persistent Done
+control. The same Done node moves between the phone bar and desktop header.
+Native selectors with action toolbars take a full row on narrow screens;
+touch targets stay44px while selected names remain readable. Prompt lists wrap
+name/actions/token counts and keep native editing, toggling and ordering.
+
+Provider setup precedes dependent tuning. History loading and failure feedback
+shares one presentation across Stories, Archive and profiles, retaining known
+rows while retrying. Native editors own Escape before surrounding settings.
+Chat tools measure available space above the composer and scroll vertically
+within it; long labels wrap.
+
+The review uses actual renders, action regressions and an independent critique.
+[Evidence](evidence/full-workspace-review-20261106/review.md) records the coverage
+and unqualified external-provider/hardware paths. Opaque workspace text pairs
+measure7.392–15.411:1, and primary-action text8.619:1; this does not qualify every
+native theme, disabled control or provider-specific color.

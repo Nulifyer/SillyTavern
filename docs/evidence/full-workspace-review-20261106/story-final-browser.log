@@ -1,0 +1,17 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep starting a character story|new stories preserve|cast creation --output=/tmp/st-full-review-story-final
+(node:140356) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:140374) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:140374) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:140374) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:329:1 › new stories preserve previous transcripts and profile history resumes the exact scene (5.8s)
+  ✓  2 workspace.e2e.js:355:1 › starting a character story is immediate, creates one transcript and can be renamed afterward (4.4s)
+  ✓  3 workspace.e2e.js:2316:1 › cast creation selects real characters and opens a group story (4.5s)
+
+  3 passed (15.6s)
