@@ -31,10 +31,10 @@ Out: Production69, production app/data/config/volumes, shared test85, shared inf
 
 ## Current state
 
-Phase: Final source acceptance and immutablev1.19.13 publication.
+Phase: v1.19.14 character form correction after actualv1.19.13 visual review.
 Dependencies: Local Podman, T3 browser, synthetic fixtures, existing Juiced HTTPS, GitHub release access.
 Integration: v1.19.11 remains published. Root clean at task start. Older local synthetic containers/data are preserved.
-Next action: Complete v1.19.13 acceptance and publication after actualv1.19.12 exposed a native vision-mode selection discrepancy. Keep v1.19.12 tag immutable. Final source41passes plus corrected search1pass complete;42diagnostics zero uncaught errors. Publish and pass actual-image42-case acceptance before handoff. Sourcev12frozen38passed in5.1minutes with bothlivecases;424units/lint/actionlint pass. The independent critic has no remaining supported objection in reviewed states and closed its tab. Its22final captures are retained. A subsequent source critique found the cast cancellation boundary; before/fix regression confirms the correction. Never deployproduction69.
+Next action: Actualv1.19.13 passed42cases with both live checks and zero page errors, but pixel review found native character toolbar/tag/note overlap. Complete v1.19.14 natural-height form fix, new43rd regression1280/768/390/320 normal/150%, independent visual re-review, source checks, immutable publication and actual-image43-case acceptance. Preserve v1.19.12/13 tags. No production access/deployment.
 
 v1.19.12 sourcec78f9f5e312dfcbbe3df1c02b55456af427a3873; workflow42263052988 success. Actualv12 local8019 st-full-review-release-20261106, five fresh volumes/no overlays. Health/version1.19.12 passed. Reproduction v12-native-vision-ready-browser.log: nativecaption.custom_current used the story model while service-vision-model still showedvision-fixture. Native request semantics are public/scripts/extensions/shared.js:111. Correct selection projection for custom_current/custom_custom, remove redundant writer restoration, qualify its native profile mode/API. Focused correction test added; no inference protocol change. v12 not the final deployment recommendation.
 

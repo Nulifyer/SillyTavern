@@ -1,7 +1,25 @@
 # Full workspace review release handoff
 
-Status: pending final v1.19.13 publication and actual-image acceptance.
-Do not use v1.19.12 as this task's final deployment recommendation. Its tag
+Source: `607198579bb3090dcda68c34aab252d2558c5647`.
+[Release v1.19.13](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.13).
+[Workflow42270651338](https://github.com/Nulifyer/SillyTavern/actions/runs/42270651338)
+passed both native build/startup/heartbeat gates and publication.
+
+```yaml
+image: ghcr.io/nulifyer/sillytavern@sha256:fadeb1b6bb283c80d26d3488c3a49e134b0acb262a0df94d7ad51e14c0a682d8
+```
+
+- linux/amd64: `sha256:2e9718adedf4f00dd3a3bd44a3e16d8898b292977807433509de3033213c6d8c`
+- linux/arm64: `sha256:1f84ca9214df7a10e82b7552962bfc2084b84bab53e1735bfffec951054df0b6`
+
+Anonymous tag, source-tag and latest manifests match. Twenty-four checked runtime
+files match the tag. Local amd64 container st-full-review-release13-20261106 on
+8020 has five fresh synthetic volumes/no overlays, version1.19.13, valid native
+heartbeat and HTTPS200 to Juiced. Actual-image42-case acceptance passed, but pixel review then found native
+character toolbar overlap. This v1.19.13 block is historical. Final deployment
+recommendation is pendingv1.19.14 and its43-case image acceptance.
+
+Do not use v1.19.12 or v1.19.13 as this task's final deployment recommendation. Its tag
 remains immutable; actual-image native-mode and keyboard findings are retained
 in review.md.
 

@@ -1,0 +1,32 @@
+{
+  "version": "1.19.14",
+  "rootLint": {
+    "command": "npm run lint",
+    "exitCode": 0
+  },
+  "unit": {
+    "command": "npm --prefix tests run test:unit -- --runInBand",
+    "exitCode": 0,
+    "passed": 424,
+    "suites": 20
+  },
+  "testLint": {
+    "command": "npm --prefix tests run lint",
+    "exitCode": 0,
+    "errors": 0,
+    "warnings": 24
+  },
+  "actionlint": {
+    "command": "/home/nulifyer/go/bin/actionlint .github/workflows/docker-publish.yml",
+    "exitCode": 0
+  },
+  "browser": {
+    "controlledPassed": 41,
+    "optInLiveSkipped": 2,
+    "minutes": 4.5,
+    "reason": "CSS-only change; same inference code passed both live cases on actualv1.19.13; finalv1.19.14 actual-image run enables both.",
+    "finalPhoneIdentityFocusedPassed": 1,
+    "actualImageAcceptance": "pending43cases"
+  },
+  "sourceHashes": "frozen-v14-source.sha256"
+}

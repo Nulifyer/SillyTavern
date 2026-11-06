@@ -151,3 +151,70 @@ uncaught page errors. The sole failure was the one-result assumption described
 above; an exact-name focused rerun and final actual-image42-case pass are the
 acceptance checks for the corrected fixture. Runtime source hashes remain
 frozen.
+
+v1.19.13 source607198579bb3090dcda68c34aab252d2558c5647 is published;
+workflow42270651338 is running. Source push and annotated tag push succeeded.
+The first gh release attempt selected upstream by local CLI default and safely
+failed tag verification; explicit -R Nulifyer/SillyTavern created the intended
+fork release. No upstream release was created. Actual-image acceptance pending.
+
+The cast-stop screenshot initially caught the asynchronous header before its
+refresh. Added explicit generation-status hidden and Image enabled assertions
+passed on unchanged application source (cast-state-final-browser.log,1pass).
+This was not evidence of a persistent application state defect. The stronger
+assertions will also run in actual-image acceptance.
+
+Workflow42270651338 completed successfully, including both native startup and
+heartbeat gates. Anonymous pull and registry proof establish index/architectures
+and matching version/source/latest tags (v13-registry/). Actual local8020 matches
+24runtime files and stockv1.19.8 sd.cpp handler, has five fresh volumes/no overlays,
+reports1.19.13 and reaches Juiced over verified HTTPS200. Parent inspected the
+desktop/phone onboarding and completed its native persona Save. One initial
+preview navigation preceded HTTP readiness and returned ERR_SOCKET_NOT_CONNECTED;
+HTTP-ready retry succeeded. The phone screenshot was repeated after resize
+settled and Save is visible/hit-testable. Final browser acceptance is running.
+
+The actualv1.19.13 image passed42browser cases in5.4minutes, both live cases,
+zero uncaught page errors. Subsequent pixel inspection of its character editor
+revealed overlapping action controls/tags/Creator's Notes at390px; parent
+reproduced this interactively after layout settled (v13-character-overlap-phone).
+Native100% heights plus the workspace's mobile flex wrapping let the actions
+flow outside the avatar row; the form's grid also retained a fixed100% height.
+The next immutablev1.19.14 scopes this native form to natural height/overflow,
+uses a96×120 portrait and lets native actions, More and tags take their own
+space. No model/protocol code changes fromv1.19.13. A new eight-viewport/scale
+character-layout regression supplements width-only checks; final actual-image
+acceptance must run43cases. The prior42-pass result does not disprove this
+visual defect. Independent source re-review requested before publication.
+
+The new character-layout case fails against the actualv1.19.13 image because
+the toolbar extends below its owning avatar block, and passes all eight
+width/scale combinations on corrected source in10.2seconds. It also opens and
+dismisses Advanced Definitions at every size. The first focused attempt selected
+a hidden character-editor destination directly; the corrected fixture enters
+through the character profile, as a user does. Both attempts are retained.
+Parent inspected every actualv1.19.13 phone settings capture, normal mode, plus
+advanced speech and the corrected source character actions. No other supported
+overlap was found in those captures. The new full source43-case run omits the
+two opt-in live cases because only CSS changed; the actualv1.19.14 run will
+enable both. Priorv1.19.13 actual-image live proof remains retained.
+
+Independent re-review found the character name shortened to S... at320px/150%
+because token statistics consumed its row. The phone header now gives identity
+a full wrapping row above statistics. The strengthened eight-state character
+regression passes in10.1seconds on final CSS. Parent inspected320px/150% and
+1280px renders. The controlled source run passed41cases/2opt-in live skips in
+4.5minutes, zero uncaught errors in retained diagnostics. The header correction
+has its separate focused pass; no inference code changed. These runs briefly
+overlapped in separate browser contexts with per-context mock settings; no
+standalone persistence claim is based on them. Final published-image acceptance
+will run all43 with both live cases, followed by standalone persistence.
+
+The independent final character critique retains28captures and16Edit/Create
+width/scale measurements (character-critique-index.json). It freshly verified
+the final CSS hash53e6b47d8d7d88c405a342cbd09c4bdbe2322371c16402ccbe8e1722dd7dfa67,
+full320px/150% identity, native Advanced Definitions/Escape, and representative
+Connection Profile, Presets, Appearance and sampling rows. It reports no
+remaining supported overlap or critical usability defect within those states.
+Its CSS-only font override was removed and tab6 closed. No further source
+change is supported. Final image acceptance remains.

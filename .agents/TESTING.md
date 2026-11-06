@@ -50,6 +50,14 @@ native dropdown Escape behavior. Exact release evidence and digest: docs/contain
 
 ## Environment
 
+Pendingv1.19.14 source passes41controlled cases/2opt-in live skips in4.5minutes;
+separate final character-identity focused case passes all8width/scale states.
+424units, root lint and actionlint pass. Test lint has0errors/24warnings.
+Actualv1.19.13 passed42cases with both real cases/zero uncaught page errors,
+but subsequent pixel review found native character toolbar overlap. New43rd
+case fails on that image and passes the natural-height correction. Actual
+immutablev1.19.14 all43-case acceptance and standalone persistence remain pending.
+
 Pendingv1.19.13 final source:41 browser cases passed in the full run, including
 both live Juiced cases. One inherited search-fixture count assertion failed;
 the corrected exact-name case passed separately. All42 full-run diagnostics

@@ -113,3 +113,15 @@ The review uses actual renders, action regressions and an independent critique.
 and unqualified external-provider/hardware paths. Opaque workspace text pairs
 measure7.392–15.411:1, and primary-action text8.619:1; this does not qualify every
 native theme, disabled control or provider-specific color.
+
+## Mounted native forms
+
+Native forms keep their fields and actions. The workspace owns their layout.
+When changing a native form from flex to grid, reset inherited percentage heights
+and nested scrolling so wrapped actions grow their containing row. Check both
+horizontal bounds and vertical overlap with the next section.
+
+The character editor uses a compact portrait followed by native actions, More,
+tags and notes in document flow. On phones, its character name has a full row
+above token statistics. Check existing-character and Create states at normal
+and enlarged text; an empty name must not reserve the existing-character header.

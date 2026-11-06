@@ -1,0 +1,1474 @@
+{
+  "date": "2026-11-06",
+  "source": "http://127.0.0.1:8018",
+  "baseCommit": "607198579bb3090dcda68c34aab252d2558c5647",
+  "finalCssSha256": "53e6b47d8d7d88c405a342cbd09c4bdbe2322371c16402ccbe8e1722dd7dfa67",
+  "testFileSha256": "b08f4058bb1bf1f27debf1e0fee068a2c6eacf28adbd0d16379966e00a521333",
+  "terminalGoal": "Independently reject remaining character editor/create overlaps and critical native Settings layout regressions before immutable v1.19.14 publication; parent owns release and actual-image acceptance.",
+  "scope": {
+    "readOnly": true,
+    "ownTab": "tab_6_dfebdf42-64d6-46f6-9748-1374a67d0b39",
+    "tabClosedAndAbsenceVerified": true,
+    "persistedSettingsChanged": false,
+    "implementationEdited": false,
+    "providersChanged": false,
+    "storiesStartedDeletedChanged": false,
+    "characterFieldsEditedSaved": false,
+    "fontMethod": "CSS-only documentElement --fontScale=1 or1.5; native #font_scale remained1. Override removed before closing, computed returned1.",
+    "visibilityLimit": "Independent browser captures and source/worktree/continuity records; parent worker live session not inspected. Parent supplied implementation/test status; no automated suite run by this reviewer."
+  },
+  "coverage": {
+    "matrix": "Edit and blank Create at1280/768/390/320 x CSS font1/1.5, viewport height844:16 states, captured and visually inspected. Final identity-only CSS update reloaded: Edit320/1.5 header and Create320/1280 at1.5 recaptured.",
+    "operations": [
+      "Open existing Seraphina profile and Edit character",
+      "Open blank Create character form, no submit",
+      "Edit and Create Advanced Definitions opens; Escape closes native dialog, keeps Settings/form open, restores advanced_div focus",
+      "Settings category navigation, connection disclosure collapse/expand, reply/preset section navigation",
+      "Native More clicked/focused only: host did not open system chooser (:open false), no option selected"
+    ],
+    "representativeSettings": "320/CSS1.5 native Connection Profile+action toolbar; Appearance language/version/account/theme/style rows; sampling unlocked-context helper and lengths; Chat Completion Presets+action toolbar. Rendered-only; no values changed."
+  },
+  "findings": [
+    {
+      "status": "resolved-and-freshly-verified",
+      "severity": "critical-overlap-originally",
+      "fact": "Natural-height avatar/actions stack keeps controls inside avatar, avatar before tags, tags before notes. All16 states satisfy recorded bounds and horizontal overflow0.",
+      "evidence": "audit array + edit/create screenshots"
+    },
+    {
+      "status": "resolved-and-freshly-verified",
+      "severity": "minor-readability",
+      "fact": "Seraphina native header truncated to S... at320/CSS1.5 before identity fix. After final reload full name visible; clientWidth270=scrollWidth270.",
+      "evidence": "final-edit-header-320-css1.5",
+      "measurement": {
+        "bounds": {
+          "bottom": 680.671875,
+          "height": 42.1875,
+          "left": 17,
+          "right": 287,
+          "top": 638.484375,
+          "width": 270,
+          "x": 17,
+          "y": 638.484375
+        },
+        "client": 270,
+        "font": "1.5",
+        "name": "Seraphina",
+        "scroll": 270
+      }
+    },
+    {
+      "status": "no-supported-new-defect",
+      "severity": null,
+      "fact": "No remaining overlap or critical usability issue found in the bounded reviewed states. Native profile/preset action groups wrap below readable selectors; sampling helpers remain in flow.",
+      "inference": "The reviewed layout is ready for parent actual-image acceptance; this does not prove every native option or external workflow."
+    }
+  ],
+  "preferences": [
+    "The compact96x120 portrait leaves spare desktop width; acceptable for this correction, no necessary change supported.",
+    "Native icon-only advanced actions preserve existing tooltips and semantics; no newly observed failure."
+  ],
+  "limitations": [
+    "No real mobile device/system select picker interaction",
+    "No character create/save, More action choice, provider application/inference, native persisted preferences, microphone or destructive operations tested",
+    "Not an all16 Settings rerun in this bounded follow-up; prior full audit remains separately indexed",
+    "Final published image not reviewed by this agent; parent owns no-overlay actual-image acceptance"
+  ],
+  "recommendedAction": "No further source intervention needed from this bounded review. Copy index/images, then complete parent controlled actual-v1.19.14 character layout/operation acceptance before recommending deployment.",
+  "audit": [
+    {
+      "mode": "edit",
+      "width": 1280,
+      "scale": 1,
+      "avatar": {
+        "bottom": 374.3125,
+        "height": 214,
+        "left": 474,
+        "right": 1235,
+        "top": 160.3125,
+        "width": 761,
+        "x": 474,
+        "y": 160.3125
+      },
+      "controls": {
+        "bottom": 374.3125,
+        "height": 82,
+        "left": 474,
+        "right": 1235,
+        "top": 292.3125,
+        "width": 761,
+        "x": 474,
+        "y": 292.3125
+      },
+      "form": {
+        "bottom": 1079.0625,
+        "height": 918.75,
+        "left": 472,
+        "right": 1237,
+        "top": 160.3125,
+        "width": 765,
+        "x": 472,
+        "y": 160.3125
+      },
+      "more": {
+        "bottom": 374.3125,
+        "height": 37,
+        "left": 474,
+        "right": 1235,
+        "top": 337.3125,
+        "width": 761,
+        "x": 474,
+        "y": 337.3125
+      },
+      "notes": {
+        "bottom": 538.9375,
+        "height": 58,
+        "left": 474,
+        "right": 1235,
+        "top": 480.9375,
+        "width": 761,
+        "x": 474,
+        "y": 480.9375
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 280.3125,
+        "height": 120,
+        "left": 474,
+        "right": 570,
+        "top": 160.3125,
+        "width": 96,
+        "x": 474,
+        "y": 160.3125
+      },
+      "tags": {
+        "bottom": 464.9375,
+        "height": 78.625,
+        "left": 474,
+        "right": 1235,
+        "top": 386.3125,
+        "width": 761,
+        "x": 474,
+        "y": 386.3125
+      }
+    },
+    {
+      "mode": "edit",
+      "width": 768,
+      "scale": 1,
+      "avatar": {
+        "bottom": 384.34375,
+        "height": 223.328125,
+        "left": 18,
+        "right": 739,
+        "top": 161.015625,
+        "width": 721,
+        "x": 18,
+        "y": 161.015625
+      },
+      "controls": {
+        "bottom": 384.34375,
+        "height": 91.328125,
+        "left": 18,
+        "right": 739,
+        "top": 293.015625,
+        "width": 721,
+        "x": 18,
+        "y": 293.015625
+      },
+      "form": {
+        "bottom": 1003.71875,
+        "height": 842.703125,
+        "left": 16,
+        "right": 741,
+        "top": 161.015625,
+        "width": 725,
+        "x": 16,
+        "y": 161.015625
+      },
+      "more": {
+        "bottom": 384.34375,
+        "height": 37,
+        "left": 18,
+        "right": 739,
+        "top": 347.34375,
+        "width": 721,
+        "x": 18,
+        "y": 347.34375
+      },
+      "notes": {
+        "bottom": 569.6875,
+        "height": 67.328125,
+        "left": 18,
+        "right": 739,
+        "top": 502.359375,
+        "width": 721,
+        "x": 18,
+        "y": 502.359375
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 281.015625,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 161.015625,
+        "width": 96,
+        "x": 18,
+        "y": 161.015625
+      },
+      "tags": {
+        "bottom": 486.359375,
+        "height": 90.015625,
+        "left": 18,
+        "right": 739,
+        "top": 396.34375,
+        "width": 721,
+        "x": 18,
+        "y": 396.34375
+      }
+    },
+    {
+      "mode": "edit",
+      "width": 390,
+      "scale": 1,
+      "avatar": {
+        "bottom": 434.90625,
+        "height": 275,
+        "left": 18,
+        "right": 361,
+        "top": 159.90625,
+        "width": 343,
+        "x": 18,
+        "y": 159.90625
+      },
+      "controls": {
+        "bottom": 434.90625,
+        "height": 143,
+        "left": 18,
+        "right": 361,
+        "top": 291.90625,
+        "width": 343,
+        "x": 18,
+        "y": 291.90625
+      },
+      "form": {
+        "bottom": 1062.90625,
+        "height": 903,
+        "left": 16,
+        "right": 363,
+        "top": 159.90625,
+        "width": 347,
+        "x": 16,
+        "y": 159.90625
+      },
+      "more": {
+        "bottom": 434.90625,
+        "height": 37,
+        "left": 18,
+        "right": 361,
+        "top": 397.90625,
+        "width": 343,
+        "x": 18,
+        "y": 397.90625
+      },
+      "notes": {
+        "bottom": 623.53125,
+        "height": 70,
+        "left": 18,
+        "right": 361,
+        "top": 553.53125,
+        "width": 343,
+        "x": 18,
+        "y": 553.53125
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 279.90625,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 159.90625,
+        "width": 96,
+        "x": 18,
+        "y": 159.90625
+      },
+      "tags": {
+        "bottom": 537.53125,
+        "height": 90.625,
+        "left": 18,
+        "right": 361,
+        "top": 446.90625,
+        "width": 343,
+        "x": 18,
+        "y": 446.90625
+      }
+    },
+    {
+      "mode": "edit",
+      "width": 320,
+      "scale": 1,
+      "avatar": {
+        "bottom": 434.90625,
+        "height": 275,
+        "left": 18,
+        "right": 291,
+        "top": 159.90625,
+        "width": 273,
+        "x": 18,
+        "y": 159.90625
+      },
+      "controls": {
+        "bottom": 434.90625,
+        "height": 143,
+        "left": 18,
+        "right": 291,
+        "top": 291.90625,
+        "width": 273,
+        "x": 18,
+        "y": 291.90625
+      },
+      "form": {
+        "bottom": 1062.90625,
+        "height": 903,
+        "left": 16,
+        "right": 293,
+        "top": 159.90625,
+        "width": 277,
+        "x": 16,
+        "y": 159.90625
+      },
+      "more": {
+        "bottom": 434.90625,
+        "height": 37,
+        "left": 18,
+        "right": 291,
+        "top": 397.90625,
+        "width": 273,
+        "x": 18,
+        "y": 397.90625
+      },
+      "notes": {
+        "bottom": 623.53125,
+        "height": 70,
+        "left": 18,
+        "right": 291,
+        "top": 553.53125,
+        "width": 273,
+        "x": 18,
+        "y": 553.53125
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 279.90625,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 159.90625,
+        "width": 96,
+        "x": 18,
+        "y": 159.90625
+      },
+      "tags": {
+        "bottom": 537.53125,
+        "height": 90.625,
+        "left": 18,
+        "right": 291,
+        "top": 446.90625,
+        "width": 273,
+        "x": 18,
+        "y": 446.90625
+      }
+    },
+    {
+      "mode": "edit",
+      "width": 1280,
+      "scale": 1.5,
+      "avatar": {
+        "bottom": 393.65625,
+        "height": 233.171875,
+        "left": 474,
+        "right": 1235,
+        "top": 160.484375,
+        "width": 761,
+        "x": 474,
+        "y": 160.484375
+      },
+      "controls": {
+        "bottom": 393.65625,
+        "height": 101.171875,
+        "left": 474,
+        "right": 1235,
+        "top": 292.484375,
+        "width": 761,
+        "x": 474,
+        "y": 292.484375
+      },
+      "form": {
+        "bottom": 1169.671875,
+        "height": 1009.1875,
+        "left": 472,
+        "right": 1237,
+        "top": 160.484375,
+        "width": 765,
+        "x": 472,
+        "y": 160.484375
+      },
+      "more": {
+        "bottom": 393.65625,
+        "height": 46,
+        "left": 474,
+        "right": 1235,
+        "top": 347.65625,
+        "width": 761,
+        "x": 474,
+        "y": 347.65625
+      },
+      "notes": {
+        "bottom": 589.515625,
+        "height": 68.171875,
+        "left": 474,
+        "right": 1235,
+        "top": 521.34375,
+        "width": 761,
+        "x": 474,
+        "y": 521.34375
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 280.484375,
+        "height": 120,
+        "left": 474,
+        "right": 570,
+        "top": 160.484375,
+        "width": 96,
+        "x": 474,
+        "y": 160.484375
+      },
+      "tags": {
+        "bottom": 505.34375,
+        "height": 99.6875,
+        "left": 474,
+        "right": 1235,
+        "top": 405.65625,
+        "width": 761,
+        "x": 474,
+        "y": 405.65625
+      }
+    },
+    {
+      "mode": "edit",
+      "width": 768,
+      "scale": 1.5,
+      "avatar": {
+        "bottom": 394.4375,
+        "height": 234.453125,
+        "left": 18,
+        "right": 739,
+        "top": 159.984375,
+        "width": 721,
+        "x": 18,
+        "y": 159.984375
+      },
+      "controls": {
+        "bottom": 394.4375,
+        "height": 102.453125,
+        "left": 18,
+        "right": 739,
+        "top": 291.984375,
+        "width": 721,
+        "x": 18,
+        "y": 291.984375
+      },
+      "form": {
+        "bottom": 1051.0625,
+        "height": 891.078125,
+        "left": 16,
+        "right": 741,
+        "top": 159.984375,
+        "width": 725,
+        "x": 16,
+        "y": 159.984375
+      },
+      "more": {
+        "bottom": 394.4375,
+        "height": 46,
+        "left": 18,
+        "right": 739,
+        "top": 348.4375,
+        "width": 721,
+        "x": 18,
+        "y": 348.4375
+      },
+      "notes": {
+        "bottom": 593.09375,
+        "height": 69.453125,
+        "left": 18,
+        "right": 739,
+        "top": 523.640625,
+        "width": 721,
+        "x": 18,
+        "y": 523.640625
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 279.984375,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 159.984375,
+        "width": 96,
+        "x": 18,
+        "y": 159.984375
+      },
+      "tags": {
+        "bottom": 507.640625,
+        "height": 101.203125,
+        "left": 18,
+        "right": 739,
+        "top": 406.4375,
+        "width": 721,
+        "x": 18,
+        "y": 406.4375
+      }
+    },
+    {
+      "mode": "edit",
+      "width": 390,
+      "scale": 1.5,
+      "avatar": {
+        "bottom": 443.875,
+        "height": 284,
+        "left": 18,
+        "right": 361,
+        "top": 159.875,
+        "width": 343,
+        "x": 18,
+        "y": 159.875
+      },
+      "controls": {
+        "bottom": 443.875,
+        "height": 152,
+        "left": 18,
+        "right": 361,
+        "top": 291.875,
+        "width": 343,
+        "x": 18,
+        "y": 291.875
+      },
+      "form": {
+        "bottom": 1138.796875,
+        "height": 978.921875,
+        "left": 16,
+        "right": 363,
+        "top": 159.875,
+        "width": 347,
+        "x": 16,
+        "y": 159.875
+      },
+      "more": {
+        "bottom": 443.875,
+        "height": 46,
+        "left": 18,
+        "right": 361,
+        "top": 397.875,
+        "width": 343,
+        "x": 18,
+        "y": 397.875
+      },
+      "notes": {
+        "bottom": 643.234375,
+        "height": 70,
+        "left": 18,
+        "right": 361,
+        "top": 573.234375,
+        "width": 343,
+        "x": 18,
+        "y": 573.234375
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 279.875,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 159.875,
+        "width": 96,
+        "x": 18,
+        "y": 159.875
+      },
+      "tags": {
+        "bottom": 557.234375,
+        "height": 101.359375,
+        "left": 18,
+        "right": 361,
+        "top": 455.875,
+        "width": 343,
+        "x": 18,
+        "y": 455.875
+      }
+    },
+    {
+      "mode": "edit",
+      "width": 320,
+      "scale": 1.5,
+      "avatar": {
+        "bottom": 443.671875,
+        "height": 284,
+        "left": 18,
+        "right": 291,
+        "top": 159.671875,
+        "width": 273,
+        "x": 18,
+        "y": 159.671875
+      },
+      "controls": {
+        "bottom": 443.671875,
+        "height": 152,
+        "left": 18,
+        "right": 291,
+        "top": 291.671875,
+        "width": 273,
+        "x": 18,
+        "y": 291.671875
+      },
+      "form": {
+        "bottom": 1222.09375,
+        "height": 1062.421875,
+        "left": 16,
+        "right": 293,
+        "top": 159.671875,
+        "width": 277,
+        "x": 16,
+        "y": 159.671875
+      },
+      "more": {
+        "bottom": 443.671875,
+        "height": 46,
+        "left": 18,
+        "right": 291,
+        "top": 397.671875,
+        "width": 273,
+        "x": 18,
+        "y": 397.671875
+      },
+      "notes": {
+        "bottom": 668.53125,
+        "height": 95.5,
+        "left": 18,
+        "right": 291,
+        "top": 573.03125,
+        "width": 273,
+        "x": 18,
+        "y": 573.03125
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 279.671875,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 159.671875,
+        "width": 96,
+        "x": 18,
+        "y": 159.671875
+      },
+      "tags": {
+        "bottom": 557.03125,
+        "height": 101.359375,
+        "left": 18,
+        "right": 291,
+        "top": 455.671875,
+        "width": 273,
+        "x": 18,
+        "y": 455.671875
+      }
+    },
+    {
+      "mode": "create",
+      "width": 1280,
+      "scale": 1,
+      "avatar": {
+        "bottom": 370.21875,
+        "height": 215.109375,
+        "left": 474,
+        "right": 1235,
+        "top": 155.109375,
+        "width": 761,
+        "x": 474,
+        "y": 155.109375
+      },
+      "controls": {
+        "bottom": 370.21875,
+        "height": 83.109375,
+        "left": 474,
+        "right": 1235,
+        "top": 287.109375,
+        "width": 761,
+        "x": 474,
+        "y": 287.109375
+      },
+      "create": {
+        "bottom": 320.21875,
+        "height": 33.109375,
+        "left": 604.75,
+        "right": 756.171875,
+        "top": 287.109375,
+        "width": 151.421875,
+        "x": 604.75,
+        "y": 287.109375
+      },
+      "more": {
+        "bottom": 370.21875,
+        "height": 37,
+        "left": 474,
+        "right": 1235,
+        "top": 333.21875,
+        "width": 761,
+        "x": 474,
+        "y": 333.21875
+      },
+      "name": "",
+      "notes": {
+        "bottom": 511.4375,
+        "height": 59.109375,
+        "left": 474,
+        "right": 1235,
+        "top": 452.328125,
+        "width": 761,
+        "x": 474,
+        "y": 452.328125
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 275.109375,
+        "height": 120,
+        "left": 474,
+        "right": 570,
+        "top": 155.109375,
+        "width": 96,
+        "x": 474,
+        "y": 155.109375
+      },
+      "tags": {
+        "bottom": 436.328125,
+        "height": 54.109375,
+        "left": 474,
+        "right": 1235,
+        "top": 382.21875,
+        "width": 761,
+        "x": 474,
+        "y": 382.21875
+      }
+    },
+    {
+      "mode": "create",
+      "width": 768,
+      "scale": 1,
+      "avatar": {
+        "bottom": 380.109375,
+        "height": 220.375,
+        "left": 18,
+        "right": 739,
+        "top": 159.734375,
+        "width": 721,
+        "x": 18,
+        "y": 159.734375
+      },
+      "controls": {
+        "bottom": 380.109375,
+        "height": 88.375,
+        "left": 18,
+        "right": 739,
+        "top": 291.734375,
+        "width": 721,
+        "x": 18,
+        "y": 291.734375
+      },
+      "create": {
+        "bottom": 330.109375,
+        "height": 38.375,
+        "left": 180.296875,
+        "right": 331.6875,
+        "top": 291.734375,
+        "width": 151.390625,
+        "x": 180.296875,
+        "y": 291.734375
+      },
+      "more": {
+        "bottom": 380.109375,
+        "height": 37,
+        "left": 18,
+        "right": 739,
+        "top": 343.109375,
+        "width": 721,
+        "x": 18,
+        "y": 343.109375
+      },
+      "name": "",
+      "notes": {
+        "bottom": 533.84375,
+        "height": 64.375,
+        "left": 18,
+        "right": 739,
+        "top": 469.46875,
+        "width": 721,
+        "x": 18,
+        "y": 469.46875
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 279.734375,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 159.734375,
+        "width": 96,
+        "x": 18,
+        "y": 159.734375
+      },
+      "tags": {
+        "bottom": 453.46875,
+        "height": 61.359375,
+        "left": 18,
+        "right": 739,
+        "top": 392.109375,
+        "width": 721,
+        "x": 18,
+        "y": 392.109375
+      }
+    },
+    {
+      "mode": "create",
+      "width": 390,
+      "scale": 1,
+      "avatar": {
+        "bottom": 435.328125,
+        "height": 275,
+        "left": 18,
+        "right": 361,
+        "top": 160.328125,
+        "width": 343,
+        "x": 18,
+        "y": 160.328125
+      },
+      "controls": {
+        "bottom": 435.328125,
+        "height": 143,
+        "left": 18,
+        "right": 361,
+        "top": 292.328125,
+        "width": 343,
+        "x": 18,
+        "y": 292.328125
+      },
+      "create": {
+        "bottom": 385.328125,
+        "height": 44,
+        "left": 18,
+        "right": 169.390625,
+        "top": 341.328125,
+        "width": 151.390625,
+        "x": 18,
+        "y": 341.328125
+      },
+      "more": {
+        "bottom": 435.328125,
+        "height": 37,
+        "left": 18,
+        "right": 361,
+        "top": 398.328125,
+        "width": 343,
+        "x": 18,
+        "y": 398.328125
+      },
+      "name": "",
+      "notes": {
+        "bottom": 597.328125,
+        "height": 70,
+        "left": 18,
+        "right": 361,
+        "top": 527.328125,
+        "width": 343,
+        "x": 18,
+        "y": 527.328125
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 280.328125,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 160.328125,
+        "width": 96,
+        "x": 18,
+        "y": 160.328125
+      },
+      "tags": {
+        "bottom": 511.328125,
+        "height": 64,
+        "left": 18,
+        "right": 361,
+        "top": 447.328125,
+        "width": 343,
+        "x": 18,
+        "y": 447.328125
+      }
+    },
+    {
+      "mode": "create",
+      "width": 320,
+      "scale": 1,
+      "avatar": {
+        "bottom": 435.328125,
+        "height": 275,
+        "left": 18,
+        "right": 291,
+        "top": 160.328125,
+        "width": 273,
+        "x": 18,
+        "y": 160.328125
+      },
+      "controls": {
+        "bottom": 435.328125,
+        "height": 143,
+        "left": 18,
+        "right": 291,
+        "top": 292.328125,
+        "width": 273,
+        "x": 18,
+        "y": 292.328125
+      },
+      "create": {
+        "bottom": 385.328125,
+        "height": 44,
+        "left": 18,
+        "right": 169.390625,
+        "top": 341.328125,
+        "width": 151.390625,
+        "x": 18,
+        "y": 341.328125
+      },
+      "more": {
+        "bottom": 435.328125,
+        "height": 37,
+        "left": 18,
+        "right": 291,
+        "top": 398.328125,
+        "width": 273,
+        "x": 18,
+        "y": 398.328125
+      },
+      "name": "",
+      "notes": {
+        "bottom": 597.328125,
+        "height": 70,
+        "left": 18,
+        "right": 291,
+        "top": 527.328125,
+        "width": 273,
+        "x": 18,
+        "y": 527.328125
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 280.328125,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 160.328125,
+        "width": 96,
+        "x": 18,
+        "y": 160.328125
+      },
+      "tags": {
+        "bottom": 511.328125,
+        "height": 64,
+        "left": 18,
+        "right": 291,
+        "top": 447.328125,
+        "width": 273,
+        "x": 18,
+        "y": 447.328125
+      }
+    },
+    {
+      "mode": "create",
+      "width": 1280,
+      "scale": 1.5,
+      "avatar": {
+        "bottom": 393.8125,
+        "height": 233.546875,
+        "left": 474,
+        "right": 1235,
+        "top": 160.265625,
+        "width": 761,
+        "x": 474,
+        "y": 160.265625
+      },
+      "controls": {
+        "bottom": 393.8125,
+        "height": 101.546875,
+        "left": 474,
+        "right": 1235,
+        "top": 292.265625,
+        "width": 761,
+        "x": 474,
+        "y": 292.265625
+      },
+      "create": {
+        "bottom": 334.8125,
+        "height": 42.546875,
+        "left": 636.828125,
+        "right": 853.40625,
+        "top": 292.265625,
+        "width": 216.578125,
+        "x": 636.828125,
+        "y": 292.265625
+      },
+      "more": {
+        "bottom": 393.8125,
+        "height": 46,
+        "left": 474,
+        "right": 1235,
+        "top": 347.8125,
+        "width": 761,
+        "x": 474,
+        "y": 347.8125
+      },
+      "name": "",
+      "notes": {
+        "bottom": 553.296875,
+        "height": 68.546875,
+        "left": 474,
+        "right": 1235,
+        "top": 484.75,
+        "width": 761,
+        "x": 474,
+        "y": 484.75
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 280.265625,
+        "height": 120,
+        "left": 474,
+        "right": 570,
+        "top": 160.265625,
+        "width": 96,
+        "x": 474,
+        "y": 160.265625
+      },
+      "tags": {
+        "bottom": 468.75,
+        "height": 62.9375,
+        "left": 474,
+        "right": 1235,
+        "top": 405.8125,
+        "width": 761,
+        "x": 474,
+        "y": 405.8125
+      }
+    },
+    {
+      "mode": "create",
+      "width": 768,
+      "scale": 1.5,
+      "avatar": {
+        "bottom": 394.34375,
+        "height": 234.390625,
+        "left": 18,
+        "right": 739,
+        "top": 159.953125,
+        "width": 721,
+        "x": 18,
+        "y": 159.953125
+      },
+      "controls": {
+        "bottom": 394.34375,
+        "height": 102.390625,
+        "left": 18,
+        "right": 739,
+        "top": 291.953125,
+        "width": 721,
+        "x": 18,
+        "y": 291.953125
+      },
+      "create": {
+        "bottom": 335.34375,
+        "height": 43.390625,
+        "left": 200.625,
+        "right": 417.71875,
+        "top": 291.953125,
+        "width": 217.09375,
+        "x": 200.625,
+        "y": 291.953125
+      },
+      "more": {
+        "bottom": 394.34375,
+        "height": 46,
+        "left": 18,
+        "right": 739,
+        "top": 348.34375,
+        "width": 721,
+        "x": 18,
+        "y": 348.34375
+      },
+      "name": "",
+      "notes": {
+        "bottom": 555.546875,
+        "height": 69.390625,
+        "left": 18,
+        "right": 739,
+        "top": 486.15625,
+        "width": 721,
+        "x": 18,
+        "y": 486.15625
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 279.953125,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 159.953125,
+        "width": 96,
+        "x": 18,
+        "y": 159.953125
+      },
+      "tags": {
+        "bottom": 470.15625,
+        "height": 63.8125,
+        "left": 18,
+        "right": 739,
+        "top": 406.34375,
+        "width": 721,
+        "x": 18,
+        "y": 406.34375
+      }
+    },
+    {
+      "mode": "create",
+      "width": 390,
+      "scale": 1.5,
+      "avatar": {
+        "bottom": 443.84375,
+        "height": 284,
+        "left": 18,
+        "right": 361,
+        "top": 159.84375,
+        "width": 343,
+        "x": 18,
+        "y": 159.84375
+      },
+      "controls": {
+        "bottom": 443.84375,
+        "height": 152,
+        "left": 18,
+        "right": 361,
+        "top": 291.84375,
+        "width": 343,
+        "x": 18,
+        "y": 291.84375
+      },
+      "create": {
+        "bottom": 384.84375,
+        "height": 44,
+        "left": 18,
+        "right": 235.09375,
+        "top": 340.84375,
+        "width": 217.09375,
+        "x": 18,
+        "y": 340.84375
+      },
+      "more": {
+        "bottom": 443.84375,
+        "height": 46,
+        "left": 18,
+        "right": 361,
+        "top": 397.84375,
+        "width": 343,
+        "x": 18,
+        "y": 397.84375
+      },
+      "name": "",
+      "notes": {
+        "bottom": 605.84375,
+        "height": 70,
+        "left": 18,
+        "right": 361,
+        "top": 535.84375,
+        "width": 343,
+        "x": 18,
+        "y": 535.84375
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 279.84375,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 159.84375,
+        "width": 96,
+        "x": 18,
+        "y": 159.84375
+      },
+      "tags": {
+        "bottom": 519.84375,
+        "height": 64,
+        "left": 18,
+        "right": 361,
+        "top": 455.84375,
+        "width": 343,
+        "x": 18,
+        "y": 455.84375
+      }
+    },
+    {
+      "mode": "create",
+      "width": 320,
+      "scale": 1.5,
+      "avatar": {
+        "bottom": 443.640625,
+        "height": 284,
+        "left": 18,
+        "right": 291,
+        "top": 159.640625,
+        "width": 273,
+        "x": 18,
+        "y": 159.640625
+      },
+      "controls": {
+        "bottom": 443.640625,
+        "height": 152,
+        "left": 18,
+        "right": 291,
+        "top": 291.640625,
+        "width": 273,
+        "x": 18,
+        "y": 291.640625
+      },
+      "create": {
+        "bottom": 384.640625,
+        "height": 44,
+        "left": 18,
+        "right": 235.09375,
+        "top": 340.640625,
+        "width": 217.09375,
+        "x": 18,
+        "y": 340.640625
+      },
+      "more": {
+        "bottom": 443.640625,
+        "height": 46,
+        "left": 18,
+        "right": 291,
+        "top": 397.640625,
+        "width": 273,
+        "x": 18,
+        "y": 397.640625
+      },
+      "name": "",
+      "notes": {
+        "bottom": 631.140625,
+        "height": 95.5,
+        "left": 18,
+        "right": 291,
+        "top": 535.640625,
+        "width": 273,
+        "x": 18,
+        "y": 535.640625
+      },
+      "overflow": 0,
+      "portrait": {
+        "bottom": 279.640625,
+        "height": 120,
+        "left": 18,
+        "right": 114,
+        "top": 159.640625,
+        "width": 96,
+        "x": 18,
+        "y": 159.640625
+      },
+      "tags": {
+        "bottom": 519.640625,
+        "height": 64,
+        "left": 18,
+        "right": 291,
+        "top": 455.640625,
+        "width": 273,
+        "x": 18,
+        "y": 455.640625
+      }
+    }
+  ],
+  "screenshots": [
+    {
+      "name": "edit-1280-css1",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bgcr1-6e9f97dd.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-1280-css1.png"
+    },
+    {
+      "name": "edit-768-css1",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bgdic-3b5819ad.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-768-css1.png"
+    },
+    {
+      "name": "edit-390-css1",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bge1e-b029754c.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-390-css1.png"
+    },
+    {
+      "name": "edit-320-css1",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bgenv-c647dfc8.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-320-css1.png"
+    },
+    {
+      "name": "edit-1280-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bgfgn-3c9055b8.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-1280-css1.5.png"
+    },
+    {
+      "name": "edit-768-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bggzb-8f40d328.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-768-css1.5.png"
+    },
+    {
+      "name": "edit-390-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bghqy-d08dad84.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-390-css1.5.png"
+    },
+    {
+      "name": "edit-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bgiir-060d7a60.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-320-css1.5.png"
+    },
+    {
+      "name": "edit-320-css1.5-native-definitions",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bhh11-42d93e91.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-320-css1.5-native-definitions.png"
+    },
+    {
+      "name": "edit-more-select-focused-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bioxf-0c1e9347.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/edit-more-select-focused-320-css1.5.png"
+    },
+    {
+      "name": "create-1280-css1",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bkemj-a1595276.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/create-1280-css1.png"
+    },
+    {
+      "name": "create-768-css1",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bkg45-dd6a0af8.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/create-768-css1.png"
+    },
+    {
+      "name": "create-390-css1",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bkgvy-113560af.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/create-390-css1.png"
+    },
+    {
+      "name": "create-320-css1",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bkhnk-40014ca6.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/create-320-css1.png"
+    },
+    {
+      "name": "create-1280-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bkige-a949c207.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/create-1280-css1.5.png"
+    },
+    {
+      "name": "create-768-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bkj7c-c9106c3e.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/create-768-css1.5.png"
+    },
+    {
+      "name": "create-390-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bkkqr-4595efa7.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/create-390-css1.5.png"
+    },
+    {
+      "name": "create-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bkl9r-42ffc177.png",
+      "phase": "natural-height-fix-before-identity-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/create-320-css1.5.png"
+    },
+    {
+      "name": "final-edit-header-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bo6n5-25e9cf7f.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-edit-header-320-css1.5.png"
+    },
+    {
+      "name": "final-create-320-css1.5-native-definitions",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bovg8-969414ff.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-create-320-css1.5-native-definitions.png"
+    },
+    {
+      "name": "final-create-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bp4bk-4486262f.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-create-320-css1.5.png"
+    },
+    {
+      "name": "final-create-1280-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bp59a-1ec4af01.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-create-1280-css1.5.png"
+    },
+    {
+      "name": "final-settings-connection-profile-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bpdhd-53ada426.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-settings-connection-profile-320-css1.5.png"
+    },
+    {
+      "name": "final-settings-connection-profile-expanded-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bpkpz-8ae259c8.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-settings-connection-profile-expanded-320-css1.5.png"
+    },
+    {
+      "name": "final-settings-reply-controls-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bptq8-dd154038.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-settings-reply-controls-320-css1.5.png"
+    },
+    {
+      "name": "final-settings-appearance-native-header-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bq3ls-c3a15fcd.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-settings-appearance-native-header-320-css1.5.png"
+    },
+    {
+      "name": "final-settings-sampling-helper-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bqdpm-f030d346.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-settings-sampling-helper-320-css1.5.png"
+    },
+    {
+      "name": "final-settings-presets-320-css1.5",
+      "path": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bqluq-3bd02a53.png",
+      "phase": "after-identity-fix-reload",
+      "retainedPath": "docs/evidence/full-workspace-review-20261106/character-critique/final-settings-presets-320-css1.5.png"
+    }
+  ]
+}

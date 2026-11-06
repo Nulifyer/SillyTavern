@@ -1,0 +1,15 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep character portrait --output=/tmp/st-character-layout-fixed-final
+(node:223322) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:223343) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:223343) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:223343) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:333:1 › character portrait and native actions stay above tags and notes at every size (9.2s)
+
+  1 passed (10.2s)

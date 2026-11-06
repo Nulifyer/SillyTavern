@@ -1,0 +1,225 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to message" [ref=e3] [cursor=pointer]:
+    - /url: "#send_textarea"
+  - banner [ref=e4]:
+    - button "Open navigation" [ref=e5] [cursor=pointer]:
+      - generic [ref=e6]: 
+    - generic [ref=e7]:
+      - strong [ref=e8]: Settings
+      - generic [ref=e9]: Character editor
+    - generic:  +
+  - text:  
+  - generic:
+    - generic:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items   X                                      
+    - generic:                                                                         
+    - generic:                                                
+    - generic:                 +     
+    - generic:                                    
+    - generic:        +                            
+    - generic:          +                                                                                     +                      +   + +  +     +        +        +        +                                               
+    - generic:                     
+    - generic: 
+  - generic:                      +                                                                               +    + +                  
+  - generic:                  
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - generic [ref=e14]: Settings category
+          - combobox "Settings category" [ref=e15]:
+            - option "Servers"
+            - option "Story replies"
+            - option "Image prompts"
+            - option "Images"
+            - option "Speech"
+            - option "Dictation"
+            - option "Vision & captions"
+            - option "Retrieval"
+            - option "Your persona"
+            - option "World & lore"
+            - option "Scene backgrounds"
+            - option "Appearance & behavior"
+            - option "Extensions"
+            - option "Character editor" [selected]
+        - button "Done" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: 
+          - generic [ref=e18]: Done
+      - text:              
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - heading "Character editor" [level=1] [ref=e22]
+            - paragraph [ref=e23]: Create a card or edit character and group details. Existing characters save automatically; use Create character for a new card.
+          - generic "Expand native provider settings, sampling, prompt formatting and extension options. Changes only which controls are shown." [ref=e25] [cursor=pointer]:
+            - checkbox "Advanced controls" [ref=e26]
+            - generic [ref=e27]: Advanced controls
+        - navigation "Character editor" [ref=e29]:
+          - text: 
+          - generic [ref=e30]:
+            - generic [ref=e31]:
+              - text:  
+              - button "" [ref=e32] [cursor=pointer]
+            - generic [ref=e36]:
+              - generic [ref=e37]: 
+              - text: Favorite characters to add them to HotSwaps
+          - generic [ref=e39]:   
+          - generic [ref=e41]:
+            - text:                                              Group is empty.          No characters available
+            - generic [ref=e42]:
+              - generic [ref=e43]:
+                - generic [ref=e44]:
+                  - button " Create" [ref=e45] [cursor=pointer]:
+                    - text: 
+                    - generic [ref=e46]: Create
+                  - button " Import" [ref=e47] [cursor=pointer]:
+                    - text: 
+                    - generic [ref=e48]: Import
+                  - button "" [ref=e49] [cursor=pointer]
+                  - button " New group" [ref=e50] [cursor=pointer]:
+                    - text: 
+                    - generic [ref=e51]: New group
+                  - combobox "Characters sorting order" [ref=e52]:
+                    - option "A-Z" [selected]
+                    - option "Z-A"
+                    - option "Newest"
+                    - option "Oldest"
+                    - option "Favorites"
+                    - option "Recent"
+                    - option "Most chats"
+                    - option "Least chats"
+                    - option "Most tokens"
+                    - option "Least tokens"
+                    - option "Random"
+                  - button "" [ref=e53] [cursor=pointer]
+                - generic [ref=e55]:
+                  - button "" [ref=e56] [cursor=pointer]:
+                    - generic "Show only favorites" [ref=e57]: 
+                    - text: 
+                  - button "" [ref=e58] [cursor=pointer]:
+                    - generic "Show only groups" [ref=e59]: 
+                    - text: 
+                  - button "" [ref=e60] [cursor=pointer]:
+                    - generic "Enable 'Tags as Folder' Allows characters to be grouped in folders by their assigned tags. Tags have to be explicitly chosen as folder to show up. Click here to start" [ref=e61]: 
+                    - text: 
+                  - button "" [ref=e62] [cursor=pointer]:
+                    - generic "Manage tags" [ref=e63]: 
+                    - text: 
+                  - button "" [ref=e64] [cursor=pointer]:
+                    - generic "Show Tag List" [ref=e65]: 
+                    - text: 
+                  - button "" [ref=e66] [cursor=pointer]:
+                    - generic "Clear all filters" [ref=e67]: 
+                    - text: 
+                  - text: 
+              - generic [ref=e68]:
+                - generic [ref=e69]:
+                  - generic [ref=e70]: 1-1 .. 1
+                  - list [ref=e72]:
+                    - listitem [ref=e73]:
+                      - button "«" [ref=e74]
+                    - listitem [ref=e75]:
+                      - button "<" [ref=e76]
+                    - listitem [ref=e77]:
+                      - button ">" [ref=e78]
+                    - listitem [ref=e79]:
+                      - button "»" [ref=e80]
+                  - combobox [ref=e82]:
+                    - option "10 / page"
+                    - option "25 / page"
+                    - option "50 / page" [selected]
+                    - option "100 / page"
+                    - option "250 / page"
+                    - option "500 / page"
+                    - option "1000 / page"
+                - button "" [ref=e83] [cursor=pointer]
+                - button "" [ref=e84] [cursor=pointer]
+                - text:  
+              - list [ref=e86]:
+                - listitem [ref=e87] [cursor=pointer]:
+                  - 'generic "[Character] Seraphina File: default_Seraphina.png" [ref=e88]':
+                    - img "Seraphina" [ref=e89]
+                  - generic [ref=e90]:
+                    - generic [ref=e91]:
+                      - generic "[Character] Seraphina" [ref=e92]: Seraphina
+                      - generic [ref=e93]: 1.0.0
+                    - text: 
+                    - generic [ref=e94]: "ST Default Bot contest winner: roleplay bots category"
+                    - button "ST Default" [ref=e96]:
+                      - generic [ref=e97]: ST Default
+                      - text: 
+    - region "Roleplay workspace" [ref=e98]:
+      - generic [ref=e99]:
+        - button "All characters" [ref=e100] [cursor=pointer]:
+          - generic [ref=e101]: 
+          - generic [ref=e102]: All characters
+        - generic [ref=e103]:
+          - complementary [ref=e104]:
+            - generic [ref=e105]:
+              - heading "Seraphina" [level=1] [ref=e106]
+              - paragraph [ref=e107]: You were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.
+              - generic [ref=e108]:
+                - button "Start new story" [ref=e109] [cursor=pointer]:
+                  - generic [ref=e110]: +
+                  - generic [ref=e111]: Start new story
+                - button "Edit character" [ref=e112] [cursor=pointer]:
+                  - generic [ref=e113]: 
+                  - generic [ref=e114]: Edit character
+          - generic [ref=e115]:
+            - generic [ref=e116]:
+              - heading "Pick up where you left off" [level=2] [ref=e117]
+              - strong [ref=e118]: Seraphina - 2023-5-12 @21h 32m 29s 224ms
+              - paragraph [ref=e119]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+              - button "Continue latest story" [ref=e120] [cursor=pointer]:
+                - generic [ref=e121]: 
+                - generic [ref=e122]: Continue latest story
+            - generic [ref=e123]:
+              - group [ref=e124]:
+                - generic "Opening message" [ref=e125] [cursor=pointer]
+              - group [ref=e126]:
+                - generic "Full character description" [ref=e127] [cursor=pointer]
+            - generic [ref=e128]:
+              - heading "Story history" [level=2] [ref=e129]
+              - generic [ref=e130]:
+                - button "Active" [pressed] [ref=e131] [cursor=pointer]
+                - button "Archived" [ref=e132] [cursor=pointer]
+            - region "Story list" [ref=e133]:
+              - generic [ref=e134]:
+                - article [ref=e135]:
+                  - button "Continue Seraphina - 2023-5-12 @21h 32m 29s 224ms with Seraphina" [ref=e136] [cursor=pointer]:
+                    - generic [ref=e137]:
+                      - strong [ref=e138]: Seraphina - 2023-5-12 @21h 32m 29s 224ms
+                      - generic [ref=e139]: Seraphina
+                      - generic [ref=e140]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+                  - group [ref=e141]:
+                    - generic "Actions for Seraphina - 2023-5-12 @21h 32m 29s 224ms" [ref=e142]:
+                      - generic [ref=e143]: 
+                    - text:   
+                - article [ref=e144]:
+                  - button "Continue Seraphina - 2026-11-06@13h30m17s367ms with Seraphina" [ref=e145] [cursor=pointer]:
+                    - generic [ref=e146]:
+                      - strong [ref=e147]: Seraphina - 2026-11-06@13h30m17s367ms
+                      - generic [ref=e148]: Seraphina
+                      - generic [ref=e149]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+                  - group [ref=e150]:
+                    - generic "Actions for Seraphina - 2026-11-06@13h30m17s367ms" [ref=e151]:
+                      - generic [ref=e152]: 
+                    - text:   
+    - text:             |     |                                                                                         
+  - text:                      1  
+  - status [ref=e153]
+  - status [ref=e154]
+  - status [ref=e155]
+  - status [ref=e156]
+  - status [ref=e157]
+  - status [ref=e158]
+  - status [ref=e159]
+  - status [ref=e160]
+  - status [ref=e161]
+  - status [ref=e162]
+  - status [ref=e163]
+  - status [ref=e164]
+  - text: 
+```

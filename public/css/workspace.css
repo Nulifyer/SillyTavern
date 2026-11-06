@@ -303,7 +303,13 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-extension-path .inline-drawer-content { display: block !important; }
 .workspace-ui .workspace-mounted-panel :is(#extensions_settings, #extensions_settings2) { width: 100%; min-width: 0; }
 .workspace-ui .workspace-mounted-panel .world_entry { border-radius: var(--ws-radius-control); }
-.workspace-ui .workspace-mounted-panel #form_create { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; }
+.workspace-ui .workspace-mounted-panel #form_create { display: grid; grid-template-columns: minmax(0, 1fr); gap: 16px; height: auto; overflow: visible; }
+.workspace-ui .workspace-mounted-panel #avatar_div { flex: none; flex-direction: column; flex-wrap: nowrap; align-items: stretch; height: auto; gap: 12px; }
+.workspace-ui .workspace-mounted-panel #avatar_div_div { flex: none; width: 96px; height: 120px; margin: 0; align-self: flex-start !important; }
+.workspace-ui .workspace-mounted-panel #avatar_load_preview { width: 100%; height: 100%; object-fit: cover; }
+.workspace-ui .workspace-mounted-panel #avatar_controls { flex: none; height: auto; padding: 0; gap: 8px; }
+.workspace-ui .workspace-mounted-panel #avatar_controls > :is(.buttons_block, label) { flex: none; height: auto; justify-content: flex-start; }
+.workspace-ui .workspace-mounted-panel #tags_div { margin-top: 12px; }
 .workspace-ui .workspace-mounted-panel #rm_ch_create_block { max-width: 840px; margin: auto; }
 .workspace-ui .workspace-mounted-panel :is(#description_textarea, #firstmessage_textarea, #scenario_pole, #personality_textarea) { min-height: 120px; line-height: 1.6; }
 .workspace-ui .character_select { padding: 12px; border-radius: var(--ws-radius-control); border: 1px solid transparent; }
@@ -632,6 +638,9 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 }
 @media (max-width: 600px) {
     .workspace-profile-layout { display: block; }
+    .workspace-ui .workspace-mounted-panel #right-nav-panel-tabs { flex-wrap: wrap; gap: 8px; }
+    .workspace-ui .workspace-mounted-panel #rm_button_selected_ch { flex: 1 0 100%; opacity: 1; }
+    .workspace-ui .workspace-mounted-panel #rm_button_selected_ch h2 { white-space: normal; overflow-wrap: anywhere; }
     .workspace-profile-identity { position: static; display: grid; grid-template-columns: 88px minmax(0, 1fr); gap: 16px; margin-bottom: 32px; }
     .workspace-profile-identity > .workspace-profile-portrait { width: 88px; }
     .workspace-profile-identity > :is(h2, .workspace-profile-cast) { grid-column: 1 / -1; }

@@ -1,0 +1,407 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to message" [ref=e3] [cursor=pointer]:
+    - /url: "#send_textarea"
+  - complementary "Workspace" [ref=e4]:
+    - link "SillyTavern" [ref=e5] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e6]: SillyTavern
+    - button "Find anything Ctrl K" [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]: 
+      - generic [ref=e9]: Find anything
+      - generic [ref=e10]: Ctrl K
+    - button "New story" [ref=e11] [cursor=pointer]:
+      - generic [ref=e12]: +
+      - generic [ref=e13]: New story
+    - navigation "Main navigation" [ref=e14]:
+      - button "Stories" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 
+        - generic [ref=e17]: Stories
+      - button "Characters" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: 
+        - generic [ref=e20]: Characters
+      - button "Archive" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Archive
+    - text: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]: Recent stories
+        - button "View all stories" [ref=e27] [cursor=pointer]:
+          - generic [ref=e28]: 
+      - generic [ref=e29]:
+        - article [ref=e30]:
+          - button "Continue Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 group-stop with Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 cast" [ref=e31] [cursor=pointer]:
+            - generic [ref=e33]:
+              - strong [ref=e34]: Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 group-stop
+              - generic [ref=e35]: Workspace e2e f5948f93a1ec48d2d907-4207231a300277a41804-mw5albk0 cast
+        - article [ref=e36]:
+          - button "Continue Seraphina - 2026-11-06@12h15m18s883ms with Seraphina" [ref=e37] [cursor=pointer]:
+            - generic [ref=e38]:
+              - strong [ref=e39]: Seraphina - 2026-11-06@12h15m18s883ms
+              - generic [ref=e40]: Seraphina
+        - article [ref=e41]:
+          - button "Continue Seraphina - 2026-11-06@11h52m36s428ms with Seraphina" [ref=e42] [cursor=pointer]:
+            - generic [ref=e43]:
+              - strong [ref=e44]: Seraphina - 2026-11-06@11h52m36s428ms
+              - generic [ref=e45]: Seraphina
+    - generic [ref=e46]:
+      - button "Settings" [ref=e47] [cursor=pointer]:
+        - generic [ref=e48]: 
+        - generic [ref=e49]: Settings
+      - text: 
+      - button "Storyteller Manage persona" [ref=e50] [cursor=pointer]:
+        - generic [ref=e52]: 
+        - generic [ref=e53]:
+          - strong [ref=e54]: Storyteller
+          - generic [ref=e55]: Manage persona
+        - generic [ref=e56]: 
+  - banner [ref=e57]:
+    - text: 
+    - generic [ref=e58]:
+      - strong [ref=e59]: Settings
+      - generic [ref=e60]: Appearance & behavior
+    - generic:  +
+  - text:  
+  - generic:
+    - generic:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items   X                                      
+    - generic:                                                                         
+    - generic:                                                
+    - generic:                 +     
+    - generic: 
+    - generic:        +                            
+    - generic:          +                                                                                     +                      +   + +  +     +        +        +        +                                               
+    - generic:                     
+    - generic:                                                       Group is empty.          No characters available                          
+  - generic:                      +                                                                               +    + +                  
+  - generic:                  
+  - generic [ref=e61]:
+    - generic [ref=e62]:
+      - navigation "Settings categories" [ref=e63]:
+        - heading "Settings" [level=2] [ref=e64]
+        - generic [ref=e65]:
+          - heading "Model services" [level=3] [ref=e66]
+          - button "Servers" [ref=e67] [cursor=pointer]:
+            - generic [ref=e68]: 
+            - generic [ref=e69]: Servers
+          - button "Story replies" [ref=e70] [cursor=pointer]:
+            - generic [ref=e71]: 
+            - generic [ref=e72]: Story replies
+          - button "Image prompts" [ref=e73] [cursor=pointer]:
+            - generic [ref=e74]: 
+            - generic [ref=e75]: Image prompts
+          - button "Images" [ref=e76] [cursor=pointer]:
+            - generic [ref=e77]: 
+            - generic [ref=e78]: Images
+          - button "Speech" [ref=e79] [cursor=pointer]:
+            - generic [ref=e80]: 
+            - generic [ref=e81]: Speech
+          - button "Dictation" [ref=e82] [cursor=pointer]:
+            - generic [ref=e83]: 
+            - generic [ref=e84]: Dictation
+          - button "Vision & captions" [ref=e85] [cursor=pointer]:
+            - generic [ref=e86]: 
+            - generic [ref=e87]: Vision & captions
+          - button "Retrieval" [ref=e88] [cursor=pointer]:
+            - generic [ref=e89]: 
+            - generic [ref=e90]: Retrieval
+        - generic [ref=e91]:
+          - heading "Story world" [level=3] [ref=e92]
+          - button "Your persona" [ref=e93] [cursor=pointer]:
+            - generic [ref=e94]: 
+            - generic [ref=e95]: Your persona
+          - button "World & lore" [ref=e96] [cursor=pointer]:
+            - generic [ref=e97]: 
+            - generic [ref=e98]: World & lore
+          - button "Scene backgrounds" [ref=e99] [cursor=pointer]:
+            - generic [ref=e100]: 
+            - generic [ref=e101]: Scene backgrounds
+        - generic [ref=e102]:
+          - heading "Workspace" [level=3] [ref=e103]
+          - button "Appearance & behavior" [ref=e104] [cursor=pointer]:
+            - generic [ref=e105]: 
+            - generic [ref=e106]: Appearance & behavior
+          - button "Extensions" [ref=e107] [cursor=pointer]:
+            - generic [ref=e108]: 
+            - generic [ref=e109]: Extensions
+          - text: 
+      - generic [ref=e110]:
+        - generic [ref=e111]:
+          - generic [ref=e112]:
+            - heading "Appearance & behavior" [level=1] [ref=e113]
+            - paragraph [ref=e114]: Reading preferences, account controls, and the classic layout.
+          - generic [ref=e115]:
+            - generic "Expand native provider settings, sampling, prompt formatting and extension options. Changes only which controls are shown." [ref=e116] [cursor=pointer]:
+              - checkbox "Advanced controls" [ref=e117]
+              - generic [ref=e118]: Advanced controls
+            - button "Done" [active] [ref=e119] [cursor=pointer]:
+              - generic [ref=e120]: 
+              - generic [ref=e121]: Done
+        - navigation "Settings sections" [ref=e122]:
+          - button "Reading & appearance" [pressed] [ref=e123] [cursor=pointer]
+          - button "Interaction" [ref=e124] [cursor=pointer]
+          - button "All controls" [ref=e125] [cursor=pointer]
+        - generic "Appearance & behavior" [ref=e127]:
+          - generic [ref=e128]:
+            - generic [ref=e129]:
+              - checkbox "Dark workspace layout. Turn off to use the classic layout and custom themes." [checked] [ref=e130] [cursor=pointer]
+              - generic [ref=e131]: Dark workspace layout. Turn off to use the classic layout and custom themes.
+            - generic [ref=e132]:
+              - heading "User Settings " [level=3] [ref=e135]:
+                - text: User Settings
+                - link "" [ref=e136] [cursor=pointer]:
+                  - /url: https://docs.sillytavern.app/usage/user-settings/
+                  - generic [ref=e137]: 
+              - generic [ref=e138]:
+                - generic [ref=e139]: "Language:"
+                - combobox [ref=e140]:
+                  - option "Default" [selected]
+                  - option "English"
+                  - option "عربي (Arabic)"
+                  - option "简体中文 (Chinese) (Simplified)"
+                  - option "繁體中文 (Chinese) (Taiwan)"
+                  - option "Nederlands (Dutch)"
+                  - option "Deutsch (German)"
+                  - option "Français (French)"
+                  - option "íslenska (Icelandic)"
+                  - option "Italiano (Italian)"
+                  - option "日本語 (Japanese)"
+                  - option "한국어 (Korean)"
+                  - option "Português (Portuguese brazil)"
+                  - option "Русский (Russian)"
+                  - option "Español (Spanish)"
+                  - option "Українська (Ukrainian)"
+                  - option "Tiếng Việt (Vietnamese)"
+                  - option "ไทย (Thai)"
+              - generic [ref=e141]: SillyTavern 1.19.11
+            - generic [ref=e142]:
+              - generic [ref=e143]:
+                - button " Account" [ref=e144] [cursor=pointer]:
+                  - generic [ref=e145]: 
+                  - generic [ref=e146]: Account
+                - text:  
+              - textbox "Search Settings" [ref=e147]
+          - generic [ref=e148]:
+            - generic [ref=e149]:
+              - generic [ref=e150]:
+                - heading "UI Theme   " [level=4] [ref=e151]:
+                  - generic [ref=e152]: UI Theme
+                  - generic [ref=e153]:
+                    - button "" [ref=e154] [cursor=pointer]:
+                      - generic [ref=e155]: 
+                    - button "" [ref=e156] [cursor=pointer]:
+                      - generic [ref=e157]: 
+                    - button "" [ref=e158] [cursor=pointer]:
+                      - generic [ref=e159]: 
+                - generic [ref=e160]:
+                  - combobox [ref=e161]:
+                    - option "Azure"
+                    - option "Cappuccino"
+                    - option "Celestial Macaron"
+                    - option "Dark Lite" [selected]
+                    - option "Dark V 1.0"
+                  - button "" [ref=e162] [cursor=pointer]:
+                    - generic [ref=e163]: 
+                  - button "" [ref=e164] [cursor=pointer]:
+                    - generic [ref=e165]: 
+              - generic [ref=e166]:
+                - generic [ref=e167]:
+                  - generic "This style applies to all avatars globaly, including your Persona, Character Management, Account selection, etc." [ref=e168]:
+                    - generic [ref=e169]: "Avatars:"
+                    - combobox [ref=e170]:
+                      - option "Circle" [selected]
+                      - option "Square"
+                      - option "Rounded"
+                      - option "Rectangle"
+                  - generic [ref=e171]:
+                    - generic [ref=e172]: "Chat Style:"
+                    - combobox [ref=e173]:
+                      - option "Flat" [selected]
+                      - option "Bubbles"
+                      - option "Document"
+                  - generic "Default display style for media attachments in chat messages. Extensions can override this setting." [ref=e174]:
+                    - generic [ref=e175]: "Media Style:"
+                    - combobox [ref=e176]:
+                      - option "List" [selected]
+                      - option "Gallery"
+                  - generic [ref=e177]:
+                    - generic [ref=e178]: "Notifications:"
+                    - combobox [ref=e179]:
+                      - option "Top Left"
+                      - option "Top Center" [selected]
+                      - option "Top Right"
+                      - option "Bottom Left"
+                      - option "Bottom Center"
+                      - option "Bottom Right"
+                - generic "Specify colors for your theme." [ref=e181] [cursor=pointer]:
+                  - generic [ref=e182]: Theme Colors
+                  - button "" [ref=e183]
+                - separator [ref=e184]
+                - generic [ref=e185]:
+                  - generic [ref=e186]:
+                    - generic [ref=e187]:
+                      - generic [ref=e188]:
+                        - text: Chat Width
+                        - generic [ref=e189]: 
+                      - generic "Width of the main chat window in % of screen width" [ref=e190]: 
+                    - slider [ref=e191]: "50"
+                    - spinbutton [ref=e192]: "50"
+                  - generic [ref=e193]:
+                    - generic [ref=e194]:
+                      - text: Font Scale
+                      - generic "Font size" [ref=e195]: 
+                    - slider [ref=e196]: "1"
+                    - spinbutton [ref=e197]: "1"
+                  - generic [ref=e198]:
+                    - generic [ref=e199]:
+                      - text: Blur Strength
+                      - generic "Blur strength on UI panels." [ref=e200]: 
+                    - slider [disabled] [ref=e201]: "10"
+                    - spinbutton [ref=e202]: "10"
+                  - generic [ref=e203]:
+                    - generic [ref=e204]:
+                      - text: Shadow Width
+                      - generic "Strength of the text shadows" [ref=e205]: 
+                    - slider [disabled] [ref=e206]: "2"
+                    - spinbutton [ref=e207]: "2"
+                - separator [ref=e208]
+                - generic [ref=e209]:
+                  - generic "Disable animations and transitions" [ref=e210]:
+                    - checkbox "Reduced Motion" [ref=e211] [cursor=pointer]
+                    - generic [ref=e212]: Reduced Motion
+                  - generic "Remove blur from window backgrounds, for faster rendering." [ref=e213]:
+                    - checkbox "No Blur Effect" [checked] [ref=e214] [cursor=pointer]
+                    - generic [ref=e215]: No Blur Effect
+                  - generic "Remove text shadow effect." [ref=e216]:
+                    - checkbox "No Text Shadows" [checked] [ref=e217] [cursor=pointer]
+                    - generic [ref=e218]: No Text Shadows
+                  - generic "Reduce chat height, and put a static sprite behind the chat window." [ref=e219]:
+                    - checkbox "Visual Novel Mode" [ref=e220] [cursor=pointer]
+                    - generic [ref=e221]: Visual Novel Mode
+                  - generic "Always show the full list of the Message Actions context items for chat messages, instead of hiding them behind '...'." [ref=e222]:
+                    - checkbox "Expand Message Actions" [ref=e223] [cursor=pointer]
+                    - generic [ref=e224]: Expand Message Actions
+                  - generic "Alternative UI for numeric sampling parameters with fewer steps." [ref=e225]:
+                    - checkbox "Zen Sliders" [ref=e226] [cursor=pointer]
+                    - generic [ref=e227]: Zen Sliders
+                  - generic "Entirely unrestrict all numeric sampling parameters." [ref=e228]:
+                    - checkbox "Mad Lab Mode" [ref=e229] [cursor=pointer]
+                    - generic [ref=e230]: Mad Lab Mode
+                  - generic "Time the AI's message generation, and show the duration in the chat log." [ref=e231]:
+                    - checkbox "Message Timer" [ref=e232] [cursor=pointer]
+                    - generic [ref=e233]: Message Timer
+                  - generic "Show a timestamp for each message in the chat log." [ref=e234]:
+                    - checkbox "Chat Timestamps" [checked] [ref=e235] [cursor=pointer]
+                    - generic [ref=e236]: Chat Timestamps
+                  - generic "Show an icon for the API that generated the message." [ref=e237]:
+                    - checkbox "Model Icons" [checked] [ref=e238] [cursor=pointer]
+                    - generic [ref=e239]: Model Icons
+                  - generic "Show sequential message numbers in the chat log." [ref=e240]:
+                    - checkbox "Message IDs" [ref=e241] [cursor=pointer]
+                    - generic [ref=e242]: Message IDs
+                  - generic "Hide avatars, only in chat messages." [ref=e243]:
+                    - checkbox "Hide Chat Avatars" [ref=e244] [cursor=pointer]
+                    - generic [ref=e245]: Hide Chat Avatars
+                  - generic "Show the number of tokens for each message in the chat log." [ref=e246]:
+                    - checkbox "Message Token Count" [ref=e247] [cursor=pointer]
+                    - generic [ref=e248]: Message Token Count
+                  - generic "Single-row message input area. Mobile only, no effect on PC." [ref=e249]:
+                    - checkbox "Compact Input Area " [checked] [ref=e250] [cursor=pointer]
+                    - generic [ref=e251]: Compact Input Area
+                    - generic [ref=e252]: 
+                  - generic "Display swipe numbers for all messages, not just the last." [ref=e253]:
+                    - 'checkbox "Swipe # for All Messages" [ref=e254] [cursor=pointer]'
+                    - generic [ref=e255]: "Swipe # for All Messages"
+                  - generic "In the Character Management panel, show quick selection buttons for favorited characters." [ref=e256]:
+                    - checkbox "Characters Hotswap" [checked] [ref=e257] [cursor=pointer]
+                    - generic [ref=e258]: Characters Hotswap
+                  - generic "Enable magnification for zoomed avatar display." [ref=e259]:
+                    - checkbox "Avatar Hover Magnification " [ref=e260] [cursor=pointer]
+                    - generic [ref=e261]: Avatar Hover Magnification
+                    - button "" [ref=e262] [cursor=pointer]
+                  - generic "Show tagged character folders in the character list." [ref=e263]:
+                    - checkbox "Tags as Folders " [ref=e264] [cursor=pointer]
+                    - generic [ref=e265]: Tags as Folders
+                    - button "" [ref=e266] [cursor=pointer]
+                  - generic "Click the message text in the chat log to edit it." [ref=e267]:
+                    - checkbox "Click to Edit" [ref=e268] [cursor=pointer]
+                    - generic [ref=e269]: Click to Edit
+            - text:                 
+    - region "Roleplay workspace" [ref=e270]:
+      - generic [ref=e271]:
+        - button "All characters" [ref=e272] [cursor=pointer]:
+          - generic [ref=e273]: 
+          - generic [ref=e274]: All characters
+        - generic [ref=e275]:
+          - complementary [ref=e276]:
+            - generic [ref=e277]:
+              - heading "Seraphina" [level=1] [ref=e278]
+              - paragraph [ref=e279]: You were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.
+              - generic [ref=e280]:
+                - button "Start new story" [ref=e281] [cursor=pointer]:
+                  - generic [ref=e282]: +
+                  - generic [ref=e283]: Start new story
+                - button "Edit character" [ref=e284] [cursor=pointer]:
+                  - generic [ref=e285]: 
+                  - generic [ref=e286]: Edit character
+          - generic [ref=e287]:
+            - generic [ref=e288]:
+              - heading "Pick up where you left off" [level=2] [ref=e289]
+              - strong [ref=e290]: Seraphina - 2026-11-06@12h15m18s883ms
+              - paragraph [ref=e291]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+              - button "Continue latest story" [ref=e292] [cursor=pointer]:
+                - generic [ref=e293]: 
+                - generic [ref=e294]: Continue latest story
+            - generic [ref=e295]:
+              - group [ref=e296]:
+                - generic "Opening message" [ref=e297] [cursor=pointer]
+              - group [ref=e298]:
+                - generic "Full character description" [ref=e299] [cursor=pointer]
+            - generic [ref=e300]:
+              - heading "Story history" [level=2] [ref=e301]
+              - generic [ref=e302]:
+                - button "Active" [pressed] [ref=e303] [cursor=pointer]
+                - button "Archived" [ref=e304] [cursor=pointer]
+            - region "Story list" [ref=e305]:
+              - generic [ref=e306]:
+                - article [ref=e307]:
+                  - button "Continue Seraphina - 2026-11-06@12h15m18s883ms with Seraphina" [ref=e308] [cursor=pointer]:
+                    - generic [ref=e309]:
+                      - strong [ref=e310]: Seraphina - 2026-11-06@12h15m18s883ms
+                      - generic [ref=e311]: Seraphina
+                      - generic [ref=e312]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+                  - time [ref=e313]: Nov 6
+                  - group [ref=e314]:
+                    - generic "Actions for Seraphina - 2026-11-06@12h15m18s883ms" [ref=e315]:
+                      - generic [ref=e316]: 
+                    - text:   
+                - article [ref=e317]:
+                  - button "Continue Seraphina - 2026-11-06@11h52m36s428ms with Seraphina" [ref=e318] [cursor=pointer]:
+                    - generic [ref=e319]:
+                      - strong [ref=e320]: Seraphina - 2026-11-06@11h52m36s428ms
+                      - generic [ref=e321]: Seraphina
+                      - generic [ref=e322]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+                  - time [ref=e323]: Nov 6
+                  - group [ref=e324]:
+                    - generic "Actions for Seraphina - 2026-11-06@11h52m36s428ms" [ref=e325]:
+                      - generic [ref=e326]: 
+                    - text:   
+    - text:             |     |     |                                                                                         
+  - text:                      1  
+  - generic [ref=e328]: 
+  - status [ref=e329]
+  - status [ref=e330]
+  - status [ref=e331]
+  - status [ref=e332]
+  - status [ref=e333]
+  - status [ref=e334]
+  - status [ref=e335]
+  - status [ref=e336]
+  - status [ref=e337]
+  - status [ref=e338]
+  - status [ref=e339]
+  - status [ref=e340]
+  - text: 
+```

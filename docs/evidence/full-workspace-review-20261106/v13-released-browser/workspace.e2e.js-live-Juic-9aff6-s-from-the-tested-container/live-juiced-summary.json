@@ -1,0 +1,190 @@
+{
+  "server": "https://juiced.swarm.nulteck.com",
+  "base": "http://127.0.0.1:8020",
+  "discovered": [
+    {
+      "id": "service-chat-model",
+      "options": [
+        "",
+        "Ornith-1.5-35B-A3B-GGUF-Q6_K",
+        "Qwen3.5-2B",
+        "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+        "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL"
+      ]
+    },
+    {
+      "id": "service-writer-model",
+      "options": [
+        "",
+        "Ornith-1.5-35B-A3B-GGUF-Q6_K",
+        "Qwen3.5-2B",
+        "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+        "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL"
+      ]
+    },
+    {
+      "id": "service-images-model",
+      "options": [
+        "",
+        "z-image-turbo-nsfw-v2-GGUF-Q8_0"
+      ]
+    },
+    {
+      "id": "service-speak-model",
+      "options": [
+        "",
+        "kokoro-v1"
+      ]
+    },
+    {
+      "id": "service-speak-voice",
+      "options": []
+    },
+    {
+      "id": "service-vision-model",
+      "options": [
+        "",
+        "Ornith-1.5-35B-A3B-GGUF-Q6_K"
+      ]
+    },
+    {
+      "id": "service-transcribe-model",
+      "options": [
+        "",
+        "asr4all-l-gptq-Q8_0"
+      ]
+    }
+  ],
+  "voices": [
+    "af_alloy",
+    "af_aoede",
+    "af_bella",
+    "af_heart",
+    "af_jessica",
+    "af_kore",
+    "af_nicole",
+    "af_nova",
+    "af_river",
+    "af_sarah",
+    "af_sky",
+    "alloy",
+    "am_adam",
+    "am_echo",
+    "am_eric",
+    "am_fenrir",
+    "am_liam",
+    "am_michael",
+    "am_onyx",
+    "am_puck",
+    "am_santa",
+    "ash",
+    "ballad",
+    "bf_alice",
+    "bf_emma",
+    "bf_isabella",
+    "bf_lily",
+    "bm_daniel",
+    "bm_fable",
+    "bm_george",
+    "bm_lewis",
+    "cedar",
+    "coral",
+    "echo",
+    "ef_dora",
+    "em_alex",
+    "em_santa",
+    "fable",
+    "ff_siwis",
+    "hf_alpha",
+    "hf_beta",
+    "hm_omega",
+    "hm_psi",
+    "if_sara",
+    "im_nicola",
+    "jf_alpha",
+    "jf_gongitsune",
+    "jf_nezumi",
+    "jf_tebukuro",
+    "jm_kumo",
+    "marin",
+    "nova",
+    "onyx",
+    "pf_dora",
+    "pm_alex",
+    "pm_santa",
+    "sage",
+    "shimmer",
+    "verse",
+    "zf_xiaobei",
+    "zf_xiaoni",
+    "zf_xiaoxiao",
+    "zf_xiaoyi",
+    "zm_yunjian",
+    "zm_yunxi",
+    "zm_yunxia",
+    "zm_yunyang"
+  ],
+  "storyModel": "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL",
+  "writerModel": "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+  "visionModel": "Ornith-1.5-35B-A3B-GGUF-Q6_K",
+  "caption": "A cozy kitchen scene. A person with long pink hair and amber eyes, wearing a black spaghetti-strap dress, sits at a wooden table. On the table: a bright red teapot with rising steam, a closed blue book, a tan coffee cup on a saucer, and a pencil holder with pens. Background: a bright window on the left, a shelf with jars and utensils on the right, and a small framed picture on the wall. Warm neutral tones dominate, with the pink hair and red teapot as bright accents.",
+  "storyText": "Seraphina\nNovember 6, 2026 1:32 PM\n\nThe sunlit workshop glows warm and golden, dust motes dancing in the light that falls across a weathered wooden table. Upon it rests a fat red teapot, its surface gleaming with a faint steam, beside a thick blue book whose pages are worn soft at the edges.\n\n1​/​1",
+  "transcriptDraft": "My draft. The red teapot is beside the blue book.",
+  "audio": {
+    "type": "audio/wav",
+    "bytes": 276044,
+    "duration": 2.875
+  },
+  "seconds": {
+    "chatAndSetup": 20.686,
+    "writerAndImage": 33.193,
+    "speech": 10.412,
+    "transcription": 0.417
+  },
+  "requests": [
+    {
+      "path": "/api/openai/custom/discover",
+      "url": "https://juiced.swarm.nulteck.com"
+    },
+    {
+      "path": "/api/openai/custom/discover",
+      "url": "https://juiced.swarm.nulteck.com"
+    },
+    {
+      "path": "/api/backends/chat-completions/generate",
+      "model": "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL",
+      "stream": true,
+      "max_tokens": 128,
+      "custom_url": "https://juiced.swarm.nulteck.com/v1",
+      "custom_include_body": "chat_template_kwargs:\n  enable_thinking: false"
+    },
+    {
+      "path": "/api/backends/chat-completions/generate",
+      "model": "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+      "stream": false,
+      "max_tokens": 512,
+      "custom_url": "https://juiced.swarm.nulteck.com/v1",
+      "custom_include_body": "{\"chat_template_kwargs\":{\"enable_thinking\":false}}"
+    },
+    {
+      "path": "/api/sd/sdcpp/generate",
+      "model": "z-image-turbo-nsfw-v2-GGUF-Q8_0",
+      "url": "https://juiced.swarm.nulteck.com",
+      "width": 512,
+      "height": 512,
+      "steps": 8,
+      "cfg_scale": 1,
+      "sampler": "euler",
+      "scheduler": "simple"
+    },
+    {
+      "path": "/api/openai/custom/generate-voice",
+      "model": "kokoro-v1"
+    },
+    {
+      "path": "/api/openai/custom/transcribe-audio",
+      "multipart": true
+    }
+  ],
+  "errors": []
+}

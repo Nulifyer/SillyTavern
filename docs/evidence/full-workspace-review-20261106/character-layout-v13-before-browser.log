@@ -1,0 +1,39 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep character portrait --output=/tmp/st-character-layout-v13-before
+(node:223382) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:223536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:223536) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:223536) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 workspace.e2e.js:333:1 › character portrait and native actions stay above tags and notes at every size (5.3s)
+
+
+  1) workspace.e2e.js:333:1 › character portrait and native actions stay above tags and notes at every size
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 643.90625
+    Received:    897.90625
+
+      243 |             });
+      244 |             audit.push({ width, scale, ...bounds });
+    > 245 |             expect(bounds.controls.bottom).toBeLessThanOrEqual(bounds.avatar.bottom + 1);
+          |                                            ^
+      246 |             expect(bounds.avatar.bottom).toBeLessThanOrEqual(bounds.tags.top + 1);
+      247 |             expect(bounds.tags.bottom).toBeLessThanOrEqual(bounds.notes.top + 1);
+      248 |             expect(bounds.overflow).toBeLessThanOrEqual(1);
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:245:44
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-character-layout-v13-before/workspace.e2e.js-character-a1193-ags-and-notes-at-every-size/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-character-layout-v13-before/workspace.e2e.js-character-a1193-ags-and-notes-at-every-size/error-context.md
+
+  1 failed
+    workspace.e2e.js:333:1 › character portrait and native actions stay above tags and notes at every size

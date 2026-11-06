@@ -223,6 +223,41 @@ test('native character editor owns Escape before its settings page and audio upl
     await expect(page.locator('#dictation-endpoint')).toBeVisible();
 });
 
+test('character portrait and native actions stay above tags and notes at every size', async ({ page }, testInfo) => {
+    const audit = [];
+    for (const scale of [1, 1.5]) {
+        await settingsCategory(page, 'settings');
+        await page.locator('#font_scale').evaluate((input, scale) => {
+            input.value = String(scale);
+            input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new Event('mouseup', { bubbles: true }));
+        }, scale);
+        await profile(page);
+        await page.getByRole('button', { name: 'Edit character', exact: true }).click();
+        await expect(page.locator('#avatar_controls')).toBeVisible();
+        for (const width of [1280, 768, 390, 320]) {
+            await page.setViewportSize({ width, height: 844 });
+            const bounds = await page.locator('#form_create').evaluate(form => {
+                const box = id => document.getElementById(id).getBoundingClientRect().toJSON();
+                return { avatar: box('avatar_div'), controls: box('avatar_controls'), tags: box('tags_div'), notes: box('spoiler_free_desc'), overflow: form.scrollWidth - form.clientWidth };
+            });
+            audit.push({ width, scale, ...bounds });
+            expect(bounds.controls.bottom).toBeLessThanOrEqual(bounds.avatar.bottom + 1);
+            expect(bounds.avatar.bottom).toBeLessThanOrEqual(bounds.tags.top + 1);
+            expect(bounds.tags.bottom).toBeLessThanOrEqual(bounds.notes.top + 1);
+            expect(bounds.overflow).toBeLessThanOrEqual(1);
+            expect(await page.locator('#rm_button_selected_ch h2').evaluate(name => name.scrollWidth - name.clientWidth)).toBeLessThanOrEqual(1);
+            await page.locator('#advanced_div').click();
+            await expect(page.locator('#character_popup')).toBeVisible();
+            await page.keyboard.press('Escape');
+            await expect(page.locator('#character_popup')).toBeHidden();
+            await page.locator('#avatar_controls').scrollIntoViewIfNeeded();
+            await page.screenshot({ path: testInfo.outputPath(`character-actions-${width}-${scale}.png`) });
+        }
+    }
+    fs.writeFileSync(testInfo.outputPath('character-layout-audit.json'), JSON.stringify(audit, null, 2));
+});
+
 test('new stories preserve previous transcripts and profile history resumes the exact scene', async ({ page }, testInfo) => {
     const first = `Workspace e2e ${testInfo.testId}-${runId} first`;
     const second = `Workspace e2e ${testInfo.testId}-${runId} second`;
@@ -1499,6 +1534,8 @@ test('stopping a two-member cast reply cancels the queue and preserves its next 
     await expect(page.locator('#send_but')).toBeVisible();
     await expect(page.locator('#send_textarea')).toHaveValue('My next cast draft.');
     finishReply();
+    await expect(page.locator('#workspace-generation-status')).toBeHidden();
+    await expect(page.locator('#workspace-image-button')).toBeEnabled();
     expect(requests).toBe(1);
     await expect(page.locator('#chat')).not.toContainText('Cancelled cast text must not appear.');
     await page.screenshot({ path: testInfo.outputPath('stopped-cast-queue.png') });

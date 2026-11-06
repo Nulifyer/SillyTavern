@@ -1,0 +1,54 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep character portrait --output=/tmp/st-character-layout-fixed
+(node:222165) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:222223) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:222223) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:222223) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 workspace.e2e.js:333:1 › character portrait and native actions stay above tags and notes at every size (13.6s)
+
+
+  1) workspace.e2e.js:333:1 › character portrait and native actions stay above tags and notes at every size
+
+    TimeoutError: locator.click: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('.workspace-settings-rail [data-workspace-action="character-editor"]')
+        - locator resolved to <button hidden="" type="button" class="workspace-settings-destination" data-workspace-action="character-editor">…</button>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        19 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+
+
+      26 |     const primary = ['generation', 'prompts'].includes(category) ? 'connection' : category;
+      27 |     if (await page.locator('#workspace-settings-category').isVisible()) await page.locator('#workspace-settings-category').selectOption(primary);
+    > 28 |     else await page.locator(`.workspace-settings-rail [data-workspace-action="${primary}"]`).click();
+         |                                                                                              ^
+      29 |     if (['generation', 'prompts'].includes(category)) {
+      30 |         await page.locator(`.workspace-service-tabs [data-service-destination="${category}"]`).click();
+      31 |     }
+        at settingsCategory (/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:28:94)
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:238:9
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-character-layout-fixed/workspace.e2e.js-character-a1193-ags-and-notes-at-every-size/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-character-layout-fixed/workspace.e2e.js-character-a1193-ags-and-notes-at-every-size/error-context.md
+
+  1 failed
+    workspace.e2e.js:333:1 › character portrait and native actions stay above tags and notes at every size
