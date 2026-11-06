@@ -1,0 +1,16 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep message portraits|within a 448px --output=/tmp/st-avatar-pixel-final
+(node:410134) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:410148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:410148) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:410148) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:2639:3 › roleplay pages and composer stay within a 448px viewport (6.1s)
+  ✓  2 workspace.e2e.js:2751:3 › Pixel 9 Pro XL portrait sizing › message portraits fit their containers and stay clear of text across screen and font sizes (7.1s)
+
+  2 passed (14.1s)

@@ -1,0 +1,39 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep message portraits --output=/tmp/st-avatar-before
+(node:407506) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:407520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:407520) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:407520) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✘  1 workspace.e2e.js:2736:1 › message portraits fit their containers and stay clear of text across screen and font sizes (4.7s)
+
+
+  1) workspace.e2e.js:2736:1 › message portraits fit their containers and stay clear of text across screen and font sizes
+
+    Error: expect(received).toBeLessThanOrEqual(expected)
+
+    Expected: <= 68.28125
+    Received:    81
+
+      1839 |             });
+      1840 |             audit.push({ width, scale, ...bounds });
+    > 1841 |             expect(bounds.image.right).toBeLessThanOrEqual(bounds.avatar.right + 0.5);
+           |                                        ^
+      1842 |             expect(bounds.image.bottom).toBeLessThanOrEqual(bounds.avatar.bottom + 0.5);
+      1843 |             expect(bounds.image.left).toBeGreaterThanOrEqual(bounds.avatar.left - 0.5);
+      1844 |             expect(bounds.image.right + 8).toBeLessThanOrEqual(bounds.name.left);
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1841:40
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-avatar-before/workspace.e2e.js-message-p-27edd-cross-screen-and-font-sizes/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-avatar-before/workspace.e2e.js-message-p-27edd-cross-screen-and-font-sizes/error-context.md
+
+  1 failed
+    workspace.e2e.js:2736:1 › message portraits fit their containers and stay clear of text across screen and font sizes

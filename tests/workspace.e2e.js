@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test';
+import { test, expect, devices } from '@playwright/test';
 import fs from 'node:fs';
 
 test.use({ channel: 'chromium', video: 'off', viewport: { width: 1280, height: 800 } });
@@ -1741,9 +1741,9 @@ test('cast creation selects real characters and opens a group story', async ({ p
     expect(await page.evaluate(async title => (await import('/scripts/group-chats.js')).groups.some(group => group.chats.includes(title)), `${prefix} group-scene`)).toBe(true);
 });
 
-for (const width of [320, 390, 768]) {
+for (const width of [320, 390, 448, 768]) {
     test(`roleplay pages and composer stay within a ${width}px viewport`, async ({ page }, testInfo) => {
-        await page.setViewportSize({ width, height: 844 });
+        await page.setViewportSize({ width, height: width === 448 ? 997 : 844 });
         await expect(page.locator('#workspace-sidebar')).toBeHidden();
         await page.locator('#workspace-menu').click();
         await expect(page.locator('#sheld')).toHaveAttribute('inert', '');
@@ -1817,6 +1817,51 @@ for (const width of [320, 390, 768]) {
         expect(panel.x + panel.width).toBeLessThanOrEqual(width);
     });
 }
+
+test.describe('Pixel 9 Pro XL portrait sizing', () => {
+    test.use({
+        isMobile: true,
+        hasTouch: true,
+        userAgent: devices['Pixel 7'].userAgent.replace('Pixel 7', 'Pixel 9 Pro XL'),
+        screen: { width: 448, height: 997 },
+        viewport: { width: 448, height: 921 },
+        deviceScaleFactor: 3,
+    });
+
+    test('message portraits fit their containers and stay clear of text across screen and font sizes', async ({ page }, testInfo) => {
+        await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} portraits`);
+        const audit = [];
+        for (const scale of [1, 1.5]) {
+            await settingsCategory(page, 'settings');
+            await page.locator('#font_scale').evaluate((input, scale) => {
+                input.value = String(scale);
+                input.dispatchEvent(new Event('input', { bubbles: true }));
+                input.dispatchEvent(new Event('mouseup', { bubbles: true }));
+            }, scale);
+            await page.keyboard.press('Escape');
+            // Chromium's Pixel 9 Pro XL screen is448x997 at DPR3; include
+            // reduced browser-chrome/keyboard heights and landscape as well.
+            for (const { width, height } of [{ width: 320, height: 844 }, { width: 390, height: 844 }, { width: 448, height: 997 }, { width: 448, height: 921 }, { width: 448, height: 400 }, { width: 997, height: 448 }, { width: 945, height: 396 }, { width: 768, height: 844 }, { width: 1280, height: 844 }]) {
+                await page.setViewportSize({ width, height });
+                const message = page.locator('#chat .mes[is_user="false"]').first();
+                await message.scrollIntoViewIfNeeded();
+                const bounds = await message.evaluate(message => {
+                    const box = selector => message.querySelector(selector).getBoundingClientRect().toJSON();
+                    return { image: box('.avatar img'), avatar: box('.avatar'), wrapper: box('.mesAvatarWrapper'), name: box('.ch_name'), text: box('.mes_text') };
+                });
+                audit.push({ width, height, scale, deviceScaleFactor: await page.evaluate(() => devicePixelRatio), ...bounds });
+                expect(bounds.image.right).toBeLessThanOrEqual(bounds.avatar.right + 0.5);
+                expect(bounds.image.bottom).toBeLessThanOrEqual(bounds.avatar.bottom + 0.5);
+                expect(bounds.image.left).toBeGreaterThanOrEqual(bounds.avatar.left - 0.5);
+                expect(bounds.image.right + 8).toBeLessThanOrEqual(bounds.name.left);
+                expect(bounds.image.right + 8).toBeLessThanOrEqual(bounds.text.left);
+                expect(bounds.wrapper.width).toBeGreaterThanOrEqual(bounds.avatar.width);
+                await page.screenshot({ path: testInfo.outputPath(`portrait-${width}-${height}-${scale}.png`), scale: 'css' });
+            }
+        }
+        fs.writeFileSync(testInfo.outputPath('portrait-layout.json'), JSON.stringify(audit, null, 2));
+    });
+});
 
 test('native font preferences and browser text sizing keep phone controls usable', async ({ page }, testInfo) => {
     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} large text`);

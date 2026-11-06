@@ -1,0 +1,8 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep message portraits|within a 448px --output=/tmp/st-avatar-pixel-fixed
+(node:409734) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+Cannot use({ defaultBrowserType }) in a describe group, because it forces a new worker.
+Make it top-level in the test file or put in the configuration file.
+
+   at workspace.e2e.js:2737

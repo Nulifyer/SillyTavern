@@ -1,0 +1,35 @@
+npm notice run lint
+npm notice run eslint "**/*.js" ./*.js
+
+/home/nulifyer/Projects/SillyTavern/tests/frontend/MacroEngine.e2e.js
+  738:13  warning  Avoid having conditionals in tests  playwright/no-conditional-in-test
+
+/home/nulifyer/Projects/SillyTavern/tests/frontend/MacroLexer.e2e.js
+  978:19  warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+
+/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js
+   219:5   warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   291:9   warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   305:9   warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   477:13  warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   490:13  warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   490:17  warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   493:17  warning  Avoid calling `expect` conditionally`                            playwright/no-conditional-expect
+   494:23  warning  Avoid calling `expect` conditionally`                            playwright/no-conditional-expect
+   496:23  warning  Avoid calling `expect` conditionally`                            playwright/no-conditional-expect
+   501:13  warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   659:13  warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   659:17  warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   660:13  warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   660:17  warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   663:17  warning  Avoid calling `expect` conditionally`                            playwright/no-conditional-expect
+   671:13  warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   967:9   warning  Avoid having conditionals in tests                               playwright/no-conditional-in-test
+   967:29  warning  Avoid calling `expect` conditionally`                            playwright/no-conditional-expect
+   968:20  warning  Avoid calling `expect` conditionally`                            playwright/no-conditional-expect
+  1122:5   warning  Unexpected use of the `.skip()` annotation                       playwright/no-skipped-test
+  1212:5   warning  Unexpected use of the `.skip()` annotation                       playwright/no-skipped-test
+  1649:52  warning  Unexpected usage of not.toBeVisible(). Use toBeHidden() instead  playwright/no-useless-not
+
+✖ 24 problems (0 errors, 24 warnings)
+  0 errors and 1 warning potentially fixable with the `--fix` option.

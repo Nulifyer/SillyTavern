@@ -9,11 +9,17 @@ Image index: `sha256:5f8324a85c392cb2682b5c0892d7088bcf8687af9148413c1cfbe533644
 
 ## Active tasks
 
-None. [Full workspace review](work/full-workspace-review.md) and the earlier
+Mobile message portrait overlap follow-up is active. User also requests Pixel9ProXL sizing.
+Source fix constrains avatar images to their container and keeps the avatar column
+from shrinking. Publish/verifyv1.19.15 after focused/source checks. Never touch
+production69/test85. Evidence: docs/evidence/mobile-portraits-20261106/.
+
+[Full workspace review](work/full-workspace-review.md) and the earlier
 [service workspace task](work/service-workspace.md) are complete.
 
 ## Next action
 
+First finish the v1.19.15 portrait follow-up and actual image acceptance.
 Homelab owns the later deployment using
 [handoff](../docs/evidence/full-workspace-review-20261106/handoff.md).
 Production69 and shared test85 were never accessed or changed. Do not update

@@ -1,0 +1,359 @@
+{
+  "url": "http://127.0.0.1:8021/",
+  "title": "SillyTavern",
+  "loading": false,
+  "visibleText": "Skip to message\nSeraphina - 2026-11-06@13h50m45s125ms\nSeraphina\nSeraphina\nNovember 6, 2026 1:50 PM\n\nYou wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. \"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\" She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. \"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\" Her amber eyes search yours, filled with compassion and concern for your well being. \"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\"\n\n1​/​1\n\nConnect a model to get replies. Your existing stories stay available.",
+  "interactiveElements": [],
+  "consoleEntries": [
+    {
+      "level": "debug",
+      "text": "Event emitted: extension_settings_loaded",
+      "timestamp": "2026-11-06T21:33:41.140Z"
+    },
+    {
+      "level": "debug",
+      "text": "returning full samplers array",
+      "timestamp": "2026-11-06T21:33:41.140Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: settings_loaded",
+      "timestamp": "2026-11-06T21:33:41.141Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: character_page_loaded",
+      "timestamp": "2026-11-06T21:33:41.205Z"
+    },
+    {
+      "level": "debug",
+      "text": "Chat Completions: loading token cache",
+      "timestamp": "2026-11-06T21:33:41.222Z"
+    },
+    {
+      "level": "debug",
+      "text": "Character context menu initialized CharacterContextMenu",
+      "timestamp": "2026-11-06T21:33:41.240Z"
+    },
+    {
+      "level": "trace",
+      "text": "EventEmitter: Cannot listen to undefined event",
+      "timestamp": "2026-11-06T21:33:41.256Z"
+    },
+    {
+      "level": "debug",
+      "text": "aborting MUI reset 0",
+      "timestamp": "2026-11-06T21:33:41.262Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: app_initialized",
+      "timestamp": "2026-11-06T21:33:41.267Z"
+    },
+    {
+      "level": "debug",
+      "text": "Window resize: 1280x800 -> 1280x800",
+      "timestamp": "2026-11-06T21:33:41.563Z"
+    },
+    {
+      "level": "debug",
+      "text": "Zoom: 1, X:1280, Y:800, original: 1280x800 ",
+      "timestamp": "2026-11-06T21:33:41.564Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: app_ready",
+      "timestamp": "2026-11-06T21:33:41.625Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] executing startup",
+      "timestamp": "2026-11-06T21:33:41.650Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] /executing startup",
+      "timestamp": "2026-11-06T21:33:41.650Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] executing queue (0 items)",
+      "timestamp": "2026-11-06T21:33:41.650Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] /executing queue",
+      "timestamp": "2026-11-06T21:33:41.650Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] READY",
+      "timestamp": "2026-11-06T21:33:41.650Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: settings_updated",
+      "timestamp": "2026-11-06T21:33:42.284Z"
+    },
+    {
+      "level": "debug",
+      "text": "aborting MUI reset 0",
+      "timestamp": "2026-11-06T21:33:50.201Z"
+    },
+    {
+      "level": "debug",
+      "text": "Window resize: 390x844 -> 390x844",
+      "timestamp": "2026-11-06T21:33:50.523Z"
+    },
+    {
+      "level": "debug",
+      "text": "Zoom: 1, X:390, Y:844, original: 390x844 ",
+      "timestamp": "2026-11-06T21:33:50.524Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: settings_updated",
+      "timestamp": "2026-11-06T21:33:51.426Z"
+    },
+    {
+      "level": "debug",
+      "text": "saw no avatars",
+      "timestamp": "2026-11-06T21:33:59.004Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: itemized_prompts_loaded",
+      "timestamp": "2026-11-06T21:33:59.012Z"
+    },
+    {
+      "level": "info",
+      "text": "Rendered 1 messages in 0.005 seconds.",
+      "timestamp": "2026-11-06T21:33:59.017Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: character_editor_opened",
+      "timestamp": "2026-11-06T21:33:59.030Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: chat_id_changed",
+      "timestamp": "2026-11-06T21:33:59.030Z"
+    },
+    {
+      "level": "debug",
+      "text": "[WI] Character Seraphina's lore has 4 world info entries [Eldoria]",
+      "timestamp": "2026-11-06T21:33:59.036Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: worldinfo_entries_loaded",
+      "timestamp": "2026-11-06T21:33:59.036Z"
+    },
+    {
+      "level": "debug",
+      "text": "[WI] Found 4 world lore entries. Sorted by strategy [character_first, 1]",
+      "timestamp": "2026-11-06T21:33:59.037Z"
+    },
+    {
+      "level": "debug",
+      "text": "getting sprites list",
+      "timestamp": "2026-11-06T21:33:59.039Z"
+    },
+    {
+      "level": "debug",
+      "text": "Summary has no content",
+      "timestamp": "2026-11-06T21:33:59.039Z"
+    },
+    {
+      "level": "log",
+      "text": "[QR2] calling {functionToCall: , args: Array(1)}",
+      "timestamp": "2026-11-06T21:33:59.041Z"
+    },
+    {
+      "level": "log",
+      "text": "[QR2] CHAT_CHANGED Seraphina - 2026-11-06@13h50m45s125ms",
+      "timestamp": "2026-11-06T21:33:59.041Z"
+    },
+    {
+      "level": "debug",
+      "text": "\n    setFloatingPrompt entered\n    ------\n    lastMessageNumber = 0\n    metadata_keys.interval = 1\n    metadata_keys.position = 1\n    metadata_keys.depth = 4\n    metadata_keys.role = 0\n    ------\n    ",
+      "timestamp": "2026-11-06T21:33:59.048Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: message_received",
+      "timestamp": "2026-11-06T21:33:59.055Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: character_message_rendered",
+      "timestamp": "2026-11-06T21:33:59.059Z"
+    },
+    {
+      "level": "log",
+      "text": "[QR2] calling {functionToCall: , args: Array(2)}",
+      "timestamp": "2026-11-06T21:33:59.059Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: chatLoaded",
+      "timestamp": "2026-11-06T21:33:59.060Z"
+    },
+    {
+      "level": "debug",
+      "text": "Expression unset - No sprite found {expression: }",
+      "timestamp": "2026-11-06T21:33:59.118Z"
+    }
+  ],
+  "networkEntries": [
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/curiosity.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.122Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/confusion.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.127Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/desire.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.127Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/disappointment.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.128Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/disgust.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.128Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/disapproval.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.128Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/embarrassment.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.128Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/excitement.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.128Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/fear.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.130Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/gratitude.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.131Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/api/chats/recent",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.131Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/grief.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.414Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/love.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.415Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/joy.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.415Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/nervousness.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.415Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/neutral.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.424Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/optimism.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.424Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/pride.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.424Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/realization.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.424Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/characters/Seraphina/relief.png?t=20261106184959",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T21:33:59.424Z"
+    }
+  ],
+  "actionTimeline": [],
+  "screenshot": {
+    "mimeType": "image/png",
+    "width": 390,
+    "height": 844
+  },
+  "screenshotPath": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5hs2zg-9fbf7b3e.png",
+  "accessibilityTree": "- generic [ref=t3-a2af1dc3-a0-e1] [box=0,0,390,844]:\n  - link \"Skip to message\" [ref=t3-a2af1dc3-a0-e3] [cursor=pointer] [box=16,-80,131,45]:\n    - /url: \"#send_textarea\"\n  - banner [ref=t3-a2af1dc3-a0-e4] [box=0,0,390,60]:\n    - button \"Open navigation\" [ref=t3-a2af1dc3-a0-e5] [cursor=pointer] [box=12,8,44,44]:\n      - generic [ref=t3-a2af1dc3-a0-e6] [box=27,21,14,17]: \n    - button \"Scene details\" [ref=t3-a2af1dc3-a0-e52] [cursor=pointer] [box=64,8,44,44]\n    - generic [ref=t3-a2af1dc3-a0-e7] [box=116,8,210,43]:\n      - strong [ref=t3-a2af1dc3-a0-e8] [box=116,8,210,21]: Seraphina - 2026-11-06@13h50m45s125ms\n      - generic [ref=t3-a2af1dc3-a0-e9] [box=116,33,210,18]: Seraphina\n    - generic [ref=t3-a2af1dc3-a0-e53] [box=334,8,44,44]:\n      - text:  +\n      - group [ref=t3-a2af1dc3-a0-e55] [box=334,8,44,44]:\n        - generic \"Actions for Seraphina - 2026-11-06@13h50m45s125ms\" [ref=t3-a2af1dc3-a0-e56] [box=334,8,44,44]:\n          - generic [ref=t3-a2af1dc3-a0-e57] [box=349,21,14,17]: \n        - text:   \n  - text:  \n  - generic [box=0,0,0,0]:\n    - generic [box=0,0,0,0]:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items   X                                      \n    - generic [box=0,0,0,0]:                                                                         \n    - generic [box=0,0,0,0]:                                                \n    - generic [box=0,0,0,0]:                 +     \n    - generic [box=0,0,0,0]:                                    \n    - generic [box=0,0,0,0]:        +                            \n    - generic [box=0,0,0,0]:          +                                                                                     +                      +   + +  +     +        +        +        +                                               \n    - generic [box=0,0,0,0]:                     \n    - generic [box=0,0,0,0]:                                                       Group is empty.          No characters available                        \n  - generic [box=0,0,390,0]:                      +                                                                               +    + +                  \n  - generic [box=0,0,390,0]:                  \n  - generic [ref=t3-a2af1dc3-a0-e10] [box=0,60,390,784]:\n    - text:                +       \n    - generic [ref=t3-a2af1dc3-a0-e59] [box=21,80,338,789]:\n      - img [ref=t3-a2af1dc3-a0-e62] [cursor=pointer] [box=31,108,50,50]\n      - button \"\" [ref=t3-a2af1dc3-a0-e63] [cursor=pointer] [box=41,824,25,25]\n      - generic [ref=t3-a2af1dc3-a0-e64] [box=71,108,288,733]:\n        - generic [ref=t3-a2af1dc3-a0-e65] [box=81,108,278,44]:\n          - generic [ref=t3-a2af1dc3-a0-e67] [box=81,108,218,44]:\n            - generic [ref=t3-a2af1dc3-a0-e68] [box=81,108,69,21]: Seraphina\n            - text: \n            - generic [ref=t3-a2af1dc3-a0-e69] [box=81,134,151,18]: November 6, 2026 1:50 PM\n          - generic [ref=t3-a2af1dc3-a0-e70] [box=307,108,52,22]:\n            - button \"\" [ref=t3-a2af1dc3-a0-e71] [cursor=pointer] [box=308,109,22,20]\n            - text:              \n            - button \"\" [ref=t3-a2af1dc3-a0-e72] [cursor=pointer] [box=334,109,24,20]\n          - text:       \n        - text:       \n        - paragraph [ref=t3-a2af1dc3-a0-e74] [box=81,160,248,676]:\n          - emphasis [ref=t3-a2af1dc3-a0-e75] [box=81,162,236,178]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.\n          - text: \"\\\"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\\\"\"\n          - emphasis [ref=t3-a2af1dc3-a0-e76] [box=81,370,246,126]: She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.\n          - text: \"\\\"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\\\"\"\n          - emphasis [ref=t3-a2af1dc3-a0-e77] [box=81,656,212,74]: Her amber eyes search yours, filled with compassion and concern for your well being.\n          - text: \"\\\"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\\\"\"\n      - generic [box=319,824,40,45]:\n        - button \"\" [ref=t3-a2af1dc3-a0-e78] [cursor=pointer] [box=327,824,25,25]\n        - generic [ref=t3-a2af1dc3-a0-e79] [box=319,849,40,15]: 1/1\n    - generic [ref=t3-a2af1dc3-a0-e81] [box=12,640,366,204]:\n      - generic [ref=t3-a2af1dc3-a0-e84] [box=13,641,364,146]:\n        - text:  \n        - textbox \"Message\" [active] [ref=t3-a2af1dc3-a0-e86] [box=34,655,329,72]:\n          - /placeholder: Write your next turn with Seraphina…\n        - generic [ref=t3-a2af1dc3-a0-e87] [box=13,729,364,58]:\n          - button \"Story model settings\" [ref=t3-a2af1dc3-a0-e88] [cursor=pointer] [box=19,733,32,44]:\n            - generic [ref=t3-a2af1dc3-a0-e89] [box=27,747,16,17]: \n          - button \"Generate one illustration from the current story\" [ref=t3-a2af1dc3-a0-e90] [cursor=pointer] [box=122,733,44,44]:\n            - generic [ref=t3-a2af1dc3-a0-e91] [box=136,747,16,17]: \n          - button \"Voice narration\" [ref=t3-a2af1dc3-a0-e92] [cursor=pointer] [box=166,733,44,44]:\n            - generic [ref=t3-a2af1dc3-a0-e93] [box=179,747,18,17]: \n          - button \"Dictate message\" [ref=t3-a2af1dc3-a0-e94] [cursor=pointer] [box=210,733,44,44]:\n            - generic [ref=t3-a2af1dc3-a0-e95] [box=226,747,12,17]: \n          - group [ref=t3-a2af1dc3-a0-e96] [box=254,733,44,44]:\n            - generic \"Chat tools and options\" [ref=t3-a2af1dc3-a0-e97] [box=254,733,44,44]:\n              - generic [ref=t3-a2af1dc3-a0-e98] [box=269,747,14,17]: \n            - text:         \n          - generic [box=369,755,2,0]:       \n      - paragraph [ref=t3-a2af1dc3-a0-e100] [box=20,796,350,36]: Connect a model to get replies. Your existing stories stay available.\n    - text:          \n  - text:                      1  \n  - status [ref=t3-a2af1dc3-a0-e40] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e41] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e42] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e43] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e44] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e45] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e46] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e47] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e48] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e49] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e50] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-a0-e51] [box=-1,808,1,1]\n  - text: "
+}

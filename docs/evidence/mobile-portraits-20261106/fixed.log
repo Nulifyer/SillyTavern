@@ -1,0 +1,15 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep message portraits --output=/tmp/st-avatar-fixed
+(node:407567) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:407718) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:407718) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:407718) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:2736:1 › message portraits fit their containers and stay clear of text across screen and font sizes (5.7s)
+
+  1 passed (6.4s)
