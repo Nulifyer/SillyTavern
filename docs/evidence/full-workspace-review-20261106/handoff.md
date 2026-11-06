@@ -1,27 +1,44 @@
-# Full workspace review release handoff
+# Homelab handoff for v1.19.14
 
-Source: `607198579bb3090dcda68c34aab252d2558c5647`.
-[Release v1.19.13](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.13).
-[Workflow42270651338](https://github.com/Nulifyer/SillyTavern/actions/runs/42270651338)
-passed both native build/startup/heartbeat gates and publication.
+Source: `06ab7010310dfa174be81d7eefa38ecdc195778c`.
+[Release v1.19.14](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.14).
+[Workflow 42273796301](https://github.com/Nulifyer/SillyTavern/actions/runs/42273796301)
+passed both native architecture builds, HTTP startup, heartbeat and publication.
 
 ```yaml
-image: ghcr.io/nulifyer/sillytavern@sha256:fadeb1b6bb283c80d26d3488c3a49e134b0acb262a0df94d7ad51e14c0a682d8
+image: ghcr.io/nulifyer/sillytavern@sha256:5f8324a85c392cb2682b5c0892d7088bcf8687af9148413c1cfbe5336441c24b
 ```
 
-- linux/amd64: `sha256:2e9718adedf4f00dd3a3bd44a3e16d8898b292977807433509de3033213c6d8c`
-- linux/arm64: `sha256:1f84ca9214df7a10e82b7552962bfc2084b84bab53e1735bfffec951054df0b6`
+- linux/amd64: `sha256:cd64e3eaa4538856f6d11747b6dbff36fd9281a163affb1b7a4ab55b822db3c2`
+- linux/arm64: `sha256:36fa952fed1d629e064b5d09e05113f6dc8c27522b3b816b49ced499366d5daf`
 
-Anonymous tag, source-tag and latest manifests match. Twenty-four checked runtime
-files match the tag. Local amd64 container st-full-review-release13-20261106 on
-8020 has five fresh synthetic volumes/no overlays, version1.19.13, valid native
-heartbeat and HTTPS200 to Juiced. Actual-image42-case acceptance passed, but pixel review then found native
-character toolbar overlap. This v1.19.13 block is historical. Final deployment
-recommendation is pendingv1.19.14 and its43-case image acceptance.
+Anonymous version, source and latest tags match. Twenty-four checked runtime
+files match the tag. Local amd64 container `st-full-review-release14-20261106`
+on port 8021 has five fresh synthetic volumes, no overlays, version 1.19.14,
+valid native heartbeat and verified HTTPS 200 to Juiced.
 
-Do not use v1.19.12 or v1.19.13 as this task's final deployment recommendation. Its tag
-remains immutable; actual-image native-mode and keyboard findings are retained
-in review.md.
+All 43 Chromium browser cases passed on this actual image in 6.2 minutes,
+including both live Juiced cases, with zero uncaught page errors. Console and
+network diagnostics retain the intentional failure/retry and cancellation
+fixtures; see v14-browser-summary.json. Source checks passed 41 controlled
+cases plus the final character regression separately, 424 unit tests, lint and actionlint.
+
+Standalone persistence passed after the suite, using the actual native settings
+API with no mock routes. Advanced controls, Qwen3.5-2B, manual 12,288-token
+context, temperature 0.85, image steps 20 and voice off survived native Save,
+container restart and browser reload. Server metadata still reports 16,384;
+manual context remains selected. Evidence: v14-persistence.json and
+v14-manual-after-restart.png.
+
+Visual review covers all 16 settings destinations and core story flows, with
+independent baseline/follow-up/final captures and fresh Edit/Create review.
+Desktop, tablet, 320/390px, enlarged text, native editors and pending navigation
+are covered. The final actual-image character and live chat/image screenshots
+were inspected, along with its manual onboarding, server setup and post-restart
+phone settings. Exact findings, coverage and failed attempts: review.md.
+
+v1.19.12 and v1.19.13 remain immutable; neither is this task's final deployment
+recommendation. Actual-image follow-up findings are retained in review.md.
 
 Homelab owns the later update. Production endpoint7 stack69, its application
 and all private data/config/volumes were never accessed. Shared test85 was also
@@ -59,16 +76,16 @@ reported; Retrieval retains native provider setup.
 Live fixture selections (nonexplicit synthetic story/image/audio):
 
 - Story: `TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL`, 16K, streaming,
-  thinking off. Test output budget128; users retain their explicit budgets.
+  thinking off. Test output budget 128; users retain their explicit budgets.
 - Optional writer: `Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0`,
   512 output tokens, thinking off. Story model stays selected.
 - Images: `z-image-turbo-nsfw-v2-GGUF-Q8_0`, stock sd.cpp root URL,
-  explicit512px/8steps/CFG1/Euler/Simple. These are observed working fixture
+  explicit 512px, 8 steps, CFG 1, Euler/Simple. These are observed working fixture
   settings, not universal defaults or a speed promise.
 - Vision: `Ornith-1.5-35B-A3B-GGUF-Q6_K` through native captioning/chat.
 - Narration: `kokoro-v1`, `af_heart`; select available voices from discovery.
 - Dictation: `asr4all-l-gptq-Q8_0`; microphone/file audio is normalized to
-  mono16kHz PCM WAV, maximum120seconds. Recognized text enters the draft
+  mono 16 kHz PCM WAV, maximum 120 seconds. Recognized text enters the draft
   for review and is never sent automatically. Secure context and browser
   microphone permission are required for recording.
 

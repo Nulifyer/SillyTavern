@@ -1,0 +1,27 @@
+{
+  "container": "st-full-review-release14-20261106",
+  "base": "http://127.0.0.1:8021",
+  "method": "Standalone after the43-case suite; phone UI discovery/apply + native manual fields, awaited native saveSettings, native settings API read, container restart/health, browser reload and loaded native owners. No mock settings routes.",
+  "before": {
+    "advanced": "true",
+    "automaticContext": false,
+    "context": 12288,
+    "imageSteps": 20,
+    "model": "Qwen3.5-2B",
+    "temperature": 0.85,
+    "url": "https://juiced.swarm.nulteck.com/v1",
+    "voiceEnabled": false
+  },
+  "after": {
+    "advanced": "true",
+    "automaticContext": false,
+    "context": 12288,
+    "imageSteps": 20,
+    "model": "Qwen3.5-2B",
+    "temperature": 0.85,
+    "url": "https://juiced.swarm.nulteck.com/v1",
+    "voiceEnabled": false
+  },
+  "equal": true,
+  "heartbeatAfterRestart": "passed"
+}

@@ -1,0 +1,359 @@
+{
+  "url": "http://127.0.0.1:8021/",
+  "title": "SillyTavern",
+  "loading": false,
+  "visibleText": "Skip to message\nWorkspace\nA place for your characters and conversations\nWelcome to SillyTavern!\nLanguage:\nEnglish\nعربي (Arabic)\n简体中文 (Chinese) (Simplified)\n繁體中文 (Chinese) (Taiwan)\nNederlands (Dutch)\nDeutsch (German)\nFrançais (French)\níslenska (Icelandic)\nItaliano (Italian)\n日本語 (Japanese)\n한국어 (Korean)\nPortuguês (Portuguese brazil)\nРусский (Russian)\nEspañol (Spanish)\nУкраїнська (Ukrainian)\nTiếng Việt (Vietnamese)\nไทย (Thai)\nA space for your characters and stories.\nChoose a character and read their profile.\nStart a new story or continue an existing scene.\nConnect a model in Settings to write replies together.\n\nOfficial Documentation · Discord server\n\nLooking for AI characters?\nImport\n from supported sources or view \nSample characters\nYour Persona\nChoose the name your characters will know you by.\nYou can change your persona in Settings at any time.\nPersona Name:\nSave",
+  "interactiveElements": [],
+  "consoleEntries": [
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"gallery\"",
+      "timestamp": "2026-11-06T18:50:23.448Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"gallery\"",
+      "timestamp": "2026-11-06T18:50:23.449Z"
+    },
+    {
+      "level": "debug",
+      "text": "Activating extension memory",
+      "timestamp": "2026-11-06T18:50:23.449Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"memory\"",
+      "timestamp": "2026-11-06T18:50:23.454Z"
+    },
+    {
+      "level": "debug",
+      "text": "Summary has no content",
+      "timestamp": "2026-11-06T18:50:23.494Z"
+    },
+    {
+      "level": "debug",
+      "text": "Summary has no content",
+      "timestamp": "2026-11-06T18:50:23.499Z"
+    },
+    {
+      "level": "debug",
+      "text": "Summary has no content",
+      "timestamp": "2026-11-06T18:50:23.504Z"
+    },
+    {
+      "level": "debug",
+      "text": "Summary has no content",
+      "timestamp": "2026-11-06T18:50:23.537Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"memory\"",
+      "timestamp": "2026-11-06T18:50:23.543Z"
+    },
+    {
+      "level": "debug",
+      "text": "Activating extension stable-diffusion",
+      "timestamp": "2026-11-06T18:50:23.543Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: online_status_changed",
+      "timestamp": "2026-11-06T18:50:23.548Z"
+    },
+    {
+      "level": "debug",
+      "text": "Window resize: 390x844 -> 390x844",
+      "timestamp": "2026-11-06T18:50:23.550Z"
+    },
+    {
+      "level": "debug",
+      "text": "Zoom: 1, X:390, Y:844, original: 390x844 ",
+      "timestamp": "2026-11-06T18:50:23.550Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"stable-diffusion\"",
+      "timestamp": "2026-11-06T18:50:23.554Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"stable-diffusion\"",
+      "timestamp": "2026-11-06T18:50:23.634Z"
+    },
+    {
+      "level": "debug",
+      "text": "Activating extension tts",
+      "timestamp": "2026-11-06T18:50:23.634Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"tts\"",
+      "timestamp": "2026-11-06T18:50:23.749Z"
+    },
+    {
+      "level": "info",
+      "text": "Using default TTS Provider settings",
+      "timestamp": "2026-11-06T18:50:23.755Z"
+    },
+    {
+      "level": "debug",
+      "text": "SystemTTS: Settings loaded",
+      "timestamp": "2026-11-06T18:50:23.756Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"tts\"",
+      "timestamp": "2026-11-06T18:50:23.756Z"
+    },
+    {
+      "level": "debug",
+      "text": "Activating extension quick-reply",
+      "timestamp": "2026-11-06T18:50:23.757Z"
+    },
+    {
+      "level": "log",
+      "text": "getModels [Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object, Object]",
+      "timestamp": "2026-11-06T18:50:23.772Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"quick-reply\"",
+      "timestamp": "2026-11-06T18:50:23.796Z"
+    },
+    {
+      "level": "log",
+      "text": "[QR2] sets:  [QuickReplySet]",
+      "timestamp": "2026-11-06T18:50:23.807Z"
+    },
+    {
+      "level": "log",
+      "text": "[QR2] settings:  QuickReplySettings",
+      "timestamp": "2026-11-06T18:50:23.807Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"quick-reply\"",
+      "timestamp": "2026-11-06T18:50:23.815Z"
+    },
+    {
+      "level": "debug",
+      "text": "Activating extension assets",
+      "timestamp": "2026-11-06T18:50:23.815Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"assets\"",
+      "timestamp": "2026-11-06T18:50:23.820Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"assets\"",
+      "timestamp": "2026-11-06T18:50:23.825Z"
+    },
+    {
+      "level": "debug",
+      "text": "Activating extension token-counter",
+      "timestamp": "2026-11-06T18:50:23.825Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"token-counter\"",
+      "timestamp": "2026-11-06T18:50:23.829Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"token-counter\"",
+      "timestamp": "2026-11-06T18:50:23.830Z"
+    },
+    {
+      "level": "debug",
+      "text": "Activating extension vectors",
+      "timestamp": "2026-11-06T18:50:23.830Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"vectors\"",
+      "timestamp": "2026-11-06T18:50:23.847Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"vectors\"",
+      "timestamp": "2026-11-06T18:50:23.856Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: extension_settings_loaded",
+      "timestamp": "2026-11-06T18:50:23.856Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:24.621Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:25.621Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:26.622Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:27.622Z"
+    }
+  ],
+  "networkEntries": [
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/quick-reply/src/QuickReplySetLink.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.788Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/quick-reply/src/SlashCommandHandler.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.788Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/quick-reply/src/ui/SettingsUi.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.788Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/quick-reply/src/ui/ctx/ContextMenu.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.789Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/quick-reply/src/ui/ctx/MenuHeader.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.793Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/quick-reply/src/ui/ctx/MenuItem.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.793Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/quick-reply/src/ui/ctx/SubMenu.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.796Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/api/settings/get",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.806Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/quick-reply/html/settings.html",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.810Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/assets/style.css",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.818Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/assets/index.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.820Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/assets/window.html",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.825Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/token-counter/style.css",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.828Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/token-counter/index.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.829Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/vectors/style.css",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.847Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/vectors/index.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.847Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/vectors/webllm.js",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.847Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/scripts/extensions/vectors/settings.html",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:23.856Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/api/quick-replies/save",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:24.027Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/webfonts/NotoSans/NotoSans-Bold.woff2",
+      "method": "GET",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:50:24.889Z"
+    }
+  ],
+  "actionTimeline": [],
+  "screenshot": {
+    "mimeType": "image/png",
+    "width": 390,
+    "height": 844
+  },
+  "screenshotPath": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5bxsrk-0dfffda2.png",
+  "accessibilityTree": "- generic [ref=t3-a2af1dc3-9n-e1] [box=0,0,390,844]:\n  - link \"Skip to message\" [ref=t3-a2af1dc3-9n-e3] [cursor=pointer] [box=16,-80,131,45]:\n    - /url: \"#send_textarea\"\n  - banner [ref=t3-a2af1dc3-9n-e4] [box=0,0,390,60]:\n    - button \"Open navigation\" [ref=t3-a2af1dc3-9n-e5] [cursor=pointer] [box=12,8,44,44]:\n      - generic [ref=t3-a2af1dc3-9n-e6] [box=27,21,14,17]: \n    - generic [ref=t3-a2af1dc3-9n-e7] [box=64,8,306,43]:\n      - strong [ref=t3-a2af1dc3-9n-e8] [box=64,8,306,21]: Workspace\n      - generic [ref=t3-a2af1dc3-9n-e9] [box=64,33,306,18]: A place for your characters and conversations\n    - generic [box=378,30,0,0]:  +\n  - text:  \n  - generic [box=0,0,0,0]:\n    - generic [box=0,0,0,0]:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items \n    - generic [box=0,0,0,0]:                                                                         \n    - generic [box=0,0,0,0]:                                                \n    - generic [box=0,0,0,0]:                 +     \n    - generic [box=0,0,0,0]:                                    \n    - generic [box=0,0,0,0]:        +    \n    - generic [box=0,0,0,0]:          +               +                                    +   + +  +     +        +        +        +                                              \n    - generic [box=0,0,0,0]:                 \n    - generic [box=0,0,0,0]:                                              Group is empty.  No characters available         \n  - generic [box=0,0,390,0]:                      +                                                                             +    + +                  \n  - generic [box=0,0,390,0]:                  \n  - generic [ref=t3-a2af1dc3-9n-e10] [box=0,60,390,784]:\n    - text: \n    - generic [ref=t3-a2af1dc3-9n-e13] [box=12,756,366,88]:\n      - text:  \n      - generic [ref=t3-a2af1dc3-9n-e14] [box=12,756,366,88]:\n        - generic [ref=t3-a2af1dc3-9n-e15] [box=26,784,90,44]:\n          - generic [ref=t3-a2af1dc3-9n-e16] [cursor=pointer] [box=28,784,44,44]: \n          - generic \"Extensions\" [ref=t3-a2af1dc3-9n-e17] [cursor=pointer] [box=72,784,44,44]: \n        - textbox \"Type a message, or /? for help\" [ref=t3-a2af1dc3-9n-e18] [box=121,770,192,72]\n        - generic [ref=t3-a2af1dc3-9n-e19] [box=318,784,46,44]:\n          - text:      \n          - generic \"Send a message\" [ref=t3-a2af1dc3-9n-e20] [cursor=pointer] [box=318,784,44,44]: \n  - text:                      1  \n  - dialog [ref=t3-a2af1dc3-9n-e21] [box=20,21,351,802]:\n    - generic [ref=t3-a2af1dc3-9n-e22] [box=35,26,321,792]:\n      - generic [ref=t3-a2af1dc3-9n-e24] [box=44,37,303,669]:\n        - heading \"Welcome to SillyTavern!\" [level=3] [ref=t3-a2af1dc3-9n-e25] [box=98,37,193,25]\n        - generic [ref=t3-a2af1dc3-9n-e26] [box=44,82,303,28]:\n          - generic [ref=t3-a2af1dc3-9n-e27] [box=44,86,69,21]: \"Language:\"\n          - combobox [ref=t3-a2af1dc3-9n-e28] [box=118,82,229,28]:\n            - option \"English\" [selected] [box=0,0,0,0]\n            - option \"عربي (Arabic)\" [box=0,0,0,0]\n            - option \"简体中文 (Chinese) (Simplified)\" [box=0,0,0,0]\n            - option \"繁體中文 (Chinese) (Taiwan)\" [box=0,0,0,0]\n            - option \"Nederlands (Dutch)\" [box=0,0,0,0]\n            - option \"Deutsch (German)\" [box=0,0,0,0]\n            - option \"Français (French)\" [box=0,0,0,0]\n            - option \"íslenska (Icelandic)\" [box=0,0,0,0]\n            - option \"Italiano (Italian)\" [box=0,0,0,0]\n            - option \"日本語 (Japanese)\" [box=0,0,0,0]\n            - option \"한국어 (Korean)\" [box=0,0,0,0]\n            - option \"Português (Portuguese brazil)\" [box=0,0,0,0]\n            - option \"Русский (Russian)\" [box=0,0,0,0]\n            - option \"Español (Spanish)\" [box=0,0,0,0]\n            - option \"Українська (Ukrainian)\" [box=0,0,0,0]\n            - option \"Tiếng Việt (Vietnamese)\" [box=0,0,0,0]\n            - option \"ไทย (Thai)\" [box=0,0,0,0]\n        - generic [ref=t3-a2af1dc3-9n-e29] [box=44,120,303,21]: A space for your characters and stories.\n        - list [ref=t3-a2af1dc3-9n-e30] [box=44,156,303,126]:\n          - listitem [ref=t3-a2af1dc3-9n-e31] [box=84,156,263,42]: Choose a character and read their profile.\n          - listitem [ref=t3-a2af1dc3-9n-e32] [box=84,198,263,42]: Start a new story or continue an existing scene.\n          - listitem [ref=t3-a2af1dc3-9n-e33] [box=84,240,263,42]: Connect a model in Settings to write replies together.\n        - paragraph [ref=t3-a2af1dc3-9n-e34] [box=44,297,303,21]:\n          - link \"Official Documentation\" [ref=t3-a2af1dc3-9n-e35] [cursor=pointer] [box=44,298,152,19]:\n            - /url: https://docs.sillytavern.app/\n          - text: ·\n          - link \"Discord server\" [ref=t3-a2af1dc3-9n-e36] [cursor=pointer] [box=207,298,95,19]:\n            - /url: https://discord.gg/sillytavern\n        - generic [ref=t3-a2af1dc3-9n-e37] [box=44,354,303,143]:\n          - heading \"Looking for AI characters?\" [level=3] [ref=t3-a2af1dc3-9n-e38] [box=44,354,303,25]\n          - generic [ref=t3-a2af1dc3-9n-e39] [box=49,405,291,73]:\n            - generic [ref=t3-a2af1dc3-9n-e40] [cursor=pointer] [box=49,393,79,44]:\n              - generic [ref=t3-a2af1dc3-9n-e41] [box=55,408,18,15]: \n              - generic [ref=t3-a2af1dc3-9n-e42] [box=78,405,44,20]: Import\n            - text: from supported sources or view\n            - generic [ref=t3-a2af1dc3-9n-e43] [cursor=pointer] [box=123,447,144,44]:\n              - generic [ref=t3-a2af1dc3-9n-e44] [box=129,462,11,15]: \n              - generic [ref=t3-a2af1dc3-9n-e45] [box=144,459,117,20]: Sample characters\n        - heading \"Your Persona\" [level=3] [ref=t3-a2af1dc3-9n-e46] [box=141,526,108,25]\n        - generic [ref=t3-a2af1dc3-9n-e47] [box=44,571,303,84]:\n          - text: Choose the name your characters will know you by.\n          - text: You can change your persona in Settings at any time.\n        - heading \"Persona Name:\" [level=4] [ref=t3-a2af1dc3-9n-e48] [box=44,680,303,21]\n      - textbox [active] [ref=t3-a2af1dc3-9n-e49] [box=36,711,319,37]: User\n      - generic [ref=t3-a2af1dc3-9n-e51] [cursor=pointer] [box=174,768,43,44]: Save\n    - text: "
+}

@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.11`.
+2. Create a version tag on that commit, such as `v1.19.14`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.11` | The exact GitHub Release tag |
+| `v1.19.14` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.11` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.14` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -99,6 +99,52 @@ Its evidence is in `docs/evidence/service-workspace-20261102/`. v1.19.11 adds
 explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
+
+### v1.19.14
+
+[Release v1.19.14](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.14)
+is source `06ab7010310dfa174be81d7eefa38ecdc195778c`.
+[Workflow 42273796301](https://github.com/Nulifyer/SillyTavern/actions/runs/42273796301)
+passed native amd64/arm64 builds, HTTP startup, heartbeat and publication.
+Anonymous version, source and latest tags share this immutable index:
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:5f8324a85c392cb2682b5c0892d7088bcf8687af9148413c1cfbe5336441c24b
+```
+
+- linux/amd64: `sha256:cd64e3eaa4538856f6d11747b6dbff36fd9281a163affb1b7a4ab55b822db3c2`
+- linux/arm64: `sha256:36fa952fed1d629e064b5d09e05113f6dc8c27522b3b816b49ced499366d5daf`
+
+The pulled amd64 image passed all 43 browser cases in 6.2 minutes, including both
+live Juiced cases, with zero uncaught page errors. It has five fresh synthetic
+volumes and no source overlays. Twenty-four runtime files match the tag; the
+stock sd.cpp handler still matches v1.19.8. Version, HTTPS Juiced reachability,
+and native heartbeat passed. Standalone native Save, restart and browser reload
+preserved Advanced controls, the selected model, manual context, temperature,
+image steps and voice off.
+
+The visual review covers all 16 settings destinations and core story flows,
+with desktop/tablet/phone and enlarged text. It adds immediate character/cast
+story creation, recoverable history failures, shared keyboard ownership,
+service state derived from native owners, grouped phone settings and readable
+native character actions. Advanced controls, All controls and classic layout
+retain native options. Source checks passed 41 controlled cases, a focused final
+character regression, 424 unit tests, lint and actionlint. The two live cases
+were disabled only in the CSS-only source run and both passed on the final image.
+
+v1.19.12 and v1.19.13 remain immutable intermediate releases. Actual-image checks
+found further native vision/keyboard/cancellation state issues in v1.19.12;
+v1.19.13 passed 42 cases before pixel inspection found character-toolbar overlap.
+The added regression fails on v1.19.13 and passes on this image. Neither older
+version is this review's final deployment recommendation.
+
+[Homelab handoff](evidence/full-workspace-review-20261106/handoff.md) records
+exact setup, migration, rollback and limits. Production69 and shared test85
+were never accessed or updated. Preserve every existing volume identity and
+record the actual pre-update image and private backup before Homelab deploys.
+ARM64 passed native startup gates; full browser/service acceptance ran on amd64.
+Physical microphone, audible quality, paid-provider inference and administrator
+mutations remain unqualified. No Juiced runtime, policy or cache was changed.
 
 ### v1.19.11
 

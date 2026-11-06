@@ -1,0 +1,233 @@
+{
+  "url": "http://127.0.0.1:8021/",
+  "title": "SillyTavern",
+  "loading": false,
+  "visibleText": "Skip to message\nSettings\nServers\nSettings category\nServers\nStory replies\nImage prompts\nImages\nSpeech\nDictation\nVision & captions\nRetrieval\nYour persona\nWorld & lore\nScene backgrounds\nAppearance & behavior\nExtensions\nCharacter editor\nDone\nServers\n\nConnect once. Discover the models and capabilities available to each service.\n\nAdvanced controls\nServer URL\nVerify & discover\n\nConnected to Juiced. Select a model for each service you want to use. Only enabled models are listed.\n\nStory replies\n4 models available\nImage prompts\n4 models available\nImages\n1 model available\nSpeech\n1 model available\nDictation\n1 model available\nVision & captions\n1 model available\nRetrieval\nConfigure provider\nCharacters\n\nChoose who shares your next story.\n\nImport card\nCreate character\nAll\nCharacters\nCasts\nFavorites\n\n1 character or cast\n\nCreate cast\nSeraphina\nYou were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.",
+  "interactiveElements": [],
+  "consoleEntries": [
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"token-counter\"",
+      "timestamp": "2026-11-06T18:50:23.829Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"token-counter\"",
+      "timestamp": "2026-11-06T18:50:23.830Z"
+    },
+    {
+      "level": "debug",
+      "text": "Activating extension vectors",
+      "timestamp": "2026-11-06T18:50:23.830Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Calling hook \"activate\" (function \"init\") for extension \"vectors\"",
+      "timestamp": "2026-11-06T18:50:23.847Z"
+    },
+    {
+      "level": "debug",
+      "text": "callExtensionHook: Hook \"activate\" completed for extension \"vectors\"",
+      "timestamp": "2026-11-06T18:50:23.856Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: extension_settings_loaded",
+      "timestamp": "2026-11-06T18:50:23.856Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:24.621Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:25.621Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:26.622Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:27.622Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:28.622Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:29.622Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:30.622Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:31.623Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:32.623Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:33.623Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:34.623Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:35.623Z"
+    },
+    {
+      "level": "warning",
+      "text": "Settings not ready, scheduling another save",
+      "timestamp": "2026-11-06T18:50:36.624Z"
+    },
+    {
+      "level": "log",
+      "text": "User name changed to Review Storyteller",
+      "timestamp": "2026-11-06T18:50:36.632Z"
+    },
+    {
+      "level": "log",
+      "text": "Binding persona user-default.png to name Review Storyteller",
+      "timestamp": "2026-11-06T18:50:36.635Z"
+    },
+    {
+      "level": "debug",
+      "text": "returning full samplers array",
+      "timestamp": "2026-11-06T18:50:36.635Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: settings_loaded",
+      "timestamp": "2026-11-06T18:50:36.635Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: character_page_loaded",
+      "timestamp": "2026-11-06T18:50:36.839Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: settings_updated",
+      "timestamp": "2026-11-06T18:50:37.675Z"
+    },
+    {
+      "level": "debug",
+      "text": "Chat Completions: loading token cache",
+      "timestamp": "2026-11-06T18:50:38.211Z"
+    },
+    {
+      "level": "debug",
+      "text": "Character context menu initialized CharacterContextMenu",
+      "timestamp": "2026-11-06T18:50:38.213Z"
+    },
+    {
+      "level": "trace",
+      "text": "EventEmitter: Cannot listen to undefined event",
+      "timestamp": "2026-11-06T18:50:38.227Z"
+    },
+    {
+      "level": "debug",
+      "text": "aborting MUI reset 0",
+      "timestamp": "2026-11-06T18:50:38.235Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: app_initialized",
+      "timestamp": "2026-11-06T18:50:38.241Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: app_ready",
+      "timestamp": "2026-11-06T18:50:38.272Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] executing startup",
+      "timestamp": "2026-11-06T18:50:38.305Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] /executing startup",
+      "timestamp": "2026-11-06T18:50:38.305Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] executing queue (0 items)",
+      "timestamp": "2026-11-06T18:50:38.305Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] /executing queue",
+      "timestamp": "2026-11-06T18:50:38.306Z"
+    },
+    {
+      "level": "debug",
+      "text": "[QR2] READY",
+      "timestamp": "2026-11-06T18:50:38.306Z"
+    },
+    {
+      "level": "debug",
+      "text": "Window resize: 390x844 -> 390x844",
+      "timestamp": "2026-11-06T18:50:38.537Z"
+    },
+    {
+      "level": "debug",
+      "text": "Zoom: 1, X:390, Y:844, original: 390x844 ",
+      "timestamp": "2026-11-06T18:50:38.537Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: settings_updated",
+      "timestamp": "2026-11-06T18:50:39.251Z"
+    },
+    {
+      "level": "debug",
+      "text": "Event emitted: settings_updated",
+      "timestamp": "2026-11-06T18:57:28.329Z"
+    }
+  ],
+  "networkEntries": [
+    {
+      "url": "http://127.0.0.1:8021/api/openai/custom/discover",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:57:27.308Z"
+    },
+    {
+      "url": "http://127.0.0.1:8021/api/settings/save",
+      "method": "POST",
+      "status": 200,
+      "failed": false,
+      "timestamp": "2026-11-06T18:57:28.329Z"
+    }
+  ],
+  "actionTimeline": [],
+  "screenshot": {
+    "mimeType": "image/png",
+    "width": 390,
+    "height": 844
+  },
+  "screenshotPath": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5c723y-02567b13.png",
+  "accessibilityTree": "- generic [active] [ref=t3-a2af1dc3-9p-e1] [box=0,0,390,844]:\n  - link \"Skip to message\" [ref=t3-a2af1dc3-9p-e3] [cursor=pointer] [box=16,-80,131,45]:\n    - /url: \"#send_textarea\"\n  - banner [ref=t3-a2af1dc3-9p-e4] [box=0,0,390,60]:\n    - button \"Open navigation\" [ref=t3-a2af1dc3-9p-e5] [cursor=pointer] [box=12,8,44,44]:\n      - generic [ref=t3-a2af1dc3-9p-e6] [box=27,21,14,17]: \n    - generic [ref=t3-a2af1dc3-9p-e7] [box=64,8,306,43]:\n      - strong [ref=t3-a2af1dc3-9p-e8] [box=64,8,306,21]: Settings\n      - generic [ref=t3-a2af1dc3-9p-e9] [box=64,33,306,18]: Servers\n    - generic [box=378,30,0,0]:  +\n  - text:  \n  - generic [box=0,0,0,0]:\n    - generic [box=0,0,0,0]:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items \n    - generic [box=0,0,0,0]:                                                                         \n    - generic [box=0,0,0,0]:                                                \n    - generic [box=0,0,0,0]:                 +     \n    - generic [box=0,0,0,0]:                                    \n    - generic [box=0,0,0,0]:        +                            \n    - generic [box=0,0,0,0]:          +                             +                      +   + +  +     +        +        +        +                                               \n    - generic [box=0,0,0,0]:                     \n    - generic [box=0,0,0,0]:                                                      Group is empty.          No characters available                        \n  - generic [box=0,0,390,0]:                      +                                                                             +    + +                  \n  - generic [box=0,0,390,0]:                  \n  - generic [ref=t3-a2af1dc3-9p-e10] [box=0,60,390,784]:\n    - generic [ref=t3-a2af1dc3-9p-e52] [box=0,60,390,784]:\n      - generic [ref=t3-a2af1dc3-9p-e53] [box=0,60,390,61]:\n        - generic [ref=t3-a2af1dc3-9p-e54] [box=16,68,262,44]:\n          - generic [ref=t3-a2af1dc3-9p-e55] [box=16,68,1,1]: Settings category\n          - combobox \"Settings category\" [ref=t3-a2af1dc3-9p-e56] [box=16,68,262,44]:\n            - option \"Servers\" [selected] [box=0,0,0,0]\n            - option \"Story replies\" [box=0,0,0,0]\n            - option \"Image prompts\" [box=0,0,0,0]\n            - option \"Images\" [box=0,0,0,0]\n            - option \"Speech\" [box=0,0,0,0]\n            - option \"Dictation\" [box=0,0,0,0]\n            - option \"Vision & captions\" [box=0,0,0,0]\n            - option \"Retrieval\" [box=0,0,0,0]\n            - option \"Your persona\" [box=0,0,0,0]\n            - option \"World & lore\" [box=0,0,0,0]\n            - option \"Scene backgrounds\" [box=0,0,0,0]\n            - option \"Appearance & behavior\" [box=0,0,0,0]\n            - option \"Extensions\" [box=0,0,0,0]\n            - option \"Character editor\" [box=0,0,0,0]\n        - button \"Done\" [ref=t3-a2af1dc3-9p-e57] [cursor=pointer] [box=290,68,84,44]:\n          - generic [ref=t3-a2af1dc3-9p-e58] [box=303,82,14,17]: \n          - generic [ref=t3-a2af1dc3-9p-e59] [box=325,80,36,20]: Done\n      - text:              \n      - generic [ref=t3-a2af1dc3-9p-e60] [box=0,121,390,723]:\n        - generic [ref=t3-a2af1dc3-9p-e61] [box=16,137,347,146]:\n          - generic [ref=t3-a2af1dc3-9p-e62] [box=16,137,347,77]:\n            - heading \"Servers\" [level=1] [ref=t3-a2af1dc3-9p-e63] [box=16,137,347,31]\n            - paragraph [ref=t3-a2af1dc3-9p-e64] [box=16,172,347,42]: Connect once. Discover the models and capabilities available to each service.\n          - generic \"Expand native provider settings, sampling, prompt formatting and extension options. Changes only which controls are shown.\" [ref=t3-a2af1dc3-9p-e66] [cursor=pointer] [box=16,226,151,44]:\n            - checkbox \"Advanced controls\" [ref=t3-a2af1dc3-9p-e67] [box=20,229,15,15]\n            - generic [ref=t3-a2af1dc3-9p-e68] [box=46,226,121,21]: Advanced controls\n        - generic \"Servers\" [ref=t3-a2af1dc3-9p-e70] [box=16,295,347,649]:\n          - generic [ref=t3-a2af1dc3-9p-e71] [box=16,295,347,649]:\n            - generic [ref=t3-a2af1dc3-9p-e72] [box=16,295,347,21]: Server URL\n            - textbox \"Server URL\" [ref=t3-a2af1dc3-9p-e73] [box=16,331,347,37]:\n              - /placeholder: https://your-server\n              - text: https://juiced.swarm.nulteck.com\n            - button \"Verify & discover\" [ref=t3-a2af1dc3-9p-e74] [cursor=pointer] [box=16,388,347,44]\n            - status [ref=t3-a2af1dc3-9p-e119] [box=16,447,347,38]: Connected to Juiced. Select a model for each service you want to use. Only enabled models are listed.\n            - generic [ref=t3-a2af1dc3-9p-e120] [box=16,527,347,392]:\n              - button \"Story replies 4 models available \" [ref=t3-a2af1dc3-9p-e121] [cursor=pointer] [box=16,527,347,56]:\n                - generic [ref=t3-a2af1dc3-9p-e122] [box=18,546,207,19]: Story replies\n                - generic [ref=t3-a2af1dc3-9p-e123] [box=235,546,104,18]: 4 models available\n                - generic [ref=t3-a2af1dc3-9p-e124] [box=349,549,12,12]: \n              - button \"Image prompts 4 models available \" [ref=t3-a2af1dc3-9p-e125] [cursor=pointer] [box=16,583,347,56]:\n                - generic [ref=t3-a2af1dc3-9p-e126] [box=18,602,207,19]: Image prompts\n                - generic [ref=t3-a2af1dc3-9p-e127] [box=235,602,104,18]: 4 models available\n                - generic [ref=t3-a2af1dc3-9p-e128] [box=349,605,12,12]: \n              - button \"Images 1 model available \" [ref=t3-a2af1dc3-9p-e129] [cursor=pointer] [box=16,639,347,56]:\n                - generic [ref=t3-a2af1dc3-9p-e130] [box=18,658,212,19]: Images\n                - generic [ref=t3-a2af1dc3-9p-e131] [box=240,658,99,18]: 1 model available\n                - generic [ref=t3-a2af1dc3-9p-e132] [box=349,661,12,12]: \n              - button \"Speech 1 model available \" [ref=t3-a2af1dc3-9p-e133] [cursor=pointer] [box=16,695,347,56]:\n                - generic [ref=t3-a2af1dc3-9p-e134] [box=18,714,212,19]: Speech\n                - generic [ref=t3-a2af1dc3-9p-e135] [box=240,714,99,18]: 1 model available\n                - generic [ref=t3-a2af1dc3-9p-e136] [box=349,717,12,12]: \n              - button \"Dictation 1 model available \" [ref=t3-a2af1dc3-9p-e137] [cursor=pointer] [box=16,751,347,56]:\n                - generic [ref=t3-a2af1dc3-9p-e138] [box=18,770,212,19]: Dictation\n                - generic [ref=t3-a2af1dc3-9p-e139] [box=240,770,99,18]: 1 model available\n                - generic [ref=t3-a2af1dc3-9p-e140] [box=349,773,12,12]: \n              - button \"Vision & captions 1 model available \" [ref=t3-a2af1dc3-9p-e141] [cursor=pointer] [box=16,807,347,56]:\n                - generic [ref=t3-a2af1dc3-9p-e142] [box=18,826,212,19]: Vision & captions\n                - generic [ref=t3-a2af1dc3-9p-e143] [box=240,826,99,18]: 1 model available\n                - generic [ref=t3-a2af1dc3-9p-e144] [box=349,829,12,12]: \n              - button \"Retrieval Configure provider \" [ref=t3-a2af1dc3-9p-e145] [cursor=pointer] [box=16,863,347,56]:\n                - generic [ref=t3-a2af1dc3-9p-e146] [box=18,882,205,19]: Retrieval\n                - generic [ref=t3-a2af1dc3-9p-e147] [box=233,882,106,18]: Configure provider\n                - generic [ref=t3-a2af1dc3-9p-e148] [box=349,885,12,12]: \n    - region \"Roleplay workspace\" [ref=t3-a2af1dc3-9p-e75] [box=0,60,390,784]:\n      - generic [ref=t3-a2af1dc3-9p-e76] [box=0,60,390,590]:\n        - generic [ref=t3-a2af1dc3-9p-e77] [box=16,84,358,132]:\n          - generic [ref=t3-a2af1dc3-9p-e78] [box=16,84,234,68]:\n            - heading \"Characters\" [level=1] [ref=t3-a2af1dc3-9p-e79] [box=16,84,234,32]\n            - paragraph [ref=t3-a2af1dc3-9p-e80] [box=16,128,234,25]: Choose who shares your next story.\n          - generic [ref=t3-a2af1dc3-9p-e81] [box=16,172,297,44]:\n            - button \"Import card\" [ref=t3-a2af1dc3-9p-e82] [cursor=pointer] [box=16,172,130,44]:\n              - generic [ref=t3-a2af1dc3-9p-e83] [box=29,186,16,17]: \n              - generic [ref=t3-a2af1dc3-9p-e84] [box=53,184,80,20]: Import card\n            - button \"Create character\" [ref=t3-a2af1dc3-9p-e85] [cursor=pointer] [box=154,172,159,44]:\n              - generic [ref=t3-a2af1dc3-9p-e86] [box=167,186,14,17]: +\n              - generic [ref=t3-a2af1dc3-9p-e87] [box=189,184,111,20]: Create character\n        - generic [ref=t3-a2af1dc3-9p-e88] [box=16,240,358,104]:\n          - generic [ref=t3-a2af1dc3-9p-e89] [box=16,240,358,44]:\n            - generic [ref=t3-a2af1dc3-9p-e90] [box=31,255,14,15]: \n            - searchbox \"Search characters, descriptions, and tags\" [ref=t3-a2af1dc3-9p-e91] [box=57,244,302,36]\n          - generic [ref=t3-a2af1dc3-9p-e92] [box=16,300,282,44]:\n            - button \"All\" [pressed] [ref=t3-a2af1dc3-9p-e93] [cursor=pointer] [box=16,300,38,44]\n            - button \"Characters\" [ref=t3-a2af1dc3-9p-e94] [cursor=pointer] [box=58,300,93,44]\n            - button \"Casts\" [ref=t3-a2af1dc3-9p-e95] [cursor=pointer] [box=155,300,57,44]\n            - button \"Favorites\" [ref=t3-a2af1dc3-9p-e96] [cursor=pointer] [box=216,300,82,44]\n        - generic [ref=t3-a2af1dc3-9p-e97] [box=16,368,358,44]:\n          - paragraph [ref=t3-a2af1dc3-9p-e98] [box=16,381,104,18]: 1 character or cast\n          - button \"Create cast\" [ref=t3-a2af1dc3-9p-e99] [cursor=pointer] [box=275,368,99,44]:\n            - generic [ref=t3-a2af1dc3-9p-e100] [box=275,383,18,15]: \n            - generic [ref=t3-a2af1dc3-9p-e101] [box=301,380,73,20]: Create cast\n        - button \"Meet Seraphina\" [ref=t3-a2af1dc3-9p-e103] [cursor=pointer] [box=16,428,358,158]:\n          - generic [ref=t3-a2af1dc3-9p-e104] [box=125,429,248,156]:\n            - strong [ref=t3-a2af1dc3-9p-e105] [box=137,441,224,19]: Seraphina\n            - generic [ref=t3-a2af1dc3-9p-e106] [box=137,465,224,58]: You were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.\n    - text:                                                                                                  \n  - text:                      1  \n  - status [ref=t3-a2af1dc3-9p-e107] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e108] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e109] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e110] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e111] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e112] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e113] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e114] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e115] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e116] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e117] [box=-1,808,1,1]\n  - status [ref=t3-a2af1dc3-9p-e118] [box=-1,808,1,1]\n  - text: "
+}

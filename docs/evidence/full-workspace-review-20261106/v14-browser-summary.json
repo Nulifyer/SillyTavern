@@ -1,0 +1,21 @@
+{
+  "passed": 43,
+  "skipped": 0,
+  "minutes": 6.2,
+  "diagnostics": 43,
+  "uncaughtPageErrors": 0,
+  "consoleErrors": 12,
+  "failedRequests": 45,
+  "consoleNetworkNote": "Includes intentional error/retry fixtures, deliberate first-reply Jinja failure and request cancellation; inspect per-case diagnostics. Zero uncaught errors is the suite assertion, not zero network/console events.",
+  "diagnosticsReviewed": true,
+  "consoleClassification": {
+    "history503": 2,
+    "singleAndCastDelete500AndVisibleRecovery": 6,
+    "discovery502AndVoice409": 2,
+    "writer503": 1,
+    "imageInFlightStoryChangeGuard": 1
+  },
+  "requestFailureClassification": {
+    "net::ERR_ABORTED": 45
+  }
+}

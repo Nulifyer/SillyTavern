@@ -218,3 +218,49 @@ Connection Profile, Presets, Appearance and sampling rows. It reports no
 remaining supported overlap or critical usability defect within those states.
 Its CSS-only font override was removed and tab6 closed. No further source
 change is supported. Final image acceptance remains.
+
+v1.19.14 was published from06ab7010310dfa174be81d7eefa38ecdc195778c;
+workflow42273796301 queued. Source push and annotated tag push succeeded.
+Final source CSS remains53e6b47d8d7d88c405a342cbd09c4bdbe2322371c16402ccbe8e1722dd7dfa67.
+The actual-image all43-case run and standalone restart persistence remain.
+
+## Final accepted image
+
+Actualv1.19.14 passed all43browser cases in6.2minutes with both live cases,
+zero skips and zero uncaught page errors. v14-browser-summary.json classifies
+all12console errors as deliberate error/retry/guard fixtures; all45failed
+requests are net::ERR_ABORTED. This is not a claim of zero console/network
+events. Full per-case diagnostics and screenshots are retained in
+v14-released-browser/. Both native architecture startup/heartbeat gates passed
+in workflow42273796301; full browser/service acceptance ran on amd64.
+
+The parent inspected final actual-image character actions at1280 and320/150%,
+desktop live image/chat and phone draft/transcription, manual onboarding and
+server setup. Discovery reports4chat/4writer/1image/1speech/1dictation/1vision
+models; service lists remain discovered. The live run returned67voices and
+decoded276044bytes of audio/wav with2.875seconds duration. Observed setup/chat
+36.742s, writer/image39.205s, speech6.93s and transcription0.416s are bounded
+measurements, not speed promises. Native model names/requests are in its
+live-juiced-summary.json.
+
+Standalone native Save/API-read/container-restart/reload passed afterward:
+Advanced true, Qwen3.5-2B at /v1, manual context12288, temperature0.85,
+imageSteps20, voice false. Native heartbeat passed after restart. The parent
+visually confirmed Custom12288 against reported16384 in phone settings.
+Three initial post-reload preview CSS-locator actions timed out; the page was
+visible/hit-testable and fresh snapshot aria-ref actions succeeded. No app
+source change followed this tooling issue. See v14-persistence.json and manual
+captures. No production69/test85 access or deployment occurred.
+
+Release/tag/source/index/architecture digests, migration, limits and rollback
+requirements are in [handoff.md](handoff.md). All final runtime source hashes
+remain frozen-v14-source.sha256.
+
+The final reloaded UI reports no enabled embedding models, preserving native
+Retrieval setup. Parent tabs3/5 and critic tabs4/6 were closed; no user-owned
+tab was closed. Application source is unchanged after tag publication.
+
+GitHub release notes now link the verifiedv1.19.14 handoff. v1.19.12/13 notes
+identify their observed defects and superseding release; no tag was moved and
+no published image was replaced. Post-release continuity/evidence docs are a
+separate commit on release; the tagged application source remains unchanged.

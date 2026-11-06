@@ -50,43 +50,30 @@ native dropdown Escape behavior. Exact release evidence and digest: docs/contain
 
 ## Environment
 
-Pendingv1.19.14 source passes41controlled cases/2opt-in live skips in4.5minutes;
-separate final character-identity focused case passes all8width/scale states.
-424units, root lint and actionlint pass. Test lint has0errors/24warnings.
-Actualv1.19.13 passed42cases with both real cases/zero uncaught page errors,
-but subsequent pixel review found native character toolbar overlap. New43rd
-case fails on that image and passes the natural-height correction. Actual
-immutablev1.19.14 all43-case acceptance and standalone persistence remain pending.
+Verifiedv1.19.14 preview: http://127.0.0.1:8021, Podman container
+st-full-review-release14-20261106. Five fresh synthetic named volumes, no source
+overlays. All43browser cases passed in6.2minutes with both live Juiced cases,
+zero skips and zero uncaught page errors. Per-case console/network diagnostics
+retain deliberate failure/retry/guard events and45aborted requests; classified
+in v14-browser-summary.json. Twenty-four runtime files match the tag; native
+heartbeat/version/HTTPS passed. Standalone native Save/restart/reload persistence
+passed after the suite, with no mock settings routes.
 
-Pendingv1.19.13 final source:41 browser cases passed in the full run, including
-both live Juiced cases. One inherited search-fixture count assertion failed;
-the corrected exact-name case passed separately. All42 full-run diagnostics
-have zero uncaught page errors. Single streamed/nonstreamed and two-member
-cast Stop, pending keyboard ownership and native vision modes are covered.
-424 units, root lint and actionlint pass; test lint has0errors/24warnings.
-Actual immutable image full42-case acceptance remains pending. See
-full-workspace-review-20261106/source-checks-v13.json and review.md.
+Source41controlled cases/2opt-in live skips passed in4.5minutes, plus the final
+character identity case separately. Both live cases passed on the final actual
+image.424unit tests, root lint and actionlint pass; test lint0errors/24warnings.
+The new character case covers1280/768/390/320 normal/150%, vertical containment,
+identity readability and native Advanced Definitions/Escape. Independent review
+also inspected blank Create in all16Edit/Create states and retained28captures.
+The broader review retains all16settings destinations, normal/Advanced modes,
+long forms, menus/dialogs, loading/error/retry, pending navigation and classic.
+Coverage/limits/failed attempts: docs/evidence/full-workspace-review-20261106/.
 
-The full November6 source review for pendingv1.19.12 passes38 browser cases
-with both real Juiced cases enabled,424 unit tests, lint and actionlint.
-The final run is source-browser-release.log;38 diagnostics have zero uncaught
-page errors. Independent baseline/follow-up/final review retains175 captures,
-including all16 destinations, normal/Advanced,320/390/768/1280px,150% text and
-short editors. A new regression checks every category at320/390/150%, native
-selector readability, Done hit-testing and prompt action sizes. Direct character
-and group start, double-click protection, native Escape, keyboard upload,
-history retry, native provider changes and enlarged chat-tools bounds are covered.
-Actualv1.19.12 image verification is pending. Evidence:
-docs/evidence/full-workspace-review-20261106/.
-
-Verified v1.19.11 preview: http://127.0.0.1:8016, Podman container
-st-advanced-release-20261106, five fresh synthetic named volumes, no overlays.
-All34 browser cases passed with both live cases enabled against source and this
-actual pulled image. Advanced controls has an additional expanded source pass
-at1280/390/320px and a real-settings-API/container-restart persistence check.
-Run standalone persistence checks after the shared synthetic suite completes.
-Exact logs, diagnostics and images: docs/evidence/advanced-controls-20261106/.
-Prior containers and their synthetic volumes remain preserved.
+Earlier actual previews8016(v1.19.11),8017(baselinev1.19.11),8019(v1.19.12),
+8020(v1.19.13) and source8018 remain preserved with their synthetic volumes.
+v1.19.12/13 are immutable intermediate releases, superseded for this handoff.
+Do not overlap standalone persistence checks with fixture runs that use the
+shared synthetic service. Production69/shared test85 were never accessed.
 
 ## Shared-screen follow-up
 

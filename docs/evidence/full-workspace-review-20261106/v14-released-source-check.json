@@ -1,0 +1,152 @@
+{
+  "source": "06ab7010310dfa174be81d7eefa38ecdc195778c",
+  "version": {
+    "agent": "SillyTavern:1.19.14:Cohee#1207",
+    "pkgVersion": "1.19.14",
+    "gitRevision": null,
+    "gitBranch": null,
+    "commitDate": null,
+    "isLatest": true
+  },
+  "files": [
+    {
+      "file": "package.json",
+      "sha256": "4ca33b75cd840b596344b2d75b9e434b2387bf1ce9d66ba3ada012f4932c1cf3"
+    },
+    {
+      "file": "public/index.html",
+      "sha256": "a07eced9f6042820dfd58c99dc560d629a86c95b3be136bebe97d9c33071f4fc"
+    },
+    {
+      "file": "public/css/workspace.css",
+      "sha256": "53e6b47d8d7d88c405a342cbd09c4bdbe2322371c16402ccbe8e1722dd7dfa67"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "sha256": "efc155bbf77527327316d5476af43eef6b680c56c6ed0a2abbad24211bbba295"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "sha256": "f0b07c868d095f71657d330b0be60a8e4073e5f0f71809a431f0cb54e1f1a34c"
+    },
+    {
+      "file": "public/scripts/workspace-chats.js",
+      "sha256": "708091168a15d60d57f367d639b88c7407e19e005f670624b456fb1eb02f1b72"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "sha256": "8b830d388a304d8f487c69f2eda4a75a1db1f31cd9539ad43c8a132091d2f4b1"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "sha256": "52ab219545b205a7dd0aeed0319a7ae72edc1decdb3100d1c13c8faabcd9ed91"
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "sha256": "8e96b8556637a3e412bc30e3dd2462ac267ab0deb75363c82905f6439eef2ec2"
+    },
+    {
+      "file": "public/scripts/composer-surface.js",
+      "sha256": "d007ce5b4e87adfc7696b80d3534bb257961c9e44c22eb9b60d813072463e2f4"
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "sha256": "de119fe9dc5acf13be3ef0b576c7ea91cf9c8df158b5798f8ccbd0407b668802"
+    },
+    {
+      "file": "public/scripts/audio-recording.js",
+      "sha256": "5e4c9674f88504f5dc984a3a613f9162b9296e812f05e57a1c9aa7e1cd9f9dfa"
+    },
+    {
+      "file": "public/scripts/RossAscends-mods.js",
+      "sha256": "ac07d6550e84a35c9b77c5d4e668f106605b869e8fdddc59e3db9bdce9f98a2d"
+    },
+    {
+      "file": "public/scripts/openai.js",
+      "sha256": "77acb2efe6e5d79f053735f033b7bb1d8332e45c1f30a3ee36c1147103b0c873"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/index.js",
+      "sha256": "98dadc2ace7b85b65305a4db3e3fa5560cc6e7ffdcc04a80304bd37c6e30cf70"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/settings.html",
+      "sha256": "c14cb561cfdc3a775114b970b61bb5816a087e1bc07eeabf410c8dae9f39dca2"
+    },
+    {
+      "file": "public/scripts/extensions/tts/index.js",
+      "sha256": "f8c16ffa4277015a3d970442b3e751aecd02a81e16736b00ed0de45b8ddf96a3"
+    },
+    {
+      "file": "public/scripts/extensions/tts/openai-compatible.js",
+      "sha256": "030b90e54a6035b4e6f942f642cdde61f1f485e5bb630783e8bb6c9b0efe995c"
+    },
+    {
+      "file": "public/scripts/extensions/connection-manager/index.js",
+      "sha256": "965949ec7f298623e6c1f9d7c2c489ff4e804f8c9c1d6ea191712469befa2daa"
+    },
+    {
+      "file": "public/scripts/extensions/caption/index.js",
+      "sha256": "c4fc4cb3453276a5f3ea218888941e837dc1aad44e955bd20c55e8b48a76ac9e"
+    },
+    {
+      "file": "src/endpoints/stable-diffusion.js",
+      "sha256": "15439fdffd839815ef7adcaa39806738c4e4503db8bbb697b337e905dfb4ed43"
+    },
+    {
+      "file": "src/endpoints/openai.js",
+      "sha256": "757848a2a4617c44e67eed9c554b7adfadc2d55f93d0938793e4d0125e5c63bc"
+    },
+    {
+      "file": "src/endpoints/backends/chat-completions.js",
+      "sha256": "53f429859efcfb29dd8becfebf7ff0ae49256ea795a0c81c320930fab5a407e7"
+    },
+    {
+      "file": "public/script.js",
+      "sha256": "a193d1910b5e9eeccf6e7819bc2ebc0c7b39116ff053095f5b1db3a47e9d963d"
+    }
+  ],
+  "mounts": [
+    {
+      "name": "st-full-review-release14-20261106-data",
+      "destination": "/home/node/app/data",
+      "type": "volume"
+    },
+    {
+      "name": "st-full-review-release14-20261106-plugins",
+      "destination": "/home/node/app/plugins",
+      "type": "volume"
+    },
+    {
+      "name": "st-full-review-release14-20261106-extensions",
+      "destination": "/home/node/app/public/scripts/extensions/third-party",
+      "type": "volume"
+    },
+    {
+      "name": "st-full-review-release14-20261106-backups",
+      "destination": "/home/node/app/backups",
+      "type": "volume"
+    },
+    {
+      "name": "st-full-review-release14-20261106-config",
+      "destination": "/home/node/app/config",
+      "type": "volume"
+    }
+  ],
+  "overlays": false,
+  "stockSdcppHandlerMatchesV1198": true,
+  "nativeHeartbeat": "passed",
+  "juicedHTTPS": {
+    "url": "https://juiced.swarm.nulteck.com/.well-known/juiced.json",
+    "status": 200,
+    "tlsVerified": true,
+    "body": {
+      "catalog": "/v1/juiced/catalog",
+      "inference": "/v1",
+      "name": "Juiced",
+      "protocols": "/v1/juiced/protocols",
+      "ui": "/",
+      "version": "0.1.0"
+    }
+  }
+}

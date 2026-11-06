@@ -21,6 +21,9 @@
 - Returning to the active story is allowed during generation and preserves its mounted transcript.
 - Use compact desktop controls, larger mobile touch targets, and flat dropdown surfaces.
 - Restrict upstream GitHub App bot jobs to the upstream repository.
+- Start character/cast stories immediately using native automatic names; Rename is a later action. Coalesce rapid starts.
+- Foreground native editors handle Escape; inert background controls must not receive it. Native generation owns interactive Stop cancellation, including cast queues; quiet callers retain rejection.
+- Mounted native forms use natural height, with wrapped actions contained before tags/notes. Phone character identity gets a full row above statistics.
 
 ## Open decisions
 

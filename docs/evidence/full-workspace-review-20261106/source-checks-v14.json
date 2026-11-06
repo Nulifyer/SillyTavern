@@ -26,7 +26,14 @@
     "minutes": 4.5,
     "reason": "CSS-only change; same inference code passed both live cases on actualv1.19.13; finalv1.19.14 actual-image run enables both.",
     "finalPhoneIdentityFocusedPassed": 1,
-    "actualImageAcceptance": "pending43cases"
+    "actualImageAcceptance": {
+      "passed": 43,
+      "skipped": 0,
+      "minutes": 6.2,
+      "uncaughtPageErrors": 0,
+      "liveCasesPassed": 2,
+      "persistence": "passed after suite on native API/restart/reload"
+    }
   },
   "sourceHashes": "frozen-v14-source.sha256"
 }

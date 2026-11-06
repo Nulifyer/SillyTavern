@@ -1,0 +1,12 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+  ],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8021/img/ai4.png",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}
