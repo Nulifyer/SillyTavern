@@ -1,0 +1,93 @@
+{
+  "source": "05e7858f429a5fc5680e2d64919a47f5505d029d",
+  "version": "1.19.16",
+  "container": "st-mobile-resume-release-20261106",
+  "url": "http://127.0.0.1:8023",
+  "settingsMocks": false,
+  "sourceOverlays": false,
+  "before": {
+    "advanced": "true",
+    "context": 12288,
+    "draft": "My unsent lantern scene stays here.",
+    "model": "Qwen3.5-2B",
+    "restore": true,
+    "status": 200,
+    "story": "Seraphina - 2026-11-06@18h20m41s440ms",
+    "temp": 0.85,
+    "url": "https://juiced.swarm.nulteck.com/v1"
+  },
+  "afterRestart": {
+    "busy": null,
+    "connection": "Model connected",
+    "context": 12288,
+    "draft": "My unsent lantern scene stays here.",
+    "errors": [],
+    "messages": 1,
+    "model": "Qwen3.5-2B",
+    "options": [
+      8,
+      8
+    ],
+    "requests": [
+      {
+        "error": "TypeError",
+        "path": "/api/ping"
+      },
+      {
+        "path": "/api/ping",
+        "status": 204
+      },
+      {
+        "path": "/api/backends/chat-completions/status",
+        "status": 200
+      }
+    ],
+    "temp": 0.85,
+    "url": "https://juiced.swarm.nulteck.com/v1"
+  },
+  "keyboard": {
+    "draft": "My unsent lantern scene stays here.\n\nA lantern rests beside the blue book.",
+    "errors": [],
+    "focus": "send_textarea",
+    "inferenceRequests": 0,
+    "messages": 1
+  },
+  "afterReload": {
+    "context": 12288,
+    "draft": "My unsent lantern scene stays here.\n\nA lantern rests beside the blue book.",
+    "messages": 1,
+    "model": "Qwen3.5-2B",
+    "recovery": "A reply was interrupted before completion. Received text is available below; nothing was sent again.Retry connectionRecovered reply textAdd recovered text to draftDismiss recovered textRestore older saved draft",
+    "story": "Seraphina - 2026-11-06@18h20m41s440ms",
+    "temp": 0.85
+  },
+  "serverReadback": {
+    "advanced": "true",
+    "autoConnect": false,
+    "context": 12288,
+    "draft": "My unsent lantern scene stays here.\n\nA lantern rests beside the blue book.",
+    "font": 1,
+    "model": "Qwen3.5-2B",
+    "status": 200,
+    "story": "Seraphina - 2026-11-06@18h20m41s440ms",
+    "temp": 0.85,
+    "url": "https://juiced.swarm.nulteck.com/v1"
+  },
+  "captures": {
+    "outage": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5m0e3k-de5812c4.png",
+    "reconnected": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5m11lw-801df03d.png",
+    "expanded": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5m22pn-56710a41.png",
+    "keyboardHeight": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5m23go-c27c10ac.png",
+    "largeText": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5m2k1j-adaad739.png",
+    "reload": "/home/nulifyer/.t3/userdata/browser-artifacts/browser-screenshot-127-0-0-1-mw5m49rq-9a41cec6.png"
+  },
+  "notes": "Controlled partial-text UI fixture for manual visual review; real reset/early-EOF and native save failures are covered by the released63-case suite. Actual local container stop/start, failed ping, ping204/status200, native settings save/readback, reload and keyboard append observed. No inference was sent during manual recovery. Native auto-connect=false was preserved after reload; this is not a physical phone-lock test.",
+  "durableCaptures": {
+    "outage": "manual/outage.png",
+    "reconnected": "manual/reconnected.png",
+    "expanded": "manual/expanded.png",
+    "keyboardHeight": "manual/keyboardHeight.png",
+    "largeText": "manual/largeText.png",
+    "reload": "manual/reload.png"
+  }
+}

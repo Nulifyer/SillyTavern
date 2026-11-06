@@ -51,10 +51,15 @@ docs/evidence/mobile-portraits-20261106/.
 
 ## Environment
 
-Latest verifiedv1.19.15 preview: http://127.0.0.1:8022, Podman container
-st-mobile-portraits-release-20261106, five new synthetic volumes/no overlays.
-45browser cases,24runtime-file matches, version/heartbeat/HTTPS and native
-multiarch startup passed. Previousv1.19.14 full review/restart proof follows.
+Latest verifiedv1.19.16 preview: http://127.0.0.1:8023, Podman container
+st-mobile-resume-release-20261106, five fresh volumes/no overlays. All63browser
+cases passed in8.2minutes, both live cases, zero skips/flaky/uncaught errors.
+28runtime matches/version/heartbeat/HTTPS/index/labels passed.425units, lint,
+actionlint pass; test lint0errors/28warnings. Native Save/stop/start/retry/reload
+proof and final mobile recovery views passed. This fixture retains Qwen3.5-2B,
+manual12288/temp0.85/Advanced=true/voice off after that standalone check.
+Source8024 st-mobile-resume-source-20261106 has public/src/package overlays;
+it is not published-image proof. Exact evidence: docs/evidence/mobile-resume-20261106/.
 
 Verifiedv1.19.14 preview: http://127.0.0.1:8021, Podman container
 st-full-review-release14-20261106. Five fresh synthetic named volumes, no source

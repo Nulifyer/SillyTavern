@@ -20,16 +20,21 @@ native opt-out; explicit legacy recovery; blocked storage warning; late micropho
 permission stopped; mobile/keyboard recovery UI; source/full checks; published
 image with fresh synthetic volumes and no overlays.
 
-## Current evidence and next action
+## Completion and handoff
 
-425units/lint/actionlint pass. Source full run61/63 passed with zero uncaught page
-errors; corrected migration/reload checks plus keyboard recovery passed4focused
-cases. No runtime changes remain after the recovery button activation fix.
-Repeated owner checks12passed. Actual hidden/freeze is asserted through the original
-Playwright CDP session, not visibility emulation alone. Native dropdown preservation,
-multiple unacknowledged messages, pending-permission ownership and late APP_READY/
-dry-run notice resets were corrected before publication. Publishv16 and require
-full63-case acceptance of the pulled image/no overlays before final handoff.
+Published/verifiedv1.19.16, source05e7858f429a5fc5680e2d64919a47f5505d029d,
+workflow42310788170. Actual pulled image passed63/63browser cases in8.2minutes,
+zero skips/flaky/uncaught errors, both live Juiced cases. Five fresh volumes/no
+overlays,28runtime-file matches/version/heartbeat/HTTPS and both native architecture
+gates passed.425units/lint/actionlint pass; test lint0errors/28warnings.
+Native Save/readback/stop/start/retry/reload and final manual phone views passed.
+[Handoff](../../docs/evidence/mobile-resume-20261106/handoff.md) owns exact pins,
+connections, migration, rollback and limits. Homelab owns later production deployment.
+
+Source attempts, corrected fixtures and before/after renders are retained. The
+review caught dropdown mutation, replaced unsaved replies, stale permission
+ownership, late APP_READY/dry-run notice resets and keyboard focus-transfer input.
+No runtime code changed after publication. This ledger has no remaining action.
 
 ## Boundaries and limits
 

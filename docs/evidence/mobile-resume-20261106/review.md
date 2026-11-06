@@ -93,3 +93,23 @@ in51.1seconds. Keyboard Enter activation had added a newline after moving focus
 into the composer; recovery buttons now consume that activation before the new
 focus can receive its default keypress. Received text and existing drafts match
 exactly, with no Send. Runtime source is frozen for published-image acceptance.
+
+## Published-image acceptance
+
+The pulled v1.19.16 image passed all 63 cases in 8.2 minutes, zero skips, flaky
+cases or uncaught page errors. Both live Juiced cases passed. Five fresh synthetic
+volumes, no overlays, 28 tagged runtime-file matches, native heartbeat/version,
+HTTPS reachability, registry source labels and both native startup gates passed.
+The runtime stayed unchanged after its source tag. The final manual review
+inspected collapsed/expanded recovery at 448×921, scrolled actions at 448×400,
+320px with enlarged text, the live image and the Pixel portrait render.
+
+Manual native Save/readback, container stop/start, failed ping and keyboard Retry
+recovered with ping 204/status 200 and zero inference calls. Reload retained exact
+draft text, Qwen3.5-2B, context `12288`, temperature `0.85` and Advanced controls enabled and native
+Auto-connect=false. Keyboard append returned focus to the composer without an
+extra newline or Send. The controlled partial-text UI fixture is identified in
+manual-restart.json; real transport-loss proof remains in the automated cases.
+33 console entries and 107 failed requests remain classified in browser-summary.json.
+One settings save was aborted by a fixture reload; settled native settings
+persistence passed separately with no mocks. Production69/shared85 were untouched.

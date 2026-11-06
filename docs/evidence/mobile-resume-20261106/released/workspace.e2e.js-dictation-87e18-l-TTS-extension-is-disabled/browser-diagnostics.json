@@ -1,0 +1,12 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Error saving settings: TypeError: Failed to fetch\n    at saveSettings (http://127.0.0.1:8023/script.js:8156:30)"
+  ],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8023/api/settings/save",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

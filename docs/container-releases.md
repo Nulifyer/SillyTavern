@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.15`.
+2. Create a version tag on that commit, such as `v1.19.16`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.15` | The exact GitHub Release tag |
+| `v1.19.16` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.15` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.16` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -99,6 +99,41 @@ Its evidence is in `docs/evidence/service-workspace-20261102/`. v1.19.11 adds
 explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
+
+### v1.19.16
+
+[Release v1.19.16](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.16)
+is source `05e7858f429a5fc5680e2d64919a47f5505d029d`.
+[Workflow 42310788170](https://github.com/Nulifyer/SillyTavern/actions/runs/42310788170)
+passed native amd64/arm64 startup, heartbeat and publication gates.
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:f54190820e830b5ff24eb760136504c6c6ecf9ecf9523997abfbc5a6fdc3b657
+```
+
+- linux/amd64: `sha256:7381723771bccf5f78eee8da195d78462687f484d7ddc2e3511f4d1375f3ff38`
+- linux/arm64: `sha256:bd73ac13eb42a1e7d2a45b2850a580b13f1c22d5f4cd6e0b36ee157af2acd418`
+
+Adds per-story draft and unsaved reply recovery across browser suspension/reload.
+Native generation handles interrupted streams and cast queues without replay;
+read-only foreground checks preserve settings and model dropdowns. Late readiness
+and prompt-counting dry runs cannot erase newer failures. Hidden microphone
+recording/permission cancels safely. Advanced controls and Pixel sizing remain.
+
+The pulled image passed all 63 browser cases in 8.2 minutes with both live Juiced
+cases, zero skips/flaky cases/uncaught page errors. Five fresh synthetic volumes,
+no overlays, 28 tagged runtime-file matches, heartbeat/version and HTTPS passed.
+Real native Save/stop/start/Retry/reload retained explicit settings and exact text.
+Recovery renders at 448×921, 448×400 and 320px/enlarged text were inspected.
+425 unit tests, root lint and actionlint pass; test lint has 0 errors/28 warnings.
+Console/network events and corrected source fixtures are retained and classified.
+
+[Handoff, connections, evidence and rollback](evidence/mobile-resume-20261106/handoff.md).
+Homelab owns deployment. This thread never accessed or updated production69/shared85.
+Physical phone lock remains unqualified. ARM64 has native startup proof; full
+browser/live-service acceptance ran on amd64. OS discard cannot reattach an old
+HTTP inference request; local text recovery supports explicit continuation.
+
 
 ### v1.19.15
 

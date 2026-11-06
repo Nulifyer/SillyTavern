@@ -1,0 +1,14 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8023/api/settings/save",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8023/api/quick-replies/save",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}
