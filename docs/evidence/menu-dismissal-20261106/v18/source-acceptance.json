@@ -1,0 +1,18 @@
+{
+  "source": "6184efd200a6d7b84ded01bb256fe2841db3fcde",
+  "focusedCases": 8,
+  "lateCases": 2,
+  "regressionCases": 6,
+  "unitTests": 425,
+  "rootLint": "pass",
+  "actionlint": "pass",
+  "testLint": {
+    "errors": 0,
+    "warnings": 50
+  },
+  "nativeHookTimeoutMilliseconds": 5000,
+  "baselineVersion": "v1.19.17",
+  "baselineExpectedFailure": ".sd_image_settings expected1 received0 after30000ms",
+  "excludedCases": [],
+  "actualImageAcceptance": "pending67case full suite"
+}

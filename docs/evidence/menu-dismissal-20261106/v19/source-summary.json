@@ -1,0 +1,50 @@
+{
+  "phase": "source",
+  "stats": {
+    "startTime": "2026-11-07T01:22:45.461Z",
+    "duration": 57722.299,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "query-string navigation keeps background tabs local and every native owner unique",
+      "status": "passed",
+      "milliseconds": 8235,
+      "retry": 0
+    },
+    {
+      "title": "late extension activation recovers image-settings without replacing edited controls",
+      "status": "passed",
+      "milliseconds": 9921,
+      "retry": 0
+    },
+    {
+      "title": "late extension activation recovers connection without replacing edited controls",
+      "status": "passed",
+      "milliseconds": 10310,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 13429,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 14814,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequestsByReason": {
+    "net::ERR_ABORTED": 5
+  },
+  "diagnostics": 5,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

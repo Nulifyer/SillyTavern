@@ -1,0 +1,16 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Error: The reply stream ended before completion.\n    at StreamingProcessor.streamData [as generator] (http://127.0.0.1:8027/scripts/openai.js:3192:63)\n    at async StreamingProcessor.generate (http://127.0.0.1:8027/script.js:3899:73)\n    at async finishGenerating (http://127.0.0.1:8027/script.js:5423:30)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8027/script.js:1795:22)\n    at async SimpleMutex.update (http://127.0.0.1:8027/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8027/script.js:11220:9)"
+  ],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8027/img/ai4.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8027/api/ping",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

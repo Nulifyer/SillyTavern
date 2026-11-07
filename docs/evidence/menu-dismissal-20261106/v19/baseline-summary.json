@@ -1,0 +1,26 @@
+{
+  "phase": "baseline",
+  "stats": {
+    "startTime": "2026-11-07T01:22:46.628Z",
+    "duration": 34266.002,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "query-string navigation keeps background tabs local and every native owner unique",
+      "status": "failed",
+      "milliseconds": 33645,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [
+    "cannot call methods on autocomplete prior to initialization; attempted to call method 'widget'"
+  ],
+  "consoleErrors": [],
+  "failedRequestsByReason": {},
+  "diagnostics": 1,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

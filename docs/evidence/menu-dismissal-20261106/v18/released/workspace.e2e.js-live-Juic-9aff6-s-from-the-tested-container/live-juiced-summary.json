@@ -1,0 +1,190 @@
+{
+  "server": "https://juiced.swarm.nulteck.com",
+  "base": "http://127.0.0.1:8027",
+  "discovered": [
+    {
+      "id": "service-chat-model",
+      "options": [
+        "",
+        "Ornith-1.5-35B-A3B-GGUF-Q6_K",
+        "Qwen3.5-2B",
+        "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+        "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL"
+      ]
+    },
+    {
+      "id": "service-writer-model",
+      "options": [
+        "",
+        "Ornith-1.5-35B-A3B-GGUF-Q6_K",
+        "Qwen3.5-2B",
+        "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+        "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL"
+      ]
+    },
+    {
+      "id": "service-images-model",
+      "options": [
+        "",
+        "z-image-turbo-nsfw-v2-GGUF-Q8_0"
+      ]
+    },
+    {
+      "id": "service-speak-model",
+      "options": [
+        "",
+        "kokoro-v1"
+      ]
+    },
+    {
+      "id": "service-speak-voice",
+      "options": []
+    },
+    {
+      "id": "service-vision-model",
+      "options": [
+        "",
+        "Ornith-1.5-35B-A3B-GGUF-Q6_K"
+      ]
+    },
+    {
+      "id": "service-transcribe-model",
+      "options": [
+        "",
+        "asr4all-l-gptq-Q8_0"
+      ]
+    }
+  ],
+  "voices": [
+    "af_alloy",
+    "af_aoede",
+    "af_bella",
+    "af_heart",
+    "af_jessica",
+    "af_kore",
+    "af_nicole",
+    "af_nova",
+    "af_river",
+    "af_sarah",
+    "af_sky",
+    "alloy",
+    "am_adam",
+    "am_echo",
+    "am_eric",
+    "am_fenrir",
+    "am_liam",
+    "am_michael",
+    "am_onyx",
+    "am_puck",
+    "am_santa",
+    "ash",
+    "ballad",
+    "bf_alice",
+    "bf_emma",
+    "bf_isabella",
+    "bf_lily",
+    "bm_daniel",
+    "bm_fable",
+    "bm_george",
+    "bm_lewis",
+    "cedar",
+    "coral",
+    "echo",
+    "ef_dora",
+    "em_alex",
+    "em_santa",
+    "fable",
+    "ff_siwis",
+    "hf_alpha",
+    "hf_beta",
+    "hm_omega",
+    "hm_psi",
+    "if_sara",
+    "im_nicola",
+    "jf_alpha",
+    "jf_gongitsune",
+    "jf_nezumi",
+    "jf_tebukuro",
+    "jm_kumo",
+    "marin",
+    "nova",
+    "onyx",
+    "pf_dora",
+    "pm_alex",
+    "pm_santa",
+    "sage",
+    "shimmer",
+    "verse",
+    "zf_xiaobei",
+    "zf_xiaoni",
+    "zf_xiaoxiao",
+    "zf_xiaoyi",
+    "zm_yunjian",
+    "zm_yunxi",
+    "zm_yunxia",
+    "zm_yunyang"
+  ],
+  "storyModel": "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL",
+  "writerModel": "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+  "visionModel": "Ornith-1.5-35B-A3B-GGUF-Q6_K",
+  "caption": "Here are the visible objects and colors in this scene:\n\n**Objects:**\n- A doll with long pink hair and a black dress\n- A bright red teapot\n- An open book with illustrated pages\n- A closed blue book\n- A wooden table\n- A wooden chair\n- A potted plant on the windowsill\n- Framed pictures on the wall\n- Shelves with bottles in the background\n\n**Colors:**\n- Soft pink (doll's hair)\n- Black (doll's dress)\n- Bright red (teapot)\n- Blue (book)\n- Warm browns (wooden furniture)\n- Cream and off-white (walls, book pages)\n- Muted greens (plant)\n- White (doll's skin)\n\nThe scene has a soft, warm, and slightly nostalgic atmosphere.",
+  "storyText": "Seraphina\nNovember 6, 2026 8:08 PM\n\nThe red teapot sits near the edge of the weathered wooden table, its spout tilted slightly as though it has just finished pouring. Beside it, a blue leather book lies open to a page filled with faded ink illustrations of birds and wildflowers, its spine cracked from years of use.\n\n1​/​1",
+  "transcriptDraft": "My draft. The red teapot is beside the blue book.",
+  "audio": {
+    "type": "audio/wav",
+    "bytes": 276044,
+    "duration": 2.875
+  },
+  "seconds": {
+    "chatAndSetup": 32.629,
+    "writerAndImage": 36.258,
+    "speech": 9.729,
+    "transcription": 0.417
+  },
+  "requests": [
+    {
+      "path": "/api/openai/custom/discover",
+      "url": "https://juiced.swarm.nulteck.com"
+    },
+    {
+      "path": "/api/openai/custom/discover",
+      "url": "https://juiced.swarm.nulteck.com"
+    },
+    {
+      "path": "/api/backends/chat-completions/generate",
+      "model": "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL",
+      "stream": true,
+      "max_tokens": 128,
+      "custom_url": "https://juiced.swarm.nulteck.com/v1",
+      "custom_include_body": "chat_template_kwargs:\n  enable_thinking: false"
+    },
+    {
+      "path": "/api/backends/chat-completions/generate",
+      "model": "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+      "stream": false,
+      "max_tokens": 512,
+      "custom_url": "https://juiced.swarm.nulteck.com/v1",
+      "custom_include_body": "{\"chat_template_kwargs\":{\"enable_thinking\":false}}"
+    },
+    {
+      "path": "/api/sd/sdcpp/generate",
+      "model": "z-image-turbo-nsfw-v2-GGUF-Q8_0",
+      "url": "https://juiced.swarm.nulteck.com",
+      "width": 512,
+      "height": 512,
+      "steps": 8,
+      "cfg_scale": 1,
+      "sampler": "euler",
+      "scheduler": "simple"
+    },
+    {
+      "path": "/api/openai/custom/generate-voice",
+      "model": "kokoro-v1"
+    },
+    {
+      "path": "/api/openai/custom/transcribe-audio",
+      "multipart": true
+    }
+  ],
+  "errors": []
+}

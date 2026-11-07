@@ -2465,6 +2465,28 @@ test('native font preferences and browser text sizing keep phone controls usable
     expect(await page.locator('#workspace-view').evaluate(view => view.scrollWidth <= view.clientWidth)).toBe(true);
 });
 
+test('query-string navigation keeps background tabs local and every native owner unique', async ({ page }) => {
+    const rootFetches = [];
+    page.on('request', request => { if (['xhr', 'fetch'].includes(request.resourceType()) && new URL(request.url()).pathname === '/') rootFetches.push(request.url()); });
+    await page.goto('/?workspace-review=query');
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await settingsCategory(page, 'backgrounds');
+    for (const fragment of ['#bg_chat_tab', '#bg_global_tab']) {
+        await page.locator(`#bg_tabs > ul a[href$="${fragment}"]`).click();
+        await expect(page.locator(fragment)).toBeVisible();
+    }
+    await settingsCategory(page, 'image-settings');
+    await expect(page.locator('.sd_settings')).toBeVisible();
+    for (const id of ['workspace-sidebar', 'workspace-menu', 'workspace-settings-shell', 'rm_extensions_block', 'sd_steps_value', 'connection_profiles', 'bg_tabs']) await expect(page.locator(`#${id}`)).toHaveCount(1);
+    expect(rootFetches).toEqual([]);
+    await page.reload();
+    await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await settingsCategory(page, 'image-settings');
+    await expect(page.locator('.sd_settings')).toBeVisible();
+    await expect(page.locator('#rm_extensions_block')).toHaveCount(1);
+    expect(rootFetches).toEqual([]);
+});
+
 for (const destination of ['image-settings', 'connection']) {
     test(`late extension activation recovers ${destination} without replacing edited controls`, async ({ page }, testInfo) => {
         await page.setViewportSize({ width: destination === 'image-settings' ? 448 : 1280, height: 921 });

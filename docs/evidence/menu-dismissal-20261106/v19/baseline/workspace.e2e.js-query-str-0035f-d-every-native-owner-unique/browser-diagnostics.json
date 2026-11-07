@@ -1,0 +1,7 @@
+{
+  "pageErrors": [
+    "cannot call methods on autocomplete prior to initialization; attempted to call method 'widget'"
+  ],
+  "consoleErrors": [],
+  "failedRequests": []
+}

@@ -1858,6 +1858,13 @@ export function initBackgrounds() {
         });
     });
 
+    // <base href="/"> otherwise makes fragment links look remote when the
+    // document has a query string. jQuery UI would fetch the whole app as a tab.
+    const documentUrl = new URL(window.location.href);
+    for (const link of document.querySelectorAll('#bg_tabs > ul a[href^="#"]')) {
+        documentUrl.hash = link.getAttribute('href');
+        link.href = documentUrl.href;
+    }
     $('#bg_tabs').tabs();
     $('#bg_tabs').on('tabsactivate', () => updateGroupFolderControlsVisibility());
     updateGroupFolderControlsVisibility();

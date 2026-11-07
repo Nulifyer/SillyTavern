@@ -37,3 +37,18 @@ in 1.1 minutes. 425 unit tests, root lint and actionlint pass; test lint has
 summaries. Actual acceptance requires all 67 cases together, both live Juiced
 cases, fresh synthetic volumes and no source overlays. v1.19.17 remains an
 immutable intermediate; it is not this task's final deployment handoff.
+
+## Query-navigation correction
+
+The manual reload URL included a query string. Subsequent DOM inspection found
+two copies of the workspace sidebar and native panels. A second full app index
+was inside Backgrounds → #bg_tabs → #ui-id-4. With base href=/, the fragment-only
+background anchors resolved without the document query; jQuery UI treated them
+as remote tabs and fetched the index. This explains the manual missing-view
+symptom; the earlier attribution of that symptom solely to late activation was
+not isolated. The separate held-template failure on actualv17 independently
+proves the late-activation defect, andv18 fixes that case.
+
+The new query regression fails on actualv18 and passes on sourcev19. v18 remains
+an immutable intermediate. Proper root reload and query navigation are both
+required in final acceptance; no iframe/DOM duplicate is treated as healthy.

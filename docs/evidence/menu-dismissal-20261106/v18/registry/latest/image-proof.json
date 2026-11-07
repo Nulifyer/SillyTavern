@@ -1,0 +1,28 @@
+{
+  "observedAt": "2026-11-07T01:04:19.224763+00:00",
+  "image": "ghcr.io/nulifyer/sillytavern",
+  "tag": "latest",
+  "indexDigest": "sha256:7a79e218394e769d3cc7be02a9d7fb1885ff3165b0bb107630f14a3b8b597fe1",
+  "architectures": [
+    {
+      "architecture": "amd64",
+      "digest": "sha256:5b137d5e256613c084389f11d90dae3d08899e4bf455ac4ca51f4532f147c35a",
+      "labels": {
+        "org.opencontainers.image.licenses": "AGPL-3.0",
+        "org.opencontainers.image.revision": "6184efd200a6d7b84ded01bb256fe2841db3fcde",
+        "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+        "org.opencontainers.image.version": "v1.19.18"
+      }
+    },
+    {
+      "architecture": "arm64",
+      "digest": "sha256:67b1614749d4695a23b972d5066cf8aba32df8df9ffd46bb758aa3791060c6ca",
+      "labels": {
+        "org.opencontainers.image.licenses": "AGPL-3.0",
+        "org.opencontainers.image.revision": "6184efd200a6d7b84ded01bb256fe2841db3fcde",
+        "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+        "org.opencontainers.image.version": "v1.19.18"
+      }
+    }
+  ]
+}
