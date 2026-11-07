@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.16`.
+2. Create a version tag on that commit, such as `v1.19.19`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.16` | The exact GitHub Release tag |
+| `v1.19.19` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.16` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.19` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -99,6 +99,68 @@ Its evidence is in `docs/evidence/service-workspace-20261102/`. v1.19.11 adds
 explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
+
+### v1.19.19
+
+[Release v1.19.19](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.19)
+is source `031bc97933cab8827b473080c50d95c52b9f55af`.
+[Workflow 42324206240](https://github.com/Nulifyer/SillyTavern/actions/runs/42324206240)
+passed native amd64/arm64 startup and publication gates.
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:4aaf8c5450b26d1086309de6321f9759b7b93f96d9a5eadacf489240411ee9a4
+```
+
+- linux/amd64: `sha256:9665f6167c716b9e2748905d0ffa4860a6bc3aea12b530765190f4046c70d9a5`
+- linux/arm64: `sha256:67c11b8316ae5f130196cf6c12ccf776df075aa65a2b8daa206c72f2e07e1d37`
+
+Adds outside click/tap, Tab and layered Escape dismissal for temporary menus.
+Native editors keep priority; closing menus preserves pending generation.
+Synthetic chat-load clicks and late focus restoration cannot hide a clicked menu.
+Settings/recovered reply disclosures stay open. Background fragment tabs preserve
+the document query and stay local, preventing a second full app/index from being
+fetched into a tab and duplicating every control ID. Late extension activation now
+notifies readiness after its startup timeout; newly arriving service sections
+recover without navigation or replacing existing controls, focus or choices.
+
+The actual pulled image passed all 68 browser cases together in 9.0 minutes,
+both live Juiced cases, zero skips/flaky cases/uncaught page errors. Five fresh
+synthetic volumes, no overlays, 31 tagged runtime matches, version/heartbeat and
+HTTPS passed. Final desktop/Pixel renders and native Save/readback/reload passed.
+425 unit tests, root lint and actionlint pass; test lint has 0 errors/50 warnings.
+Console/network fault fixtures and prior failed attempts remain classified.
+
+[Handoff, connections, migration and rollback](evidence/menu-dismissal-20261106/v19/handoff.md).
+Homelab owns later deployment. This thread never accessed production69/shared85.
+Physical phone/microphone/lock and audible quality remain unqualified. ARM64 has
+native startup proof; full browser/live acceptance ran on amd64.
+
+### v1.19.18 (intermediate)
+
+[Release v1.19.18](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.18)
+is source `6184efd200a6d7b84ded01bb256fe2841db3fcde`. Its actual image passed 67
+cases and the late-extension regression. The added query test fails with duplicate
+controls/preloader and an autocomplete error. Use the final v1.19.19 handoff.
+
+- Index: `sha256:7a79e218394e769d3cc7be02a9d7fb1885ff3165b0bb107630f14a3b8b597fe1`
+- amd64: `sha256:5b137d5e256613c084389f11d90dae3d08899e4bf455ac4ca51f4532f147c35a`
+- arm64: `sha256:67b1614749d4695a23b972d5066cf8aba32df8df9ffd46bb758aa3791060c6ca`
+- [Workflow 42321695043](https://github.com/Nulifyer/SillyTavern/actions/runs/42321695043)
+- [Evidence and corrected manual-query attribution](evidence/menu-dismissal-20261106/v18/review.md).
+
+### v1.19.17 (intermediate)
+
+[Release v1.19.17](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.17),
+source `a3bce50251d039bf13bf309a8b15e3491c8bddae`, passed native architecture gates
+and its 65-case actual-image suite in 8.8 minutes. Native review led to separate late-activation and query regressions;
+the held-template regression fails
+on this immutable image and passes on v1.19.19. Use the v1.19.19 handoff above.
+
+- Index: `sha256:540a2d39d9f7c41827f43a0c23d33639d0e6e7c50f228ecb6881acddc91f93c3`
+- amd64: `sha256:48fd22a9bf9bb8a647df4f917eee0e82816e9dd33d4b0ab397c1b9848caa2d7a`
+- arm64: `sha256:86e56e14ebbbb5b05a987e1724fad69199c95f0d3038d18d2e33e39ed733d7a7`
+- [Workflow 42317385718](https://github.com/Nulifyer/SillyTavern/actions/runs/42317385718)
+- [Evidence, source iterations and local host-network incident](evidence/menu-dismissal-20261106/review.md).
 
 ### v1.19.16
 

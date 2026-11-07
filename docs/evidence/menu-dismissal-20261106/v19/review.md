@@ -26,3 +26,19 @@ autocomplete prior to initialization; attempted to call method 'widget'` and
 the extra index's preloader remained (expected0, received1 after30000ms). Source
 has no uncaught errors in all five focused cases.425units/lint/actionlint pass;
 test lint0errors/50warnings. Earlier failing attempts remain retained.
+
+## Final actual-image acceptance
+
+Actualv1.19.19 passed all68cases together in9.0minutes, both live Juiced cases,
+zero skips/flaky cases/uncaught errors.31runtime files match the tag; five fresh
+volumes/no overlays, native version/heartbeat/HTTPS and both architecture labels
+passed. Native UI Save/readback, location.reload() and query navigation retained
+Advanced=true/steps8/automatic tools off. All seven inspected control IDs remain
+unique and root XHR/fetch count is0. Root/query/desktop/Pixel renders inspected;
+owned browser tab closed. Source/runtime are unchanged after tag.
+
+32console entries belong to deliberate HTTP500/503/403/502/409, EOF/reset and
+busy/delete guard cases.106failed requests:103ERR_ABORTED,2syntheticERR_FAILED,
+1real fixtureERR_INCOMPLETE_CHUNKED_ENCODING. No claim of zero console/network
+errors.425units/root lint/actionlint pass; test lint0errors/50warnings. Exact
+results are in browser-summary.json and manual/native-settings.json.

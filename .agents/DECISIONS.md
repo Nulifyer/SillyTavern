@@ -25,6 +25,7 @@
 - Foreground native editors handle Escape; inert background controls must not receive it. Native generation owns interactive Stop cancellation, including cast queues; quiet callers retain rejection.
 - Workspace owns transient menu dismissal; native modules own their popup state/actions. Ignore programmatic outside clicks/focus restoration. Escape closes nested menus before background Stop; settings/recovery disclosures remain persistent. See docs/workspace-ui-system.md.
 - Native activation fulfillment notifies readiness even after its startup timeout. Service preparation is idempotent per native section; settings recover only their empty active category. Do not remount existing forms/rows on late extension events.
+- Native local tab fragments resolve against the full document URL, including its query. Background tabs must never fetch/insert the application index or duplicate native control IDs.
 - Mounted native forms use natural height, with wrapped actions contained before tags/notes. Phone character identity gets a full row above statistics.
 
 ## Open decisions

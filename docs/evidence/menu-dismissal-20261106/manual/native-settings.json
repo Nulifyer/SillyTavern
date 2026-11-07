@@ -59,5 +59,6 @@
     }
   ],
   "consoleErrors": [],
-  "note": "Native Save/readback retained Advanced=true/steps8/automatic tools off. Reload exposed stale missing-extension view; after category reselect controls appeared. Version17 is not final deployment handoff. Early post-navigation automation had invalid-selector/timeouts before workspace was ready."
+  "note": "Native Save/readback retained Advanced=true/steps8/automatic tools off. Reload exposed stale missing-extension view; after category reselect controls appeared. Version17 is not final deployment handoff. Early post-navigation automation had invalid-selector/timeouts before workspace was ready.",
+  "laterAttributionCorrection": "The manual reload URL query made jQuery UI background tabs fetch the complete app index. Duplicate control IDs explain the missing/ambiguous targets; timing alone was not isolated. Independent held-template regression verifies the separate readiness bug. See v18/review.md and v19/review.md."
 }

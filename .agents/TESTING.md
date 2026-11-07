@@ -51,15 +51,15 @@ docs/evidence/mobile-portraits-20261106/.
 
 ## Environment
 
-Latest verifiedv1.19.16 preview: http://127.0.0.1:8023, Podman container
-st-mobile-resume-release-20261106, five fresh volumes/no overlays. All63browser
-cases passed in8.2minutes, both live cases, zero skips/flaky/uncaught errors.
-28runtime matches/version/heartbeat/HTTPS/index/labels passed.425units, lint,
-actionlint pass; test lint0errors/28warnings. Native Save/stop/start/retry/reload
-proof and final mobile recovery views passed. This fixture retains Qwen3.5-2B,
-manual12288/temp0.85/Advanced=true/voice off after that standalone check.
-Source8024 st-mobile-resume-source-20261106 has public/src/package overlays;
-it is not published-image proof. Exact evidence: docs/evidence/mobile-resume-20261106/.
+Latest verifiedv1.19.19: http://127.0.0.1:8028,
+st-menu-query-release-20261106, five fresh synthetic volumes/no overlays. All68
+cases passed together in9.0minutes, both live cases, zero uncaught errors.
+31runtime matches/version/heartbeat/HTTPS/index/labels pass.425units/lint/actionlint
+pass; test lint0errors/50warnings. Native Save/readback/reload/visual check passed.
+Source8026 st-menu-dismiss-source-20261106 has public/src/package overlays; it is
+not image proof. v17actual8025/v18actual8027 are intermediates after late/query gaps.
+Earlier local host forwards were lost once; their container data was preserved.
+Current handoff/evidence: docs/evidence/menu-dismissal-20261106/v19/.
 
 Earlier full workspace acceptance (v1.19.14, all43cases, 424units) and the
 16-category/Advanced/Create reviews remain in
@@ -98,6 +98,11 @@ story and retries. It checks the saved setting at 390px. Evidence lives in
 docs/evidence/first-reply-formatting-20261102/. Discovery success alone does
 not prove a model accepts every story prompt. Earlier 27-case acceptance did
 not cover this message-order/model combination.
+
+Late activation: `--grep 'late extension activation'` holds the actual SD
+template beyond APP_READY. Images recover without navigation; switching away
+keeps native/model node identity, focus and unapplied choice. Repeated native
+readiness signals do not duplicate sections or collapse opened details.
 
 ## Known gaps
 

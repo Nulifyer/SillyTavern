@@ -51,6 +51,11 @@ readiness signal; the startup timeout is not completion. Service sections are
 grouped once as their native controls arrive. Recover only a missing section;
 keep mounted forms, unapplied model choices, input focus and disclosure state.
 
+Local background tabs must retain the full current document URL when resolving
+their fragment links. The app's base URL must not turn them into remote tabs on
+query URLs. There is one workspace/native control tree; loading an app index into
+a tab and duplicating control IDs violates that ownership.
+
 These values adapt those principles to a dark character-roleplay workspace.
 They are defined in `public/css/workspace.css` at the workspace boundary.
 

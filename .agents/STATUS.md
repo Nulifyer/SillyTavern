@@ -2,35 +2,38 @@
 
 ## Project state
 
-Latest fully verified release: v1.19.16. v1.19.17 published; actual65passed, but manual reload found a late-extension gap.
+Published/verifiedv1.19.19, source031bc97933cab8827b473080c50d95c52b9f55af.
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Previous immutable source/digests/handoff remain in docs/container-releases.md.
+Workflow42324206240 passed native amd64/arm64 startup/publication.
+Index: `sha256:4aaf8c5450b26d1086309de6321f9759b7b93f96d9a5eadacf489240411ee9a4`.
 
 ## Active tasks
 
-Root owns menu/late-extension/query fixes, browser evidence, release and continuity.
-v17actual65passed andv18actual67passed. Query navigation in native reload review
-revealed duplicate app IDs: base href=/ made jQuery UI background fragment tabs
-remote, fetching the complete index into a background panel. This explains the
-manual query-page missing settings; earlier attribution solely to late activation
-was not isolated. Separate held-template regression independently failsv17 and
-passesv18. v17/v18 remain immutable intermediates.
+None. Menu dismissal, late readiness and local query tabs follow-up complete.
+Previous full workspace/service/mobile recovery reviews remain retained.
 
 ## Next action
 
-Publish v1.19.19 with local background fragment anchors resolved against the full
-current document URL. Source query/late/menu5cases pass; actualv18 baseline fails
-with duplicate preloader and autocomplete widget error.425units/lint/actionlint
-pass; test lint0errors/50warnings. Root owns all new edits. Verify actual19 with
-five fresh volumes/no overlays, all68cases/live Juiced and native Save/readback/
-root reload/query visual review. Then finish docs/handoff. Never touch69/85.
+Homelab owns later deployment using
+[handoff](../docs/evidence/menu-dismissal-20261106/v19/handoff.md).
+Never deploy production69 here. Preserve existing volumes/network boundaries,
+record the actual pre-update image/private backup and reload tabs afterward.
+This thread never accessed production69 app/data/config/volumes or shared85.
 
 ## Verification
 
-v18 workflow42321695043 passed native amd64/arm64 startup/publication. Actual18
-on8027 matched30runtime files/version/heartbeat/HTTPS and passed67cases in8.8min.
-v19 source has31recorded runtime hashes; stock sd.cpp backend unchanged. Evidence:
-docs/evidence/menu-dismissal-20261106/v19/ and parent v17/v18 iterations.
+Actual19 on8028 st-menu-query-release-20261106 passed all68browser cases together
+in9.0minutes, both live Juiced cases, zero skips/flaky/uncaught errors.
+Five fresh volumes/no overlays;31runtime matches/version/heartbeat/HTTPS/index
+and both architecture labels passed.425units/lint/actionlint pass; test lint
+0errors/50warnings. Native Save/readback/reload preserved Advanced=true/steps8
+and automatic tools off. Desktop/Pixel and nested-menu renders inspected.
+Console/network events classified separately; no claim of zero console errors.
+v17/v18 passed65/67cases but failed later late-template/query regressions; they
+are immutable intermediates. Query/native DOM attribution was corrected in
+evidence. Source query/late/menu5cases pass. Exact evidence:
+docs/evidence/menu-dismissal-20261106/v19/. Earlier menu/debug/host failures remain
+in the parent folder. Source/runtime unchanged after tag; only delivery docs follow.
 
 ## Blockers
 
@@ -38,7 +41,7 @@ None.
 
 ## Limits
 
-Physical phone/microphone/lock and audible quality remain unqualified. ARM64
-requires native startup gates; full browser/live checks run on amd64. Production
-app/data/config/volumes and shared85 were never accessed. No Juiced runtime,
-policy, cache or shared infrastructure changes. Homelab owns later deployment.
+Physical phone/mic/lock and audible quality unqualified. ARM64 native startup
+proof; browser/live checks on amd64. No Juiced model/policy/cache/infrastructure
+changes. Older local fixture host forwards disappeared in one incident; data
+preserved. Only owned8025/8026/8027/8028 fixtures were restarted/created afterward.

@@ -1,0 +1,45 @@
+{
+  "release": "v1.19.19",
+  "saved": {
+    "advanced": "true",
+    "automaticTools": false,
+    "status": 200,
+    "steps": 8
+  },
+  "afterReload": {
+    "advanced": true,
+    "automaticTools": false,
+    "idCounts": {
+      "connection_profiles": 1,
+      "rm_extensions_block": 1,
+      "sd_steps_value": 1,
+      "workspace-sidebar": 1
+    },
+    "panelVisible": true,
+    "steps": "8"
+  },
+  "afterQuery": {
+    "advanced": true,
+    "automaticTools": false,
+    "idCounts": {
+      "bg_tabs": 1,
+      "connection_profiles": 1,
+      "rm_extensions_block": 1,
+      "sd_steps_value": 1,
+      "workspace-menu": 1,
+      "workspace-settings-shell": 1,
+      "workspace-sidebar": 1
+    },
+    "panelVisible": true,
+    "rootFetches": [],
+    "steps": "8"
+  },
+  "consoleErrors": [],
+  "settingsMocks": false,
+  "nativeUIChanges": [
+    "Advanced controls enabled",
+    "Image steps set to8",
+    "Automatic image tools remain off"
+  ],
+  "note": "Real native Save/readback followed by location.reload() and distinct query navigation. Both keep Images visible and selected native IDs unique. No reselect workaround."
+}

@@ -1,0 +1,22 @@
+{
+  "source": "031bc97933cab8827b473080c50d95c52b9f55af",
+  "focusedCases": 5,
+  "unitTests": 425,
+  "rootLint": "passed",
+  "actionlint": "passed",
+  "testLint": {
+    "errors": 0,
+    "warnings": 50
+  },
+  "baselineVersion": "v1.19.18",
+  "baselineUncaughtError": "cannot call methods on autocomplete prior to initialization; attempted to call method 'widget'",
+  "baselineFailure": "#preloader expected0 received1 after30000ms",
+  "excludedCases": [],
+  "actualImageAcceptance": {
+    "cases": 68,
+    "passed": 68,
+    "durationMilliseconds": 542236.684,
+    "uncaughtPageErrors": 0,
+    "overlays": false
+  }
+}
