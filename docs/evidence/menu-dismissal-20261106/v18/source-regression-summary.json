@@ -1,0 +1,65 @@
+{
+  "phase": "source-regression",
+  "stats": {
+    "startTime": "2026-11-07T00:56:55.761Z",
+    "duration": 67571.738,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "every settings category uses one control tree and fits desktop and phone",
+      "status": "passed",
+      "milliseconds": 20520,
+      "retry": 0
+    },
+    {
+      "title": "discovered selectors distinguish unapplied choices and follow native provider changes",
+      "status": "passed",
+      "milliseconds": 4451,
+      "retry": 0
+    },
+    {
+      "title": "one server configures native services and survives reload without replacing sampling or profiles",
+      "status": "passed",
+      "milliseconds": 8898,
+      "retry": 0
+    },
+    {
+      "title": "service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server",
+      "status": "passed",
+      "milliseconds": 3893,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 13995,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 15124,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "case": "workspace.e2e.js-service-s-a84be-cannot-replace-a-new-server",
+      "message": "Failed to load resource: the server responded with a status of 502 (Bad Gateway)"
+    },
+    {
+      "case": "workspace.e2e.js-service-s-a84be-cannot-replace-a-new-server",
+      "message": "Failed to load resource: the server responded with a status of 409 (Conflict)"
+    }
+  ],
+  "failedRequestsByReason": {
+    "net::ERR_ABORTED": 7
+  },
+  "diagnostics": 6,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

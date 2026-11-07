@@ -1,0 +1,63 @@
+{
+  "release": "v1.19.17",
+  "saved": {
+    "advanced": "true",
+    "automaticTools": false,
+    "functionTool": false,
+    "interactive": false,
+    "status": 200,
+    "steps": 8
+  },
+  "afterReloadInitially": {
+    "advanced": true,
+    "automaticTools": false,
+    "panelVisible": false,
+    "preloader": true,
+    "steps": "8",
+    "viewport": [
+      448,
+      921
+    ]
+  },
+  "afterReselect": {
+    "advanced": true,
+    "automaticTools": false,
+    "panelVisible": true,
+    "placeholder": [
+      "Discover models, or configure a provider below.",
+      "Discover models, or configure a provider below.",
+      "Discover models, or configure a provider below.",
+      "Discover models, or configure a provider below.",
+      "Discover models, or configure a provider below."
+    ],
+    "steps": "8"
+  },
+  "escapeStates": [
+    {
+      "extensions": "true",
+      "focus": null,
+      "more": true,
+      "sd": "true"
+    },
+    {
+      "extensions": "true",
+      "focus": "sd_gen",
+      "more": true,
+      "sd": "false"
+    },
+    {
+      "extensions": "false",
+      "focus": "extensionsMenuButton",
+      "more": true,
+      "sd": "false"
+    },
+    {
+      "extensions": "false",
+      "focus": "Chat tools and options",
+      "more": false,
+      "sd": "false"
+    }
+  ],
+  "consoleErrors": [],
+  "note": "Native Save/readback retained Advanced=true/steps8/automatic tools off. Reload exposed stale missing-extension view; after category reselect controls appeared. Version17 is not final deployment handoff. Early post-navigation automation had invalid-selector/timeouts before workspace was ready."
+}

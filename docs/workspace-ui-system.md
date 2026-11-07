@@ -45,6 +45,12 @@ details and recovered reply text are persistent disclosures; they do not join
 the transient-menu dismissal rule. Native programmatic focus restoration alone
 must not hide a menu.
 
+An extension finishing after startup must become usable in its open settings
+category without navigation or reload. Native activation completion is the
+readiness signal; the startup timeout is not completion. Service sections are
+grouped once as their native controls arrive. Recover only a missing section;
+keep mounted forms, unapplied model choices, input focus and disclosure state.
+
 These values adapt those principles to a dark character-roleplay workspace.
 They are defined in `public/css/workspace.css` at the workspace boundary.
 

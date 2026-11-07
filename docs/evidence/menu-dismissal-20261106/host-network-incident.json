@@ -1,0 +1,14 @@
+{
+  "observation": "All local fixture host listeners8013..8026 absent; no pasta/rootlessport/slirp4netns process found. Container Node alive, internal version200 and native heartbeat pass. No OOMKilled flag. Cause unknown.",
+  "applicationInternalStatus": 200,
+  "container": "st-menu-dismiss-release-20261106",
+  "containerOOMKilled": false,
+  "testRun": "/tmp/st-dismiss-released.json",
+  "action": "Restart only this owned local synthetic container; preserve its five volumes and image. Repeat full acceptance with fail-fast for infrastructure loss.",
+  "processCheckLimit": "The initial pgrep names did not include the actual helper name passt.avx2. It does not establish helper absence. The host listener absence and internal HTTP200 are observed.",
+  "restoredListener": {
+    "address": "127.0.0.1:8025",
+    "process": "passt.avx2",
+    "pid": 695501
+  }
+}

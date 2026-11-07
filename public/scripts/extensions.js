@@ -451,7 +451,11 @@ async function callExtensionHook(name, hookName) {
         };
 
         const result = await Promise.race([
-            (hookCallResult instanceof Promise ? hookCallResult : Promise.resolve(hookCallResult)).then(() => HOOK_RESULT.OK),
+            Promise.resolve(hookCallResult).then(async () => {
+                // The timeout releases startup, not the extension's lifetime.
+                if (hookName === 'activate') await eventSource.emit(event_types.EXTENSION_ACTIVATED, name);
+                return HOOK_RESULT.OK;
+            }),
             delay(HOOK_TIMEOUT).then(() => HOOK_RESULT.TIMEOUT),
         ]);
 

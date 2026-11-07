@@ -86,3 +86,16 @@ Browser emulation does not qualify physical Pixel hardware, phone lock,
 microphone hardware or audible speech quality. Native ARM64 startup gates do
 not establish ARM64 browser acceptance. Console/network fault fixtures are
 reported separately from uncaught page errors.
+
+## Actual-image host network incident
+
+The first pulled-image run passed9cases, then its host listener disappeared.
+The remaining56failed with network/hook errors. All local fixture host listeners
+8013..8026 were absent. Node/container stayed running with OOMKilled=false;
+internal version200 and native heartbeat passed. Cause is unknown. Initial
+process-name grep did not cover passt.avx2, so it proves no helper absence.
+Restarting only the owned release test container restored8025;29runtime hashes,
+version/heartbeat/HTTPS passed again. Its five synthetic volumes/image were kept.
+The full rerun uses max-failures1 to stop on another infrastructure loss; that
+is no exclusion in a green65case run. Incident and failed summary are retained.
+Older local fixture host ports were not restarted; their container data remains.

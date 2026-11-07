@@ -1,0 +1,432 @@
+{
+  "phase": "released-host-network-failure",
+  "stats": {
+    "startTime": "2026-11-07T00:22:49.388Z",
+    "duration": 97415.76,
+    "expected": 9,
+    "skipped": 0,
+    "unexpected": 56,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "library browsing shows profiles without opening or replacing a story",
+      "status": "passed",
+      "milliseconds": 4002,
+      "retry": 0
+    },
+    {
+      "title": "history failure stays visible in profiles and archive while known stories remain usable",
+      "status": "passed",
+      "milliseconds": 4343,
+      "retry": 0
+    },
+    {
+      "title": "native character editor owns Escape before its settings page and audio upload works by keyboard",
+      "status": "passed",
+      "milliseconds": 4174,
+      "retry": 0
+    },
+    {
+      "title": "character portrait and native actions stay above tags and notes at every size",
+      "status": "passed",
+      "milliseconds": 8840,
+      "retry": 0
+    },
+    {
+      "title": "new stories preserve previous transcripts and profile history resumes the exact scene",
+      "status": "passed",
+      "milliseconds": 5762,
+      "retry": 0
+    },
+    {
+      "title": "starting a character story is immediate, creates one transcript and can be renamed afterward",
+      "status": "passed",
+      "milliseconds": 4495,
+      "retry": 0
+    },
+    {
+      "title": "archive persists, excludes active lists, reads without editing, and restores the same transcript",
+      "status": "passed",
+      "milliseconds": 7865,
+      "retry": 0
+    },
+    {
+      "title": "rename follows archived identity and deletion requires confirmation without recreating the file",
+      "status": "passed",
+      "milliseconds": 6642,
+      "retry": 0
+    },
+    {
+      "title": "failed deletion keeps the story and reports the server failure",
+      "status": "passed",
+      "milliseconds": 4475,
+      "retry": 0
+    },
+    {
+      "title": "settings keep every native area reachable with Escape and focus restoration",
+      "status": "failed",
+      "milliseconds": 6311,
+      "retry": 0
+    },
+    {
+      "title": "advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace",
+      "status": "failed",
+      "milliseconds": 192,
+      "retry": 0
+    },
+    {
+      "title": "every settings category uses one control tree and fits desktop and phone",
+      "status": "failed",
+      "milliseconds": 172,
+      "retry": 0
+    },
+    {
+      "title": "settings sections, blank space and external dialogs never close mounted controls",
+      "status": "failed",
+      "milliseconds": 169,
+      "retry": 0
+    },
+    {
+      "title": "every settings destination keeps controls reachable with enlarged phone text",
+      "status": "failed",
+      "milliseconds": 169,
+      "retry": 0
+    },
+    {
+      "title": "settings changes and late saves preserve every category through direct navigation",
+      "status": "failed",
+      "milliseconds": 166,
+      "retry": 0
+    },
+    {
+      "title": "dictation settings remain available when the optional TTS extension is disabled",
+      "status": "failed",
+      "milliseconds": 166,
+      "retry": 0
+    },
+    {
+      "title": "discovered selectors distinguish unapplied choices and follow native provider changes",
+      "status": "failed",
+      "milliseconds": 169,
+      "retry": 0
+    },
+    {
+      "title": "vision discovery follows the native current-story-model option",
+      "status": "failed",
+      "milliseconds": 176,
+      "retry": 0
+    },
+    {
+      "title": "one server configures native services and survives reload without replacing sampling or profiles",
+      "status": "failed",
+      "milliseconds": 169,
+      "retry": 0
+    },
+    {
+      "title": "discovered context uses configured capacity, preserves manual overrides and survives reload",
+      "status": "failed",
+      "milliseconds": 173,
+      "retry": 0
+    },
+    {
+      "title": "service prompt editors save native values and composer nodes survive classic round trips",
+      "status": "failed",
+      "milliseconds": 159,
+      "retry": 0
+    },
+    {
+      "title": "fresh compatible connection migrates context preference",
+      "status": "failed",
+      "milliseconds": 166,
+      "retry": 0
+    },
+    {
+      "title": "existing explicit compatible connection migrates context preference",
+      "status": "failed",
+      "milliseconds": 182,
+      "retry": 0
+    },
+    {
+      "title": "service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server",
+      "status": "failed",
+      "milliseconds": 162,
+      "retry": 0
+    },
+    {
+      "title": "dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change",
+      "status": "failed",
+      "milliseconds": 170,
+      "retry": 0
+    },
+    {
+      "title": "image writer preserves scene context and story model through failure and retry",
+      "status": "failed",
+      "milliseconds": 159,
+      "retry": 0
+    },
+    {
+      "title": "live Juiced first reply with post-history instructions recovers through native prompt formatting",
+      "status": "failed",
+      "milliseconds": 164,
+      "retry": 0
+    },
+    {
+      "title": "live Juiced services use native providers from the tested container",
+      "status": "failed",
+      "milliseconds": 167,
+      "retry": 0
+    },
+    {
+      "title": "search opens character profiles and a fixture model generates through the native composer",
+      "status": "failed",
+      "milliseconds": 173,
+      "retry": 0
+    },
+    {
+      "title": "mobile draft survives a frozen tab and reload without leaking into another story",
+      "status": "failed",
+      "milliseconds": 182,
+      "retry": 0
+    },
+    {
+      "title": "a healthy reply completed while frozen resumes once and preserves the next draft",
+      "status": "failed",
+      "milliseconds": 180,
+      "retry": 0
+    },
+    {
+      "title": "a reset stream after freeze preserves partial text without success actions or replay",
+      "status": "failed",
+      "milliseconds": 166,
+      "retry": 0
+    },
+    {
+      "title": "a early-eof stream after freeze preserves partial text without success actions or replay",
+      "status": "failed",
+      "milliseconds": 168,
+      "retry": 0
+    },
+    {
+      "title": "a multi-choice stream with all finish reasons handles EOF correctly",
+      "status": "failed",
+      "milliseconds": 174,
+      "retry": 0
+    },
+    {
+      "title": "a multi-choice stream with only one finish reason handles EOF correctly",
+      "status": "failed",
+      "milliseconds": 170,
+      "retry": 0
+    },
+    {
+      "title": "foreground retry coalesces events, refreshes CSRF and preserves explicit model settings",
+      "status": "failed",
+      "milliseconds": 163,
+      "retry": 0
+    },
+    {
+      "title": "an unresponsive foreground heartbeat times out and can be retried without sending a reply",
+      "status": "failed",
+      "milliseconds": 185,
+      "retry": 0
+    },
+    {
+      "title": "a pending native recovery save does not keep the connection check busy",
+      "status": "failed",
+      "milliseconds": 183,
+      "retry": 0
+    },
+    {
+      "title": "a delayed read-only foreground check cannot reconnect a changed provider",
+      "status": "failed",
+      "milliseconds": 170,
+      "retry": 0
+    },
+    {
+      "title": "story drafts survive rapid switching and rename while the native recovery preference is respected",
+      "status": "failed",
+      "milliseconds": 176,
+      "retry": 0
+    },
+    {
+      "title": "legacy draft recovery is explicit and blocked browser storage retains text in this tab",
+      "status": "failed",
+      "milliseconds": 177,
+      "retry": 0
+    },
+    {
+      "title": "identical story filenames on different characters never share a recovered draft",
+      "status": "failed",
+      "milliseconds": 175,
+      "retry": 0
+    },
+    {
+      "title": "quiet prompt callers keep rejection on transport failure without automatic retry",
+      "status": "failed",
+      "milliseconds": 169,
+      "retry": 0
+    },
+    {
+      "title": "a late microphone permission result after suspension is stopped and never transcribed",
+      "status": "failed",
+      "milliseconds": 216,
+      "retry": 0
+    },
+    {
+      "title": "a completed reply stays recoverable until the native save succeeds",
+      "status": "failed",
+      "milliseconds": 179,
+      "retry": 0
+    },
+    {
+      "title": "two replies with failed native saves both survive reload as recovery text",
+      "status": "failed",
+      "milliseconds": 172,
+      "retry": 0
+    },
+    {
+      "title": "stopping a pending nonstreamed reply restores the composer and preserves its next draft",
+      "status": "failed",
+      "milliseconds": 173,
+      "retry": 0
+    },
+    {
+      "title": "stopping a pending streamed reply restores the composer and preserves its next draft",
+      "status": "failed",
+      "milliseconds": 159,
+      "retry": 0
+    },
+    {
+      "title": "a two-member cast handles stop without advancing the queue or losing its next draft",
+      "status": "failed",
+      "milliseconds": 163,
+      "retry": 0
+    },
+    {
+      "title": "a two-member cast handles network loss without advancing the queue or losing its next draft",
+      "status": "failed",
+      "milliseconds": 168,
+      "retry": 0
+    },
+    {
+      "title": "native streamed replies keep the composer and character identity mounted",
+      "status": "failed",
+      "milliseconds": 172,
+      "retry": 0
+    },
+    {
+      "title": "image tools use the native provider and treat custom prompts as text",
+      "status": "failed",
+      "milliseconds": 166,
+      "retry": 0
+    },
+    {
+      "title": "one scene click generates one native illustration with automatic tools off",
+      "status": "failed",
+      "milliseconds": 163,
+      "retry": 0
+    },
+    {
+      "title": "voice tools narrate the latest native reply with the configured System voice",
+      "status": "failed",
+      "milliseconds": 164,
+      "retry": 0
+    },
+    {
+      "title": "chat voice is opt-in and persists; manual images do not enable automatic tools",
+      "status": "failed",
+      "milliseconds": 158,
+      "retry": 0
+    },
+    {
+      "title": "cast creation selects real characters and opens a group story",
+      "status": "failed",
+      "milliseconds": 168,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 320px viewport",
+      "status": "failed",
+      "milliseconds": 162,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 390px viewport",
+      "status": "failed",
+      "milliseconds": 160,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 448px viewport",
+      "status": "failed",
+      "milliseconds": 158,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 768px viewport",
+      "status": "failed",
+      "milliseconds": 170,
+      "retry": 0
+    },
+    {
+      "title": "native font preferences and browser text sizing keep phone controls usable",
+      "status": "failed",
+      "milliseconds": 171,
+      "retry": 0
+    },
+    {
+      "title": "classic preference survives reload and can be restored",
+      "status": "failed",
+      "milliseconds": 167,
+      "retry": 0
+    },
+    {
+      "title": "message portraits fit their containers and stay clear of text across screen and font sizes",
+      "status": "failed",
+      "milliseconds": 170,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "failed",
+      "milliseconds": 177,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "failed",
+      "milliseconds": 160,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [
+    {
+      "case": "workspace.e2e.js-failed-de-51488--reports-the-server-failure",
+      "message": "Failed to load resource: the server responded with a status of 500 (Internal Server Error)"
+    },
+    {
+      "case": "workspace.e2e.js-failed-de-51488--reports-the-server-failure",
+      "message": "Failed to delete chat for character."
+    },
+    {
+      "case": "workspace.e2e.js-failed-de-51488--reports-the-server-failure",
+      "message": "Workspace action failed Error: The story could not be deleted. Check the server connection and try again.\n    at WorkspaceChats.remove (http://127.0.0.1:8025/scripts/workspace-chats.js:135:29)\n    at async handleAction (http://127.0.0.1:8025/scripts/workspace.js:496:26)"
+    },
+    {
+      "case": "workspace.e2e.js-history-f-f7ab2-known-stories-remain-usable",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    },
+    {
+      "case": "workspace.e2e.js-history-f-f7ab2-known-stories-remain-usable",
+      "message": "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+    }
+  ],
+  "failedRequestsByReason": {
+    "net::ERR_CONNECTION_REFUSED": 55,
+    "net::ERR_ABORTED": 8
+  },
+  "diagnostics": 65,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

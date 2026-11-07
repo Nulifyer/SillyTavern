@@ -2465,6 +2465,72 @@ test('native font preferences and browser text sizing keep phone controls usable
     expect(await page.locator('#workspace-view').evaluate(view => view.scrollWidth <= view.clientWidth)).toBe(true);
 });
 
+for (const destination of ['image-settings', 'connection']) {
+    test(`late extension activation recovers ${destination} without replacing edited controls`, async ({ page }, testInfo) => {
+        await page.setViewportSize({ width: destination === 'image-settings' ? 448 : 1280, height: 921 });
+        let release, requested;
+        const held = new Promise(resolve => release = resolve);
+        const arrived = new Promise(resolve => requested = resolve);
+        await page.route('**/scripts/extensions/stable-diffusion/settings.html', async route => { requested(); await held; await route.continue(); });
+        await page.addInitScript(() => {
+            window.__lateReady = false;
+            import('/scripts/events.js').then(({ eventSource, event_types }) => eventSource.on(event_types.APP_READY, () => window.__lateReady = true));
+        });
+        await page.reload({ waitUntil: 'domcontentloaded' });
+        await arrived;
+        await expect.poll(() => page.evaluate(() => window.__lateReady), { timeout: 30000 }).toBe(true);
+        await expect(page.locator('.sd_settings')).toHaveCount(0);
+        try {
+            await settingsCategory(page, 'image-settings', false);
+            if (destination === 'connection') {
+                const root = 'http://127.0.0.1:12345';
+                const models = { chat: [{ id: 'late-story' }], images: [{ id: 'late-image' }], speak: [], transcribe: [], embeddings: [] };
+                await page.route('**/api/openai/custom/discover', route => route.fulfill({ json: { root, base: `${root}/v1`, juiced: true, protocols: [{ id: 'automatic1111', features: ['txt2img'] }], services: Object.fromEntries(Object.entries(models).map(([service, models]) => [service, { models }])) } }));
+                await settingsCategory(page, 'servers');
+                await page.locator('#service-server-url').fill(root);
+                await page.locator('#service-discover').click();
+                await expect(page.locator('#service-discovery-status')).toContainText('Connected to Juiced');
+                await settingsCategory(page, 'connection');
+                await page.locator('#chat_completion_source').selectOption('custom');
+                await page.locator('#custom_api_url_text').fill('http://127.0.0.1:23456/v1');
+                await page.locator('#service-chat-model').selectOption('late-story');
+                await page.locator('#custom_api_url_text').focus();
+                page.lateNative = await page.locator('#custom_api_url_text').elementHandle();
+                page.lateModel = await page.locator('#service-chat-model').elementHandle();
+            } else await expect(page.locator('.workspace-settings-host')).toContainText(/not (loaded|available yet)/);
+            await page.screenshot({ path: testInfo.outputPath(`late-${destination}-before.png`) });
+            release();
+            await expect(page.locator('.sd_image_settings')).toHaveCount(1, { timeout: 30000 });
+            await expect(page.locator('.sd_writer_settings')).toHaveCount(1);
+            if (destination === 'image-settings') {
+                await expect(page.locator('.sd_settings')).toBeVisible();
+                await expect(page.locator('.workspace-settings-host')).not.toContainText(/not (loaded|available yet)/);
+                await page.locator('#sd_steps_value').fill('8');
+                await page.locator('#sd_steps_value').press('Tab');
+                await page.locator('.sd_settings .workspace-advanced-creative > summary').click();
+            } else {
+                await expect(page.locator('#custom_api_url_text')).toBeFocused();
+                await expect(page.locator('#custom_api_url_text')).toHaveValue('http://127.0.0.1:23456/v1');
+                await expect(page.locator('#service-chat-model')).toHaveValue('late-story');
+                expect(await page.locator('#custom_api_url_text').evaluate((node, original) => node === original, page.lateNative)).toBe(true);
+                expect(await page.locator('#service-chat-model').evaluate((node, original) => node === original, page.lateModel)).toBe(true);
+                await expect(page.locator('#service-images-row')).toHaveCount(1);
+            }
+            await page.evaluate(async () => { const { eventSource, event_types } = await import('/scripts/events.js'); for (let i = 0; i < 3; i++) await eventSource.emit(event_types.EXTENSION_ACTIVATED, 'stable-diffusion'); });
+            await expect(page.locator('.sd_image_settings')).toHaveCount(1);
+            await expect(page.locator('#connection_profiles')).toHaveCount(1);
+            if (destination === 'image-settings') {
+                await expect(page.locator('#sd_steps_value')).toHaveValue('8');
+                await expect(page.locator('.sd_settings .workspace-advanced-creative')).toHaveAttribute('open', '');
+            } else {
+                await expect(page.locator('#custom_api_url_text')).toBeFocused();
+                await expect(page.locator('#service-chat-model')).toHaveValue('late-story');
+            }
+            await page.screenshot({ path: testInfo.outputPath(`late-${destination}-after.png`) });
+        } finally { release(); }
+    });
+}
+
 for (const touch of [false, true]) {
     test.describe(`Action menus: ${touch ? 'Pixel 9 Pro XL touch' : 'desktop'}`, () => {
         test.use({ viewport: touch ? { width: 448, height: 921 } : { width: 1280, height: 800 }, hasTouch: touch, isMobile: touch, deviceScaleFactor: touch ? 3 : 1 });

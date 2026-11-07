@@ -1,0 +1,16 @@
+{
+  "Id": "e8ff9bca72311f2ac1ddcaf0cabd477a7a7333636b52167b8a4246da92c79339",
+  "Digest": "sha256:48fd22a9bf9bb8a647df4f917eee0e82816e9dd33d4b0ab397c1b9848caa2d7a",
+  "RepoDigests": [
+    "ghcr.io/nulifyer/sillytavern@sha256:48fd22a9bf9bb8a647df4f917eee0e82816e9dd33d4b0ab397c1b9848caa2d7a",
+    "ghcr.io/nulifyer/sillytavern@sha256:540a2d39d9f7c41827f43a0c23d33639d0e6e7c50f228ecb6881acddc91f93c3"
+  ],
+  "Architecture": "amd64",
+  "Os": "linux",
+  "Labels": {
+    "org.opencontainers.image.licenses": "AGPL-3.0",
+    "org.opencontainers.image.revision": "a3bce50251d039bf13bf309a8b15e3491c8bddae",
+    "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+    "org.opencontainers.image.version": "v1.19.17"
+  }
+}

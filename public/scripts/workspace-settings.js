@@ -1,6 +1,7 @@
 import { button, element, workspaceSettings } from './workspace-views.js';
 import { ServiceConnections } from './service-connections.js';
 import { accountStorage } from './util/AccountStorage.js';
+import { eventSource, event_types } from './events.js';
 
 /** One mounted copy of each native settings panel, presented as a category workspace. */
 export class WorkspaceSettings {
@@ -103,6 +104,37 @@ export class WorkspaceSettings {
         this.templateControls.open = true;
         this.templateControls.append(element('summary', 'workspace-only', 'Text completion templates and tokenization'), ...formatting.childNodes);
         formatting.append(this.templateControls);
+        eventSource.on(event_types.EXTENSION_ACTIVATED, () => this.extensionsActivated());
+    }
+
+    extensionsActivated() {
+        this.services.extensionsActivated();
+        const setting = workspaceSettings.find(item => item.id === this.active);
+        const panel = setting && document.getElementById(setting.panel);
+        if (!this.empty?.isConnected || !setting?.focus || !this.host.contains(panel) || !panel.querySelector(setting.focus)) return;
+        // Only recover a missing section. Never remount a form the user is editing.
+        for (const branch of this.extensionBranches) branch.classList.remove('workspace-extension-path', 'workspace-extension-section');
+        this.extensionBranches = [];
+        this.empty.remove();
+        this.showExtension(setting, panel);
+        this.applyAdvanced();
+    }
+
+    showExtension(setting, panel) {
+        const section = panel.querySelector(setting.focus);
+        if (!section) return false;
+        let branch = section;
+        while (branch && branch !== panel) {
+            branch.classList.add('workspace-extension-path');
+            this.extensionBranches.push(branch);
+            const parent = branch.parentElement;
+            parent.classList.add('workspace-extension-section');
+            this.extensionBranches.push(parent);
+            branch = parent;
+        }
+        const toggle = section.querySelector('.inline-drawer-toggle');
+        if (toggle && !$(section.querySelector('.inline-drawer-content')).is(':visible')) toggle.click();
+        return true;
     }
 
     setLayout(workspace) {
@@ -136,24 +168,10 @@ export class WorkspaceSettings {
         });
         this.root.querySelector('.workspace-settings-destination.active')?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
         if (setting.focus) {
-            const section = panel.querySelector(setting.focus);
-            if (section) {
-                // Keep native ancestry and handlers while showing only this extension's controls.
-                let branch = section;
-                while (branch && branch !== panel) {
-                    branch.classList.add('workspace-extension-path');
-                    this.extensionBranches.push(branch);
-                    const parent = branch.parentElement;
-                    parent.classList.add('workspace-extension-section');
-                    this.extensionBranches.push(parent);
-                    branch = parent;
-                }
-                const toggle = section.querySelector('.inline-drawer-toggle');
-                if (toggle && !$(section.querySelector('.inline-drawer-content')).is(':visible')) toggle.click();
-            } else {
+            if (!this.showExtension(setting, panel)) {
                 panel.classList.add('workspace-extension-section');
                 this.extensionBranches.push(panel);
-                this.empty = element('p', 'service-empty', 'This extension is not loaded. Enable it in Extensions to configure this service.');
+                this.empty = element('p', 'service-empty', 'These controls are not available yet. If the extension is disabled, enable it in Extensions.');
                 this.host.append(this.empty);
             }
         }

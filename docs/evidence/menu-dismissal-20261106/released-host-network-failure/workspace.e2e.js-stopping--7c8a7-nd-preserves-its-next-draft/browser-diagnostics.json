@@ -1,0 +1,10 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8025/",
+      "error": "net::ERR_CONNECTION_REFUSED"
+    }
+  ]
+}

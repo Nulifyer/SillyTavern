@@ -1,0 +1,32 @@
+{
+  "phase": "source-final",
+  "stats": {
+    "startTime": "2026-11-07T00:58:29.603Z",
+    "duration": 21797.899999999998,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "late extension activation recovers image-settings without replacing edited controls",
+      "status": "passed",
+      "milliseconds": 10219,
+      "retry": 0
+    },
+    {
+      "title": "late extension activation recovers connection without replacing edited controls",
+      "status": "passed",
+      "milliseconds": 10581,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequestsByReason": {
+    "net::ERR_ABORTED": 2
+  },
+  "diagnostics": 2,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

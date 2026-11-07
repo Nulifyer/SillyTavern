@@ -1,0 +1,172 @@
+{
+  "source": "a3bce50251d039bf13bf309a8b15e3491c8bddae",
+  "version": {
+    "agent": "SillyTavern:1.19.17:Cohee#1207",
+    "pkgVersion": "1.19.17",
+    "gitRevision": null,
+    "gitBranch": null,
+    "commitDate": null,
+    "isLatest": true
+  },
+  "files": [
+    {
+      "file": "package-lock.json",
+      "sha256": "4d5dabcfec2373f86c6e1fe275553286bf236160401ddaba6c6744de147f5c3c"
+    },
+    {
+      "file": "package.json",
+      "sha256": "efc57ff00961e1b7c3f6c466cddfba82691a0d6f483dec2794fb1369a34ee7cf"
+    },
+    {
+      "file": "public/css/workspace.css",
+      "sha256": "4041969a390041ab0614b6693703de5c642de6efaad170bb4457ade8ad2e0b15"
+    },
+    {
+      "file": "public/index.html",
+      "sha256": "a07eced9f6042820dfd58c99dc560d629a86c95b3be136bebe97d9c33071f4fc"
+    },
+    {
+      "file": "public/script.js",
+      "sha256": "c753c9aff85e09cfe8e9d64d90de7510bf544aca8f03d69c18f74653320d7db9"
+    },
+    {
+      "file": "public/scripts/RossAscends-mods.js",
+      "sha256": "61c091ae0331d4df2b1c9204381b241662884ec9dce7a82da0a4837b4b881ece"
+    },
+    {
+      "file": "public/scripts/audio-recording.js",
+      "sha256": "5e4c9674f88504f5dc984a3a613f9162b9296e812f05e57a1c9aa7e1cd9f9dfa"
+    },
+    {
+      "file": "public/scripts/browser-recovery.js",
+      "sha256": "7cee154c518fbd003c1d8591d4b74ac85b283f5b58941801620b5dc624c6a9a6"
+    },
+    {
+      "file": "public/scripts/composer-surface.js",
+      "sha256": "d007ce5b4e87adfc7696b80d3534bb257961c9e44c22eb9b60d813072463e2f4"
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "sha256": "5ff32c3759ba68485e443a708cdf38f6dc38f182c2b7abe2c02fa338842ae99a"
+    },
+    {
+      "file": "public/scripts/extensions.js",
+      "sha256": "38f2c7331b0b30245784810c4e4019d475d549e53770f80e0f1092635d7d2780"
+    },
+    {
+      "file": "public/scripts/extensions/caption/index.js",
+      "sha256": "c4fc4cb3453276a5f3ea218888941e837dc1aad44e955bd20c55e8b48a76ac9e"
+    },
+    {
+      "file": "public/scripts/extensions/connection-manager/index.js",
+      "sha256": "965949ec7f298623e6c1f9d7c2c489ff4e804f8c9c1d6ea191712469befa2daa"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/index.js",
+      "sha256": "18e1906e65bb611703090b67280b64f6f95736427dbaa520dd59f1a3daf56321"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/settings.html",
+      "sha256": "c14cb561cfdc3a775114b970b61bb5816a087e1bc07eeabf410c8dae9f39dca2"
+    },
+    {
+      "file": "public/scripts/extensions/tts/index.js",
+      "sha256": "f8c16ffa4277015a3d970442b3e751aecd02a81e16736b00ed0de45b8ddf96a3"
+    },
+    {
+      "file": "public/scripts/extensions/tts/openai-compatible.js",
+      "sha256": "030b90e54a6035b4e6f942f642cdde61f1f485e5bb630783e8bb6c9b0efe995c"
+    },
+    {
+      "file": "public/scripts/group-chats.js",
+      "sha256": "aa85a4aceaa7209f1cf236aefa5ec67b5c67cb6cf953982f0eb939ca5f5d55c6"
+    },
+    {
+      "file": "public/scripts/openai.js",
+      "sha256": "09891fb59e329e9e800576ca3b92bc87a13cd50ad635b8e3ffb837888377920d"
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "sha256": "8e96b8556637a3e412bc30e3dd2462ac267ab0deb75363c82905f6439eef2ec2"
+    },
+    {
+      "file": "public/scripts/workspace-chats.js",
+      "sha256": "708091168a15d60d57f367d639b88c7407e19e005f670624b456fb1eb02f1b72"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "sha256": "8b830d388a304d8f487c69f2eda4a75a1db1f31cd9539ad43c8a132091d2f4b1"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "sha256": "52ab219545b205a7dd0aeed0319a7ae72edc1decdb3100d1c13c8faabcd9ed91"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "sha256": "f0b07c868d095f71657d330b0be60a8e4073e5f0f71809a431f0cb54e1f1a34c"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "sha256": "72c91c6687766ca7afd91b80245c8f2b9f22a9c9607a7202540b50b13f184de6"
+    },
+    {
+      "file": "src/endpoints/backends/chat-completions.js",
+      "sha256": "53f429859efcfb29dd8becfebf7ff0ae49256ea795a0c81c320930fab5a407e7"
+    },
+    {
+      "file": "src/endpoints/openai.js",
+      "sha256": "757848a2a4617c44e67eed9c554b7adfadc2d55f93d0938793e4d0125e5c63bc"
+    },
+    {
+      "file": "src/endpoints/stable-diffusion.js",
+      "sha256": "15439fdffd839815ef7adcaa39806738c4e4503db8bbb697b337e905dfb4ed43"
+    },
+    {
+      "file": "src/util.js",
+      "sha256": "b0e5c49613dae854afba843256aa639152b1e02ba39aeb57ed81952c9cb4259c"
+    }
+  ],
+  "mounts": [
+    {
+      "name": "st-menu-dismiss-release-20261106-data",
+      "destination": "/home/node/app/data",
+      "type": "volume"
+    },
+    {
+      "name": "st-menu-dismiss-release-20261106-plugins",
+      "destination": "/home/node/app/plugins",
+      "type": "volume"
+    },
+    {
+      "name": "st-menu-dismiss-release-20261106-extensions",
+      "destination": "/home/node/app/public/scripts/extensions/third-party",
+      "type": "volume"
+    },
+    {
+      "name": "st-menu-dismiss-release-20261106-backups",
+      "destination": "/home/node/app/backups",
+      "type": "volume"
+    },
+    {
+      "name": "st-menu-dismiss-release-20261106-config",
+      "destination": "/home/node/app/config",
+      "type": "volume"
+    }
+  ],
+  "overlays": false,
+  "stockSdcppHandlerMatchesV1198": true,
+  "nativeHeartbeat": "passed",
+  "juicedHTTPS": {
+    "url": "https://juiced.swarm.nulteck.com/.well-known/juiced.json",
+    "status": 200,
+    "tlsVerified": true,
+    "body": {
+      "catalog": "/v1/juiced/catalog",
+      "inference": "/v1",
+      "name": "Juiced",
+      "protocols": "/v1/juiced/protocols",
+      "ui": "/",
+      "version": "0.1.0"
+    }
+  }
+}

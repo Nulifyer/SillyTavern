@@ -2,25 +2,30 @@
 
 ## Project state
 
-Latest fully verified release: v1.19.16. Root source is ready for v1.19.17.
+Latest fully verified release: v1.19.16. v1.19.17 published; actual65passed, but manual reload found a late-extension gap.
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
 Previous immutable source/digests/handoff remain in docs/container-releases.md.
 
 ## Active tasks
 
-Root owns menu dismissal source, browser evidence, release and continuity.
-Implementation/source validation complete; publication and actual-image checks
-remain. Outside click/tap, Tab and layered Escape share the workspace owner.
-Native popup state stays native. Synthetic chat-load clicks and delayed focus
-cannot hide a clicked menu. Persistent settings/recovery disclosures stay open.
+Root owns menu dismissal/late-extension source, browser evidence, release and continuity.
+v1.19.17 sourcea3bce50251d039bf13bf309a8b15e3491c8bddae passed actual65browser
+cases in8.8minutes after an observed local host-forwarding loss/restart. Manual
+unmocked Save/readback/reload kept Advanced/steps8, but Images opened during late
+activation stayed missing. v1.19.17 is an intermediate, not the final handoff.
 
 ## Next action
 
-Commit/push completed source, tag/publishv1.19.17, await native amd64/arm64 gates,
-pull/run it on8025 with five fresh synthetic volumes/no overlays, run all65
-browser cases with live Juiced and inspect final mobile renders. Record exact
-source/index/architecture digests and return the Homelab deployment handoff.
-Never deploy production69 or touch shared85 here.
+Finish v1.19.18 readiness repair: native hook actual fulfillment notifies even
+after5000ms timeout; ServiceConnections prepares new native sections once and
+preserves existing rows/inputs; WorkspaceSettings reconciles only its empty
+active category. Two final held-template regressions pass on source8026 (21.8s); old17baseline
+on8025 fails the exact missing-wrapper assertion. Six existing settings/discovery/
+menu regressions and425units/lint/actionlint pass; test lint0errors/50warnings.
+Root owns new edits. Commit/publish18, verify actual fresh/no-overlay image with
+all67browser cases/live Juiced and native reload, then complete release docs.
+Never deploy production69 or touch shared85. Existing local source8024 and older
+fixture host forwards disappeared in the incident; their data was preserved.
 
 ## Verification
 

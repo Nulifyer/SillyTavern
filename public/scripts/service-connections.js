@@ -62,7 +62,7 @@ export class ServiceConnections {
     /** Group existing controls once. No provider values or event handlers are copied. */
     preparePanels() {
         const sd = document.querySelector('.sd_settings > .inline-drawer > .inline-drawer-content');
-        if (sd) {
+        if (sd && !this.targets.has('images')) {
             const writer = element('div', 'sd_writer_settings');
             this.writer = writer;
             const image = element('div', 'sd_image_settings');
@@ -95,21 +95,31 @@ export class ServiceConnections {
             this.adopt('images', image, 'Advanced image provider settings', connection);
         }
         const chat = document.getElementById('rm_api_block');
-        this.adopt('chat', chat, 'Advanced provider settings and connection profiles', [...chat.childNodes]);
+        if (!this.targets.has('chat')) this.adopt('chat', chat, 'Advanced provider settings and connection profiles', [...chat.childNodes]);
         const speech = document.querySelector('#tts_settings > .inline-drawer > .inline-drawer-content');
-        if (speech) this.adopt('speak', speech, 'Advanced speech settings, voice mapping and playback', [...speech.childNodes]);
+        if (speech && !this.targets.has('speak')) this.adopt('speak', speech, 'Advanced speech settings, voice mapping and playback', [...speech.childNodes]);
         const dictation = document.querySelector('#dictation-settings > .inline-drawer-content');
-        if (dictation) this.adopt('transcribe', dictation, 'Endpoint and model override', ['dictation-endpoint', 'dictation-model'].flatMap(id => [dictation.querySelector(`label[for="${id}"]`), document.getElementById(id)]));
+        if (dictation && !this.targets.has('transcribe')) this.adopt('transcribe', dictation, 'Endpoint and model override', ['dictation-endpoint', 'dictation-model'].flatMap(id => [dictation.querySelector(`label[for="${id}"]`), document.getElementById(id)]));
         const retrieval = document.querySelector('.vectors_settings > .inline-drawer > .inline-drawer-content');
-        if (retrieval) {
+        if (retrieval && !this.retrievalStatus) {
             this.retrievalStatus = element('p', 'workspace-only service-note', 'Verify a server in Servers to check available embedding models.');
             retrieval.prepend(this.retrievalStatus);
         }
         const vision = document.querySelector('.caption_settings > .inline-drawer > .inline-drawer-content');
-        if (vision) {
+        if (vision && !this.targets.has('vision')) {
             const prompt = document.getElementById('caption_prompt_block');
             this.adopt('vision', vision, 'Advanced vision provider settings and caption preferences', [...vision.childNodes].filter(node => node !== prompt));
         }
+    }
+
+    extensionsActivated() {
+        const count = this.targets.size;
+        const controls = this.nativeControls.length;
+        const retrieval = this.retrievalStatus;
+        this.preparePanels();
+        if (count === this.targets.size && retrieval === this.retrievalStatus) return;
+        if (this.data) this.render(this.data);
+        for (const native of this.nativeControls.slice(controls)) native.open = !document.body.classList.contains('workspace-ui') || this.advanced || !this.data;
     }
 
     prepareImagePrompts() {
@@ -325,7 +335,7 @@ export class ServiceConnections {
 
     render(data) {
         this.results.replaceChildren();
-        refreshCustomModelMetadata(data.base, data.services.chat?.models || []);
+        if (!this.rows.size) refreshCustomModelMetadata(data.base, data.services.chat?.models || []);
         for (const [service, destination] of [['chat', 'connection'], ['chat', 'image-writer'], ['images', 'image-settings'], ['speak', 'voice-settings'], ['transcribe', 'dictation-settings'], ['vision', 'vision-settings'], ['embeddings', 'embeddings-settings']]) {
             if (service === 'vision' && !this.targets.has('vision')) continue;
             const setting = workspaceSettings.find(setting => setting.id === destination);
@@ -336,25 +346,27 @@ export class ServiceConnections {
             link.append(element('span', '', setting.label), element('small', '', available ? `${available} ${available === 1 ? 'model' : 'models'} available` : 'Configure provider'), element('i', 'fa-solid fa-chevron-right'));
             this.results.append(link);
         }
-        const chat = this.row('chat', 'Model', data.services.chat, model => configureCustomConnection(data.base, model, { models: data.services.chat.models, automaticContext: this.contextToggle.checked }));
-        const contextLabel = element('label', 'checkbox_label service-context-toggle');
-        this.contextToggle = element('input');
-        this.contextToggle.type = 'checkbox';
-        this.contextToggle.id = 'service-chat-auto-context';
-        this.contextToggle.checked = Boolean(oai_settings.custom_context_auto);
-        contextLabel.append(this.contextToggle, element('span', '', 'Use discovered context size'));
-        this.contextStatus = element('p', 'service-note');
-        this.contextStatus.id = 'service-chat-context';
-        this.contextStatus.setAttribute('role', 'status');
-        this.contextToggle.addEventListener('change', () => {
-            applyCustomModelContext(this.contextToggle.checked);
+        if (!this.rows.has('chat')) {
+            const chat = this.row('chat', 'Model', data.services.chat, model => configureCustomConnection(data.base, model, { models: data.services.chat.models, automaticContext: this.contextToggle.checked }));
+            const contextLabel = element('label', 'checkbox_label service-context-toggle');
+            this.contextToggle = element('input');
+            this.contextToggle.type = 'checkbox';
+            this.contextToggle.id = 'service-chat-auto-context';
+            this.contextToggle.checked = Boolean(oai_settings.custom_context_auto);
+            contextLabel.append(this.contextToggle, element('span', '', 'Use discovered context size'));
+            this.contextStatus = element('p', 'service-note');
+            this.contextStatus.id = 'service-chat-context';
+            this.contextStatus.setAttribute('role', 'status');
+            this.contextToggle.addEventListener('change', () => {
+                applyCustomModelContext(this.contextToggle.checked);
+                this.updateContext();
+            });
+            chat.row.append(contextLabel, this.contextStatus);
+            chat.row.append(element('small', '', 'Reply length, temperature and context overrides are in Reply controls. Story prompts contains the actual prompt manager.'));
             this.updateContext();
-        });
-        chat.row.append(contextLabel, this.contextStatus);
-        chat.row.append(element('small', '', 'Reply length, temperature and context overrides are in Reply controls. Story prompts contains the actual prompt manager.'));
-        this.updateContext();
-        const imageAvailable = Boolean(document.getElementById('sd_source'));
-        if (imageAvailable) {
+        }
+        const imageAvailable = this.targets.has('images');
+        if (imageAvailable && !this.rows.has('writer')) {
             const writer = this.row('writer', 'Optional image prompt writer', data.services.chat, async model => {
                 const sd = await import('./extensions/stable-diffusion/index.js');
                 const { saveCompatibleProfile } = await import('./extensions/connection-manager/index.js');
@@ -365,14 +377,14 @@ export class ServiceConnections {
         }
         if (!data.juiced) return;
         const sdSupported = data.protocols.some(protocol => protocol.id === 'automatic1111' && protocol.features?.includes('txt2img'));
-        if (imageAvailable && sdSupported) {
+        if (imageAvailable && sdSupported && !this.rows.has('images')) {
             const image = this.row('images', 'Image generation', data.services.images, async model => {
                 const { configureSdcppConnection } = await import('./extensions/stable-diffusion/index.js');
                 await configureSdcppConnection(data.root, model);
             });
             image.row.append(element('small', '', 'Uses stable-diffusion.cpp with the server root. Review size, steps, CFG and sampler in Image generation. Automatic image tools stay as configured.'));
-        } else this.results.append(element('p', '', 'Image generation needs the Image Generation extension and an advertised sd.cpp txt2img service.'));
-        if (document.getElementById('tts_provider')) {
+        } else if (!imageAvailable || !sdSupported) this.results.append(element('p', '', 'Image generation needs the Image Generation extension and an advertised sd.cpp txt2img service.'));
+        if (this.targets.has('speak') && !this.rows.has('speak')) {
             const speech = this.row('speak', 'Voice narration', data.services.speak, async model => {
                 if (!speech.voice.value || !speech.voices?.length) throw new Error('Discover voices and choose a voice first.');
                 const { configureCompatibleTts } = await import('./extensions/tts/index.js');
@@ -426,11 +438,13 @@ export class ServiceConnections {
             speech.select.addEventListener('change', () => void voices());
             if (speech.select.value) void voices();
         }
-        this.row('transcribe', 'Microphone dictation', data.services.transcribe, async model => {
-            const { configureDictation } = await import('./dictation.js');
-            configureDictation(`${data.base}/audio/transcriptions`, model);
-        }).row.append(element('small', '', 'Dictation inserts text into your draft. It never sends the message. Microphone access needs HTTPS or localhost and browser permission.'));
-        if (this.targets.has('vision')) {
+        if (this.targets.has('transcribe') && !this.rows.has('transcribe')) {
+            this.row('transcribe', 'Microphone dictation', data.services.transcribe, async model => {
+                const { configureDictation } = await import('./dictation.js');
+                configureDictation(`${data.base}/audio/transcriptions`, model);
+            }).row.append(element('small', '', 'Dictation inserts text into your draft. It never sends the message. Microphone access needs HTTPS or localhost and browser permission.'));
+        }
+        if (this.targets.has('vision') && !this.rows.has('vision')) {
             this.row('vision', 'Vision model', { models: data.services.chat?.models.filter(model => model.labels?.includes('vision')) || [] }, async model => {
                 if (oai_settings.custom_url.replace(/\/$/, '') !== data.base) throw new Error('Connect the story service to this server first. Native custom captioning shares its compatible server address.');
                 const { configureCompatibleCaption } = await import('./extensions/caption/index.js');
