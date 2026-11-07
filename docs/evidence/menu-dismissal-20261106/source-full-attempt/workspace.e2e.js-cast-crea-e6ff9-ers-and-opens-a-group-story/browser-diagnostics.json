@@ -1,0 +1,9 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 500 (Internal Server Error)",
+    "Group chat could not be deleted",
+    "Workspace action failed Error: The story could not be deleted. Check the server connection and try again.\n    at WorkspaceChats.remove (http://127.0.0.1:8024/scripts/workspace-chats.js:135:29)\n    at async handleAction (http://127.0.0.1:8024/scripts/workspace.js:495:26)"
+  ],
+  "failedRequests": []
+}

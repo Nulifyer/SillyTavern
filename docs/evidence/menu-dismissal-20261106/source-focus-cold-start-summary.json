@@ -1,0 +1,39 @@
+{
+  "phase": "source-focus-cold-start",
+  "stats": {
+    "startTime": "2026-11-06T23:59:08.153Z",
+    "duration": 3368.7340000000004,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "search opens character profiles and a fixture model generates through the native composer",
+      "status": "failed",
+      "milliseconds": 230,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "failed",
+      "milliseconds": 230,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "failed",
+      "milliseconds": 412,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequestsByReason": {
+    "net::ERR_CONNECTION_RESET": 2,
+    "net::ERR_SOCKET_NOT_CONNECTED": 1
+  },
+  "diagnostics": 3,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

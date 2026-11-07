@@ -2,40 +2,35 @@
 
 ## Project state
 
-Published/verifiedv1.19.16, source05e7858f429a5fc5680e2d64919a47f5505d029d.
+Latest fully verified release: v1.19.16. Root source is ready for v1.19.17.
 Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Workflow42310788170 passed native amd64/arm64 startup/heartbeat/publication.
-Index: `sha256:f54190820e830b5ff24eb760136504c6c6ecf9ecf9523997abfbc5a6fdc3b657`.
+Previous immutable source/digests/handoff remain in docs/container-releases.md.
 
 ## Active tasks
 
-None. [Mobile suspension follow-up](work/mobile-resume.md) is complete.
-Previous full workspace/service/Pixel reviews remain complete and retained.
+Root owns menu dismissal source, browser evidence, release and continuity.
+Implementation/source validation complete; publication and actual-image checks
+remain. Outside click/tap, Tab and layered Escape share the workspace owner.
+Native popup state stays native. Synthetic chat-load clicks and delayed focus
+cannot hide a clicked menu. Persistent settings/recovery disclosures stay open.
 
 ## Next action
 
-Homelab owns the later deployment using
-[handoff](../docs/evidence/mobile-resume-20261106/handoff.md).
-Never deploy production from this thread. Preserve every existing volume and
-record the actual pre-update image/private backup. Reload tabs after recreation.
-This thread never accessed production69, its app/data/config/volumes or shared85.
+Commit/push completed source, tag/publishv1.19.17, await native amd64/arm64 gates,
+pull/run it on8025 with five fresh synthetic volumes/no overlays, run all65
+browser cases with live Juiced and inspect final mobile renders. Record exact
+source/index/architecture digests and return the Homelab deployment handoff.
+Never deploy production69 or touch shared85 here.
 
 ## Verification
 
-Actualv1.19.16 on8023 st-mobile-resume-release-20261106 passed all63browser cases
-in8.2minutes, both live Juiced cases, zero skips/flaky cases/uncaught errors.
-Five fresh volumes/no overlays;28tagged runtime matches; version/heartbeat/HTTPS
-and anonymous version/sha-source/latest index checks passed. Stock sd.cpp handler
-matchesv1.19.8.425units/lint/actionlint pass; test lint0errors/28warnings.
-Console33entries include intentional faults/guards and one settings save aborted
-by fixture reload;107failed requests are classified. No claim of zero console errors.
-
-Real native Save/readback, stop/start, failed ping, Retry204/status200 and reload
-preserved Qwen3.5-2B, manual12288/temp0.85/Advanced=true and exact draft. No settings
-mocks or inference replay. Auto-connect=false remained false. Final phone/reduced
-height/enlarged recovery, live scene and Pixel portrait renders were inspected.
-Owned browser tab closed. Evidence: docs/evidence/mobile-resume-20261106/.
-Source attempts/corrected fixtures remain documented; runtime is unchanged after tag.
+Source full61pass/4old phone-fixture failures; corrected outside-dismissal
+fixtures all4pass at320/390/448/768px. No excluded cases. Both live Juiced cases
+passed. Final nested-menu/keyboard pair2pass; draft-switching repeats3pass.
+425units/root lint/actionlint pass; test lint0errors/33warnings. Runtime hashes
+recorded for29files; stock sd.cpp backend remains unchanged. Source attempts,
+setter trace proving the synthetic-click closure and before/after images are
+in docs/evidence/menu-dismissal-20261106/. Source is not actual-image acceptance.
 
 ## Blockers
 
@@ -43,8 +38,7 @@ None.
 
 ## Limits
 
-Browser simulation is not physical phone-lock qualification. OS discard cannot
-reattach old HTTP inference; received text supports explicit continuation/retry.
-Blocked storage retains text only in this tab with a copy warning. Physical mic,
-audible quality and paid providers remain unqualified. ARM64 has native startup
-proof; browser/live acceptance ran on amd64. No Juiced policy/runtime/cache changes.
+Physical phone/microphone/lock and audible quality remain unqualified. ARM64
+requires native startup gates; full browser/live checks run on amd64. Production
+app/data/config/volumes and shared85 were never accessed. No Juiced runtime,
+policy, cache or shared infrastructure changes. Homelab owns later deployment.

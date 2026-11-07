@@ -1,0 +1,111 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep transient menus dismiss|search opens character profiles and a fixture --output=/tmp/st-dismiss-final-focus2 --reporter=line,json
+(node:643247) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:643262) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:643262) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:643262) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/3] workspace.e2e.js:2090:1 › search opens character profiles and a fixture model generates through the native composer
+[2/3] workspace.e2e.js:3812:5 › Action menus: desktop › transient menus dismiss outside without closing persistent controls
+  1) workspace.e2e.js:3812:5 › Action menus: desktop › transient menus dismiss outside without closing persistent controls
+
+    TimeoutError: locator.click: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('#sd_gen')
+        - locator resolved to <div id="sd_gen" tabindex="0" role="listitem" aria-expanded="false" aria-controls="sd_dropdown" class="list-group-item flex-container flexGap5 interactable">…</div>
+      - attempting click action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying click action
+          - waiting 100ms
+        17 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying click action
+           - waiting 500ms
+        - waiting for element to be visible, enabled and stable
+
+
+      2468 |         test.use({ viewport: touch ? { width: 448, height: 921 } : { width: 1280, height: 800 }, hasTouch: touch, isMobile: touch, deviceScaleFactor: touch ? 3 : 1 });
+      2469 |         test('transient menus dismiss outside without closing persistent controls', async ({ page }, testInfo) => {
+    > 2470 |             const activate = locator => touch ? locator.tap() : locator.click();
+           |                                                                         ^
+      2471 |             await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} dismissal ${touch}`);
+      2472 |             const tools = page.locator('.workspace-creative-menu');
+      2473 |             const toolsTrigger = tools.locator('summary');
+        at activate (/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:2470:73)
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:2543:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-dismiss-final-focus2/workspace.e2e.js-Action-me-c5292-closing-persistent-controls/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-dismiss-final-focus2/workspace.e2e.js-Action-me-c5292-closing-persistent-controls/error-context.md
+
+
+(node:645152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:645152) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:645152) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/3] workspace.e2e.js:3812:5 › Action menus: Pixel 9 Pro XL touch › transient menus dismiss outside without closing persistent controls
+  2) workspace.e2e.js:3812:5 › Action menus: Pixel 9 Pro XL touch › transient menus dismiss outside without closing persistent controls
+
+    TimeoutError: locator.tap: Timeout 10000ms exceeded.
+    Call log:
+      - waiting for locator('#sd_gen')
+        - locator resolved to <div id="sd_gen" tabindex="0" role="listitem" aria-expanded="false" aria-controls="sd_dropdown" class="list-group-item flex-container flexGap5 interactable">…</div>
+      - attempting tap action
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying tap action
+        - waiting 20ms
+        2 × waiting for element to be visible, enabled and stable
+          - element is not visible
+        - retrying tap action
+          - waiting 100ms
+        19 × waiting for element to be visible, enabled and stable
+           - element is not visible
+         - retrying tap action
+           - waiting 500ms
+
+
+      2468 |         test.use({ viewport: touch ? { width: 448, height: 921 } : { width: 1280, height: 800 }, hasTouch: touch, isMobile: touch, deviceScaleFactor: touch ? 3 : 1 });
+      2469 |         test('transient menus dismiss outside without closing persistent controls', async ({ page }, testInfo) => {
+    > 2470 |             const activate = locator => touch ? locator.tap() : locator.click();
+           |                                                         ^
+      2471 |             await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} dismissal ${touch}`);
+      2472 |             const tools = page.locator('.workspace-creative-menu');
+      2473 |             const toolsTrigger = tools.locator('summary');
+        at activate (/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:2470:57)
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:2543:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-dismiss-final-focus2/workspace.e2e.js-Action-me-301ff-closing-persistent-controls/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-dismiss-final-focus2/workspace.e2e.js-Action-me-301ff-closing-persistent-controls/error-context.md
+
+
+  2 failed
+    workspace.e2e.js:3812:5 › Action menus: desktop › transient menus dismiss outside without closing persistent controls
+    workspace.e2e.js:3812:5 › Action menus: Pixel 9 Pro XL touch › transient menus dismiss outside without closing persistent controls
+  1 passed (1.2m)

@@ -1419,6 +1419,20 @@ test('search opens character profiles and a fixture model generates through the 
     const stop = await page.locator('#mes_stop').boundingBox();
     expect(stop.width).toBe(32);
     expect(stop.height).toBe(32);
+    for (const width of [1280, 448]) {
+        await page.setViewportSize({ width, height: 921 });
+        await page.locator('.workspace-creative-menu summary').click();
+        await page.locator('#options_button').click();
+        await expect(page.locator('#options')).toBeVisible();
+        await page.keyboard.press('Escape');
+        await expect(page.locator('#options')).toBeHidden();
+        await expect(page.locator('.workspace-creative-menu')).toHaveAttribute('open', '');
+        await expect(page.locator('#mes_stop')).toBeVisible();
+        await page.keyboard.press('Escape');
+        await expect(page.locator('.workspace-creative-menu')).not.toHaveAttribute('open');
+        await expect(page.locator('#mes_stop')).toBeVisible();
+        expect(await page.evaluate(async () => (await import('/script.js')).isGenerating())).toBe(true);
+    }
     const title = await page.locator('#workspace-chat-title').textContent();
     await page.locator('#send_textarea').fill('A draft for my next turn');
     await page.setViewportSize({ width: 390, height: 844 });
@@ -2296,12 +2310,14 @@ for (const width of [320, 390, 448, 768]) {
         // The phone tools popover covers the editor's upper area. Click its exposed lower edge.
         await page.locator('#send_textarea').click({ position: { x: 8, y: (await page.locator('#send_textarea').boundingBox()).height - 4 } });
         await expect(page.locator('#options')).toBeHidden();
+        await expect(page.locator('.workspace-creative-menu')).not.toHaveAttribute('open');
+        await page.locator('.workspace-creative-menu summary').click();
         await page.locator('#extensionsMenuButton').click();
         await expect(page.locator('#extensionsMenu')).toBeVisible();
         // The phone tools popover covers the editor's upper area. Click its exposed lower edge.
         await page.locator('#send_textarea').click({ position: { x: 8, y: (await page.locator('#send_textarea').boundingBox()).height - 4 } });
         await expect(page.locator('#extensionsMenu')).toBeHidden();
-        await tools.click();
+        await expect(page.locator('.workspace-creative-menu')).not.toHaveAttribute('open');
         const profileTarget = await page.locator('#workspace-header-portrait').boundingBox();
         expect(profileTarget.width).toBe(44);
         expect(profileTarget.height).toBe(44);
@@ -2448,6 +2464,145 @@ test('native font preferences and browser text sizing keep phone controls usable
     await expect(page.locator('#tts_enabled')).toBeVisible();
     expect(await page.locator('#workspace-view').evaluate(view => view.scrollWidth <= view.clientWidth)).toBe(true);
 });
+
+for (const touch of [false, true]) {
+    test.describe(`Action menus: ${touch ? 'Pixel 9 Pro XL touch' : 'desktop'}`, () => {
+        test.use({ viewport: touch ? { width: 448, height: 921 } : { width: 1280, height: 800 }, hasTouch: touch, isMobile: touch, deviceScaleFactor: touch ? 3 : 1 });
+        test('transient menus dismiss outside without closing persistent controls', async ({ page }, testInfo) => {
+            const activate = locator => touch ? locator.tap() : locator.click();
+            await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} dismissal ${touch}`);
+            const tools = page.locator('.workspace-creative-menu');
+            const toolsTrigger = tools.locator('summary');
+            const story = page.locator('#workspace-header-menu details');
+            const storyTrigger = story.locator('summary');
+            await activate(toolsTrigger);
+            await expect(tools).toHaveAttribute('open', '');
+            await tools.locator('.workspace-action-menu').click({ position: { x: 3, y: 3 } });
+            await expect(tools).toHaveAttribute('open', '');
+            await page.screenshot({ path: testInfo.outputPath('menu-open.png') });
+            await activate(page.locator('#workspace-chat-title'));
+            await expect(tools).not.toHaveAttribute('open');
+            await page.screenshot({ path: testInfo.outputPath('menu-dismissed.png') });
+            if (touch) {
+                await activate(toolsTrigger);
+                await activate(page.locator('#workspace-menu'));
+                await expect(tools).not.toHaveAttribute('open');
+                await expect(page.locator('body')).toHaveClass(/workspace-nav-open/);
+                await page.locator('#workspace-scrim').tap({ position: { x: 440, y: 460 } });
+                await expect(page.locator('body')).not.toHaveClass(/workspace-nav-open/);
+            }
+            await activate(toolsTrigger);
+            await activate(storyTrigger);
+            await expect(tools).not.toHaveAttribute('open');
+            await expect(story).toHaveAttribute('open', '');
+            // Escape dismisses one layer; the inspector underneath stays mounted.
+            await activate(page.locator('#workspace-header-portrait'));
+            await expect(story).not.toHaveAttribute('open');
+            await expect(page.locator('#workspace-scene-info')).toBeVisible();
+            await activate(storyTrigger);
+            await page.keyboard.press('Escape');
+            await expect(story).not.toHaveAttribute('open');
+            await expect(storyTrigger).toBeFocused();
+            await expect(page.locator('#workspace-scene-info')).toBeVisible();
+            await page.keyboard.press('Escape');
+            await expect(page.locator('#workspace-scene-info')).toBeHidden();
+            await activate(toolsTrigger);
+            await page.evaluate(() => document.getElementById('send_textarea').click());
+            await expect(tools).toHaveAttribute('open', '');
+            await page.locator('#send_textarea').focus();
+            await expect(tools).toHaveAttribute('open', '');
+            await toolsTrigger.focus();
+            await page.keyboard.press('Tab');
+            await expect(tools.getByRole('button', { name: 'Portrait or custom image', exact: true })).toBeFocused();
+            await expect(tools).toHaveAttribute('open', '');
+            await page.keyboard.press('Shift+Tab');
+            await page.keyboard.press('Shift+Tab');
+            await expect(tools).not.toHaveAttribute('open');
+            for (const [trigger, panel] of [['#options_button', '#options'], ['#extensionsMenuButton', '#extensionsMenu']]) {
+                await activate(toolsTrigger);
+                await activate(page.locator(trigger));
+                await expect(page.locator(panel)).toBeVisible();
+                await page.keyboard.press('Escape');
+                await page.keyboard.press('Escape');
+                await expect(page.locator(panel)).toBeHidden();
+                await expect(tools).not.toHaveAttribute('open');
+                await expect(toolsTrigger).toBeFocused();
+                await activate(toolsTrigger);
+                await activate(page.locator(trigger));
+                await expect(page.locator(panel)).toBeVisible();
+                await expect(tools).toHaveAttribute('open', '');
+                await page.keyboard.press('Escape');
+                await expect(page.locator(panel)).toBeHidden();
+                await expect(page.locator(trigger)).toBeFocused();
+                await expect(tools).toHaveAttribute('open', '');
+                await activate(page.locator(trigger));
+                await expect(page.locator(panel)).toBeVisible();
+                // Nonfocusable body text used to leave the native anchor focused.
+                await activate(page.locator('#workspace-chat-title'));
+                await expect(page.locator(panel)).toBeHidden();
+                await expect(tools).not.toHaveAttribute('open');
+            }
+            await settingsCategory(page, 'image-settings');
+            await page.locator('.sd_settings .workspace-advanced-creative > summary').click();
+            await page.locator('#sd_enabled').check();
+            await returnToChat(page);
+            await activate(toolsTrigger);
+            await activate(page.locator('#extensionsMenuButton'));
+            await activate(page.locator('#sd_gen'));
+            await expect(page.locator('#sd_dropdown')).toBeVisible();
+            await activate(page.locator('#sd_dropdown span').first());
+            await expect(page.locator('#sd_dropdown')).toBeVisible();
+            await expect(page.locator('#extensionsMenu')).toBeVisible();
+            await expect(tools).toHaveAttribute('open', '');
+            await page.keyboard.press('Escape');
+            await expect(page.locator('#sd_dropdown')).toBeHidden();
+            await expect(page.locator('#sd_gen')).toBeFocused();
+            await expect(page.locator('#extensionsMenu')).toBeVisible();
+            await page.keyboard.press('Enter');
+            await expect(page.locator('#sd_dropdown')).toBeVisible();
+            await page.keyboard.press('Escape');
+            await expect(page.locator('#sd_dropdown')).toBeHidden();
+            await page.keyboard.press('Escape');
+            await expect(page.locator('#extensionsMenu')).toBeHidden();
+            await expect(tools).toHaveAttribute('open', '');
+            await page.keyboard.press('Escape');
+            await expect(tools).not.toHaveAttribute('open');
+            // Choosing a menu action takes effect with the same click/tap.
+            await activate(toolsTrigger);
+            await activate(tools.getByRole('button', { name: 'Image settings', exact: true }));
+            const panel = page.locator('.sd_settings');
+            await expect(panel).toBeVisible();
+            const original = await panel.elementHandle();
+            await settingsCategory(page, 'image-settings');
+            const disclosure = page.locator('.sd_settings .workspace-advanced-creative');
+            await disclosure.locator(':scope > summary').click();
+            await expect(disclosure).toHaveAttribute('open', '');
+            await activate(page.locator('#workspace-chat-title'));
+            await expect(disclosure).toHaveAttribute('open', '');
+            await expect(panel).toBeVisible();
+            expect(await panel.evaluate((node, original) => node === original, original)).toBe(true);
+            await expect(page.locator('dialog[open]')).toHaveCount(0);
+            await navigate(page, 'chats');
+            const rowMenu = page.locator('#workspace-view .workspace-scene-menu').first();
+            await activate(rowMenu.locator('summary'));
+            await expect(rowMenu).toHaveAttribute('open', '');
+            await activate(page.locator('#workspace-chat-title'));
+            await expect(rowMenu).not.toHaveAttribute('open');
+            await settingsCategory(page, 'settings');
+            const saved = page.waitForResponse(response => response.url().endsWith('/api/settings/save') && response.request().postDataJSON().accountStorage?.workspaceLayout === 'false');
+            await page.locator('#workspace-layout-toggle').uncheck();
+            await saved;
+            await page.reload();
+            await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+            await expect(page.locator('body')).not.toHaveClass(/workspace-ui/);
+            await activate(page.locator('#options_button'));
+            await expect(page.locator('#options')).toBeVisible();
+            await page.locator('#options_button').focus();
+            await activate(page.locator('#chat .mes_text').first());
+            await expect(page.locator('#options')).toBeHidden();
+        });
+    });
+}
 
 test('classic preference survives reload and can be restored', async ({ page }) => {
     await navigate(page, 'settings-page');

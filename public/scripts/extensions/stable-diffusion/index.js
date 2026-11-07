@@ -5114,6 +5114,10 @@ async function addSDGenButtons() {
     const button = $('#sd_gen');
     const dropdown = $('#sd_dropdown');
     dropdown.hide();
+    button.attr({ 'aria-controls': 'sd_dropdown', 'aria-expanded': 'false', role: 'button', tabindex: '0' });
+    button.on('keydown', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); this.click(); }
+    });
 
     let popper = Popper.createPopper(button.get(0), dropdown.get(0), {
         placement: 'top',
@@ -5128,14 +5132,17 @@ async function addSDGenButtons() {
             e.preventDefault();
 
             dropdown.fadeIn(animation_duration);
+            button.attr('aria-expanded', 'true');
             popper.update();
         } else {
             dropdown.fadeOut(animation_duration);
+            button.attr('aria-expanded', 'false');
         }
     });
 
     $('#sd_dropdown [id]').on('click', function () {
         dropdown.fadeOut(animation_duration);
+        button.attr('aria-expanded', 'false');
         const id = $(this).attr('id');
         const idParamMap = {
             'sd_you': 'you',

@@ -1,0 +1,12 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Workspace action failed Error: Wait for the current illustration to finish before changing stories.\n    at handleAction (http://127.0.0.1:8024/scripts/workspace.js:450:15)\n    at http://127.0.0.1:8024/scripts/workspace.js:648:58"
+  ],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8024/img/ai4.png",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

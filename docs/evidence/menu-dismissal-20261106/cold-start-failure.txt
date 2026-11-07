@@ -1,0 +1,146 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep transient menus dismiss|search opens character profiles and a fixture --output=/tmp/st-dismiss-final-focus --reporter=line,json
+(node:639204) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 3 tests using 1 worker
+
+(node:639242) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:639242) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:639242) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/3] workspace.e2e.js:2090:1 › search opens character profiles and a fixture model generates through the native composer
+  1) workspace.e2e.js:2090:1 › search opens character profiles and a fixture model generates through the native composer
+
+    Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8026/
+    Call log:
+      - navigating to "http://127.0.0.1:8026/", waiting until "load"
+
+
+      124 |         await route.fulfill({ json: { result: 'ok' } });
+      125 |     });
+    > 126 |     await page.goto('/');
+          |                ^
+      127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      128 |     await navigate(page, 'characters');
+      129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      139 |     const records = await api(page, '/api/chats/recent', {});
+      140 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-dismiss-final-focus/workspace.e2e.js-search-op-ae169-through-the-native-composer/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-dismiss-final-focus/workspace.e2e.js-search-op-ae169-through-the-native-composer/error-context.md
+
+
+(node:639389) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:639389) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:639389) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/3] workspace.e2e.js:3812:5 › Action menus: desktop › transient menus dismiss outside without closing persistent controls
+  2) workspace.e2e.js:3812:5 › Action menus: desktop › transient menus dismiss outside without closing persistent controls
+
+    Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8026/
+    Call log:
+      - navigating to "http://127.0.0.1:8026/", waiting until "load"
+
+
+      124 |         await route.fulfill({ json: { result: 'ok' } });
+      125 |     });
+    > 126 |     await page.goto('/');
+          |                ^
+      127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      128 |     await navigate(page, 'characters');
+      129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      139 |     const records = await api(page, '/api/chats/recent', {});
+      140 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-dismiss-final-focus/workspace.e2e.js-Action-me-c5292-closing-persistent-controls/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-dismiss-final-focus/workspace.e2e.js-Action-me-c5292-closing-persistent-controls/error-context.md
+
+
+(node:639550) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:639550) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:639550) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/3] workspace.e2e.js:3812:5 › Action menus: Pixel 9 Pro XL touch › transient menus dismiss outside without closing persistent controls
+  3) workspace.e2e.js:3812:5 › Action menus: Pixel 9 Pro XL touch › transient menus dismiss outside without closing persistent controls
+
+    Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8026/
+    Call log:
+      - navigating to "http://127.0.0.1:8026/", waiting until "load"
+
+
+      124 |         await route.fulfill({ json: { result: 'ok' } });
+      125 |     });
+    > 126 |     await page.goto('/');
+          |                ^
+      127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      128 |     await navigate(page, 'characters');
+      129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      139 |     const records = await api(page, '/api/chats/recent', {});
+      140 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-dismiss-final-focus/workspace.e2e.js-Action-me-301ff-closing-persistent-controls/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-dismiss-final-focus/workspace.e2e.js-Action-me-301ff-closing-persistent-controls/error-context.md
+
+
+  3 failed
+    workspace.e2e.js:2090:1 › search opens character profiles and a fixture model generates through the native composer
+    workspace.e2e.js:3812:5 › Action menus: desktop › transient menus dismiss outside without closing persistent controls
+    workspace.e2e.js:3812:5 › Action menus: Pixel 9 Pro XL touch › transient menus dismiss outside without closing persistent controls

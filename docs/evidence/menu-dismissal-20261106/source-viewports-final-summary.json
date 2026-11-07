@@ -1,0 +1,44 @@
+{
+  "phase": "source-viewports-final",
+  "stats": {
+    "startTime": "2026-11-07T00:14:33.643Z",
+    "duration": 26746.323,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "roleplay pages and composer stay within a 320px viewport",
+      "status": "passed",
+      "milliseconds": 6528,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 390px viewport",
+      "status": "passed",
+      "milliseconds": 6410,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 448px viewport",
+      "status": "passed",
+      "milliseconds": 6303,
+      "retry": 0
+    },
+    {
+      "title": "roleplay pages and composer stay within a 768px viewport",
+      "status": "passed",
+      "milliseconds": 6553,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequestsByReason": {
+    "net::ERR_ABORTED": 4
+  },
+  "diagnostics": 4,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

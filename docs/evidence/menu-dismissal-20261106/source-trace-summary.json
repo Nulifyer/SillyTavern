@@ -1,0 +1,56 @@
+{
+  "phase": "source-trace",
+  "stats": {
+    "startTime": "2026-11-07T00:04:39.724Z",
+    "duration": 87323.107,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 13607,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 13577,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 13707,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 14633,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 14786,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "passed",
+      "milliseconds": 14953,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequestsByReason": {
+    "net::ERR_ABORTED": 12
+  },
+  "diagnostics": 6,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

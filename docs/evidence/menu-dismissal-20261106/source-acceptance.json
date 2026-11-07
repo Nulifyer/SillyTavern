@@ -1,0 +1,25 @@
+{
+  "qualifiedCases": 65,
+  "fullRun": {
+    "startTime": "2026-11-07T00:06:00.118Z",
+    "duration": 557235.7359999999,
+    "expected": 61,
+    "skipped": 0,
+    "unexpected": 4,
+    "flaky": 0
+  },
+  "correctedViewportFixtures": {
+    "startTime": "2026-11-07T00:14:33.643Z",
+    "duration": 26746.323,
+    "expected": 4,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "excludedCases": [],
+  "note": "Four old fixtures assumed More stayed open after outside click. Each now asserts closure/reopens before the next tool. Runtime unchanged during fixture correction. Final actual-image full suite is required separately.",
+  "unitTests": 425,
+  "rootLint": "passed",
+  "actionlint": "passed",
+  "testLint": "0 errors, 33 warnings"
+}

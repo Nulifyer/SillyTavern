@@ -29,6 +29,22 @@ Reviewed October 8, 2026:
 
 ## Product choices
 
+Temporary action menus close after a click or tap outside, an action selection,
+or Tab navigation out of the menu. A tap on another control still performs that
+control's action. Opening another menu closes the previous one. On phones,
+scrolling inside the menu does not dismiss it; the navigation scrim keeps its
+existing outside-tap behavior.
+
+Escape closes the foreground native submenu first, then its More menu, before
+the surrounding inspector/settings/navigation. Keyboard dismissal returns focus
+to that layer's trigger. Active native editors/dialogs retain Escape priority.
+Menus take Escape before background generation Stop, preserving a pending reply.
+Native Chat actions and Extension tools keep their
+native owners and body-mounted popovers. Settings forms, expanded character
+details and recovered reply text are persistent disclosures; they do not join
+the transient-menu dismissal rule. Native programmatic focus restoration alone
+must not hide a menu.
+
 These values adapt those principles to a dark character-roleplay workspace.
 They are defined in `public/css/workspace.css` at the workspace boundary.
 

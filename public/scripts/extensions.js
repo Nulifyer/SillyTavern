@@ -695,6 +695,7 @@ async function addExtensionsButtonAndMenu() {
     const button = $('#extensionsMenuButton');
     const dropdown = $('#extensionsMenu');
     let isDropdownVisible = false;
+    button.attr({ 'aria-controls': 'extensionsMenu', 'aria-expanded': 'false' });
 
     let popper = Popper.createPopper(button.get(0), dropdown.get(0), {
         placement: 'top-start',
@@ -708,16 +709,18 @@ async function addExtensionsButtonAndMenu() {
             dropdown.fadeIn(animation_duration);
             isDropdownVisible = true;
         }
+        button.attr('aria-expanded', String(isDropdownVisible));
         popper.update();
     });
 
     $('html').on('click', function (e) {
         if (!isDropdownVisible) return;
         const clickTarget = $(e.target);
-        const noCloseTargets = ['#sd_gen', '#extensionsMenuButton', '#roll_dice'];
+        const noCloseTargets = ['#sd_gen', '#sd_dropdown', '#extensionsMenuButton', '#roll_dice'];
         if (!noCloseTargets.some(id => clickTarget.closest(id).length > 0)) {
             dropdown.fadeOut(animation_duration);
             isDropdownVisible = false;
+            button.attr('aria-expanded', 'false');
         }
     });
 }

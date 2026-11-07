@@ -1,0 +1,38 @@
+{
+  "phase": "source-draft-focus",
+  "stats": {
+    "startTime": "2026-11-07T00:06:30.216Z",
+    "duration": 31099.322,
+    "expected": 3,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "story drafts survive rapid switching and rename while the native recovery preference is respected",
+      "status": "passed",
+      "milliseconds": 9652,
+      "retry": 0
+    },
+    {
+      "title": "story drafts survive rapid switching and rename while the native recovery preference is respected",
+      "status": "passed",
+      "milliseconds": 9935,
+      "retry": 0
+    },
+    {
+      "title": "story drafts survive rapid switching and rename while the native recovery preference is respected",
+      "status": "passed",
+      "milliseconds": 9687,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequestsByReason": {
+    "net::ERR_ABORTED": 5
+  },
+  "diagnostics": 3,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

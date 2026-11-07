@@ -61,24 +61,10 @@ manual12288/temp0.85/Advanced=true/voice off after that standalone check.
 Source8024 st-mobile-resume-source-20261106 has public/src/package overlays;
 it is not published-image proof. Exact evidence: docs/evidence/mobile-resume-20261106/.
 
-Verifiedv1.19.14 preview: http://127.0.0.1:8021, Podman container
-st-full-review-release14-20261106. Five fresh synthetic named volumes, no source
-overlays. All43browser cases passed in6.2minutes with both live Juiced cases,
-zero skips and zero uncaught page errors. Per-case console/network diagnostics
-retain deliberate failure/retry/guard events and45aborted requests; classified
-in v14-browser-summary.json. Twenty-four runtime files match the tag; native
-heartbeat/version/HTTPS passed. Standalone native Save/restart/reload persistence
-passed after the suite, with no mock settings routes.
-
-Source41controlled cases/2opt-in live skips passed in4.5minutes, plus the final
-character identity case separately. Both live cases passed on the final actual
-image.424unit tests, root lint and actionlint pass; test lint0errors/24warnings.
-The new character case covers1280/768/390/320 normal/150%, vertical containment,
-identity readability and native Advanced Definitions/Escape. Independent review
-also inspected blank Create in all16Edit/Create states and retained28captures.
-The broader review retains all16settings destinations, normal/Advanced modes,
-long forms, menus/dialogs, loading/error/retry, pending navigation and classic.
-Coverage/limits/failed attempts: docs/evidence/full-workspace-review-20261106/.
+Earlier full workspace acceptance (v1.19.14, all43cases, 424units) and the
+16-category/Advanced/Create reviews remain in
+`docs/evidence/full-workspace-review-20261106/`. Immutable image/source/workflow
+identifiers and validation limits are in that handoff and docs/container-releases.md.
 
 Earlier actual previews8016(v1.19.11),8017(baselinev1.19.11),8019(v1.19.12),
 8020(v1.19.13) and source8018 remain preserved with their synthetic volumes.
@@ -114,6 +100,13 @@ not prove a model accepts every story prompt. Earlier 27-case acceptance did
 not cover this message-order/model combination.
 
 ## Known gaps
+
+Menu dismissal: run `--grep 'transient menus dismiss|search opens character profiles and a fixture'`.
+Desktop and Pixel9ProXL touch cases cover outside click/tap, inside interaction,
+one open menu, scrim, Tab exit, layered/rapid Escape, SD keyboard activation,
+synthetic click rejection, native settings node identity and classic touch closure.
+The held reply checks menu dismissal before native Stop at1280/448px.
+Evidence and exact failed attempts: docs/evidence/menu-dismissal-20261106/.
 
 No live paid-provider, physical microphone or audible speech-quality checks.
 The synthetic microphone case tests browser recording, encoding and permission

@@ -1,0 +1,32 @@
+{
+  "phase": "baseline",
+  "stats": {
+    "startTime": "2026-11-06T23:50:10.535Z",
+    "duration": 36438.005000000005,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  },
+  "cases": [
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "failed",
+      "milliseconds": 10377,
+      "retry": 0
+    },
+    {
+      "title": "transient menus dismiss outside without closing persistent controls",
+      "status": "failed",
+      "milliseconds": 23684,
+      "retry": 0
+    }
+  ],
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequestsByReason": {
+    "net::ERR_ABORTED": 1
+  },
+  "diagnostics": 2,
+  "note": "Intentional outage/permission/reset/guard fixtures retain console and network failures. Zero uncaught page errors is not zero console/network events."
+}

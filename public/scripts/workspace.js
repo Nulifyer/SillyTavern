@@ -34,6 +34,35 @@ let initializedView = false;
 let portraitSignature = '';
 let inspectorSignature = '';
 let sidebarSignature = '';
+const nativeActionMenus = [['sd_dropdown', 'sd_gen'], ['options', 'options_button'], ['extensionsMenu', 'extensionsMenuButton']];
+
+function openNativeActionMenus() {
+    return nativeActionMenus.filter(([panel, trigger]) => document.getElementById(trigger)?.getAttribute('aria-expanded') === 'true' && $(`#${panel}`).is(':visible'));
+}
+
+// Only transient action menus participate. Settings/recovery disclosures stay open.
+function closeActionMenus(except = null, restoreFocus = false) {
+    const menus = [...document.querySelectorAll('.workspace-scene-menu[open]')].filter(menu => menu !== except);
+    for (const menu of menus) {
+        const hadFocus = menu.contains(document.activeElement);
+        if (menu.classList.contains('workspace-creative-menu')) {
+            for (const [, trigger] of openNativeActionMenus()) document.getElementById(trigger).click();
+        }
+        menu.open = false;
+        if (restoreFocus && hadFocus) menu.querySelector(':scope > summary')?.focus();
+    }
+    return menus.length > 0;
+}
+
+function dismissOutsideActionMenus(event) {
+    if (!document.body.classList.contains('workspace-ui') || !(event.target instanceof Element)) return;
+    if (event.type === 'click' && !event.isTrusted) return;
+    // Native submenus live under body; their composer menu remains their anchor.
+    const owner = event.target.closest('#options, #extensionsMenu, #sd_dropdown')
+        ? document.querySelector('.workspace-creative-menu[open]')
+        : event.target.closest('.workspace-scene-menu');
+    closeActionMenus(owner);
+}
 
 function entities() {
     const library = characters.map(character => ({
@@ -585,6 +614,15 @@ export function initWorkspace() {
     document.getElementById('options_button').title = 'More chat tools';
     for (const [id, label] of [['rm_button_create', 'Create'], ['character_import_button', 'Import'], ['rm_button_group_chats', 'New group']]) document.getElementById(id).append(element('span', 'workspace-only workspace-action-label', label));
     layoutToggle.addEventListener('change', () => { accountStorage.setItem('workspaceLayout', String(layoutToggle.checked)); applyLayout(layoutToggle.checked); });
+    // Click follows a completed tap, so scrolling through a phone menu is safe.
+    // Capture also sees outside controls whose native handlers stop propagation.
+    document.addEventListener('click', dismissOutsideActionMenus, { capture: true });
+    // Native refreshes can restore editor focus. Only intentional Tab navigation
+    // dismisses on focus movement; those refreshes must not hide a clicked menu.
+    let tabbing = false;
+    document.addEventListener('keydown', event => { tabbing = event.key === 'Tab'; }, { capture: true });
+    document.addEventListener('keyup', () => { tabbing = false; }, { capture: true });
+    document.addEventListener('focusin', event => { if (tabbing) dismissOutsideActionMenus(event); });
     document.addEventListener('click', event => {
         const target = event.target instanceof Element ? event.target.closest('[data-workspace-action], [data-service-destination]') : null;
         if (!target) return;
@@ -599,7 +637,7 @@ export function initWorkspace() {
         }
         const command = document.getElementById('workspace-command');
         if (command.open && action !== 'close-search') command.close();
-        document.querySelectorAll('.workspace-scene-menu[open]').forEach(menu => menu.open = false);
+        closeActionMenus();
         const showError = error => { console.error('Workspace action failed', error); toastr.error(error.message || 'This action could not finish. Try again.'); };
         if (['generate-scene-image', 'generate-image', 'generate-custom-image'].includes(action)) {
             if (isGenerating()) { showError(new Error('Wait for the reply to finish before illustrating this scene.')); return; }
@@ -635,6 +673,15 @@ export function initWorkspace() {
     document.addEventListener('keydown', event => {
         if (!document.body.classList.contains('workspace-ui') || event.isComposing) return;
         if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k' && !document.querySelector('dialog[open]')) { event.preventDefault(); openSearch(); } else if (event.key === 'Escape' && !document.querySelector('dialog[open]')) {
+            if (hasNativeEscapeTarget({ includeGeneration: false })) return;
+            const nativeMenu = openNativeActionMenus()[0];
+            if (nativeMenu) {
+                event.preventDefault(); event.stopImmediatePropagation();
+                const trigger = document.getElementById(nativeMenu[1]);
+                trigger.click(); trigger.focus();
+                return;
+            }
+            if (closeActionMenus(null, true)) { event.preventDefault(); event.stopImmediatePropagation(); return; }
             if (hasNativeEscapeTarget()) return;
             if (document.body.classList.contains('workspace-nav-open')) {
                 event.preventDefault(); event.stopImmediatePropagation(); setMobileNavigation(false); document.getElementById('workspace-menu').focus();

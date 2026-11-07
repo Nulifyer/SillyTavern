@@ -1,0 +1,1400 @@
+[
+  {
+    "type": "focusin",
+    "target": "workspace-nav-item active",
+    "open": [],
+    "time": 2546.39999999851,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [],
+    "time": 2546.89999999851,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-view",
+    "open": [],
+    "time": 2560.89999999851,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "Meet Seraphina",
+    "open": [],
+    "time": 2596,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [],
+    "time": 2596.39999999851,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-view",
+    "open": [],
+    "time": 2630.2999999970198,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-button workspace-primary",
+    "open": [],
+    "time": 2696.1999999955297,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [],
+    "time": 2696.6999999955297,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "send_textarea",
+    "open": [],
+    "time": 2968.7999999970198,
+    "trusted": true
+  },
+  {
+    "type": "childList",
+    "target": "workspace-header-menu",
+    "open": [],
+    "time": 2978.2999999970198,
+    "added": 1,
+    "removed": 0,
+    "attribute": null,
+    "value": null
+  },
+  {
+    "type": "focusin",
+    "target": "Actions for Seraphina - 2026-11-06@19h04m43s382ms",
+    "open": [],
+    "time": 3130.2999999970198,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 3131.0999999940395,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu",
+    "open": [
+      "Actions for Seraphina - 2026-11-06@19h04m43s382ms"
+    ],
+    "time": 3137.6999999955297,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-menu-action",
+    "open": [
+      "Actions for Seraphina - 2026-11-06@19h04m43s382ms"
+    ],
+    "time": 3162.7999999970198,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [
+      "Actions for Seraphina - 2026-11-06@19h04m43s382ms"
+    ],
+    "time": 3163.2999999970198,
+    "trusted": true
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu",
+    "open": [
+      "Actions for Seraphina - 2026-11-06@19h04m43s382ms"
+    ],
+    "time": 3168.7999999970198,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:8026/scripts/workspace.js:639:9)"
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu",
+    "open": [],
+    "time": 3169.0999999940395,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "focusin",
+    "target": "popup-input text_pole result-control auto-select",
+    "open": [],
+    "time": 3175.5999999940395,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "popup-button-ok menu_button result-control menu_button_default interactable",
+    "open": [],
+    "time": 3246.39999999851,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "popup-button-ok menu_button result-control menu_button_default interactable",
+    "open": [],
+    "time": 3247.0999999940395,
+    "trusted": true
+  },
+  {
+    "type": "childList",
+    "target": "workspace-header-menu",
+    "open": [],
+    "time": 3611.5999999940395,
+    "added": 0,
+    "removed": 1,
+    "attribute": null,
+    "value": null
+  },
+  {
+    "type": "childList",
+    "target": "workspace-header-menu",
+    "open": [],
+    "time": 3611.6999999955297,
+    "added": 1,
+    "removed": 0,
+    "attribute": null,
+    "value": null
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [],
+    "time": 3679.1999999955297,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 3680,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 3688.39999999851,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "click",
+    "target": "workspace-action-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 3730.0999999940395,
+    "trusted": true
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 3822.0999999940395,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at HTMLDocument.dismissOutsideActionMenus (http://127.0.0.1:8026/scripts/workspace.js:63:5)\n    at Object.trigger (http://127.0.0.1:8026/lib/jquery-3.5.1.min.js:2:71823)\n    at HTMLTextAreaElement.<anonymous> (http://127.0.0.1:8026/lib/jquery-3.5.1.min.js:2:72108)\n    at S.each (http://127.0.0.1:8026/lib/jquery-3.5.1.min.js:2:2976)\n    at S.fn.init.each (http://127.0.0.1:8026/lib/jquery-3.5.1.min.js:2:1454)\n    at S.fn.init.trigger (http://127.0.0.1:8026/lib/jquery-3.5.1.min.js:2:72084)\n    at http://127.0.0.1:8026/script.js:7729:33"
+  },
+  {
+    "type": "click",
+    "target": "send_textarea",
+    "open": [],
+    "time": 3822.2999999970198,
+    "trusted": false
+  },
+  {
+    "type": "focusin",
+    "target": "send_textarea",
+    "open": [],
+    "time": 3824.39999999851,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [],
+    "time": 3825,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "click",
+    "target": "workspace-chat-title",
+    "open": [],
+    "time": 3830.39999999851,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [],
+    "time": 3929.0999999940395,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 3929.6999999955297,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 3938.0999999940395,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 3979.5,
+    "trusted": true
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 3980.2999999970198,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at HTMLDocument.dismissOutsideActionMenus (http://127.0.0.1:8026/scripts/workspace.js:63:5)"
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [],
+    "time": 3980.39999999851,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 3980.5,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu",
+    "open": [
+      "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false"
+    ],
+    "time": 3987.1999999955297,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-header-portrait",
+    "open": [
+      "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false"
+    ],
+    "time": 4029.2999999970198,
+    "trusted": true
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu",
+    "open": [
+      "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false"
+    ],
+    "time": 4029.7999999970198,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at HTMLDocument.dismissOutsideActionMenus (http://127.0.0.1:8026/scripts/workspace.js:63:5)"
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu",
+    "open": [],
+    "time": 4029.89999999851,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [],
+    "time": 4030.0999999940395,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "Close scene details",
+    "open": [],
+    "time": 4037.2999999970198,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false",
+    "open": [],
+    "time": 4079,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 4079.5,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu",
+    "open": [
+      "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false"
+    ],
+    "time": 4085.39999999851,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu",
+    "open": [
+      "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false"
+    ],
+    "time": 4089.0999999940395,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at document.addEventListener.capture (http://127.0.0.1:8026/scripts/workspace.js:683:17)"
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu",
+    "open": [],
+    "time": 4089.2999999970198,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-header-portrait",
+    "open": [],
+    "time": 4110,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [],
+    "time": 4146,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 4146.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4154.5,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "send_textarea",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4160.79999999702,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4172.19999999553,
+    "trusted": true
+  },
+  {
+    "type": "keydown",
+    "target": "Chat tools and options",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4173.19999999553,
+    "key": "Tab",
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-menu-action",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4174.5,
+    "trusted": true
+  },
+  {
+    "type": "keydown",
+    "target": "workspace-menu-action",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4187.0999999940395,
+    "key": "Shift",
+    "trusted": true
+  },
+  {
+    "type": "keydown",
+    "target": "workspace-menu-action",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4187.5999999940395,
+    "key": "Tab",
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4188.19999999553,
+    "trusted": true
+  },
+  {
+    "type": "keydown",
+    "target": "Chat tools and options",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4189.39999999851,
+    "key": "Shift",
+    "trusted": true
+  },
+  {
+    "type": "keydown",
+    "target": "Chat tools and options",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4189.69999999553,
+    "key": "Tab",
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-dictation",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4190.19999999553,
+    "trusted": true
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4190.5,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at dismissOutsideActionMenus (http://127.0.0.1:8026/scripts/workspace.js:63:5)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:8026/scripts/workspace.js:624:66)"
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [],
+    "time": 4190.69999999553,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [],
+    "time": 4228.89999999851,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 4229.5999999940395,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4237.89999999851,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "options_button",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4262.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-only",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4263.29999999702,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "options_button",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4280.19999999553,
+    "trusted": false
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4289.5999999940395,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at document.addEventListener.capture (http://127.0.0.1:8026/scripts/workspace.js:683:17)"
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [],
+    "time": 4291.5,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [],
+    "time": 4291.69999999553,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 4679.29999999702,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4686.89999999851,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "options_button",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4713,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-only",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4713.5999999940395,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "options_button",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 4745.5,
+    "trusted": false
+  },
+  {
+    "type": "click",
+    "target": "workspace-only",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 5145.89999999851,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "options_button",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 5196.5999999940395,
+    "trusted": false
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 5203,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at HTMLDocument.dismissOutsideActionMenus (http://127.0.0.1:8026/scripts/workspace.js:63:5)"
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [],
+    "time": 5205.19999999553,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "click",
+    "target": "workspace-chat-title",
+    "open": [],
+    "time": 5205.29999999702,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [],
+    "time": 5595.29999999702,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 5596,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 5604.0999999940395,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "extensionsMenuButton",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 5629.5999999940395,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-only",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 5630.19999999553,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "extensionsMenuButton",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 5646.69999999553,
+    "trusted": false
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 5657.5999999940395,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at document.addEventListener.capture (http://127.0.0.1:8026/scripts/workspace.js:683:17)"
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [],
+    "time": 5659.39999999851,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [],
+    "time": 5659.69999999553,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 6062.5999999940395,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 6070.39999999851,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "extensionsMenuButton",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 6096,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-only",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 6096.5999999940395,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "extensionsMenuButton",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 6120.29999999702,
+    "trusted": false
+  },
+  {
+    "type": "click",
+    "target": "workspace-only",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 6512.5,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "extensionsMenuButton",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 6563.39999999851,
+    "trusted": false
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 6569.79999999702,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at HTMLDocument.dismissOutsideActionMenus (http://127.0.0.1:8026/scripts/workspace.js:63:5)"
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [],
+    "time": 6572,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "click",
+    "target": "workspace-chat-title",
+    "open": [],
+    "time": 6572.0999999940395,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-settings-link",
+    "open": [],
+    "time": 6978.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-settings-link",
+    "open": [],
+    "time": 6979.19999999553,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-button",
+    "open": [],
+    "time": 6995.79999999702,
+    "trusted": true
+  },
+  {
+    "type": "childList",
+    "target": "workspace-header-menu",
+    "open": [],
+    "time": 7013.5,
+    "added": 0,
+    "removed": 1,
+    "attribute": null,
+    "value": null
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-settings-destination",
+    "open": [],
+    "time": 7045.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-settings-destination",
+    "open": [],
+    "time": 7046,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-button",
+    "open": [],
+    "time": 7073,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-only",
+    "open": [],
+    "time": 7213,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-only",
+    "open": [],
+    "time": 7213.79999999702,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "sd_enabled",
+    "open": [],
+    "time": 7262.5999999940395,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "sd_enabled",
+    "open": [],
+    "time": 7263.39999999851,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-active-story",
+    "open": [],
+    "time": 7329.29999999702,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [],
+    "time": 7329.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "send_textarea",
+    "open": [],
+    "time": 7372.5,
+    "trusted": true
+  },
+  {
+    "type": "childList",
+    "target": "workspace-header-menu",
+    "open": [],
+    "time": 7373.5999999940395,
+    "added": 1,
+    "removed": 0,
+    "attribute": null,
+    "value": null
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [],
+    "time": 7413,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 7413.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7422.0999999940395,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "extensionsMenuButton",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7462.89999999851,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-only",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7463.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "sd_gen",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7513.0999999940395,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7514,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7563.39999999851,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "sd_gen",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7591.19999999553,
+    "trusted": false
+  },
+  {
+    "type": "focusin",
+    "target": "sd_gen",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7594.5,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "extensionsMenuButton",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7974.29999999702,
+    "trusted": false
+  },
+  {
+    "type": "focusin",
+    "target": "extensionsMenuButton",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 7981.5,
+    "trusted": true
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 8359.89999999851,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at document.addEventListener.capture (http://127.0.0.1:8026/scripts/workspace.js:683:17)"
+  },
+  {
+    "type": "focusin",
+    "target": "Chat tools and options",
+    "open": [],
+    "time": 8362,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [],
+    "time": 8362.29999999702,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 8396.89999999851,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 8405.29999999702,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-menu-action",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 8446.19999999553,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 8446.89999999851,
+    "trusted": true
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [
+      "Chat tools and options"
+    ],
+    "time": 8454,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at HTMLDocument.<anonymous> (http://127.0.0.1:8026/scripts/workspace.js:639:9)"
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu workspace-creative-menu",
+    "open": [],
+    "time": 8454.19999999553,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-button",
+    "open": [],
+    "time": 8478.29999999702,
+    "trusted": true
+  },
+  {
+    "type": "childList",
+    "target": "workspace-header-menu",
+    "open": [],
+    "time": 8523.39999999851,
+    "added": 0,
+    "removed": 1,
+    "attribute": null,
+    "value": null
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-settings-destination active",
+    "open": [],
+    "time": 8563.19999999553,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-settings-destination active",
+    "open": [],
+    "time": 8563.89999999851,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-button",
+    "open": [],
+    "time": 8615.5,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-only",
+    "open": [],
+    "time": 8764,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-only",
+    "open": [],
+    "time": 8765.5,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-chat-title",
+    "open": [],
+    "time": 8812.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-nav-item",
+    "open": [],
+    "time": 8862.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-nav-item",
+    "open": [],
+    "time": 8863.09999999404,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-view",
+    "open": [],
+    "time": 8910,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false",
+    "open": [],
+    "time": 8980.89999999851,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "fa-solid fa-ellipsis",
+    "open": [],
+    "time": 8981.5,
+    "trusted": true
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu",
+    "open": [
+      "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false"
+    ],
+    "time": 8989.29999999702,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": ""
+  },
+  {
+    "type": "set-open",
+    "target": "workspace-scene-menu",
+    "open": [
+      "Actions for Workspace e2e f5948f93a1ec48d2d907-3caea853dde117d1dae5-mw5n5v24 dismissal false"
+    ],
+    "time": 9030,
+    "value": false,
+    "stack": "Error\n    at HTMLDetailsElement.set [as open] (eval at evaluate (:290:30), <anonymous>:20:22)\n    at closeActionMenus (http://127.0.0.1:8026/scripts/workspace.js:51:19)\n    at HTMLDocument.dismissOutsideActionMenus (http://127.0.0.1:8026/scripts/workspace.js:63:5)"
+  },
+  {
+    "type": "attributes",
+    "target": "workspace-scene-menu",
+    "open": [],
+    "time": 9030.19999999553,
+    "added": 0,
+    "removed": 0,
+    "attribute": "open",
+    "value": null
+  },
+  {
+    "type": "click",
+    "target": "workspace-chat-title",
+    "open": [],
+    "time": 9030.29999999702,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-settings-link",
+    "open": [],
+    "time": 9078.79999999702,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-settings-link",
+    "open": [],
+    "time": 9079.19999999553,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-button",
+    "open": [],
+    "time": 9092.09999999404,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-settings-destination",
+    "open": [],
+    "time": 9145.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "",
+    "open": [],
+    "time": 9146.09999999404,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-button",
+    "open": [],
+    "time": 9178.69999999553,
+    "trusted": true
+  },
+  {
+    "type": "focusin",
+    "target": "workspace-layout-toggle",
+    "open": [],
+    "time": 9246.79999999702,
+    "trusted": true
+  },
+  {
+    "type": "click",
+    "target": "workspace-layout-toggle",
+    "open": [],
+    "time": 9247.69999999553,
+    "trusted": true
+  }
+]

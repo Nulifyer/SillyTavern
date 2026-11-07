@@ -1,0 +1,10 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8026/",
+      "error": "net::ERR_SOCKET_NOT_CONNECTED"
+    }
+  ]
+}

@@ -7722,7 +7722,10 @@ export async function getChat() {
         eventSource.emit(event_types.CHAT_LOADED, { detail: { id: this_chid, character: characters[this_chid] } });
 
         // Focus on the textarea if not already focused on a visible text input
+        const focusAtChatLoad = document.activeElement;
         delay(debounce_timeout.short).then(() => {
+            // A user may have opened a menu or editor while this delay ran.
+            if (document.activeElement !== focusAtChatLoad) return;
             if ($(document.activeElement).is('input:visible, textarea:visible')) {
                 return;
             }
@@ -11602,22 +11605,21 @@ jQuery(async function () {
     const button = $('#options_button');
     const menu = $('#options');
     let isOptionsMenuVisible = false;
+    button.attr({ 'aria-controls': 'options', 'aria-expanded': 'false' });
 
     function showMenu() {
         showBookmarksButtons();
         menu.fadeIn(animation_duration);
         optionsPopper.update();
         isOptionsMenuVisible = true;
+        button.attr('aria-expanded', 'true');
     }
 
     function hideMenu() {
         menu.fadeOut(animation_duration);
         optionsPopper.update();
         isOptionsMenuVisible = false;
-    }
-
-    function isMouseOverButtonOrMenu() {
-        return menu.is(':hover, :focus-within') || button.is(':hover, :focus');
+        button.attr('aria-expanded', 'false');
     }
 
     button.on('click', function () {
@@ -11627,9 +11629,9 @@ jQuery(async function () {
             showMenu();
         }
     });
-    $(document).on('click', function () {
+    $(document).on('click', function (event) {
         if (!isOptionsMenuVisible) return;
-        if (!isMouseOverButtonOrMenu()) { hideMenu(); }
+        if (!menu.get(0).contains(event.target) && !button.get(0).contains(event.target)) { hideMenu(); }
     });
 
     /* $('#set_chat_character_settings').on('click', setScenarioOverride); */
