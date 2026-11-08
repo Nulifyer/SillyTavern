@@ -30,7 +30,7 @@ export class WorkspaceSettings {
         mobileNavigation.append(this.category);
         for (const [label, ids] of [
             ['Model services', ['servers', 'connection', 'image-writer', 'image-settings', 'voice-settings', 'dictation-settings', 'vision-settings', 'embeddings-settings']],
-            ['Story world', ['persona', 'world', 'backgrounds']],
+            ['Story world', ['persona', 'world', 'memory-settings', 'authors-note', 'backgrounds']],
             ['Workspace', ['settings', 'extensions', 'character-editor']],
         ]) {
             const group = element('div', 'workspace-settings-category');

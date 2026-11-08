@@ -1,6 +1,8 @@
+import { WorkspaceScene } from './workspace-scene.js';
+import { branchChat } from './bookmarks.js';
 import { morphdom } from '../lib.js';
 import {
-    characters, doNavbarIconClick, isGenerating, name1, name2, online_status, unshallowCharacter,
+    characters, doNavbarIconClick, getCurrentChatIdentity, setCharacterSettingsOverrides, isGenerating, name1, name2, online_status, unshallowCharacter,
 } from '../script.js';
 import { eventSource, event_types } from './events.js';
 import { extension_settings } from './extensions.js';
@@ -32,7 +34,7 @@ let chatRequest;
 let refreshTimer;
 let initializedView = false;
 let portraitSignature = '';
-let inspectorSignature = '';
+let sceneDetails;
 let sidebarSignature = '';
 const nativeActionMenus = [['sd_dropdown', 'sd_gen'], ['options', 'options_button'], ['extensionsMenu', 'extensionsMenuButton']];
 
@@ -302,34 +304,11 @@ function refreshWorkspace() {
     syncNavigation();
 }
 
-function renderInspector(entity, record) {
+async function renderInspector(entity, record) {
     const panel = document.getElementById('workspace-scene-info');
-    if (!panel) return;
-    const signature = JSON.stringify([entity?.key, entity?.description, entity?.members.map(member => member.key), record?.key, name1]);
-    if (signature === inspectorSignature) return;
-    inspectorSignature = signature;
-    panel.replaceChildren();
-    const header = element('div', 'workspace-tools-heading');
-    const close = button('Close scene details', 'close-inspector', {}, 'workspace-icon-button', 'fa-xmark');
-    close.setAttribute('aria-label', 'Close scene details');
-    header.append(element('h2', '', 'Scene details'), close);
-    panel.append(header);
-    if (!entity) return;
-    const cast = element('div', 'workspace-inspector-character');
-    cast.append(portrait(entity, 'workspace-profile-portrait'), element('h3', '', entity.name), element('p', '', entity.description));
-    panel.append(cast, button('Character and stories', 'history', {}, 'workspace-button', 'fa-address-card'));
-    if (entity.kind === 'group') {
-        const members = element('div', 'workspace-profile-cast');
-        for (const member of entity.members) {
-            const control = button(member.name, 'profile', { entity: member.key }, 'workspace-cast-member');
-            control.prepend(portrait(member));
-            members.append(control);
-        }
-        panel.append(members, button('Cast reply order & members', 'edit-entity', { entity: entity.key }, 'workspace-button', 'fa-users'));
-    }
-    panel.append(element('h3', '', 'You in this story'), button(name1 || 'Choose a persona', 'persona', {}, 'workspace-button', 'fa-user'));
-    panel.append(element('h3', '', 'Story controls'), button('World & lore', 'world', {}, 'workspace-back-link', 'fa-book-atlas'), button('Writing & replies', 'generation', {}, 'workspace-back-link', 'fa-sliders'), button('Scene background', 'backgrounds', {}, 'workspace-back-link', 'fa-panorama'));
-    if (record) panel.append(chatMenu(currentRecord()));
+    if (!panel || !document.body.classList.contains('workspace-inspecting')) return;
+    sceneDetails ||= new WorkspaceScene(panel);
+    await sceneDetails.render(entity, record, state.chats, creativeTools.busy, { loading: state.loading, error: state.error }).catch(error => console.warn('Scene details could not be refreshed.', error));
 }
 
 async function refreshChats() {
@@ -446,7 +425,11 @@ function openCast() {
 }
 
 async function handleAction(action, target) {
-    if (creativeTools.busy && !(action === 'open-chat' && target.dataset.chat === transcripts.current()?.key) && ['open-chat', 'start-story', 'start-current-story', 'archive-chat', 'delete-chat', 'rename-chat', 'edit-entity', 'create-character', 'import-character'].includes(action)) {
+    if (target.dataset.sceneOwner && action !== 'close-inspector' && target.dataset.sceneOwner !== getCurrentChatIdentity()) {
+        toastr.info('The story changed. Reopen Scene details before using that action.');
+        return;
+    }
+    if (creativeTools.busy && !(action === 'open-chat' && target.dataset.chat === transcripts.current()?.key) && ['open-chat', 'start-story', 'start-current-story', 'archive-chat', 'delete-chat', 'rename-chat', 'scene-branch', 'story-overrides', 'edit-entity', 'create-character', 'import-character'].includes(action)) {
         throw new Error('Wait for the current illustration to finish before changing stories.');
     }
     const dialog = document.getElementById('workspace-tools');
@@ -461,12 +444,23 @@ async function handleAction(action, target) {
     if (action === 'profile') return showView('profile', { entity: target.dataset.entity });
     if (action === 'settings-section') { settingsPanel.selectSection(target.dataset.section); return; }
     if (action === 'back-chat') { await closeDrawers(); setMobileNavigation(false); state.view = 'chat'; refreshWorkspace(); focusContent(); return; }
+    if (action === 'story-overrides') {
+        if (transcripts.current()?.archived) throw new Error('Restore this story before editing its overrides.');
+        await setCharacterSettingsOverrides(); refreshWorkspace(); return;
+    }
+    if (action === 'scene-branch') {
+        if (transcripts.current()?.archived) throw new Error('Restore this story before branching.');
+        const index = Number(target.dataset.message);
+        const name = await branchChat(index, { swipeId: target.dataset.swipe === '' ? null : Number(target.dataset.swipe) });
+        if (name) { await refreshChats(); refreshWorkspace(); }
+        return;
+    }
     if (action === 'history') return showView('profile', { entity: currentCharacter()?.key });
     if (action === 'current-profile') {
         const open = document.body.classList.toggle('workspace-inspecting');
         document.getElementById('workspace-header-portrait').setAttribute('aria-expanded', String(open));
         refreshWorkspace();
-        if (open) document.querySelector('#workspace-scene-info button').focus();
+        if (open) { await renderInspector(currentCharacter(), transcripts.current()); document.querySelector('#workspace-scene-info button')?.focus(); }
         return;
     }
     if (action === 'close-inspector') { document.body.classList.remove('workspace-inspecting'); refreshWorkspace(); document.getElementById('workspace-header-portrait').focus(); return; }
@@ -682,7 +676,6 @@ export function initWorkspace() {
                 return;
             }
             if (closeActionMenus(null, true)) { event.preventDefault(); event.stopImmediatePropagation(); return; }
-            if (hasNativeEscapeTarget()) return;
             if (document.body.classList.contains('workspace-nav-open')) {
                 event.preventDefault(); event.stopImmediatePropagation(); setMobileNavigation(false); document.getElementById('workspace-menu').focus();
             } else if (settingsPanel.active) {
@@ -691,15 +684,16 @@ export function initWorkspace() {
                 event.preventDefault(); event.stopImmediatePropagation(); document.body.classList.remove('workspace-inspecting'); refreshWorkspace(); document.getElementById('workspace-header-portrait').focus();
             }
         } else if (event.key === 'Tab' && (document.body.classList.contains('workspace-nav-open') || (document.body.classList.contains('workspace-inspecting') && matchMedia('(max-width: 900px)').matches))) {
-            const selector = document.body.classList.contains('workspace-nav-open') ? '#workspace-sidebar a, #workspace-sidebar button' : '#workspace-scene-info button, #workspace-scene-info summary';
-            const controls = [...document.querySelectorAll(selector)].filter(control => control.getClientRects().length);
+            const selector = document.body.classList.contains('workspace-nav-open') ? '#workspace-sidebar a, #workspace-sidebar button' : '#workspace-scene-info button:not(:disabled), #workspace-scene-info summary, #workspace-scene-info input:not(:disabled), #workspace-scene-info select:not(:disabled), #workspace-scene-info textarea:not(:disabled), #workspace-scene-info a[href], #workspace-scene-info pre';
+            const controls = [...document.querySelectorAll(selector)].filter(control => control.getClientRects().length && (control.tagName !== 'PRE' || control.scrollHeight > control.clientHeight));
             if (event.shiftKey && document.activeElement === controls[0]) { event.preventDefault(); controls.at(-1)?.focus(); } else if (!event.shiftKey && document.activeElement === controls.at(-1)) { event.preventDefault(); controls[0]?.focus(); }
         }
     }, { capture: true });
     matchMedia('(max-width: 900px)').addEventListener('change', () => { setMobileNavigation(false); refreshWorkspace(); });
+    eventSource.on(event_types.CLIENT_CONTEXT_UPDATED, () => { if (sceneDetails) sceneDetails.signature = ''; refreshWorkspace(); });
     eventSource.on(event_types.CHAT_RENAMED, data => { transcripts.renamed(data); scheduleChats(); });
     for (const event of [event_types.CHAT_DELETED, event_types.GROUP_CHAT_DELETED, event_types.GROUP_UPDATED, event_types.CHARACTER_DELETED, event_types.CHARACTER_EDITED, event_types.GENERATION_ENDED]) eventSource.on(event, scheduleChats);
-    for (const event of [event_types.ONLINE_STATUS_CHANGED, event_types.SETTINGS_UPDATED, event_types.GENERATION_STARTED, event_types.GENERATION_AFTER_DATA, event_types.GENERATION_ENDED, event_types.GENERATION_STOPPED, event_types.GROUP_WRAPPER_STARTED, event_types.GROUP_WRAPPER_FINISHED]) eventSource.on(event, refreshWorkspace);
+    for (const event of [event_types.EXTENSION_ACTIVATED, event_types.CHAT_METADATA_UPDATED, event_types.WORLDINFO_SETTINGS_UPDATED, event_types.SUMMARY_UPDATED, event_types.MESSAGE_SWIPED, event_types.MESSAGE_UPDATED, event_types.ONLINE_STATUS_CHANGED, event_types.SETTINGS_UPDATED, event_types.GENERATION_STARTED, event_types.GENERATE_AFTER_DATA, event_types.GENERATION_ENDED, event_types.GENERATION_STOPPED, event_types.GROUP_WRAPPER_STARTED, event_types.GROUP_WRAPPER_FINISHED]) eventSource.on(event, refreshWorkspace);
     eventSource.on(event_types.CHARACTER_PAGE_LOADED, () => { if (state.view !== 'chat') renderPage(); refreshWorkspace(); });
     eventSource.on(event_types.CHAT_CHANGED, () => {
         if (state.view === 'chat' && !transcripts.current()) state.view = 'chats';

@@ -17,6 +17,9 @@ import {
     setExtensionPrompt,
     streamingProcessor,
     animation_easing,
+    extension_prompts,
+    getCurrentChatIdentity,
+    saveChatConditional,
 } from '../../../script.js';
 import { is_group_generating, selected_group } from '../../group-chats.js';
 import { loadMovingUIState, power_user } from '../../power-user.js';
@@ -88,7 +91,26 @@ const formatMemoryValue = function (value) {
     }
 };
 
-const saveChatDebounced = debounce(() => getContext().saveChat(), debounce_timeout.relaxed);
+let summarySaveState = '';
+let summaryEditRevision = 0;
+const saveChatDebounced = debounce(async (owner, revision) => {
+    if (owner !== getCurrentChatIdentity()) return;
+    const saved = await saveChatConditional({ expectedIdentity: owner });
+    if (owner !== getCurrentChatIdentity() || revision !== summaryEditRevision) return;
+    summarySaveState = saved ? 'Saved to this story' : 'Not saved. Check the connection and edit again to retry.';
+    $('#memory_save_status').text(summarySaveState);
+    void eventSource.emit(event_types.SUMMARY_UPDATED);
+}, debounce_timeout.relaxed);
+
+/** Read the same summary and injection state the native extension uses; no inference. */
+export function getMemorySnapshot() {
+    const messages = getContext().chat;
+    const text = getLatestMemoryFromChat(messages);
+    const anchor = getIndexOfLatestChatSummary(messages);
+    const prompt = extension_prompts[MODULE_NAME];
+    const injected = prompt?.position !== extension_prompt_types.NONE ? prompt?.value || '' : '';
+    return { text, anchor, injected, paused: Boolean(extension_settings.memory.memoryFrozen), saving: summarySaveState };
+}
 
 const summary_sources = {
     'extras': 'extras',
@@ -937,6 +959,9 @@ function onMemoryRestoreClick() {
 
     const newContent = getLatestMemoryFromChat(context.chat);
     setMemoryContext(newContent, false);
+    summarySaveState = 'Saving…';
+    $('#memory_save_status').text(summarySaveState);
+    saveChatDebounced(getCurrentChatIdentity(), ++summaryEditRevision);
 }
 
 function onMemoryContentInput() {
@@ -980,8 +1005,11 @@ function setMemoryContext(value, saveToMessage, index = null) {
         }
 
         mes.extra.memory = value;
-        saveChatDebounced();
+        summarySaveState = 'Saving…';
+        $('#memory_save_status').text(summarySaveState);
+        saveChatDebounced(getCurrentChatIdentity(), ++summaryEditRevision);
     }
+    void eventSource.emit(event_types.SUMMARY_UPDATED);
 }
 
 function doPopout(e) {
@@ -1067,6 +1095,7 @@ export async function init() {
     async function addExtensionControls() {
         const settingsHtml = await renderExtensionTemplateAsync('memory', 'settings', { defaultSettings });
         $('#summarize_container').append(settingsHtml);
+        $('#memory_contents').after($('<p id="memory_save_status" role="status"></p>'));
         setupListeners();
         $('#summaryExtensionPopoutButton').off('click').on('click', function (e) {
             doPopout(e);
@@ -1076,7 +1105,7 @@ export async function init() {
 
     await addExtensionControls();
     loadSettings();
-    eventSource.on(event_types.CHAT_CHANGED, onChatChanged);
+    eventSource.on(event_types.CHAT_CHANGED, () => { summaryEditRevision++; summarySaveState = ''; $('#memory_save_status').text(''); onChatChanged(); });
     eventSource.makeLast(event_types.CHARACTER_MESSAGE_RENDERED, onChatEvent);
     for (const event of [event_types.MESSAGE_DELETED, event_types.MESSAGE_UPDATED, event_types.MESSAGE_SWIPED]) {
         eventSource.on(event, onChatEvent);

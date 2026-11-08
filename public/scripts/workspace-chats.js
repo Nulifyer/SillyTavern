@@ -56,7 +56,7 @@ export class WorkspaceChats {
 
     async list(signal) {
         const response = await fetch('/api/chats/recent', {
-            method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({}), cache: 'no-cache', signal,
+            method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ metadata: true }), cache: 'no-cache', signal,
         });
         if (!response.ok) throw new Error('Could not load your stories. Check the server connection and try again.');
         const data = await response.json();

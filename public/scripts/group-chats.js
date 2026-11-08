@@ -152,14 +152,19 @@ function setAutoModeWorker() {
  * @param {boolean} reload Whether to reload characters after saving
  */
 async function _save(group, reload = true) {
-    await fetch('/api/groups/edit', {
+    const response = await fetch('/api/groups/edit', {
         method: 'POST',
         headers: getRequestHeaders(),
         body: JSON.stringify(group),
     });
+    if (!response.ok) {
+        toastr.error('Group settings could not be saved. Try again.');
+        return false;
+    }
     if (reload) {
         await getCharacters();
     }
+    return true;
 }
 
 // Group chats
@@ -613,7 +618,7 @@ async function saveGroupChat(groupId, shouldSaveGroup, force = false) {
     const group = groups.find(x => x.id == groupId);
     if (!group) {
         console.warn('Group not found', groupId);
-        return;
+        return false;
     }
     const chatId = group.chat_id;
     group.date_last_chat = Date.now();
@@ -636,7 +641,7 @@ async function saveGroupChat(groupId, shouldSaveGroup, force = false) {
         if (!isIntegrityError) {
             toastr.error(t`Check the server connection and reload the page to prevent data loss.`, t`Group Chat could not be saved`);
             console.error('Group chat could not be saved', response);
-            return;
+            return false;
         }
 
         const popupResult = await Popup.show.input(
@@ -652,15 +657,16 @@ async function saveGroupChat(groupId, shouldSaveGroup, force = false) {
         if (!forceSaveConfirmed) {
             console.warn('Chat integrity check failed, and user did not confirm the overwrite. Reloading the page.');
             window.location.reload();
-            return;
+            return false;
         }
 
-        await saveGroupChat(groupId, shouldSaveGroup, true);
+        return await saveGroupChat(groupId, shouldSaveGroup, true);
     }
 
     if (shouldSaveGroup) {
         await editGroup(groupId, false, false);
     }
+    return true;
 }
 
 /**
@@ -2323,10 +2329,9 @@ export async function saveGroupBookmarkChat(groupId, name, metadata, mesId, chat
     const group = groups.find(x => x.id === groupId);
 
     if (!group) {
-        return;
+        return false;
     }
 
-    group.chats.push(name);
 
     /** @type {ChatHeader} */
     const chatHeader = {
@@ -2342,19 +2347,45 @@ export async function saveGroupBookmarkChat(groupId, name, metadata, mesId, chat
             ? chat.slice(0, Number(mesId) + 1)
             : chat;
 
-    await editGroup(groupId, true, false);
 
+    const snapshot = [chatHeader, ...trimmedChat];
     const saveChatRequest = await compressRequest({
         method: 'POST',
         headers: getRequestHeaders(),
-        body: JSON.stringify({ id: name, chat: [chatHeader, ...trimmedChat] }),
+        body: JSON.stringify({ id: name, chat: snapshot }),
     });
     const response = await fetch('/api/chats/group/save', saveChatRequest);
 
     if (!response.ok) {
-        toastr.error(t`Check the server connection and reload the page to prevent data loss.`, t`Group chat could not be saved`);
-        console.error('Group chat could not be saved', response);
+        const error = await response.clone().json().catch(() => null);
+        let retryRegistration = false;
+        if (error?.error === 'integrity') {
+            // A prior transcript write may have succeeded before group registration failed.
+            // Reuse only that exact snapshot; never force an overwrite or delete a file.
+            const existing = await fetch('/api/chats/group/get', {
+                method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ id: name }),
+            });
+            const data = existing.ok ? await existing.json() : null;
+            const comparable = value => {
+                const copy = structuredClone(value);
+                if (!Array.isArray(copy) || !copy[0]?.chat_metadata) return null;
+                delete copy[0].chat_metadata.integrity;
+                return JSON.stringify(copy);
+            };
+            retryRegistration = Array.isArray(data) && comparable(data) === comparable(snapshot);
+        }
+        if (!retryRegistration) {
+            toastr.error('The branch transcript could not be saved. An existing different transcript will not be overwritten. Check the connection or choose a different checkpoint name.', 'Group chat could not be saved');
+            return false;
+        }
     }
+    if (!groups.includes(group)) return false;
+    const added = !group.chats.includes(name);
+    if (added) group.chats.push(name);
+    let registered = false;
+    try { registered = await editGroup(groupId, true, false); } catch { toastr.error('The branch transcript was saved, but group history could not be updated. Try again.'); }
+    if (!registered && added) group.chats.splice(group.chats.indexOf(name), 1);
+    return registered;
 }
 
 function onSendTextareaInput() {

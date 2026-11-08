@@ -4472,23 +4472,28 @@ export async function createNewWorldInfo(worldName, { interactive = false } = {}
     return true;
 }
 
+function getCharacterLoreNames(character) {
+    if (!character) return [];
+    const extra = world_info.charLore?.find(entry => entry.name === getCharaFilename(characters.indexOf(character)));
+    return [character.data?.extensions?.world, ...(extra?.extraBooks || [])].filter(Boolean);
+}
+
+/** Configured attachments only; this does not scan, activate or load lore entries. */
+export function getWorldInfoBindings(cards = [characters[this_chid]]) {
+    const bindings = selected_world_info.map(name => ({ name, scope: 'Global' }));
+    if (chat_metadata[METADATA_KEY]) bindings.push({ name: chat_metadata[METADATA_KEY], scope: 'This story' });
+    if (power_user.persona_description_lorebook) bindings.push({ name: power_user.persona_description_lorebook, scope: 'Shared persona' });
+    for (const card of cards.filter(Boolean)) for (const name of getCharacterLoreNames(card)) bindings.push({ name, scope: `Shared character: ${card.name}` });
+    return bindings;
+}
+
 async function getCharacterLore() {
     const character = characters[this_chid];
     const name = character?.name;
     /** @type {Set<string>} */
     let worldsToSearch = new Set();
 
-    const baseWorldName = character?.data?.extensions?.world;
-    if (baseWorldName) {
-        worldsToSearch.add(baseWorldName);
-    }
-
-    // TODO: Maybe make the utility function not use the window context?
-    const fileName = getCharaFilename(this_chid);
-    const extraCharLore = world_info.charLore?.find((e) => e.name === fileName);
-    if (extraCharLore) {
-        worldsToSearch = new Set([...worldsToSearch, ...extraCharLore.extraBooks]);
-    }
+    worldsToSearch = new Set(getCharacterLoreNames(character));
 
     if (!worldsToSearch.size) {
         return [];

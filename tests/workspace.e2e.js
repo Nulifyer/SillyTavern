@@ -6,6 +6,241 @@ test.use({ channel: 'chromium', video: 'off', viewport: { width: 1280, height: 8
 test.setTimeout(90000);
 const runId = Date.now().toString(36);
 
+test('Scene summary uses native effective anchor and truthful save feedback with one settings tree', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} summary`);
+    await page.evaluate(async () => {
+        const script = await import('/script.js'); const { extension_settings } = await import('/scripts/extensions.js');
+        extension_settings.memory.memoryFrozen = true;
+        script.chat[0].extra ||= {}; script.chat[0].extra.memory = 'The book belongs to the library.';
+        const last = { ...structuredClone(script.chat[0]), mes: 'Final message', extra: { memory: 'Excluded final-message summary' } };
+        script.chat.push(last); script.addOneMessage(last);
+        await script.saveChatConditional(); await script.eventSource.emit(script.event_types.CHAT_CHANGED);
+    });
+    await page.locator('#workspace-header-portrait').click();
+    const panel = page.locator('#workspace-scene-info');
+    await expect(panel).toContainText('anchored at message 1');
+    await expect(panel).toContainText('updates are paused');
+    await panel.getByText('Saved summary', { exact: true }).click();
+    await expect(panel).toContainText('The book belongs to the library.');
+    await expect(panel).not.toContainText('Excluded final-message summary');
+    await panel.locator('[data-workspace-action="memory-settings"]').click();
+    await expect(page.locator('#memory_contents')).toBeVisible();
+    await page.route('**/api/chats/save', route => route.fulfill({ status: 503, json: { error: 'Synthetic summary save failure' } }));
+    await page.locator('#memory_contents').fill('Unsaved summary revision');
+    await expect(page.locator('#memory_save_status')).toContainText('Not saved', { timeout: 12000 });
+    await page.unroute('**/api/chats/save');
+    await page.locator('#memory_contents').fill('A corrected library summary.');
+    await expect(page.locator('#memory_save_status')).toHaveText('Saved to this story', { timeout: 12000 });
+    for (const width of [1280, 448, 320]) {
+        await page.setViewportSize({ width, height: 800 });
+        for (const [category, selector] of [['memory-settings', '#memory_contents'], ['authors-note', '#extension_floating_prompt']]) {
+            await settingsCategory(page, category, false);
+            await expect(page.locator(selector)).toBeVisible();
+            await expect(page.locator(selector)).toHaveCount(1);
+            await expect(page.locator('.workspace-mounted-panel')).toHaveCount(1);
+            expect(await page.locator('.workspace-mounted-panel').evaluate(node => node.scrollWidth <= node.clientWidth + 1)).toBe(true);
+        }
+    }
+    await page.keyboard.press('Escape');
+    await page.evaluate(async () => { await (await import('/script.js')).reloadCurrentChat(); });
+    expect(await page.evaluate(async () => (await import('/scripts/extensions/memory/index.js')).getMemorySnapshot().text)).toBe('A corrected library summary.');
+    await page.setViewportSize({ width: 320, height: 400 });
+    const nativeMemory = await page.locator('#memory_contents').elementHandle();
+    await settingsCategory(page, 'settings');
+    await page.locator('#workspace-layout-toggle').uncheck();
+    await expect(page.locator('#workspace-restore')).toBeInViewport();
+    await page.locator('#workspace-restore').click();
+    await expect(page.locator('body')).toHaveClass(/workspace-ui/);
+    expect(await page.locator('#memory_contents').evaluate((node, original) => node === original, nativeMemory)).toBe(true);
+});
+
+test('Scene details preserve chat and draft across sections, widths, focus refresh and freeze', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} details`);
+    await page.locator('#send_textarea').fill('My unsubmitted next turn.');
+    await page.evaluate(() => { window.__sceneMessage = document.querySelector('#chat .mes'); });
+    const effects = [];
+    page.on('request', request => { if (/\/api\/(chats\/save|backends\/.*\/generate|summarize)/.test(request.url())) effects.push(request.url()); });
+    await page.locator('#workspace-header-portrait').click();
+    const panel = page.locator('#workspace-scene-info');
+    await expect(panel.getByRole('heading', { name: 'Current story setup' })).toBeVisible();
+    await expect(panel).toContainText('Shared character card');
+    await expect(panel).toContainText('Attached lore');
+    for (const width of [1280, 1024, 768, 448, 390, 320]) {
+        await page.setViewportSize({ width, height: width === 320 ? 400 : 800 });
+        for (const section of ['setup', 'reply', 'related']) {
+            await panel.locator(`[data-scene-section="${section}"]`).click();
+            await expect.poll(() => panel.evaluate(node => node.scrollWidth <= node.clientWidth + 1)).toBe(true);
+            expect(await panel.evaluate(node => { const r = node.getBoundingClientRect(); return r.x >= 0 && r.right <= innerWidth + 1; })).toBe(true);
+        }
+        await page.screenshot({ path: testInfo.outputPath(`scene-details-${width}.png`) });
+    }
+    await panel.locator('[data-scene-section="setup"]').click();
+    await panel.locator('[data-workspace-action="story-overrides"]').focus();
+    await page.evaluate(async () => { const script = await import('/script.js'); await script.eventSource.emit(script.event_types.SUMMARY_UPDATED); });
+    await expect(panel.locator('[data-workspace-action="story-overrides"]')).toBeFocused();
+    const cdp = await freezePage(page); await resumePage(page, cdp);
+    await expect(panel).toBeVisible();
+    await page.keyboard.press('Escape');
+    await expect(panel).toBeHidden();
+    await expect(page.locator('#send_textarea')).toHaveValue('My unsubmitted next turn.');
+    expect(await page.evaluate(() => window.__sceneMessage === document.querySelector('#chat .mes'))).toBe(true);
+    expect(effects).toEqual([]);
+});
+
+test('Scene overrides Apply Cancel Escape and failed save honor the native story owner', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} overrides`);
+    await page.locator('#workspace-header-portrait').click();
+    const edit = page.locator('#workspace-scene-info [data-workspace-action="story-overrides"]');
+    for (const dismissal of ['Cancel', 'Escape']) {
+        await edit.click(); await page.locator('dialog[open] .chat_scenario').fill('Must not persist');
+        if (dismissal === 'Escape') await page.keyboard.press('Escape');
+        else await page.locator('dialog[open] .popup-button-cancel').click();
+        expect(await page.evaluate(async () => (await import('/script.js')).chat_metadata.scenario || '')).toBe('');
+    }
+    await edit.click(); await page.locator('dialog[open] .chat_scenario').fill('A quiet library with a blue book.');
+    await page.locator('dialog[open] .popup-button-ok').click();
+    await expect(page.locator('.workspace-scene-premise')).toHaveText('A quiet library with a blue book.');
+    await page.route('**/api/chats/save', route => route.fulfill({ status: 503, json: { error: 'Synthetic save failure' } }));
+    await edit.click(); await page.locator('dialog[open] .chat_scenario').fill('Rejected premise');
+    await page.locator('dialog[open] .popup-button-ok').click();
+    await expect(page.locator('dialog[open] .story-override-status')).toContainText('Not saved.');
+    await expect(page.locator('dialog[open] .chat_scenario')).toHaveValue('Rejected premise');
+    for (const width of [448, 320]) {
+        await page.setViewportSize({ width, height: width === 320 ? 400 : 600 });
+        await page.locator('#font_scale').evaluate((input, value) => {
+            input.value = value; input.dispatchEvent(new Event('input', { bubbles: true }));
+            document.documentElement.style.fontSize = value === '1.5' ? '20px' : '';
+        }, width === 320 ? '1.5' : '1');
+        await page.mouse.move(1, 1);
+        await expect(page.locator('dialog[open] .popup-button-ok')).toBeInViewport();
+        await expect(page.locator('dialog[open] .popup-button-cancel')).toBeInViewport();
+        await expect(page.locator('dialog[open] .popup-button-ok')).toHaveCSS('filter', 'none');
+        await page.screenshot({ path: testInfo.outputPath(`override-failure-before-hover-${width}.png`) });
+    }
+    await page.setViewportSize({ width: 1280, height: 800 });
+    await page.locator('#font_scale').evaluate(input => { input.value = '1'; input.dispatchEvent(new Event('input', { bubbles: true })); document.documentElement.style.fontSize = ''; });
+    expect(await page.evaluate(async () => (await import('/script.js')).chat_metadata.scenario)).toBe('A quiet library with a blue book.');
+    await page.unroute('**/api/chats/save');
+    await page.locator('dialog[open] .popup-button-cancel').click();
+    await expect(page.locator('.workspace-scene-premise')).toHaveText('A quiet library with a blue book.');
+    await page.evaluate(async () => { await (await import('/script.js')).reloadCurrentChat(); });
+    expect(await page.evaluate(async () => (await import('/script.js')).chat_metadata.scenario)).toBe('A quiet library with a blue book.');
+    // A different owner while the native popup is open must reject its pending edit.
+    if (!await edit.isVisible()) await page.locator('#workspace-header-portrait').click();
+    await edit.click(); await page.locator('dialog[open] .chat_scenario').fill('Obsolete edit');
+    await page.evaluate(async () => { await (await import('/script.js')).closeCurrentChat(); });
+    await page.locator('dialog[open] .popup-button-ok').click();
+    expect(await page.evaluate(async () => (await import('/script.js')).chat_metadata.scenario || '')).toBe('');
+});
+
+for (const streaming of [true, false]) test(`Scene context captures native ${streaming ? 'streaming' : 'nonstreaming'} reply and stays immutable through edits and rename`, async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} capture`);
+    await connectRecoveryFixture(page, 'http://127.0.0.1:12345/v1', streaming);
+    await page.route('**/api/backends/chat-completions/generate', route => route.fulfill(streaming
+        ? { contentType: 'text/event-stream', body: 'data: {"choices":[{"index":0,"delta":{"content":"The blue book contains a map."},"finish_reason":"stop"}]}\n\ndata: [DONE]\n\n' }
+        : { json: { choices: [{ message: { role: 'assistant', content: 'The blue book contains a map.' } }] } }));
+    await page.locator('#send_textarea').fill('Open the blue book.'); await page.locator('#send_but').click();
+    await expect(page.locator('#chat .mes_text').last()).toHaveText('The blue book contains a map.');
+    await expect(page.locator('#mes_stop')).toBeHidden();
+    const capture = await page.evaluate(async () => {
+        const script = await import('/script.js'); const captures = await import('/scripts/itemized-captures.js');
+        return captures.readClientCapture(script.getCurrentChatIdentity(), script.chat.at(-1), script.chat.length - 1);
+    });
+    expect(capture).toMatchObject({ stage: 'Recorded client request to SillyTavern', request: { model: 'workspace-fixture' } });
+    expect(capture.request.messages.some(message => String(message.content).includes('Open the blue book.'))).toBe(true);
+    await page.locator('#workspace-header-portrait').click();
+    await page.locator('[data-scene-section="reply"]').click();
+    const panel = page.locator('#workspace-scene-info');
+    await panel.locator('select').selectOption({ index: 1 });
+    await expect(panel).toContainText('Recorded client request to SillyTavern');
+    await expect(panel).toContainText('Configured context');
+    await panel.getByText('Recorded client messages', { exact: true }).click();
+    const requestText = panel.locator('.workspace-context-block').filter({ has: page.getByText('Recorded client messages', { exact: true }) }).locator('pre');
+    await requestText.evaluate(node => {
+        window.__sceneContextNode = node; node.scrollTop = 100; node.focus();
+        const range = document.createRange(); range.selectNodeContents(node); range.setEnd(node.firstChild, 28);
+        getSelection().removeAllRanges(); getSelection().addRange(range);
+    });
+    const textScroll = await requestText.evaluate(node => node.scrollTop);
+    await page.evaluate(async () => { const script = await import('/script.js'); script.chat_metadata.scenario = 'Temporary render trigger'; await script.eventSource.emit(script.event_types.CHAT_METADATA_UPDATED); });
+    await expect.poll(() => requestText.evaluate(node => node === window.__sceneContextNode && document.activeElement === node && node.scrollTop === window.__sceneContextNode.scrollTop && getSelection().toString().length === 28)).toBe(true);
+    expect(await requestText.evaluate(node => node.scrollTop)).toBe(textScroll);
+    await page.evaluate(async () => { const { oai_settings } = await import('/scripts/openai.js'); oai_settings.custom_model = 'changed-after-reply'; oai_settings.openai_max_context = 8192; });
+    await panel.locator('[data-scene-section="setup"]').click(); await panel.locator('[data-scene-section="reply"]').click();
+    await expect(panel).toContainText('workspace-fixture');
+    await panel.locator('[data-workspace-action="close-inspector"]').click();
+    await renameCurrentStory(page, `Workspace e2e ${testInfo.testId}-${runId} renamed capture`);
+    await page.locator('#workspace-header-portrait').click(); await panel.locator('[data-scene-section="reply"]').click();
+    await expect(panel).toContainText('Recorded client request to SillyTavern');
+    await page.unroute('**/api/backends/chat-completions/generate');
+    let requested, release;
+    const held = new Promise(resolve => release = resolve); const started = new Promise(resolve => requested = resolve);
+    await page.route('**/api/backends/chat-completions/generate', async route => { requested(); await held; await route.fulfill(streaming
+        ? { contentType: 'text/event-stream', body: 'data: {"choices":[{"index":0,"delta":{"content":" A new page appears."},"finish_reason":"stop"}]}\n\ndata: [DONE]\n\n' }
+        : { json: { choices: [{ message: { role: 'assistant', content: ' A new page appears.' } }] } }); });
+    await page.evaluate(async () => { window.__sceneContinue = (await import('/script.js')).Generate('continue'); });
+    await started;
+    await expect(panel).toContainText('This reply is still changing');
+    await expect(panel.locator('[data-workspace-action="scene-branch"]')).toBeDisabled();
+    await page.keyboard.press('Escape');
+    await expect(panel).toBeHidden(); await expect(page.locator('#mes_stop')).toBeVisible();
+    release(); await page.evaluate(() => window.__sceneContinue);
+    await page.locator('#workspace-header-portrait').click(); await panel.locator('[data-scene-section="reply"]').click();
+    await expect(panel).toContainText('Recorded client request to SillyTavern');
+    await page.evaluate(async () => { const script = await import('/script.js'); script.chat.at(-1).mes = 'Edited revision'; await script.eventSource.emit(script.event_types.MESSAGE_UPDATED, script.chat.length - 1); });
+    await expect(panel).toContainText('Recorded context unavailable for this reply revision');
+});
+
+test('Scene cast branch uses selected alternative and retries failed group registration without phantom history', async ({ page }, testInfo) => {
+    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+    const avatar = await page.evaluate(async () => (await import('/script.js')).characters[0].avatar);
+    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: avatar });
+    const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} companion` });
+    const group = await page.evaluate(async ({ name, members }) => { const script = await import('/script.js'); await script.getCharacters(); return (await import('/scripts/group-chats.js')).createGroupWithMembers(name, members); }, { name: `${prefix} cast`, members: [avatar, companion.avatar] });
+    await page.evaluate(async id => {
+        const script = await import('/script.js'); await (await import('/scripts/group-chats.js')).openGroupById(id, { newChat: true });
+        script.chat.splice(0);
+        const message = { name: 'Neutral guide', is_user: false, is_system: false, mes: 'First path', send_date: Date.now(), extra: {}, swipe_id: 0, swipes: ['First path', 'Second path'], swipe_info: [{ extra: {} }, { extra: {} }] };
+        script.chat.push(message); script.chat_metadata.scenario = 'Cast-specific premise'; await script.saveChatConditional();
+    }, group.id);
+    const before = await page.evaluate(async id => [...(await import('/scripts/group-chats.js')).groups.find(item => item.id === id).chats], group.id);
+    await page.route('**/api/groups/edit', route => route.fulfill({ status: 503, json: { error: 'Synthetic registration failure' } }));
+    expect(await page.evaluate(async () => (await import('/scripts/bookmarks.js')).createBranch(0, { swipeId: 1 }))).toBeUndefined();
+    expect(await page.evaluate(async id => (await import('/scripts/group-chats.js')).groups.find(item => item.id === id).chats, group.id)).toEqual(before);
+    await page.unroute('**/api/groups/edit');
+    const branch = await page.evaluate(async () => (await import('/scripts/bookmarks.js')).createBranch(0, { swipeId: 1 }));
+    expect(branch).toContain('Branch #1');
+    const child = await api(page, '/api/chats/group/get', { id: branch });
+    expect(child[1].mes).toBe('Second path'); expect(child[1].swipe_id).toBe(1);
+    expect(child[0].chat_metadata.scenario).toBe('Cast-specific premise');
+    expect(child[0].chat_metadata.branch_origin).toMatchObject({ kind: 'branch', messageIndex: 0, swipeId: 1 });
+    expect(await page.evaluate(async () => (await import('/script.js')).chat[0].mes)).toBe('First path');
+    expect(await page.evaluate(async id => (await import('/scripts/group-chats.js')).groups.find(item => item.id === id).chats, group.id)).toEqual([...before, branch]);
+});
+
+test('Scene greeting branch preserves parent, navigates both directions and rejects failed native saves', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} lineage`;
+    await startStory(page, title);
+    const original = await page.evaluate(async () => structuredClone((await import('/script.js')).chat));
+    await page.locator('#workspace-header-portrait').click(); await page.locator('[data-scene-section="reply"]').click();
+    await page.locator('[data-workspace-action="scene-branch"]').click();
+    await expect(page.locator('#workspace-chat-title')).toContainText('Branch #1');
+    await page.locator('[data-scene-section="related"]').click();
+    await expect(page.locator('#workspace-scene-info')).toContainText('Branch from message 1, alternative 1');
+    await page.locator('#workspace-scene-info [data-workspace-action="open-chat"]').click();
+    await expect(page.locator('#workspace-chat-title')).toHaveText(title);
+    expect(await page.evaluate(async () => (await import('/script.js')).chat[0].mes)).toBe(original[0].mes);
+    await page.locator('#workspace-header-portrait').click(); await page.locator('[data-scene-section="related"]').click();
+    await expect(page.locator('#workspace-scene-info')).toContainText('Branch #1');
+    const before = await api(page, '/api/chats/recent', {});
+    await page.route('**/api/chats/save', route => route.fulfill({ status: 503, json: { error: 'Synthetic branch failure' } }));
+    await page.locator('[data-scene-section="reply"]').click(); await page.locator('[data-workspace-action="scene-branch"]').click();
+    await expect(page.locator('#toast-container')).toContainText('could not be saved');
+    expect(await page.evaluate(async () => (await import('/script.js')).getCurrentChatId())).toBe(title);
+    await page.unroute('**/api/chats/save');
+    expect((await api(page, '/api/chats/recent', {})).map(record => record.file_name).sort()).toEqual(before.map(record => record.file_name).sort());
+});
+
 async function api(page, url, body) {
     return page.evaluate(async ({ url, body }) => {
         const { getRequestHeaders } = await import('/script.js');

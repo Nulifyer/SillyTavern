@@ -1,0 +1,23 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep Scene overrides|Scene cast branch|Scene context --output=/tmp/st-council-final-contract-results --reporter=line
+(node:2851984) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+[1A[2K(node:2852001) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2852001) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+[1A[2K(node:2852001) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/5] workspace.e2e.js:146:1 › Scene overrides Apply Cancel Escape and failed save honor the native story owner
+[1A[2K[2/5] workspace.e2e.js:191:40 › Scene context captures native streaming reply and stays immutable through edits and rename
+[1A[2K[3/5] workspace.e2e.js:191:40 › Scene context captures native nonstreaming reply and stays immutable through edits and rename
+[1A[2K[4/5] workspace.e2e.js:316:1 › Scene cast branch uses selected alternative and retries failed group registration without phantom history
+[1A[2K[5/5] workspace.e2e.js:2014:1 › image writer preserves scene context and story model through failure and retry
+[1A[2K  5 passed (31.0s)

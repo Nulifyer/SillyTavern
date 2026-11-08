@@ -1,3 +1,4 @@
+import { beginClientCapture, recordClientRequest, finishClientCapture, renameClientCaptures } from './scripts/itemized-captures.js';
 import {
     showdown,
     moment,
@@ -250,7 +251,7 @@ import { initTextGenModels } from './scripts/textgen-models.js';
 import { appendFileContent, hasPendingFileAttachment, populateFileAttachment, decodeStyleTags, encodeStyleTags, isExternalMediaAllowed, preserveNeutralChat, restoreNeutralChat, formatCreatorNotes, initChatUtilities, addDOMPurifyHooks } from './scripts/chats.js';
 import { getPresetManager, initPresetManager } from './scripts/preset-manager.js';
 import { evaluateMacros, getLastMessageId, initMacros } from './scripts/macros.js';
-import { currentUser, setUserControls } from './scripts/user.js';
+import { currentUser, getCurrentUserHandle, setUserControls } from './scripts/user.js';
 import { POPUP_RESULT, POPUP_TYPE, Popup, callGenericPopup, fixToastrForDialogs } from './scripts/popup.js';
 import { renderTemplate, renderTemplateAsync } from './scripts/templates.js';
 import { initScrapers } from './scripts/scrapers.js';
@@ -800,6 +801,8 @@ async function firstLoadInit() {
     initCustomSelectedSamplers();
     initDataMaid();
     initItemizedPrompts();
+    eventSource.on(event_types.CHAT_RENAMED, async data => { await renameClientCaptures(getCurrentUserHandle(), data).catch(() => {}); await eventSource.emit(event_types.CLIENT_CONTEXT_UPDATED); });
+    eventSource.on(event_types.CHARACTER_RENAMED, async (oldAvatar, newAvatar) => { await renameClientCaptures(getCurrentUserHandle(), { oldAvatar, newAvatar }).catch(() => {}); await eventSource.emit(event_types.CLIENT_CONTEXT_UPDATED); });
     initAccessibility();
     initWorkspace();
     initBrowserRecovery();
@@ -3835,6 +3838,7 @@ class StreamingProcessor {
             message.extra.reasoning_signature = this.reasoningSignature;
         }
 
+        if (this.type !== 'impersonate') await finishClientCapture(this.clientCapture, getCurrentChatIdentity(), message, messageId);
         if (unlockUI) {
             this.markUIGenStopped();
         }
@@ -5364,6 +5368,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
      * @returns {Promise<void|*|Awaited<*>|String|{fromStream}|string|undefined|Object>}
      * @throws {Error|object} Error with message text, or Error with response JSON (OAI/Horde), or the actual response JSON (novel|textgenerationwebui|kobold)
      */
+    let clientCapture;
     async function finishGenerating() {
         if (power_user.console_log_prompts) {
             console.log(generate_data.prompt);
@@ -5399,6 +5404,8 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
             charPersonality: personality,
             scenarioText: scenario,
             this_max_context: this_max_context,
+            contextCapacity: getMaxContextTokens(),
+            outputBudget: getMaxResponseTokens(),
             padding: power_user.token_padding,
             main_api: main_api,
             instruction: main_api !== 'openai' && power_user.sysprompt.enabled ? substituteParams(power_user.prefer_character_prompt && system ? system : power_user.sysprompt.content) : '',
@@ -5409,6 +5416,8 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
             examplesCount: main_api !== 'openai' ? (pinExmString ? mesExamplesArray.length : count_exm_add) : oaiMessageExamples.length,
         };
 
+        clientCapture = beginClientCapture(getCurrentChatIdentity(), type, additionalPromptStuff, main_api === 'openai' ? getChatCompletionModel() : String(generate_data.model || 'Provider-selected model'));
+        recordClientRequest(clientCapture, generate_data, 'Prepared client assembly');
         //console.log(additionalPromptStuff);
         const itemizedIndex = itemizedPrompts.findIndex((item) => item.mesId === additionalPromptStuff.mesId);
 
@@ -5428,7 +5437,8 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
                 streamingProcessor.firstMessageText = '';
             }
 
-            streamingProcessor.generator = await sendStreamingRequest(type, generate_data, { jsonSchema });
+            streamingProcessor.clientCapture = clientCapture;
+            streamingProcessor.generator = await sendStreamingRequest(type, generate_data, { jsonSchema, recordClientRequest: data => recordClientRequest(clientCapture, data) });
 
             hideSwipeButtons();
             let getMessage = await streamingProcessor.generate();
@@ -5498,7 +5508,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
                 });
             }
         } else {
-            return await sendGenerationRequest(type, generate_data, { jsonSchema });
+            return await sendGenerationRequest(type, generate_data, { jsonSchema, recordClientRequest: data => recordClientRequest(clientCapture, data) });
         }
     }
 
@@ -5590,6 +5600,7 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
             parseAndSaveLogprobs(data, continue_mag);
         }
 
+        if (!isImpersonate && type !== 'quiet') await finishClientCapture(clientCapture, getCurrentChatIdentity(), chat.at(-1), chat.length - 1);
         if (canPerformToolCalls) {
             const hasToolCalls = ToolManager.hasToolCalls(data);
             const shouldDeleteMessage = type !== 'swipe' && ['', '...'].includes(getMessage) && !reasoning;
@@ -6164,6 +6175,7 @@ function setInContextMessages(msgInContextCount, type) {
 /**
  * @typedef {object} AdditionalRequestOptions
  * @property {JsonSchema} [jsonSchema]
+ * @property {function(object): void} [recordClientRequest]
  */
 
 /**
@@ -7470,12 +7482,12 @@ export async function saveChat({ chatName, withMetadata, mesId, force = false, c
 
     if (!fileName && name2 === neutralCharacterName) {
         // TODO: Do something for a temporary chat with no character.
-        return;
+        return false;
     }
 
     if (!fileName) {
         console.warn('saveChat called without chat_name and no chat file found');
-        return;
+        return false;
     }
 
     characters[this_chid].date_last_chat = Date.now();
@@ -7509,7 +7521,7 @@ export async function saveChat({ chatName, withMetadata, mesId, force = false, c
         const result = await fetch('/api/chats/save', saveChatRequest);
 
         if (result.ok) {
-            return;
+            return true;
         }
 
         const errorData = await result.json();
@@ -7531,13 +7543,14 @@ export async function saveChat({ chatName, withMetadata, mesId, force = false, c
         if (!forceSaveConfirmed) {
             console.warn('Chat integrity check failed, and user did not confirm the overwrite. Reloading the page.');
             window.location.reload();
-            return;
+            return false;
         }
 
-        await saveChat({ chatName, withMetadata, mesId, force: true });
+        return await saveChat({ chatName, withMetadata, mesId, force: true, chatData });
     } catch (error) {
         console.error(error);
         toastr.error(t`Check the server connection and reload the page to prevent data loss.`, t`Chat could not be saved`);
+        return false;
     }
 }
 
@@ -9061,6 +9074,12 @@ export async function setCharacterSettingsOverrides() {
         return;
     }
 
+    const owner = getCurrentChatIdentity();
+    if (isGenerating()) {
+        toastr.info('Stop the current reply before editing this story.');
+        return false;
+    }
+
     const scenarioOverrideValue = chat_metadata.scenario || '';
     const exampleMessagesValue = chat_metadata.mes_example || '';
     const systemPromptValue = chat_metadata.system_prompt || '';
@@ -9090,7 +9109,7 @@ export async function setCharacterSettingsOverrides() {
     });
 
     $template.find('.remove_scenario_override').on('click', async function () {
-        const confirm = await Popup.show.confirm(t`Are you sure you want to remove all overrides?`, t`This action cannot be undone.`);
+        const confirm = await Popup.show.confirm(t`Clear the pending overrides?`, t`Apply to this story to save the cleared fields, or Cancel to keep your current setup.`);
         if (!confirm) {
             return;
         }
@@ -9103,17 +9122,51 @@ export async function setCharacterSettingsOverrides() {
         pendingChanges.system_prompt = '';
     });
 
-    // Wait for popup close/confirm.
-    await callGenericPopup($template, POPUP_TYPE.TEXT, '', {
+    const $status = $('<p role="status" class="story-override-status"></p>');
+    $template.append($status);
+    let saved = false;
+    let applying = false;
+    await callGenericPopup($template, POPUP_TYPE.CONFIRM, '', {
+        okButton: 'Apply',
+        cancelButton: 'Cancel',
         wide: true,
         large: true,
         allowVerticalScrolling: true,
+        onClosing: async popup => {
+            if (applying) return false;
+            if (popup.result !== POPUP_RESULT.AFFIRMATIVE) return true;
+            if (owner !== getCurrentChatIdentity() || isGenerating()) {
+                toastr.info('The story changed or a reply started. Your pending changes were not applied.');
+                return true;
+            }
+            applying = true;
+            popup.dlg.setAttribute('aria-busy', 'true');
+            $template.find('textarea, button').prop('disabled', true);
+            popup.okButton.setAttribute('aria-disabled', 'true');
+            popup.cancelButton.setAttribute('aria-disabled', 'true');
+            popup.buttonControls.prepend($status[0]);
+            $status.text('Saving to this story…');
+            const previous = { scenario: chat_metadata.scenario, mes_example: chat_metadata.mes_example, system_prompt: chat_metadata.system_prompt };
+            chat_metadata.scenario = pendingChanges.scenario;
+            chat_metadata.mes_example = pendingChanges.examples;
+            chat_metadata.system_prompt = pendingChanges.system_prompt;
+            try {
+                saved = await saveMetadata({ expectedIdentity: owner });
+                if (!saved && owner === getCurrentChatIdentity()) Object.assign(chat_metadata, previous);
+                await eventSource.emit(event_types.CHAT_METADATA_UPDATED);
+                $status.text(saved ? 'Saved to this story.' : 'Not saved. Try Apply again.');
+                // Keep pending editor text available for retry after a failed save.
+                return saved || owner !== getCurrentChatIdentity();
+            } finally {
+                applying = false;
+                popup.dlg.removeAttribute('aria-busy');
+                $template.find('textarea, button').prop('disabled', false);
+                popup.okButton.removeAttribute('aria-disabled');
+                popup.cancelButton.removeAttribute('aria-disabled');
+            }
+        },
     });
-
-    chat_metadata.scenario = pendingChanges.scenario;
-    chat_metadata.mes_example = pendingChanges.examples;
-    chat_metadata.system_prompt = pendingChanges.system_prompt;
-    await saveMetadata();
+    return saved;
 }
 
 /**
@@ -9467,34 +9520,39 @@ export async function deleteSwipe(swipeId = null, messageId = chat.length - 1) {
     return newSwipeId;
 }
 
-export async function saveMetadata() {
-    return await saveChatConditional();
+/** Stable active owner boundary for native operations that await user or network work. */
+export function getCurrentChatIdentity() {
+    return JSON.stringify([getCurrentUserHandle(), selected_group ? 'group' : 'character', String(selected_group || characters[this_chid]?.avatar || ''), String(getCurrentChatId() ?? ''), String(chat_metadata.integrity || '')]);
 }
 
-export async function saveChatConditional() {
+export async function saveMetadata(options = {}) {
+    return await saveChatConditional(options);
+}
+
+export async function saveChatConditional({ expectedIdentity = getCurrentChatIdentity() } = {}) {
     try {
         await waitUntilCondition(() => !isChatSaving, DEFAULT_SAVE_EDIT_TIMEOUT, 100);
     } catch {
         console.warn('Timeout waiting for chat to save');
-        return;
+        return false;
     }
 
     try {
+        if (expectedIdentity !== getCurrentChatIdentity()) return false;
         cancelDebouncedChatSave();
 
         isChatSaving = true;
 
-        if (selected_group) {
-            await saveGroupChat(selected_group, true);
-        } else {
-            await saveChat();
-        }
+        const saved = selected_group ? await saveGroupChat(selected_group, true) : await saveChat();
+        if (saved === false) return false;
 
         // Save token and prompts cache to IndexedDB storage
         saveTokenCache();
         saveItemizedPrompts(getCurrentChatId());
+        return true;
     } catch (error) {
         console.error('Error saving chat', error);
+        return false;
     } finally {
         isChatSaving = false;
     }

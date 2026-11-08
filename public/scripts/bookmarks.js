@@ -14,6 +14,9 @@ import {
     saveItemizedPrompts,
     setActiveGroup,
     getCurrentChatDetails,
+    getCurrentChatIdentity,
+    getCurrentChatId,
+    isGenerating,
 } from '../script.js';
 import { humanizedDateTime } from './RossAscends-mods.js';
 import {
@@ -185,6 +188,8 @@ function getBranchChatSnapshot(mesId, { swipeId = null } = {}) {
 
 // Export is used by Timelines extension. Do not remove.
 export async function createBranch(mesId, { swipeId = null } = {}) {
+    if (isGenerating()) return;
+    const owner = getCurrentChatIdentity();
     if (!chat.length) {
         toastr.warning('The chat is empty.', 'Branch creation failed');
         return;
@@ -198,7 +203,7 @@ export async function createBranch(mesId, { swipeId = null } = {}) {
     const lastMes = chat[mesId];
     const mainChatName = (getCurrentChatDetails()).sessionName;
     // Mint a fresh integrity slug so the branch is distinguishable from its parent (#5942)
-    const newMetadata = { main_chat: mainChatName, integrity: uuidv4() };
+    const newMetadata = { main_chat: mainChatName, integrity: uuidv4(), branch_origin: { version: 1, kind: 'branch', parentFile: getCurrentChatId(), parentIntegrity: chat_metadata.integrity || null, messageIndex: Number(mesId), swipeId: swipeId ?? lastMes.swipe_id ?? 0 } };
     const selectedSwipeId = swipeId === null ? null : Number(swipeId);
 
     if (selectedSwipeId !== null && (!Number.isInteger(selectedSwipeId) || selectedSwipeId < 0 || selectedSwipeId >= (lastMes?.swipes?.length ?? 0))) {
@@ -214,6 +219,7 @@ export async function createBranch(mesId, { swipeId = null } = {}) {
         return `${cleanName} - Branch #${i}`;
     }
     const existingChats = await getExistingChatNames();
+    if (owner !== getCurrentChatIdentity() || isGenerating() || chat[mesId] !== lastMes) return;
     const name = getUniqueName(mainChatName, (x) => existingChats.includes(x), { nameBuilder: buildBranchName, startIndex: 1 });
     if (!name) {
         console.error('Could not generate a unique branch name.');
@@ -227,11 +233,11 @@ export async function createBranch(mesId, { swipeId = null } = {}) {
         return;
     }
 
-    if (selected_group) {
-        await saveGroupBookmarkChat(selected_group, name, newMetadata, mesId, branchChatSnapshot);
-    } else {
-        await saveChat({ chatName: name, withMetadata: newMetadata, mesId, chatData: branchChatSnapshot });
-    }
+    const saved = selected_group
+        ? await saveGroupBookmarkChat(selected_group, name, newMetadata, mesId, branchChatSnapshot)
+        : await saveChat({ chatName: name, withMetadata: newMetadata, mesId, chatData: branchChatSnapshot });
+    if (!saved) return;
+    if (owner !== getCurrentChatIdentity()) return name;
     // append to branches list if it exists
     // otherwise create it
     if (typeof lastMes.extra !== 'object') {
@@ -253,6 +259,8 @@ export async function createBranch(mesId, { swipeId = null } = {}) {
  * @returns {Promise<string?>} - A promise that resolves to the bookmark name when the bookmark is created.
  */
 export async function createNewBookmark(mesId, { forceName = null } = {}) {
+    if (isGenerating()) return null;
+    const owner = getCurrentChatIdentity();
     if (this_chid === undefined && !selected_group) {
         toastr.info('No character selected.', 'Create Checkpoint');
         return null;
@@ -279,16 +287,18 @@ export async function createNewBookmark(mesId, { forceName = null } = {}) {
         return null;
     }
 
+    if (owner !== getCurrentChatIdentity() || isGenerating() || chat[mesId] !== lastMes) return null;
     const mainChat = selected_group ? groups?.find(x => x.id == selected_group)?.chat_id : characters[this_chid].chat;
     // Mint a fresh integrity slug so the checkpoint is distinguishable from its parent (#5942)
-    const newMetadata = { main_chat: mainChat, integrity: uuidv4() };
+    const newMetadata = { main_chat: mainChat, integrity: uuidv4(), branch_origin: { version: 1, kind: 'checkpoint', parentFile: getCurrentChatId(), parentIntegrity: chat_metadata.integrity || null, messageIndex: Number(mesId), swipeId: lastMes.swipe_id ?? 0 } };
     await saveItemizedPrompts(name);
+    if (owner !== getCurrentChatIdentity() || isGenerating() || chat[mesId] !== lastMes) return null;
 
-    if (selected_group) {
-        await saveGroupBookmarkChat(selected_group, name, newMetadata, mesId);
-    } else {
-        await saveChat({ chatName: name, withMetadata: newMetadata, mesId });
-    }
+    const saved = selected_group
+        ? await saveGroupBookmarkChat(selected_group, name, newMetadata, mesId)
+        : await saveChat({ chatName: name, withMetadata: newMetadata, mesId });
+    if (!saved) return null;
+    if (owner !== getCurrentChatIdentity()) return name;
 
     lastMes.extra.bookmark_link = name;
 
@@ -455,12 +465,15 @@ export async function branchChat(mesId, { swipeId = null } = {}) {
         return null;
     }
 
+    const owner = getCurrentChatIdentity();
     const fileName = await createBranch(mesId, { swipeId });
     if (!fileName) {
         return null;
     }
 
+    if (owner !== getCurrentChatIdentity() || isGenerating()) return fileName;
     await saveItemizedPrompts(fileName);
+    if (owner !== getCurrentChatIdentity() || isGenerating()) return fileName;
 
     if (selected_group) {
         await openGroupChat(selected_group, fileName);

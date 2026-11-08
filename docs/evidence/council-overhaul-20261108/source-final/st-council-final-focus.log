@@ -1,0 +1,22 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep Scene summary|Scene context --output=/tmp/st-council-final-focus-results --reporter=line
+(node:2848934) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+[1A[2K(node:2848962) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K(node:2848962) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+[1A[2K(node:2848962) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1A[2K[1/4] workspace.e2e.js:14:1 › Scene summary uses native effective anchor and truthful save feedback with one settings tree
+[1A[2K[2/4] workspace.e2e.js:191:40 › Scene context captures native streaming reply and stays immutable through edits and rename
+[1A[2K[3/4] workspace.e2e.js:191:40 › Scene context captures native nonstreaming reply and stays immutable through edits and rename
+[1A[2K[4/4] workspace.e2e.js:2014:1 › image writer preserves scene context and story model through failure and retry
+[1A[2K  4 passed (29.0s)

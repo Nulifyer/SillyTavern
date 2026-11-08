@@ -1,0 +1,134 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to message" [ref=e3] [cursor=pointer]:
+    - /url: "#send_textarea"
+  - complementary "Workspace" [ref=e4]:
+    - link "SillyTavern" [ref=e5] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e6]: SillyTavern
+    - button "Find anything Ctrl K" [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]: 
+      - generic [ref=e9]: Find anything
+      - generic [ref=e10]: Ctrl K
+    - button "New story" [ref=e11] [cursor=pointer]:
+      - generic [ref=e12]: +
+      - generic [ref=e13]: New story
+    - navigation "Main navigation" [ref=e14]:
+      - button "Stories" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 
+        - generic [ref=e17]: Stories
+      - button "Characters" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: 
+        - generic [ref=e20]: Characters
+      - button "Archive" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Archive
+    - text: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]: Recent stories
+        - button "View all stories" [ref=e27] [cursor=pointer]:
+          - generic [ref=e28]: 
+      - generic [ref=e29]:
+        - article [ref=e30]:
+          - button "Continue Seraphina - 2026-11-08@13h43m15s825ms with Seraphina" [ref=e31] [cursor=pointer]:
+            - generic [ref=e32]:
+              - strong [ref=e33]: Seraphina - 2026-11-08@13h43m15s825ms
+              - generic [ref=e34]: Seraphina
+        - article [ref=e35]:
+          - button "Continue Seraphina - 2023-5-12 @21h 32m 29s 224ms with Seraphina" [ref=e36] [cursor=pointer]:
+            - generic [ref=e37]:
+              - strong [ref=e38]: Seraphina - 2023-5-12 @21h 32m 29s 224ms
+              - generic [ref=e39]: Seraphina
+    - generic [ref=e40]:
+      - button "Settings" [ref=e41] [cursor=pointer]:
+        - generic [ref=e42]: 
+        - generic [ref=e43]: Settings
+      - text: 
+      - button "Storyteller Manage persona" [ref=e44] [cursor=pointer]:
+        - generic [ref=e46]: 
+        - generic [ref=e47]:
+          - strong [ref=e48]: Storyteller
+          - generic [ref=e49]: Manage persona
+        - generic [ref=e50]: 
+  - banner [ref=e51]:
+    - text: 
+    - generic [ref=e52]:
+      - strong [ref=e53]: Stories
+      - generic [ref=e54]: Roleplay workspace
+    - generic:  +
+  - text:  
+  - generic:
+    - generic:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items   X                                      
+    - generic:                                                                         
+    - generic:                                                
+    - generic:                 +     
+    - generic:                                    
+    - generic:        +                            
+    - generic:          +                                                                                     +                      +   + +  +     +        +        +        +                                               
+    - generic:                     
+    - generic:                                                              +        +          No characters available                          
+  - generic:                      +                                                                               +    + +                  
+  - generic:                  
+  - generic [ref=e55]:
+    - text:                 
+    - region "Roleplay workspace" [ref=e56]:
+      - generic [ref=e57]:
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - heading "Stories" [level=1] [ref=e60]
+            - paragraph [ref=e61]: Continue a conversation or start a new scene.
+          - button "New story" [ref=e63] [cursor=pointer]:
+            - generic [ref=e64]: +
+            - generic [ref=e65]: New story
+        - generic [ref=e66]:
+          - generic [ref=e67]:
+            - generic [ref=e68]: 
+            - searchbox "Search stories and characters" [ref=e69]
+          - button "View archive" [ref=e70] [cursor=pointer]:
+            - generic [ref=e71]: 
+            - generic [ref=e72]: View archive
+        - region "Story list" [ref=e73]:
+          - generic [ref=e74]:
+            - heading "Today" [level=2] [ref=e75]
+            - article [ref=e76]:
+              - button "Continue Seraphina - 2026-11-08@13h43m15s825ms with Seraphina" [ref=e77] [cursor=pointer]:
+                - generic [ref=e78]:
+                  - strong [ref=e79]: Seraphina - 2026-11-08@13h43m15s825ms
+                  - generic [ref=e80]: Seraphina
+                  - generic [ref=e81]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+              - time [ref=e82]: Nov 8
+              - group [ref=e83]:
+                - generic "Actions for Seraphina - 2026-11-08@13h43m15s825ms" [ref=e84]:
+                  - generic [ref=e85]: 
+                - text:   
+            - article [ref=e86]:
+              - button "Continue Seraphina - 2023-5-12 @21h 32m 29s 224ms with Seraphina" [ref=e87] [cursor=pointer]:
+                - generic [ref=e88]:
+                  - strong [ref=e89]: Seraphina - 2023-5-12 @21h 32m 29s 224ms
+                  - generic [ref=e90]: Seraphina
+                  - generic [ref=e91]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+              - time [ref=e92]: Nov 8
+              - group [ref=e93]:
+                - generic "Actions for Seraphina - 2023-5-12 @21h 32m 29s 224ms" [ref=e94]:
+                  - generic [ref=e95]: 
+                - text:   
+    - text:             |     |     |                                                                                          
+  - text:                      1  
+  - generic [ref=e96]: 
+  - status [ref=e97]
+  - status [ref=e98]
+  - status [ref=e99]
+  - status [ref=e100]
+  - status [ref=e101]
+  - status [ref=e102]
+  - status [ref=e103]
+  - status [ref=e104]
+  - status [ref=e105]
+  - status [ref=e106]
+  - status [ref=e107]
+  - status [ref=e108]
+  - text: 
+```

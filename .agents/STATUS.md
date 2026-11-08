@@ -8,33 +8,37 @@ startup gates and publication. Index: `sha256:a2831236504e74d4eb4c20fb8eb8736b38
 
 ## Active tasks
 
-None. All six audit findings and the related load/image ownership gaps are fixed.
-Parent owned integration, browser verification and release. Independent workers
-owned draft/archive/status/recording and native image fixes, with focused tests;
-the native load integration also received independent review. One source commit.
+[Council-selected overhaul](work/council-overhaul.md) is active. The user requests
+three collaborating council members, parent implementation and final review by
+the same members. Parent owns runtime/tests/release. Members own separate scope,
+critique and verdict notes. The 20-product research is completed input.
 
 ## Next action
 
-Homelab owns any later production update using the
-[handoff](../docs/evidence/audit-fixes-20261108/handoff.md).
-Never deploy production69 here. Preserve volumes/network boundaries, record the
-actual previous image/private backup and reload every open tab after updating.
-Do not clear browser storage. Production69/shared85 were never accessed here.
+Parent implementation of docs/council-overhaul-plan.md is present. The same three
+council members have reviewed separate fresh synthetic browser fixtures and sent
+source/UX findings. All three members accept the implementation and are satisfied with its agreed
+scope. Publish v1.19.22 and verify the pulled image with fresh volumes/no overlays,
+then give the same council that proof for final release verdicts. No
+new production deployment is authorized. Preserve unrelated research and prior
+operational records.
 
 ## Verification
 
-Actual image on http://127.0.0.1:8033, st-fork-fixes-release-20261108, passed all
-86 browser cases together in 10.6 minutes, both live Juiced cases, no
-skipped/flaky results or uncaught page errors. Five fresh synthetic volumes,
-no overlays, 37 runtime matches, version/heartbeat/HTTPS and both architecture
-labels passed. 478 unit tests in 24 suites, root lint and actionlint pass.
-Test lint has 0 errors and 51 warnings. Exact console/network errors, failed
-attempts and limits: docs/evidence/audit-fixes-20261108/.
+Candidate v1.19.22 source: 487 unit tests in 26 suites and all 93 browser cases
+pass, including both live Juiced cases. No skips, flakes or uncaught page errors.
+Root lint/actionlint pass; test lint has 0 errors/53 warnings. First broad attempt
+88passed/3cast failures is retained; missing native cast controls were restored
+and the affected seven-case run passes. Late footer paint/enlarged-copy changes
+pass a separate final regression; the actual image full run remains required.
 
-Source fixture 8032 uses overlays, not image proof. Audit baseline 8031 uses v1.19.20.
-The earlier source run had 69 passes and 3 failures. Their causes remain
-unresolved; passing replacement checks does not establish them. All prior
-evidence and synthetic volumes are preserved.
+Evidence: docs/evidence/council-overhaul-20261108/. Source8035, isolated focused
+source8034, council story8036/control8037/quality8038 each use five fresh synthetic
+volumes. The local neutral fixture provider18437 uses no GPU. No production,
+sharedtest85 or runtime/policy/cache changes.
+
+Previous actual v1.19.21 image acceptance remains in
+`docs/evidence/audit-fixes-20261108/`; it does not qualify current edits.
 
 ## Limits
 
@@ -45,4 +49,4 @@ An image upload already submitted at Stop can leave an unused media file.
 
 ## Blockers
 
-None. The v1.19.20 handoff remains held as historical evidence; use v1.19.21.
+No external blocker. Current work is not release-qualified until final acceptance and publication.

@@ -1,0 +1,154 @@
+{
+  "fixture": "http://127.0.0.1:8037",
+  "container": "st-council-control-20261108",
+  "tab": "tab_o_dfebdf42-64d6-46f6-9748-1374a67d0b39",
+  "kind": "fresh synthetic source-overlay review",
+  "checks": {
+    "capture-immutability": {
+      "captureId": "babb8c82-e097-4f5f-b4eb-35376d1bd677",
+      "capturedContext": 4095,
+      "capturedModel": "council-neutral-fixture",
+      "capturedOutput": 300,
+      "cardScenario": "",
+      "currentContext": 8192,
+      "currentModel": "current-setup-changed-only",
+      "currentOutput": 222,
+      "immutable": true,
+      "scenario": "Control fixture saved premise"
+    },
+    "capture-privacy": {
+      "captured": true,
+      "containsBodySentinel": false,
+      "containsHeaderSentinel": false,
+      "generating": false,
+      "id": "011a2da4-9145-4d50-86fe-8ce63b87c7cf",
+      "reply": "The blue book opens to a map of the quiet library. A red teapot marks the reading desk. (Fixture reply 3.)",
+      "requestKeys": [
+        "model",
+        "chat_completion_source",
+        "max_tokens",
+        "temperature",
+        "top_p",
+        "frequency_penalty",
+        "presence_penalty",
+        "stream",
+        "custom_prompt_post_processing",
+        "messages"
+      ]
+    },
+    "capture-continue": {
+      "after": "2c426dcb-bae4-4166-a39d-4181926cd9fe",
+      "before": "011a2da4-9145-4d50-86fe-8ce63b87c7cf",
+      "captured": true,
+      "generating": false,
+      "newCapture": true,
+      "replyLength": 213,
+      "type": "continue"
+    },
+    "capture-swipe-new": {
+      "alternatives": 2,
+      "captured": true,
+      "generating": false,
+      "id": "d2bbe01f-0513-484d-b114-03eef28e8e86",
+      "refs": [
+        "2c426dcb-bae4-4166-a39d-4181926cd9fe",
+        "d2bbe01f-0513-484d-b114-03eef28e8e86"
+      ],
+      "swipe": 1,
+      "type": "swipe"
+    },
+    "capture-swipe-return": {
+      "captured": true,
+      "id": "2c426dcb-bae4-4166-a39d-4181926cd9fe",
+      "returnsOriginalReference": true,
+      "swipe": 0,
+      "type": "continue"
+    },
+    "capture-rename": {
+      "captureId": "2c426dcb-bae4-4166-a39d-4181926cd9fe",
+      "captured": true,
+      "file": "Control exact story review",
+      "name": "Control exact story review",
+      "scenario": "Control fixture saved premise",
+      "swipe": 0
+    },
+    "summary-edit": {
+      "snapshot": {
+        "anchor": 3,
+        "injected": "[Summary: The blue book contains a library map. The red teapot is on the reading desk.]",
+        "paused": false,
+        "saving": "Saved to this story",
+        "text": "The blue book contains a library map. The red teapot is on the reading desk."
+      },
+      "status": "Saved to this story",
+      "textareaCount": 1
+    },
+    "summary-reload": {
+      "captured": true,
+      "file": "Control exact story review",
+      "memory": {
+        "anchor": 3,
+        "injected": "[Summary: The blue book contains a library map. The red teapot is on the reading desk.]",
+        "paused": false,
+        "saving": "",
+        "text": "The blue book contains a library map. The red teapot is on the reading desk."
+      },
+      "scenario": "Control fixture saved premise"
+    },
+    "scenario-failure": {
+      "committed": "Control fixture saved premise",
+      "inert": false,
+      "open": 1,
+      "pending": "Control retry premise after synthetic failure",
+      "status": "Not saved. Your previous setup remains. Check the connection, then Apply again or Cancel."
+    },
+    "classic-restoration": {
+      "memoryCount": 1,
+      "memorySame": true,
+      "modelCount": 1,
+      "modelSame": true,
+      "mountedCount": 0,
+      "workspace": false
+    },
+    "held-continue-context-fixed": {
+      "captureCurrentlyMatches": false,
+      "generating": true,
+      "held": true,
+      "panel": "Scene details\nSeraphina\nControl exact story review\nCharacter story\nSetup & memory\nReply context\nRelated stories\nSelected reply\nReply to inspect\n1 · Seraphina · *You wake with a start, recalling the events that led you deep into th\n3 · Seraphina · The blue book opens to a map of the quiet library. A red teapot marks\n5 · Seraphina · The blue book opens to a map of the quiet library. A red teapot marks\n\nAlternative 1 · Reply in progress\n\nThis reply is still changing. Its current revision can be inspected when generation ends. Older replies remain available.\n\nCurrent setup can differ from this recorded request. Components overlap and do not form additive token counts. Captures retain at most 60 replies in this browser, up to 240,000 characters each. Media and tool payloads are omitted.\n\nServer compatibility conversion, the final provider request and model chat template are unavailable here. No inference runs when inspecting a reply.\n\nBranch from this reply",
+      "reply": "The blue book opens to a map of the quiet library. A red teapot marks the reading desk. (Fixture reply 3.) The blue book opens to a map of the quiet library. A red teapot marks the reading desk. (Fixture reply 4.)  A new unfinished line now changes this revision."
+    },
+    "held-older-context": {
+      "branchDisabled": true,
+      "generating": true,
+      "oldCaptureVisible": true,
+      "pickerHeight": 44,
+      "selected": "2"
+    },
+    "held-complete": {
+      "captureId": "49230959-890c-434f-8dcf-b20da81be7a2",
+      "captured": true,
+      "fetchRestored": true,
+      "generating": false
+    },
+    "classic-fixed-before-return": {
+      "hit": true,
+      "memorySame": true,
+      "modelSame": true,
+      "mounted": 0,
+      "rect": "{\"x\":135.0625,\"y\":52,\"width\":172.9375,\"height\":39,\"top\":52,\"right\":308,\"bottom\":91,\"left\":135.0625}",
+      "workspace": false
+    },
+    "classic-fixed-return": {
+      "memoryCount": 1,
+      "memorySame": true,
+      "modelCount": 1,
+      "modelSame": true,
+      "workspace": true
+    }
+  },
+  "unsuccessfulExperiments": [
+    "Initial held Continue did not reach the request because the provider had not reconnected after reload; no conclusion. Restored interception and repeated with confirmed held SSE.",
+    "Initial classic return failed at320×400 with button y=-104. After top-anchor correction, actual hit-test and click passed.",
+    "One section click encountered a detached transient node during the initial render; repeating from the current stable panel succeeded. No reproducible task failure established."
+  ]
+}

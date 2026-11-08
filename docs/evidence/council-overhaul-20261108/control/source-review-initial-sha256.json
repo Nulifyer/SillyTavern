@@ -1,0 +1,12 @@
+{
+  "public/script.js": "b5b84749bd9876efd1ecf380b74e74261044af9ba21198c48db30c294e9c1af1",
+  "public/scripts/itemized-captures.js": "7cc3e7e882fbcce85b2fd56386ab6717cf8e92e1e1f64132ffcc05cbed3b524f",
+  "public/scripts/workspace-scene.js": "6c7e7bf5c52934cc48a8f02633e1a0a5e198e8092b3d8348b77f98f886518a1e",
+  "public/scripts/workspace.js": "0ee9ac88d835da19e9748a8057f6f43f553c7316ad35bf1dbeb9ea67cea1481b",
+  "public/scripts/workspace-settings.js": "b346a4701fc9b65c425a55c9164cc2f6ea2ad69d86720fc5a8bfcccfa7263dc3",
+  "public/scripts/openai.js": "731f044ef23ccb379378662de77544210d901f260dd6738a0723eaf5b51d5e9d",
+  "public/scripts/extensions/memory/index.js": "f205bfb903199631a8671b9d6f51200edfe5c9866f9f7d41f21848fcf5b9601c",
+  "public/scripts/bookmarks.js": "fdf2e6ed870fee0ea224b4641a3696bee3c17fdce1b09736e56a895dd64e0f73",
+  "public/scripts/group-chats.js": "354c5852d02614b881437c72facb74ca32e4dd024f471d66cef8aef0fb24d44d",
+  "public/css/workspace.css": "d8fe0e4309760349c97dab79d8be4e68e55af5bd2b8764c6c2488073a4a68c23"
+}

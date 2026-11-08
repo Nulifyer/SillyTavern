@@ -211,3 +211,39 @@ Recording and pending microphone permission stop when the tab becomes hidden or
 frozen. Dictation stays opt-in and requires another explicit recording action.
 An already submitted transcription can complete after resume. Image completion
 uses the same native request and does not generate a second illustration.
+
+## Product research, November 8, 2026
+
+The [20-product comparison](roleplay-product-comparison.md) studies memory and
+context inspection, branch navigation, edit scope, onboarding and service setup.
+These are proposals, not approved implementation changes or replacement design
+foundations. Preserve native controls and owners. The research did not inspect
+production content or test signed-in competitor workflows.
+
+## Scene details, council-selected implementation
+
+The optional header portrait opens Scene details while the native conversation
+stays mounted. Setup & memory shows the story override or shared character/cast
+source, the native effective summary and configured lore attachments. Summary
+text belongs to the story; automation, prompts and insertion settings are shared.
+An anchor is not a verified coverage range, and attachment is not activation.
+
+Reply context shows bounded client diagnostics for the selected reply and
+alternative. New native captures retain the recorded model, provider, preset,
+context/output budgets and allowlisted client text. They are local to the browser,
+limited to 60 replies and 240,000 characters each. Media/tool payloads and connection
+credentials/headers are omitted. Older, edited, copied or evicted revisions show
+unavailable instead of borrowing the legacy filename cache. Server conversion,
+the final provider request and model templates remain unavailable.
+
+Related stories uses native parent/origin metadata within the exact character or
+cast. New branches copy the selected alternative, transcript and chat overrides;
+reusable cards, lore and provider presets remain shared. Ambiguous or missing
+legacy ancestry stays unavailable. Native group registration retries reuse only
+an identical saved child, with no force overwrite or orphan deletion.
+
+Native source editors and advanced settings remain reachable through one control
+tree. Override Apply waits for acknowledgement; failure preserves pending fields
+for retry and restores the previous in-memory setup. Cancel/Escape discard pending edits.
+Archives remain inspectable and require explicit Restore before mutation. Opening
+details never generates a summary, saves a transcript or changes the draft.

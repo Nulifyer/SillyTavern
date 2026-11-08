@@ -1,0 +1,32 @@
+{
+  "member": "story",
+  "phase": "implementation_review",
+  "implementationVerdict": "accept",
+  "scopeSatisfied": true,
+  "finalReleaseVerdict": "pending",
+  "openStoryFindings": [],
+  "sourceManifest": "../source-final/runtime-sha256.json",
+  "sourceHashMatches": 18,
+  "manualFixture": "http://127.0.0.1:8036",
+  "manualFixtureKind": "fresh_synthetic_source_overlay",
+  "evidence": [
+    "review.md",
+    "implementation-critique.md",
+    "desktop-setup.png",
+    "mobile-390-setup.png",
+    "mobile-320-override.png",
+    "../source-final/st-council-final-units.log",
+    "../source-final/st-council-newest.log",
+    "../source-final/st-council-final-contract.log"
+  ],
+  "pending": [
+    "completed combined regression run",
+    "actual published image source identity and acceptance proof",
+    "quality member disposition of its own rendering findings"
+  ],
+  "limits": [
+    "manual review used source overlays, not the released image",
+    "no physical phone lock or GPU qualification",
+    "no audible quality or paid-provider qualification"
+  ]
+}

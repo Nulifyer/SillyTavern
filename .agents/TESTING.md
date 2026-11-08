@@ -136,3 +136,26 @@ already pass there. Actual v1.19.20 passed all 72cases together; focused source 
 Android UA/DPR 3 is explicit. Evidence:
 `docs/evidence/chat-resume-20261107/`. Source fixture 8029 uses overlays and is not
 release-image proof. Physical phone/GPU restoration remains unqualified.
+
+## Council Scene details candidate
+
+Candidate v1.19.22 source passed all 93 workspace browser cases in 669.43 seconds,
+both opt-in live Juiced cases, with no skips, flaky outcomes or uncaught page
+errors. The native suite passes 487 tests in 26 suites. Root lint/actionlint pass;
+test lint reports 0 errors and 53 warnings. Exact diagnostics: 53 console errors
+and 91 failed requests (87 aborts, 3 deliberate ERR_FAILED, 1 controlled incomplete
+chunk). These are retained, not described as an error-free console/network.
+
+The first broad attempt had 88 passes and 3 cast failures. Native cast controls
+were restored and an affected seven-case run passed. The late native footer
+paint/compact-copy correction passed a separate phone/enlarged-text case; the
+actual published image must run the entire suite on the final bytes.
+
+New coverage includes native summary anchor/save failure/retry, single-tree
+summary/Author’s Note/classic restoration, override Apply/Cancel/Escape/failure
+rollback/obsolete owner, immutable streaming and nonstreaming client captures,
+Continue/in-progress inspection, rename/edit invalidation, PRE identity/focus/
+selection/scroll, frozen details, 320/390/448/768/1024/1280 widths, and selected-
+alternative cast registration failure/retry without phantom membership. Evidence:
+`docs/evidence/council-overhaul-20261108/source-final/`. Separate council fixtures
+8036/8037/8038 contain neutral data and source overlays; none is image proof.
