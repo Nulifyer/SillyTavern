@@ -83,3 +83,11 @@ I accept the final bounded v1.19.23 correction and am satisfied for source freez
 I re-read those source changes and units, inspected the final 494-test, 26-suite log at `../rename-delta/st-council-v23-final-units.log`, and recomputed the refreshed manifest. All 19 hashes match current bytes. The eight affected browser cases passed in the recorded 43.9 second run; the final unit rerun after the stale-incarnation guard passed in 1.176 seconds. My inspection of parent-run tests and logs is separate from the earlier independent browser review.
 
 No control implementation or delta objection remains. The observed v1.19.22 loss and all superseded runs stay in the evidence. Final acceptance still requires the combined final-source run and the actual v1.19.23 image proof. This fix does not claim atomic file, PNG character metadata and group metadata persistence.
+
+## Shared keyboard correction accepted
+
+The next clean source run passed 98 of 99 cases and exposed a real shared keyboard defect before publication. One Enter on the native Choose audio file button produced both a synthetic and a browser click. I read `public/scripts/keyboard.js`, the seven failing-before units, the passing-after unit log and the actual browser assertions.
+
+The correction belongs in the shared keyboard owner. Native buttons, links, inputs, summaries and editable content retain browser or local-handler ownership. The fallback respects prevented defaults, composition and modifiers, including Meta. It synthesizes one consumed Enter activation only for eligible custom controls. No dictation-specific workaround was added. The existing real file-chooser case now also checks native, custom, locally owned and editing controls.
+
+I accept this bounded correction. The source-v23-final log reports 501 passing units in 27 suites, following seven failing-before cases. All 20 hashes in `../source-v23-final/runtime-sha256.json` match the inspected files. Final combined source and actual-image runs must identify these final keyboard bytes. Prior partial and failed runs remain evidence, not release acceptance.

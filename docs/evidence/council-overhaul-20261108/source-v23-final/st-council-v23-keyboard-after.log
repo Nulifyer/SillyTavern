@@ -1,0 +1,18 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep native character editor owns Escape|transient menus dismiss|search opens character profiles and a fixture --output=/tmp/st-council-v23-keyboard-after-results
+(node:3070764) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:3070817) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3070817) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:3070817) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:760:1 › native character editor owns Escape before its settings page and audio upload works by keyboard (4.7s)
+  ✓  2 workspace.e2e.js:2582:1 › search opens character profiles and a fixture model generates through the native composer (7.9s)
+  ✓  3 workspace.e2e.js:4848:5 › Action menus: desktop › transient menus dismiss outside without closing persistent controls (14.3s)
+  ✓  4 workspace.e2e.js:4848:5 › Action menus: Pixel 9 Pro XL touch › transient menus dismiss outside without closing persistent controls (15.6s)
+
+  4 passed (43.8s)

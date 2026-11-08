@@ -1,0 +1,29 @@
+{
+  "container": "st-council-v23-clean-source-20261108",
+  "url": "http://127.0.0.1:8042",
+  "sourceOverlays": true,
+  "syntheticVolumes": 5,
+  "runtimeFileCount": 20,
+  "runtimeHashes": {
+    "package.json": "b1123e2b04fcf800e3a59ba44c0d29b62cceeb2da95e7880c9375bfff607c7ac",
+    "package-lock.json": "5da2c5b7886bfb9f54d924a8c8f9510c17f53a32e6dad376359a0a04ffe99063",
+    "public/css/workspace.css": "8fa38a8ee42b40bb5ce8aca0de39d0d46cd294d71f80a33858807bc6aced30c9",
+    "public/script.js": "a97fbec68b0f5a2754569ce7d88d78272becbf33ca9170701c40dd568047cf39",
+    "public/scripts/bookmarks.js": "fdf2e6ed870fee0ea224b4641a3696bee3c17fdce1b09736e56a895dd64e0f73",
+    "public/scripts/events.js": "6c6b9fe587b9e671e0dd9573ac9b7662f2a36311d2acf6f8191bb91937958c2a",
+    "public/scripts/extensions/memory/index.js": "f205bfb903199631a8671b9d6f51200edfe5c9866f9f7d41f21848fcf5b9601c",
+    "public/scripts/group-chats.js": "354c5852d02614b881437c72facb74ca32e4dd024f471d66cef8aef0fb24d44d",
+    "public/scripts/openai.js": "731f044ef23ccb379378662de77544210d901f260dd6738a0723eaf5b51d5e9d",
+    "public/scripts/templates/scenarioOverride.html": "58ffde71ddb7ceb3af2aac7e40e1797c8a714052ec07604b52e349c59b20f8f3",
+    "public/scripts/workspace-chats.js": "7659ca1411005b46e27701b08f24daa27e3fd0d652dc0c3b61b30535ece3dc91",
+    "public/scripts/workspace-settings.js": "b346a4701fc9b65c425a55c9164cc2f6ea2ad69d86720fc5a8bfcccfa7263dc3",
+    "public/scripts/workspace-views.js": "2c6d48c8779a6556d702b5ed0d4df2ba5a7e05b9c582c1a604709892b4e41d08",
+    "public/scripts/workspace.js": "f9b4f1c7fcf32692a88dbac2a0c08d6aa0b4b43150a8d667751cc946e9d7e0d1",
+    "public/scripts/world-info.js": "2ea8572e008cfe930d966199860b4d88e81aa8a75e8c3912c1156673624a08fb",
+    "public/scripts/itemized-captures.js": "7cc3e7e882fbcce85b2fd56386ab6717cf8e92e1e1f64132ffcc05cbed3b524f",
+    "public/scripts/workspace-scene.js": "2428b5f6d204eb9970e8dbf7d80b6c03b9edbe61e60ae8a3ac5d68cd45aaea18",
+    "src/endpoints/stable-diffusion.js": "15439fdffd839815ef7adcaa39806738c4e4503db8bbb697b337e905dfb4ed43",
+    "public/scripts/browser-recovery.js": "0e40a98b95ee4d23214aea839458cb8c6ff0d249d36a412db82e2c4c5e8a8a74",
+    "public/scripts/keyboard.js": "93edf90a82687b9530285532a6dd6b2cc5fc553477fee4abb44a58ff96c6fa29"
+  }
+}

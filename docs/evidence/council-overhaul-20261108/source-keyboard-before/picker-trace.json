@@ -1,0 +1,108 @@
+[
+  {
+    "phase": "event",
+    "type": "focusout",
+    "target": "",
+    "trusted": true,
+    "active": "",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  },
+  {
+    "phase": "event",
+    "type": "focusin",
+    "target": "dictation-choose-file",
+    "trusted": true,
+    "active": "dictation-choose-file",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  },
+  {
+    "phase": "event",
+    "type": "keydown",
+    "target": "dictation-choose-file",
+    "key": "Enter",
+    "trusted": true,
+    "active": "dictation-choose-file",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  },
+  {
+    "phase": "event",
+    "type": "click",
+    "target": "dictation-choose-file",
+    "trusted": false,
+    "active": "dictation-choose-file",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  },
+  {
+    "phase": "input.click",
+    "active": "dictation-choose-file",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  },
+  {
+    "phase": "event",
+    "type": "click",
+    "target": "dictation-file",
+    "trusted": false,
+    "active": "dictation-choose-file",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  },
+  {
+    "phase": "event",
+    "type": "click",
+    "target": "dictation-choose-file",
+    "trusted": true,
+    "active": "dictation-choose-file",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  },
+  {
+    "phase": "input.click",
+    "active": "dictation-choose-file",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  },
+  {
+    "phase": "event",
+    "type": "click",
+    "target": "dictation-file",
+    "trusted": false,
+    "active": "dictation-choose-file",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  },
+  {
+    "phase": "event",
+    "type": "keyup",
+    "target": "dictation-choose-file",
+    "key": "Enter",
+    "trusted": true,
+    "active": "dictation-choose-file",
+    "connected": true,
+    "same": true,
+    "activation": true,
+    "disabled": false
+  }
+]

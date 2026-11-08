@@ -1,6 +1,6 @@
 # Quality implementation review
 
-Decision: accept the replacement implementation delta. The original actual-image rename/draft defect is resolved in source with focused before/after coverage. No source objection remains. Final release satisfaction is pending the replacement image and complete regression evidence. See the actual-image hold and delta review below.
+Decision: accept the current source implementation, including the native rename/collection and shared keyboard corrections. No source objection remains. Final satisfaction is pending a clean full replacement image run and exact image identity. See the held-run and diagnostic notes below.
 
 ## Reviewed identity and method
 
@@ -36,3 +36,9 @@ Physical phone lock/GPU restoration, real microphone hardware, audible quality a
 The first actual v1.19.22 run passed92 of93 cases and failed identical-filename draft return. I read the failure in release-first-attempt/report.json. The original character's expected draft was empty after returning. The parent subsequently reproduced a real rename acknowledgement window: after the file rename succeeds but before the delayed character edit acknowledgement, the UI can reveal the new title while the draft owner still uses the previous identity. A user draft typed in that window is cleared later. This violates the agreed draft/rename contract. The release handoff is held, and the parent is preparing a native-owner fix and v1.19.23 replacement. This new evidence supersedes unconditional implementation satisfaction until the focused delta and actual replacement image are verified. The earlier Q1 paint correction remains verified.
 
 The final native rename/collection delta is reviewed in rename-delta-review.md. Its8 focused browser passes and494 unit passes directly cover the reported window, stale/foreign ownership, malformed candidates and prior sibling draft. Q2 is resolved in source. The held v1.19.22 image is not accepted; final v1.19.23 image evidence remains required.
+
+## Keyboard activation hold
+
+A later clean source run timed out in the preserved real Enter audio-picker path. I inspected test447, native dictation and shared keyboard owners, then read the parent's picker-trace.json. One trusted Enter triggers a synthetic button click and the browser's native click, each invoking input.click. This is a real double-activation defect. Q3 remains open pending the shared-owner correction and real keyboard regression. keyboard-diagnostic.md records source, evidence and boundaries. No programmatic file assignment or weakened keyboard assertion is acceptable as a replacement.
+
+The concrete shared keyboard correction and real chooser/click-count regression are accepted in keyboard-diagnostic.md. Q3 is resolved in source. The complete replacement-image suite is still required before final release satisfaction.

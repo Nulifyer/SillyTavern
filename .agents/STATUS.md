@@ -28,10 +28,10 @@ Actual92/93 failed sibling-filename draft isolation. Controlled rename metadata
 gap and transient/invalid character collection cases fail22 and pass replacement.
 
 Final23delta uses native file acknowledgement, bounded draft transition, full
-request integrity guard and complete valid character publication.494unit tests/
-26suites pass, rootlint/actionlint pass. Testlint0errors53warnings. Earlier focused8
+request integrity guard and complete valid character publication.501unit tests/
+27suites pass, rootlint/actionlint pass. Testlint0errors53warnings. Earlier focused8
 cases pass43.9s; last stale-incarnation guard has focusedunit proof and must run
-in final99browser.19runtime hashes identify frozenbytes in rename-delta/.
+in final99browser.20runtime hashes identify frozenbytes in source-v23-final/.
 All evidence: docs/evidence/council-overhaul-20261108/.
 
 ## Limits
@@ -47,3 +47,11 @@ Initial fixture settings now explicitly enable restoration; within-case opt-out
 reload remainsfalse. Affected4plus1 nativecharacter cases pass. No runtimechange.
 Finalclean99runs8042 with fivefreshvolumes and sourceoverlays. Original22failure
 remainsunattributed; its controlled runtimebugs remainfixed.
+
+## Keyboard correction
+
+Clean source99completed98/99, realkeyboardfilechooserfailed. Testinstrumentation
+provedoneEntercausedsynthetic+nativeclicks. Sharedkeyboardowner nowrespectsnative
+controls/editors/defaultPrevented/IME/Meta, customEnteronce.7unitsfailbefore;501
+units/27suitespassafter.4affectedbrowsercasespass43.8s. Same3councilsacceptfreeze.
+Final99source8042active on20manifestbytes, actualimagepending.23notpublishedyet.

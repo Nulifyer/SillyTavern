@@ -1,0 +1,1787 @@
+npm notice run test:unit
+npm notice run node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.json
+  console.debug
+    Triggering click on keyboard-focused interactable control via Enter Control {
+      native: false,
+      isContentEditable: false,
+      custom: true,
+      parentElement: null,
+      classList: { contains: [Function: contains] },
+      click: [Function: mockConstructor] {
+        _isMockFunction: true,
+        getMockImplementation: [Function (anonymous)],
+        mock: [Getter/Setter],
+        mockClear: [Function (anonymous)],
+        mockReset: [Function (anonymous)],
+        mockRestore: [Function (anonymous)],
+        mockReturnValueOnce: [Function (anonymous)],
+        mockResolvedValueOnce: [Function (anonymous)],
+        mockRejectedValueOnce: [Function (anonymous)],
+        mockReturnValue: [Function (anonymous)],
+        mockResolvedValue: [Function (anonymous)],
+        mockRejectedValue: [Function (anonymous)],
+        mockImplementationOnce: [Function (anonymous)],
+        withImplementation: [Function: bound withImplementation],
+        mockImplementation: [Function (anonymous)],
+        mockReturnThis: [Function (anonymous)],
+        mockName: [Function (anonymous)],
+        getMockName: [Function (anonymous)]
+      }
+    }
+
+      at handleGlobalKeyDown (vm:module(0):235:21)
+
+(node:3070004) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS ./keyboard-activation.test.js
+  native and custom keyboard activation ownership
+    ✓ native controls keep browser activation without a second synthetic click (7 ms)
+    ✓ text inside a custom interactable never activates its parent while editing (3 ms)
+    ✓ editable content retains its own Enter behavior (1 ms)
+    ✓ an existing key handler retains activation when it already prevented default (1 ms)
+    ✓ custom interactables activate once and consume their Enter default (21 ms)
+    ✓ composition and command shortcuts retain ownership: {"isComposing":true} (1 ms)
+    ✓ composition and command shortcuts retain ownership: {"metaKey":true} (2 ms)
+
+(node:3070085) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3070017) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS ./util.test.js
+  flattenSchema
+    ✓ should return the schema if it is not an object (4 ms)
+    ✓ should handle schema with $defs and $ref (2 ms)
+    ✓ should filter unsupported properties for Google API schema (1 ms)
+    ✓ should not filter properties for non-Google API schema (1 ms)
+  forwardFetchResponse
+    ✓ forwards the first SSE event before EOF and fails the downstream on upstream reset (8 ms)
+    ✓ should log JSON error bodies and return the original body for non-2xx streaming responses (4 ms)
+    ✓ should log plain text error bodies and return the original body for non-2xx streaming responses (4 ms)
+
+PASS ./image-operation-ownership.test.js
+  ✓ native image Stop cancels the held writer before inference and restores explicit settings (29 ms)
+  ✓ same-filename character switch aborts the pending writer (8 ms)
+  ✓ non-workspace image callers retain undefined on native Stop (8 ms)
+  ✓ same-filename character switch discards an inference that finishes late (12 ms)
+  ✓ same-filename group switch discards an inference that finishes late (8 ms)
+  ✓ navigation during media upload never invokes a callback or inserts into the next story (11 ms)
+  ✓ navigation in the native receive event prevents later rendering and saving in the next story (9 ms)
+  ✓ Stop releases image UI during a held upload and never inserts its late result (9 ms)
+  ✓ quiet requests and explicit callbacks retain native return behavior (10 ms)
+  ✓ main-model writer cancellation waits for the native quiet owner to settle (19 ms)
+  ✓ native image Stop cancels a held multimodal caption without image inference (12 ms)
+  ✓ successful native scene generation inserts one image and retains writer and sampling options (25 ms)
+
+(node:3070084) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS ./util-fs.test.js
+  getImages
+    ✓ sorts by name with natural collation (46 ms)
+    ✓ sorts by date oldest-first using file mtime (6 ms)
+    ✓ reads each file mtime only once when sorting by date (3 ms)
+    ✓ falls back to mtime 0 if a file disappears between readdir and stat (1 ms)
+    ✓ propagates non-ENOENT stat errors (e.g. EACCES) instead of masking them (8 ms)
+    ✓ filters to image types by default (1 ms)
+    ✓ filters to video types when requested (1 ms)
+    ✓ filters to audio types when requested
+    ✓ accepts combined media-type bitmask
+    ✓ skips subdirectories
+    ✓ returns empty array for an empty directory (1 ms)
+
+PASS ./mock-server.test.js
+  MockServer tests
+    ✓ should provide OpenAI-compatible endpoint (84 ms)
+
+(node:3070087) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS ./util-pure.test.js
+  keyToEnv
+    ✓ should convert dotted key to env var format (13 ms)
+    ✓ should handle simple key without dots
+    ✓ should coerce non-string input via String() (1 ms)
+  getBasicAuthHeader
+    ✓ should return a valid Basic auth header
+    ✓ should handle empty string (1 ms)
+  getHexString
+    ✓ should return a string of the requested length
+    ✓ should only contain hex characters (1 ms)
+    ✓ should return empty string for length 0
+  normalizeZipEntryPath
+    ✓ should normalize backslashes to forward slashes (1 ms)
+    ✓ should strip leading ./ (1 ms)
+    ✓ should strip leading / (1 ms)
+    ✓ should reject path traversal
+    ✓ should reject non-string input
+    ✓ should reject empty or whitespace-only string (1 ms)
+  deepMerge
+    ✓ should merge flat objects (1 ms)
+    ✓ should recursively merge nested objects (1 ms)
+    ✓ should override primitives with source values (2 ms)
+    ✓ should not mutate original objects (3 ms)
+    ✓ should handle empty source
+  uuidv4
+    ✓ should return a valid UUIDv4 format (1 ms)
+    ✓ should return unique values (1 ms)
+  humanizedDateTime
+    ✓ should format a known timestamp correctly
+  tryParse
+    ✓ should parse valid JSON (2 ms)
+    ✓ should parse JSON array
+    ✓ should return undefined for invalid JSON (1 ms)
+    ✓ should return undefined for empty string
+  clientRelativePath
+    ✓ should strip the root prefix and use forward slashes (1 ms)
+    ✓ should throw if path does not start with root (3 ms)
+  getUniqueName
+    ✓ should return base name with index when first try collides
+    ✓ should increment index until unique (1 ms)
+    ✓ should return null when maxTries exceeded
+    ✓ should support custom nameBuilder
+    ✓ should check basename first when startIndex is 0
+  removeFileExtension
+    ✓ should remove a single extension
+    ✓ should remove only the last extension
+    ✓ should return filename unchanged if no extension
+    ✓ should handle dotfiles (1 ms)
+  removeColorFormatting
+    ✓ should strip ANSI color codes
+    ✓ should return plain text unchanged
+  getSeparator
+    ✓ should return n equals signs
+    ✓ should return empty string for 0
+  isValidUrl
+    ✓ should accept valid HTTP URLs (1 ms)
+    ✓ should accept file URLs
+    ✓ should reject non-URL strings
+  urlHostnameToIPv6
+    ✓ should strip surrounding brackets (1 ms)
+    ✓ should handle already-clean hostname
+    ✓ should handle IPv4 passthrough
+  toBoolean
+    ✓ should handle "true" and "false" strings case-insensitively (1 ms)
+    ✓ should handle whitespace around boolean strings (1 ms)
+    ✓ should use JS truthiness for non-boolean strings
+    ✓ should handle non-string values (1 ms)
+  stringToBool
+    ✓ should convert "true" to true (10 ms)
+    ✓ should convert "false" to false
+    ✓ should pass through non-boolean strings
+    ✓ should pass through null
+  trimV1
+    ✓ should remove trailing /v1 (1 ms)
+    ✓ should remove trailing slash
+    ✓ should remove trailing slash then /v1
+    ✓ should handle null/undefined gracefully (1 ms)
+  trimTrailingSlash
+    ✓ should remove trailing slash
+    ✓ should leave non-trailing-slash URLs unchanged
+    ✓ should handle null/undefined gracefully
+  mutateJsonString
+    ✓ should apply mutation and re-serialize
+    ✓ should return original string on invalid JSON (1 ms)
+  isPathUnderParent
+    ✓ should accept child paths
+    ✓ should reject traversal attempts
+    ✓ should reject sibling paths (1 ms)
+    ✓ should accept the parent path itself
+  isFileURL
+    ✓ should detect file:// string URLs
+    ✓ should reject non-file string URLs (1 ms)
+    ✓ should detect file:// URL objects
+    ✓ should detect file:// Request objects (2 ms)
+    ✓ should return false for non-matching types
+  getRequestURL
+    ✓ should return string URLs as-is
+    ✓ should extract href from URL objects
+    ✓ should extract url from Request objects (1 ms)
+    ✓ should throw for invalid types (1 ms)
+  delay
+    ✓ should resolve after the specified time (3 ms)
+    ✓ should return a promise (1 ms)
+  formatBytes
+    ✓ should format bytes to human-readable string
+    ✓ should return empty string for null/undefined
+  sanitizeSafeCharacterReplacements
+    ✓ should always return underscore
+  generateTimestamp
+    ✓ should return YYYYMMDD-HHMMSS format for a known date (1 ms)
+  mergeObjectWithYaml
+    ✓ should merge a YAML object into the target (7 ms)
+    ✓ should merge a YAML array of objects into the target (5 ms)
+    ✓ should override existing keys (1 ms)
+    ✓ should do nothing for empty/falsy yamlString
+    ✓ should not throw on invalid YAML (2 ms)
+    ✓ should skip non-object items in YAML array (1 ms)
+  getArrayBufferSlice
+    ✓ returns an exact ArrayBuffer for Buffer views (1 ms)
+    ✓ throws for non-Uint8Array input (1 ms)
+  excludeKeysByYaml
+    ✓ should delete keys listed in a YAML array (1 ms)
+    ✓ should delete keys from a YAML object
+    ✓ should delete a single string key (1 ms)
+    ✓ should do nothing for empty/falsy yamlString
+    ✓ should not throw on invalid YAML (1 ms)
+  Cache
+    ✓ should store and retrieve values
+    ✓ should return null for missing keys
+    ✓ should return null for expired entries (1 ms)
+    ✓ should remove entries
+    ✓ should clear all entries
+  MemoryLimitedMap
+    ✓ should store and retrieve values (1 ms)
+    ✓ should reject non-string keys and values
+    ✓ should evict oldest entries when memory limit is reached
+    ✓ should reject values larger than max memory
+    ✓ should do nothing when maxMemory is 0 (1 ms)
+    ✓ should track memory usage
+    ✓ should update memory when overwriting a key
+    ✓ should delete entries and free memory (4 ms)
+    ✓ should return false when deleting non-existent key
+    ✓ should clear all entries and reset memory
+    ✓ should iterate with forEach
+    ✓ should expose keys and values iterators (1 ms)
+    ✓ estimateStringSize should return 2 bytes per character
+
+(node:3070086) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS ./config-init.test.js
+  addMissingConfigValues
+    ✓ migrates the boolean environment value false to true (77 ms)
+    ✓ migrates the boolean environment value true to false (66 ms)
+
+(node:3070011) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3070013) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3070009) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3070005) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3070081) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+PASS ./chat-backups.test.js
+  getBackupKey
+    ✓ keeps plain ASCII names unchanged (9 ms)
+    ✓ produces distinct stable keys for names that sanitize identically (3 ms)
+  chat backups
+    ✓ chats with equal-length CJK names get independent backups and quotas (4 ms)
+
+(node:3070006) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+  console.warn
+    Chat file was deleted while it was being scanned: /tmp/st-chat-info-whVcuu/gone.jsonl
+
+      399 |     // A chat that is deleted while a scan is running is not an error: treat it like a corrupted chat and move on.
+      400 |     const chatVanished = () => {
+    > 401 |         console.warn('Chat file was deleted while it was being scanned:', pathToFile);
+          |                 ^
+      402 |         return { match: false };
+      403 |     };
+      404 |
+
+      at chatVanished (../src/endpoints/chats.js:401:17)
+      at Module.getChatInfo (../src/endpoints/chats.js:410:20)
+      at Object.<anonymous> (chat-info.test.js:72:22)
+
+  console.warn
+    Chat file was deleted while it was being scanned: /tmp/st-chat-info-HQdhSg/ghost.jsonl
+
+      399 |     // A chat that is deleted while a scan is running is not an error: treat it like a corrupted chat and move on.
+      400 |     const chatVanished = () => {
+    > 401 |         console.warn('Chat file was deleted while it was being scanned:', pathToFile);
+          |                 ^
+      402 |         return { match: false };
+      403 |     };
+      404 |
+
+      at chatVanished (../src/endpoints/chats.js:401:17)
+      at ReadStream.<anonymous> (../src/endpoints/chats.js:436:21)
+
+  console.warn
+    Chat file was deleted while it was being scanned: /tmp/st-chat-info-HQdhSg/ghost.jsonl
+
+      399 |     // A chat that is deleted while a scan is running is not an error: treat it like a corrupted chat and move on.
+      400 |     const chatVanished = () => {
+    > 401 |         console.warn('Chat file was deleted while it was being scanned:', pathToFile);
+          |                 ^
+      402 |         return { match: false };
+      403 |     };
+      404 |
+
+      at chatVanished (../src/endpoints/chats.js:401:17)
+      at Interface.<anonymous> (../src/endpoints/chats.js:450:21)
+
+(node:3070008) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+  console.warn
+    Found an invalid or corrupted last line in a chat file: /tmp/st-chat-info-RR0JMy/chat.jsonl
+
+      493 |                     // Resolve a degraded preview from the stat data instead of hiding an otherwise intact chat
+      494 |                     // from the chat list, search and recents.
+    > 495 |                     console.warn('Found an invalid or corrupted last line in a chat file:', pathToFile);
+          |                             ^
+      496 |                     // Exclude both the metadata line and the unreadable trailing line.
+      497 |                     chatData.chat_items = Math.max(itemCounter - 2, 0);
+      498 |                     chatData.mes = '[The message is empty]';
+
+      at Interface.<anonymous> (../src/endpoints/chats.js:495:29)
+
+  console.warn
+    Found an invalid or corrupted last line in a chat file: /tmp/st-chat-info-785h0Z/chat.jsonl
+
+      493 |                     // Resolve a degraded preview from the stat data instead of hiding an otherwise intact chat
+      494 |                     // from the chat list, search and recents.
+    > 495 |                     console.warn('Found an invalid or corrupted last line in a chat file:', pathToFile);
+          |                             ^
+      496 |                     // Exclude both the metadata line and the unreadable trailing line.
+      497 |                     chatData.chat_items = Math.max(itemCounter - 2, 0);
+      498 |                     chatData.mes = '[The message is empty]';
+
+      at Interface.<anonymous> (../src/endpoints/chats.js:495:29)
+
+  console.warn
+    Found an invalid or corrupted last line in a chat file: /tmp/st-chat-info-cyGM43/chat.jsonl
+
+      493 |                     // Resolve a degraded preview from the stat data instead of hiding an otherwise intact chat
+      494 |                     // from the chat list, search and recents.
+    > 495 |                     console.warn('Found an invalid or corrupted last line in a chat file:', pathToFile);
+          |                             ^
+      496 |                     // Exclude both the metadata line and the unreadable trailing line.
+      497 |                     chatData.chat_items = Math.max(itemCounter - 2, 0);
+      498 |                     chatData.mes = '[The message is empty]';
+
+      at Interface.<anonymous> (../src/endpoints/chats.js:495:29)
+
+PASS ./pollinations.test.js
+  Pollinations TTS model aliases
+    ✓ looks up voices for undefined (65 ms)
+    ✓ looks up voices for openai-audio (6 ms)
+    ✓ looks up voices for openai/gpt-audio-mini (5 ms)
+    ✓ still accepts catalogs without aliases (7 ms)
+
+  console.warn
+    Found an invalid or corrupted last line in a chat file: /tmp/st-chat-info-cyGM43/chat.jsonl
+
+      493 |                     // Resolve a degraded preview from the stat data instead of hiding an otherwise intact chat
+      494 |                     // from the chat list, search and recents.
+    > 495 |                     console.warn('Found an invalid or corrupted last line in a chat file:', pathToFile);
+          |                             ^
+      496 |                     // Exclude both the metadata line and the unreadable trailing line.
+      497 |                     chatData.chat_items = Math.max(itemCounter - 2, 0);
+      498 |                     chatData.mes = '[The message is empty]';
+
+      at Interface.<anonymous> (../src/endpoints/chats.js:495:29)
+
+PASS ./chat-info.test.js
+  getChatInfo
+    ✓ reads info from a normal chat file (20 ms)
+    ✓ returns defaults for an empty chat file (3 ms)
+    ✓ applies the matcher against message content (10 ms)
+    ✓ resolves without match when the file was already deleted (42 ms)
+    ✓ resolves without match when the file is deleted between stat and read (5 ms)
+    ✓ resolves instead of hanging when the file is truncated between stat and read (1 ms)
+    ✓ rejects with the original error for non-ENOENT stat failures (2 ms)
+    ✓ resolves a degraded preview for a fully corrupted chat file (2 ms)
+    ✓ resolves a degraded preview when only the last line is unparseable (2 ms)
+    ✓ matcher still applies to intact messages when the last line is unparseable (5 ms)
+
+  console.debug
+    File "/tmp/st-chat-integrity-Bv0KWa/chat.jsonl" does not have integrity metadata matching "1e6905db-bab6-4901-913b-06d18cab5a8f". The integrity validation has been skipped.
+
+      at checkChatIntegrity (../src/endpoints/chats.js:365:17)
+
+  console.debug
+    ComfyUI outputs: [ { a_images: [ [Object] ] }, { images: [ [Object] ] } ]
+
+      at ../src/endpoints/stable-diffusion.js:613:17
+
+  console.error
+    No url provided for /visit
+
+      396 |
+      397 |         if (!url) {
+    > 398 |             console.error('No url provided for /visit');
+          |                     ^
+      399 |             return response.sendStatus(400);
+      400 |         }
+      401 |
+
+      at ../src/endpoints/search.js:398:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.warn
+    File "/tmp/st-chat-integrity-A3XDCl/chat.jsonl" is not empty, but its first line could not be parsed as a chat header. Overwriting it requires an explicit confirmation.
+
+      355 |     // Fail the check so the client asks for an explicit overwrite confirmation instead of silently losing data.
+      356 |     if (typeof jsonData !== 'object' || jsonData === null || Array.isArray(jsonData)) {
+    > 357 |         console.warn(`File "${filePath}" is not empty, but its first line could not be parsed as a chat header. Overwriting it requires an explicit confirmation.`);
+          |                 ^
+      358 |         return false;
+      359 |     }
+      360 |
+
+      at checkChatIntegrity (../src/endpoints/chats.js:357:17)
+      at Module.trySaveChat (../src/endpoints/chats.js:540:30)
+      at Object.<anonymous> (chat-integrity.test.js:107:9)
+
+  console.debug
+    ComfyUI outputs: [ { text: [ 'some non-media output' ] }, { gifs: [ [Object] ] } ]
+
+      at ../src/endpoints/stable-diffusion.js:613:17
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:257:13)
+
+  console.warn
+    File "/tmp/st-chat-integrity-8O3itK/chat.jsonl" is not empty, but its first line could not be parsed as a chat header. Overwriting it requires an explicit confirmation.
+
+      355 |     // Fail the check so the client asks for an explicit overwrite confirmation instead of silently losing data.
+      356 |     if (typeof jsonData !== 'object' || jsonData === null || Array.isArray(jsonData)) {
+    > 357 |         console.warn(`File "${filePath}" is not empty, but its first line could not be parsed as a chat header. Overwriting it requires an explicit confirmation.`);
+          |                 ^
+      358 |         return false;
+      359 |     }
+      360 |
+
+      at checkChatIntegrity (../src/endpoints/chats.js:357:17)
+      at Module.trySaveChat (../src/endpoints/chats.js:540:30)
+      at Object.<anonymous> (chat-integrity.test.js:114:9)
+
+  console.info
+    [Private Request Filter] Enabled
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:258:13)
+
+  console.info
+    [Private Request Filter] Allowed private addresses: 127.0.0.0/8
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:260:17)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:262:13)
+
+  console.error
+    No url provided for /visit
+
+      396 |
+      397 |         if (!url) {
+    > 398 |             console.error('No url provided for /visit');
+          |                     ^
+      399 |             return response.sendStatus(400);
+      400 |         }
+      401 |
+
+      at ../src/endpoints/search.js:398:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.warn
+    File "/tmp/st-chat-integrity-MN83nm/chat.jsonl" is not empty, but its first line could not be parsed as a chat header. Overwriting it requires an explicit confirmation.
+
+      355 |     // Fail the check so the client asks for an explicit overwrite confirmation instead of silently losing data.
+      356 |     if (typeof jsonData !== 'object' || jsonData === null || Array.isArray(jsonData)) {
+    > 357 |         console.warn(`File "${filePath}" is not empty, but its first line could not be parsed as a chat header. Overwriting it requires an explicit confirmation.`);
+          |                 ^
+      358 |         return false;
+      359 |     }
+      360 |
+
+      at checkChatIntegrity (../src/endpoints/chats.js:357:17)
+      at Module.trySaveChat (../src/endpoints/chats.js:540:30)
+      at Object.<anonymous> (chat-integrity.test.js:121:9)
+
+PASS ./chat-load-ownership.test.js
+  native chat owner commits
+    ✓ a delayed character read follows its avatar after array indexes change (14 ms)
+    ✓ character identity is captured before shallow-card hydration yields (4 ms)
+    ✓ removing the character during its read preserves the mounted conversation (4 ms)
+    ✓ a character removed during prompt-cache persistence cannot clear the current transcript (4 ms)
+    ✓ a canonical group replacement invalidates the pending group read (5 ms)
+    ✓ group replacement while clearing awaits its cache is checked before DOM mutation (4 ms)
+    ✓ closing a story invalidates a held read even if its response ignores abort (4 ms)
+    ✓ fresh group greetings save only after installing generated integrity metadata (3 ms)
+  exact workspace story transactions
+    ✓ a character historical-file open skips its default transcript (5 ms)
+    ✓ a group historical-file open skips its default transcript (4 ms)
+    ✓ a failed exact-file open does not select an intermediate default or persist active settings (6 ms)
+
+  console.debug
+    ComfyUI outputs: [ { text: [ 'no media at all' ] } ]
+
+      at ../src/endpoints/stable-diffusion.js:613:17
+
+  console.warn
+    File "/tmp/st-chat-integrity-Pdjpee/chat.jsonl" is not empty, but its first line could not be parsed as a chat header. Overwriting it requires an explicit confirmation.
+
+      355 |     // Fail the check so the client asks for an explicit overwrite confirmation instead of silently losing data.
+      356 |     if (typeof jsonData !== 'object' || jsonData === null || Array.isArray(jsonData)) {
+    > 357 |         console.warn(`File "${filePath}" is not empty, but its first line could not be parsed as a chat header. Overwriting it requires an explicit confirmation.`);
+          |                 ^
+      358 |         return false;
+      359 |     }
+      360 |
+
+      at checkChatIntegrity (../src/endpoints/chats.js:357:17)
+      at Module.trySaveChat (../src/endpoints/chats.js:540:30)
+      at Object.<anonymous> (chat-integrity.test.js:128:9)
+
+  console.error
+    ComfyUI error: Error: ComfyUI did not return any recognizable outputs.
+        at /home/nulifyer/Projects/SillyTavern/src/endpoints/stable-diffusion.js:617:19
+        at processTicksAndRejections (node:internal/process/task_queues:104:5)
+
+      627 |         return response.send({ format: format, data: Buffer.from(imgBuffer).toString('base64') });
+      628 |     } catch (error) {
+    > 629 |         console.error('ComfyUI error:', error);
+          |                 ^
+      630 |         response.status(500).send(error.message);
+      631 |         return response;
+      632 |     }
+
+      at ../src/endpoints/stable-diffusion.js:629:17
+
+  console.error
+    Invalid url provided for /visit /etc/passwd
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+PASS ./chat-loading.test.js
+  ✓ newer character/group reads cancel the prior lifetime (3 ms)
+  ✓ HTTP failure is rejected rather than returned as an empty conversation (3 ms)
+  ✓ invalid successful payloads are rejected and genuine empty arrays remain valid (1 ms)
+  ✓ object arrays without a recognizable header or message bodies are not empty chats (2 ms)
+
+PASS ./stable-diffusion.test.js
+  ComfyUI generation
+    ✓ skips output nodes without images (88 ms)
+    ✓ falls back to gifs when no output node has images (11 ms)
+    ✓ reports an error when no output has images or gifs (10 ms)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:257:13)
+
+  console.info
+    [Private Request Filter] Enabled
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:258:13)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:262:13)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:257:13)
+
+  console.error
+    Invalid url provided for /visit ftp://example.com/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.info
+    [Private Request Filter] Enabled
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:258:13)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:262:13)
+
+PASS ./prompt-converters.test.js
+  addAssistantPrefix
+    ✓ returns empty array unchanged (3 ms)
+    ✓ sets property on last message when it is assistant and no tools (1 ms)
+    ✓ does not set property when tools are present
+    ✓ does not set property when last message is not assistant (1 ms)
+    ✓ does not set property when a tool role message exists in prompt
+  convertTextCompletionPrompt
+    ✓ passes through string input unchanged (1 ms)
+    ✓ converts basic message array to text format (1 ms)
+    ✓ uses name instead of role for named system messages
+    ✓ handles empty array
+  calculateClaudeBudgetTokens
+    adaptive model (Opus 4.6+)
+      ✓ auto returns null (1 ms)
+      ✓ min returns "low"
+      ✓ low returns "low"
+      ✓ medium returns "medium" (1 ms)
+      ✓ high returns "high"
+      ✓ max returns "max"
+    traditional model
+      ✓ auto returns null
+      ✓ min returns 1024 regardless of maxTokens (1 ms)
+      ✓ low is 10% of maxTokens, floored to 1024
+      ✓ medium is 25% of maxTokens
+      ✓ high is 50% of maxTokens (1 ms)
+      ✓ max is 95% of maxTokens
+      ✓ non-streaming caps at 21333
+      ✓ streaming does not cap at 21333
+  calculateGoogleBudgetTokens
+    ✓ returns null for unrecognized model (1 ms)
+    ✓ Gemini 3.7 Flash uses Gemini 3 thinking levels without minimal (4 ms)
+    ✓ Gemini 3.6 Flash uses Gemini 3 thinking levels
+    ✓ Gemini 3.5 Flash-Lite uses Gemini 3 thinking levels (1 ms)
+    ✓ stable Gemini 3.1 Flash-Lite uses Gemini 3 thinking levels
+    ✓ stable Gemini 3 image models use Gemini 3 thinking levels
+    gemini-3 flash
+      ✓ auto returns null (1 ms)
+      ✓ min returns minimal
+      ✓ low returns low (1 ms)
+      ✓ medium returns medium
+      ✓ high returns high
+      ✓ max returns high
+    gemini-3 pro
+      ✓ auto returns null
+      ✓ min returns low (1 ms)
+      ✓ low returns low
+      ✓ medium returns low
+      ✓ high returns high
+      ✓ max returns high (2 ms)
+    flash (non-gemini-3)
+      ✓ auto returns -1 (1 ms)
+      ✓ min returns 0
+      ✓ caps at 24576
+    flash-lite
+      ✓ min returns 0
+      ✓ floors at 512
+    pro (non-gemini-3)
+      ✓ min returns 128 (1 ms)
+      ✓ floors at 128
+      ✓ caps at 32768 (1 ms)
+    model matching priority
+      ✓ flash-lite matches before flash
+  addReasoningContentToToolCalls
+    ✓ adds reasoning_content to messages with tool_calls (1 ms)
+    ✓ does not overwrite existing reasoning_content
+    ✓ skips messages without tool_calls
+    ✓ handles non-array input gracefully (1 ms)
+  embedOpenRouterMedia
+    ✓ converts audio data URLs to input_audio format
+    ✓ defaults to mp3 for unknown audio mime types
+    ✓ skips non-data-URL audio
+    ✓ keeps video_url type for video data URLs
+    ✓ skips non-data-URL video
+    ✓ respects audio=false option (1 ms)
+    ✓ respects video=false option
+    ✓ handles non-array input gracefully
+    ✓ skips messages with string content
+  cachingSystemPromptForOpenRouter
+    ✓ adds cache_control to string system message
+    ✓ adds cache_control with TTL
+    ✓ adds cache_control to last text part of array content (1 ms)
+    ✓ skips if system message already has cache_control
+    ✓ skips if array content already has cache_control
+    ✓ does nothing with empty array (1 ms)
+    ✓ does nothing without system message
+  convertAI21Messages
+    ✓ returns empty array for non-array input (1 ms)
+    ✓ extracts leading system messages into merged system prompt (2 ms)
+    ✓ prepends character name to example_assistant system messages
+    ✓ does not double-prepend if name already present (10 ms)
+    ✓ merges consecutive same-role messages (1 ms)
+    ✓ prepends name to non-system messages and deletes name property
+    ✓ inserts placeholder when all messages are system
+  convertCohereMessages
+    ✓ inserts placeholder for empty messages
+    ✓ prepends character name to example_assistant system messages
+    ✓ prepends user name to example_user system messages
+    ✓ prepends name to non-system messages (1 ms)
+    ✓ handles tool_calls by extracting function names
+  convertXAIMessages
+    ✓ returns empty array for non-array input
+    ✓ prepends char name to assistant messages (1 ms)
+    ✓ skips user role messages entirely
+    ✓ handles group names - does not double prefix
+  mergeMessages
+    ✓ squashes consecutive same-role messages (1 ms)
+    ✓ inserts placeholder for empty messages
+    ✓ removes name property and prepends to content for non-system
+    ✓ strict mode forces mid-prompt system to user (1 ms)
+    ✓ single mode forces all roles to user
+    ✓ single mode prepends charName to assistant, userName to user
+    ✓ tools=false removes tool_calls and tool_call_id (1 ms)
+    ✓ flattens array content and preserves image URLs via tokens (1 ms)
+  postProcessPrompt
+    ✓ NONE type returns messages unchanged
+    ✓ MERGE type merges consecutive same-role messages
+    ✓ deprecated CLAUDE type works same as MERGE
+  addOpenRouterSignatures
+    ✓ handles non-array input gracefully (1 ms)
+    ✓ detects google model format
+    ✓ detects anthropic model format
+    ✓ removes signature property from messages (1 ms)
+    ✓ removes signature property from tool_calls
+  getPromptNames
+    ✓ extracts names from request body
+    ✓ defaults to empty strings and array when missing (1 ms)
+    ✓ startsWithGroupName checks message prefix
+    ✓ coerces non-string group_names to strings
+  convertClaudePrompt
+    ✓ returns empty string for empty messages
+    ✓ basic conversion with Human/Assistant prefixes (1 ms)
+    ✓ adds assistant postfix when requested
+    ✓ adds assistant prefill when provided (1 ms)
+    ✓ system prompt mode sets first message role to system
+    ✓ exclude prefixes mode sets non-last messages to system
+    ✓ stringifies tool_calls into content (1 ms)
+  convertClaudeMessages
+    ✓ extracts leading system messages when useSysPrompt is true (1 ms)
+    ✓ inserts placeholder when all messages are system and useSysPrompt is true
+    ✓ converts system messages to user role after extraction (1 ms)
+    ✓ merges consecutive same-role messages
+    ✓ converts string content to array of text parts
+    ✓ converts image_url content to Claude base64 format (1 ms)
+    ✓ moves images from assistant to next user message
+    ✓ adds prefill as trailing assistant message
+    ✓ converts tool_calls to tool_use format (1 ms)
+    ✓ converts tool messages to tool_result format
+    ✓ replaces empty text content with zero-width space
+    ✓ prepends example_assistant name with charName in system prompt (1 ms)
+    ✓ removes name, tool_calls, and tool_call_id properties from output
+  convertGooglePrompt
+    ✓ extracts leading system messages into system_instruction (1 ms)
+    ✓ converts assistant role to model role
+    ✓ converts system and tool roles to user role (1 ms)
+    ✓ merges consecutive same-role messages (1 ms)
+    ✓ merges a trailing prefill into the user turn on gemini-3.7-flash
+    ✓ merges a trailing prefill into the user turn on gemini-3.6-flash
+    ✓ merges a trailing prefill into the user turn on gemini-3.5-flash-lite (1 ms)
+    ✓ keeps non-trailing model turns on models without prefill support
+    ✓ converts image_url to inlineData
+    ✓ converts tool_calls to functionCall parts
+    ✓ converts tool_call_id to functionResponse parts
+    ✓ prepends example names when useSysPrompt is true (1 ms)
+    ✓ does not extract system if useSysPrompt is false
+  convertMistralMessages
+    ✓ returns empty array for non-array input
+    ✓ prepends charName to example_assistant system messages (1 ms)
+    ✓ prepends userName to example_user system messages
+    ✓ prepends name to non-system messages
+    ✓ hashes tool call IDs
+    ✓ changes system to user when following assistant (1 ms)
+    ✓ merges user message after tool into previous user message
+  cachingAtDepthForClaude
+    ✓ adds cache_control at specified depth (1 ms)
+    ✓ skips trailing assistant messages (prefill)
+    ✓ does not modify messages when depth exceeds message count
+  cachingAtDepthForOpenRouterClaude
+    ✓ adds cache_control to string content by wrapping in array (1 ms)
+    ✓ adds cache_control to array content on last part
+    ✓ skips system messages for depth counting
+    ✓ skips trailing assistant prefill
+
+  console.error
+    Invalid url provided for /visit file:///etc/passwd
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+(node:3070007) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+  console.warn
+    Client context could not be stored in this browser.
+
+      at Module.finishClientCapture (vm:module(1):80:17)
+      at Object.<anonymous> (itemized-captures.test.js:73:5)
+
+  console.warn
+    Extension folder "/tmp/st-extensions-olen6t/Deleted-Husk" has no manifest.json and was skipped. Remove the folder to get rid of this warning.
+
+      498 |         const manifestExists = fs.existsSync(path.join(parentDirectory, folder, 'manifest.json'));
+      499 |         if (!manifestExists) {
+    > 500 |             console.warn(color.yellow(`Extension folder "${path.join(parentDirectory, folder)}" has no manifest.json and was skipped. Remove the folder to get rid of this warning.`));
+          |                     ^
+      501 |         }
+      502 |         return manifestExists;
+      503 |     };
+
+      at hasManifest (../src/endpoints/extensions.js:500:21)
+      at ../src/endpoints/extensions.js:517:22
+          at Array.filter (<anonymous>)
+      at ../src/endpoints/extensions.js:517:10
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at extensionsEnabledFeatureGuard (../src/endpoints/extensions.js:78:5)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at extensions-discover.test.js:42:13
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at expressInit (../node_modules/express/lib/middleware/init.js:40:5)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at query (../node_modules/express/lib/middleware/query.js:45:5)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at app.handle (../node_modules/express/lib/application.js:181:10)
+      at Server.app (../node_modules/express/lib/express.js:39:9)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:257:13)
+
+PASS ./chat-integrity.test.js
+  trySaveChat integrity check
+    ✓ writes a new file when none exists (7 ms)
+    ✓ overwrites when the integrity slug matches (19 ms)
+    ✓ refuses to overwrite when the integrity slug mismatches and keeps the original bytes (8 ms)
+    ✓ overwrites a legacy chat whose header has no integrity metadata (31 ms)
+    ✓ overwrites an empty file (1 ms)
+    ✓ refuses to overwrite a non-empty file with an unparseable first line and keeps the original bytes (19 ms)
+    ✓ refuses to overwrite a truncated header and keeps the original bytes (5 ms)
+    ✓ refuses to overwrite when the first line parses to a non-object (5 ms)
+    ✓ refuses to overwrite when the file starts with a blank line but has content below (7 ms)
+    ✓ ignores a UTF-8 BOM in front of a valid matching header (2 ms)
+    ✓ still checks the integrity slug behind a UTF-8 BOM (2 ms)
+    ✓ force overwrites a corrupted file when the user confirmed
+    ✓ force overwrites a mismatching file when the user confirmed
+    ✓ rejects a missing incoming integrity slug and preserves protected bytes (1 ms)
+  strict chat reads
+    ✓ missing and truly empty files are valid new conversations (2 ms)
+    ✓ loads complete BOM-prefixed JSONL and trailing newlines (1 ms)
+    ✓ does not turn a partially corrupt transcript into a partial successful read (1 ms)
+    ✓ filesystem errors other than a missing file do not mean an empty chat (3 ms)
+    ✓ missing incoming metadata cannot erase a nonempty legacy file
+
+  console.info
+    [Private Request Filter] Enabled
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:258:13)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:262:13)
+
+  console.error
+    Invalid url provided for /visit http://example.com:8080/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.debug
+    Extensions available for test-user [
+      { type: 'system', name: 'assets' },
+      { type: 'system', name: 'attachments' },
+      { type: 'system', name: 'caption' },
+      { type: 'system', name: 'connection-manager' },
+      { type: 'system', name: 'expressions' },
+      { type: 'system', name: 'gallery' },
+      { type: 'system', name: 'memory' },
+      { type: 'system', name: 'quick-reply' },
+      { type: 'system', name: 'regex' },
+      { type: 'system', name: 'stable-diffusion' },
+      { type: 'system', name: 'token-counter' },
+      { type: 'system', name: 'translate' },
+      { type: 'system', name: 'tts' },
+      { type: 'system', name: 'vectors' },
+      { type: 'local', name: 'third-party/Valid-Extension' }
+    ]
+
+      at ../src/endpoints/extensions.js:531:13
+
+  console.warn
+    Client context could not be stored in this browser.
+
+      at Module.finishClientCapture (vm:module(1):80:17)
+      at Object.<anonymous> (itemized-captures.test.js:85:5)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:257:13)
+
+PASS ./itemized-captures.test.js
+  ✓ immutable context follows the exact account/entity/file/message/alternative/revision (13 ms)
+  ✓ request allowlist strips credentials, arbitrary body fields and media payloads (3 ms)
+  ✓ bounded capture retains newest sixty records and omits oversized request text (21 ms)
+  ✓ only acknowledged native rename bindings keep recorded identity intact (4 ms)
+  ✓ Continue creates an independent revision and quiet/impersonate never capture (3 ms)
+  ✓ obsolete completion and storage failure cannot attach unrelated references (26 ms)
+  ✓ absent or failing Web Crypto never escapes optional diagnostics (7 ms)
+
+  console.info
+    [Private Request Filter] Enabled
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:258:13)
+
+  console.error
+    Invalid url provided for /visit http://127.0.0.1/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:262:13)
+
+  console.error
+    Invalid url provided for /visit http://10.0.0.1/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.error
+    [Private Request Filter] Unable to resolve host: missing-host.local. Set privateAddressWhitelist.allowUnresolvedHosts to true to bypass this check.
+
+      115 |         const raiseError = (message, log = true) => {
+      116 |             if (log) {
+    > 117 |                 console.error(color.red(LOG_HEADER), message);
+          |                         ^
+      118 |             }
+      119 |             throw new Error(message);
+      120 |         };
+
+      at raiseError (../src/private-request-filter.js:117:25)
+      at PrivateRequestAgent.connect (../src/private-request-filter.js:190:28)
+      at Object.<anonymous> (private-request-filter.test.js:115:9)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:257:13)
+
+  console.info
+    [Private Request Filter] Enabled
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:258:13)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:262:13)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:257:13)
+
+  console.error
+    Invalid url provided for /visit http://169.254.169.254/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.info
+    [Private Request Filter] Enabled
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:258:13)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:262:13)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:257:13)
+
+  console.debug
+    Preset samplers order: 1,5,0,2,3,4
+
+      at sortItemsByOrder (../public/scripts/nai-settings.js:642:13)
+
+  console.info
+    [Private Request Filter] Enabled
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:258:13)
+
+  console.error
+    Invalid url provided for /visit http://0x7f000001/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.info
+    undefined
+
+      at initPrivateRequestFilter (../src/private-request-filter.js:262:13)
+
+PASS ./extensions-discover.test.js
+  extensions discover
+    ✓ lists folders with a manifest and skips folders without one (88 ms)
+
+  console.debug
+    Preset samplers order: 1,5,0,2,3,4
+
+      at sortItemsByOrder (../public/scripts/nai-settings.js:642:13)
+
+PASS ./nai-settings.test.js
+  NovelAI settings
+    ✓ preserves a zero Math1 temperature when loading settings (28 ms)
+
+  console.error
+    [Private Request Filter] Blocked request to private IP address: 127.0.0.1
+
+      115 |         const raiseError = (message, log = true) => {
+      116 |             if (log) {
+    > 117 |                 console.error(color.red(LOG_HEADER), message);
+          |                         ^
+      118 |             }
+      119 |             throw new Error(message);
+      120 |         };
+
+      at raiseError (../src/private-request-filter.js:117:25)
+      at validateIpAddress (../src/private-request-filter.js:158:20)
+      at PrivateRequestAgent.connect (../src/private-request-filter.js:183:20)
+      at Object.<anonymous> (private-request-filter.test.js:157:28)
+
+  console.error
+    Invalid url provided for /visit http://0177.0.0.1/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.error
+    [Private Request Filter] Blocked request to private IP address: ::1
+
+      115 |         const raiseError = (message, log = true) => {
+      116 |             if (log) {
+    > 117 |                 console.error(color.red(LOG_HEADER), message);
+          |                         ^
+      118 |             }
+      119 |             throw new Error(message);
+      120 |         };
+
+      at raiseError (../src/private-request-filter.js:117:25)
+      at validateIpAddress (../src/private-request-filter.js:158:20)
+      at PrivateRequestAgent.connect (../src/private-request-filter.js:183:20)
+      at Object.<anonymous> (private-request-filter.test.js:160:28)
+
+PASS ./workspace-state-ownership.test.js
+  acknowledged story rename draft ownership
+    ✓ reopening the old filename retires acknowledged permission and keeps the renamed draft separate (9 ms)
+    ✓ a different incarnation never lends its composer to an earlier rename acknowledgement (4 ms)
+    ✓ preserves input before and after visible identity changes, then retires the old-name permission (5 ms)
+    ✓ an unrelated story retires the transition even when later metadata persistence failed (4 ms)
+    ✓ another account or entity never captures this composer (5 ms)
+    ✓ destination conflict preserves both records and completion cannot resurrect deliberately cleared text (3 ms)
+    ✓ a newer acknowledged rename supersedes only the active transition (3 ms)
+  character rename state ownership
+    ✓ migrates active and inactive drafts for only this user and character (4 ms)
+    ✓ keeps both records and reports a pre-existing destination draft (3 ms)
+    ✓ does not remove the source when persisting its new key fails (3 ms)
+    ✓ migrates archived character keys and coalesces only equivalent destinations (3 ms)
+  native connection response ownership
+    ✓ discards old server metadata and releases its spinner after a URL edit (6 ms)
+    ✓ an obsolete same-settings Connect cannot replace a newer response or stop its spinner (2 ms)
+    ✓ foreground verification does not supersede a native Connect or end its loading state (2 ms)
+    ✓ an older foreground failure cannot disconnect a newer successful native Connect (3 ms)
+    ✓ claude has no read-only verification, rather than a failed connection (3 ms)
+    ✓ ai21 has no read-only verification, rather than a failed connection (2 ms)
+    ✓ vertexai has no read-only verification, rather than a failed connection (2 ms)
+    ✓ perplexity has no read-only verification, rather than a failed connection (2 ms)
+    ✓ zai has no read-only verification, rather than a failed connection (2 ms)
+    ✓ minimax has no read-only verification, rather than a failed connection (4 ms)
+    ✓ foreground verification null shows a failure only when supported verification failed (2 ms)
+    ✓ foreground verification false shows a failure only when supported verification failed (3 ms)
+  workspace native load outcomes
+    ✓ character selection rejects native failure without applying active settings (2 ms)
+    ✓ group selection rejects native failure without applying active settings (2 ms)
+    ✓ character exact-story open rejects native file-load failure (2 ms)
+    ✓ group exact-story open rejects native file-load failure (2 ms)
+  recorder callback ownership
+    ✓ old stop, error and timer callbacks cannot clean a newer recording (4 ms)
+
+  console.error
+    Invalid url provided for /visit http://2130706433/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.error
+    [Private Request Filter] Blocked request to private IP address: 192.168.1.8
+
+      115 |         const raiseError = (message, log = true) => {
+      116 |             if (log) {
+    > 117 |                 console.error(color.red(LOG_HEADER), message);
+          |                         ^
+      118 |             }
+      119 |             throw new Error(message);
+      120 |         };
+
+      at raiseError (../src/private-request-filter.js:117:25)
+      at validateIpAddress (../src/private-request-filter.js:158:20)
+      at PrivateRequestAgent.connect (../src/private-request-filter.js:194:20)
+      at Object.<anonymous> (private-request-filter.test.js:171:9)
+
+  console.error
+    [Private Request Filter] Unable to resolve host: missing-host.local. Set privateAddressWhitelist.allowUnresolvedHosts to true to bypass this check.
+
+      115 |         const raiseError = (message, log = true) => {
+      116 |             if (log) {
+    > 117 |                 console.error(color.red(LOG_HEADER), message);
+          |                         ^
+      118 |             }
+      119 |             throw new Error(message);
+      120 |         };
+
+      at raiseError (../src/private-request-filter.js:117:25)
+      at PrivateRequestAgent.connect (../src/private-request-filter.js:190:28)
+      at Object.<anonymous> (private-request-filter.test.js:182:9)
+
+PASS ./private-request-filter.test.js
+  private request filter
+    ✓ allows direct private IP requests only when whitelisted (46 ms)
+    ✓ resolves hostnames and blocks when DNS returns private IP (10 ms)
+    ✓ connects to resolved public IP to avoid hostname re-resolution (5 ms)
+    ✓ handles unresolved hosts according to allowUnresolvedHosts setting (11 ms)
+    ✓ uses tls.connect for secure endpoints (5 ms)
+  untrusted request agent
+    ✓ returns undefined when the private request filter is enabled (3 ms)
+    ✓ returns undefined when a request proxy owns outbound routing (1 ms)
+    ✓ returns the same strict agent instance when the filter is disabled
+    ✓ blocks private addresses even when the configured whitelist allows them (4 ms)
+    ✓ blocks hostnames that resolve to private addresses (6 ms)
+    ✓ blocks unresolvable hostnames (1 ms)
+    ✓ connects public hostnames to their resolved IP for both http and https
+
+  console.error
+    Invalid url provided for /visit http://[::1]/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+PASS ./google-models.test.js
+  Google AI Studio model pagination
+    ✓ fetches every page and returns generateContent models (3 ms)
+    ✓ preserves reverse proxy query parameters
+    ✓ rejects an HTTP failure without returning partial models (1 ms)
+    ✓ rejects a malformed models field (1 ms)
+    ✓ rejects a repeated page token
+    ✓ rejects a supported model without a valid name
+
+  console.error
+    Invalid url provided for /visit http://[fe80::1]/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.error
+    Invalid url provided for /visit http://localhost/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.error
+    Invalid url provided for /visit http://sub.localhost/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.error
+    Invalid url provided for /visit https://localhost/
+
+      429 |             }
+      430 |         } catch (error) {
+    > 431 |             console.error('Invalid url provided for /visit', url);
+          |                     ^
+      432 |             return response.sendStatus(400);
+      433 |         }
+      434 |
+
+      at ../src/endpoints/search.js:431:21
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at next (../node_modules/express/lib/router/route.js:149:13)
+      at Route.dispatch (../node_modules/express/lib/router/route.js:119:3)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at ../node_modules/express/lib/router/index.js:284:15
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at router.handle (../node_modules/express/lib/router/index.js:175:3)
+      at router (../node_modules/express/lib/router/index.js:47:12)
+      at Layer.handle [as handle_request] (../node_modules/express/lib/router/layer.js:95:5)
+      at trim_prefix (../node_modules/express/lib/router/index.js:328:13)
+      at ../node_modules/express/lib/router/index.js:286:9
+      at router.process_params (../node_modules/express/lib/router/index.js:346:12)
+      at next (../node_modules/express/lib/router/index.js:280:10)
+      at ../node_modules/body-parser/lib/read.js:137:5
+      at invokeCallback (../node_modules/raw-body/index.js:238:16)
+      at done (../node_modules/raw-body/index.js:227:7)
+      at IncomingMessage.onEnd (../node_modules/raw-body/index.js:287:7)
+
+  console.info
+    Visiting web URL http://example.com/
+
+      at ../src/endpoints/search.js:435:17
+
+PASS ./secret-inputs.test.js
+  secret inputs
+    ✓ keeps the proxy access key out of password manager form detection (3 ms)
+    ✓ uses a regular text input for the Azure API key (1 ms)
+
+PASS ./tavern-card-validator.test.js
+  TavernCardValidator
+    validate
+      ✓ returns 1 for valid V1 card (1 ms)
+      ✓ returns 2 for valid V2 card
+      ✓ returns 3 for valid V3 card
+      ✓ returns false for empty object
+      ✓ prefers V1 when card satisfies both V1 and V2
+    validateV1
+      ✓ accepts card with all required fields
+      ✓ rejects card missing name (1 ms)
+      ✓ rejects card missing description
+      ✓ rejects card missing personality
+      ✓ rejects card missing scenario (1 ms)
+      ✓ rejects card missing first_mes
+      ✓ rejects card missing mes_example
+    validateV2
+      ✓ accepts valid V2 card
+      ✓ rejects wrong spec string
+      ✓ rejects wrong spec_version
+      ✓ rejects missing data
+      ✓ rejects card missing data.name
+      ✓ rejects card missing data.description
+      ✓ rejects card missing data.personality (1 ms)
+      ✓ rejects card missing data.scenario
+      ✓ rejects card missing data.first_mes
+      ✓ rejects card missing data.mes_example
+      ✓ rejects card missing data.creator_notes (1 ms)
+      ✓ rejects card missing data.system_prompt
+      ✓ rejects card missing data.post_history_instructions
+      ✓ rejects card missing data.alternate_greetings
+      ✓ rejects card missing data.tags (1 ms)
+      ✓ rejects card missing data.creator
+      ✓ rejects card missing data.character_version
+      ✓ rejects card missing data.extensions
+      ✓ rejects non-array alternate_greetings
+      ✓ rejects non-array tags (1 ms)
+      ✓ rejects non-object extensions
+      ✓ accepts card with optional character_book
+      ✓ rejects character_book missing entries
+      ✓ rejects character_book missing extensions
+      ✓ rejects character_book with non-array entries
+      ✓ rejects character_book with non-object extensions
+    validateV3
+      ✓ accepts valid V3 card
+      ✓ rejects wrong spec string
+      ✓ rejects spec_version below 3.0
+      ✓ rejects spec_version at or above 4.0 (1 ms)
+      ✓ accepts spec_version 3.5
+      ✓ rejects missing data
+      ✓ rejects non-object data
+    lastValidationError
+      ✓ is null after successful validation
+      ✓ is reset on each validate call
+
+PASS ./bookmark-ownership.test.js
+  ✓ branchChat rejects a changed story after the legacy prompt cache await (2 ms)
+  ✓ createNewBookmark rejects a changed story after the legacy prompt cache await (1 ms)
+
+  console.info
+    Visiting web URL https://example.com/some/page?query=1
+
+      at ../src/endpoints/search.js:435:17
+
+PASS ./search-visit.test.js
+  POST /api/search/visit URL validation
+    ✓ rejects missing url with 400 before any request is made (76 ms)
+    ✓ rejects empty url with 400 before any request is made (8 ms)
+    ✓ rejects relative url with 400 before any request is made (9 ms)
+    ✓ rejects ftp protocol with 400 before any request is made (7 ms)
+    ✓ rejects file protocol with 400 before any request is made (5 ms)
+    ✓ rejects non-standard port with 400 before any request is made (5 ms)
+    ✓ rejects literal IPv4 loopback with 400 before any request is made (6 ms)
+    ✓ rejects literal IPv4 private with 400 before any request is made (4 ms)
+    ✓ rejects literal IPv4 metadata service with 400 before any request is made (6 ms)
+    ✓ rejects hex IPv4 form with 400 before any request is made (5 ms)
+    ✓ rejects octal IPv4 form with 400 before any request is made (3 ms)
+    ✓ rejects decimal IPv4 form with 400 before any request is made (3 ms)
+    ✓ rejects bracketed IPv6 loopback with 400 before any request is made (7 ms)
+    ✓ rejects bracketed IPv6 link-local with 400 before any request is made (4 ms)
+    ✓ rejects localhost with 400 before any request is made (3 ms)
+    ✓ rejects localhost subdomain with 400 before any request is made (2 ms)
+    ✓ rejects https localhost with 400 before any request is made (3 ms)
+    ✓ passes public http url to fetch through the untrusted request agent (5 ms)
+    ✓ passes public https url to fetch through the untrusted request agent (4 ms)
+
+(node:3070010) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+  console.info
+    Processing audio file with OpenAI-compatible /tmp/st-compatible-test-Bk9STX/9a4178d0aab4ad8693d01bc53ddb2a60
+
+      at ../src/endpoints/openai.js:878:21
+
+  console.info
+    Processing audio file with OpenAI-compatible /tmp/st-compatible-test-Bk9STX/6fbb35e937a302c33aa57c43d737fa6e
+
+      at ../src/endpoints/openai.js:878:21
+
+  console.warn
+    OpenAI-compatible request failed Unavailable Synthetic failure
+
+      897 |             if (!result.ok) {
+      898 |                 const text = await result.text();
+    > 899 |                 console.warn(`${providerName} request failed`, result.statusText, text);
+          |                         ^
+      900 |                 return response.status(500).send(text);
+      901 |             }
+      902 |
+
+      at ../src/endpoints/openai.js:899:25
+
+PASS ./compatible-services.test.js
+  compatible service discovery and transcription
+    ✓ discovers service-filtered models from https://fixture.example without credentials or management mutations (43 ms)
+    ✓ discovers service-filtered models from https://fixture.example/v1/ without credentials or management mutations (5 ms)
+    ✓ discovers service-filtered models from https://fixture.example/v1/audio/speech without credentials or management mutations (3 ms)
+    ✓ generic servers expose chat discovery without claiming filtered audio or image support (2 ms)
+    ✓ discovery preserves reported context limits without forwarding runtime internals (3 ms)
+    ✓ rejects unsafe or ambiguous URL file:///tmp/fixture (2 ms)
+    ✓ rejects unsafe or ambiguous URL https://user:secret@fixture.example (2 ms)
+    ✓ rejects unsafe or ambiguous URL https://fixture.example?key=secret (1 ms)
+    ✓ rejects unsafe or ambiguous URL invalid (2 ms)
+    ✓ upstream model errors remain visible with a retry instruction (2 ms)
+    ✓ voice discovery uses the native TTS key and returns actual deduplicated voices (2 ms)
+    ✓ key-free transcription preserves recording format and cleans its upload, success=true (22 ms)
+    ✓ key-free transcription preserves recording format and cleans its upload, success=false (5 ms)
+
+  console.warn
+    Error opening ZIP file: Invalid comment length. Expected: 4096. Found: 0. Are there extra bytes at the end of the file? Or is the end of central dir signature `PK☺☻` in the comment?
+
+      210 |             yauzl.fromBuffer(Buffer.from(archiveBuffer), { lazyEntries: true }, (err, zipfile) => {
+      211 |                 if (err) {
+    > 212 |                     console.warn(`Error opening ZIP file: ${err.message}`);
+          |                             ^
+      213 |                     return resolve(null);
+      214 |                 }
+      215 |
+
+      at ../src/util.js:212:29
+      at ../node_modules/yauzl/index.js:134:16
+      at ../node_modules/yauzl/index.js:761:5
+      at Immediate._onImmediate (../node_modules/yauzl/fd-slicer.js:220:5)
+
+PASS ./byaf-import.test.js
+  BYAF import buffer handling
+    ✓ parses a real BYAF archive from an exact ArrayBuffer slice of a pooled view (7 ms)
+    ✓ the raw oversized backing buffer is not parseable, which is why callers must slice (16 ms)
+
+Test Suites: 27 passed, 27 total
+Tests:       501 passed, 501 total
+Snapshots:   0 total
+Time:        1.149 s
+Ran all test suites.

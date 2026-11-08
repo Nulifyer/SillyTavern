@@ -1,0 +1,130 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to message" [ref=e3] [cursor=pointer]:
+    - /url: "#send_textarea"
+  - banner [ref=e4]:
+    - button "Open navigation" [ref=e5] [cursor=pointer]:
+      - generic [ref=e6]: 
+    - generic [ref=e7]:
+      - strong [ref=e8]: Settings
+      - generic [ref=e9]: Dictation
+    - generic:  +
+  - text:  
+  - generic:
+    - generic:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items   X                                      
+    - generic:                                                                         
+    - generic:                                                
+    - generic:                 +     
+    - generic:                                    
+    - generic:        +                            
+    - generic: 
+    - generic:                     
+    - generic:                                                      Group is empty.          No characters available                        
+  - generic:                      +                                                                               +    + +                  
+  - generic:                  
+  - generic [ref=e10]:
+    - generic [ref=e11]:
+      - generic [ref=e12]:
+        - generic [ref=e13]:
+          - generic [ref=e14]: Settings category
+          - combobox "Settings category" [ref=e15]:
+            - option "Servers"
+            - option "Story replies"
+            - option "Image prompts"
+            - option "Images"
+            - option "Speech"
+            - option "Dictation" [selected]
+            - option "Vision & captions"
+            - option "Retrieval"
+            - option "Your persona"
+            - option "World & lore"
+            - option "Summary memory"
+            - option "Author’s Note"
+            - option "Scene backgrounds"
+            - option "Appearance & behavior"
+            - option "Extensions"
+            - option "Character editor"
+        - button "Done" [ref=e16] [cursor=pointer]:
+          - generic [ref=e17]: 
+          - generic [ref=e18]: Done
+      - text:                
+      - generic [ref=e19]:
+        - generic [ref=e20]:
+          - generic [ref=e21]:
+            - heading "Dictation" [level=1] [ref=e22]
+            - paragraph [ref=e23]: Connect a transcription service and add microphone or audio-file transcripts to your draft.
+          - generic "Expand native provider settings, sampling, prompt formatting and extension options. Changes only which controls are shown." [ref=e25] [cursor=pointer]:
+            - checkbox "Advanced controls" [ref=e26]
+            - generic [ref=e27]: Advanced controls
+        - generic "Dictation" [ref=e29]:
+          - generic [ref=e30]:
+            - text:         +                             +                    
+            - generic [ref=e31]:
+              - text:  +   + +  +     +        +        +        +                                              
+              - generic [ref=e32]:
+                - text: 
+                - generic [ref=e33]:
+                  - generic [ref=e34]:
+                    - button "Set up a server" [ref=e35] [cursor=pointer]
+                    - paragraph [ref=e36]: Discover models, or configure a provider below.
+                  - group [ref=e37]:
+                    - generic "Endpoint and model override" [ref=e38] [cursor=pointer]
+                    - text: Transcription endpoint
+                    - textbox "Transcription endpoint" [ref=e39]
+                    - text: Transcription model
+                    - textbox "Transcription model" [ref=e40]
+                  - heading "Microphone dictation" [level=3] [ref=e41]
+                  - paragraph [ref=e42]: Use a compatible transcription service to add text to your draft. Dictation never sends messages. Microphone access requires HTTPS or localhost and browser permission. Audio is sent as mono 16 kHz WAV. You can also transcribe an audio file up to 120 seconds long.
+                  - text: Uses the Custom OpenAI provider key when one is saved. Key-free servers need no key. Choose discovered models in Settings > Dictation.
+                  - paragraph [ref=e43]: Transcribe an audio file into your current story draft. Maximum 120 seconds and 25 MB.
+                  - button "Choose audio file" [active] [ref=e44] [cursor=pointer]
+                  - status
+    - region "Roleplay workspace" [ref=e45]:
+      - generic [ref=e46]:
+        - generic [ref=e47]:
+          - generic [ref=e48]:
+            - heading "Characters" [level=1] [ref=e49]
+            - paragraph [ref=e50]: Choose who shares your next story.
+          - generic [ref=e51]:
+            - button "Import card" [ref=e52] [cursor=pointer]:
+              - generic [ref=e53]: 
+              - generic [ref=e54]: Import card
+            - button "Create character" [ref=e55] [cursor=pointer]:
+              - generic [ref=e56]: +
+              - generic [ref=e57]: Create character
+        - generic [ref=e58]:
+          - generic [ref=e59]:
+            - generic [ref=e60]: 
+            - searchbox "Search characters, descriptions, and tags" [ref=e61]
+          - generic [ref=e62]:
+            - button "All" [pressed] [ref=e63] [cursor=pointer]
+            - button "Characters" [ref=e64] [cursor=pointer]
+            - button "Casts" [ref=e65] [cursor=pointer]
+            - button "Favorites" [ref=e66] [cursor=pointer]
+        - generic [ref=e67]:
+          - paragraph [ref=e68]: 1 character or cast
+          - button "Create cast" [ref=e69] [cursor=pointer]:
+            - generic [ref=e70]: 
+            - generic [ref=e71]: Create cast
+        - button "Meet Seraphina" [ref=e73] [cursor=pointer]:
+          - generic [ref=e74]:
+            - strong [ref=e75]: Seraphina
+            - generic [ref=e76]: You were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.
+    - text:                                                                                                 
+  - text:                      1  
+  - status [ref=e77]
+  - status [ref=e78]
+  - status [ref=e79]
+  - status [ref=e80]
+  - status [ref=e81]
+  - status [ref=e82]
+  - status [ref=e83]
+  - status [ref=e84]
+  - status [ref=e85]
+  - status [ref=e86]
+  - status [ref=e87]
+  - status [ref=e88]
+  - text: 
+```

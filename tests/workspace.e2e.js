@@ -458,11 +458,13 @@ test('native character editor owns Escape before its settings page and audio upl
     await settingsCategory(page, 'dictation-settings');
     await expect(page.getByLabel('Settings category')).toHaveValue('dictation-settings');
     const choose = page.getByRole('button', { name: 'Choose audio file', exact: true });
+    await choose.evaluate(button => { window.__audioPickerClicks = 0; button.addEventListener('click', () => window.__audioPickerClicks++); });
     await choose.focus();
     const chooser = page.waitForEvent('filechooser');
     await page.keyboard.press('Enter');
     await (await chooser).setFiles([]);
     await expect(choose).toBeFocused();
+    expect(await page.evaluate(() => window.__audioPickerClicks)).toBe(1);
     await settingsCategory(page, 'extensions');
     // The endpoint fields belong to the native dictation drawer's collapse state.
     const drawer = page.locator('#dictation-settings > .inline-drawer-content');
@@ -471,6 +473,19 @@ test('native character editor owns Escape before its settings page and audio upl
     await expect(page.locator('#dictation-endpoint')).toBeHidden();
     await page.locator('#dictation-settings > .inline-drawer-toggle').click();
     await expect(page.locator('#dictation-endpoint')).toBeVisible();
+    await page.evaluate(() => {
+        const fixture = document.createElement('div'); fixture.id = 'keyboard-activation-fixture';
+        fixture.innerHTML = '<button id="keyboard-native" class="menu_button" type="button">Native fixture</button><div id="keyboard-custom" class="menu_button" role="button" tabindex="0">Custom fixture</div><div id="keyboard-owned" class="menu_button" role="button" tabindex="0">Owned fixture</div><div id="keyboard-editor-parent" class="menu_button"><textarea id="keyboard-editor" aria-label="Keyboard fixture draft"></textarea></div>';
+        document.querySelector('.workspace-mounted-panel').append(fixture);
+        window.__keyboardClicks = {};
+        for (const id of ['keyboard-native', 'keyboard-custom', 'keyboard-owned', 'keyboard-editor-parent']) document.getElementById(id).addEventListener('click', () => window.__keyboardClicks[id] = (window.__keyboardClicks[id] || 0) + 1);
+        document.getElementById('keyboard-owned').addEventListener('keydown', event => { if (event.key === 'Enter') { event.preventDefault(); event.currentTarget.click(); } });
+    });
+    for (const id of ['keyboard-native', 'keyboard-custom', 'keyboard-owned']) { await page.locator(`#${id}`).focus(); await page.keyboard.press('Enter'); }
+    await page.locator('#keyboard-editor').fill('My draft'); await page.keyboard.press('Enter');
+    await expect(page.locator('#keyboard-editor')).toHaveValue('My draft\n');
+    expect(await page.evaluate(() => window.__keyboardClicks)).toEqual({ 'keyboard-native': 1, 'keyboard-custom': 1, 'keyboard-owned': 1 });
+    await page.locator('#keyboard-activation-fixture').evaluate(node => node.remove());
 });
 
 test('character portrait and native actions stay above tags and notes at every size', async ({ page }, testInfo) => {

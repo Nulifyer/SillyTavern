@@ -211,12 +211,17 @@ function initializeScrollResetBehaviors(element = document) {
  * @param {KeyboardEvent} event - The keyboard event
  */
 function handleGlobalKeyDown(event) {
+    if (event.defaultPrevented || event.isComposing) return;
     if (event.key === 'Enter') {
         if (!(event.target instanceof HTMLElement))
             return;
 
+        // Native controls already activate through the browser. Synthesizing a
+        // second click can open file pickers twice or toggle a menu closed again.
+        if (event.target.isContentEditable || event.target.closest('button, input, select, textarea, a[href], summary')) return;
+
         // Only count enter on this interactable if no modifier key is pressed
-        if (event.altKey || event.ctrlKey || event.shiftKey)
+        if (event.altKey || event.ctrlKey || event.shiftKey || event.metaKey)
             return;
 
         // Traverse up the DOM tree to find the actual interactable element
@@ -228,6 +233,7 @@ function handleGlobalKeyDown(event) {
         // Trigger click if a valid interactable is found and it's not disabled
         if (target && !target.classList.contains(DISABLED_CONTROL_CLASS)) {
             console.debug('Triggering click on keyboard-focused interactable control via Enter', target);
+            event.preventDefault();
             target.click();
         }
     }

@@ -1,0 +1,20 @@
+{
+  "stats": {
+    "startTime": "2026-11-08T20:52:43.853Z",
+    "duration": 721797.132,
+    "expected": 98,
+    "skipped": 0,
+    "unexpected": 1,
+    "flaky": 0
+  },
+  "diagnosticFiles": 99,
+  "pageErrors": [],
+  "consoleErrorCount": 54,
+  "failedRequestCount": 88,
+  "failedRequestErrors": {
+    "net::ERR_ABORTED": 84,
+    "net::ERR_INCOMPLETE_CHUNKED_ENCODING": 1,
+    "net::ERR_FAILED": 3
+  },
+  "runtimeManifest": "../rename-delta/runtime-sha256.json"
+}

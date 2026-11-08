@@ -3,8 +3,8 @@
   "phase": "implementation_review",
   "decision": "accept",
   "satisfied": true,
-  "sourceIdentity": "../rename-delta/runtime-sha256.json",
-  "sourceHashMatches": 19,
+  "sourceIdentity": "../source-v23-final/runtime-sha256.json",
+  "sourceHashMatches": 20,
   "fixture": "st-council-control-20261108 http://127.0.0.1:8037",
   "releaseVerdict": "pending_final_source_and_actual_v1.19.23_image_proof",
   "openFindings": [],
@@ -20,7 +20,8 @@
     "Native override retry paint and enlarged footer, peer-rendered recheck",
     "Observed v1.19.22 draft loss during acknowledged rename",
     "Staged and validated character collection publication",
-    "Old-filename transition retirement and stale-incarnation persisted-draft protection"
+    "Old-filename transition retirement and stale-incarnation persisted-draft protection",
+    "Native browser and custom keyboard activation ownership without duplicate Enter clicks"
   ],
   "evidence": [
     "render-checks.json",
@@ -29,7 +30,9 @@
     "phone320-override-retry.png",
     "../rename-delta/st-council-v23-final-units.log",
     "../rename-delta/st-council-v23-delta-final.log",
-    "../quality/review.md"
+    "../quality/review.md",
+    "../source-v23-final/st-council-keyboard-before-units.log",
+    "../source-v23-final/st-council-v23-keyboard-units.log"
   ],
   "limits": [
     "Independent browser review used fresh synthetic source overlays, not the immutable image.",

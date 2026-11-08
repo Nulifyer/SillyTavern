@@ -116,3 +116,12 @@ Tracedinputhaszero writes, productrespectsprefoff. Initialfixture resets ittrue;
 within-case savedSettings retains optoutfalse. Affected4pass31s,nativechar1pass8.4s.
 No runtimechange. Final99source runsfresh8042,19runtimebytes unchanged.22original
 imagefailure remainsunattributed, independent controlled22defects remainproven.
+
+## Shared keyboard activation correction
+
+Clean99source98passes1filechooserfailure. InstrumentedoneEnterproducedfalse+true
+clicks fromglobalkeyboardhelper+browser. Sharedownerfix preservesnativecontrols,
+contenteditable/defaultPrevented/IME/Meta andcustomclickonce.7unitsfailbefore;501
+units/27suitespassafter;4keyboard/search/desktop+Pixelmenucasespass43.8s. Allsame
+councilmembersacceptboundedsource.20runtime manifest in source-v23-final/. Final
+99source8042runsuniqueoutput /tmp/st-council-v23-final-source-results.23unpublished.

@@ -1,0 +1,367 @@
+npm notice run test:unit
+npm notice run node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.json --runTestsByPath keyboard-activation.test.js
+  console.debug
+    Triggering click on keyboard-focused interactable control via Enter Control {
+      native: true,
+      isContentEditable: false,
+      custom: true,
+      parentElement: null,
+      classList: { contains: [Function: contains] },
+      click: [Function: mockConstructor] {
+        _isMockFunction: true,
+        getMockImplementation: [Function (anonymous)],
+        mock: [Getter/Setter],
+        mockClear: [Function (anonymous)],
+        mockReset: [Function (anonymous)],
+        mockRestore: [Function (anonymous)],
+        mockReturnValueOnce: [Function (anonymous)],
+        mockResolvedValueOnce: [Function (anonymous)],
+        mockRejectedValueOnce: [Function (anonymous)],
+        mockReturnValue: [Function (anonymous)],
+        mockResolvedValue: [Function (anonymous)],
+        mockRejectedValue: [Function (anonymous)],
+        mockImplementationOnce: [Function (anonymous)],
+        withImplementation: [Function: bound withImplementation],
+        mockImplementation: [Function (anonymous)],
+        mockReturnThis: [Function (anonymous)],
+        mockName: [Function (anonymous)],
+        getMockName: [Function (anonymous)]
+      }
+    }
+
+      at handleGlobalKeyDown (vm:module(0):230:21)
+
+  console.debug
+    Triggering click on keyboard-focused interactable control via Enter Control {
+      native: false,
+      isContentEditable: false,
+      custom: true,
+      parentElement: null,
+      classList: { contains: [Function: contains] },
+      click: [Function: mockConstructor] {
+        _isMockFunction: true,
+        getMockImplementation: [Function (anonymous)],
+        mock: [Getter/Setter],
+        mockClear: [Function (anonymous)],
+        mockReset: [Function (anonymous)],
+        mockRestore: [Function (anonymous)],
+        mockReturnValueOnce: [Function (anonymous)],
+        mockResolvedValueOnce: [Function (anonymous)],
+        mockRejectedValueOnce: [Function (anonymous)],
+        mockReturnValue: [Function (anonymous)],
+        mockResolvedValue: [Function (anonymous)],
+        mockRejectedValue: [Function (anonymous)],
+        mockImplementationOnce: [Function (anonymous)],
+        withImplementation: [Function: bound withImplementation],
+        mockImplementation: [Function (anonymous)],
+        mockReturnThis: [Function (anonymous)],
+        mockName: [Function (anonymous)],
+        getMockName: [Function (anonymous)]
+      }
+    }
+
+      at handleGlobalKeyDown (vm:module(0):230:21)
+
+  console.debug
+    Triggering click on keyboard-focused interactable control via Enter Control {
+      native: false,
+      isContentEditable: true,
+      custom: true,
+      parentElement: null,
+      classList: { contains: [Function: contains] },
+      click: [Function: mockConstructor] {
+        _isMockFunction: true,
+        getMockImplementation: [Function (anonymous)],
+        mock: [Getter/Setter],
+        mockClear: [Function (anonymous)],
+        mockReset: [Function (anonymous)],
+        mockRestore: [Function (anonymous)],
+        mockReturnValueOnce: [Function (anonymous)],
+        mockResolvedValueOnce: [Function (anonymous)],
+        mockRejectedValueOnce: [Function (anonymous)],
+        mockReturnValue: [Function (anonymous)],
+        mockResolvedValue: [Function (anonymous)],
+        mockRejectedValue: [Function (anonymous)],
+        mockImplementationOnce: [Function (anonymous)],
+        withImplementation: [Function: bound withImplementation],
+        mockImplementation: [Function (anonymous)],
+        mockReturnThis: [Function (anonymous)],
+        mockName: [Function (anonymous)],
+        getMockName: [Function (anonymous)]
+      }
+    }
+
+      at handleGlobalKeyDown (vm:module(0):230:21)
+
+  console.debug
+    Triggering click on keyboard-focused interactable control via Enter Control {
+      native: false,
+      isContentEditable: false,
+      custom: true,
+      parentElement: null,
+      classList: { contains: [Function: contains] },
+      click: [Function: mockConstructor] {
+        _isMockFunction: true,
+        getMockImplementation: [Function (anonymous)],
+        mock: [Getter/Setter],
+        mockClear: [Function (anonymous)],
+        mockReset: [Function (anonymous)],
+        mockRestore: [Function (anonymous)],
+        mockReturnValueOnce: [Function (anonymous)],
+        mockResolvedValueOnce: [Function (anonymous)],
+        mockRejectedValueOnce: [Function (anonymous)],
+        mockReturnValue: [Function (anonymous)],
+        mockResolvedValue: [Function (anonymous)],
+        mockRejectedValue: [Function (anonymous)],
+        mockImplementationOnce: [Function (anonymous)],
+        withImplementation: [Function: bound withImplementation],
+        mockImplementation: [Function (anonymous)],
+        mockReturnThis: [Function (anonymous)],
+        mockName: [Function (anonymous)],
+        getMockName: [Function (anonymous)]
+      }
+    }
+
+      at handleGlobalKeyDown (vm:module(0):230:21)
+
+  console.debug
+    Triggering click on keyboard-focused interactable control via Enter Control {
+      native: false,
+      isContentEditable: false,
+      custom: true,
+      parentElement: null,
+      classList: { contains: [Function: contains] },
+      click: [Function: mockConstructor] {
+        _isMockFunction: true,
+        getMockImplementation: [Function (anonymous)],
+        mock: [Getter/Setter],
+        mockClear: [Function (anonymous)],
+        mockReset: [Function (anonymous)],
+        mockRestore: [Function (anonymous)],
+        mockReturnValueOnce: [Function (anonymous)],
+        mockResolvedValueOnce: [Function (anonymous)],
+        mockRejectedValueOnce: [Function (anonymous)],
+        mockReturnValue: [Function (anonymous)],
+        mockResolvedValue: [Function (anonymous)],
+        mockRejectedValue: [Function (anonymous)],
+        mockImplementationOnce: [Function (anonymous)],
+        withImplementation: [Function: bound withImplementation],
+        mockImplementation: [Function (anonymous)],
+        mockReturnThis: [Function (anonymous)],
+        mockName: [Function (anonymous)],
+        getMockName: [Function (anonymous)]
+      }
+    }
+
+      at handleGlobalKeyDown (vm:module(0):230:21)
+
+  console.debug
+    Triggering click on keyboard-focused interactable control via Enter Control {
+      native: false,
+      isContentEditable: false,
+      custom: true,
+      parentElement: null,
+      classList: { contains: [Function: contains] },
+      click: [Function: mockConstructor] {
+        _isMockFunction: true,
+        getMockImplementation: [Function (anonymous)],
+        mock: [Getter/Setter],
+        mockClear: [Function (anonymous)],
+        mockReset: [Function (anonymous)],
+        mockRestore: [Function (anonymous)],
+        mockReturnValueOnce: [Function (anonymous)],
+        mockResolvedValueOnce: [Function (anonymous)],
+        mockRejectedValueOnce: [Function (anonymous)],
+        mockReturnValue: [Function (anonymous)],
+        mockResolvedValue: [Function (anonymous)],
+        mockRejectedValue: [Function (anonymous)],
+        mockImplementationOnce: [Function (anonymous)],
+        withImplementation: [Function: bound withImplementation],
+        mockImplementation: [Function (anonymous)],
+        mockReturnThis: [Function (anonymous)],
+        mockName: [Function (anonymous)],
+        getMockName: [Function (anonymous)]
+      }
+    }
+
+      at handleGlobalKeyDown (vm:module(0):230:21)
+
+  console.debug
+    Triggering click on keyboard-focused interactable control via Enter Control {
+      native: false,
+      isContentEditable: false,
+      custom: true,
+      parentElement: null,
+      classList: { contains: [Function: contains] },
+      click: [Function: mockConstructor] {
+        _isMockFunction: true,
+        getMockImplementation: [Function (anonymous)],
+        mock: [Getter/Setter],
+        mockClear: [Function (anonymous)],
+        mockReset: [Function (anonymous)],
+        mockRestore: [Function (anonymous)],
+        mockReturnValueOnce: [Function (anonymous)],
+        mockResolvedValueOnce: [Function (anonymous)],
+        mockRejectedValueOnce: [Function (anonymous)],
+        mockReturnValue: [Function (anonymous)],
+        mockResolvedValue: [Function (anonymous)],
+        mockRejectedValue: [Function (anonymous)],
+        mockImplementationOnce: [Function (anonymous)],
+        withImplementation: [Function: bound withImplementation],
+        mockImplementation: [Function (anonymous)],
+        mockReturnThis: [Function (anonymous)],
+        mockName: [Function (anonymous)],
+        getMockName: [Function (anonymous)]
+      }
+    }
+
+      at handleGlobalKeyDown (vm:module(0):230:21)
+
+(node:3068552) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+FAIL ./keyboard-activation.test.js
+  native and custom keyboard activation ownership
+    ✕ native controls keep browser activation without a second synthetic click (10 ms)
+    ✕ text inside a custom interactable never activates its parent while editing (2 ms)
+    ✕ editable content retains its own Enter behavior (1 ms)
+    ✕ an existing key handler retains activation when it already prevented default (2 ms)
+    ✕ custom interactables activate once and consume their Enter default (1 ms)
+    ✕ composition and command shortcuts retain ownership: {"isComposing":true} (2 ms)
+    ✕ composition and command shortcuts retain ownership: {"metaKey":true} (1 ms)
+
+  ● native and custom keyboard activation ownership › native controls keep browser activation without a second synthetic click
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: called with 0 arguments
+
+      32 |         const handle = await keyboard(); const target = new Control({ native: true }); const event = enter(target);
+      33 |         handle(event);
+    > 34 |         expect(target.click).not.toHaveBeenCalled(); expect(event.preventDefault).not.toHaveBeenCalled();
+         |                                  ^
+      35 |     });
+      36 |     test('text inside a custom interactable never activates its parent while editing', async () => {
+      37 |         const handle = await keyboard(); const parent = new Control(); const target = new Control({ native: true, custom: false });
+
+      at Object.<anonymous> (keyboard-activation.test.js:34:34)
+
+  ● native and custom keyboard activation ownership › text inside a custom interactable never activates its parent while editing
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: called with 0 arguments
+
+      37 |         const handle = await keyboard(); const parent = new Control(); const target = new Control({ native: true, custom: false });
+      38 |         target.parentElement = parent; handle(enter(target));
+    > 39 |         expect(parent.click).not.toHaveBeenCalled(); expect(target.click).not.toHaveBeenCalled();
+         |                                  ^
+      40 |     });
+      41 |     test('editable content retains its own Enter behavior', async () => {
+      42 |         const handle = await keyboard(); const target = new Control({ editable: true }); handle(enter(target));
+
+      at Object.<anonymous> (keyboard-activation.test.js:39:34)
+
+  ● native and custom keyboard activation ownership › editable content retains its own Enter behavior
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: called with 0 arguments
+
+      41 |     test('editable content retains its own Enter behavior', async () => {
+      42 |         const handle = await keyboard(); const target = new Control({ editable: true }); handle(enter(target));
+    > 43 |         expect(target.click).not.toHaveBeenCalled();
+         |                                  ^
+      44 |     });
+      45 |     test('an existing key handler retains activation when it already prevented default', async () => {
+      46 |         const handle = await keyboard(); const target = new Control(); handle(enter(target, { defaultPrevented: true }));
+
+      at Object.<anonymous> (keyboard-activation.test.js:43:34)
+
+  ● native and custom keyboard activation ownership › an existing key handler retains activation when it already prevented default
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: called with 0 arguments
+
+      45 |     test('an existing key handler retains activation when it already prevented default', async () => {
+      46 |         const handle = await keyboard(); const target = new Control(); handle(enter(target, { defaultPrevented: true }));
+    > 47 |         expect(target.click).not.toHaveBeenCalled();
+         |                                  ^
+      48 |     });
+      49 |     test('custom interactables activate once and consume their Enter default', async () => {
+      50 |         const handle = await keyboard(); const target = new Control(); const event = enter(target); handle(event);
+
+      at Object.<anonymous> (keyboard-activation.test.js:47:34)
+
+  ● native and custom keyboard activation ownership › custom interactables activate once and consume their Enter default
+
+    expect(jest.fn()).toHaveBeenCalledTimes(expected)
+
+    Expected number of calls: 1
+    Received number of calls: 0
+
+      49 |     test('custom interactables activate once and consume their Enter default', async () => {
+      50 |         const handle = await keyboard(); const target = new Control(); const event = enter(target); handle(event);
+    > 51 |         expect(target.click).toHaveBeenCalledTimes(1); expect(event.preventDefault).toHaveBeenCalledTimes(1);
+         |                                                                                     ^
+      52 |     });
+      53 |     test.each([{ isComposing: true }, { metaKey: true }])('composition and command shortcuts retain ownership: %j', async options => {
+      54 |         const handle = await keyboard(); const target = new Control(); handle(enter(target, options));
+
+      at Object.<anonymous> (keyboard-activation.test.js:51:85)
+
+  ● native and custom keyboard activation ownership › composition and command shortcuts retain ownership: {"isComposing":true}
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: called with 0 arguments
+
+      53 |     test.each([{ isComposing: true }, { metaKey: true }])('composition and command shortcuts retain ownership: %j', async options => {
+      54 |         const handle = await keyboard(); const target = new Control(); handle(enter(target, options));
+    > 55 |         expect(target.click).not.toHaveBeenCalled();
+         |                                  ^
+      56 |     });
+      57 | });
+      58 |
+
+      at keyboard-activation.test.js:55:34
+
+  ● native and custom keyboard activation ownership › composition and command shortcuts retain ownership: {"metaKey":true}
+
+    expect(jest.fn()).not.toHaveBeenCalled()
+
+    Expected number of calls: 0
+    Received number of calls: 1
+
+    1: called with 0 arguments
+
+      53 |     test.each([{ isComposing: true }, { metaKey: true }])('composition and command shortcuts retain ownership: %j', async options => {
+      54 |         const handle = await keyboard(); const target = new Control(); handle(enter(target, options));
+    > 55 |         expect(target.click).not.toHaveBeenCalled();
+         |                                  ^
+      56 |     });
+      57 | });
+      58 |
+
+      at keyboard-activation.test.js:55:34
+
+Test Suites: 1 failed, 1 total
+Tests:       7 failed, 7 total
+Snapshots:   0 total
+Time:        0.147 s
+Ran all test suites within paths "keyboard-activation.test.js".

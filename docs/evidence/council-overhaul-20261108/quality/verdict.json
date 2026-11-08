@@ -1,11 +1,11 @@
 {
   "member": "quality",
-  "phase": "replacement_source_review",
+  "phase": "final_source_review",
   "decision": "accept",
   "satisfied": true,
   "sourceIdentity": "../source-final/runtime-sha256.json",
   "fixture": "st-council-quality-20261108 http://localhost:8038",
-  "releaseVerdict": "pending_actual_v1.19.23_image_full99",
+  "releaseVerdict": "pending_actual_v1.19.23_full99",
   "findings": [
     {
       "id": "Q1",
@@ -38,6 +38,20 @@
         "../rename-delta/st-council-v23-final-units.log"
       ],
       "resolution": "Native file acknowledgement and bounded draft transition, active integrity guard, atomic candidate publication and avatar validation;8 relevant browser cases and494 units pass."
+    },
+    {
+      "id": "Q3",
+      "severity": "major",
+      "status": "resolved_in_source_pending_release",
+      "trigger": "One real Enter on native Choose audio file button.",
+      "observed": "Shared keyboard handler calls synthetic click and browser also emits trusted native click, invoking native file input twice; focused picker times out.",
+      "acceptanceImpact": "Violates preserved keyboard upload workflow and single native activation ownership.",
+      "evidence": [
+        "keyboard-diagnostic.md",
+        "picker-trace.json",
+        "../../../../tests/keyboard-activation.test.js"
+      ],
+      "resolution": "Shared keyboard handler preserves native/defaultPrevented ownership and consumes one custom Enter; retained real chooser/focus regression counts one activation and covers custom controls/editing."
     }
   ],
   "limits": [
