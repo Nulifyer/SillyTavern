@@ -1,0 +1,62 @@
+{
+  "sourceRef": "13005c03ee62b009fadbe208f78e8a793eacdc0a",
+  "checks": [
+    {
+      "name": "character HTTP503 load initializes and saves a greeting",
+      "writes": [
+        {
+          "metadata": {},
+          "messages": [
+            {
+              "mes": "Greeting only",
+              "name": "Synthetic"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "group HTTP503 load initializes and saves greetings",
+      "writes": [
+        {
+          "metadata": {},
+          "messages": [
+            {
+              "mes": "Group greeting only"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "old recorder stop event stops a newer recording stream",
+      "newStreamBeforeOldStop": "live",
+      "newStreamAfterOldStop": "ended",
+      "newRecorderState": "recording"
+    },
+    {
+      "name": "character rename strands its unsent draft",
+      "draftAfterRename": "",
+      "oldRecordsRetained": 1
+    },
+    {
+      "name": "character rename makes archived stories active",
+      "archivedBeforeRename": true,
+      "archivedAfterRename": false
+    },
+    {
+      "name": "normal status response is accepted after its server URL changes",
+      "applied": [
+        {
+          "currentUrl": "https://server-b.invalid/v1",
+          "metadata": [
+            {
+              "id": "same-model",
+              "context_length": 65536
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,59 @@
+npm notice run test:unit
+npm notice run node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.json --runInBand compatible-services.test.js util.test.js
+(node:1957490) ExperimentalWarning: VM Modules is an experimental feature and might change at any time
+(Use `node --trace-warnings ...` to show where the warning was created)
+  console.info
+    Processing audio file with OpenAI-compatible /tmp/st-compatible-test-oTetZ8/594e891a273cd0b7832f73343049aba2
+
+      at ../src/endpoints/openai.js:878:21
+
+  console.info
+    Processing audio file with OpenAI-compatible /tmp/st-compatible-test-oTetZ8/d0afa1e7524e0e77cd2d9f7d59cc2866
+
+      at ../src/endpoints/openai.js:878:21
+
+  console.warn
+    OpenAI-compatible request failed Unavailable Synthetic failure
+
+      897 |             if (!result.ok) {
+      898 |                 const text = await result.text();
+    > 899 |                 console.warn(`${providerName} request failed`, result.statusText, text);
+          |                         ^
+      900 |                 return response.status(500).send(text);
+      901 |             }
+      902 |
+
+      at ../src/endpoints/openai.js:899:25
+
+PASS ./compatible-services.test.js
+  compatible service discovery and transcription
+    ✓ discovers service-filtered models from https://fixture.example without credentials or management mutations (30 ms)
+    ✓ discovers service-filtered models from https://fixture.example/v1/ without credentials or management mutations (6 ms)
+    ✓ discovers service-filtered models from https://fixture.example/v1/audio/speech without credentials or management mutations (2 ms)
+    ✓ generic servers expose chat discovery without claiming filtered audio or image support (2 ms)
+    ✓ discovery preserves reported context limits without forwarding runtime internals (2 ms)
+    ✓ rejects unsafe or ambiguous URL file:///tmp/fixture (2 ms)
+    ✓ rejects unsafe or ambiguous URL https://user:secret@fixture.example (1 ms)
+    ✓ rejects unsafe or ambiguous URL https://fixture.example?key=secret (1 ms)
+    ✓ rejects unsafe or ambiguous URL invalid (1 ms)
+    ✓ upstream model errors remain visible with a retry instruction (2 ms)
+    ✓ voice discovery uses the native TTS key and returns actual deduplicated voices (1 ms)
+    ✓ key-free transcription preserves recording format and cleans its upload, success=true (14 ms)
+    ✓ key-free transcription preserves recording format and cleans its upload, success=false (5 ms)
+
+PASS ./util.test.js
+  flattenSchema
+    ✓ should return the schema if it is not an object (1 ms)
+    ✓ should handle schema with $defs and $ref (1 ms)
+    ✓ should filter unsupported properties for Google API schema
+    ✓ should not filter properties for non-Google API schema (1 ms)
+  forwardFetchResponse
+    ✓ forwards the first SSE event before EOF and fails the downstream on upstream reset (2 ms)
+    ✓ should log JSON error bodies and return the original body for non-2xx streaming responses (1 ms)
+    ✓ should log plain text error bodies and return the original body for non-2xx streaming responses (1 ms)
+
+Test Suites: 2 passed, 2 total
+Tests:       20 passed, 20 total
+Snapshots:   0 total
+Time:        0.467 s, estimated 1 s
+Ran all test suites matching /compatible-services.test.js|util.test.js/i.

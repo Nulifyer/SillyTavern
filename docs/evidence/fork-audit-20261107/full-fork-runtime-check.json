@@ -1,0 +1,186 @@
+{
+  "observedAt": "2026-11-08T04:27:25.488949+00:00",
+  "comparisonBase": "06bde939fb1e9c4c8d8641d810f0a916b5bce127",
+  "tag": "v1.19.20",
+  "source": "e750add4eb6f448f68673707f7ca258e836a882b",
+  "container": "st-chat-resume-release-20261107",
+  "scope": "Every added or modified tracked public/src/package runtime path versus upstream base. Deleted paths and build/container configuration are not runtime-byte comparisons.",
+  "files": [
+    {
+      "path": "package-lock.json",
+      "matches": true,
+      "sha256": "1b73f47b94c8fca387a03dc74479e728f609b2ab49b343b0d29e7c8853620ca7"
+    },
+    {
+      "path": "package.json",
+      "matches": true,
+      "sha256": "8e8d82dfb46ea24dfb1b1a9e6017741c348906d8ac56fae5ea2b28119d3e7cc7"
+    },
+    {
+      "path": "public/css/toggle-dependent.css",
+      "matches": true,
+      "sha256": "6bab5c23161a7a2a6d27f2811e6e343e51cf37145f1fa7d87c209240df348695"
+    },
+    {
+      "path": "public/css/workspace.css",
+      "matches": true,
+      "sha256": "c9e0dc3997bdea4512695893e604654cdbcc48aca46122094ac6408118e27ca6"
+    },
+    {
+      "path": "public/index.html",
+      "matches": true,
+      "sha256": "a07eced9f6042820dfd58c99dc560d629a86c95b3be136bebe97d9c33071f4fc"
+    },
+    {
+      "path": "public/licenses/T3-Code.txt",
+      "matches": true,
+      "sha256": "935d8f2af0c703f9c39517ee57cc4930b19d02d533be930b63f0e82f93614b43"
+    },
+    {
+      "path": "public/script.js",
+      "matches": true,
+      "sha256": "89d81c59b7ad5dabd4abbef05bd6a0a8797c913097f92da8cfac9dd2ebfa1761"
+    },
+    {
+      "path": "public/scripts/RossAscends-mods.js",
+      "matches": true,
+      "sha256": "64238b07955fb3fa1bbf408a648a845f2634556abe624661979d096d3fe6919e"
+    },
+    {
+      "path": "public/scripts/audio-recording.js",
+      "matches": true,
+      "sha256": "5e4c9674f88504f5dc984a3a613f9162b9296e812f05e57a1c9aa7e1cd9f9dfa"
+    },
+    {
+      "path": "public/scripts/backgrounds.js",
+      "matches": true,
+      "sha256": "a9bc5e43d661638aa6080e421300dede9aba215eda91c99bebfe99de8d8bb56b"
+    },
+    {
+      "path": "public/scripts/browser-fixes.js",
+      "matches": true,
+      "sha256": "90e8521cea3a7acb5462fa01dd56b29e5094392189e9ee7c2d8a015b74dfc372"
+    },
+    {
+      "path": "public/scripts/browser-recovery.js",
+      "matches": true,
+      "sha256": "3278a16b304725a60da6e5567b425a4d376035b352ea6be78f5db8d3bb93f8a2"
+    },
+    {
+      "path": "public/scripts/composer-surface.js",
+      "matches": true,
+      "sha256": "d007ce5b4e87adfc7696b80d3534bb257961c9e44c22eb9b60d813072463e2f4"
+    },
+    {
+      "path": "public/scripts/dictation.js",
+      "matches": true,
+      "sha256": "5ff32c3759ba68485e443a708cdf38f6dc38f182c2b7abe2c02fa338842ae99a"
+    },
+    {
+      "path": "public/scripts/events.js",
+      "matches": true,
+      "sha256": "7fd884815771b4ef15f5337d3f2c508dee87b2e01a394d39cbcbe361ed967261"
+    },
+    {
+      "path": "public/scripts/extensions.js",
+      "matches": true,
+      "sha256": "92f94491ab328bfb702acfe1023eca2d643c4cd97dc86a680359ba3b044bf987"
+    },
+    {
+      "path": "public/scripts/extensions/caption/index.js",
+      "matches": true,
+      "sha256": "c4fc4cb3453276a5f3ea218888941e837dc1aad44e955bd20c55e8b48a76ac9e"
+    },
+    {
+      "path": "public/scripts/extensions/connection-manager/index.js",
+      "matches": true,
+      "sha256": "965949ec7f298623e6c1f9d7c2c489ff4e804f8c9c1d6ea191712469befa2daa"
+    },
+    {
+      "path": "public/scripts/extensions/shared.js",
+      "matches": true,
+      "sha256": "c47f6e04f1df4df101c2f7f8f35121520f87cf39b4d4ce133e9019871a32b232"
+    },
+    {
+      "path": "public/scripts/extensions/stable-diffusion/index.js",
+      "matches": true,
+      "sha256": "18e1906e65bb611703090b67280b64f6f95736427dbaa520dd59f1a3daf56321"
+    },
+    {
+      "path": "public/scripts/extensions/stable-diffusion/settings.html",
+      "matches": true,
+      "sha256": "c14cb561cfdc3a775114b970b61bb5816a087e1bc07eeabf410c8dae9f39dca2"
+    },
+    {
+      "path": "public/scripts/extensions/tts/index.js",
+      "matches": true,
+      "sha256": "f8c16ffa4277015a3d970442b3e751aecd02a81e16736b00ed0de45b8ddf96a3"
+    },
+    {
+      "path": "public/scripts/extensions/tts/openai-compatible.js",
+      "matches": true,
+      "sha256": "030b90e54a6035b4e6f942f642cdde61f1f485e5bb630783e8bb6c9b0efe995c"
+    },
+    {
+      "path": "public/scripts/extensions/tts/settings.html",
+      "matches": true,
+      "sha256": "6a1aa20e409bd78dffa8ba18792f8f942844be71365e8afeca8f83f7030dd8cf"
+    },
+    {
+      "path": "public/scripts/group-chats.js",
+      "matches": true,
+      "sha256": "5fb2f566c4405442003b41af580a8d807889a2c1d8b22f0b4fd952473b2d87ed"
+    },
+    {
+      "path": "public/scripts/openai.js",
+      "matches": true,
+      "sha256": "09891fb59e329e9e800576ca3b92bc87a13cd50ad635b8e3ffb837888377920d"
+    },
+    {
+      "path": "public/scripts/service-connections.js",
+      "matches": true,
+      "sha256": "d78e5f47296b883b5d1e4a2b508557a8d9a84a9d59e744174fc7ad4a38480e4c"
+    },
+    {
+      "path": "public/scripts/workspace-chats.js",
+      "matches": true,
+      "sha256": "708091168a15d60d57f367d639b88c7407e19e005f670624b456fb1eb02f1b72"
+    },
+    {
+      "path": "public/scripts/workspace-settings.js",
+      "matches": true,
+      "sha256": "09631a9f9c8a24e1ee41140f0ac4ba59cbdb5889582cd89babdab79d89b33451"
+    },
+    {
+      "path": "public/scripts/workspace-tools.js",
+      "matches": true,
+      "sha256": "52ab219545b205a7dd0aeed0319a7ae72edc1decdb3100d1c13c8faabcd9ed91"
+    },
+    {
+      "path": "public/scripts/workspace-views.js",
+      "matches": true,
+      "sha256": "f0b07c868d095f71657d330b0be60a8e4073e5f0f71809a431f0cb54e1f1a34c"
+    },
+    {
+      "path": "public/scripts/workspace.js",
+      "matches": true,
+      "sha256": "72c91c6687766ca7afd91b80245c8f2b9f22a9c9607a7202540b50b13f184de6"
+    },
+    {
+      "path": "src/endpoints/openai.js",
+      "matches": true,
+      "sha256": "757848a2a4617c44e67eed9c554b7adfadc2d55f93d0938793e4d0125e5c63bc"
+    },
+    {
+      "path": "src/util.js",
+      "matches": true,
+      "sha256": "b0e5c49613dae854afba843256aa639152b1e02ba39aeb57ed81952c9cb4259c"
+    }
+  ],
+  "additionalToEarlierSample": [
+    "public/css/toggle-dependent.css",
+    "public/licenses/T3-Code.txt",
+    "public/scripts/extensions/shared.js",
+    "public/scripts/extensions/tts/settings.html"
+  ]
+}

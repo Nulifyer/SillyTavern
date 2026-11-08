@@ -1,0 +1,7 @@
+{
+  "online": "Key saved; press Test Message to verify.",
+  "message": "The app server is available. Check the model connection in Settings, then retry.",
+  "hidden": false,
+  "statusRequests": 0,
+  "inferenceRequests": 0
+}

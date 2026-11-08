@@ -1,0 +1,212 @@
+{
+  "config": {
+    "configFile": "/tmp/st-fork-audit-tests-20261107/playwright.config.js",
+    "rootDir": "/tmp/st-fork-audit-tests-20261107",
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/tmp/st-fork-audit-browser",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/tmp/st-fork-audit-tests-20261107",
+        "testIgnore": [],
+        "testMatch": [
+          "audit.e2e.js"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "audit.e2e.js",
+      "file": "audit.e2e.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "audit: failed current-format story load must preserve existing transcript",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 8607,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 33\u001b[39m\n\u001b[31m+ Received  +  2\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Object {\u001b[22m\n\u001b[2m      \"character_name\": \"unused\",\u001b[22m\n\u001b[32m-     \"chat_metadata\": Object {\u001b[39m\n\u001b[32m-       \"integrity\": \"4185d0c2-0261-47ba-9444-d76493ca9c7c\",\u001b[39m\n\u001b[32m-       \"note_depth\": 4,\u001b[39m\n\u001b[32m-       \"note_interval\": 1,\u001b[39m\n\u001b[32m-       \"note_position\": 1,\u001b[39m\n\u001b[32m-       \"note_prompt\": \"\",\u001b[39m\n\u001b[32m-       \"note_role\": 0,\u001b[39m\n\u001b[32m-     },\u001b[39m\n\u001b[31m+     \"chat_metadata\": Object {},\u001b[39m\n\u001b[2m      \"user_name\": \"unused\",\u001b[22m\n\u001b[2m    },\u001b[22m\n\u001b[2m    Object {\u001b[22m\n\u001b[2m      \"extra\": Object {},\u001b[22m\n\u001b[2m      \"is_system\": false,\u001b[22m\n\u001b[2m      \"is_user\": false,\u001b[22m\n\u001b[2m      \"mes\": \"*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \\\"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\\\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \\\"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\\\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \\\"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\\\"\",\u001b[22m\n\u001b[2m      \"name\": \"Seraphina\",\u001b[22m\n\u001b[32m-     \"send_date\": \"2026-11-08T04:34:54.420Z\",\u001b[39m\n\u001b[32m-     \"swipe_id\": 0,\u001b[39m\n\u001b[32m-     \"swipe_info\": Array [\u001b[39m\n\u001b[32m-       Object {\u001b[39m\n\u001b[32m-         \"extra\": Object {},\u001b[39m\n\u001b[32m-         \"send_date\": \"2026-11-08T04:34:54.420Z\",\u001b[39m\n\u001b[32m-       },\u001b[39m\n\u001b[32m-     ],\u001b[39m\n\u001b[32m-     \"swipes\": Array [\u001b[39m\n\u001b[32m-       \"*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \\\"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\\\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \\\"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\\\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \\\"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\\\"\",\u001b[39m\n\u001b[32m-     ],\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \"is_system\": false,\u001b[39m\n\u001b[32m-     \"is_user\": true,\u001b[39m\n\u001b[32m-     \"mes\": \"Audit user message must survive.\",\u001b[39m\n\u001b[32m-     \"name\": \"Storyteller\",\u001b[39m\n\u001b[32m-     \"send_date\": 1794112494632,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \"is_system\": false,\u001b[39m\n\u001b[32m-     \"is_user\": false,\u001b[39m\n\u001b[32m-     \"mes\": \"Audit assistant sentinel must survive.\",\u001b[39m\n\u001b[32m-     \"name\": \"Seraphina\",\u001b[39m\n\u001b[32m-     \"send_date\": 1794112494633,\u001b[39m\n\u001b[31m+     \"send_date\": \"2026-11-08T04:34:56.585Z\",\u001b[39m\n\u001b[2m    },\u001b[22m\n\u001b[2m  ]\u001b[22m",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 33\u001b[39m\n\u001b[31m+ Received  +  2\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Object {\u001b[22m\n\u001b[2m      \"character_name\": \"unused\",\u001b[22m\n\u001b[32m-     \"chat_metadata\": Object {\u001b[39m\n\u001b[32m-       \"integrity\": \"4185d0c2-0261-47ba-9444-d76493ca9c7c\",\u001b[39m\n\u001b[32m-       \"note_depth\": 4,\u001b[39m\n\u001b[32m-       \"note_interval\": 1,\u001b[39m\n\u001b[32m-       \"note_position\": 1,\u001b[39m\n\u001b[32m-       \"note_prompt\": \"\",\u001b[39m\n\u001b[32m-       \"note_role\": 0,\u001b[39m\n\u001b[32m-     },\u001b[39m\n\u001b[31m+     \"chat_metadata\": Object {},\u001b[39m\n\u001b[2m      \"user_name\": \"unused\",\u001b[22m\n\u001b[2m    },\u001b[22m\n\u001b[2m    Object {\u001b[22m\n\u001b[2m      \"extra\": Object {},\u001b[22m\n\u001b[2m      \"is_system\": false,\u001b[22m\n\u001b[2m      \"is_user\": false,\u001b[22m\n\u001b[2m      \"mes\": \"*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \\\"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\\\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \\\"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\\\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \\\"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\\\"\",\u001b[22m\n\u001b[2m      \"name\": \"Seraphina\",\u001b[22m\n\u001b[32m-     \"send_date\": \"2026-11-08T04:34:54.420Z\",\u001b[39m\n\u001b[32m-     \"swipe_id\": 0,\u001b[39m\n\u001b[32m-     \"swipe_info\": Array [\u001b[39m\n\u001b[32m-       Object {\u001b[39m\n\u001b[32m-         \"extra\": Object {},\u001b[39m\n\u001b[32m-         \"send_date\": \"2026-11-08T04:34:54.420Z\",\u001b[39m\n\u001b[32m-       },\u001b[39m\n\u001b[32m-     ],\u001b[39m\n\u001b[32m-     \"swipes\": Array [\u001b[39m\n\u001b[32m-       \"*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \\\"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\\\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \\\"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\\\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \\\"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\\\"\",\u001b[39m\n\u001b[32m-     ],\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \"is_system\": false,\u001b[39m\n\u001b[32m-     \"is_user\": true,\u001b[39m\n\u001b[32m-     \"mes\": \"Audit user message must survive.\",\u001b[39m\n\u001b[32m-     \"name\": \"Storyteller\",\u001b[39m\n\u001b[32m-     \"send_date\": 1794112494632,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \"is_system\": false,\u001b[39m\n\u001b[32m-     \"is_user\": false,\u001b[39m\n\u001b[32m-     \"mes\": \"Audit assistant sentinel must survive.\",\u001b[39m\n\u001b[32m-     \"name\": \"Seraphina\",\u001b[39m\n\u001b[32m-     \"send_date\": 1794112494633,\u001b[39m\n\u001b[31m+     \"send_date\": \"2026-11-08T04:34:56.585Z\",\u001b[39m\n\u001b[2m    },\u001b[22m\n\u001b[2m  ]\u001b[22m\n    at /tmp/st-fork-audit-tests-20261107/audit.e2e.js:228:19",
+                    "location": {
+                      "file": "/tmp/st-fork-audit-tests-20261107/audit.e2e.js",
+                      "column": 19,
+                      "line": 228
+                    },
+                    "snippet": "  226 |     fs.writeFileSync(testInfo.outputPath('load-failure-observation.json'),JSON.stringify({target,reads,saveStatus:saved.status(),originalIntegrity:before[0].chat_metadata.integrity,savedIntegrity:saved.request().postDataJSON().chat[0].chat_metadata.integrity??null,before,after},null,2));\n  227 |     await page.screenshot({path:testInfo.outputPath('failed-read-transcript.png')});\n> 228 |     expect(after).toEqual(before);\n      |                   ^\n  229 | });\n  230 |\n  231 | test('audit: unsupported read-only provider must not show false connection failure', async ({page},testInfo)=>{"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/tmp/st-fork-audit-tests-20261107/audit.e2e.js",
+                        "column": 19,
+                        "line": 228
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoEqual\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // deep equality\u001b[22m\n\n\u001b[32m- Expected  - 33\u001b[39m\n\u001b[31m+ Received  +  2\u001b[39m\n\n\u001b[2m  Array [\u001b[22m\n\u001b[2m    Object {\u001b[22m\n\u001b[2m      \"character_name\": \"unused\",\u001b[22m\n\u001b[32m-     \"chat_metadata\": Object {\u001b[39m\n\u001b[32m-       \"integrity\": \"4185d0c2-0261-47ba-9444-d76493ca9c7c\",\u001b[39m\n\u001b[32m-       \"note_depth\": 4,\u001b[39m\n\u001b[32m-       \"note_interval\": 1,\u001b[39m\n\u001b[32m-       \"note_position\": 1,\u001b[39m\n\u001b[32m-       \"note_prompt\": \"\",\u001b[39m\n\u001b[32m-       \"note_role\": 0,\u001b[39m\n\u001b[32m-     },\u001b[39m\n\u001b[31m+     \"chat_metadata\": Object {},\u001b[39m\n\u001b[2m      \"user_name\": \"unused\",\u001b[22m\n\u001b[2m    },\u001b[22m\n\u001b[2m    Object {\u001b[22m\n\u001b[2m      \"extra\": Object {},\u001b[22m\n\u001b[2m      \"is_system\": false,\u001b[22m\n\u001b[2m      \"is_user\": false,\u001b[22m\n\u001b[2m      \"mes\": \"*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \\\"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\\\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \\\"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\\\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \\\"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\\\"\",\u001b[22m\n\u001b[2m      \"name\": \"Seraphina\",\u001b[22m\n\u001b[32m-     \"send_date\": \"2026-11-08T04:34:54.420Z\",\u001b[39m\n\u001b[32m-     \"swipe_id\": 0,\u001b[39m\n\u001b[32m-     \"swipe_info\": Array [\u001b[39m\n\u001b[32m-       Object {\u001b[39m\n\u001b[32m-         \"extra\": Object {},\u001b[39m\n\u001b[32m-         \"send_date\": \"2026-11-08T04:34:54.420Z\",\u001b[39m\n\u001b[32m-       },\u001b[39m\n\u001b[32m-     ],\u001b[39m\n\u001b[32m-     \"swipes\": Array [\u001b[39m\n\u001b[32m-       \"*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \\\"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\\\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \\\"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\\\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \\\"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\\\"\",\u001b[39m\n\u001b[32m-     ],\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \"is_system\": false,\u001b[39m\n\u001b[32m-     \"is_user\": true,\u001b[39m\n\u001b[32m-     \"mes\": \"Audit user message must survive.\",\u001b[39m\n\u001b[32m-     \"name\": \"Storyteller\",\u001b[39m\n\u001b[32m-     \"send_date\": 1794112494632,\u001b[39m\n\u001b[32m-   },\u001b[39m\n\u001b[32m-   Object {\u001b[39m\n\u001b[32m-     \"is_system\": false,\u001b[39m\n\u001b[32m-     \"is_user\": false,\u001b[39m\n\u001b[32m-     \"mes\": \"Audit assistant sentinel must survive.\",\u001b[39m\n\u001b[32m-     \"name\": \"Seraphina\",\u001b[39m\n\u001b[32m-     \"send_date\": 1794112494633,\u001b[39m\n\u001b[31m+     \"send_date\": \"2026-11-08T04:34:56.585Z\",\u001b[39m\n\u001b[2m    },\u001b[22m\n\u001b[2m  ]\u001b[22m\n\n  226 |     fs.writeFileSync(testInfo.outputPath('load-failure-observation.json'),JSON.stringify({target,reads,saveStatus:saved.status(),originalIntegrity:before[0].chat_metadata.integrity,savedIntegrity:saved.request().postDataJSON().chat[0].chat_metadata.integrity??null,before,after},null,2));\n  227 |     await page.screenshot({path:testInfo.outputPath('failed-read-transcript.png')});\n> 228 |     expect(after).toEqual(before);\n      |                   ^\n  229 | });\n  230 |\n  231 | test('audit: unsupported read-only provider must not show false connection failure', async ({page},testInfo)=>{\n    at /tmp/st-fork-audit-tests-20261107/audit.e2e.js:228:19"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T04:34:48.464Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/st-fork-audit-browser/audit.e2e.js-audit-failed--9a0b9-reserve-existing-transcript/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/st-fork-audit-browser/audit.e2e.js-audit-failed--9a0b9-reserve-existing-transcript/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/tmp/st-fork-audit-tests-20261107/audit.e2e.js",
+                    "column": 19,
+                    "line": 228
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7b82b57204c21bd28bce-9976aafcd33a7e23bdc1",
+          "file": "audit.e2e.js",
+          "line": 294,
+          "column": 1
+        },
+        {
+          "title": "audit: unsupported read-only provider must not show false connection failure",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 10021,
+                  "error": {
+                    "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeHidden\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#browser-recovery')\nExpected: hidden\nReceived: visible\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeHidden\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#browser-recovery')\u001b[22m\n\u001b[2m    9 × locator resolved to <section id=\"browser-recovery\" aria-label=\"Connection status\">…</section>\u001b[22m\n\u001b[2m      - unexpected value \"visible\"\u001b[22m\n",
+                    "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeHidden\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#browser-recovery')\nExpected: hidden\nReceived: visible\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeHidden\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#browser-recovery')\u001b[22m\n\u001b[2m    9 × locator resolved to <section id=\"browser-recovery\" aria-label=\"Connection status\">…</section>\u001b[22m\n\u001b[2m      - unexpected value \"visible\"\u001b[22m\n\n    at /tmp/st-fork-audit-tests-20261107/audit.e2e.js:248:53",
+                    "location": {
+                      "file": "/tmp/st-fork-audit-tests-20261107/audit.e2e.js",
+                      "column": 53,
+                      "line": 248
+                    },
+                    "snippet": "  246 |     fs.writeFileSync(testInfo.outputPath('provider-observation.json'),JSON.stringify({...observation,statusRequests,inferenceRequests},null,2));\n  247 |     expect(statusRequests).toBe(0);expect(inferenceRequests).toBe(0);\n> 248 |     await expect(page.locator('#browser-recovery')).toBeHidden();\n      |                                                     ^\n  249 | });\n  250 |"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/tmp/st-fork-audit-tests-20261107/audit.e2e.js",
+                        "column": 53,
+                        "line": 248
+                      },
+                      "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mlocator\u001b[39m\u001b[2m).\u001b[22mtoBeHidden\u001b[2m(\u001b[22m\u001b[2m)\u001b[22m failed\n\nLocator:  locator('#browser-recovery')\nExpected: hidden\nReceived: visible\nTimeout:  5000ms\n\nCall log:\n\u001b[2m  - Expect \"toBeHidden\" with timeout 5000ms\u001b[22m\n\u001b[2m  - waiting for locator('#browser-recovery')\u001b[22m\n\u001b[2m    9 × locator resolved to <section id=\"browser-recovery\" aria-label=\"Connection status\">…</section>\u001b[22m\n\u001b[2m      - unexpected value \"visible\"\u001b[22m\n\n\n  246 |     fs.writeFileSync(testInfo.outputPath('provider-observation.json'),JSON.stringify({...observation,statusRequests,inferenceRequests},null,2));\n  247 |     expect(statusRequests).toBe(0);expect(inferenceRequests).toBe(0);\n> 248 |     await expect(page.locator('#browser-recovery')).toBeHidden();\n      |                                                     ^\n  249 | });\n  250 |\n    at /tmp/st-fork-audit-tests-20261107/audit.e2e.js:248:53"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T04:34:57.757Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "screenshot",
+                      "contentType": "image/png",
+                      "path": "/tmp/st-fork-audit-browser/audit.e2e.js-audit-unsuppo-ba42b-ow-false-connection-failure/test-failed-1.png"
+                    },
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/st-fork-audit-browser/audit.e2e.js-audit-unsuppo-ba42b-ow-false-connection-failure/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/tmp/st-fork-audit-tests-20261107/audit.e2e.js",
+                    "column": 53,
+                    "line": 248
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "7b82b57204c21bd28bce-3ead52c837e360834d6a",
+          "file": "audit.e2e.js",
+          "line": 363,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T04:34:48.045Z",
+    "duration": 19884.179,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 2,
+    "flaky": 0
+  }
+}

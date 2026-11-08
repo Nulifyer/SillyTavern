@@ -102,6 +102,11 @@ explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ### v1.19.20
 
+**Deployment handoff held.** The later independent audit reproduced a failed-read
+path that overwrites existing transcripts. It affects current-format integrity
+metadata too. This inherited native defect is not fixed in v1.19.20. See
+[audit findings and evidence](evidence/fork-audit-20261107/review.md).
+
 [Release v1.19.20](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.20)
 is source `e750add4eb6f448f68673707f7ca258e836a882b`.
 [Workflow 42439301418](https://github.com/Nulifyer/SillyTavern/actions/runs/42439301418)

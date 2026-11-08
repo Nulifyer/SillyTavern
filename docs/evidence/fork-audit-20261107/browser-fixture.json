@@ -1,0 +1,36 @@
+{
+  "container": "st-fork-audit-baseline-20261107",
+  "image": "ghcr.io/nulifyer/sillytavern@sha256:a674a6e99b86737ec10479e39d0fb423927585ec895f557737ba8b1e5b8b8d09",
+  "imageID": "37c0807cafcdca58d7e7a02183d275b80eb038980f1686e3b8b6b55c2cfc1398",
+  "mounts": [
+    {
+      "name": "st-fork-audit-baseline-20261107-backups",
+      "destination": "/home/node/app/backups",
+      "type": "volume"
+    },
+    {
+      "name": "st-fork-audit-baseline-20261107-config",
+      "destination": "/home/node/app/config",
+      "type": "volume"
+    },
+    {
+      "name": "st-fork-audit-baseline-20261107-data",
+      "destination": "/home/node/app/data",
+      "type": "volume"
+    },
+    {
+      "name": "st-fork-audit-baseline-20261107-plugins",
+      "destination": "/home/node/app/plugins",
+      "type": "volume"
+    },
+    {
+      "name": "st-fork-audit-baseline-20261107-extensions",
+      "destination": "/home/node/app/public/scripts/extensions/third-party",
+      "type": "volume"
+    }
+  ],
+  "overlays": false,
+  "fixture": "http://127.0.0.1:8031",
+  "syntheticDataOnly": true,
+  "productionAccessed": false
+}

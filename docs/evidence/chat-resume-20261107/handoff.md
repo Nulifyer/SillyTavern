@@ -1,5 +1,12 @@
 # v1.19.20 release handoff
 
+**Deployment handoff on hold after the independent audit.** A failed character or
+group read can initialize and save over an existing transcript. The character
+case was reproduced in a fresh actual-image fixture, including a current-format
+file with integrity metadata. This native load/save defect is not fixed in
+v1.19.20. See the [audit and reproductions](../fork-audit-20261107/review.md).
+The historical test results below remain accurate but did not cover this path.
+
 [Release v1.19.20](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.20)
 corrects foreground chat layout without a recovered-reply workflow.
 Production69 and shared test85 were never accessed or changed by this thread.

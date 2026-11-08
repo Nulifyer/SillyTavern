@@ -2,45 +2,53 @@
 
 ## Project state
 
-Published and verified v1.19.20, source `e750add4eb6f448f68673707f7ca258e836a882b`.
-Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Workflow 42439301418 passed both native architecture startup/publication gates.
-Index: `sha256:a674a6e99b86737ec10479e39d0fb423927585ec895f557737ba8b1e5b8b8d09`.
+Latest publication: v1.19.20, source e750add4eb6f448f68673707f7ca258e836a882b.
+The release passed its 72-case browser suite, but an independent audit found
+critical uncovered defects. Production handoff is now on hold. No runtime fixes
+or new container were published during this review. Production69/shared85 were
+never accessed or changed by this thread.
 
 ## Active tasks
 
-None. Foreground chat correction is complete. Independent read-only critique
-reviewed the design/ownership changes; the main agent owned implementation,
-tests, publication and continuity.
+Independent review is complete. Six runtime findings remain unfixed: failed
+character/group reads can overwrite transcripts; character rename strands
+user drafts/archive state; normal status responses can apply stale server context;
+stale recorder cleanup can stop a newer recording; unsupported providers get
+false foreground warnings; a pending separate image writer cannot be cancelled.
+Main agent owns follow-up implementation/validation/continuity. The independent
+reviewer wrote evidence only and made no runtime/source/test changes.
 
 ## Next action
 
-Homelab owns any later production update using
-[handoff](../docs/evidence/chat-resume-20261107/handoff.md).
-Never deploy production69 here. Preserve existing volumes and network boundaries,
-record the actual previous image/private backup and reload open tabs afterward.
-Do not clear browser storage. This thread did not access production69/shared85.
+Fix the native client/server chat load/save contract first. Failed HTTP/network/
+payload/disk reads must not initialize or save a new conversation. Preserve the
+current transcript/draft until a new load succeeds. Cover character and group
+open/reload/new paths and valid empty/new chats. Add integrity-bypass regression.
+Then address the other five owner-level findings in the audit report, verify
+missing cases and publish a replacement through the normal process. Do not deploy
+production here. Keep all existing volumes and concurrent work untouched.
 
 ## Verification
 
-Actual release on 8030, st-chat-resume-release-20261107, passed all 72 browser cases
-in 9.2 minutes, both live Juiced cases, zero skipped/flaky/uncaught errors.
-Five fresh synthetic volumes, no overlays, 32 runtime matches, version/heartbeat,
-HTTPS and both architecture labels passed. 425 unit tests, root lint and actionlint pass;
-test lint has 0 errors and 51 warnings. Evidence: docs/evidence/chat-resume-20261107/.
+Audit: docs/evidence/fork-audit-20261107/review.md.
+Actual v1.19.20 on fresh local port 8031 reproduced destructive failed-read fallback and false
+provider warning. Both audit invariants failed. Six isolated source observations
+were independently rerun exactly; focused existing units passed 20/20. All 34 changed
+runtime/package files versus upstream base match v1.19.20 bytes. These checks are
+review evidence, not fixes or a clean bill of health.
 
-The v1.19.19 comparison failed history position on desktop/Android and the old
-checkpoint popup. Source full run: 69 passes and 3 failures; isolated ready rerun: 6/6 passes.
-Failure causes remain unresolved. A premature isolated attempt failed on startup
-connection errors. All attempts remain; final actual-image 72 cases pass together.
+Prior release proof remains in docs/evidence/chat-resume-20261107/: all 72 browser
+cases passed together with both live Juiced cases; 425 source unit tests/lint passed;
+32 sampled runtime matches, five fresh volumes/no overlays and native architecture
+startup gates passed. Earlier source run with 69 passes and 3 failures remains unresolved despite later
+isolated 6/6 and released 72/72 passes. The rename failure included HTTP400.
 
 ## Limits
 
-Physical phone locking/GPU restoration and audible quality remain unqualified.
-ARM64 has native startup proof; browser/live acceptance ran on amd64. No Juiced
-runtime/policy/cache changes. Source fixture 8029 has overlays and is not image
-proof. Prior synthetic fixtures/volumes remain preserved.
+Narrow image-result ownership races need browser reproduction. Physical phone/
+GPU restoration and real microphone quality remain unqualified. No production,
+shared fixture, model policy/cache or infrastructure operations were performed.
 
 ## Blockers
 
-None.
+Production handoff held pending the critical native load/save correction.

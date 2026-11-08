@@ -1,0 +1,133 @@
+(node:1956073) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:1956091) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1956091) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1956091) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] ../../../../tmp/st-fork-audit-tests-20261107/audit.e2e.js:294:1 › audit: failed current-format story load must preserve existing transcript
+  1) ../../../../tmp/st-fork-audit-tests-20261107/audit.e2e.js:294:1 › audit: failed current-format story load must preserve existing transcript
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 33
+    + Received  +  2
+
+      Array [
+        Object {
+          "character_name": "unused",
+    -     "chat_metadata": Object {
+    -       "integrity": "4185d0c2-0261-47ba-9444-d76493ca9c7c",
+    -       "note_depth": 4,
+    -       "note_interval": 1,
+    -       "note_position": 1,
+    -       "note_prompt": "",
+    -       "note_role": 0,
+    -     },
+    +     "chat_metadata": Object {},
+          "user_name": "unused",
+        },
+        Object {
+          "extra": Object {},
+          "is_system": false,
+          "is_user": false,
+          "mes": "*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\"",
+          "name": "Seraphina",
+    -     "send_date": "2026-11-08T04:34:54.420Z",
+    -     "swipe_id": 0,
+    -     "swipe_info": Array [
+    -       Object {
+    -         "extra": Object {},
+    -         "send_date": "2026-11-08T04:34:54.420Z",
+    -       },
+    -     ],
+    -     "swipes": Array [
+    -       "*You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room.* \"Ah, you're awake at last. I was so worried, I found you bloodied and unconscious.\" *She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile.* \"The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength.\" *Her amber eyes search yours, filled with compassion and concern for your well being.* \"Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you.\"",
+    -     ],
+    -   },
+    -   Object {
+    -     "is_system": false,
+    -     "is_user": true,
+    -     "mes": "Audit user message must survive.",
+    -     "name": "Storyteller",
+    -     "send_date": 1794112494632,
+    -   },
+    -   Object {
+    -     "is_system": false,
+    -     "is_user": false,
+    -     "mes": "Audit assistant sentinel must survive.",
+    -     "name": "Seraphina",
+    -     "send_date": 1794112494633,
+    +     "send_date": "2026-11-08T04:34:56.585Z",
+        },
+      ]
+
+      226 |     fs.writeFileSync(testInfo.outputPath('load-failure-observation.json'),JSON.stringify({target,reads,saveStatus:saved.status(),originalIntegrity:before[0].chat_metadata.integrity,savedIntegrity:saved.request().postDataJSON().chat[0].chat_metadata.integrity??null,before,after},null,2));
+      227 |     await page.screenshot({path:testInfo.outputPath('failed-read-transcript.png')});
+    > 228 |     expect(after).toEqual(before);
+          |                   ^
+      229 | });
+      230 |
+      231 | test('audit: unsupported read-only provider must not show false connection failure', async ({page},testInfo)=>{
+        at /tmp/st-fork-audit-tests-20261107/audit.e2e.js:228:19
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/st-fork-audit-browser/audit.e2e.js-audit-failed--9a0b9-reserve-existing-transcript/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/st-fork-audit-browser/audit.e2e.js-audit-failed--9a0b9-reserve-existing-transcript/error-context.md
+
+
+(node:1956370) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1956370) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1956370) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/2] ../../../../tmp/st-fork-audit-tests-20261107/audit.e2e.js:363:1 › audit: unsupported read-only provider must not show false connection failure
+  2) ../../../../tmp/st-fork-audit-tests-20261107/audit.e2e.js:363:1 › audit: unsupported read-only provider must not show false connection failure
+
+    Error: expect(locator).toBeHidden() failed
+
+    Locator:  locator('#browser-recovery')
+    Expected: hidden
+    Received: visible
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeHidden" with timeout 5000ms
+      - waiting for locator('#browser-recovery')
+        9 × locator resolved to <section id="browser-recovery" aria-label="Connection status">…</section>
+          - unexpected value "visible"
+
+
+      246 |     fs.writeFileSync(testInfo.outputPath('provider-observation.json'),JSON.stringify({...observation,statusRequests,inferenceRequests},null,2));
+      247 |     expect(statusRequests).toBe(0);expect(inferenceRequests).toBe(0);
+    > 248 |     await expect(page.locator('#browser-recovery')).toBeHidden();
+          |                                                     ^
+      249 | });
+      250 |
+        at /tmp/st-fork-audit-tests-20261107/audit.e2e.js:248:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../tmp/st-fork-audit-browser/audit.e2e.js-audit-unsuppo-ba42b-ow-false-connection-failure/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../tmp/st-fork-audit-browser/audit.e2e.js-audit-unsuppo-ba42b-ow-false-connection-failure/error-context.md
+
+
+  2 failed
+    ../../../../tmp/st-fork-audit-tests-20261107/audit.e2e.js:294:1 › audit: failed current-format story load must preserve existing transcript
+    ../../../../tmp/st-fork-audit-tests-20261107/audit.e2e.js:363:1 › audit: unsupported read-only provider must not show false connection failure

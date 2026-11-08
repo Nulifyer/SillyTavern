@@ -1,0 +1,119 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - link "Skip to message" [ref=e3] [cursor=pointer]:
+    - /url: "#send_textarea"
+  - complementary "Workspace" [ref=e4]:
+    - link "SillyTavern" [ref=e5] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e6]: SillyTavern
+    - button "Find anything Ctrl K" [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]: 
+      - generic [ref=e9]: Find anything
+      - generic [ref=e10]: Ctrl K
+    - button "New story" [ref=e11] [cursor=pointer]:
+      - generic [ref=e12]: +
+      - generic [ref=e13]: New story
+    - navigation "Main navigation" [ref=e14]:
+      - button "Stories" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 
+        - generic [ref=e17]: Stories
+      - button "Characters" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: 
+        - generic [ref=e20]: Characters
+      - button "Archive" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Archive
+    - text: 
+    - generic [ref=e24]:
+      - generic [ref=e25]:
+        - generic [ref=e26]: Recent stories
+        - button "View all stories" [ref=e27] [cursor=pointer]:
+          - generic [ref=e28]: 
+      - article [ref=e30]:
+        - button "Continue Workspace e2e 7b82b57204c21bd28bce-3ead52c837e360834d6a-mw7c9b2u claude foreground with Seraphina" [ref=e31] [cursor=pointer]:
+          - generic [ref=e32]:
+            - strong [ref=e33]: Workspace e2e 7b82b57204c21bd28bce-3ead52c837e360834d6a-mw7c9b2u claude foreground
+            - generic [ref=e34]: Seraphina
+    - generic [ref=e35]:
+      - button "Settings" [ref=e36] [cursor=pointer]:
+        - generic [ref=e37]: 
+        - generic [ref=e38]: Settings
+      - text: 
+      - button "Storyteller Manage persona" [ref=e39] [cursor=pointer]:
+        - generic [ref=e41]: 
+        - generic [ref=e42]:
+          - strong [ref=e43]: Storyteller
+          - generic [ref=e44]: Manage persona
+        - generic [ref=e45]: 
+  - banner [ref=e46]:
+    - text: 
+    - generic [ref=e47]:
+      - strong [ref=e48]: Stories
+      - generic [ref=e49]: Roleplay workspace
+    - generic:  +
+  - text:  
+  - generic:
+    - generic:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items   X                                      
+    - generic:                                                                         
+    - generic:                                                
+    - generic:                 +     
+    - generic:                                    
+    - generic:        +                            
+    - generic:          +                                                                                     +                      +   + +  +     +        +        +        +                                               
+    - generic:                     
+    - generic:                                                       Group is empty.          No characters available                        
+  - generic:                      +                                                                               +    + +                  
+  - generic:                  
+  - generic [ref=e50]:
+    - text:               
+    - region "Roleplay workspace" [ref=e51]:
+      - generic [ref=e52]:
+        - button "All characters" [ref=e53] [cursor=pointer]:
+          - generic [ref=e54]: 
+          - generic [ref=e55]: All characters
+        - generic [ref=e56]:
+          - complementary [ref=e57]:
+            - generic [ref=e58]:
+              - heading "Seraphina" [level=1] [ref=e59]
+              - paragraph [ref=e60]: You were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.
+              - generic [ref=e61]:
+                - button "Start new story" [ref=e62] [cursor=pointer]:
+                  - generic [ref=e63]: +
+                  - generic [ref=e64]: Start new story
+                - button "Edit character" [ref=e65] [cursor=pointer]:
+                  - generic [ref=e66]: 
+                  - generic [ref=e67]: Edit character
+          - generic [ref=e68]:
+            - generic [ref=e69]:
+              - group [ref=e70]:
+                - generic "Opening message" [ref=e71] [cursor=pointer]
+              - group [ref=e72]:
+                - generic "Full character description" [ref=e73] [cursor=pointer]
+            - generic [ref=e74]:
+              - heading "Story history" [level=2] [ref=e75]
+              - generic [ref=e76]:
+                - button "Active" [pressed] [ref=e77] [cursor=pointer]
+                - button "Archived" [ref=e78] [cursor=pointer]
+            - region "Story list" [ref=e79]:
+              - generic [ref=e80]:
+                - heading "Your first scene together" [level=2] [ref=e81]
+                - paragraph [ref=e82]: Start a new story when you are ready.
+    - text:             |                                                                                         
+  - text:                      1  
+  - generic [ref=e84]: 
+  - status [ref=e85]
+  - status [ref=e86]
+  - status [ref=e87]
+  - status [ref=e88]
+  - status [ref=e89]
+  - status [ref=e90]
+  - status [ref=e91]
+  - status [ref=e92]
+  - status [ref=e93]
+  - status [ref=e94]
+  - status [ref=e95]
+  - status [ref=e96]
+  - text: 
+```
