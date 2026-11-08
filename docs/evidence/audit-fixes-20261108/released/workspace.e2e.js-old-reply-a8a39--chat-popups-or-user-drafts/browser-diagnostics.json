@@ -1,0 +1,14 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8033/api/ping",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8033/characters/Seraphina/surprise.png?t=20261108130206",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

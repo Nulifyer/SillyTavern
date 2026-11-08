@@ -1,5 +1,8 @@
 # v1.19.20 release handoff
 
+Use the [verified v1.19.21 replacement](../audit-fixes-20261108/handoff.md).
+The v1.19.20 hold and historical evidence below remain intact.
+
 **Deployment handoff on hold after the independent audit.** A failed character or
 group read can initialize and save over an existing transcript. The character
 case was reproduced in a fresh actual-image fixture, including a current-format

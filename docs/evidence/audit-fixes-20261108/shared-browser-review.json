@@ -1,0 +1,20 @@
+{
+  "url": "http://127.0.0.1:8033/",
+  "viewport": {
+    "mimeType": "image/png",
+    "width": 448,
+    "height": 921
+  },
+  "method": "T3 shared browser CSS resize, not Android device emulation",
+  "consoleErrors": [],
+  "consoleTraces": [],
+  "screens": [
+    "Stories 1280x800",
+    "Native character chat 448x921"
+  ],
+  "observations": [
+    "Character portrait stays left of message text",
+    "Complete greeting and composer remain inside viewport",
+    "No recovered-reply panel"
+  ]
+}

@@ -1,0 +1,17 @@
+[
+  {
+    "observedAt": "2026-11-08T13:01:35.382130+00:00",
+    "tag": "v1.19.21",
+    "indexDigest": "sha256:a2831236504e74d4eb4c20fb8eb8736b38b9897bbffd20e3de7ea537e510aaa0"
+  },
+  {
+    "observedAt": "2026-11-08T13:02:59.069708+00:00",
+    "tag": "latest",
+    "indexDigest": "sha256:a2831236504e74d4eb4c20fb8eb8736b38b9897bbffd20e3de7ea537e510aaa0"
+  },
+  {
+    "observedAt": "2026-11-08T13:02:59.741149+00:00",
+    "tag": "sha-24fbda8c25d6898fde1e99aa005303592dd3ddaf",
+    "indexDigest": "sha256:a2831236504e74d4eb4c20fb8eb8736b38b9897bbffd20e3de7ea537e510aaa0"
+  }
+]

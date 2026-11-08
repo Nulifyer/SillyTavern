@@ -1,0 +1,25 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: net::ERR_INCOMPLETE_CHUNKED_ENCODING",
+    "TypeError: network error"
+  ],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8033/api/ping",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8033/api/backends/chat-completions/generate",
+      "error": "net::ERR_INCOMPLETE_CHUNKED_ENCODING"
+    },
+    {
+      "url": "http://127.0.0.1:8033/api/ping",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8033/api/settings/save",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

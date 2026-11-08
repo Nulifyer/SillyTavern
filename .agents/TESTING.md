@@ -51,16 +51,20 @@ docs/evidence/mobile-portraits-20261106/.
 
 ## Environment
 
-Latest verified v1.19.20: http://127.0.0.1:8030,
-st-chat-resume-release-20261107, five fresh synthetic volumes/no overlays. All72
-cases passed together in 9.2 minutes, both live cases, zero uncaught errors.
-32 runtime matches/version/heartbeat/HTTPS and both architecture labels pass.
-425 unit tests/lint/actionlint pass; test lint has 0 errors and 51 warnings. Evidence and limits:
-`docs/evidence/chat-resume-20261107/`. Source 8029 uses overlays; it is not image proof.
-
-Earlier fixtures retain their synthetic volumes. Previous full workspace and
-release evidence remains in `docs/container-releases.md`. Do not overlap native
-persistence checks with fixture runs. Production69/shared85 were never accessed.
+Latest verified v1.19.21: http://127.0.0.1:8033,
+st-fork-fixes-release-20261108, five fresh volumes/no overlays. All 86 browser
+cases passed together in 10.6 minutes, both live Juiced cases, no
+skipped/flaky results or uncaught errors. 37 runtime matches/version/heartbeat/
+HTTPS and both architecture labels pass. 478 unit tests in 24 suites, root lint
+and actionlint pass; test lint has 0 errors and 51 warnings. Evidence and limits:
+`docs/evidence/audit-fixes-20261108/`. Source 8032 uses overlays, not image proof.
+Run the full suite with ST_BASE_URL=http://127.0.0.1:8033 and ST_JUICED_URL set.
+Use `--grep 'audited'` for failed character/group/reload reads, exact-history and
+Close races, rename/reload, stale status, recorder, writer Stop, late upload and
+missing-integrity save guards. Strict JSONL/I/O and native owner units are in
+chat-loading, chat-load-ownership, chat-integrity, workspace-state-ownership and
+image-operation-ownership tests. Earlier fixtures/evidence remain preserved.
+Do not overlap persistence checks with fixture runs. Never use production data.
 
 ## Shared-screen follow-up
 

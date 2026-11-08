@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.20`.
+2. Create a version tag on that commit, such as `v1.19.21`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.20` | The exact GitHub Release tag |
+| `v1.19.21` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.20` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.21` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -100,11 +100,34 @@ explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
 
+### v1.19.21
+
+[Release v1.19.21](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.21)
+is source `24fbda8c25d6898fde1e99aa005303592dd3ddaf`.
+[Workflow 42482760159](https://github.com/Nulifyer/SillyTavern/actions/runs/42482760159)
+passed both native architecture startup gates and published the multiarch index.
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:a2831236504e74d4eb4c20fb8eb8736b38b9897bbffd20e3de7ea537e510aaa0
+```
+
+All six independent-audit findings are fixed. Failed reads preserve existing
+chats; rename retains drafts/archive; status, recorder and image operations reject
+stale work. Image Stop is available during prompt writing. The actual pulled
+amd64 image passed all 86 browser cases together in 10.6 minutes with
+both live Juiced cases and no skipped/flaky results or uncaught page errors.
+Five fresh volumes, no overlays, 37 runtime matches, version, heartbeat and
+Juiced HTTPS passed. Source lint/actionlint and 478 unit tests passed.
+[Handoff, digests, connections, migration and rollback](evidence/audit-fixes-20261108/handoff.md).
+Production69/shared85 were never accessed or changed here.
+
+
 ### v1.19.20
 
 **Deployment handoff held.** The later independent audit reproduced a failed-read
 path that overwrites existing transcripts. It affects current-format integrity
-metadata too. This inherited native defect is not fixed in v1.19.20. See
+metadata too. This inherited native defect is not fixed in v1.19.20.
+Use the [verified v1.19.21 replacement](evidence/audit-fixes-20261108/handoff.md). See
 [audit findings and evidence](evidence/fork-audit-20261107/review.md).
 
 [Release v1.19.20](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.20)

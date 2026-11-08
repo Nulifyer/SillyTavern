@@ -60,3 +60,30 @@ or shared85 app/data/config/volume was accessed. Juiced policies, runtimes and
 caches were not changed. Physical phone/GPU resume and real microphone hardware
 remain unqualified. Earlier source-run failures remain preserved in the audit;
 passing replacement checks alone does not establish their historical causes.
+
+## Actual image acceptance
+
+The pulled v1.19.21 image passed all 86 cases together in 10.6 minutes,
+including both live Juiced cases, with no skipped/flaky results or uncaught page
+errors. All 37 checked runtime files match the immutable tag; five fresh volumes
+and no overlays are verified. See [handoff](handoff.md), browser-summary.json and
+released/ for exact console/network diagnostics. The corrected image-upload
+harness case passes in this full run. Historical failed attempts remain intact.
+
+## Visual follow-up
+
+Inspected actual-image captures of the 320px changed image controls, native image
+prompt editor, live story/image, 390px draft and reduced-height Pixel final reply.
+The final line, draft selection and composer fit in the Pixel capture without a
+recovered-reply panel. A T3 shared-browser pass opened Stories and the native
+character chat at 1280×800 and 448×921. The portrait remains beside the text and
+the complete greeting remains scrollable above the composer. These last two
+shots use CSS resize, not Android emulation; automated Pixel cases use the
+documented Android/DPR/touch profile. Shared-browser shots and review metadata
+are in shared-browser/ and shared-browser-review.json.
+
+The final suite logged 45 console errors and 82 failed requests. Three explicit
+transport-failure fixtures and one reset stream account for the non-abort
+requests. The fresh-context migration case also recorded an aborted settings
+save; its migration assertions passed. No claim of zero console/network errors
+is made. See the per-case diagnostics for exact errors.

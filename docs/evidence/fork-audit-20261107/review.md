@@ -1,5 +1,9 @@
 # Independent fork audit
 
+All six findings were subsequently fixed and verified in
+[v1.19.21](../audit-fixes-20261108/handoff.md). The audit observations below
+describe the earlier source and v1.19.20; their negative evidence is preserved.
+
 The independent review found six defects. The production handoff is on hold until
 the critical native chat load/save defect is fixed. This review did not change
 runtime code or publish a new container.

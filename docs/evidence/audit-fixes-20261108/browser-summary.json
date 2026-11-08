@@ -1,0 +1,536 @@
+{
+  "stats": {
+    "startTime": "2026-11-08T13:02:30.127Z",
+    "duration": 635498.5349999999,
+    "expected": 86,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "uncaughtPageErrors": 0,
+  "consoleErrors": 45,
+  "failedRequests": 82,
+  "failedRequestReasons": {
+    "net::ERR_ABORTED": 78,
+    "net::ERR_FAILED": 3,
+    "net::ERR_INCOMPLETE_CHUNKED_ENCODING": 1
+  },
+  "cases": [
+    {
+      "case": "workspace.e2e.js-audited-s-2712c--stale-client-tries-to-save",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-audited-c-5fd3c-it-the-target-default-story",
+      "consoleErrors": 3,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-audited-l-cd9f6-er-with-the-same-story-name",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-audited-h-d17f0-er-an-explicit-native-Close",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-audited-l-46631--newer-microphone-recording",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-audited-n-8b006--metadata-after-URL-editing",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-audited-p-32c4d-n-image-or-provider-failure",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-audited-n-49d74-and-archives-through-reload",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-audited-u-695b9-ed-status-without-inference",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 6
+    },
+    {
+      "case": "workspace.e2e.js-audited-g-e7ec0--group-transcript-and-draft",
+      "consoleErrors": 4,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-audited-c-89090-ner-draft-and-mounted-nodes",
+      "consoleErrors": 3,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-audited-c-98f81-ner-draft-and-mounted-nodes",
+      "consoleErrors": 3,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-audited-c-c7c3e-ner-draft-and-mounted-nodes",
+      "consoleErrors": 4,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-audited-c-791e4-ner-draft-and-mounted-nodes",
+      "consoleErrors": 4,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-classic-p-1254d--reload-and-can-be-restored",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-Action-me-301ff-closing-persistent-controls",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-Action-me-c5292-closing-persistent-controls",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-late-exte-5f94b-t-replacing-edited-controls",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-late-exte-d71a7-t-replacing-edited-controls",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-query-str-0035f-d-every-native-owner-unique",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-native-fo-4c14f--keep-phone-controls-usable",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-Pixel-9-P-7e9b6-cross-screen-and-font-sizes",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-roleplay--5b866-tay-within-a-768px-viewport",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-roleplay--c5668-tay-within-a-448px-viewport",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-roleplay--37f47-tay-within-a-390px-viewport",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-roleplay--5e3b2-tay-within-a-320px-viewport",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-cast-crea-e6ff9-ers-and-opens-a-group-story",
+      "consoleErrors": 3,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-chat-voic-6d59b--not-enable-automatic-tools",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-voice-too-54823-the-configured-System-voice",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-one-scene-6a33a-on-with-automatic-tools-off",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 2
+    },
+    {
+      "case": "workspace.e2e.js-image-too-4f6af-reat-custom-prompts-as-text",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-native-st-a586b--character-identity-mounted",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-a-two-mem-43bf8-ue-or-losing-its-next-draft",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 4
+    },
+    {
+      "case": "workspace.e2e.js-a-two-mem-06a51-ue-or-losing-its-next-draft",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 3
+    },
+    {
+      "case": "workspace.e2e.js-stopping--9cb0e-nd-preserves-its-next-draft",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-stopping--7c8a7-nd-preserves-its-next-draft",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-old-reply-a8a39--chat-popups-or-user-drafts",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 2
+    },
+    {
+      "case": "workspace.e2e.js-a-native--818a3--a-recovered-reply-workflow",
+      "consoleErrors": 2,
+      "pageErrors": [],
+      "failedRequests": 3
+    },
+    {
+      "case": "workspace.e2e.js-a-late-mi-829c6-opped-and-never-transcribed",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 3
+    },
+    {
+      "case": "workspace.e2e.js-quiet-pro-5331f-ure-without-automatic-retry",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 2
+    },
+    {
+      "case": "workspace.e2e.js-identical-bd35d-ver-share-a-recovered-draft",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-old-globa-82c4e-e-retains-the-current-draft",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 2
+    },
+    {
+      "case": "workspace.e2e.js-story-dra-caa31-ery-preference-is-respected",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 2
+    },
+    {
+      "case": "workspace.e2e.js-a-delayed-8753b-econnect-a-changed-provider",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-a-pending-5618f-layout-or-connection-checks",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-an-unresp-3bfa0-ied-without-sending-a-reply",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 2
+    },
+    {
+      "case": "workspace.e2e.js-foregroun-07ef8-ves-explicit-model-settings",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 3
+    },
+    {
+      "case": "workspace.e2e.js-a-multi-c-fb8a5-eason-handles-EOF-correctly",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-a-multi-c-20020-asons-handles-EOF-correctly",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-a-early-e-9d119-t-success-actions-or-replay",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 3
+    },
+    {
+      "case": "workspace.e2e.js-a-reset-s-00776-t-success-actions-or-replay",
+      "consoleErrors": 2,
+      "pageErrors": [],
+      "failedRequests": 4
+    },
+    {
+      "case": "workspace.e2e.js-Foregroun-66cd6-on-without-a-recovery-popup",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-Foregroun-9b9b3-ne-without-a-recovery-popup",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 2
+    },
+    {
+      "case": "workspace.e2e.js-Foregroun-6bbdc-on-without-a-recovery-popup",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-Foregroun-012be-ne-without-a-recovery-popup",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-a-healthy-e5fbf-nd-preserves-the-next-draft",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 2
+    },
+    {
+      "case": "workspace.e2e.js-mobile-dr-ad16d--leaking-into-another-story",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 3
+    },
+    {
+      "case": "workspace.e2e.js-search-op-ae169-through-the-native-composer",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-live-Juic-9aff6-s-from-the-tested-container",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-live-Juic-268aa-gh-native-prompt-formatting",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 3
+    },
+    {
+      "case": "workspace.e2e.js-image-wri-401d9-l-through-failure-and-retry",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-dictation-ecf36-and-cancels-on-story-change",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-service-s-a84be-cannot-replace-a-new-server",
+      "consoleErrors": 2,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-existing--48e7f-migrates-context-preference",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-fresh-com-dc666-migrates-context-preference",
+      "consoleErrors": 1,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-service-p-c0aa7-survive-classic-round-trips",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-discovere-3569a-errides-and-survives-reload",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-one-serve-910f3-lacing-sampling-or-profiles",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-vision-di-b30fa--current-story-model-option",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-discovere-5ea26-low-native-provider-changes",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-dictation-87e18-l-TTS-extension-is-disabled",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-settings--c57e3-y-through-direct-navigation",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-every-set-40742-le-with-enlarged-phone-text",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-settings--24ac5-ever-close-mounted-controls",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-every-set-a1c61--and-fits-desktop-and-phone",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-advanced--ebcbb-thout-leaving-the-workspace",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-settings--e28e7-scape-and-focus-restoration",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-failed-de-51488--reports-the-server-failure",
+      "consoleErrors": 3,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-rename-fo-e8742-without-recreating-the-file",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-archive-p-2dc88-estores-the-same-transcript",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-starting--7c5dc-nd-can-be-renamed-afterward",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-new-stori-29f89-ory-resumes-the-exact-scene",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-character-a1193-ags-and-notes-at-every-size",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-native-ch-f6c7b-io-upload-works-by-keyboard",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    },
+    {
+      "case": "workspace.e2e.js-history-f-f7ab2-known-stories-remain-usable",
+      "consoleErrors": 2,
+      "pageErrors": [],
+      "failedRequests": 1
+    },
+    {
+      "case": "workspace.e2e.js-library-b-a295a-pening-or-replacing-a-story",
+      "consoleErrors": 0,
+      "pageErrors": [],
+      "failedRequests": 0
+    }
+  ]
+}

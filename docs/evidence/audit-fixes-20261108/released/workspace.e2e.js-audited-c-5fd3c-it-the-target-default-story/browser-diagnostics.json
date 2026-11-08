@@ -1,0 +1,9 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+    "Chat load failed: Error: Chat could not be loaded. Your existing conversation has not been replaced.\n    at readChatFile (http://127.0.0.1:8033/scripts/chat-loader.js:7:29)\n    at async getChat (http://127.0.0.1:8033/script.js:7704:22)\n    at async openCharacterChat (http://127.0.0.1:8033/script.js:7810:10)\n    at async WorkspaceChats.open (http://127.0.0.1:8033/scripts/workspace-chats.js:109:15)\n    at async enterChat (http://127.0.0.1:8033/scripts/workspace.js:376:5)",
+    "Workspace action failed Error: The story could not be opened. Check the server connection and try again.\n    at WorkspaceChats.open (http://127.0.0.1:8033/scripts/workspace-chats.js:110:37)\n    at async enterChat (http://127.0.0.1:8033/scripts/workspace.js:376:5)"
+  ],
+  "failedRequests": []
+}
