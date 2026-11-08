@@ -31,7 +31,8 @@ at computed font scale 1.5 with a 20px browser root at 320 by 400. The unit suit
 passes 494 tests in 26 suites. Root lint and actionlint pass. Test lint reports
 zero errors and 53 warnings. The 19-file runtime manifest identifies these bytes.
 
-The first full v1.19.23 source run was interrupted for the council's avatar and
-transition-lifetime corrections. Its partial artifacts remain in source-superseded.
+Two full v1.19.23 source attempts were interrupted for the council's avatar,
+transition-lifetime and stored-draft corrections. Their partial artifacts remain
+in source-superseded and source-superseded2-browser.
 The final combined source and actual-image runs are recorded separately. Source
 overlays and focused results alone do not qualify release acceptance.

@@ -1,0 +1,5 @@
+{
+  "public/script.js": true,
+  "public/scripts/events.js": true,
+  "public/scripts/browser-recovery.js": true
+}

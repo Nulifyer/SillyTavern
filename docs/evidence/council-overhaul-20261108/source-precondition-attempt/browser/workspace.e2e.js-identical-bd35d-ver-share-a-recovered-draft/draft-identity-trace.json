@@ -1,0 +1,33 @@
+[
+  {
+    "phase": "CHAT_CHANGED",
+    "owner": "[\"default-user\",\"character\",\"default_Seraphina.png\",\"Seraphina - 2026-11-08@15h49m25s961ms\",\"7564efef-1f65-4646-8605-a38030ab34ed\"]",
+    "text": ""
+  },
+  {
+    "phase": "CHAT_CHANGED",
+    "owner": "[\"default-user\",\"character\",\"default_Seraphina.png\",\"Workspace e2e f5948f93a1ec48d2d907-4b73951d04225d4dde22-mw8b1o3b same filename\",\"7564efef-1f65-4646-8605-a38030ab34ed\"]",
+    "text": ""
+  },
+  {
+    "phase": "input",
+    "owner": "[\"default-user\",\"character\",\"default_Seraphina.png\",\"Workspace e2e f5948f93a1ec48d2d907-4b73951d04225d4dde22-mw8b1o3b same filename\",\"7564efef-1f65-4646-8605-a38030ab34ed\"]",
+    "text": "Only the original character gets this draft."
+  },
+  {
+    "phase": "CHAT_CHANGED",
+    "owner": "[\"default-user\",\"character\",\"Workspace e2e f5948f93a1ec48d2d907-4b73951d04225d4dde22-mw8b1o3b companion.png\",\"Workspace e2e f5948f93a1ec48d2d907-4b73951d04225d4dde22-mw8b1o3b companion - 2026-11-08@15h49m26s991ms\",\"a9ef0cf1-c2f0-4ed7-b4e7-43d7f320ed71\"]",
+    "text": "Only the original character gets this draft."
+  },
+  {
+    "phase": "selected-companion",
+    "owner": "[\"default-user\",\"character\",\"Workspace e2e f5948f93a1ec48d2d907-4b73951d04225d4dde22-mw8b1o3b companion.png\",\"Workspace e2e f5948f93a1ec48d2d907-4b73951d04225d4dde22-mw8b1o3b companion - 2026-11-08@15h49m26s991ms\",\"a9ef0cf1-c2f0-4ed7-b4e7-43d7f320ed71\"]",
+    "text": "Only the original character gets this draft.",
+    "selected": true
+  },
+  {
+    "phase": "CHAT_CHANGED",
+    "owner": "[\"default-user\",\"character\",\"Workspace e2e f5948f93a1ec48d2d907-4b73951d04225d4dde22-mw8b1o3b companion.png\",\"Workspace e2e f5948f93a1ec48d2d907-4b73951d04225d4dde22-mw8b1o3b same filename\",\"a9ef0cf1-c2f0-4ed7-b4e7-43d7f320ed71\"]",
+    "text": "Only the original character gets this draft."
+  }
+]

@@ -1,0 +1,18 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep old global drafts|identical story filenames|old reply checkpoints|story drafts --output=/tmp/st-council-v23-precondition-results
+(node:3036124) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 4 tests using 1 worker
+
+(node:3036228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3036228) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:3036228) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:3353:1 › story drafts survive rapid switching and rename while the native recovery preference is respected (10.3s)
+  ✓  2 workspace.e2e.js:3392:1 › old global drafts never interrupt chat and blocked storage retains the current draft (7.0s)
+  ✓  3 workspace.e2e.js:3672:1 › identical story filenames on different characters never share a recovered draft (5.5s)
+  ✓  4 workspace.e2e.js:3859:1 › old reply checkpoints stay untouched and never become character chat popups or user drafts (7.0s)
+
+  4 passed (31.0s)

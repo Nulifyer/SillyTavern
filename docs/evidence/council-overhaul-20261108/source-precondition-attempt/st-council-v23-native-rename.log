@@ -1,0 +1,15 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep audited native character rename --output=/tmp/st-council-v23-native-rename-results
+(node:3046904) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:3047042) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:3047042) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:3047042) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 workspace.e2e.js:5172:1 › audited native character rename preserves active/inactive drafts and archives through reload (7.7s)
+
+  1 passed (8.4s)

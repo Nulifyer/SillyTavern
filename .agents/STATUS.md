@@ -15,7 +15,7 @@ for this batch; never inspect production app/data/screens/logs/volumes.
 
 ## Next action
 
-Complete final99case source run on8035, then commit/publish immutable v1.19.23,
+Complete final99case clean source run on8042, then commit/publish immutable v1.19.23,
 wait native multiarch gates and test fresh actual image without source overlays.
 Give the same three members release proof and obtain final verdicts. Preserve
 failed v1.19.22 and superseded source evidence; do not move published tags.
@@ -39,3 +39,11 @@ All evidence: docs/evidence/council-overhaul-20261108/.
 Physical phone lock/GPU, real microphone hardware, audible quality and paid
 providers remain unqualified. ARM64 native startup gates only; browser/live on
 amd64. No model/runtime/policy/cache or production/sharedtest changes.
+
+## Source fixture correction
+
+Frozen runtime8035full95/99,4failures with persisted synthetic restore_user_input=false.
+Initial fixture settings now explicitly enable restoration; within-case opt-out
+reload remainsfalse. Affected4plus1 nativecharacter cases pass. No runtimechange.
+Finalclean99runs8042 with fivefreshvolumes and sourceoverlays. Original22failure
+remainsunattributed; its controlled runtimebugs remainfixed.

@@ -346,6 +346,9 @@ test.beforeEach(async ({ page }) => {
             settings.active_group = null;
             settings.power_user.auto_connect = false;
             settings.power_user.font_scale = 1;
+            // Every case starts with the native draft preference enabled. An opt-out
+            // within a case remains in savedSettings through that case's reload.
+            settings.power_user.restore_user_input = true;
             settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true', workspaceAdvancedSettings: 'false', workspaceArchivedChats: '[]' };
             settings.extension_settings.serviceConnections = { url: '' };
             settings.extension_settings.tts = { ...settings.extension_settings.tts };

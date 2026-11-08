@@ -108,3 +108,11 @@ candidates require nonempty avatar identifiers.494unit tests/26suites pass; root
 lint/actionlint pass,testlint0errors53warnings. The second partial source run was
 stopped before the last guard edit and retained as superseded2 evidence. Final99
 source run on8035 uses frozen19manifest bytes. No release acceptance claim yet.
+
+## Source fixture preference correction
+
+Fullfrozen8035run95/99;4draft cases inherited synthetic server restorationfalse.
+Tracedinputhaszero writes, productrespectsprefoff. Initialfixture resets ittrue;
+within-case savedSettings retains optoutfalse. Affected4pass31s,nativechar1pass8.4s.
+No runtimechange. Final99source runsfresh8042,19runtimebytes unchanged.22original
+imagefailure remainsunattributed, independent controlled22defects remainproven.
