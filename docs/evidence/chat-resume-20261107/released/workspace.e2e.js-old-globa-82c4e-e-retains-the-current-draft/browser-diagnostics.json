@@ -1,0 +1,22 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8030/img/ai4.png",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8030/api/settings/save",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8030/characters/Seraphina/approval.png?t=20261108024021",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8030/characters/Seraphina/admiration.png?t=20261108024021",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

@@ -10,7 +10,7 @@ For a new fork, enable GitHub Actions on the Actions tab before publishing.
 This fork has Actions enabled.
 
 1. Push the completed changes to the fork's `release` branch.
-2. Create a version tag on that commit, such as `v1.19.19`.
+2. Create a version tag on that commit, such as `v1.19.20`.
 3. Publish a [GitHub Release](https://github.com/Nulifyer/SillyTavern/releases/new) for that tag.
 4. Wait for [Publish release container](https://github.com/Nulifyer/SillyTavern/actions/workflows/docker-publish.yml) to succeed.
 
@@ -27,7 +27,7 @@ use the release, commit, or latest tag for homelab deployments.
 
 | Image tag | Purpose |
 | --- | --- |
-| `v1.19.19` | The exact GitHub Release tag |
+| `v1.19.20` | The exact GitHub Release tag |
 | `sha-<full-commit-sha>` | The commit checked out for that release |
 | `latest` | The release GitHub currently identifies as its latest stable release |
 
@@ -75,7 +75,7 @@ docker compose up -d sillytavern
 ```
 
 The included `docker/docker-compose.yml` uses the fork's image and does not build locally.
-To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.19` in the deployment's `.env` file.
+To pin a release, put `SILLYTAVERN_IMAGE_TAG=v1.19.20` in the deployment's `.env` file.
 For a new deployment using the included file, run:
 
 ```sh
@@ -99,6 +99,26 @@ Its evidence is in `docs/evidence/service-workspace-20261102/`. v1.19.11 adds
 explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
+
+### v1.19.20
+
+[Release v1.19.20](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.20)
+is source `e750add4eb6f448f68673707f7ca258e836a882b`.
+[Workflow 42439301418](https://github.com/Nulifyer/SillyTavern/actions/runs/42439301418)
+passed both native architecture startup/publication gates.
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:a674a6e99b86737ec10479e39d0fb423927585ec895f557737ba8b1e5b8b8d09
+```
+
+The actual pulled amd64 image passed all 72 browser cases together in 9.2
+minutes with both live Juiced cases and zero skipped/flaky/uncaught-error results.
+Five fresh synthetic volumes, no overlays, 32 runtime matches, version, heartbeat
+and Juiced HTTPS passed. Root lint, actionlint and 425 unit tests passed.
+The retired reply panel is removed; foreground layout preserves chat/scroll/draft
+identity using native owners. Production was not deployed here. Earlier source
+failures and limits remain in the [handoff and evidence](evidence/chat-resume-20261107/handoff.md).
+
 
 ### v1.19.19
 

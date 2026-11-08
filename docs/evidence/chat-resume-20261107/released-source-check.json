@@ -1,0 +1,214 @@
+{
+  "source": "e750add4eb6f448f68673707f7ca258e836a882b",
+  "version": {
+    "agent": "SillyTavern:1.19.20:Cohee#1207",
+    "pkgVersion": "1.19.20",
+    "gitRevision": null,
+    "gitBranch": null,
+    "commitDate": null,
+    "isLatest": true
+  },
+  "files": [
+    {
+      "file": "package-lock.json",
+      "sha256": "1b73f47b94c8fca387a03dc74479e728f609b2ab49b343b0d29e7c8853620ca7"
+    },
+    {
+      "file": "package.json",
+      "sha256": "8e8d82dfb46ea24dfb1b1a9e6017741c348906d8ac56fae5ea2b28119d3e7cc7"
+    },
+    {
+      "file": "public/css/workspace.css",
+      "sha256": "c9e0dc3997bdea4512695893e604654cdbcc48aca46122094ac6408118e27ca6"
+    },
+    {
+      "file": "public/index.html",
+      "sha256": "a07eced9f6042820dfd58c99dc560d629a86c95b3be136bebe97d9c33071f4fc"
+    },
+    {
+      "file": "public/script.js",
+      "sha256": "89d81c59b7ad5dabd4abbef05bd6a0a8797c913097f92da8cfac9dd2ebfa1761"
+    },
+    {
+      "file": "public/scripts/RossAscends-mods.js",
+      "sha256": "64238b07955fb3fa1bbf408a648a845f2634556abe624661979d096d3fe6919e"
+    },
+    {
+      "file": "public/scripts/audio-recording.js",
+      "sha256": "5e4c9674f88504f5dc984a3a613f9162b9296e812f05e57a1c9aa7e1cd9f9dfa"
+    },
+    {
+      "file": "public/scripts/backgrounds.js",
+      "sha256": "a9bc5e43d661638aa6080e421300dede9aba215eda91c99bebfe99de8d8bb56b"
+    },
+    {
+      "file": "public/scripts/browser-fixes.js",
+      "sha256": "90e8521cea3a7acb5462fa01dd56b29e5094392189e9ee7c2d8a015b74dfc372"
+    },
+    {
+      "file": "public/scripts/browser-recovery.js",
+      "sha256": "3278a16b304725a60da6e5567b425a4d376035b352ea6be78f5db8d3bb93f8a2"
+    },
+    {
+      "file": "public/scripts/composer-surface.js",
+      "sha256": "d007ce5b4e87adfc7696b80d3534bb257961c9e44c22eb9b60d813072463e2f4"
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "sha256": "5ff32c3759ba68485e443a708cdf38f6dc38f182c2b7abe2c02fa338842ae99a"
+    },
+    {
+      "file": "public/scripts/events.js",
+      "sha256": "7fd884815771b4ef15f5337d3f2c508dee87b2e01a394d39cbcbe361ed967261"
+    },
+    {
+      "file": "public/scripts/extensions.js",
+      "sha256": "92f94491ab328bfb702acfe1023eca2d643c4cd97dc86a680359ba3b044bf987"
+    },
+    {
+      "file": "public/scripts/extensions/caption/index.js",
+      "sha256": "c4fc4cb3453276a5f3ea218888941e837dc1aad44e955bd20c55e8b48a76ac9e"
+    },
+    {
+      "file": "public/scripts/extensions/connection-manager/index.js",
+      "sha256": "965949ec7f298623e6c1f9d7c2c489ff4e804f8c9c1d6ea191712469befa2daa"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/index.js",
+      "sha256": "18e1906e65bb611703090b67280b64f6f95736427dbaa520dd59f1a3daf56321"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/settings.html",
+      "sha256": "c14cb561cfdc3a775114b970b61bb5816a087e1bc07eeabf410c8dae9f39dca2"
+    },
+    {
+      "file": "public/scripts/extensions/tts/index.js",
+      "sha256": "f8c16ffa4277015a3d970442b3e751aecd02a81e16736b00ed0de45b8ddf96a3"
+    },
+    {
+      "file": "public/scripts/extensions/tts/openai-compatible.js",
+      "sha256": "030b90e54a6035b4e6f942f642cdde61f1f485e5bb630783e8bb6c9b0efe995c"
+    },
+    {
+      "file": "public/scripts/group-chats.js",
+      "sha256": "5fb2f566c4405442003b41af580a8d807889a2c1d8b22f0b4fd952473b2d87ed"
+    },
+    {
+      "file": "public/scripts/openai.js",
+      "sha256": "09891fb59e329e9e800576ca3b92bc87a13cd50ad635b8e3ffb837888377920d"
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "sha256": "d78e5f47296b883b5d1e4a2b508557a8d9a84a9d59e744174fc7ad4a38480e4c"
+    },
+    {
+      "file": "public/scripts/workspace-chats.js",
+      "sha256": "708091168a15d60d57f367d639b88c7407e19e005f670624b456fb1eb02f1b72"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "sha256": "09631a9f9c8a24e1ee41140f0ac4ba59cbdb5889582cd89babdab79d89b33451"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "sha256": "52ab219545b205a7dd0aeed0319a7ae72edc1decdb3100d1c13c8faabcd9ed91"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "sha256": "f0b07c868d095f71657d330b0be60a8e4073e5f0f71809a431f0cb54e1f1a34c"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "sha256": "72c91c6687766ca7afd91b80245c8f2b9f22a9c9607a7202540b50b13f184de6"
+    },
+    {
+      "file": "src/endpoints/backends/chat-completions.js",
+      "sha256": "53f429859efcfb29dd8becfebf7ff0ae49256ea795a0c81c320930fab5a407e7"
+    },
+    {
+      "file": "src/endpoints/openai.js",
+      "sha256": "757848a2a4617c44e67eed9c554b7adfadc2d55f93d0938793e4d0125e5c63bc"
+    },
+    {
+      "file": "src/endpoints/stable-diffusion.js",
+      "sha256": "15439fdffd839815ef7adcaa39806738c4e4503db8bbb697b337e905dfb4ed43"
+    },
+    {
+      "file": "src/util.js",
+      "sha256": "b0e5c49613dae854afba843256aa639152b1e02ba39aeb57ed81952c9cb4259c"
+    }
+  ],
+  "mounts": [
+    {
+      "name": "st-chat-resume-release-20261107-plugins",
+      "destination": "/home/node/app/plugins",
+      "type": "volume"
+    },
+    {
+      "name": "st-chat-resume-release-20261107-extensions",
+      "destination": "/home/node/app/public/scripts/extensions/third-party",
+      "type": "volume"
+    },
+    {
+      "name": "st-chat-resume-release-20261107-backups",
+      "destination": "/home/node/app/backups",
+      "type": "volume"
+    },
+    {
+      "name": "st-chat-resume-release-20261107-config",
+      "destination": "/home/node/app/config",
+      "type": "volume"
+    },
+    {
+      "name": "st-chat-resume-release-20261107-data",
+      "destination": "/home/node/app/data",
+      "type": "volume"
+    }
+  ],
+  "overlays": false,
+  "stockSdcppHandlerMatchesV1198": true,
+  "nativeHeartbeat": "passed",
+  "juicedHTTPS": {
+    "url": "https://juiced.swarm.nulteck.com/.well-known/juiced.json",
+    "status": 200,
+    "tlsVerified": true
+  },
+  "localImage": {
+    "id": "37c0807cafcdca58d7e7a02183d275b80eb038980f1686e3b8b6b55c2cfc1398",
+    "digest": "sha256:a674a6e99b86737ec10479e39d0fb423927585ec895f557737ba8b1e5b8b8d09",
+    "labels": {
+      "org.opencontainers.image.licenses": "AGPL-3.0",
+      "org.opencontainers.image.revision": "e750add4eb6f448f68673707f7ca258e836a882b",
+      "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+      "org.opencontainers.image.version": "v1.19.20"
+    }
+  },
+  "registry": {
+    "observedAt": "2026-11-08T02:39:42.917913+00:00",
+    "image": "ghcr.io/nulifyer/sillytavern",
+    "tag": "v1.19.20",
+    "indexDigest": "sha256:a674a6e99b86737ec10479e39d0fb423927585ec895f557737ba8b1e5b8b8d09",
+    "architectures": [
+      {
+        "architecture": "amd64",
+        "digest": "sha256:17f4a373cc5fee1ef318f906f32f57a0df9ccc71d4270c0c15a55d05916f92ce",
+        "labels": {
+          "org.opencontainers.image.licenses": "AGPL-3.0",
+          "org.opencontainers.image.revision": "e750add4eb6f448f68673707f7ca258e836a882b",
+          "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+          "org.opencontainers.image.version": "v1.19.20"
+        }
+      },
+      {
+        "architecture": "arm64",
+        "digest": "sha256:c5313b1107aedaff44105db23a52e59700a9cd4a69a96f29d0ccbf3da4a1bc8a",
+        "labels": {
+          "org.opencontainers.image.licenses": "AGPL-3.0",
+          "org.opencontainers.image.revision": "e750add4eb6f448f68673707f7ca258e836a882b",
+          "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+          "org.opencontainers.image.version": "v1.19.20"
+        }
+      }
+    ]
+  }
+}

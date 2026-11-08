@@ -45,30 +45,22 @@ Native font scales1/1.5 are covered, plus320/390/768/1280 widths. The448px
 roleplay case checks navigation, tools/dialogs, inspector and composer. These are
 emulator profiles, not physical-device qualification. Source2cases pass and
 prior actualv1.19.14 fails the new containment assertion. Actualv1.19.15 passed
-all45cases with both live cases/zero uncaught errors in6.2minutes. Final focused
+all45cases with both live cases/zero uncaught errors in 6.2 minutes. Final focused
 visible-portrait rerun passed in8.2seconds. Evidence:
 docs/evidence/mobile-portraits-20261106/.
 
 ## Environment
 
-Latest verifiedv1.19.19: http://127.0.0.1:8028,
-st-menu-query-release-20261106, five fresh synthetic volumes/no overlays. All68
-cases passed together in9.0minutes, both live cases, zero uncaught errors.
-31runtime matches/version/heartbeat/HTTPS/index/labels pass.425units/lint/actionlint
-pass; test lint0errors/50warnings. Native Save/readback/reload/visual check passed.
-Source8026 st-menu-dismiss-source-20261106 has public/src/package overlays; it is
-not image proof. v17actual8025/v18actual8027 are intermediates after late/query gaps.
-Earlier local host forwards were lost once; their container data was preserved.
-Current handoff/evidence: docs/evidence/menu-dismissal-20261106/v19/.
+Latest verified v1.19.20: http://127.0.0.1:8030,
+st-chat-resume-release-20261107, five fresh synthetic volumes/no overlays. All72
+cases passed together in 9.2 minutes, both live cases, zero uncaught errors.
+32 runtime matches/version/heartbeat/HTTPS and both architecture labels pass.
+425 unit tests/lint/actionlint pass; test lint has 0 errors and 51 warnings. Evidence and limits:
+`docs/evidence/chat-resume-20261107/`. Source 8029 uses overlays; it is not image proof.
 
-Earlier full workspace acceptance (v1.19.14, all43cases, 424units) and the
-16-category/Advanced/Create reviews remain in
-`docs/evidence/full-workspace-review-20261106/`. Immutable image/source/workflow
-identifiers and validation limits are in that handoff and docs/container-releases.md.
-
-Earlier synthetic fixtures retain their volumes; exact versions/ports are in
-`docs/container-releases.md`. Do not overlap native persistence checks with fixture
-runs. Production69/shared85 were never accessed or changed.
+Earlier fixtures retain their synthetic volumes. Previous full workspace and
+release evidence remains in `docs/container-releases.md`. Do not overlap native
+persistence checks with fixture runs. Production69/shared85 were never accessed.
 
 ## Shared-screen follow-up
 
@@ -136,6 +128,7 @@ message node identity, draft selection and exactly one generation request.
 
 Use `--grep 'Foreground chat layout|old reply checkpoints'`. Actual v1.19.19 fails
 both history-position cases and the old-record popup case; both final-line cases
-already pass there. Source final focused7cases pass with Android UA/DPR3. Evidence:
-`docs/evidence/chat-resume-20261107/`. Source fixture8029 uses overlays and is not
+already pass there. Actual v1.19.20 passed all 72cases together; focused source 7 cases also passed.
+Android UA/DPR 3 is explicit. Evidence:
+`docs/evidence/chat-resume-20261107/`. Source fixture 8029 uses overlays and is not
 release-image proof. Physical phone/GPU restoration remains unqualified.

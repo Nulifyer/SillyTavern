@@ -51,3 +51,19 @@ package-version bump, so its cached /version remained1.19.19. The restarted
 source server reported1.19.20. Neither source phase is release-image proof.
 
 Stored logs omit ANSI formatting and trailing whitespace; errors and counts are retained.
+
+## Actual image acceptance
+
+The pulled v1.19.20 image passed all 72cases together in 9.2 minutes with
+both live Juiced cases,zero skipped/flaky results andzero uncaught page errors. Full raw
+console/network events remain in released/ and browser-summary.json. This clean
+image result supersedes the failed source acceptance run for delivery; it does
+not erase that run or establish the cause of its three failures.
+
+The actual-image Pixel latest-reply, desktop history and old-checkpoint/no-popup
+renders were inspected after the full run. The final line is above the composer,
+the selected user draft remains separate, and old records produce no panel.
+The 115 aborted requests are retained by case; 2 ERR_FAILED events belong to deliberate
+cast/quiet transport failures and 1 incomplete-chunk event belongs to the real reset
+fixture. The 24 console entries include the deliberate save/delete/status/stream
+failures and pending-illustration guard. None is an uncaught page error.

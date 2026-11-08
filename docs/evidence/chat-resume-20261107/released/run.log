@@ -1,0 +1,172 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --output=/tmp/st-chat-resume-release-full --reporter=line,json
+(node:1846178) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 72 tests using 1 worker
+
+(node:1846197) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1846197) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1846197) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/72] workspace.e2e.js:237:1 › library browsing shows profiles without opening or replacing a story
+[2/72] workspace.e2e.js:260:1 › history failure stays visible in profiles and archive while known stories remain usable
+[3/72] workspace.e2e.js:300:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+[4/72] workspace.e2e.js:339:1 › character portrait and native actions stay above tags and notes at every size
+[5/72] workspace.e2e.js:397:1 › new stories preserve previous transcripts and profile history resumes the exact scene
+[6/72] workspace.e2e.js:423:1 › starting a character story is immediate, creates one transcript and can be renamed afterward
+[7/72] workspace.e2e.js:462:1 › archive persists, excludes active lists, reads without editing, and restores the same transcript
+[8/72] workspace.e2e.js:493:1 › rename follows archived identity and deletion requires confirmation without recreating the file
+[9/72] workspace.e2e.js:530:1 › failed deletion keeps the story and reports the server failure
+[10/72] workspace.e2e.js:548:1 › settings keep every native area reachable with Escape and focus restoration
+[11/72] workspace.e2e.js:590:1 › advanced controls retain native provider, sampling, prompts and extensions without leaving the workspace
+[12/72] workspace.e2e.js:689:1 › every settings category uses one control tree and fits desktop and phone
+[13/72] workspace.e2e.js:736:1 › settings sections, blank space and external dialogs never close mounted controls
+[14/72] workspace.e2e.js:787:1 › every settings destination keeps controls reachable with enlarged phone text
+[15/72] workspace.e2e.js:861:1 › settings changes and late saves preserve every category through direct navigation
+workspace.e2e.js:861:1 › settings changes and late saves preserve every category through direct navigation
+Settings mutation: 1280px connection
+
+Settings mutation: 1280px generation
+
+Settings mutation: 1280px prompts
+
+Settings mutation: 1280px persona
+
+Settings mutation: 1280px world
+
+Settings mutation: 1280px backgrounds
+
+Settings mutation: 1280px voice-settings
+
+Settings mutation: 1280px dictation-settings
+
+Settings mutation: 1280px image-settings
+
+Settings mutation: 1280px settings
+
+Settings mutation: 1280px extensions
+
+Settings mutation: 390px connection
+
+Settings mutation: 390px generation
+
+Settings mutation: 390px prompts
+
+Settings mutation: 390px persona
+
+Settings mutation: 390px world
+
+Settings mutation: 390px backgrounds
+
+Settings mutation: 390px voice-settings
+
+Settings mutation: 390px dictation-settings
+
+Settings mutation: 390px image-settings
+
+Settings mutation: 390px settings
+
+Settings mutation: 390px extensions
+
+Settings mutation: 320px connection
+
+Settings mutation: 320px generation
+
+Settings mutation: 320px prompts
+
+Settings mutation: 320px persona
+
+Settings mutation: 320px world
+
+Settings mutation: 320px backgrounds
+
+Settings mutation: 320px voice-settings
+
+Settings mutation: 320px dictation-settings
+
+Settings mutation: 320px image-settings
+
+Settings mutation: 320px settings
+
+Settings mutation: 320px extensions
+
+[16/72] workspace.e2e.js:1007:1 › dictation settings remain available when the optional TTS extension is disabled
+[17/72] workspace.e2e.js:1045:1 › discovered selectors distinguish unapplied choices and follow native provider changes
+[18/72] workspace.e2e.js:1092:1 › vision discovery follows the native current-story-model option
+[19/72] workspace.e2e.js:1134:1 › one server configures native services and survives reload without replacing sampling or profiles
+[20/72] workspace.e2e.js:1279:1 › discovered context uses configured capacity, preserves manual overrides and survives reload
+[21/72] workspace.e2e.js:1358:1 › service prompt editors save native values and composer nodes survive classic round trips
+[22/72] workspace.e2e.js:1406:3 › fresh compatible connection migrates context preference
+[23/72] workspace.e2e.js:1406:3 › existing explicit compatible connection migrates context preference
+[24/72] workspace.e2e.js:1455:1 › service setup reports failure, missing capability and voice errors; stale requests cannot replace a new server
+[25/72] workspace.e2e.js:1527:1 › dictation handles permission failure and retry, preserves drafts, never sends, and cancels on story change
+[26/72] workspace.e2e.js:1602:1 › image writer preserves scene context and story model through failure and retry
+[27/72] workspace.e2e.js:1688:1 › live Juiced first reply with post-history instructions recovers through native prompt formatting
+[28/72] workspace.e2e.js:1828:1 › live Juiced services use native providers from the tested container
+workspace.e2e.js:1828:1 › live Juiced services use native providers from the tested container
+Live Juiced: discover and configure native providers
+
+Live Juiced: streaming story reply
+
+Live Juiced: configure image sampling and generate scene
+
+Live Juiced: configure vision and caption the synthetic scene
+
+Live Juiced: synthesize and decode speech
+
+Live Juiced: transcribe speech into draft
+
+[29/72] workspace.e2e.js:2090:1 › search opens character profiles and a fixture model generates through the native composer
+[30/72] workspace.e2e.js:2285:1 › mobile draft survives a frozen tab and reload without leaking into another story
+[31/72] workspace.e2e.js:2316:1 › a healthy reply completed while frozen resumes once and preserves the next draft
+[32/72] workspace.e2e.js:2387:7 › Foreground chat layout: desktop › resume shows the final character line without a recovery popup
+[33/72] workspace.e2e.js:2387:7 › Foreground chat layout: desktop › resume preserves the history reading position without a recovery popup
+[34/72] workspace.e2e.js:2387:7 › Foreground chat layout: Pixel 9 Pro XL › resume shows the final character line without a recovery popup
+[35/72] workspace.e2e.js:2387:7 › Foreground chat layout: Pixel 9 Pro XL › resume preserves the history reading position without a recovery popup
+[36/72] workspace.e2e.js:2508:3 › a reset stream after freeze preserves partial text without success actions or replay
+[37/72] workspace.e2e.js:2508:3 › a early-eof stream after freeze preserves partial text without success actions or replay
+[38/72] workspace.e2e.js:2589:3 › a multi-choice stream with all finish reasons handles EOF correctly
+[39/72] workspace.e2e.js:2589:3 › a multi-choice stream with only one finish reason handles EOF correctly
+[40/72] workspace.e2e.js:2637:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings
+[41/72] workspace.e2e.js:2779:1 › an unresponsive foreground heartbeat times out and can be retried without sending a reply
+[42/72] workspace.e2e.js:2822:1 › a pending native save does not block foreground layout or connection checks
+[43/72] workspace.e2e.js:2856:1 › a delayed read-only foreground check cannot reconnect a changed provider
+[44/72] workspace.e2e.js:2893:1 › story drafts survive rapid switching and rename while the native recovery preference is respected
+[45/72] workspace.e2e.js:2932:1 › old global drafts never interrupt chat and blocked storage retains the current draft
+[46/72] workspace.e2e.js:2982:1 › identical story filenames on different characters never share a recovered draft
+[47/72] workspace.e2e.js:3021:1 › quiet prompt callers keep rejection on transport failure without automatic retry
+[48/72] workspace.e2e.js:3045:1 › a late microphone permission result after suspension is stopped and never transcribed
+[49/72] workspace.e2e.js:3090:1 › a native save failure never creates a recovered reply workflow
+[50/72] workspace.e2e.js:3133:1 › old reply checkpoints stay untouched and never become character chat popups or user drafts
+[51/72] workspace.e2e.js:3192:3 › stopping a pending nonstreamed reply restores the composer and preserves its next draft
+[52/72] workspace.e2e.js:3192:3 › stopping a pending streamed reply restores the composer and preserves its next draft
+[53/72] workspace.e2e.js:3248:3 › a two-member cast handles stop without advancing the queue or losing its next draft
+[54/72] workspace.e2e.js:3248:3 › a two-member cast handles network loss without advancing the queue or losing its next draft
+[55/72] workspace.e2e.js:3340:1 › native streamed replies keep the composer and character identity mounted
+[56/72] workspace.e2e.js:3391:1 › image tools use the native provider and treat custom prompts as text
+[57/72] workspace.e2e.js:3439:1 › one scene click generates one native illustration with automatic tools off
+[58/72] workspace.e2e.js:3530:1 › voice tools narrate the latest native reply with the configured System voice
+[59/72] workspace.e2e.js:3565:1 › chat voice is opt-in and persists; manual images do not enable automatic tools
+[60/72] workspace.e2e.js:3594:1 › cast creation selects real characters and opens a group story
+[61/72] workspace.e2e.js:3651:3 › roleplay pages and composer stay within a 320px viewport
+[62/72] workspace.e2e.js:3651:3 › roleplay pages and composer stay within a 390px viewport
+[63/72] workspace.e2e.js:3651:3 › roleplay pages and composer stay within a 448px viewport
+[64/72] workspace.e2e.js:3651:3 › roleplay pages and composer stay within a 768px viewport
+[65/72] workspace.e2e.js:3765:3 › Pixel 9 Pro XL portrait sizing › message portraits fit their containers and stay clear of text across screen and font sizes
+[66/72] workspace.e2e.js:3856:1 › native font preferences and browser text sizing keep phone controls usable
+[67/72] workspace.e2e.js:3929:1 › query-string navigation keeps background tabs local and every native owner unique
+[68/72] workspace.e2e.js:3959:3 › late extension activation recovers image-settings without replacing edited controls
+[69/72] workspace.e2e.js:3959:3 › late extension activation recovers connection without replacing edited controls
+[70/72] workspace.e2e.js:4090:5 › Action menus: desktop › transient menus dismiss outside without closing persistent controls
+[71/72] workspace.e2e.js:4090:5 › Action menus: Pixel 9 Pro XL touch › transient menus dismiss outside without closing persistent controls
+[72/72] workspace.e2e.js:4249:1 › classic preference survives reload and can be restored
+  Slow test file: workspace.e2e.js (9.1m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  72 passed (9.2m)
