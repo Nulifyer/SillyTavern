@@ -2,38 +2,36 @@
 
 ## Project state
 
-Published/verifiedv1.19.19, source031bc97933cab8827b473080c50d95c52b9f55af.
-Fork: https://github.com/Nulifyer/SillyTavern. Published branch: release.
-Workflow42324206240 passed native amd64/arm64 startup/publication.
-Index: `sha256:4aaf8c5450b26d1086309de6321f9759b7b93f96d9a5eadacf489240411ee9a4`.
+Latest verified publication is v1.19.19, source
+031bc97933cab8827b473080c50d95c52b9f55af. This thread never deployed production69.
 
 ## Active tasks
 
-None. Menu dismissal, late readiness and local query tabs follow-up complete.
-Previous full workspace/service/mobile recovery reviews remain retained.
+Correct foreground chat layout after the user's November 7 clarification.
+Main agent owns implementation, tests, release and continuity. ux_critique
+completed two read-only design reviews. No worker edits.
+
+Removed the recovered-reply panel, assistant-to-user draft insertion and reply
+checkpoint/save hooks. Existing local reply records remain untouched. Native chat
+retains replies/saving; per-story user drafts remain. Foreground geometry now uses
+native positioning, composer fitting and scroll anchors independently of probes.
 
 ## Next action
 
-Homelab owns later deployment using
-[handoff](../docs/evidence/menu-dismissal-20261106/v19/handoff.md).
-Never deploy production69 here. Preserve existing volumes/network boundaries,
-record the actual pre-update image/private backup and reload tabs afterward.
-This thread never accessed production69 app/data/config/volumes or shared85.
+Publish v1.19.20 through the normal GitHub
+Release workflow, then run the full suite on its pulled image with five fresh
+synthetic volumes and no overlays. Update evidence/release handoff afterwards.
+Never access or deploy production69; preserve all existing production data.
 
 ## Verification
 
-Actual19 on8028 st-menu-query-release-20261106 passed all68browser cases together
-in9.0minutes, both live Juiced cases, zero skips/flaky/uncaught errors.
-Five fresh volumes/no overlays;31runtime matches/version/heartbeat/HTTPS/index
-and both architecture labels passed.425units/lint/actionlint pass; test lint
-0errors/50warnings. Native Save/readback/reload preserved Advanced=true/steps8
-and automatic tools off. Desktop/Pixel and nested-menu renders inspected.
-Console/network events classified separately; no claim of zero console errors.
-v17/v18 passed65/67cases but failed later late-template/query regressions; they
-are immutable intermediates. Query/native DOM attribution was corrected in
-evidence. Source query/late/menu5cases pass. Exact evidence:
-docs/evidence/menu-dismissal-20261106/v19/. Earlier menu/debug/host failures remain
-in the parent folder. Source/runtime unchanged after tag; only delivery docs follow.
+Initial source focused run: 10 passed in 70.5 seconds. Unit tests: 425 passed.
+Root lint passed. Final Android-profile7cases pass; actual19 comparison2pass/3fail.
+Full source69pass/3fail; isolated rerun of those3cases twice passes6/6. Causes
+unresolved; all attempts retained. No browser case was excluded.
+Source fixture: http://127.0.0.1:8029, st-chat-resume-source-20261107, five fresh
+synthetic volumes with source overlays. It is not release-image proof.
+Evidence owner: docs/evidence/chat-resume-20261107/.
 
 ## Blockers
 
@@ -41,7 +39,5 @@ None.
 
 ## Limits
 
-Physical phone/mic/lock and audible quality unqualified. ARM64 native startup
-proof; browser/live checks on amd64. No Juiced model/policy/cache/infrastructure
-changes. Older local fixture host forwards disappeared in one incident; data
-preserved. Only owned8025/8026/8027/8028 fixtures were restarted/created afterward.
+Physical phone locking/GPU restoration and audible quality remain unqualified.
+No production69/shared85 access or changes. No Juiced runtime/policy/cache changes.

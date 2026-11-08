@@ -11,7 +11,7 @@ import {
     lodash,
 } from './lib.js';
 
-import { humanizedDateTime, favsToHotswap, getMessageTimeStamp, dragElement, isMobile, initRossMods } from './scripts/RossAscends-mods.js';
+import { humanizedDateTime, favsToHotswap, getMessageTimeStamp, dragElement, isMobile, initRossMods, autoFitSendTextArea } from './scripts/RossAscends-mods.js';
 import { userStatsHandler, statMesProcess, initStats } from './scripts/stats.js';
 import {
     generateKoboldWithStreaming,
@@ -264,7 +264,7 @@ import { initSystemPrompts } from './scripts/sysprompt.js';
 import { registerExtensionSlashCommands as initExtensionSlashCommands } from './scripts/extensions-slashcommands.js';
 import { ToolManager } from './scripts/tool-calling.js';
 import { addShowdownPatch } from './scripts/util/showdown-patch.js';
-import { applyBrowserFixes } from './scripts/browser-fixes.js';
+import { applyBrowserFixes, refreshBrowserPosition } from './scripts/browser-fixes.js';
 import { initServerHistory } from './scripts/server-history.js';
 import { initSettingsSearch } from './scripts/setting-search.js';
 import { initBulkEdit } from './scripts/bulk-edit.js';
@@ -273,7 +273,7 @@ import { extractReasoningFromData, extractReasoningSignatureFromData, initReason
 import { accountStorage } from './scripts/util/AccountStorage.js';
 import { initWelcomeScreen, openPermanentAssistantChat, openPermanentAssistantCard, getPermanentAssistantAvatar } from './scripts/welcome-screen.js';
 import { initWorkspace, openWorkspacePanel } from './scripts/workspace.js';
-import { captureRecoverySave, checkpointStreamingReply, initBrowserRecovery, reportGenerationInterrupted } from './scripts/browser-recovery.js';
+import { initBrowserRecovery, reportGenerationInterrupted } from './scripts/browser-recovery.js';
 import { initDataMaid } from './scripts/data-maid.js';
 import { clearItemizedPrompts, deleteItemizedPromptForMessage, deleteItemizedPrompts, findItemizedPromptSet, initItemizedPrompts, itemizedParams, itemizedPrompts, loadItemizedPrompts, promptItemize, replaceItemizedPromptText, saveItemizedPrompts, swapItemizedPrompts } from './scripts/itemized-prompts.js';
 import { getSystemMessageByType, initSystemMessages, SAFETY_CHAT, sendSystemMessage, system_message_types, system_messages } from './scripts/system-messages.js';
@@ -2796,6 +2796,50 @@ function formatGenerationTimer(gen_started, gen_finished, tokenCount, reasoningD
 
 let requestId = null;
 
+/** Capture the reader's position before the browser suspends layout and paints. */
+export function captureChatViewport() {
+    const container = chatElement[0];
+    if (!container?.clientHeight || document.body.matches('.workspace-browsing, .workspace-configuring')) return null;
+    const top = container.getBoundingClientRect().top;
+    const anchor = [...container.querySelectorAll('.mes')].find(node => node.getBoundingClientRect().bottom > top);
+    return {
+        container, character: characters[this_chid]?.avatar, group: selected_group, file: getCurrentChatId(),
+        locked: scrollLock, follow: !scrollLock && power_user.auto_scroll_chat_to_bottom && !power_user.waifuMode,
+        scrollTop: container.scrollTop, anchor, offset: anchor?.getBoundingClientRect().top - top,
+    };
+}
+
+/** Repair native geometry after resume without replacing messages or moving focus. */
+export async function refreshChatViewport(view = captureChatViewport()) {
+    if (!view) return;
+    const valid = () => document.visibilityState === 'visible' && view.container === chatElement[0]
+        && view.character === characters[this_chid]?.avatar && view.group === selected_group && view.file === getCurrentChatId()
+        && view.container.clientHeight > 0 && !document.body.matches('.workspace-browsing, .workspace-configuring');
+    if (!valid()) return;
+    const controller = new AbortController();
+    let interacted = false;
+    for (const type of ['wheel', 'touchstart', 'pointerdown', 'keydown']) {
+        document.addEventListener(type, () => { interacted = true; }, { passive: true, signal: controller.signal });
+    }
+    try {
+        refreshBrowserPosition();
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        if (!valid() || interacted) return;
+        autoFitSendTextArea();
+        await new Promise(resolve => requestAnimationFrame(resolve));
+        if (!valid() || interacted) return;
+        if (view.follow) {
+            scrollLock = false;
+            scrollChatToBottom();
+        } else {
+            view.container.scrollTop = view.anchor?.isConnected
+                ? view.container.scrollTop + view.anchor.getBoundingClientRect().top - view.container.getBoundingClientRect().top - view.offset
+                : view.scrollTop;
+            scrollLock = view.locked;
+        }
+    } finally { controller.abort(); }
+}
+
 /**
  * Scrolls the chat to the bottom if configured to do so.
  * @param {object} [options] Options
@@ -3838,7 +3882,6 @@ class StreamingProcessor {
 
     async onFinishStreaming(messageId, text) {
         await this.finalizeIntermediaryMessage(messageId, text, { unlockUI: false });
-        if (this.type !== 'impersonate') checkpointStreamingReply(messageId, chat[messageId]?.mes || text, 'complete');
         try { await saveChatConditional(); } finally { this.markUIGenStopped(); }
 
         const isAborted = this.abortController.signal.aborted;
@@ -3908,7 +3951,6 @@ class StreamingProcessor {
 
                 this.toolCalls = toolCalls;
                 this.result = text;
-                if (!isImpersonate) checkpointStreamingReply(this.messageId, this.continueMessage + text);
                 this.swipes = Array.from(swipes ?? []);
                 if (logprobs) {
                     this.messageLogprobs.push(...(Array.isArray(logprobs) ? logprobs : [logprobs]));
@@ -5439,7 +5481,6 @@ export async function Generate(type, { automatic_trigger, force_name2, quiet_pro
                 // completion and must not run tools, auto-swipe or auto-continue.
                 requestController.abort(CONNECTION_INTERRUPTED_REASON);
                 await interrupted.finalizeIntermediaryMessage(interrupted.messageId, getMessage, { unlockUI: false, interrupted: true });
-                if (type !== 'impersonate') checkpointStreamingReply(interrupted.messageId, chat[interrupted.messageId]?.mes || getMessage, 'interrupted');
                 try { await saveChatConditional(); } finally {
                     interrupted.markUIGenStopped();
                     streamingProcessor = null;
@@ -7474,7 +7515,6 @@ export async function saveChat({ chatName, withMetadata, mesId, force = false, c
         : (mesId !== undefined && mesId >= 0 && mesId < chat.length)
             ? chat.slice(0, Number(mesId) + 1)
             : chat.slice();
-    const acknowledgeRecovery = captureRecoverySave({ avatar: characters[this_chid].avatar, fileName, messages: trimmedChat });
 
     /** @type {ChatHeader} */
     const chatHeader = {
@@ -7499,7 +7539,6 @@ export async function saveChat({ chatName, withMetadata, mesId, force = false, c
         const result = await fetch('/api/chats/save', saveChatRequest);
 
         if (result.ok) {
-            acknowledgeRecovery();
             return;
         }
 

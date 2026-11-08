@@ -1,0 +1,260 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep native character editor owns Escape|identical story filenames|late microphone permission --repeat-each=2 --output=/tmp/st-chat-resume-isolated --reporter=line,json
+(node:1837454) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:1837489) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1837489) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1837489) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/6] workspace.e2e.js:300:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+  1) workspace.e2e.js:300:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+
+    Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/
+    Call log:
+      - navigating to "http://127.0.0.1:8029/", waiting until "load"
+
+
+      124 |         await route.fulfill({ json: { result: 'ok' } });
+      125 |     });
+    > 126 |     await page.goto('/');
+          |                ^
+      127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      128 |     await navigate(page, 'characters');
+      129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      139 |     const records = await api(page, '/api/chats/recent', {});
+      140 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16
+
+    Error Context: ../../../../../tmp/st-chat-resume-isolated/workspace.e2e.js-native-ch-f6c7b-io-upload-works-by-keyboard/error-context.md
+
+
+(node:1837639) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1837639) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1837639) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/6] workspace.e2e.js:2982:1 › identical story filenames on different characters never share a recovered draft
+  2) workspace.e2e.js:2982:1 › identical story filenames on different characters never share a recovered draft
+
+    Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/
+    Call log:
+      - navigating to "http://127.0.0.1:8029/", waiting until "load"
+
+
+      124 |         await route.fulfill({ json: { result: 'ok' } });
+      125 |     });
+    > 126 |     await page.goto('/');
+          |                ^
+      127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      128 |     await navigate(page, 'characters');
+      129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      139 |     const records = await api(page, '/api/chats/recent', {});
+      140 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16
+
+    Error Context: ../../../../../tmp/st-chat-resume-isolated/workspace.e2e.js-identical-bd35d-ver-share-a-recovered-draft/error-context.md
+
+
+(node:1837775) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1837775) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1837775) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/6] workspace.e2e.js:3045:1 › a late microphone permission result after suspension is stopped and never transcribed
+  3) workspace.e2e.js:3045:1 › a late microphone permission result after suspension is stopped and never transcribed
+
+    Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/
+    Call log:
+      - navigating to "http://127.0.0.1:8029/", waiting until "load"
+
+
+      124 |         await route.fulfill({ json: { result: 'ok' } });
+      125 |     });
+    > 126 |     await page.goto('/');
+          |                ^
+      127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      128 |     await navigate(page, 'characters');
+      129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      139 |     const records = await api(page, '/api/chats/recent', {});
+      140 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16
+
+    Error Context: ../../../../../tmp/st-chat-resume-isolated/workspace.e2e.js-a-late-mi-829c6-opped-and-never-transcribed/error-context.md
+
+
+(node:1837913) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1837913) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1837913) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[4/6] workspace.e2e.js:300:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+  4) workspace.e2e.js:300:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+
+    Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/
+    Call log:
+      - navigating to "http://127.0.0.1:8029/", waiting until "load"
+
+
+      124 |         await route.fulfill({ json: { result: 'ok' } });
+      125 |     });
+    > 126 |     await page.goto('/');
+          |                ^
+      127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      128 |     await navigate(page, 'characters');
+      129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      139 |     const records = await api(page, '/api/chats/recent', {});
+      140 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16
+
+    Error Context: ../../../../../tmp/st-chat-resume-isolated/workspace.e2e.js-native-ch-f6c7b-io-upload-works-by-keyboard-repeat1/error-context.md
+
+
+(node:1838044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1838044) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1838044) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[5/6] workspace.e2e.js:2982:1 › identical story filenames on different characters never share a recovered draft
+  5) workspace.e2e.js:2982:1 › identical story filenames on different characters never share a recovered draft
+
+    Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/
+    Call log:
+      - navigating to "http://127.0.0.1:8029/", waiting until "load"
+
+
+      124 |         await route.fulfill({ json: { result: 'ok' } });
+      125 |     });
+    > 126 |     await page.goto('/');
+          |                ^
+      127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      128 |     await navigate(page, 'characters');
+      129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      139 |     const records = await api(page, '/api/chats/recent', {});
+      140 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16
+
+    Error Context: ../../../../../tmp/st-chat-resume-isolated/workspace.e2e.js-identical-bd35d-ver-share-a-recovered-draft-repeat1/error-context.md
+
+
+(node:1838179) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1838179) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1838179) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[6/6] workspace.e2e.js:3045:1 › a late microphone permission result after suspension is stopped and never transcribed
+  6) workspace.e2e.js:3045:1 › a late microphone permission result after suspension is stopped and never transcribed
+
+    Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/
+    Call log:
+      - navigating to "http://127.0.0.1:8029/", waiting until "load"
+
+
+      124 |         await route.fulfill({ json: { result: 'ok' } });
+      125 |     });
+    > 126 |     await page.goto('/');
+          |                ^
+      127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+      128 |     await navigate(page, 'characters');
+      129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16
+
+    Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js
+
+      135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
+      136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
+    > 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });
+          |                ^
+      138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+      139 |     const records = await api(page, '/api/chats/recent', {});
+      140 |     await page.evaluate(async records => {
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16
+
+    Error Context: ../../../../../tmp/st-chat-resume-isolated/workspace.e2e.js-a-late-mi-829c6-opped-and-never-transcribed-repeat1/error-context.md
+
+
+  6 failed
+    workspace.e2e.js:300:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+    workspace.e2e.js:2982:1 › identical story filenames on different characters never share a recovered draft
+    workspace.e2e.js:3045:1 › a late microphone permission result after suspension is stopped and never transcribed
+    workspace.e2e.js:300:1 › native character editor owns Escape before its settings page and audio upload works by keyboard
+    workspace.e2e.js:2982:1 › identical story filenames on different characters never share a recovered draft
+    workspace.e2e.js:3045:1 › a late microphone permission result after suspension is stopped and never transcribed

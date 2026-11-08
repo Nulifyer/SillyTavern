@@ -1,0 +1,25 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep Foreground chat layout|foreground retry|pending native save|old reply checkpoints --output=/tmp/st-chat-resume-focused-final --reporter=line
+(node:1821601) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 7 tests using 1 worker
+
+(node:1821670) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1821670) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1821670) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/7] workspace.e2e.js:2387:7 › Foreground chat layout: desktop › resume shows the final character line without a recovery popup
+[2/7] workspace.e2e.js:2387:7 › Foreground chat layout: desktop › resume preserves the history reading position without a recovery popup
+[3/7] workspace.e2e.js:2387:7 › Foreground chat layout: Pixel 9 Pro XL › resume shows the final character line without a recovery popup
+[4/7] workspace.e2e.js:2387:7 › Foreground chat layout: Pixel 9 Pro XL › resume preserves the history reading position without a recovery popup
+[5/7] workspace.e2e.js:2637:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings
+[6/7] workspace.e2e.js:2822:1 › a pending native save does not block foreground layout or connection checks
+[7/7] workspace.e2e.js:3133:1 › old reply checkpoints stay untouched and never become character chat popups or user drafts
+  7 passed (42.7s)

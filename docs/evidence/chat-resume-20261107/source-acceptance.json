@@ -1,0 +1,57 @@
+{
+  "baseline": {
+    "image": "ghcr.io/nulifyer/sillytavern:v1.19.19",
+    "port": 8028,
+    "passed": 2,
+    "failed": 3,
+    "durationSeconds": 46.1,
+    "failures": [
+      "desktop history position after freeze/height change",
+      "Pixel 9 Pro XL history position after freeze/height change",
+      "old reply records show unsolicited recovery panel"
+    ]
+  },
+  "sourceFocused": {
+    "port": 8029,
+    "passed": 7,
+    "failed": 0,
+    "durationSeconds": 42.7,
+    "androidUserAgent": true,
+    "dpr": 3
+  },
+  "initialFocused": {
+    "passed": 10,
+    "failed": 0,
+    "durationSeconds": 70.5
+  },
+  "unit": {
+    "passed": 425,
+    "suites": 20
+  },
+  "lint": {
+    "errors": 0
+  },
+  "testLint": {
+    "errors": 0,
+    "warnings": 51
+  },
+  "physicalPhoneQualified": false,
+  "productionAccessed": false,
+  "fullSource": {
+    "startTime": "2026-11-08T02:22:33.455Z",
+    "duration": 610735.625,
+    "expected": 69,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  },
+  "isolatedReady": {
+    "startTime": "2026-11-08T02:33:56.887Z",
+    "duration": 27912.498,
+    "expected": 6,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "sourceFullFailureCause": "unresolved"
+}

@@ -23,7 +23,7 @@
 - Restrict upstream GitHub App bot jobs to the upstream repository.
 - Start character/cast stories immediately using native automatic names; Rename is a later action. Coalesce rapid starts.
 - Foreground native editors handle Escape; inert background controls must not receive it. Native generation owns interactive Stop cancellation, including cast queues; quiet callers retain rejection.
-- Workspace owns transient menu dismissal; native modules own their popup state/actions. Ignore programmatic outside clicks/focus restoration. Escape closes nested menus before background Stop; settings/recovery disclosures remain persistent. See docs/workspace-ui-system.md.
+- Workspace owns transient menu dismissal; native modules own their popup state/actions. Ignore programmatic outside clicks/focus restoration. Escape closes nested menus before background Stop; settings disclosures remain persistent. See docs/workspace-ui-system.md.
 - Native activation fulfillment notifies readiness even after its startup timeout. Service preparation is idempotent per native section; settings recover only their empty active category. Do not remount existing forms/rows on late extension events.
 - Native local tab fragments resolve against the full document URL, including its query. Background tabs must never fetch/insert the application index or duplicate native control IDs.
 - Mounted native forms use natural height, with wrapped actions contained before tags/notes. Phone character identity gets a full row above statistics.
@@ -52,3 +52,17 @@ chat selection are superseded by profile and scene workflows.
 - Retain unacknowledged reply text per message ID/send date. Clear completed records only after an exact native save acknowledgment or matching loaded transcript. Interrupted text remains available until dismissed. Local checkpoints never overwrite a server transcript.
 - Foreground probes coalesce, time out after10seconds and require native ping204. Renew expired CSRF through the native token endpoint. Compatible model checks are read-only and ignore stale provider responses; preserve models, dropdowns, prompts, profiles, context and sampling.
 - Hidden/frozen microphone recording or pending permission is cancelled. An already submitted transcription may finish into its original story draft. Permission results belong to their request sequence.
+
+## Foreground chat layout correction, November 7, 2026
+
+The user clarified that recovery means restoring the existing chat display when
+the tab becomes active. It does not mean adding a reply recovery workflow.
+This supersedes the earlier local reply checkpoint/panel decision. Remove that
+workflow and its insertion of character text into user drafts. Preserve existing
+local reply records without reading, migrating or deleting them. Native chat owns
+replies and transcript saves. Keep per-story unsent user drafts separate.
+
+Native positioning, textarea fitting and scroll ownership repair foreground
+geometry without remounting messages or changing focus. Preserve history anchors;
+follow the bottom only when already following it. Run layout repair independently
+of bounded connectivity probes, with story, visibility and Settings guards.

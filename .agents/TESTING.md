@@ -66,27 +66,16 @@ Earlier full workspace acceptance (v1.19.14, all43cases, 424units) and the
 `docs/evidence/full-workspace-review-20261106/`. Immutable image/source/workflow
 identifiers and validation limits are in that handoff and docs/container-releases.md.
 
-Earlier actual previews8016(v1.19.11),8017(baselinev1.19.11),8019(v1.19.12),
-8020(v1.19.13) and source8018 remain preserved with their synthetic volumes.
-v1.19.12/13 are immutable intermediate releases, superseded for this handoff.
-Do not overlap standalone persistence checks with fixture runs that use the
-shared synthetic service. Production69/shared test85 were never accessed.
+Earlier synthetic fixtures retain their volumes; exact versions/ports are in
+`docs/container-releases.md`. Do not overlap native persistence checks with fixture
+runs. Production69/shared85 were never accessed or changed.
 
 ## Shared-screen follow-up
 
-The November2 follow-up suite had27 controlled browser cases plus2 opt-in live cases.
-All 27 controlled cases passed on the actual v1.19.9 image after the user
-reported remaining disappearance. The user then confirmed the affected page
-is v1.19.8. Evidence: docs/evidence/shared-screen-lifecycle-20261102/.
-
-The new `settings changes and late saves` case changes native controls in 11
-categories at 1280/390/320px and switches through the active category rail.
-It holds a settings save across navigation to Image generation. It verifies
-the same native panel/control tree survives all 33 checkpoints. Existing
-cases cover the character editor, all settings sections, dialogs, keyboard,
-stories, profiles, archive, pending generation, reload and classic restoration.
-Screenshots of all 12 settings categories at all three widths were inspected.
-The original disappearing-panel case is also rerun on the local v1.19.8 image.
+November2 actualv1.19.9 passed27controlled cases after reproducing the disappearing
+settings on unmodifiedv1.19.8. The11category save/navigation checks retain native
+nodes at1280/390/320px. Evidence and prior matrix:
+`docs/evidence/shared-screen-lifecycle-20261102/`.
 
 ## First-reply template regression
 
@@ -128,10 +117,25 @@ than silently replacing real suspension with a synthetic event.
 
 Run the full workspace suite with ST_JUICED_URL set for both live cases. Recovery
 coverage includes healthy paused chat/image/transcription requests; reset and early
-EOF; local partial text after save503/reload; several unsaved replies; exact native
-save acknowledgment; cast queue/Stop and quiet rejection; per-character/story draft
-isolation/rename and opt-out; blocked storage/legacy recovery; coalesced status,
+EOF with partial text in native character bubbles; native save failure without a
+reply-recovery workflow; old local records unchanged and without UI; cast queue/Stop and quiet rejection; per-character/story draft
+isolation/rename and opt-out; blocked storage/old global draft isolation; coalesced status,
 CSRF, stale provider rejection, dropdown preservation, timeout/retry; two pending
 microphone permissions; mobile/reduced keyboard height and enlarged text.
 Physical phone lock remains unqualified. Actual-image acceptance requires five
 fresh synthetic volumes and no source overlays. Never test production data here.
+
+## Foreground chat layout correction
+
+The user clarified that recovery means restoring the existing UI after returning
+to a tab. Reply backup/panel tests are superseded by native bubble/draft isolation
+and old-record preservation checks. The added desktop/Pixel cases freeze an actual
+hidden tab, complete one long reply, reduce height to400px and hold the heartbeat.
+They check final-line visibility or history position, composer/chat bounds,
+message node identity, draft selection and exactly one generation request.
+
+Use `--grep 'Foreground chat layout|old reply checkpoints'`. Actual v1.19.19 fails
+both history-position cases and the old-record popup case; both final-line cases
+already pass there. Source final focused7cases pass with Android UA/DPR3. Evidence:
+`docs/evidence/chat-resume-20261107/`. Source fixture8029 uses overlays and is not
+release-image proof. Physical phone/GPU restoration remains unqualified.

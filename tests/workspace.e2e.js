@@ -1576,6 +1576,76 @@ test('a healthy reply completed while frozen resumes once and preserves the next
     expect(requests).toBe(1);
 });
 
+for (const mobile of [false, true]) {
+    test.describe(`Foreground chat layout: ${mobile ? 'Pixel 9 Pro XL' : 'desktop'}`, () => {
+        test.use({ viewport: mobile ? { width: 448, height: 921 } : { width: 1280, height: 800 }, screen: mobile ? { width: 448, height: 997 } : { width: 1280, height: 800 }, userAgent: mobile ? devices['Pixel 7'].userAgent.replace('Pixel 7', 'Pixel 9 Pro XL') : undefined, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: mobile ? 3 : 1 });
+        for (const readingHistory of [false, true]) {
+            test(`resume ${readingHistory ? 'preserves the history reading position' : 'shows the final character line'} without a recovery popup`, async ({ page }, testInfo) => {
+                await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} viewport`);
+                await connectRecoveryFixture(page);
+                const reply = Array.from({ length: 15 }, (_, i) => `Lantern paragraph ${i + 1}. Seraphina walks beside the river and describes the quiet forest.`).join('\n\n') + '\n\nThe final lantern line is visible.';
+                let release, requested, delivered, releasePing;
+                const held = new Promise(resolve => release = resolve);
+                const started = new Promise(resolve => requested = resolve);
+                const finished = new Promise(resolve => delivered = resolve);
+                const pingHeld = new Promise(resolve => releasePing = resolve);
+                let requests = 0;
+                await page.route('**/api/backends/chat-completions/generate', async route => {
+                    requests++; requested(); await held;
+                    await route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ index: 0, delta: { content: reply }, finish_reason: 'stop' }] })}\n\ndata: [DONE]\n\n` });
+                    delivered();
+                });
+                // Give the reader a real, scrollable native history before starting the held reply.
+                await page.evaluate(async () => {
+                    const script = await import('/script.js');
+                    const message = { ...structuredClone(script.chat[0]), send_date: Date.now(), mes: Array.from({ length: 20 }, (_, i) => `History paragraph ${i + 1}. The river winds through the old forest.`).join('\n\n') };
+                    script.chat.push(message); script.addOneMessage(message);
+                    await script.saveChatConditional();
+                });
+                await page.locator('#send_textarea').fill('Continue by the lantern.');
+                await page.locator('#send_but').click();
+                await started;
+                await page.locator('#send_textarea').fill('Only my next unsent turn.');
+                await page.evaluate(reading => {
+                    const chat = document.getElementById('chat');
+                    chat.scrollTop = reading ? 160 : chat.scrollHeight;
+                    const input = document.getElementById('send_textarea');
+                    input.setSelectionRange(5, 12);
+                    window.__viewportNodes = { chat, input, first: chat.querySelector('.mes'), scrollTop: chat.scrollTop, position: document.documentElement.style.position };
+                }, readingHistory);
+                // Let the native scroll owner observe the deliberate history/bottom position.
+                await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+                const cdp = await freezePage(page);
+                await page.setViewportSize({ width: mobile ? 448 : 1280, height: 400 });
+                await page.route('**/api/ping', async route => { await pingHeld; await route.fulfill({ status: 204 }); });
+                try {
+                    release(); await finished;
+                    await resumePage(page, cdp);
+                    await expect(page.locator('#chat .mes_text').last()).toHaveText(reply);
+                    await expect(page.locator('#mes_stop')).toBeHidden();
+                    await expect(page.locator('#browser-recovery')).toBeHidden();
+                    await expect(page.locator('#send_textarea')).toHaveValue('Only my next unsent turn.');
+                    await expect.poll(() => page.evaluate(reading => {
+                        const { chat, input, first, scrollTop } = window.__viewportNodes;
+                        const bounds = chat.getBoundingClientRect();
+                        const composer = document.getElementById('form_sheld').getBoundingClientRect();
+                        const final = chat.querySelector('.mes:last-child .mes_text').lastElementChild.getBoundingClientRect();
+                        return {
+                            same: chat === document.getElementById('chat') && input === document.getElementById('send_textarea') && first === chat.querySelector('.mes') && document.documentElement.style.position === window.__viewportNodes.position,
+                            selection: [input.selectionStart, input.selectionEnd],
+                            reading: !reading || Math.abs(chat.scrollTop - scrollTop) < 3,
+                            final: reading || final.bottom <= bounds.bottom + 1,
+                            fits: bounds.bottom <= composer.top + 1 && composer.bottom <= innerHeight + 1 && bounds.height > 80,
+                        };
+                    }, readingHistory)).toEqual({ same: true, selection: [5, 12], reading: true, final: true, fits: true });
+                    expect(requests).toBe(1);
+                    await page.screenshot({ path: testInfo.outputPath(`resumed-${readingHistory ? 'history' : 'latest'}-${mobile ? 'pixel' : 'desktop'}.png`) });
+                } finally { releasePing(); release(); }
+            });
+        }
+    });
+}
+
 for (const loss of ['reset', 'early-eof']) {
     test(`a ${loss} stream after freeze preserves partial text without success actions or replay`, async ({ page }, testInfo) => {
         const title = `Workspace e2e ${testInfo.testId}-${runId} interrupted`;
@@ -1601,8 +1671,6 @@ for (const loss of ['reset', 'early-eof']) {
             await page.locator('#send_but').click();
             await expect(page.locator('#chat .mes_text').last()).toContainText('partial lantern reply', { timeout: 20000 });
             await page.locator('#send_textarea').fill('My next draft stays separate.');
-            // A failed native save must not delete the local checkpoint.
-            await page.route('**/api/chats/save', route => route.fulfill({ status: 503, json: { error: 'Synthetic save outage' } }));
             const cdp = await freezePage(page);
             if (loss === 'reset') upstream.destroy();
             else upstream.end();
@@ -1610,8 +1678,7 @@ for (const loss of ['reset', 'early-eof']) {
             await expect(page.locator('#mes_stop')).toBeHidden({ timeout: 20000 });
             await expect(page.locator('#workspace-generation-status')).toBeHidden();
             await expect(page.locator('#send_textarea')).toHaveValue('My next draft stays separate.');
-            await expect(page.locator('#browser-recovery')).toContainText('interrupted');
-            expect(await page.evaluate(() => window.__receivedOnFailure)).toBe(0);
+            await expect(page.getByRole('textbox', { name: 'Recovered partial reply', exact: true })).toHaveCount(0);
             expect(requests).toBe(1);
             await page.evaluate(async () => (await import('/script.js')).saveSettings());
             await page.reload();
@@ -1619,13 +1686,9 @@ for (const loss of ['reset', 'early-eof']) {
             await navigate(page, 'chats');
             await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
             await expect(page.locator('#send_textarea')).toHaveValue('My next draft stays separate.');
-            await expect(page.locator('#browser-recovery')).toContainText('interrupted');
-            await page.locator('#browser-recovery summary').click();
-            await expect(page.getByRole('textbox', { name: 'Recovered partial reply', exact: true })).toHaveValue('A partial lantern reply remains recoverable.');
-            const add = page.getByRole('button', { name: 'Add recovered text to draft', exact: true });
-            if (loss === 'early-eof') await add.press('Enter');
-            else await add.click();
-            await expect(page.locator('#send_textarea')).toHaveValue('My next draft stays separate.\n\nA partial lantern reply remains recoverable.');
+            await expect(page.locator('#chat .mes_text').last()).toHaveText('A partial lantern reply remains recoverable.');
+            await expect(page.locator('#browser-recovery')).toBeHidden();
+            await expect(page.locator('#send_textarea')).toHaveValue('My next draft stays separate.');
             expect(requests).toBe(1);
             await page.setViewportSize({ width: 448, height: 921 });
             await page.screenshot({ path: testInfo.outputPath('interrupted-reply-recovered.png') });
@@ -1742,7 +1805,7 @@ test('an unresponsive foreground heartbeat times out and can be retried without 
     expect(replies).toBe(0);
 });
 
-test('a pending native recovery save does not keep the connection check busy', async ({ page }, testInfo) => {
+test('a pending native save does not block foreground layout or connection checks', async ({ page }, testInfo) => {
     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} pending recovery save`);
     await connectRecoveryFixture(page);
     await expect.poll(() => page.evaluate(async () => (await import('/script.js')).isChatSaving)).toBe(false);
@@ -1752,9 +1815,8 @@ test('a pending native recovery save does not keep the connection check busy', a
     await page.route('**/api/chats/save', async route => { requested(); await held; await route.continue(); });
     await page.evaluate(async () => {
         const script = await import('/script.js');
-        const recovery = await import('/scripts/browser-recovery.js');
-        recovery.checkpointStreamingReply(0, script.chat[0].mes, 'interrupted');
-        recovery.reportGenerationInterrupted();
+        window.__pendingNativeSave = script.saveChatConditional();
+        window.dispatchEvent(new Event('offline'));
     });
     try {
         await page.getByRole('button', { name: 'Retry connection', exact: true }).click();
@@ -1814,7 +1876,7 @@ test('story drafts survive rapid switching and rename while the native recovery 
     await expect(page.locator('#send_textarea')).toHaveValue('');
 });
 
-test('legacy draft recovery is explicit and blocked browser storage retains text in this tab', async ({ page }, testInfo) => {
+test('old global drafts never interrupt chat and blocked storage retains the current draft', async ({ page }, testInfo) => {
     const title = `Workspace e2e ${testInfo.testId}-${runId} legacy draft`;
     await startStory(page, title);
     await page.evaluate(async () => {
@@ -1829,9 +1891,10 @@ test('legacy draft recovery is explicit and blocked browser storage retains text
     await navigate(page, 'chats');
     await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
     await page.locator('#send_textarea').fill('Current draft.');
-    await page.getByRole('button', { name: 'Restore older saved draft', exact: true }).press('Enter');
-    await expect(page.locator('#send_textarea')).toHaveValue('Current draft.\n\nOlder native saved text.');
-    await expect(page.getByRole('button', { name: 'Restore older saved draft', exact: true })).toBeHidden();
+    await expect(page.getByRole('button', { name: 'Restore older saved draft', exact: true })).toHaveCount(0);
+    await expect(page.locator('#browser-recovery')).toBeHidden();
+    await expect(page.locator('#send_textarea')).toHaveValue('Current draft.');
+    expect(await page.evaluate(async () => localStorage.getItem(`${(await import('/scripts/user.js')).getCurrentUserHandle()}_userInput`))).toBe('Older native saved text.');
     await page.evaluate(() => {
         for (const method of ['getItem', 'setItem', 'removeItem']) {
             const native = Storage.prototype[method];
@@ -1921,7 +1984,7 @@ test('a late microphone permission result after suspension is stopped and never 
     expect(requests).toBe(0);
 });
 
-test('a completed reply stays recoverable until the native save succeeds', async ({ page }, testInfo) => {
+test('a native save failure never creates a recovered reply workflow', async ({ page }, testInfo) => {
     const title = `Workspace e2e ${testInfo.testId}-${runId} save retry`;
     await startStory(page, title);
     await connectRecoveryFixture(page);
@@ -1934,8 +1997,9 @@ test('a completed reply stays recoverable until the native save succeeds', async
     await page.locator('#send_textarea').fill('Describe the lantern.');
     await page.locator('#send_but').click();
     await expect(page.locator('#mes_stop')).toBeHidden();
-    await expect(page.locator('#browser-recovery')).toContainText('could not be confirmed saved');
-    expect(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('st-recovery:reply:')).length)).toBe(1);
+    await expect(page.locator('#browser-recovery')).toBeHidden();
+    await expect(page.locator('#chat .mes_text').last()).toHaveText('A completed reply waiting to be saved.');
+    expect(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('st-recovery:reply:')).length)).toBe(0);
     failSave = false;
     await page.evaluate(async () => (await import('/script.js')).saveChatConditional());
     expect(await page.evaluate(() => Object.keys(localStorage).filter(key => key.startsWith('st-recovery:reply:')).length)).toBe(0);
@@ -1948,33 +2012,37 @@ test('a completed reply stays recoverable until the native save succeeds', async
     await expect(page.locator('#browser-recovery')).toBeHidden();
 });
 
-test('two replies with failed native saves both survive reload as recovery text', async ({ page }, testInfo) => {
-    const title = `Workspace e2e ${testInfo.testId}-${runId} unsaved replies`;
+test('old reply checkpoints stay untouched and never become character chat popups or user drafts', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} old checkpoints`;
     await startStory(page, title);
-    await connectRecoveryFixture(page);
-    let requests = 0, failSave = false;
-    await page.route('**/api/chats/save', route => failSave ? route.fulfill({ status: 503, json: { error: 'Synthetic save outage' } }) : route.continue());
-    await page.route('**/api/backends/chat-completions/generate', route => {
-        requests++;
-        failSave = true;
-        return route.fulfill({ contentType: 'text/event-stream', body: `data: ${JSON.stringify({ choices: [{ index: 0, delta: { content: `Recovered lantern reply ${requests}.` }, finish_reason: 'stop' }] })}\n\ndata: [DONE]\n\n` });
+    const records = await page.evaluate(async () => {
+        const script = await import('/script.js');
+        const handle = (await import('/scripts/user.js')).getCurrentUserHandle();
+        const identity = JSON.stringify([handle, 'character', script.characters[script.this_chid].avatar, script.getCurrentChatId()]);
+        const records = { text: 'Old character reply must never become user input.', messageId: 1, sendDate: 'old fixture date', status: 'interrupted', previous: [
+            { text: 'An older pending reply.', messageId: 2, sendDate: 'older fixture date', status: 'pending' },
+            { text: 'An older completed reply.', messageId: 3, sendDate: 'earlier fixture date', status: 'complete' },
+        ] };
+        const key = `st-recovery:reply:${identity}`;
+        localStorage.setItem(key, JSON.stringify(records));
+        await script.saveSettings();
+        return { key, value: JSON.stringify(records) };
     });
-    for (const turn of [1, 2]) {
-        await page.locator('#send_textarea').fill(`Describe lantern ${turn}.`);
-        await page.locator('#send_but').click();
-        await expect(page.locator('#chat .mes_text').last()).toHaveText(`Recovered lantern reply ${turn}.`);
-        await expect(page.locator('#mes_stop')).toBeHidden();
-        await expect(page.locator('#browser-recovery')).toContainText('could not be confirmed saved');
-    }
-    await page.evaluate(async () => (await import('/script.js')).saveSettings());
+    await page.locator('#send_textarea').fill('Only my unsent draft.');
+    const cdp = await freezePage(page);
+    await resumePage(page, cdp);
+    await expect(page.locator('#browser-recovery')).toBeHidden();
+    await expect(page.locator('#send_textarea')).toHaveValue('Only my unsent draft.');
     await page.reload();
     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
     await navigate(page, 'chats');
     await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: title }) }).locator('.workspace-scene-open').click();
-    await page.locator('#browser-recovery summary').click();
-    const recovered = page.getByRole('textbox', { name: 'Recovered partial reply', exact: true });
-    await expect(recovered).toHaveValue(/Recovered lantern reply 1\.[\s\S]+Recovered lantern reply 2\./);
-    expect(requests).toBe(2);
+    await expect(page.locator('#send_textarea')).toHaveValue('Only my unsent draft.');
+    await expect(page.locator('#browser-recovery')).toBeHidden();
+    await expect(page.locator('#browser-recovery details, #browser-recovery textarea')).toHaveCount(0);
+    expect(await page.evaluate(key => localStorage.getItem(key), records.key)).toBe(records.value);
+    await expect(page.locator('#chat')).not.toContainText('Old character reply must never become user input.');
+    await page.screenshot({ path: testInfo.outputPath('legacy-checkpoints-no-popup.png') });
 });
 
 for (const streaming of [false, true]) {

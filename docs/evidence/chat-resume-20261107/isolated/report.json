@@ -1,0 +1,473 @@
+{
+  "config": {
+    "configFile": "/home/nulifyer/Projects/SillyTavern/tests/playwright.config.js",
+    "rootDir": "/home/nulifyer/Projects/SillyTavern/tests",
+    "forbidOnly": false,
+    "fullyParallel": true,
+    "globalSetup": null,
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "reporter": [
+      [
+        "line"
+      ],
+      [
+        "json"
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "quiet": false,
+    "projects": [
+      {
+        "outputDir": "/tmp/st-chat-resume-isolated",
+        "repeatEach": 2,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "",
+        "name": "",
+        "testDir": "/home/nulifyer/Projects/SillyTavern/tests",
+        "testIgnore": [],
+        "testMatch": [
+          "*.e2e.js"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "shard": null,
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.56.1",
+    "workers": 1,
+    "webServer": null
+  },
+  "suites": [
+    {
+      "title": "workspace.e2e.js",
+      "file": "workspace.e2e.js",
+      "column": 0,
+      "line": 0,
+      "specs": [
+        {
+          "title": "native character editor owns Escape before its settings page and audio upload works by keyboard",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 0,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 179,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16",
+                    "location": {
+                      "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                      "column": 16,
+                      "line": 126
+                    },
+                    "snippet": "  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 126
+                      },
+                      "message": "Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n\n  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16"
+                    },
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 137
+                      },
+                      "message": "Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js\n\n  135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));\n  136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);\n> 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });\n      |                ^\n  138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;\n  139 |     const records = await api(page, '/api/chats/recent', {});\n  140 |     await page.evaluate(async records => {\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T02:33:08.136Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/st-chat-resume-isolated/workspace.e2e.js-native-ch-f6c7b-io-upload-works-by-keyboard/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                    "column": 16,
+                    "line": 126
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 3,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 192,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16",
+                    "location": {
+                      "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                      "column": 16,
+                      "line": 126
+                    },
+                    "snippet": "  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 126
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n\n  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16"
+                    },
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 137
+                      },
+                      "message": "Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js\n\n  135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));\n  136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);\n> 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });\n      |                ^\n  138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;\n  139 |     const records = await api(page, '/api/chats/recent', {});\n  140 |     await page.evaluate(async records => {\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T02:33:10.487Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/st-chat-resume-isolated/workspace.e2e.js-native-ch-f6c7b-io-upload-works-by-keyboard-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                    "column": 16,
+                    "line": 126
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f5948f93a1ec48d2d907-32fa806d4385c4fef151",
+          "file": "workspace.e2e.js",
+          "line": 300,
+          "column": 1
+        },
+        {
+          "title": "identical story filenames on different characters never share a recovered draft",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 1,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 179,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16",
+                    "location": {
+                      "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                      "column": 16,
+                      "line": 126
+                    },
+                    "snippet": "  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 126
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n\n  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16"
+                    },
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 137
+                      },
+                      "message": "Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js\n\n  135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));\n  136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);\n> 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });\n      |                ^\n  138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;\n  139 |     const records = await api(page, '/api/chats/recent', {});\n  140 |     await page.evaluate(async records => {\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T02:33:08.943Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/st-chat-resume-isolated/workspace.e2e.js-identical-bd35d-ver-share-a-recovered-draft/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                    "column": 16,
+                    "line": 126
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 4,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 184,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16",
+                    "location": {
+                      "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                      "column": 16,
+                      "line": 126
+                    },
+                    "snippet": "  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 126
+                      },
+                      "message": "Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n\n  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16"
+                    },
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 137
+                      },
+                      "message": "Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js\n\n  135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));\n  136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);\n> 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });\n      |                ^\n  138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;\n  139 |     const records = await api(page, '/api/chats/recent', {});\n  140 |     await page.evaluate(async records => {\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T02:33:11.277Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/st-chat-resume-isolated/workspace.e2e.js-identical-bd35d-ver-share-a-recovered-draft-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                    "column": 16,
+                    "line": 126
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f5948f93a1ec48d2d907-4b73951d04225d4dde22",
+          "file": "workspace.e2e.js",
+          "line": 2982,
+          "column": 1
+        },
+        {
+          "title": "a late microphone permission result after suspension is stopped and never transcribed",
+          "ok": false,
+          "tags": [],
+          "tests": [
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 2,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 187,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16",
+                    "location": {
+                      "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                      "column": 16,
+                      "line": 126
+                    },
+                    "snippet": "  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 126
+                      },
+                      "message": "Error: page.goto: net::ERR_SOCKET_NOT_CONNECTED at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n\n  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16"
+                    },
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 137
+                      },
+                      "message": "Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js\n\n  135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));\n  136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);\n> 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });\n      |                ^\n  138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;\n  139 |     const records = await api(page, '/api/chats/recent', {});\n  140 |     await page.evaluate(async records => {\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T02:33:09.722Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/st-chat-resume-isolated/workspace.e2e.js-a-late-mi-829c6-opped-and-never-transcribed/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                    "column": 16,
+                    "line": 126
+                  }
+                }
+              ],
+              "status": "unexpected"
+            },
+            {
+              "timeout": 90000,
+              "annotations": [],
+              "expectedStatus": "passed",
+              "projectId": "",
+              "projectName": "",
+              "results": [
+                {
+                  "workerIndex": 5,
+                  "parallelIndex": 0,
+                  "status": "failed",
+                  "duration": 186,
+                  "error": {
+                    "message": "Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n",
+                    "stack": "Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16",
+                    "location": {
+                      "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                      "column": 16,
+                      "line": 126
+                    },
+                    "snippet": "  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();"
+                  },
+                  "errors": [
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 126
+                      },
+                      "message": "Error: page.goto: net::ERR_CONNECTION_RESET at http://127.0.0.1:8029/\nCall log:\n\u001b[2m  - navigating to \"http://127.0.0.1:8029/\", waiting until \"load\"\u001b[22m\n\n\n  124 |         await route.fulfill({ json: { result: 'ok' } });\n  125 |     });\n> 126 |     await page.goto('/');\n      |                ^\n  127 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });\n  128 |     await navigate(page, 'characters');\n  129 |     await expect(page.locator('.workspace-library-card').first()).toBeVisible();\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:126:16"
+                    },
+                    {
+                      "location": {
+                        "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                        "column": 16,
+                        "line": 137
+                      },
+                      "message": "Error: page.evaluate: TypeError: Failed to fetch dynamically imported module: chrome-error://chromewebdata/script.js\n\n  135 |     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));\n  136 |     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);\n> 137 |     await page.evaluate(async () => { const { closeCurrentChat } = await import('/script.js'); await closeCurrentChat(); });\n      |                ^\n  138 |     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;\n  139 |     const records = await api(page, '/api/chats/recent', {});\n  140 |     await page.evaluate(async records => {\n    at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:137:16"
+                    }
+                  ],
+                  "stdout": [],
+                  "stderr": [],
+                  "retry": 0,
+                  "startTime": "2026-11-08T02:33:12.100Z",
+                  "annotations": [],
+                  "attachments": [
+                    {
+                      "name": "error-context",
+                      "contentType": "text/markdown",
+                      "path": "/tmp/st-chat-resume-isolated/workspace.e2e.js-a-late-mi-829c6-opped-and-never-transcribed-repeat1/error-context.md"
+                    }
+                  ],
+                  "errorLocation": {
+                    "file": "/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js",
+                    "column": 16,
+                    "line": 126
+                  }
+                }
+              ],
+              "status": "unexpected"
+            }
+          ],
+          "id": "f5948f93a1ec48d2d907-0129677df9ec3e05e454",
+          "file": "workspace.e2e.js",
+          "line": 3045,
+          "column": 1
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-11-08T02:33:07.681Z",
+    "duration": 4765.879,
+    "expected": 0,
+    "skipped": 0,
+    "unexpected": 6,
+    "flaky": 0
+  }
+}

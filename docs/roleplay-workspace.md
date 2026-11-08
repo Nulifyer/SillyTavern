@@ -188,20 +188,24 @@ the workspace.
 
 ## Returning to a mobile tab
 
-Returning after a phone lock or tab switch checks app connectivity without sending
-another prompt. Healthy requests may finish after the browser resumes. A broken
-reply connection stops the writing state and cast queue. Received text remains
-available beside the composer, with an explicit action to add it to the draft.
+Returning after a phone lock or tab switch restores the existing chat geometry
+and checks connectivity without sending another prompt. Reuse native viewport
+positioning, composer sizing and scroll ownership. Preserve the reader's history
+position, or keep the latest line visible if already following the reply. Do not
+remount messages, move focus or wait for connectivity before fixing the display.
+
+Character responses remain in the transcript. Remove the recovered-reply panel
+and the action that inserts a character response into the user's draft. Native
+generation and saving own reply completion and interruption. A broken connection
+stops the writing state and cast queue; received text stays in its native bubble.
 The app never resends an interrupted reply automatically.
 
-The native Restore unsent input preference controls browser text recovery. Drafts
-belong to one user, character or cast, and story. Renaming a story carries its draft.
-An older global draft has an explicit recovery button because it has no story ID.
-Several unsaved replies remain recoverable; successful native saves acknowledge
-only the exact matching completed text. Recovery does not replace a server chat.
-If browser storage is blocked, the app keeps text in this tab and asks the user to
-copy it before reloading. Closing or clearing that browser storage removes local
-recovery. A discarded tab cannot reconnect to its former HTTP inference request.
+The native Restore unsent input preference controls per-story user drafts. Drafts
+belong to one user, character or cast, and story; renaming carries that draft.
+Existing older local reply/global-draft records remain untouched and do not open
+UI. If browser storage is blocked, retain the current draft in this tab and show
+a compact storage warning. A discarded tab cannot reconnect to its former HTTP
+inference request.
 
 Recording and pending microphone permission stop when the tab becomes hidden or
 frozen. Dictation stays opt-in and requires another explicit recording action.

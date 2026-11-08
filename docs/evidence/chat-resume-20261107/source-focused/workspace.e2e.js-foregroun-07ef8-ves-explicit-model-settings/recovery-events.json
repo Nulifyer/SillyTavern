@@ -1,0 +1,70 @@
+{
+  "routes": [
+    {
+      "kind": "initial-ping",
+      "count": 1
+    },
+    {
+      "kind": "initial-ping",
+      "count": 2
+    },
+    {
+      "kind": "outage-ping",
+      "status": 200
+    },
+    {
+      "kind": "retry-ping",
+      "status": 204
+    }
+  ],
+  "browser": [
+    {
+      "at": 4488.29999999702,
+      "hidden": true,
+      "busy": "true",
+      "message": ""
+    },
+    {
+      "at": 4601.70000000298,
+      "hidden": true,
+      "busy": null,
+      "message": ""
+    },
+    {
+      "at": 4720.5999999940395,
+      "hidden": false,
+      "busy": null,
+      "message": "The browser reports no network connection. Your text stays here. Retry when the connection returns."
+    },
+    {
+      "at": 4784.70000000298,
+      "hidden": false,
+      "busy": "true",
+      "message": "The browser reports no network connection. Your text stays here. Retry when the connection returns."
+    },
+    {
+      "at": 4811.5,
+      "hidden": false,
+      "busy": null,
+      "message": "The app server is unavailable. Your draft stays here. Retry when the connection returns."
+    },
+    {
+      "at": 4909.5,
+      "hidden": false,
+      "busy": null,
+      "message": "The app server is unavailable. Your draft stays here. Retry when the connection returns."
+    },
+    {
+      "at": 5085.29999999702,
+      "hidden": false,
+      "busy": "true",
+      "message": "The app server is unavailable. Your draft stays here. Retry when the connection returns."
+    },
+    {
+      "at": 5119.399999991059,
+      "hidden": true,
+      "busy": null,
+      "message": ""
+    }
+  ]
+}

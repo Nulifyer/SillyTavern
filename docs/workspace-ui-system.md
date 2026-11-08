@@ -41,7 +41,7 @@ to that layer's trigger. Active native editors/dialogs retain Escape priority.
 Menus take Escape before background generation Stop, preserving a pending reply.
 Native Chat actions and Extension tools keep their
 native owners and body-mounted popovers. Settings forms, expanded character
-details and recovered reply text are persistent disclosures; they do not join
+details are persistent disclosures; they do not join
 the transient-menu dismissal rule. Native programmatic focus restoration alone
 must not hide a menu.
 
@@ -159,11 +159,23 @@ Regression checks compare the image, box, name and text bounds, including
 Pixel 9 Pro XL portrait/landscape and enlarged text; panel width alone cannot
 detect an image overflowing inside a correctly sized message.
 
-## Recovery beside the composer
+## Returning to a suspended chat
 
-Connection failures and recovered text appear above the existing composer. Keep
-the message readable, Retry explicit, and recovered reply text behind a details
-control. Adding recovered text appends to the existing draft and focuses it; it
-never sends. Recovery controls have 44px phone targets. The region scrolls within
-28dvh so a reduced keyboard viewport retains the composer. Check collapsed and
-expanded states at 448×921, 448×400 and 320px with enlarged text.
+Returning to a tab restores the existing chat layout. Reuse native mobile
+positioning, composer fitting and scroll ownership after the viewport settles.
+Keep the latest reply visible when the reader was following it. Preserve the
+visible history anchor when the reader had scrolled upward. Do not replace
+message nodes, remount the composer, move focus or replay generation.
+Layout repair runs independently of connectivity checks and ignores delayed
+work for a different story, hidden tab or Settings view.
+
+Character replies stay in character bubbles. The composer contains the user's
+unsent draft. There is no recovered-reply panel, copy-to-draft action or automatic
+recovery dialog. Native generation and transcript saving retain their ownership.
+Older local reply checkpoints and unscoped draft records remain untouched.
+Per-story unsent drafts still follow the native Restore unsent input preference.
+Actual connection failures use a compact inline status with Retry.
+
+Check hidden/frozen tabs, completion and failure while hidden, reduced viewport
+height, history reading, input selection, node identity and a held heartbeat on
+desktop and Pixel 9 Pro XL emulation. Physical phone locking remains unqualified.

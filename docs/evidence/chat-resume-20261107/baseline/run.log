@@ -1,0 +1,155 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep Foreground chat layout|old reply checkpoints --output=/tmp/st-chat-resume-baseline-final --reporter=line
+(node:1821659) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 5 tests using 1 worker
+
+(node:1821690) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1821690) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1821690) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/5] workspace.e2e.js:2387:7 › Foreground chat layout: desktop › resume shows the final character line without a recovery popup
+[2/5] workspace.e2e.js:2387:7 › Foreground chat layout: desktop › resume preserves the history reading position without a recovery popup
+  1) workspace.e2e.js:2387:7 › Foreground chat layout: desktop › resume preserves the history reading position without a recovery popup
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -1,9 +1,9 @@
+      Object {
+        "final": true,
+        "fits": true,
+    -   "reading": true,
+    +   "reading": false,
+        "same": true,
+        "selection": Array [
+          5,
+          12,
+        ],
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      1626 |                     await expect(page.locator('#browser-recovery')).toBeHidden();
+      1627 |                     await expect(page.locator('#send_textarea')).toHaveValue('Only my next unsent turn.');
+    > 1628 |                     await expect.poll(() => page.evaluate(reading => {
+           |                     ^
+      1629 |                         const { chat, input, first, scrollTop } = window.__viewportNodes;
+      1630 |                         const bounds = chat.getBoundingClientRect();
+      1631 |                         const composer = document.getElementById('form_sheld').getBoundingClientRect();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1628:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-chat-resume-baseline-final/workspace.e2e.js-Foregroun-6bbdc-on-without-a-recovery-popup/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-chat-resume-baseline-final/workspace.e2e.js-Foregroun-6bbdc-on-without-a-recovery-popup/error-context.md
+
+
+(node:1822545) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1822545) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1822545) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/5] workspace.e2e.js:2387:7 › Foreground chat layout: Pixel 9 Pro XL › resume shows the final character line without a recovery popup
+[4/5] workspace.e2e.js:2387:7 › Foreground chat layout: Pixel 9 Pro XL › resume preserves the history reading position without a recovery popup
+  2) workspace.e2e.js:2387:7 › Foreground chat layout: Pixel 9 Pro XL › resume preserves the history reading position without a recovery popup
+
+    Error: expect(received).toEqual(expected) // deep equality
+
+    - Expected  - 1
+    + Received  + 1
+
+    @@ -1,9 +1,9 @@
+      Object {
+        "final": true,
+        "fits": true,
+    -   "reading": true,
+    +   "reading": false,
+        "same": true,
+        "selection": Array [
+          5,
+          12,
+        ],
+
+    Call Log:
+    - Timeout 5000ms exceeded while waiting on the predicate
+
+      1626 |                     await expect(page.locator('#browser-recovery')).toBeHidden();
+      1627 |                     await expect(page.locator('#send_textarea')).toHaveValue('Only my next unsent turn.');
+    > 1628 |                     await expect.poll(() => page.evaluate(reading => {
+           |                     ^
+      1629 |                         const { chat, input, first, scrollTop } = window.__viewportNodes;
+      1630 |                         const bounds = chat.getBoundingClientRect();
+      1631 |                         const composer = document.getElementById('form_sheld').getBoundingClientRect();
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:1628:21
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-chat-resume-baseline-final/workspace.e2e.js-Foregroun-66cd6-on-without-a-recovery-popup/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-chat-resume-baseline-final/workspace.e2e.js-Foregroun-66cd6-on-without-a-recovery-popup/error-context.md
+
+
+(node:1823321) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:1823321) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:1823321) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[5/5] workspace.e2e.js:3133:1 › old reply checkpoints stay untouched and never become character chat popups or user drafts
+  3) workspace.e2e.js:3133:1 › old reply checkpoints stay untouched and never become character chat popups or user drafts
+
+    Error: expect(locator).toBeHidden() failed
+
+    Locator:  locator('#browser-recovery')
+    Expected: hidden
+    Received: visible
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toBeHidden" with timeout 5000ms
+      - waiting for locator('#browser-recovery')
+        9 × locator resolved to <section id="browser-recovery" aria-label="Connection and text recovery">…</section>
+          - unexpected value "visible"
+
+
+      2032 |     const cdp = await freezePage(page);
+      2033 |     await resumePage(page, cdp);
+    > 2034 |     await expect(page.locator('#browser-recovery')).toBeHidden();
+           |                                                     ^
+      2035 |     await expect(page.locator('#send_textarea')).toHaveValue('Only my unsent draft.');
+      2036 |     await page.reload();
+      2037 |     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:2034:53
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-chat-resume-baseline-final/workspace.e2e.js-old-reply-a8a39--chat-popups-or-user-drafts/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-chat-resume-baseline-final/workspace.e2e.js-old-reply-a8a39--chat-popups-or-user-drafts/error-context.md
+
+
+  3 failed
+    workspace.e2e.js:2387:7 › Foreground chat layout: desktop › resume preserves the history reading position without a recovery popup
+    workspace.e2e.js:2387:7 › Foreground chat layout: Pixel 9 Pro XL › resume preserves the history reading position without a recovery popup
+    workspace.e2e.js:3133:1 › old reply checkpoints stay untouched and never become character chat popups or user drafts
+  2 passed (46.1s)

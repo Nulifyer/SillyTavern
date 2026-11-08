@@ -1,5 +1,4 @@
 import { Fuse } from '../lib.js';
-import { captureRecoverySave } from './browser-recovery.js';
 
 import {
     shuffle,
@@ -628,7 +627,6 @@ async function saveGroupChat(groupId, shouldSaveGroup, force = false) {
         return;
     }
     const chatId = group.chat_id;
-    const acknowledgeRecovery = captureRecoverySave({ group: groupId, fileName: chatId, messages: chat });
     group.date_last_chat = Date.now();
     /** @type {ChatHeader} */
     const chatHeader = {
@@ -642,7 +640,6 @@ async function saveGroupChat(groupId, shouldSaveGroup, force = false) {
         body: JSON.stringify({ id: chatId, chat: [chatHeader, ...chat], force: force }),
     });
     const response = await fetch('/api/chats/group/save', saveGroupChatRequest);
-    if (response.ok) acknowledgeRecovery();
 
     if (!response.ok) {
         const errorData = await response.json();

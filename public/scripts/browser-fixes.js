@@ -1,6 +1,7 @@
 import { getParsedUA, isMobile } from './RossAscends-mods.js';
 
 const isFirefox = () => /firefox/i.test(navigator.userAgent);
+let positioningFrame = null;
 
 function sanitizeInlineQuotationOnCopy() {
     // STRG+C, STRG+V on firefox leads to duplicate double quotes when inline quotation elements are copied.
@@ -65,27 +66,30 @@ function addSafariPatch() {
     }
 }
 
+/** Reapply the native mobile positioning fix after viewport or lifecycle changes. */
+export function refreshBrowserPosition() {
+    if (!isMobile() || positioningFrame !== null) return;
+    if (isFirefox()) {
+        const active = document.activeElement;
+        // Preserve Firefox Mobile/GBoard candidate replacement.
+        if (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) return;
+    }
+    const position = document.documentElement.style.position;
+    document.documentElement.style.position = 'fixed';
+    positioningFrame = requestAnimationFrame(() => {
+        document.documentElement.style.position = position;
+        positioningFrame = null;
+    });
+}
+
 function applyBrowserFixes() {
     if (isFirefox()) {
         sanitizeInlineQuotationOnCopy();
     }
 
     if (isMobile()) {
-        const fixFunkyPositioning = () => {
-            if (isFirefox()) {
-                const active = document.activeElement;
-                if (active instanceof HTMLInputElement || active instanceof HTMLTextAreaElement) {
-                    // The positioning hack below breaks GBoard candidate replacement
-                    // in Firefox Mobile on Android.
-                    return;
-                }
-            }
-            console.debug('[Mobile] Device viewport change detected.');
-            document.documentElement.style.position = 'fixed';
-            requestAnimationFrame(() => document.documentElement.style.position = '');
-        };
-        window.addEventListener('resize', fixFunkyPositioning);
-        window.addEventListener('orientationchange', fixFunkyPositioning);
+        window.addEventListener('resize', refreshBrowserPosition);
+        window.addEventListener('orientationchange', refreshBrowserPosition);
     }
 
     addSafariPatch();
