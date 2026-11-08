@@ -1,0 +1,15 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+    "Group chat load failed: Error: Chat could not be loaded. Your existing conversation has not been replaced.\n    at readChatFile (http://127.0.0.1:8032/scripts/chat-loader.js:7:29)\n    at async getGroupChat (http://127.0.0.1:8032/scripts/group-chats.js:252:22)\n    at async Module.openGroupChat (http://127.0.0.1:8032/scripts/group-chats.js:2165:10)\n    at async <anonymous>:316:30",
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+    "Group chat load failed: Error: Chat could not be loaded. Your existing conversation has not been replaced.\n    at readChatFile (http://127.0.0.1:8032/scripts/chat-loader.js:7:29)\n    at async getGroupChat (http://127.0.0.1:8032/scripts/group-chats.js:252:22)\n    at async SimpleMutex.reloadCurrentChatUnsafe [as callback] (http://127.0.0.1:8032/script.js:1712:9)\n    at async SimpleMutex.update (http://127.0.0.1:8032/scripts/util/SimpleMutex.js:38:13)\n    at async <anonymous>:316:30"
+  ],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8032/api/chats/group/get",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

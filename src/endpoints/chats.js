@@ -18,7 +18,6 @@ import {
     removeOldBackups,
     formatBytes,
     tryWriteFileSync,
-    tryReadFileSync,
     tryDeleteFile,
     readFirstLine,
     isPathUnderParent,
@@ -345,6 +344,9 @@ async function checkChatIntegrity(filePath, integritySlug) {
         return true;
     }
 
+    // Missing client metadata is not permission to overwrite an existing file.
+    if (!integritySlug) return false;
+
     // Parse the first line of the chat file as JSON. Strip a UTF-8 BOM an external editor may have added.
     const firstLine = await readFirstLine(filePath);
     const jsonData = tryParse(String(firstLine ?? '').replace(/^\uFEFF/, ''));
@@ -535,7 +537,7 @@ export async function trySaveChat(chatData, filePath, skipIntegrityCheck = false
     const doIntegrityCheck = (checkIntegrity && !skipIntegrityCheck);
     const chatIntegritySlug = doIntegrityCheck ? chatData?.[0]?.chat_metadata?.integrity : undefined;
 
-    if (chatIntegritySlug && !await checkChatIntegrity(filePath, chatIntegritySlug)) {
+    if (doIntegrityCheck && !await checkChatIntegrity(filePath, chatIntegritySlug)) {
         throw new IntegrityMismatchError(`Chat integrity check failed for "${filePath}". The expected integrity slug was "${chatIntegritySlug}".`);
     }
     tryWriteFileSync(filePath, jsonlData);
@@ -572,21 +574,22 @@ router.post('/save', validateAvatarUrlMiddleware, async function (request, respo
 /**
  * Gets the chat as an object.
  * @param {string} chatFilePath The full chat file path.
- * @returns {Array}} If the chatFilePath cannot be read, this will return [].
+ * @returns {Array} Empty only for a missing or empty file. Other read/parse errors propagate.
  */
 export function getChatData(chatFilePath) {
-    let chatData = [];
-
-    const chatJSON = tryReadFileSync(chatFilePath) ?? '';
-    if (chatJSON.length > 0) {
-        const lines = chatJSON.split('\n');
-        // Iterate through the array of strings and parse each line as JSON
-        chatData = lines.map(line => tryParse(line)).filter(x => x);
-    } else {
-        console.warn(`File not found: ${chatFilePath}. The chat does not exist or is empty.`);
+    let text;
+    try { text = fs.readFileSync(chatFilePath, 'utf8'); } catch (error) {
+        if (error.code === 'ENOENT') return [];
+        throw error;
     }
-
-    return chatData;
+    if (text.length === 0) return [];
+    const lines = text.replace(/^\uFEFF/, '').trimEnd().split('\n');
+    return lines.map((line, index) => {
+        let value;
+        try { value = JSON.parse(line); } catch { throw new SyntaxError(`Invalid chat JSON at line ${index + 1}`); }
+        if (!value || typeof value !== 'object' || Array.isArray(value)) throw new SyntaxError(`Invalid chat entry at line ${index + 1}`);
+        return value;
+    });
 }
 
 router.post('/get', validateAvatarUrlMiddleware, function (request, response) {
@@ -601,11 +604,11 @@ router.post('/get', validateAvatarUrlMiddleware, function (request, response) {
         //if no chat dir for the character is found, make one with the character name
         if (!chatDirExists) {
             fs.mkdirSync(directoryPath);
-            return response.send({});
+            return response.send([]);
         }
 
         if (!request.body.file_name) {
-            return response.send({});
+            return response.send([]);
         }
 
         const chatFileName = `${String(request.body.file_name)}.jsonl`;
@@ -614,7 +617,7 @@ router.post('/get', validateAvatarUrlMiddleware, function (request, response) {
         return response.send(getChatData(chatFilePath));
     } catch (error) {
         console.error(error);
-        return response.send({});
+        return response.status(error instanceof SyntaxError ? 422 : 500).send({ error: 'Chat could not be loaded.' });
     }
 });
 
@@ -877,7 +880,10 @@ router.post('/group/get', (request, response) => {
     const id = request.body.id;
     const chatFilePath = path.join(request.user.directories.groupChats, sanitize(`${id}.jsonl`));
 
-    return response.send(getChatData(chatFilePath));
+    try { return response.send(getChatData(chatFilePath)); } catch (error) {
+        console.error(error);
+        return response.status(error instanceof SyntaxError ? 422 : 500).send({ error: 'Chat could not be loaded.' });
+    }
 });
 
 router.post('/group/info', async (request, response) => {

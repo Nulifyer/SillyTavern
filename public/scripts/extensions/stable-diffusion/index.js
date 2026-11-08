@@ -3018,6 +3018,29 @@ function ensureSelectionExists(setting, selector) {
     }
 }
 
+function imageStoryIdentity() {
+    const context = getContext();
+    return JSON.stringify([
+        context.groupId ? 'group' : 'character',
+        context.groupId ? String(context.groupId) : context.characters[context.characterId]?.avatar ?? '',
+        getCurrentChatId() ?? '',
+    ]);
+}
+
+/** Native image work keeps its cancellation and originating story through every await. */
+function createImageOperation(controller = new AbortController()) {
+    const story = imageStoryIdentity();
+    const checkStory = () => {
+        if (story !== imageStoryIdentity()) controller.abort(new DOMException('Story changed during image generation.', 'AbortError'));
+    };
+    eventSource.on(event_types.CHAT_CHANGED, checkStory);
+    return {
+        signal: controller.signal,
+        check() { checkStory(); controller.signal.throwIfAborted(); },
+        dispose() { eventSource.removeListener(event_types.CHAT_CHANGED, checkStory); },
+    };
+}
+
 /**
  * Generates an image based on the given trigger word.
  * @param {string} initiator The initiator of the image generation
@@ -3062,13 +3085,15 @@ async function generatePicture(initiator, args, trigger, message, callback, { ma
     if (generationType === generationMode.BACKGROUND) {
         const callbackOriginal = callback;
         callback = async function (prompt, imagePath, generationType, _negativePromptPrefix, _initiator, prefixedPrompt, format) {
+            operation.check();
             const imgUrl = `url("${encodeURI(imagePath)}")`;
             await eventSource.emit(event_types.FORCE_SET_BACKGROUND, { url: imgUrl, path: imagePath });
+            operation.check();
 
             if (typeof callbackOriginal === 'function') {
                 await callbackOriginal(prompt, imagePath, generationType, negativePromptPrefix, initiator, prefixedPrompt, format);
             } else {
-                await sendMessage(prompt, imagePath, generationType, negativePromptPrefix, initiator, prefixedPrompt, format);
+                await sendMessage(prompt, imagePath, generationType, negativePromptPrefix, initiator, prefixedPrompt, format, operation);
             }
         };
     }
@@ -3083,30 +3108,22 @@ async function generatePicture(initiator, args, trigger, message, callback, { ma
 
     const dimensions = setTypeSpecificDimensions(generationType);
     const abortController = new AbortController();
+    const operation = createImageOperation(abortController);
     let negativePromptPrefix = args?.negative || '';
     let imagePath = '';
 
     const stopListener = () => abortController.abort('Aborted by user');
+    const externalSignal = args?._abortController?.signal ?? args?._abortController;
 
     let loaderHandle = ActionLoaderHandle.EMPTY;
 
     try {
-        const combineNegatives = (prefix) => { negativePromptPrefix = combinePrefixes(negativePromptPrefix, prefix); };
-
-        // generate the text prompt for the image
-        let prompt = await getPrompt(generationType, message, trigger, quietPrompt, combineNegatives, { refine: !(manual && generationType === generationMode.SCENARIO) });
-        console.log('Processed image prompt:', prompt);
-
-        // Extension hook for prompt processing
-        const eventData = { prompt, generationType, message, trigger };
-        await eventSource.emit(event_types.SD_PROMPT_PROCESSING, eventData);
-        prompt = eventData.prompt; // Allow extensions to modify the prompt
-
-        if (typeof args?._abortController?.addEventListener === 'function') {
-            args._abortController.addEventListener('abort', stopListener);
+        if (typeof externalSignal?.addEventListener === 'function') {
+            externalSignal.addEventListener('abort', stopListener, { once: true });
+            if (externalSignal.aborted) stopListener();
         }
-
-        // Show non-blocking stoppable toast for this generation
+        operation.check();
+        // Prompt writing is part of the same stoppable native image operation.
         loaderHandle = loader.show({
             blocking: false,
             slug: `${MODULE_NAME}-image-generation`,
@@ -3114,13 +3131,27 @@ async function generatePicture(initiator, args, trigger, message, callback, { ma
             message: t`Generating an image...`,
             onStop: stopListener,
         });
+        const combineNegatives = (prefix) => { negativePromptPrefix = combinePrefixes(negativePromptPrefix, prefix); };
+
+        // generate the text prompt for the image
+        let prompt = await getPrompt(generationType, message, trigger, quietPrompt, combineNegatives, { refine: !(manual && generationType === generationMode.SCENARIO), operation });
+        operation.check();
+        console.log('Processed image prompt:', prompt);
+
+        // Extension hook for prompt processing
+        const eventData = { prompt, generationType, message, trigger };
+        await eventSource.emit(event_types.SD_PROMPT_PROCESSING, eventData);
+        operation.check();
+        prompt = eventData.prompt; // Allow extensions to modify the prompt
 
         // generate the image
-        imagePath = await sendGenerationRequest(generationType, prompt, negativePromptPrefix, characterName, callback, initiator, abortController.signal);
+        imagePath = await sendGenerationRequest(generationType, prompt, negativePromptPrefix, characterName, callback, initiator, abortController.signal, operation);
+        operation.check();
     } catch (err) {
         // Check if this was an intentional abort by user
         if (abortController.signal.aborted) {
             console.log('SD: Image generation aborted by user');
+            if (manual) throw new DOMException('Image generation stopped.', 'AbortError');
             toastr.info('Image generation stopped.', 'Image Generation');
             return;
         }
@@ -3133,6 +3164,8 @@ async function generatePicture(initiator, args, trigger, message, callback, { ma
         toastr.error(errorText, 'Image Generation');
         throw new Error(errorText);
     } finally {
+        operation.dispose();
+        externalSignal?.removeEventListener?.('abort', stopListener);
         restoreOriginalDimensions(dimensions);
         await loaderHandle.hide();
     }
@@ -3206,10 +3239,10 @@ function restoreOriginalDimensions(savedParams) {
  * @param {string} trigger A trigger string to use for the image generation.
  * @param {string} quietPrompt A quiet prompt to use for the image generation.
  * @param {function} combineNegatives A function that combines the negative prompt with other prompts.
- * @param {{refine?: boolean}} [options] Whether to offer the configured prompt-review dialog.
+ * @param {{refine?: boolean, operation?: ReturnType<typeof createImageOperation>}} [options] Prompt review and operation ownership.
  * @returns {Promise<string>} - A promise that resolves when the prompt generation completes.
  */
-async function getPrompt(generationType, message, trigger, quietPrompt, combineNegatives, { refine = true } = {}) {
+async function getPrompt(generationType, message, trigger, quietPrompt, combineNegatives, { refine = true, operation } = {}) {
     let prompt;
     console.log('getPrompt: Generation mode', generationType, 'triggered with', trigger);
     switch (generationType) {
@@ -3222,12 +3255,13 @@ async function getPrompt(generationType, message, trigger, quietPrompt, combineN
         case generationMode.FACE_MULTIMODAL:
         case generationMode.CHARACTER_MULTIMODAL:
         case generationMode.USER_MULTIMODAL:
-            prompt = await generateMultimodalPrompt(generationType, quietPrompt);
+            prompt = await generateMultimodalPrompt(generationType, quietPrompt, operation?.signal);
             break;
         default:
-            prompt = await generatePrompt(quietPrompt);
+            prompt = await generatePrompt(quietPrompt, operation?.signal);
             break;
     }
+    operation?.check();
 
     if (generationType === generationMode.FREE_EXTENDED) {
         prompt = generateFreeModePrompt(prompt.trim(), combineNegatives);
@@ -3235,6 +3269,7 @@ async function getPrompt(generationType, message, trigger, quietPrompt, combineN
 
     if (generationType !== generationMode.FREE && refine) {
         prompt = await refinePrompt(prompt);
+        operation?.check();
     }
 
     return prompt;
@@ -3275,8 +3310,9 @@ function generateFreeModePrompt(trigger, combineNegatives) {
  * Generates a prompt using multimodal captioning.
  * @param {number} generationType - The type of image generation to perform.
  * @param {string} quietPrompt - The prompt to use for the image generation.
+ * @param {AbortSignal} [signal] Cancellation signal for caption preparation and inference.
  */
-async function generateMultimodalPrompt(generationType, quietPrompt) {
+async function generateMultimodalPrompt(generationType, quietPrompt, signal) {
     let avatarUrl;
 
     if (generationType === generationMode.USER_MULTIMODAL) {
@@ -3287,19 +3323,21 @@ async function generateMultimodalPrompt(generationType, quietPrompt) {
         avatarUrl = getCharacterAvatarUrl();
     }
 
+    const toast = toastr.info('Generating multimodal caption...', 'Image Generation');
     try {
-        const toast = toastr.info('Generating multimodal caption...', 'Image Generation');
-        const response = await fetch(avatarUrl);
+        const response = await fetch(avatarUrl, { signal });
 
         if (!response.ok) {
             throw new Error('Could not fetch avatar image.');
         }
 
         const avatarBlob = await response.blob();
+        signal?.throwIfAborted();
         const avatarBase64 = await getBase64Async(avatarBlob);
+        signal?.throwIfAborted();
 
-        const caption = await getMultimodalCaption(avatarBase64, quietPrompt);
-        toastr.clear(toast);
+        const caption = await getMultimodalCaption(avatarBase64, quietPrompt, signal);
+        signal?.throwIfAborted();
 
         if (!caption) {
             throw new Error('No caption returned from the API.');
@@ -3307,9 +3345,12 @@ async function generateMultimodalPrompt(generationType, quietPrompt) {
 
         return caption;
     } catch (error) {
+        if (signal?.aborted) throw error;
         console.error(error);
         toastr.error('Multimodal captioning failed. Please try again.', 'Image Generation');
         throw new Error('Multimodal captioning failed.');
+    } finally {
+        toastr.clear(toast);
     }
 }
 
@@ -3334,9 +3375,10 @@ function getUserAvatarUrl() {
 /**
  * Generates a prompt using the main LLM API.
  * @param {string} quietPrompt - The prompt to use for the image generation.
+ * @param {AbortSignal} [signal] Cancellation signal for the prompt writer.
  * @returns {Promise<string>} - A promise that resolves when the prompt generation completes.
  */
-async function generatePrompt(quietPrompt) {
+async function generatePrompt(quietPrompt, signal) {
     const toast = toastr.info('Generating image prompt with an LLM...', 'Image Generation');
     let processedReply;
     try {
@@ -3364,14 +3406,16 @@ async function generatePrompt(quietPrompt) {
                     { role: 'user', content: `Scene context:\n${JSON.stringify(scene)}\n\nImage request:\n${quietPrompt}` },
                 ],
                 extension_settings.sd.prompt_writer_max_tokens,
-                { includePreset: false, includeInstruct: false },
+                { includePreset: false, includeInstruct: false, signal },
                 ConnectionManagerRequestService.getProfile(extension_settings.sd.prompt_writer_profile)?.api === 'custom'
                     ? { custom_include_body: JSON.stringify({ chat_template_kwargs: { enable_thinking: false } }) }
                     : {},
             );
+            signal?.throwIfAborted();
             processedReply = result.content?.trim();
         } else {
-            const reply = await generateQuietPrompt({ quietPrompt });
+            const reply = await generateQuietPrompt({ quietPrompt, signal });
+            signal?.throwIfAborted();
             processedReply = processReply(reply);
         }
     } finally {
@@ -3395,9 +3439,11 @@ async function generatePrompt(quietPrompt) {
  * @param {function} callback Callback function to be called after image generation
  * @param {string} initiator The initiator of the image generation
  * @param {AbortSignal} signal Abort signal to cancel the request
+ * @param {ReturnType<typeof createImageOperation>} operation Originating native image operation
  * @returns
  */
-async function sendGenerationRequest(generationType, prompt, additionalNegativePrefix, characterName, callback, initiator, signal) {
+async function sendGenerationRequest(generationType, prompt, additionalNegativePrefix, characterName, callback, initiator, signal, operation) {
+    operation.check();
     const noCharPrefix = [generationMode.FREE, generationMode.BACKGROUND, generationMode.USER, generationMode.USER_MULTIMODAL, generationMode.FREE_EXTENDED];
     const isCharChat = this_chid !== undefined && !selected_group;
     const ignoreNoCharForSwipe = initiator === initiators.swipe && isCharChat;
@@ -3416,7 +3462,6 @@ async function sendGenerationRequest(generationType, prompt, additionalNegativeP
     const negativePrompt = substituteParams(combinePrefixes(additionalNegativePrefix, negativePrefix));
 
     let result = { format: '', data: '' };
-    const currentChatId = getCurrentChatId();
 
     try {
         switch (extension_settings.sd.source) {
@@ -3503,6 +3548,7 @@ async function sendGenerationRequest(generationType, prompt, additionalNegativeP
                 break;
         }
 
+        operation.check();
         if (!result.data) {
             throw new Error('Endpoint did not return image data.');
         }
@@ -3510,7 +3556,6 @@ async function sendGenerationRequest(generationType, prompt, additionalNegativeP
         // Check if this was an intentional abort by user
         if (signal?.aborted) {
             console.log('SD: Image generation aborted by user');
-            toastr.info('Image generation stopped.', 'Image Generation');
             return;
         }
 
@@ -3519,17 +3564,24 @@ async function sendGenerationRequest(generationType, prompt, additionalNegativeP
         return;
     }
 
-    if (currentChatId !== getCurrentChatId()) {
-        console.warn('Chat changed, aborting SD result saving');
-        toastr.warning('Chat changed, generated image discarded.', 'Image Generation');
-        return;
-    }
-
+    operation.check();
     const filename = characterName ? `${characterName}_${humanizedDateTime()}` : humanizedDateTime();
-    const base64Image = await saveBase64AsFile(result.data, characterName, filename, result.format);
+    let cancelUpload;
+    let base64Image;
+    try {
+        // The native file uploader has no cancellation parameter. Stop awaiting
+        // its result on cancellation; it cannot run chat callbacks afterward.
+        const cancelled = new Promise((_resolve, reject) => {
+            cancelUpload = () => reject(signal.reason);
+            signal.addEventListener('abort', cancelUpload, { once: true });
+        });
+        base64Image = await Promise.race([saveBase64AsFile(result.data, characterName, filename, result.format), cancelled]);
+    } finally { signal.removeEventListener('abort', cancelUpload); }
+    operation.check();
     callback
         ? await callback(prompt, base64Image, generationType, additionalNegativePrefix, initiator, prefixedPrompt, result.format)
-        : await sendMessage(prompt, base64Image, generationType, additionalNegativePrefix, initiator, prefixedPrompt, result.format);
+        : await sendMessage(prompt, base64Image, generationType, additionalNegativePrefix, initiator, prefixedPrompt, result.format, operation);
+    operation.check();
     return base64Image;
 }
 
@@ -5045,8 +5097,10 @@ async function onComfyRenameWorkflowClick() {
  * @param {string} initiator The initiator of the image generation
  * @param {string} prefixedPrompt Prompt with an attached specific prefix
  * @param {string} format Format of the image (e.g., 'png', 'jpg')
+ * @param {ReturnType<typeof createImageOperation>} operation Originating native image operation
  */
-async function sendMessage(prompt, image, generationType, additionalNegativePrefix, initiator, prefixedPrompt, format) {
+async function sendMessage(prompt, image, generationType, additionalNegativePrefix, initiator, prefixedPrompt, format, operation) {
+    operation.check();
     const context = getContext();
     const name = context.groupId ? systemUserName : context.name2;
     const template = extension_settings.sd.prompts[generationMode.MESSAGE] || '{{prompt}}';
@@ -5078,10 +5132,16 @@ async function sendMessage(prompt, image, generationType, additionalNegativePref
     context.chat.push(message);
     const messageId = context.chat.length - 1;
     await eventSource.emit(event_types.MESSAGE_RECEIVED, messageId, 'extension');
+    operation.check();
     context.addOneMessage(message);
     await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, messageId, 'extension');
+    operation.check();
     await context.saveChat();
-    setTimeout(() => context.scrollOnMediaLoad(), debounce_timeout.short);
+    operation.check();
+    const story = imageStoryIdentity();
+    setTimeout(() => {
+        if (story === imageStoryIdentity()) context.scrollOnMediaLoad();
+    }, debounce_timeout.short);
 }
 
 /**
@@ -5251,22 +5311,16 @@ async function sdMessageButton($icon, { animate } = {}) {
 
     const classes = { busy: 'fa-hourglass', idle: 'fa-paintbrush', animation: 'fa-fade' };
     const context = getContext();
-    const abortController = (() => {
-        const nativeElement = $icon.get(0);
-        if (buttonAbortControllers.has(nativeElement)) {
-            return buttonAbortControllers.get(nativeElement);
-        } else {
-            const controller = new AbortController();
-            buttonAbortControllers.set(nativeElement, controller);
-            return controller;
-        }
-    })();
+    const nativeElement = $icon.get(0);
 
     if ($icon.hasClass(classes.busy)) {
-        abortController.abort('Aborted by user');
+        buttonAbortControllers.get(nativeElement)?.abort('Aborted by user');
         console.log('SD: Image generation aborted by user');
         return;
     }
+    const abortController = new AbortController();
+    buttonAbortControllers.set(nativeElement, abortController);
+    const story = imageStoryIdentity();
 
     const messageElement = $icon.closest('.mes');
     const messageId = Number(messageElement.attr('mesid'));
@@ -5309,7 +5363,8 @@ async function sdMessageButton($icon, { animate } = {}) {
         abortController,
     );
 
-    if (!newMediaAttachment) {
+    if (!newMediaAttachment || abortController.signal.aborted || story !== imageStoryIdentity()
+        || context.chat[messageId] !== message || !messageElement.get(0)?.isConnected) {
         return;
     }
 
@@ -5359,6 +5414,7 @@ async function writePromptFields(characterId) {
  * @returns {Promise<MediaAttachment|null>} - A promise that resolves to the newly generated media attachment, or null if generation failed or was aborted.
  */
 async function generateMediaSwipe(mediaAttachment, message, onStart, onComplete, abortController = new AbortController()) {
+    const operation = createImageOperation(abortController);
     const stopListener = () => abortController.abort('Aborted by user');
     const generationType = mediaAttachment.generation_type ?? message?.extra?.generationType ?? generationMode.FREE;
     let dimensions = { width: extension_settings.sd.width, height: extension_settings.sd.height };
@@ -5375,6 +5431,15 @@ async function generateMediaSwipe(mediaAttachment, message, onStart, onComplete,
     let loaderHandle = ActionLoaderHandle.EMPTY;
 
     try {
+        operation.check();
+        loaderHandle = loader.show({
+            blocking: false,
+            slug: `${MODULE_NAME}-image-generation`,
+            title: t`Image Generation`,
+            message: t`Generating an image...`,
+            onStop: stopListener,
+        });
+        onStart();
         const callback = (_a, _b, _c, _d, _e, _f, format) => { result.type = isVideo(format) ? MEDIA_TYPE.VIDEO : MEDIA_TYPE.IMAGE; };
         const savedPrompt = mediaAttachment.title ?? message.extra.title ?? '';
         const savedNegative = mediaAttachment.negative ?? message.extra.negative ?? '';
@@ -5383,6 +5448,7 @@ async function generateMediaSwipe(mediaAttachment, message, onStart, onComplete,
             resolution: mediaAttachment.width && mediaAttachment.height ? `${mediaAttachment.width}x${mediaAttachment.height}` : null,
         };
         const prompt = await refinePrompt(savedPrompt, refineArgs);
+        operation.check();
         dimensions = setTypeSpecificDimensions(generationType, refineArgs.resolution ? mediaAttachment : null);
 
         const context = getContext();
@@ -5390,17 +5456,8 @@ async function generateMediaSwipe(mediaAttachment, message, onStart, onComplete,
             ? context.groups[Object.keys(context.groups).filter(x => context.groups[x].id === context.groupId)[0]]?.id?.toString()
             : context.characters[context.characterId]?.name;
 
-        // Show non-blocking stoppable toast for this generation
-        loaderHandle = loader.show({
-            blocking: false,
-            slug: `${MODULE_NAME}-image-generation`,
-            title: t`Image Generation`,
-            message: t`Generating an image...`,
-            onStop: stopListener,
-        });
-
-        onStart();
-        result.url = await sendGenerationRequest(generationType, prompt, refineArgs.negative, characterName, callback, initiators.swipe, abortController.signal);
+        result.url = await sendGenerationRequest(generationType, prompt, refineArgs.negative, characterName, callback, initiators.swipe, abortController.signal, operation);
+        operation.check();
         result.generation_type = generationType;
         result.title = prompt;
         result.negative = refineArgs.negative;
@@ -5408,7 +5465,11 @@ async function generateMediaSwipe(mediaAttachment, message, onStart, onComplete,
             result.width = mediaAttachment.width;
             result.height = mediaAttachment.height;
         }
+    } catch (error) {
+        if (!abortController.signal.aborted) throw error;
+        return null;
     } finally {
+        operation.dispose();
         onComplete();
         restoreOriginalDimensions(dimensions);
         extension_settings.sd.seed = extension_settings.sd.original_seed;
@@ -5590,12 +5651,13 @@ export async function init() {
         returns: 'URL of the generated image, or an empty string if the generation failed',
         callback: async (args, trigger) => {
             const currentSettings = applyCommandArguments(args);
+            const story = imageStoryIdentity();
 
             try {
                 const url = await generatePicture(initiators.command, args, String(trigger));
 
                 // Save override width/height into a message result
-                if (!isTrueBoolean(args?.quiet?.toString()) && Object.hasOwn(args, 'width') && Object.hasOwn(args, 'height')) {
+                if (url && story === imageStoryIdentity() && !isTrueBoolean(args?.quiet?.toString()) && Object.hasOwn(args, 'width') && Object.hasOwn(args, 'height')) {
                     const context = getContext();
                     const message = context.chat.at(-1);
                     if (Array.isArray(message?.extra?.media) && message.extra.media.length > 0) {

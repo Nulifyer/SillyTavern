@@ -1,0 +1,28 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep audited|starting a character story|cast creation selects|a two-member cast handles stop --output=/tmp/st-audit-fixes-focused --reporter=line,json
+(node:2354615) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:2354637) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:2354637) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:2354637) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/10] workspace.e2e.js:423:1 › starting a character story is immediate, creates one transcript and can be renamed afterward
+[2/10] workspace.e2e.js:3248:3 › a two-member cast handles stop without advancing the queue or losing its next draft
+[3/10] workspace.e2e.js:3594:1 › cast creation selects real characters and opens a group story
+[4/10] workspace.e2e.js:4276:3 › audited character load http failure preserves transcript, owner, draft and mounted nodes
+[5/10] workspace.e2e.js:4276:3 › audited character load network failure preserves transcript, owner, draft and mounted nodes
+[6/10] workspace.e2e.js:4276:3 › audited character load payload failure preserves transcript, owner, draft and mounted nodes
+[7/10] workspace.e2e.js:4350:1 › audited group load failures preserve current group, transcript and draft
+[8/10] workspace.e2e.js:4419:1 › audited unsupported provider foreground checks preserve connected status without inference
+[9/10] workspace.e2e.js:4446:1 › audited native character rename preserves active/inactive drafts and archives through reload
+[10/10] workspace.e2e.js:4526:1 › audited pending separate image writer can Stop without an image or provider failure
+  10 passed (57.7s)

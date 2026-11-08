@@ -1846,7 +1846,7 @@ test('a delayed read-only foreground check cannot reconnect a changed provider',
         script.setOnlineStatus('no_connection');
     });
     release();
-    expect(await page.evaluate(() => window.__readonlyCheck)).toBe(false);
+    expect(await page.evaluate(() => window.__readonlyCheck)).toBeNull();
     await expect(page.locator('#workspace-connection-label')).toHaveText('Connect a model');
     expect(await page.evaluate(async () => (await import('/scripts/openai.js')).oai_settings.custom_model)).toBe('new-manual-model');
 });
@@ -2781,4 +2781,241 @@ test('classic preference survives reload and can be restored', async ({ page }) 
     await expect(page.locator('#workspace-sidebar')).toBeVisible();
     await expect(page.locator('.workspace-creative-menu #options_button')).toHaveCount(1);
     await expect(page.locator('.workspace-creative-menu #extensionsMenuButton')).toHaveCount(1);
+});
+
+for (const failure of ['http', 'network', 'payload', 'object-array']) {
+    test(`audited character load ${failure} failure preserves transcript, owner, draft and mounted nodes`, async ({ page }, testInfo) => {
+        const targetTitle = `Workspace e2e ${testInfo.testId}-${runId} saved target`;
+        await startStory(page, targetTitle);
+        const target = await page.evaluate(async () => {
+            const script = await import('/script.js');
+            script.chat.push({ name: 'Storyteller', is_user: true, send_date: Date.now(), mes: 'Saved user sentinel.' }, { name: 'Seraphina', is_user: false, send_date: Date.now() + 1, mes: 'Saved character sentinel.' });
+            await script.saveChatConditional();
+            return { file_name: script.getCurrentChatId(), avatar_url: script.characters[script.this_chid].avatar, ch_name: script.characters[script.this_chid].name };
+        });
+        const before = await api(page, '/api/chats/get', target);
+        await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} retained current`);
+        await page.locator('#send_textarea').fill('My current draft remains here.');
+        const current = await page.evaluate(async () => { window.__retainedMessage = document.querySelector('#chat .mes'); return (await import('/script.js')).getCurrentChatId(); });
+        let writes = 0;
+        page.on('request', request => { if (request.url().endsWith('/api/chats/save') && request.postDataJSON().file_name === target.file_name) writes++; });
+        const route = handler => page.route('**/api/chats/get', handler);
+        await route(handler => {
+            if (handler.request().postDataJSON().file_name !== target.file_name) return handler.continue();
+            if (failure === 'network') return handler.abort('failed');
+            return handler.fulfill(failure === 'http' ? { status: 503, json: { error: 'Synthetic read failure' } } : { json: failure === 'object-array' ? [{}] : { invalid: 'not a transcript' } });
+        });
+        expect(await page.evaluate(async name => (await import('/script.js')).openCharacterChat(name), target.file_name)).toBe(false);
+        await expect(page.locator('#send_textarea')).toHaveValue('My current draft remains here.');
+        expect(await page.evaluate(async () => (await import('/script.js')).getCurrentChatId())).toBe(current);
+        expect(await page.evaluate(() => window.__retainedMessage === document.querySelector('#chat .mes'))).toBe(true);
+        expect(writes).toBe(0);
+        await page.unroute('**/api/chats/get');
+        expect(await api(page, '/api/chats/get', target)).toEqual(before);
+        // The active conversation's reload uses the same non-destructive owner.
+        await page.route('**/api/chats/get', handler => handler.fulfill({ status: 503, json: { error: 'Synthetic reload failure' } }));
+        await page.evaluate(async () => (await import('/script.js')).reloadCurrentChat());
+        await expect(page.locator('#send_textarea')).toHaveValue('My current draft remains here.');
+        expect(await page.evaluate(() => window.__retainedMessage === document.querySelector('#chat .mes'))).toBe(true);
+        await page.unroute('**/api/chats/get');
+        await page.screenshot({ path: testInfo.outputPath('failed-read-preserved.png') });
+    });
+}
+
+test('audited group load failures preserve current group, transcript and draft', async ({ page }, testInfo) => {
+    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+    const avatar = await page.evaluate(async () => (await import('/script.js')).characters[0].avatar);
+    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: avatar });
+    const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} companion` });
+    const group = await page.evaluate(async ({ name, members }) => { const script = await import('/script.js'); await script.getCharacters(); return (await import('/scripts/group-chats.js')).createGroupWithMembers(name, members); }, { name: `${prefix} cast`, members: [avatar, companion.avatar] });
+    expect(await page.evaluate(async id => (await import('/scripts/group-chats.js')).openGroupById(id, { newChat: true }), group.id)).toBe(true);
+    await returnToChat(page);
+    const target = await page.evaluate(async () => { const script = await import('/script.js'); script.chat.push({ name: 'Storyteller', is_user: true, send_date: Date.now(), mes: 'Protected cast message.' }); await script.saveChatConditional(); return script.getCurrentChatId(); });
+    const before = await api(page, '/api/chats/group/get', { id: target });
+    expect(await page.evaluate(async id => (await import('/scripts/group-chats.js')).createNewGroupChat(id), group.id)).toBe(true);
+    const current = await page.evaluate(async () => (await import('/script.js')).getCurrentChatId());
+    await page.locator('#send_textarea').fill('Unsent group draft.');
+    await page.evaluate(() => { window.__castNode = document.querySelector('#chat .mes'); });
+    await page.route('**/api/chats/group/get', route => route.fulfill({ status: 503, json: { error: 'Synthetic group read failure' } }));
+    expect(await page.evaluate(async ({ id, target }) => (await import('/scripts/group-chats.js')).openGroupChat(id, target), { id: group.id, target })).toBe(false);
+    await page.evaluate(async () => (await import('/script.js')).reloadCurrentChat());
+    expect(await page.evaluate(async () => (await import('/script.js')).getCurrentChatId())).toBe(current);
+    expect(await page.evaluate(() => window.__castNode === document.querySelector('#chat .mes'))).toBe(true);
+    await expect(page.locator('#send_textarea')).toHaveValue('Unsent group draft.');
+    await page.unroute('**/api/chats/group/get');
+    expect(await api(page, '/api/chats/group/get', { id: target })).toEqual(before);
+});
+
+test('audited unsupported provider foreground checks preserve connected status without inference', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} provider checks`);
+    await connectRecoveryFixture(page);
+    let requests = 0;
+    await page.route('**/api/backends/chat-completions/status', route => { requests++; return route.abort(); });
+    await page.route('**/api/backends/chat-completions/generate', route => { requests++; return route.abort(); });
+    for (const source of ['claude', 'ai21', 'vertexai', 'perplexity', 'zai', 'minimax']) {
+        await page.evaluate(async source => { const script = await import('/script.js'); (await import('/scripts/openai.js')).oai_settings.chat_completion_source = source; script.setOnlineStatus('Key saved; test explicitly.'); }, source);
+        const cdp = await freezePage(page); await resumePage(page, cdp);
+        await expect(page.locator('#browser-recovery')).not.toHaveAttribute('aria-busy', 'true');
+        await expect(page.locator('#browser-recovery')).toBeHidden();
+    }
+    expect(requests).toBe(0);
+});
+
+test('audited native character rename preserves active/inactive drafts and archives through reload', async ({ page }, testInfo) => {
+    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+    const base = await page.evaluate(async () => (await import('/script.js')).characters[0].avatar);
+    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: base });
+    const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} before` });
+    await page.evaluate(async avatar => { const script = await import('/script.js'); await script.getCharacters(); await script.selectCharacterById(script.characters.findIndex(c => c.avatar === avatar), { newChat: true }); }, companion.avatar);
+    await returnToChat(page);
+    const first = `${prefix} first`;
+    await renameCurrentStory(page, first);
+    await page.locator('#send_textarea').fill('First private draft.');
+    await page.evaluate(async () => (await import('/script.js')).doNewChat());
+    await renameCurrentStory(page, `${prefix} second`);
+    await page.locator('#send_textarea').fill('Second private draft.');
+    await page.evaluate(async ({ avatar, first }) => { const { WorkspaceChats } = await import('/scripts/workspace-chats.js'); const chats = new WorkspaceChats(); const record = (await chats.list()).find(r => r.avatar === avatar && r.file_name === first); await chats.archive(record, true); }, { avatar: companion.avatar, first });
+    const renamed = await page.evaluate(async name => { const script = await import('/script.js'); await script.renameCharacter(name, { silent: true, renameChats: false }); return script.characters[script.this_chid].avatar; }, `${prefix} after`);
+    await expect(page.locator('#send_textarea')).toHaveValue('Second private draft.');
+    expect(await page.evaluate(async ({ avatar, first }) => { const { WorkspaceChats } = await import('/scripts/workspace-chats.js'); return (await new WorkspaceChats().list()).find(r => r.avatar === avatar && r.file_name === first)?.archived; }, { avatar: renamed, first })).toBe(true);
+    await page.evaluate(async () => (await import('/script.js')).saveSettings());
+    await page.reload(); await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
+    await page.evaluate(async ({ avatar, first }) => { const script = await import('/script.js'); await script.selectCharacterById(script.characters.findIndex(c => c.avatar === avatar)); await script.openCharacterChat(first); }, { avatar: renamed, first });
+    await returnToChat(page);
+    await expect(page.locator('#send_textarea')).toHaveValue('First private draft.');
+});
+
+test('audited pending separate image writer can Stop without an image or provider failure', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} stopped writer`);
+    await page.evaluate(async () => {
+        const { extension_settings: settings } = await import('/scripts/extensions.js');
+        settings.connectionManager.profiles.push({ id: 'audit-writer', name: 'Audit writer', api: 'custom', 'api-url': 'https://synthetic.invalid/v1', model: 'writer-fixture' });
+        Object.assign(settings.sd, { source: 'sdcpp', sdcpp_url: 'https://synthetic.invalid', model: 'image-fixture', sampler: 'Euler', scheduler: 'Simple', prompt_writer_profile: 'audit-writer' });
+    });
+    let release, requested; const held = new Promise(r => release = r); const started = new Promise(r => requested = r); let images = 0;
+    await page.route('**/api/backends/chat-completions/generate', async route => { requested(); await held; await route.fulfill({ json: { choices: [{ message: { content: 'A neutral blue book.' } }] } }); });
+    await page.route('**/api/sd/**', route => { images++; return route.abort(); });
+    try {
+        await page.locator('#workspace-image-button').click(); await started;
+        await expect(page.locator('.action-loader-stop').last()).toBeVisible();
+        await page.locator('.action-loader-stop').last().press('Enter');
+        await expect(page.locator('#workspace-image-status')).toHaveText('Image generation stopped.');
+        await expect(page.locator('#workspace-image-button')).toBeEnabled();
+        await expect(page.locator('#send_form')).not.toHaveAttribute('inert');
+        expect(images).toBe(0);
+        await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} after stop`);
+    } finally { release(); }
+});
+
+test('audited normal Connect discards stale server metadata after URL editing', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} stale normal status`);
+    await connectRecoveryFixture(page);
+    await settingsCategory(page, 'connection');
+    await page.locator('#custom_api_url_text').fill('https://server-a.invalid/v1');
+    await page.locator('#custom_model_id').fill('audit-shared-model');
+    await page.evaluate(async () => { const { oai_settings } = await import('/scripts/openai.js'); oai_settings.custom_context_auto = true; oai_settings.openai_max_context = 8192; });
+    await page.unroute('**/api/backends/chat-completions/status');
+    let release, requested; const held = new Promise(r => release = r); const started = new Promise(r => requested = r);
+    await page.route('**/api/backends/chat-completions/status', async route => { requested(); await held; await route.fulfill({ json: { data: [{ id: 'audit-shared-model', context_length: 65536 }] } }); });
+    await page.locator('#api_button_openai').click(); await started;
+    await page.locator('#custom_api_url_text').fill('https://server-b.invalid/v1'); release();
+    await expect(page.locator('#api_loading_openai')).toBeHidden();
+    const settings = await page.evaluate(async () => { const { oai_settings } = await import('/scripts/openai.js'); return { url: oai_settings.custom_url, context: oai_settings.openai_max_context, automatic: oai_settings.custom_context_auto }; });
+    expect(settings).toEqual({ url: 'https://server-b.invalid/v1', context: 8192, automatic: true });
+    await expect(page.locator('#model_custom_select')).not.toContainText('audit-shared-model');
+});
+
+test('audited late recorder stop and error cannot terminate a newer microphone recording', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} recorder ownership`);
+    await page.evaluate(async () => {
+        (await import('/scripts/dictation.js')).configureDictation('https://synthetic.invalid/v1/audio/transcriptions', 'fixture');
+        window.__recorders = []; window.__streams = [];
+        navigator.mediaDevices.getUserMedia = async () => { const stream = new AudioContext().createMediaStreamDestination().stream; window.__streams.push(stream); return stream; };
+        window.MediaRecorder = class {
+            static isTypeSupported() { return true; }
+            constructor(stream) { this.stream = stream; this.state = 'inactive'; this.mimeType = 'audio/webm'; window.__recorders.push(this); }
+            start() { this.state = 'recording'; }
+            stop() { this.state = 'inactive'; }
+        };
+    });
+    await page.locator('#send_textarea').fill('Only my unsent microphone turn.');
+    await page.locator('#workspace-dictation').click();
+    await expect(page.locator('#workspace-dictation')).toHaveAttribute('aria-pressed', 'true');
+    const cdp = await freezePage(page); await resumePage(page, cdp);
+    await page.locator('#workspace-dictation').click();
+    await expect(page.locator('#workspace-dictation')).toHaveAttribute('aria-pressed', 'true');
+    await page.evaluate(async () => { await window.__recorders[0].onstop(); window.__recorders[0].onerror?.(new Event('error')); });
+    expect(await page.evaluate(() => window.__streams[1].getTracks().every(track => track.readyState === 'live'))).toBe(true);
+    await expect(page.locator('#workspace-dictation')).toHaveAttribute('aria-pressed', 'true');
+    await expect(page.locator('#send_textarea')).toHaveValue('Only my unsent microphone turn.');
+    const pause = await freezePage(page); await resumePage(page, pause);
+    expect(await page.evaluate(() => window.__streams[1].getTracks().every(track => track.readyState === 'ended'))).toBe(true);
+});
+
+test('audited held chat load cannot reopen after an explicit native Close', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} held close`);
+    let release, requested; const held = new Promise(r => release = r); const started = new Promise(r => requested = r);
+    await page.route('**/api/chats/get', async route => { requested(); await held; await route.fulfill({ json: [{ chat_metadata: { integrity: 'synthetic-load' } }, { name: 'Seraphina', is_user: false, mes: 'An obsolete loaded reply.' }] }); });
+    await page.evaluate(() => { window.__pendingLoad = import('/script.js').then(s => s.openCharacterChat('obsolete-synthetic')); });
+    await started;
+    await page.evaluate(async () => (await import('/script.js')).closeCurrentChat());
+    release();
+    expect(await page.evaluate(() => window.__pendingLoad)).toBe(false);
+    await expect(page.locator('#chat')).not.toContainText('An obsolete loaded reply.');
+    expect(await page.evaluate(async () => (await import('/script.js')).getCurrentChatId())).not.toBe('obsolete-synthetic');
+});
+
+test('audited late image upload cannot attach to a different character with the same story name', async ({ page }, testInfo) => {
+    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+    const title = `${prefix} same image filename`;
+    await startStory(page, title);
+    const avatar = await page.evaluate(async () => (await import('/script.js')).characters[(await import('/script.js')).this_chid].avatar);
+    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: avatar });
+    const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} image companion` });
+    await page.evaluate(async () => { const { extension_settings } = await import('/scripts/extensions.js'); const { secret_state } = await import('/scripts/secrets.js'); extension_settings.sd.source = 'openai'; extension_settings.sd.model = 'dall-e-3'; secret_state.api_key_openai = true; });
+    await page.route('**/api/openai/generate-image', route => route.fulfill({ json: { data: [{ b64_json: 'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+jS1kAAAAASUVORK5CYII=' }] } }));
+    let release, requested; const held = new Promise(r => release = r); const started = new Promise(r => requested = r);
+    await page.route('**/api/images/upload', async route => { requested(); await held; await route.continue(); });
+    await page.evaluate(() => { window.__lateImage = import('/scripts/extensions/stable-diffusion/index.js').then(s => s.generateWorkspaceImage('A neutral blue book.')).catch(error => error.name); });
+    await started;
+    await page.evaluate(async ({ avatar, title }) => { const s = await import('/script.js'); await s.getCharacters(); await s.selectCharacterById(s.characters.findIndex(c => c.avatar === avatar), { newChat: true }); await s.renameChat(s.getCurrentChatId(), title); }, { avatar: companion.avatar, title });
+    release();
+    expect(await page.evaluate(() => window.__lateImage)).toBe('AbortError');
+    expect(await page.evaluate(async () => (await import('/script.js')).chat.some(message => message.extra?.media?.length))).toBe(false);
+    await expect(page.locator('#chat')).not.toContainText('A neutral blue book.');
+});
+
+test('audited cross-character historical failure does not visit the target default story', async ({ page }, testInfo) => {
+    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+    await startStory(page, `${prefix} source`);
+    const sourceAvatar = await page.evaluate(async () => (await import('/script.js')).characters[(await import('/script.js')).this_chid].avatar);
+    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: sourceAvatar });
+    const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} target character` });
+    await page.evaluate(async avatar => { const script = await import('/script.js'); await script.getCharacters(); await script.selectCharacterById(script.characters.findIndex(c => c.avatar === avatar), { newChat: true }); }, companion.avatar);
+    await returnToChat(page);
+    const target = `${prefix} historical target`; await renameCurrentStory(page, target);
+    await page.evaluate(async () => (await import('/script.js')).doNewChat());
+    await startStory(page, `${prefix} retained source`);
+    await page.locator('#send_textarea').fill('Draft belongs to the original character.');
+    const original = await page.evaluate(async () => { window.__crossNode = document.querySelector('#chat .mes'); return (await import('/script.js')).getCurrentChatId(); });
+    const loads = [];
+    await page.route('**/api/chats/get', route => { const body = route.request().postDataJSON(); if (body.avatar_url === companion.avatar) { loads.push(body.file_name); return route.fulfill({ status: 503, json: { error: 'Synthetic exact-story outage' } }); } return route.continue(); });
+    await navigate(page, 'chats');
+    await page.locator('.workspace-conversations .workspace-scene-row').filter({ has: page.locator('strong', { hasText: target }) }).locator('.workspace-scene-open').click();
+    await expect.poll(() => loads.length).toBe(1); expect(loads).toEqual([target]);
+    await expect(page.locator('#toast-container')).toContainText('could not be loaded');
+    expect(await page.evaluate(async () => (await import('/script.js')).getCurrentChatId())).toBe(original);
+    expect(await page.evaluate(() => window.__crossNode === document.querySelector('#chat .mes'))).toBe(true);
+    await returnToChat(page);
+    await expect(page.locator('#send_textarea')).toHaveValue('Draft belongs to the original character.');
+    await page.unroute('**/api/chats/get');
+});
+
+test('audited server rejects missing integrity even if a stale client tries to save', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} missing integrity`);
+    const owner = await page.evaluate(async () => { const script = await import('/script.js'); return { file_name: script.getCurrentChatId(), avatar_url: script.characters[script.this_chid].avatar, ch_name: script.characters[script.this_chid].name }; });
+    const original = await api(page, '/api/chats/get', owner);
+    const result = await page.evaluate(async owner => { const { getRequestHeaders } = await import('/script.js'); const response = await fetch('/api/chats/save', { method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ ...owner, chat: [{ chat_metadata: {} }, { name: 'Synthetic', is_user: false, mes: 'Must not replace stored text.' }] }) }); return { status: response.status, body: await response.json() }; }, owner);
+    expect(result).toEqual({ status: 400, body: { error: 'integrity' } });
+    expect(await api(page, '/api/chats/get', owner)).toEqual(original);
 });

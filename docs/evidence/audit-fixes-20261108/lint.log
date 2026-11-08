@@ -1,0 +1,2 @@
+npm notice run sillytavern@1.19.21 lint
+npm notice run eslint "src/**/*.js" "public/**/*.js" ./*.js

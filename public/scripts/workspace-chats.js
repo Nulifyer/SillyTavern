@@ -1,5 +1,5 @@
 import {
-    characters, closeCurrentChat, deleteCharacterChatByName, getCurrentChatId,
+    characters, closeCurrentChat, deleteCharacterChatByName, eventSource, event_types, getCurrentChatId,
     getRequestHeaders, isGenerating, openCharacterChat, renameGroupOrCharacterChat,
     saveSettingsDebounced, selectCharacterById, setActiveCharacter, setActiveGroup, this_chid,
 } from '../script.js';
@@ -34,6 +34,26 @@ function characterId(avatar) {
 
 /** Transcript actions stay in their native owners; only archive identifiers live here. */
 export class WorkspaceChats {
+    constructor() {
+        eventSource.on(event_types.CHARACTER_RENAMED, (oldAvatar, newAvatar) => this.characterRenamed(oldAvatar, newAvatar));
+    }
+
+    characterRenamed(oldAvatar, newAvatar) {
+        if (oldAvatar === newAvatar) return;
+        const ids = archivedIds();
+        let changed = false;
+        for (const id of [...ids]) {
+            let key;
+            try { key = JSON.parse(id); } catch { continue; }
+            if (!Array.isArray(key) || key.length !== 3 || key[0] !== 'character' || key[1] !== oldAvatar) continue;
+            ids.delete(id);
+            // An existing destination means the same story is already archived.
+            ids.add(identity({ avatar: newAvatar, file_name: key[2] }));
+            changed = true;
+        }
+        if (changed) accountStorage.setItem(archiveKey, JSON.stringify([...ids]));
+    }
+
     async list(signal) {
         const response = await fetch('/api/chats/recent', {
             method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({}), cache: 'no-cache', signal,
@@ -69,11 +89,11 @@ export class WorkspaceChats {
     async select(entity, { newChat = false } = {}) {
         requireIdle();
         if (entity.kind === 'group') {
-            await openGroupById(entity.id, { newChat });
+            if (await openGroupById(entity.id, { newChat }) === false) throw new Error('The story could not be opened. Your previous story is unchanged. Check the server connection and try again.');
             if (String(selected_group) !== String(entity.id)) throw new Error('The current story is still saving. Try again shortly.');
             setActiveGroup(entity.id);
         } else {
-            await selectCharacterById(characterId(entity.id), { switchMenu: false, newChat });
+            if (await selectCharacterById(characterId(entity.id), { switchMenu: false, newChat }) === false) throw new Error('The story could not be opened. Your previous story is unchanged. Check the server connection and try again.');
             if (selected_group || characters[this_chid]?.avatar !== entity.id) throw new Error('The current story is still saving. Try again shortly.');
             setActiveCharacter(entity.id);
         }
@@ -83,11 +103,14 @@ export class WorkspaceChats {
     async open(record) {
         // Returning to the mounted transcript is navigation, even during a reply.
         if (this.current()?.key === record.key) return;
-        await this.select({ kind: record.group ? 'group' : 'character', id: record.group || record.avatar });
-        if (getCurrentChatId() !== record.file_name) {
-            if (record.group) await openGroupChat(record.group, record.file_name);
-            else await openCharacterChat(record.file_name);
-        }
+        requireIdle();
+        const opened = record.group
+            ? await openGroupChat(record.group, record.file_name)
+            : await openCharacterChat(record.file_name, { characterId: characterId(record.avatar) });
+        if (opened === false) throw new Error('The story could not be opened. Check the server connection and try again.');
+        if (record.group) setActiveGroup(record.group);
+        else setActiveCharacter(record.avatar);
+        saveSettingsDebounced();
     }
 
     async start(entity, title = '') {

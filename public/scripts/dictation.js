@@ -163,10 +163,12 @@ export class Dictation {
             this.recorder = recorder;
             const chunks = [];
             recorder.ondataavailable = event => { if (event.data.size) chunks.push(event.data); };
-            recorder.onerror = () => this.cancel('Audio recording failed. Check microphone permissions and retry.');
+            recorder.onerror = () => {
+                if (sequence === this.sequence) this.cancel('Audio recording failed. Check microphone permissions and retry.');
+            };
             recorder.onstop = async () => {
-                this.stopTracks();
                 if (sequence !== this.sequence) return;
+                this.stopTracks();
                 try {
                     const type = recorder.mimeType;
                     const extension = type.includes('mp4') ? 'mp4' : type.includes('ogg') ? 'ogg' : 'webm';
@@ -179,7 +181,7 @@ export class Dictation {
             };
             recorder.start();
             this.show('Listening… Stop dictation when finished. Recording stops after 60 seconds.');
-            this.timer = setTimeout(() => { if (recorder.state === 'recording') { recorder.stop(); this.stopTracks(); } }, 60000);
+            this.timer = setTimeout(() => { if (sequence === this.sequence && recorder.state === 'recording') { recorder.stop(); this.stopTracks(); } }, 60000);
         } catch (error) {
             if (sequence !== this.sequence) return;
             this.microphonePending = false;

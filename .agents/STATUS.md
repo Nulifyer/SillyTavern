@@ -10,38 +10,29 @@ never accessed or changed by this thread.
 
 ## Active tasks
 
-Independent review is complete. Six runtime findings remain unfixed: failed
-character/group reads can overwrite transcripts; character rename strands
-user drafts/archive state; normal status responses can apply stale server context;
-stale recorder cleanup can stop a newer recording; unsupported providers get
-false foreground warnings; a pending separate image writer cannot be cancelled.
-Main agent owns follow-up implementation/validation/continuity. The independent
-reviewer wrote evidence only and made no runtime/source/test changes.
+Fixing all six independent-audit findings for replacement v1.19.21. Parent owns
+native character/group/server load-save contracts, browser integration and release.
+Independent worker completed draft/archive migration, status ownership, recorder
+cleanup and their unit tests. Image worker completed native operation cancellation,
+full story identity and transport signal propagation. No worker commits or remote
+operations. Production69/shared85 remain untouched.
 
 ## Next action
 
-Fix the native client/server chat load/save contract first. Failed HTTP/network/
-payload/disk reads must not initialize or save a new conversation. Preserve the
-current transcript/draft until a new load succeeds. Cover character and group
-open/reload/new paths and valid empty/new chats. Add integrity-bypass regression.
-Then address the other five owner-level findings in the audit report, verify
-missing cases and publish a replacement through the normal process. Do not deploy
-production here. Keep all existing volumes and concurrent work untouched.
+Source 86-case suite and final focused checks passed. Publish a new immutable release and verify its actual image with fresh
+synthetic volumes and no overlays. Keep v1.19.20 deployment handoff held until
+replacement acceptance is complete. Preserve all existing data and unrelated work.
 
 ## Verification
 
-Audit: docs/evidence/fork-audit-20261107/review.md.
-Actual v1.19.20 on fresh local port 8031 reproduced destructive failed-read fallback and false
-provider warning. Both audit invariants failed. Six isolated source observations
-were independently rerun exactly; focused existing units passed 20/20. All 34 changed
-runtime/package files versus upstream base match v1.19.20 bytes. These checks are
-review evidence, not fixes or a clean bill of health.
-
-Prior release proof remains in docs/evidence/chat-resume-20261107/: all 72 browser
-cases passed together with both live Juiced cases; 425 source unit tests/lint passed;
-32 sampled runtime matches, five fresh volumes/no overlays and native architecture
-startup gates passed. Earlier source run with 69 passes and 3 failures remains unresolved despite later
-isolated 6/6 and released 72/72 passes. The rename failure included HTTP400.
+Current source: 478 unit tests in 24 suites pass, root lint passes. Initial focused
+browser 10/10 passes. Expanded focused 11/12 passes; the remaining upload test had
+an incorrect intercepted URL in its harness, corrected for a focused rerun.
+No application failure is inferred from that harness timeout.
+Source fixture8032 st-fork-fixes-source-20261108 has five fresh volumes plus explicit
+public/src/package overlays. It is not release-image proof. Version 1.19.21.
+Audit baseline8031 remains fresh/synthetic and immutable20. Original evidence is
+preserved in docs/evidence/fork-audit-20261107/ and chat-resume-20261107/.
 
 ## Limits
 

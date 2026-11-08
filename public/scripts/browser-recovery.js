@@ -43,11 +43,11 @@ class BrowserRecovery {
         document.getElementById('form_sheld').prepend(this.root);
         this.input.addEventListener('input', () => this.saveDraft());
         eventSource.on(event_types.CHAT_CHANGED, () => this.changeChat());
+        eventSource.on(event_types.CHARACTER_RENAMED, (oldAvatar, newAvatar) => this.renameCharacter(oldAvatar, newAvatar));
         eventSource.on(event_types.CHAT_RENAMED, ({ avatarId, groupId, oldFileName, newFileName }) => {
             const oldKey = identity({ group: groupId || '', avatar: avatarId, fileName: oldFileName.replace(/\.jsonl$/, '') });
             const newKey = identity({ group: groupId || '', avatar: avatarId, fileName: newFileName.replace(/\.jsonl$/, '') });
-            const record = this.readDraft(oldKey);
-            if (record) { this.writeDraft(newKey, record); this.writeDraft(oldKey, null); }
+            this.moveDraft(oldKey, newKey);
             if (this.key === newKey) this.changeChat(true);
         });
         eventSource.on(event_types.APP_READY, () => { this.changeChat(true); if (document.wasDiscarded) void this.foreground(); });
@@ -111,7 +111,40 @@ class BrowserRecovery {
         try {
             if (value) localStorage.setItem(id, JSON.stringify(value));
             else localStorage.removeItem(id);
+            return true;
+        } catch { this.storageFailure(); return false; }
+    }
+
+    moveDraft(oldKey, newKey) {
+        if (oldKey === newKey) return;
+        const record = this.readDraft(oldKey);
+        if (!record) return;
+        const destination = this.readDraft(newKey);
+        if (destination && destination.text !== record.text) {
+            this.show('A draft already exists for the renamed story. That draft is preserved; the earlier draft remains in browser storage under its previous name.');
+            return;
+        }
+        // Keep the source if browser storage cannot persist its new identity.
+        if (this.writeDraft(newKey, record)) this.writeDraft(oldKey, null);
+    }
+
+    renameCharacter(oldAvatar, newAvatar) {
+        if (oldAvatar === newAvatar) return;
+        this.saveDraft();
+        const prefix = 'st-recovery:draft:';
+        const keys = new Set(this.memory.keys());
+        try {
+            for (let index = 0; index < localStorage.length; index++) keys.add(localStorage.key(index));
         } catch { this.storageFailure(); }
+        for (const id of keys) {
+            if (!id?.startsWith(prefix)) continue;
+            let key;
+            try { key = JSON.parse(id.slice(prefix.length)); } catch { continue; }
+            if (!Array.isArray(key) || key.length !== 4 || key[0] !== getCurrentUserHandle() || key[1] !== 'character' || key[2] !== oldAvatar) continue;
+            const next = [...key];
+            next[2] = newAvatar;
+            this.moveDraft(JSON.stringify(key), JSON.stringify(next));
+        }
     }
 
     saveDraft() {
@@ -185,7 +218,7 @@ class BrowserRecovery {
                     const valid = await refreshChatCompletionStatus(controller.signal);
                     if (!isCurrent()) return;
                     if (controller.signal.aborted) { this.show('Connection check timed out. Your draft stays here. Retry when ready.', true); return; }
-                    if (!valid) { this.show('The app server is available. Check the model connection in Settings, then retry.', true); return; }
+                    if (valid === false) { this.show('The app server is available. Check the model connection in Settings, then retry.', true); return; }
                 }
                 this.notice = '';
                 this.noticeKey = null;

@@ -29,6 +29,7 @@ import {
     saveSettingsDebounced,
     setOnlineStatus,
     startStatusLoading,
+    stopStatusLoading,
     substituteParams,
     substituteParamsExtended,
     system_message_types,
@@ -175,6 +176,7 @@ const textCompletionModels = [
 let biasCache = undefined;
 export let model_list = [];
 let customModelListUrl = '';
+let nativeStatusRequest = 0;
 
 export const chat_completion_sources = {
     OPENAI: 'openai',
@@ -4488,8 +4490,14 @@ function setToolReasoningControls() {
 }
 
 async function getStatusOpen({ readOnly = false, signal = abortStatusCheck.signal } = {}) {
+    const request = readOnly ? nativeStatusRequest : ++nativeStatusRequest;
     const settingsSnapshot = JSON.stringify(oai_settings);
-    const isCurrent = () => !signal.aborted && main_api === 'openai' && settingsSnapshot === JSON.stringify(oai_settings);
+    const isCurrent = () => !signal.aborted && main_api === 'openai' && settingsSnapshot === JSON.stringify(oai_settings) && request === nativeStatusRequest;
+    const discardIfStale = () => {
+        if (isCurrent()) return false;
+        if (!readOnly && request === nativeStatusRequest) stopStatusLoading();
+        return true;
+    };
     const noValidateSources = [
         chat_completion_sources.CLAUDE,
         chat_completion_sources.AI21,
@@ -4499,7 +4507,7 @@ async function getStatusOpen({ readOnly = false, signal = abortStatusCheck.signa
         chat_completion_sources.MINIMAX,
     ];
     if (noValidateSources.includes(oai_settings.chat_completion_source)) {
-        if (readOnly) return false;
+        if (readOnly) return null;
         let status = t`Key saved; press \"Test Message\" to verify.`;
         setOnlineStatus(status);
         updateFeatureSupportFlags();
@@ -4507,12 +4515,14 @@ async function getStatusOpen({ readOnly = false, signal = abortStatusCheck.signa
     }
 
     if (oai_settings.chat_completion_source === chat_completion_sources.CUSTOM && !isValidUrl(oai_settings.custom_url)) {
+        if (readOnly) return false;
         console.debug('Invalid endpoint URL of Custom OpenAI API:', oai_settings.custom_url);
         setOnlineStatus(t`Invalid endpoint URL. Requests may fail.`);
         return resultCheckStatus();
     }
 
     if (oai_settings.chat_completion_source === chat_completion_sources.AZURE_OPENAI && !isValidUrl(oai_settings.azure_base_url)) {
+        if (readOnly) return false;
         console.debug('Invalid endpoint URL of Azure OpenAI API:', oai_settings.azure_base_url);
         setOnlineStatus(t`Invalid Azure endpoint URL. Requests may fail.`);
         return resultCheckStatus();
@@ -4538,6 +4548,7 @@ async function getStatusOpen({ readOnly = false, signal = abortStatusCheck.signa
     if (!readOnly && oai_settings.reverse_proxy && validateProxySources.includes(oai_settings.chat_completion_source)) {
         await validateReverseProxy();
     }
+    if (discardIfStale()) return null;
 
     if (oai_settings.chat_completion_source === chat_completion_sources.CUSTOM) {
         if (!readOnly) $('.model_custom_select').empty();
@@ -4586,10 +4597,9 @@ async function getStatusOpen({ readOnly = false, signal = abortStatusCheck.signa
         }
 
         const responseData = await response.json();
-        if (readOnly && !isCurrent()) return false;
+        if (discardIfStale()) return null;
         if (readOnly && 'error' in responseData) {
             setOnlineStatus('no_connection');
-            resultCheckStatus();
             return false;
         }
 
@@ -4603,7 +4613,7 @@ async function getStatusOpen({ readOnly = false, signal = abortStatusCheck.signa
             setOnlineStatus(t`Status check bypassed`);
         }
     } catch (error) {
-        if (readOnly && !isCurrent()) return false;
+        if (discardIfStale()) return null;
         console.error(error);
 
         if (readOnly || !canBypass) {
@@ -4612,11 +4622,11 @@ async function getStatusOpen({ readOnly = false, signal = abortStatusCheck.signa
     }
 
     updateFeatureSupportFlags();
-    resultCheckStatus();
+    if (!readOnly) resultCheckStatus();
     return online_status !== 'no_connection';
 }
 
-/** Foreground checks update connectivity, never model lists, profiles, sampling or secrets. */
+/** Foreground checks update connectivity only; null means verification is unsupported or obsolete. */
 export function refreshChatCompletionStatus(signal) {
     return getStatusOpen({ readOnly: true, signal });
 }

@@ -274,6 +274,7 @@ import { accountStorage } from './scripts/util/AccountStorage.js';
 import { initWelcomeScreen, openPermanentAssistantChat, openPermanentAssistantCard, getPermanentAssistantAvatar } from './scripts/welcome-screen.js';
 import { initWorkspace, openWorkspacePanel } from './scripts/workspace.js';
 import { initBrowserRecovery, reportGenerationInterrupted } from './scripts/browser-recovery.js';
+import { beginChatLoad, cancelChatLoad } from './scripts/chat-loader.js';
 import { initDataMaid } from './scripts/data-maid.js';
 import { clearItemizedPrompts, deleteItemizedPromptForMessage, deleteItemizedPrompts, findItemizedPromptSet, initItemizedPrompts, itemizedParams, itemizedPrompts, loadItemizedPrompts, promptItemize, replaceItemizedPromptText, saveItemizedPrompts, swapItemizedPrompts } from './scripts/itemized-prompts.js';
 import { getSystemMessageByType, initSystemMessages, SAFETY_CHAT, sendSystemMessage, system_message_types, system_messages } from './scripts/system-messages.js';
@@ -896,46 +897,30 @@ export function resultCheckStatus() {
  */
 export async function selectCharacterById(id, { switchMenu = true, newChat = false } = {}) {
     if (characters[id] === undefined) {
-        return;
+        return false;
     }
 
     if (isChatSaving) {
         toastr.info(t`Please wait until the chat is saved before switching characters.`, t`Your chat is still saving...`);
-        return;
+        return false;
     }
 
     if (selected_group && is_group_generating) {
-        return;
+        return false;
     }
 
     if (selected_group || String(this_chid) !== String(id)) {
-        //if clicked on a different character from what was currently selected
-        if (!is_send_press) {
-            setCharacterId(undefined);
-            setCharacterName('');
-            resetSelectedGroup();
-            await clearChat({ clearData: true });
-            cancelTtsPlay();
-            this_edit_mes_id = undefined;
-            selected_button = 'character_edit';
-            setCharacterId(id);
-            chat_metadata = {};
-            if (newChat) {
-                await unshallowCharacter(this_chid);
-                setCharacterName(characters[this_chid].name);
-                select_selected_character(this_chid);
-                await doNewChat();
-            } else {
-                await getChat();
-            }
-        }
+        if (is_send_press) return false;
+        const fileName = newChat ? `${characters[id].name} - ${humanizedDateTime()}` : characters[id].chat;
+        if (!await getChat({ characterId: id, fileName })) return false;
+        if (newChat) await createOrEditCharacter(new CustomEvent('newChat'));
     } else {
-        //if clicked on character that was already selected
         switchMenu && (selected_button = 'character_edit');
         await unshallowCharacter(this_chid);
         select_selected_character(this_chid, { switchMenu: switchMenu || newChat });
-        if (newChat) await doNewChat();
+        if (newChat) return doNewChat();
     }
+    return true;
 }
 
 function getBackBlock() {
@@ -1433,32 +1418,12 @@ export async function deleteCharacterChatByName(characterId, fileName) {
 }
 
 export async function replaceCurrentChat() {
-    await clearChat({ clearData: true });
-
-    const chatsResponse = await fetch('/api/characters/chats', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify({ avatar_url: characters[this_chid].avatar }),
-    });
-
-    if (chatsResponse.ok) {
-        const chats = Object.values(await chatsResponse.json());
-        chats.sort((a, b) => sortMoments(timestampToMoment(a.last_mes), timestampToMoment(b.last_mes)));
-
-        if (chats.length && typeof chats[0] === 'object') {
-            // pick existing chat
-            characters[this_chid].chat = chats[0].file_name.replace('.jsonl', '');
-            $('#selected_chat_pole').val(characters[this_chid].chat);
-            saveCharacterDebounced();
-            await getChat();
-        } else {
-            // start new chat
-            characters[this_chid].chat = `${name2} - ${humanizedDateTime()}`;
-            $('#selected_chat_pole').val(characters[this_chid].chat);
-            saveCharacterDebounced();
-            await getChat();
-        }
-    }
+    const response = await fetch('/api/characters/chats', { method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ avatar_url: characters[this_chid].avatar }) });
+    if (!response.ok) return false;
+    const chats = Object.values(await response.json());
+    chats.sort((a, b) => sortMoments(timestampToMoment(a.last_mes), timestampToMoment(b.last_mes)));
+    const fileName = chats.length && typeof chats[0] === 'object' ? chats[0].file_name.replace('.jsonl', '') : `${characters[this_chid].name} - ${humanizedDateTime()}`;
+    return openCharacterChat(fileName);
 }
 
 export async function showMoreMessages(messagesToLoad = null) {
@@ -1614,7 +1579,9 @@ export function cancelDebouncedChatSave() {
  * @param {object} [options] Options
  * @param {boolean} [options.clearData=false] Optionally clear the chat array's contents.
  */
-export async function clearChat({ clearData = false } = {}) {
+export async function clearChat({ clearData = false, isCurrent = () => true } = {}) {
+    await saveItemizedPrompts(getCurrentChatId());
+    if (!isCurrent()) return false;
     cancelDebouncedChatSave();
     cancelDebouncedMetadataSave();
     closeMessageEditor();
@@ -1629,10 +1596,10 @@ export async function clearChat({ clearData = false } = {}) {
         $('.zoomed_avatar[forChar]').remove();
     } else { console.debug('saw no avatars'); }
 
-    await saveItemizedPrompts(getCurrentChatId());
     itemizedPrompts.length = 0;
 
     if (clearData) chat.length = 0;
+    return true;
 }
 
 export async function deleteLastMessage() {
@@ -1740,13 +1707,13 @@ export const reloadCurrentChat = reloadChatMutex.update.bind(reloadChatMutex);
  */
 export async function reloadCurrentChatUnsafe() {
     preserveNeutralChat();
-    await clearChat({ clearData: true });
 
     if (selected_group) {
         await getGroupChat(selected_group, true);
     } else if (this_chid !== undefined) {
         await getChat();
     } else {
+        await clearChat({ clearData: true });
         resetChatState();
         restoreNeutralChat();
         await getCharacters();
@@ -3152,11 +3119,12 @@ export function getStoppingStrings(isImpersonate, isContinue, api = main_api) {
  * @prop {number} [forceChId] Character ID to use for this generation run. Works in groups only.
  * @prop {object} [jsonSchema] JSON schema to use for the structured generation. Usually requires a special instruction.
  * @prop {boolean} [removeReasoning] Parses and removes the reasoning block according to reasoning format preferences
+ * @prop {AbortSignal} [signal] Cancellation signal for the quiet request
  * @prop {boolean} [trimToSentence] Whether to trim the response to the last complete sentence
  * @param {GenerateQuietPromptParams} params Parameters for the quiet prompt generation
  * @returns {Promise<string>} Generated text. If using structured output, will contain a serialized JSON object.
  */
-export async function generateQuietPrompt({ quietPrompt = '', quietToLoud = false, skipWIAN = false, quietImage = null, quietName = null, responseLength = null, forceChId = null, jsonSchema = null, removeReasoning = true, trimToSentence = false } = {}) {
+export async function generateQuietPrompt({ quietPrompt = '', quietToLoud = false, skipWIAN = false, quietImage = null, quietName = null, responseLength = null, forceChId = null, jsonSchema = null, removeReasoning = true, trimToSentence = false, signal = undefined } = {}) {
     if (arguments.length > 0 && typeof arguments[0] !== 'object') {
         console.trace('generateQuietPrompt called with positional arguments. Please use an object instead.');
         [quietPrompt, quietToLoud, skipWIAN, quietImage, quietName, responseLength, forceChId, jsonSchema] = arguments;
@@ -3167,6 +3135,7 @@ export async function generateQuietPrompt({ quietPrompt = '', quietToLoud = fals
     try {
         /** @type {GenerateOptions} */
         const generateOptions = {
+            signal,
             quiet_prompt: quietPrompt ?? '',
             quietToLoud: quietToLoud ?? false,
             skipWIAN: skipWIAN ?? false,
@@ -7181,6 +7150,7 @@ export function deactivateSendButtons() {
 }
 
 export function resetChatState() {
+    cancelChatLoad();
     // replaces deleted charcter name with system user since it will be displayed next.
     name2 = (this_chid === undefined && neutralCharacterName) ? neutralCharacterName : systemUserName;
     //unsets expected chid before reloading (related to getCharacters/printCharacters from using old arrays)
@@ -7723,60 +7693,53 @@ export async function unshallowCharacter(characterId) {
     await getOneCharacter(avatar);
 }
 
-export async function getChat() {
+export async function getChat({ characterId = this_chid, fileName = characters[characterId]?.chat } = {}) {
+    const operation = beginChatLoad();
+    const avatar = characters[characterId]?.avatar;
     try {
-        await unshallowCharacter(this_chid);
-
-        const response = await fetch('/api/chats/get', {
-            method: 'POST',
-            headers: getRequestHeaders(),
-            cache: 'no-cache',
-            body: JSON.stringify({
-                ch_name: characters[this_chid].name,
-                file_name: characters[this_chid].chat,
-                avatar_url: characters[this_chid].avatar,
-            }),
-        });
-
-        if (!response.ok) {
-            throw new Error('Chat could not be loaded');
-        }
-
-        const data = await response.json();
-        if (Array.isArray(data) && data.length > 0) {
-            /** @type {ChatHeader} */
-            const chatHeader = data.shift();
-            chat_metadata = chatHeader?.chat_metadata ?? {};
-            chat.splice(0, chat.length, ...data);
-            chat.forEach(ensureMessageMediaIsArray);
-        } else {
-            // An empty/corrupted chat file
-            chat.splice(0, chat.length);
-            chat_metadata = {};
-        }
-        if (!chat_metadata.integrity) {
-            chat_metadata.integrity = uuidv4();
-        }
-        await getChatResult();
-        eventSource.emit(event_types.CHAT_LOADED, { detail: { id: this_chid, character: characters[this_chid] } });
-
-        // Focus on the textarea if not already focused on a visible text input
+        await unshallowCharacter(characterId);
+        const character = characters.find(value => value.avatar === avatar);
+        if (!character) return false;
+        fileName ||= `${character.name} - ${humanizedDateTime()}`;
+        const data = await operation.read('/api/chats/get', {
+            ch_name: character.name, file_name: fileName, avatar_url: character.avatar,
+        }, getRequestHeaders());
+        await waitUntilCondition(() => !isChatSaving, debounce_timeout.extended, 10);
+        const ownsCharacter = () => operation.isCurrent() && characters.some(value => value.avatar === avatar);
+        if (!ownsCharacter() || isGenerating()) return false;
+        // Only a validated read can replace the mounted conversation and owner.
+        if (!await clearChat({ clearData: true, isCurrent: ownsCharacter })) return false;
+        resetSelectedGroup();
+        setCharacterId(characters.findIndex(value => value.avatar === avatar));
+        characters[this_chid].chat = fileName;
+        selected_button = 'character_edit';
+        this_edit_mes_id = undefined;
+        cancelTtsPlay();
+        const header = data.shift();
+        chat_metadata = header?.chat_metadata ?? {};
+        chat_metadata.integrity ||= uuidv4();
+        chat.splice(0, chat.length, ...data);
+        chat.forEach(ensureMessageMediaIsArray);
+        if (!await getChatResult(operation.isCurrent)) return false;
+        await eventSource.emit(event_types.CHAT_LOADED, { detail: { id: this_chid, character: characters[this_chid] } });
+        if (!operation.isCurrent()) return false;
         const focusAtChatLoad = document.activeElement;
         delay(debounce_timeout.short).then(() => {
-            // A user may have opened a menu or editor while this delay ran.
-            if (document.activeElement !== focusAtChatLoad) return;
-            if ($(document.activeElement).is('input:visible, textarea:visible')) {
-                return;
-            }
+            if (!operation.isCurrent() || characters[this_chid]?.avatar !== character.avatar || getCurrentChatId() !== fileName) return;
+            if (document.activeElement !== focusAtChatLoad || $(document.activeElement).is('input:visible, textarea:visible')) return;
             $('#send_textarea').trigger('click').trigger('focus');
         });
+        return true;
     } catch (error) {
-        await getChatResult();
-        console.log(error);
+        if (operation.isCurrent()) {
+            console.error('Chat load failed:', error);
+            toastr.error(t`The conversation could not be loaded. Your current chat has not been replaced. Try again.`, t`Chat load failed`);
+        }
+        return false;
     }
 }
 
-async function getChatResult() {
+async function getChatResult(isCurrent = () => true) {
     name2 = characters[this_chid].name;
     let freshChat = false;
     if (chat.length === 0) {
@@ -7789,17 +7752,23 @@ async function getChatResult() {
         await saveChatConditional();
     }
     await loadItemizedPrompts(getCurrentChatId());
+    if (!isCurrent()) return false;
     await printMessages();
+    if (!isCurrent()) return false;
     select_selected_character(this_chid);
 
     await eventSource.emit(event_types.CHAT_CHANGED, (getCurrentChatId()));
+    if (!isCurrent()) return false;
     if (freshChat) await eventSource.emit(event_types.CHAT_CREATED);
+    if (!isCurrent()) return false;
 
     if (chat.length === 1) {
         const chat_id = (chat.length - 1);
         await eventSource.emit(event_types.MESSAGE_RECEIVED, chat_id, 'first_message');
+        if (!isCurrent()) return false;
         await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, chat_id, 'first_message');
     }
+    return isCurrent();
 }
 
 function getFirstMessage() {
@@ -7836,14 +7805,12 @@ function getFirstMessage() {
     return message;
 }
 
-export async function openCharacterChat(file_name) {
+export async function openCharacterChat(file_name, { characterId = this_chid } = {}) {
     await waitUntilCondition(() => !isChatSaving, debounce_timeout.extended, 10);
-    await clearChat({ clearData: true });
-    characters[this_chid].chat = file_name;
-    chat_metadata = {};
-    await getChat();
+    if (!await getChat({ characterId, fileName: file_name })) return false;
     $('#selected_chat_pole').val(file_name);
     await createOrEditCharacter(new CustomEvent('newChat'));
+    return true;
 }
 
 ////////// OPTIMZED MAIN API CHANGE FUNCTION ////////////
@@ -10711,34 +10678,19 @@ async function importFromURL(items, files) {
 }
 
 export async function doNewChat({ deleteCurrentChat = false } = {}) {
-    //Make a new chat for selected character
-    if ((!selected_group && this_chid == undefined) || menu_type == 'create') {
-        return;
-    }
-
-    //Fix it; New chat doesn't create while open create character menu
+    if ((!selected_group && this_chid == undefined) || menu_type == 'create') return false;
     await waitUntilCondition(() => !isChatSaving, debounce_timeout.extended, 10);
-    await clearChat({ clearData: true });
-
     chat_file_for_del = getCurrentChatDetails()?.sessionName;
-
-    // Make it easier to find in backups
-    if (deleteCurrentChat) {
-        await saveChatConditional();
-    }
-
+    if (deleteCurrentChat) await saveChatConditional();
     if (selected_group) {
-        await createNewGroupChat(selected_group);
-        if (deleteCurrentChat) await deleteGroupChat(selected_group, chat_file_for_del, { jumpToNewChat: false }); // don't jump, new chat was already created and jumped to above
+        if (!await createNewGroupChat(selected_group)) return false;
+        if (deleteCurrentChat) await deleteGroupChat(selected_group, chat_file_for_del, { jumpToNewChat: false });
     } else {
-        //RossAscends: added character name to new chat filenames and replaced Date.now() with humanizedDateTime;
-        chat_metadata = {};
-        characters[this_chid].chat = `${name2} - ${humanizedDateTime()}`;
-        $('#selected_chat_pole').val(characters[this_chid].chat);
-        await getChat();
-        await createOrEditCharacter(new CustomEvent('newChat'));
+        const fileName = `${characters[this_chid].name} - ${humanizedDateTime()}`;
+        if (!await openCharacterChat(fileName)) return false;
         if (deleteCurrentChat) await delChat(chat_file_for_del + '.jsonl');
     }
+    return true;
 }
 
 /**
@@ -10841,6 +10793,7 @@ export async function renameChat(oldFileName, newName) {
  * @returns {Promise<boolean>} True if the chat was successfully closed, false otherwise.
  */
 export async function closeCurrentChat() {
+    cancelChatLoad();
     if (is_send_press == false) {
         await waitUntilCondition(() => !isChatSaving, debounce_timeout.extended, 10);
         await clearChat({ clearData: true });

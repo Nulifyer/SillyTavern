@@ -11,9 +11,10 @@ import { createThumbnail, isValidUrl } from '../utils.js';
  * Generates a caption for an image using a multimodal model.
  * @param {string} base64Img Base64 encoded image
  * @param {string} prompt Prompt to use for captioning
+ * @param {AbortSignal} [signal] Cancellation signal for the caption request
  * @returns {Promise<string>} Generated caption
  */
-export async function getMultimodalCaption(base64Img, prompt) {
+export async function getMultimodalCaption(base64Img, prompt, signal) {
     const useReverseProxy =
         (['openai', 'anthropic', 'google', 'mistral', 'vertexai', 'xai', 'zai', 'moonshot'].includes(extension_settings.caption.multimodal_api))
         && extension_settings.caption.allow_reverse_proxy
@@ -152,6 +153,7 @@ export async function getMultimodalCaption(base64Img, prompt) {
         method: 'POST',
         headers: getRequestHeaders(),
         body: JSON.stringify(requestBody),
+        signal,
     });
 
     if (!apiResult.ok) {

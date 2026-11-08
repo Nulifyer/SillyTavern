@@ -1,0 +1,43 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep audited --output=/tmp/st-audit-fixes-focused2 --reporter=line,json
+(node:2361726) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 12 tests using 1 worker
+
+(node:2361799) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:2361799) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:2361799) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/12] workspace.e2e.js:4276:3 › audited character load http failure preserves transcript, owner, draft and mounted nodes
+[2/12] workspace.e2e.js:4276:3 › audited character load network failure preserves transcript, owner, draft and mounted nodes
+[3/12] workspace.e2e.js:4276:3 › audited character load payload failure preserves transcript, owner, draft and mounted nodes
+[4/12] workspace.e2e.js:4276:3 › audited character load object-array failure preserves transcript, owner, draft and mounted nodes
+[5/12] workspace.e2e.js:4350:1 › audited group load failures preserve current group, transcript and draft
+[6/12] workspace.e2e.js:4419:1 › audited unsupported provider foreground checks preserve connected status without inference
+[7/12] workspace.e2e.js:4446:1 › audited native character rename preserves active/inactive drafts and archives through reload
+[8/12] workspace.e2e.js:4526:1 › audited pending separate image writer can Stop without an image or provider failure
+[9/12] workspace.e2e.js:4585:1 › audited normal Connect discards stale server metadata after URL editing
+[10/12] workspace.e2e.js:4638:1 › audited late recorder stop and error cannot terminate a newer microphone recording
+[11/12] workspace.e2e.js:4687:1 › audited held chat load cannot reopen after an explicit native Close
+[12/12] workspace.e2e.js:4719:1 › audited late image upload cannot attach to a different character with the same story name
+  1) workspace.e2e.js:4719:1 › audited late image upload cannot attach to a different character with the same story name
+
+    Test timeout of 90000ms exceeded.
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-audit-fixes-focused2/workspace.e2e.js-audited-l-cd9f6-er-with-the-same-story-name/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-audit-fixes-focused2/workspace.e2e.js-audited-l-cd9f6-er-with-the-same-story-name/error-context.md
+
+
+  1 failed
+    workspace.e2e.js:4719:1 › audited late image upload cannot attach to a different character with the same story name
+  11 passed (2.8m)

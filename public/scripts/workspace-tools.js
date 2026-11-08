@@ -161,7 +161,8 @@ export class WorkspaceTools {
             this.status.replaceChildren(element('span', '', 'Illustration added to this story.'));
             if (document.getElementById('workspace-tools').open) document.getElementById('workspace-tools').close();
         } catch (error) {
-            this.status.replaceChildren(element('span', '', error.message), button('Image settings', 'image-settings', {}, 'workspace-back-link'));
+            if (error.name === 'AbortError') this.status.textContent = 'Image generation stopped.';
+            else this.status.replaceChildren(element('span', '', error.message), button('Image settings', 'image-settings', {}, 'workspace-back-link'));
         } finally {
             this.busy = false;
             controls.forEach(control => control.disabled = false);

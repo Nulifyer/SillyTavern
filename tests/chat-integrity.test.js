@@ -158,10 +158,43 @@ describe('trySaveChat integrity check', () => {
         expect(fs.readFileSync(chatFile, 'utf8')).toBe(toJsonl(newChat));
     });
 
-    test('skips the check when the incoming chat has no integrity slug (existing behavior)', async () => {
+    test('rejects a missing incoming integrity slug and preserves protected bytes', async () => {
         fs.writeFileSync(chatFile, toJsonl(makeChat(SLUG)));
-        const newChat = makeChat(null);
-        await save(newChat);
-        expect(fs.readFileSync(chatFile, 'utf8')).toBe(toJsonl(newChat));
+        const original = fs.readFileSync(chatFile, 'utf8');
+        await expect(save(makeChat(null))).rejects.toThrow(/integrity check failed/i);
+        expect(fs.readFileSync(chatFile, 'utf8')).toBe(original);
+    });
+});
+
+describe('strict chat reads', () => {
+    let directory;
+    beforeEach(() => { directory = fs.mkdtempSync(path.join(os.tmpdir(), 'st-chat-load-')); });
+    afterEach(() => { fs.rmSync(directory, { recursive: true, force: true }); });
+    test('missing and truly empty files are valid new conversations', () => {
+        const file = path.join(directory, 'new.jsonl');
+        expect(chats.getChatData(file)).toEqual([]);
+        fs.writeFileSync(file, '');
+        expect(chats.getChatData(file)).toEqual([]);
+    });
+    test('loads complete BOM-prefixed JSONL and trailing newlines', () => {
+        const file = path.join(directory, 'valid.jsonl');
+        fs.writeFileSync(file, BOM + toJsonl(makeChat(SLUG)) + '\n');
+        expect(chats.getChatData(file)).toEqual(makeChat(SLUG));
+    });
+    test('does not turn a partially corrupt transcript into a partial successful read', () => {
+        const file = path.join(directory, 'corrupt.jsonl');
+        fs.writeFileSync(file, toJsonl(makeChat(SLUG)) + '\n{truncated');
+        const original = fs.readFileSync(file, 'utf8');
+        expect(() => chats.getChatData(file)).toThrow(/line 3/);
+        expect(fs.readFileSync(file, 'utf8')).toBe(original);
+    });
+    test('filesystem errors other than a missing file do not mean an empty chat', () => {
+        expect(() => chats.getChatData(directory)).toThrow();
+    });
+    test('missing incoming metadata cannot erase a nonempty legacy file', async () => {
+        const file = path.join(directory, 'legacy.jsonl');
+        const original = toJsonl(makeChat(null)); fs.writeFileSync(file, original);
+        await expect(chats.trySaveChat(makeChat(null), file, false, 'synthetic', 'Char', directory)).rejects.toThrow(/integrity/);
+        expect(fs.readFileSync(file, 'utf8')).toBe(original);
     });
 });

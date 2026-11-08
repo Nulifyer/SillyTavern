@@ -66,3 +66,18 @@ Native positioning, textarea fitting and scroll ownership repair foreground
 geometry without remounting messages or changing focus. Preserve history anchors;
 follow the bottom only when already following it. Run layout repair independently
 of bounded connectivity probes, with story, visibility and Settings guards.
+
+## Audit correction, November 8, 2026
+
+Native character/group load operations validate a successful file read before
+changing mounted data or owner identity. Exact-story opens use one native
+transaction. One shared load lifetime rejects obsolete reads and explicit close
+invalidates pending work. Missing or malformed metadata is not permission to
+save over an existing nonempty file. Genuine missing/empty files remain valid new
+conversations; disk and JSONL errors are visible read failures.
+
+Character rename migrates draft/archive keys at their native state owners.
+Native status owns response identity and distinguishes unsupported verification
+from failed verification. Recording cleanup and image cancellation belong to
+one operation lifetime. Image prompts, inference, uploads and callbacks retain
+full story identity. Workspace presentation does not duplicate those policies.

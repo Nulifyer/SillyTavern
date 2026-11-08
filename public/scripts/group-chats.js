@@ -30,7 +30,6 @@ import {
     substituteParams,
     characters,
     default_avatar,
-    addOneMessage,
     clearChat,
     Generate,
     select_rm_info,
@@ -77,7 +76,6 @@ import {
     depth_prompt_role_default,
     shouldAutoContinue,
     unshallowCharacter,
-    chatElement,
     ensureMessageMediaIsArray,
 } from '../script.js';
 import { printTagList, createTagMapFromList, applyTagsOnCharacterSelect, tag_map, applyTagsOnGroupSelect, printTagFilters, tag_filter_type } from './tags.js';
@@ -87,6 +85,7 @@ import { POPUP_TYPE, Popup, callGenericPopup } from './popup.js';
 import { t } from './i18n.js';
 import { accountStorage } from './util/AccountStorage.js';
 import { compressRequest } from './request-compression.js';
+import { beginChatLoad, readChatFile } from './chat-loader.js';
 
 export {
     selected_group,
@@ -192,22 +191,12 @@ async function regenerateGroup() {
  * @param {string} chatId Chat ID
  * @returns {Promise<ChatFile>} Array of chat messages
  */
+
+/**
+ * Reads a stored group transcript without changing the foreground load lifetime.
+ */
 async function loadGroupChat(chatId) {
-    const response = await fetch('/api/chats/group/get', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify({ id: chatId }),
-    });
-
-    if (response.ok) {
-        const data = await response.json();
-        if (!Array.isArray(data)) {
-            return [];
-        }
-        return data;
-    }
-
-    return [];
+    return readChatFile('/api/chats/group/get', { id: chatId }, getRequestHeaders(), undefined, { allowHeaderless: true });
 }
 
 /**
@@ -252,71 +241,71 @@ async function validateGroup(group) {
  * @param {boolean} reload - Whether to reload the group chat after loading.
  * @returns {Promise<void>} A promise that resolves when the chat messages have been loaded.
  */
-export async function getGroupChat(groupId, reload = false) {
-    const group = groups.find((x) => x.id === groupId);
-    if (!group) {
-        console.warn('Group not found', groupId);
-        return;
-    }
-
-    // Run validation before any loading
-    await validateGroup(group);
-    await unshallowGroupMembers(groupId);
-
-    const chat_id = group.chat_id;
-    const data = await loadGroupChat(chat_id);
-    const metadata = data?.[0]?.chat_metadata ?? {};
-    const freshChat = !metadata.tainted && (!Array.isArray(data) || !data.length);
-
-    // Remove chat file header if present
-    if (Array.isArray(data) && data.length && Object.hasOwn(data[0], 'chat_metadata')) {
-        data.shift();
-    }
-
-    // Add integrity slug if missing
-    if (!metadata.integrity) {
-        metadata.integrity = uuidv4();
-    }
-
-    await loadItemizedPrompts(getCurrentChatId());
-
-    if (group && Array.isArray(group.members) && freshChat) {
-        chat.splice(0, chat.length);
-        chatElement.find('.mes').remove();
-        for (let member of group.members) {
-            const character = characters.find(x => x.avatar === member || x.name === member);
-            if (!character) {
-                continue;
+export async function getGroupChat(groupId, reload = false, { chatId } = {}) {
+    const group = groups.find(x => x.id === groupId);
+    if (!group) return false;
+    const operation = beginChatLoad();
+    chatId ||= group.chat_id || humanizedDateTime();
+    try {
+        await validateGroup(group);
+        await unshallowGroupMembers(groupId);
+        const data = await operation.read('/api/chats/group/get', { id: chatId }, getRequestHeaders(), { allowHeaderless: true });
+        const metadata = data[0]?.chat_metadata ?? {};
+        const freshChat = !metadata.tainted && data.length === 0;
+        if (data.length && Object.hasOwn(data[0], 'chat_metadata')) data.shift();
+        metadata.integrity ||= uuidv4();
+        await waitUntilCondition(() => !isChatSaving, debounce_timeout.extended, 10);
+        const ownsGroup = () => operation.isCurrent() && groups.find(value => value.id === groupId) === group;
+        if (!ownsGroup() || is_send_press || is_group_generating) return false;
+        if (!await clearChat({ clearData: true, isCurrent: ownsGroup })) return false;
+        setCharacterId(undefined);
+        setCharacterName('');
+        selected_group = groupId;
+        group.chat_id = chatId;
+        group.date_last_chat = Date.now();
+        group.chats ??= [];
+        if (!group.chats.includes(chatId)) group.chats.push(chatId);
+        setEditedMessageId(undefined);
+        cancelTtsPlay();
+        updateChatMetadata(metadata, true);
+        // Greeting hooks/macros run with the successfully loaded group as owner.
+        if (freshChat) {
+            for (const avatar of group.members) {
+                const character = characters.find(x => x.avatar === avatar || x.name === avatar);
+                if (!character) continue;
+                const message = await getFirstCharacterMessage(character);
+                if (!operation.isCurrent()) return false;
+                if (message?.mes) data.push(message);
             }
-
-            const mes = await getFirstCharacterMessage(character);
-
-            // No first message
-            if (!(mes?.mes)) {
-                continue;
-            }
-
-            chat.push(mes);
-            await eventSource.emit(event_types.MESSAGE_RECEIVED, (chat.length - 1), 'first_message');
-            addOneMessage(mes);
-            await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, (chat.length - 1), 'first_message');
         }
-        await saveGroupChat(groupId, false);
-    } else if (Array.isArray(data) && data.length) {
         chat.splice(0, chat.length, ...data);
         chat.forEach(ensureMessageMediaIsArray);
-        chatElement.find('.mes').remove();
+        await loadItemizedPrompts(getCurrentChatId());
+        if (!operation.isCurrent()) return false;
         await printMessages();
+        if (!operation.isCurrent()) return false;
+        select_group_chats(groupId, reload);
+        await eventSource.emit(event_types.CHAT_CHANGED, getCurrentChatId());
+        if (freshChat) {
+            for (let index = 0; index < chat.length; index++) {
+                if (!operation.isCurrent()) return false;
+                await eventSource.emit(event_types.MESSAGE_RECEIVED, index, 'first_message');
+                if (!operation.isCurrent()) return false;
+                await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, index, 'first_message');
+            }
+            if (!operation.isCurrent()) return false;
+            await saveGroupChat(groupId, false);
+            if (!operation.isCurrent()) return false;
+            await eventSource.emit(event_types.GROUP_CHAT_CREATED);
+        }
+        return true;
+    } catch (error) {
+        if (operation.isCurrent()) {
+            console.error('Group chat load failed:', error);
+            toastr.error(t`The conversation could not be loaded. Your current chat has not been replaced. Try again.`, t`Chat load failed`);
+        }
+        return false;
     }
-
-    updateChatMetadata(metadata, true);
-
-    if (reload) {
-        select_group_chats(groupId, true);
-    }
-
-    await eventSource.emit(event_types.CHAT_CHANGED, getCurrentChatId());
-    if (freshChat) await eventSource.emit(event_types.GROUP_CHAT_CREATED);
 }
 
 /**
@@ -2018,40 +2007,13 @@ function updateFavButtonState(state) {
  * @returns {Promise<boolean>} Whether the group was opened
  */
 export async function openGroupById(groupId, { newChat = false } = {}) {
-    if (isChatSaving) {
-        toastr.info(t`Please wait until the chat is saved before switching characters.`, t`Your chat is still saving...`);
-        return false;
-    }
-
-    if (!groups.find(x => x.id === groupId)) {
-        console.log('Group not found', groupId);
-        return false;
-    }
-
-    if (!is_send_press && !is_group_generating) {
-        select_group_chats(groupId, false);
-
-        if (selected_group !== groupId) {
-            groupChatQueueOrder = new Map();
-            setCharacterId(undefined);
-            setCharacterName('');
-            resetSelectedGroup();
-            await clearChat({ clearData: true });
-            cancelTtsPlay();
-            selected_group = groupId;
-            setEditedMessageId(undefined);
-            updateChatMetadata({}, true);
-            if (newChat || !groups.find(group => group.id === groupId).chat_id) await createNewGroupChat(groupId);
-            else await getGroupChat(groupId);
-            return true;
-        }
-        if (newChat) {
-            await createNewGroupChat(groupId);
-            return true;
-        }
-    }
-
-    return false;
+    if (isChatSaving || is_send_press || is_group_generating) return false;
+    const group = groups.find(x => x.id === groupId);
+    if (!group) return false;
+    if (selected_group === groupId && !newChat) { select_group_chats(groupId, false); return true; }
+    const loaded = newChat || !group.chat_id ? await createNewGroupChat(groupId) : await getGroupChat(groupId);
+    if (loaded) groupChatQueueOrder = new Map();
+    return loaded;
 }
 
 /**
@@ -2156,19 +2118,10 @@ export async function createGroupWithMembers(name, members) {
  */
 export async function createNewGroupChat(groupId) {
     const group = groups.find(x => x.id === groupId);
-
-    if (!group) {
-        return;
-    }
-
-    await clearChat({ clearData: true });
-    const newChatName = humanizedDateTime();
-    group.chats.push(newChatName);
-    group.chat_id = newChatName;
-    updateChatMetadata({}, true);
-
+    if (!group) return false;
+    if (!await getGroupChat(groupId, false, { chatId: humanizedDateTime() })) return false;
     await editGroup(group.id, true, false);
-    await getGroupChat(group.id);
+    return true;
 }
 
 /**
@@ -2212,18 +2165,10 @@ export async function getGroupPastChats(groupId) {
 export async function openGroupChat(groupId, chatId) {
     await waitUntilCondition(() => !isChatSaving, debounce_timeout.extended, 10);
     const group = groups.find(x => x.id === groupId);
-
-    if (!group || !group.chats.includes(chatId)) {
-        return;
-    }
-
-    await clearChat({ clearData: true });
-    group.chat_id = chatId;
-    group.date_last_chat = Date.now();
-    updateChatMetadata({}, true);
-
+    if (!group?.chats.includes(chatId)) return false;
+    if (!await getGroupChat(groupId, false, { chatId })) return false;
     await editGroup(groupId, true, false);
-    await getGroupChat(groupId);
+    return true;
 }
 
 /**

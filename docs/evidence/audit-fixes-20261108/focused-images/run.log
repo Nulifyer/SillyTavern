@@ -1,0 +1,20 @@
+npm notice run test:e2e
+npm notice run playwright test workspace.e2e.js --workers=1 --grep audited pending separate|audited late image upload --output=/tmp/st-audit-fixes-focused3 --reporter=line,json
+(node:2366843) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:2366873) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:2366873) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:2366873) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] workspace.e2e.js:4526:1 › audited pending separate image writer can Stop without an image or provider failure
+[2/2] workspace.e2e.js:4719:1 › audited late image upload cannot attach to a different character with the same story name
+  2 passed (16.6s)

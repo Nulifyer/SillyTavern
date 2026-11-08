@@ -1,0 +1,25 @@
+{
+  "sourceFull": {
+    "startTime": "2026-11-08T12:41:13.864Z",
+    "duration": 668190.715,
+    "expected": 86,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "finalStatusFocused": {
+    "startTime": "2026-11-08T12:54:29.084Z",
+    "duration": 11413.915,
+    "expected": 2,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "unitTests": 478,
+  "unitSuites": 24,
+  "runtimeLintErrors": 0,
+  "testLintErrors": 0,
+  "testLintWarnings": 51,
+  "sourceRunPrecededFinalStatusRevisionGuard": true,
+  "productionAccessed": false
+}
