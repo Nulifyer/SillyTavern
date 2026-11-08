@@ -1,0 +1,402 @@
+{
+  "slug": "spicychat",
+  "product": "SpicyChat",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://spicychat.ai/",
+  "evidenceBoundary": {
+    "method": "Current public primary documentation and support pages only; no first-hand application or device interaction.",
+    "identityVerification": "Root-domain landing page identifies NextDay AI USA Inc.; same-domain documentation links to spicychat.ai/download and support.spicychat.ai. These corroborate first-party publication; no independent ownership audit.",
+    "identityEvidenceUrls": [
+      "https://spicychat.ai/pages",
+      "https://docs.spicychat.ai/support.md",
+      "https://docs.spicychat.ai/advanced/mobile-apps.md"
+    ],
+    "notPerformed": [
+      "Account creation or sign-in",
+      "Purchases",
+      "Chat or image generation; model inference",
+      "Preview or browser automation",
+      "Device, performance or accessibility testing",
+      "Production access",
+      "Other-product research or fork implementation verification"
+    ],
+    "limits": "Documented availability is not runtime verification. Benefits are design inferences. Unknown means not established, not absent. No price or model-quality comparison."
+  },
+  "sources": [
+    {
+      "url": "https://spicychat.ai/pages",
+      "title": "SpicyChat landing page",
+      "supports": "Root-domain branding and NextDay AI USA Inc. ownership footer; marketing only for product scale."
+    },
+    {
+      "url": "https://docs.spicychat.ai/support.md",
+      "title": "Support",
+      "supports": "Documentation links to support.spicychat.ai and spicychat.ai/portal, supporting first-party identity."
+    },
+    {
+      "url": "https://docs.spicychat.ai/product-guides/characters.md",
+      "title": "Characters",
+      "supports": "Filtered discovery, profiles, creator-controlled definition visibility."
+    },
+    {
+      "url": "https://docs.spicychat.ai/product-guides/creating-chatbots.md",
+      "title": "Creating Chatbots",
+      "supports": "Separate premise fields, visibility controls, advanced disclosure."
+    },
+    {
+      "url": "https://docs.spicychat.ai/product-guides/character-chats.md",
+      "title": "Character Chats",
+      "supports": "Saved-chat access, clones, edits, retry variations, conversation images."
+    },
+    {
+      "url": "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md",
+      "title": "Memory Manager",
+      "supports": "Memory corrections, pinning, entry limit, subscriber access, irreversible deletion."
+    },
+    {
+      "url": "https://docs.spicychat.ai/product-guides/rulebooks",
+      "title": "Rulebooks",
+      "supports": "Visible meters, behavioral influence, templates."
+    },
+    {
+      "url": "https://docs.spicychat.ai/advanced/generation-settings.md",
+      "title": "Generation Settings",
+      "supports": "Hosted model choice and subscription-dependent sampling controls."
+    },
+    {
+      "url": "https://docs.spicychat.ai/archive/openai-api",
+      "title": "OpenAI API, archived",
+      "supports": "Explicit November 17, 2025 sunset warning supersedes remaining historical setup instructions."
+    },
+    {
+      "url": "https://support.spicychat.ai/support/solutions/articles/153000260635-how-spicychat-generates-replies",
+      "title": "How SpicyChat generates messages",
+      "supports": "Generation input categories and conversation independence; no full prompt inspector established."
+    },
+    {
+      "url": "https://docs.spicychat.ai/product-guides/lorebook",
+      "title": "Lorebook",
+      "supports": "Keyword context injection, character-wide attachment, JSON import and single-lorebook limit."
+    },
+    {
+      "url": "https://docs.spicychat.ai/advanced/importing-characters.md",
+      "title": "Importing Characters",
+      "supports": "JSON/PNG character intake and fields requiring manual completion."
+    },
+    {
+      "url": "https://docs.spicychat.ai/product-guides/rulebooks/import-export-and-ai",
+      "title": "Import, export and AI",
+      "supports": "Rulebook JSON export, import preview and validation."
+    },
+    {
+      "url": "https://docs.spicychat.ai/product-guides/group-chat.md",
+      "title": "Group Chat",
+      "supports": "Group size, speaker selection, context scope, local drafts and media exclusions."
+    },
+    {
+      "url": "https://docs.spicychat.ai/product-guides/premium-features/text-to-speech.md",
+      "title": "Text-to-Speech",
+      "supports": "Voice selection, playback and narration toggle; subscription requirement."
+    },
+    {
+      "url": "https://docs.spicychat.ai/advanced/mobile-apps.md",
+      "title": "Mobile Apps",
+      "supports": "Official Android direct APK, iOS web home-screen route, no current native iOS app."
+    },
+    {
+      "url": "https://support.spicychat.ai/support/solutions/articles/153000260620-my-chat-history-won-t-load",
+      "title": "My chat history won't load",
+      "supports": "Acknowledged history-load issue, workaround, refresh advice and support escalation."
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Filtered discovery and premise profiles, with advanced creation fields disclosed separately.",
+      "benefitInference": "May reduce setup and premise uncertainty for newcomers.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/characters.md",
+        "https://docs.spicychat.ai/product-guides/creating-chatbots.md"
+      ]
+    },
+    {
+      "mechanism": "Named full or partial clones preserve the original; replies support edits and selectable retries.",
+      "benefitInference": "May lower the cost of trying an alternate scene.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/character-chats.md"
+      ]
+    },
+    {
+      "mechanism": "Individual extracted or manual memories can be edited and pinned.",
+      "benefitInference": "May make incorrect story facts easier to repair.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md"
+      ]
+    },
+    {
+      "mechanism": "Rulebook meters and status lines connect story state to behavioral rules.",
+      "benefitInference": "May make game and relationship progression understandable.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/rulebooks"
+      ]
+    }
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Search and tag exclusion, premise profiles, creation fields and JSON/PNG import. Definitions may be hidden.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/characters.md",
+        "https://docs.spicychat.ai/product-guides/creating-chatbots.md",
+        "https://docs.spicychat.ai/advanced/importing-characters.md"
+      ]
+    },
+    "storyOrganization": {
+      "status": "documented",
+      "note": "Main Chats shows latest per character; older exact conversations are under Saved Chats within that character.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/character-chats.md"
+      ]
+    },
+    "editRetryBranch": {
+      "status": "documented",
+      "note": "Character-message editing, retry variations, and titled full/partial clones. Branch graph or merge not established.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/character-chats.md"
+      ]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Subscriber memory editing/pinning; 250-character entries; deletion cannot be undone. Keyword lore scans the last four messages; one lorebook per character, with edits affecting existing chats.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md",
+        "https://docs.spicychat.ai/product-guides/lorebook"
+      ]
+    },
+    "promptTransparency": {
+      "status": "documented",
+      "note": "Partial only: input categories, optional visible definitions and editable memories. Complete assembled-prompt inspection not established.",
+      "evidenceUrls": [
+        "https://support.spicychat.ai/support/solutions/articles/153000260635-how-spicychat-generates-replies",
+        "https://docs.spicychat.ai/product-guides/characters.md",
+        "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md"
+      ]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "Hosted model selection. OpenAI API-key feature sunset November 17, 2025; arbitrary external endpoints unknown.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/generation-settings.md",
+        "https://docs.spicychat.ai/archive/openai-api"
+      ]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Temperature, Top-P, Top-K and response limits, with subscription restrictions; broader sampler control unknown.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/generation-settings.md"
+      ]
+    },
+    "groupRoleplay": {
+      "status": "documented",
+      "note": "2–10 bots, manual speaker choice, premium automatic choice. Context includes user persona and responding bot persona plus history/memories. No TTS, chat image generation or image sending.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/group-chat.md"
+      ]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "Subscription-dependent conversation images; selectable TTS voices, playback and narration. These media functions exclude groups.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/character-chats.md",
+        "https://docs.spicychat.ai/product-guides/premium-features/text-to-speech.md",
+        "https://docs.spicychat.ai/product-guides/group-chat.md"
+      ]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Official Android APK outside Google Play; no current native iOS app. iOS home-screen web route; retained old iOS app is unmaintained. No device tests.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/mobile-apps.md"
+      ]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Partial: character JSON/PNG import, lorebook JSON import, Rulebook JSON import/export. Chat export and lossless outbound character transfer unknown.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/importing-characters.md",
+        "https://docs.spicychat.ai/product-guides/lorebook",
+        "https://docs.spicychat.ai/product-guides/rulebooks/import-export-and-ai"
+      ]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "No self-hosting distribution or deployment workflow established in the reviewed sources. Hosted operation does not prove self-hosting is unavailable.",
+      "evidenceUrls": [
+        "https://spicychat.ai/pages",
+        "https://docs.spicychat.ai/advanced/generation-settings.md"
+      ]
+    }
+  },
+  "tradeoffs": [
+    {
+      "note": "Latest-chat navigation adds retrieval steps for older stories.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/character-chats.md"
+      ]
+    },
+    {
+      "note": "Support acknowledges history loading failures with many saves; starting a fresh chat does not retrieve the desired story.",
+      "evidenceUrls": [
+        "https://support.spicychat.ai/support/solutions/articles/153000260620-my-chat-history-won-t-load"
+      ]
+    },
+    {
+      "note": "Some expert controls require subscriptions. Historical OpenAI-key setup is retired.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/generation-settings.md",
+        "https://docs.spicychat.ai/archive/openai-api"
+      ]
+    },
+    {
+      "note": "Creators can hide character definitions; documented prompt input categories do not establish full prompt visibility.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/characters.md",
+        "https://support.spicychat.ai/support/solutions/articles/153000260635-how-spicychat-generates-replies"
+      ]
+    },
+    {
+      "note": "Memory deletion has no restore; pinning does not establish model compliance.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md"
+      ]
+    },
+    {
+      "note": "Lorebook attachment applies across a character's chats, so edits can affect existing stories.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/lorebook"
+      ]
+    },
+    {
+      "note": "Character imports require manual tags, visibility and advanced fields.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/importing-characters.md"
+      ]
+    },
+    {
+      "note": "Group drafts are browser/device-local and lost on cache clearing; group media exclusions limit parity with individual chat.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/group-chat.md"
+      ]
+    },
+    {
+      "note": "Android installation requires direct APK; no maintained native iOS route is documented.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/mobile-apps.md"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "note": "Full assembled-prompt inspector and exact per-response context visibility.",
+      "evidenceUrls": [
+        "https://support.spicychat.ai/support/solutions/articles/153000260635-how-spicychat-generates-replies",
+        "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md"
+      ]
+    },
+    {
+      "note": "Other external endpoint connections after the OpenAI-key retirement.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/archive/openai-api",
+        "https://docs.spicychat.ai/advanced/generation-settings.md"
+      ]
+    },
+    {
+      "note": "Lossless chat export, character export and full-account migration. Rulebook export alone does not establish these.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/importing-characters.md",
+        "https://docs.spicychat.ai/product-guides/rulebooks/import-export-and-ai"
+      ]
+    },
+    {
+      "note": "Self-hosting, offline operation and deployable source availability.",
+      "evidenceUrls": [
+        "https://spicychat.ai/pages"
+      ]
+    },
+    {
+      "note": "Runtime reliability, device usability, accessibility, model quality and Rulebook update accuracy were not tested.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/mobile-apps.md",
+        "https://docs.spicychat.ai/product-guides/rulebooks",
+        "https://support.spicychat.ai/support/solutions/articles/153000260620-my-chat-history-won-t-load"
+      ]
+    }
+  ],
+  "reusablePatterns": [
+    {
+      "proposal": "Show premise, greeting and definition visibility beside the start action.",
+      "benefitInference": "May reduce uncertainty about the scene and hidden instructions.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/characters.md",
+        "https://docs.spicychat.ai/product-guides/creating-chatbots.md"
+      ]
+    },
+    {
+      "proposal": "Offer named full/partial clones with a clearly identified source.",
+      "benefitInference": "May support story experiments with a recoverable original.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/character-chats.md"
+      ]
+    },
+    {
+      "proposal": "Expose memory corrections in the story and distinguish extracted from user-pinned facts.",
+      "benefitInference": "May improve user control of continuity.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md"
+      ]
+    },
+    {
+      "proposal": "Consider optional story meters with readable rules and inspectable changes.",
+      "benefitInference": "May explain story progression.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/rulebooks"
+      ]
+    },
+    {
+      "proposal": "Preview imported fields and identify manual completion needs.",
+      "benefitInference": "May make partial migration and validation failures understandable.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/advanced/importing-characters.md",
+        "https://docs.spicychat.ai/product-guides/rulebooks/import-export-and-ai"
+      ]
+    }
+  ],
+  "doNotCopy": [
+    {
+      "note": "Latest-only top-level conversation navigation makes older exact stories harder to find.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/character-chats.md"
+      ]
+    },
+    {
+      "note": "Irreversible memory deletion needs a recovery affordance before adopting an equivalent design.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md"
+      ]
+    },
+    {
+      "note": "Browser-only drafts need explicit persistence warnings and an export/recovery path.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/group-chat.md"
+      ]
+    },
+    {
+      "note": "Do not equate hidden definitions or editable memory snippets with complete prompt transparency.",
+      "evidenceUrls": [
+        "https://docs.spicychat.ai/product-guides/characters.md",
+        "https://support.spicychat.ai/support/solutions/articles/153000260635-how-spicychat-generates-replies",
+        "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md"
+      ]
+    }
+  ]
+}

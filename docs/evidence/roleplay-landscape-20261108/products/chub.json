@@ -1,0 +1,234 @@
+{
+  "slug": "chub",
+  "product": "Chub AI",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://chub.ai/",
+  "evidenceBoundary": "Public official documentation and repository descriptions only. GitHub verifies CharHubAI controls chub.ai; stage-template links to docs.chub.ai. Direct command-line access to chub.ai returned \"This service is not available in your country.\" No account, purchases, inference calls, preview/browser automation, production access, or hands-on chat/device tests. Benefits are explicitly untested design inferences. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://github.com/CharHubAI",
+      "title": "Chub AI · GitHub",
+      "supports": [
+        "Verified organization control of chub.ai",
+        "Official product spelling"
+      ]
+    },
+    {
+      "url": "https://github.com/CharHubAI/stage-template",
+      "title": "CharHubAI/stage-template",
+      "supports": [
+        "Official repository link to docs.chub.ai",
+        "Stage extension scope",
+        "README mobile platform claim only, current availability unverified"
+      ]
+    },
+    {
+      "url": "https://docs.chub.ai/docs/the-basics/character-creation",
+      "title": "Character Creation",
+      "supports": [
+        "Premise metadata versus model definitions",
+        "Required description and initial message",
+        "Alternate greetings",
+        "Use V2 Spec. prerequisite for character-specific instructions"
+      ]
+    },
+    {
+      "url": "https://docs.chub.ai/docs/the-basics/just-chatting",
+      "title": "Just Chatting",
+      "supports": [
+        "Start chat",
+        "All Chats and chat names",
+        "Full chat tree",
+        "User chat character edits",
+        "Model-specific presets",
+        "Chat Memory",
+        "Add characters",
+        "JSONL, PNG and text export",
+        "Imagine and TTS configuration",
+        "Public sharing scope"
+      ]
+    },
+    {
+      "url": "https://docs.chub.ai/docs/the-basics/api-connections",
+      "title": "API Connections",
+      "supports": [
+        "External API and local-model connections",
+        "System, post-history and impersonation prompts",
+        "Generation parameters",
+        "Official-key recommendation and third-party proxy warnings"
+      ]
+    },
+    {
+      "url": "https://docs.chub.ai/docs/advanced-setups/prompting",
+      "title": "Prompting",
+      "supports": [
+        "Prompt components and ordering",
+        "Limited context history",
+        "Macros",
+        "Assistant prefill API error warning"
+      ]
+    },
+    {
+      "url": "https://docs.chub.ai/docs/advanced-setups/lorebooks",
+      "title": "Lorebooks",
+      "supports": [
+        "Keyword activation",
+        "Scan depth and token budget",
+        "Entry priority and recursive scanning",
+        "Use V2 Spec. prerequisite for characterbooks"
+      ]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Separate reader-facing metadata, scenario, definitions and alternate greetings.",
+      "benefitInference": "May help readers understand the premise and select an opening without adding creator notes to the prompt.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/character-creation"
+      ]
+    },
+    {
+      "mechanism": "Full chat tree plus named conversations listed per character.",
+      "benefitInference": "May help writers retain competing continuations and distinguish separate runs.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/just-chatting"
+      ]
+    },
+    {
+      "mechanism": "Editable Chat Memory and keyword-triggered lore with budgets and priorities.",
+      "benefitInference": "May let writers correct remembered facts and allocate limited context to relevant setting information. No continuity guarantee was tested.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/just-chatting",
+        "https://docs.chub.ai/docs/advanced-setups/lorebooks"
+      ]
+    },
+    {
+      "mechanism": "Separate Configuration, Secrets and Character Settings; model-specific presets and user chat edits.",
+      "benefitInference": "May reduce accidental changes to the shared character and make model-dependent settings reusable. Exact cross-chat edit propagation is untested.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/just-chatting"
+      ]
+    }
+  ],
+  "tradeoffs": [
+    "Documented connection setup, prompt fields and generation parameters may burden first use; this is an untested design inference.",
+    "Character-specific system/post-history instructions and characterbooks depend on Use V2 Spec.; disabled prerequisites can affect expected behavior.",
+    "Prompting warns assistant prefill may cause API errors. Recovery and failed-input retention were not established.",
+    "Share/Unshare Chat creates an anonymized link and a shared public chat entry. This is public distribution, not established confidentiality.",
+    "JSONL export labeled for SillyTavern is documented, but migration fidelity and full branch preservation were not tested.",
+    "Local model connections and a stage extension repository do not establish self-hosting of the full application.",
+    "Direct command-line access to chub.ai was geographically blocked in this research environment. Global availability rules were not established."
+  ],
+  "unknowns": [
+    "Current deployed parity with the documentation; documentation image filenames include 2023 and 2025 dates.",
+    "Current mobile app availability, narrow-screen behavior, touch operation, accessibility and keyboard behavior.",
+    "Exact outgoing request/context inspector and visibility into which lore entries were actually sent.",
+    "Message editing and retry mechanics; full historical-state recovery including settings and memory.",
+    "Character and chat import steps, bulk export, branch and metadata preservation, migration round-trip fidelity.",
+    "Failure recovery, retention of failed input and service reliability.",
+    "Current voice catalog, dictation and image-provider controls.",
+    "Full Chub application self-hosting and exact propagation of user chat character edits across separate stories."
+  ],
+  "reusablePatterns": [
+    "Proposal: place a readable premise and selectable opening beside the start-story action.",
+    "Proposal: expose existing branch operations through a navigable tree with story names.",
+    "Proposal: show an editable current summary and identify the history it covers.",
+    "Proposal: label preset ownership, connection settings and character-edit scope at the decision point."
+  ],
+  "doNotCopy": [
+    "Do not hide effects of Use V2 Spec. prerequisites from affected fields.",
+    "Do not imply anonymized public sharing is private.",
+    "Do not equate local-model connections or an extension SDK with application self-hosting.",
+    "Do not treat these proposals as evidence that the fork lacks its existing native capabilities."
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Create Character separates metadata and definitions; description and initial message are required. Alternate greetings are documented. Exact character import workflow not established.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/character-creation"
+      ]
+    },
+    "storyOrganization": {
+      "status": "documented",
+      "note": "New Chat, All Chats for the current character, editable chat names and View Full Chat Tree are documented. Exact historical-state restoration and global archive organization unverified.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/just-chatting"
+      ]
+    },
+    "editRetryBranch": {
+      "status": "documented",
+      "note": "Full chat branching and revisiting alternate swipes are documented. User chat character definitions can be changed. Message editing and retry controls were not established.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/just-chatting"
+      ]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Manual/generated Chat Memory plus lorebook keyword activation, scan depth, token budget, priority and recursive scanning. Characterbooks require Use V2 Spec.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/just-chatting",
+        "https://docs.chub.ai/docs/advanced-setups/lorebooks"
+      ]
+    },
+    "promptTransparency": {
+      "status": "documented",
+      "note": "Prompt sections, context-window limit, macros and ordering are explained. This does not establish an exact outgoing request inspector.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/advanced-setups/prompting"
+      ]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "OpenAI, Anthropic, Mars, Kobold/Ooba, OpenRouter, Google and NovelAI connections are listed. Current integration operation untested.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/api-connections"
+      ]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Model-specific presets; system/post-history/impersonation prompts; temperature, Top K, Top P and penalties; prompt macros and prefill. Provider caveats apply.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/api-connections",
+        "https://docs.chub.ai/docs/advanced-setups/prompting",
+        "https://docs.chub.ai/docs/the-basics/just-chatting"
+      ]
+    },
+    "groupRoleplay": {
+      "status": "documented",
+      "note": "Chat Settings can add characters. Turn scheduling and large-group behavior unverified.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/just-chatting"
+      ]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "Imagine image generation inside chat and text-to-speech configuration are documented. Voice catalog, dictation and image controls unknown.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/just-chatting"
+      ]
+    },
+    "mobile": {
+      "status": "marketing-only",
+      "note": "Official stage-template README claims iOS/Android platform support. No current distribution or mobile usability verification; documentation image filenames include older dates.",
+      "evidenceUrls": [
+        "https://github.com/CharHubAI/stage-template"
+      ]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Chat export as JSONL labeled SillyTavern, PNG or text. Exact import procedures, bulk movement and branch/metadata fidelity unknown.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/just-chatting"
+      ]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "Kobold/Ooba permits connecting a locally hosted model; stage-template is an extension template. Neither establishes self-hosting the full Chub application.",
+      "evidenceUrls": [
+        "https://docs.chub.ai/docs/the-basics/api-connections",
+        "https://github.com/CharHubAI/stage-template"
+      ]
+    }
+  }
+}

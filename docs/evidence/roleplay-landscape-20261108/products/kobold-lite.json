@@ -1,0 +1,179 @@
+{
+  "slug": "kobold-lite",
+  "product": "KoboldAI Lite",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://lite.koboldai.net/",
+  "evidenceBoundary": "Public primary documentation and source inspection only. Official KoboldAI FAQ explicitly identifies the hosted domain and LostRuins repository. No accounts, purchases, inference calls, browser automation, device tests or production access. Source pinned to f53b6561137e3bf1f3ebcab91e704a8c585b1617, index.html LITEVER = 354. Deployed and bundled versions were not matched to this commit. Benefits are reviewer inferences. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://github.com/LostRuins/lite.koboldai.net",
+      "title": "KoboldAI Lite repository and README",
+      "supports": ["Product spelling", "Single-page frontend", "KoboldCpp bundling", "Backend connections and portability claims"]
+    },
+    {
+      "url": "https://koboldai.com/Koboldai.net/",
+      "title": "Official KoboldAI.net FAQ",
+      "supports": ["Explicit source and domain identity", "Hosted-service versus interface distinction", "Browser-storage loss warning", "Provider and Horde privacy limits", "Disclosed CORS proxy", "No direct cloud-drive support", "Custom OpenAI-compatible endpoints"]
+    },
+    {
+      "url": "https://koboldai.com/Guides/Kobold_Lite/KoboldLite_Main/",
+      "title": "Kobold Lite main interface guide",
+      "supports": ["AI, Settings and Context task grouping", "Sample scenarios", "New-session reset choices", "Save/load entry point", "Standalone index.html use"]
+    },
+    {
+      "url": "https://koboldai.com/KoboldAILite/",
+      "title": "Official KoboldAI Lite feature documentation",
+      "supports": ["Modes and style choices", "Samplers and presets", "Memory, Author's Note and World Info", "Edit, Back, Redo and Retry", "Autosave and settings in saves", "Supported import formats"]
+    },
+    {
+      "url": "https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html",
+      "title": "KoboldAI Lite pinned index.html source, LITEVER 354",
+      "supports": ["preview_temp_scenario and roleplay creator fields", "show_last_req request and response inspection", "clone_new_branch and switch_branch conversation-text scope", "max_branches = 8", "Browser, server and scenario slots", "Group participant handling", "Image and voice configuration", "Narrow-screen CSS"]
+    },
+    {
+      "url": "https://raw.githubusercontent.com/LostRuins/lite.koboldai.net/f53b6561137e3bf1f3ebcab91e704a8c585b1617/manifest.json",
+      "title": "Pinned KoboldAI Lite PWA manifest",
+      "supports": ["Standalone display", "portrait-primary orientation", "Mobile intent, not tested mobile usability"]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Scenario selection previews premise and mode; creator separates persona, scenario and greeting; card import is offered alongside creation.",
+      "benefitInference": "May reduce uncertainty before starting and help authors create a premise without editing every prompt setting.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L13017", "https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L34808"]
+    },
+    {
+      "mechanism": "Edit, Back, Redo and Retry plus selectable conversation branches, capped by max_branches = 8.",
+      "benefitInference": "May let writers try alternative responses and plot directions while retaining another conversation path.",
+      "evidenceUrls": ["https://koboldai.com/KoboldAILite/#what-are-the-buttons-above-the-user-text-input-box", "https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L30462"]
+    },
+    {
+      "mechanism": "Explicit memory insertion mechanisms and a last-request payload/response inspector.",
+      "benefitInference": "May help writers repair continuity and investigate unexpected model behavior.",
+      "evidenceUrls": ["https://koboldai.com/KoboldAILite/#how-do-i-make-the-ai-remember-things", "https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L14067"]
+    },
+    {
+      "mechanism": "Multiple import formats, downloadable saves with optional settings, browser/server slots and standalone frontend distribution.",
+      "benefitInference": "May reduce migration and repeated setup work when continuing a saved conversation.",
+      "evidenceUrls": ["https://koboldai.com/KoboldAILite/", "https://github.com/LostRuins/lite.koboldai.net", "https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L16859"]
+    }
+  ],
+  "tradeoffs": [
+    {
+      "note": "Broad expert controls require configuration choices. Grouping into AI, Settings and Context is documented, but novice discoverability was not tested.",
+      "evidenceUrls": ["https://koboldai.com/KoboldAILite/", "https://koboldai.com/Guides/Kobold_Lite/KoboldLite_Main/"]
+    },
+    {
+      "note": "Branch functions copy and switch gametext_arr. They do not snapshot memory, lore or settings. Requested branch switching clears undo/retry state. This is not evidence of full-state checkpoints or a visual story tree.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L30462"]
+    },
+    {
+      "note": "Browser storage can disappear. Downloaded backups are recommended. Official FAQ says there is no direct cloud-drive integration.",
+      "evidenceUrls": ["https://koboldai.com/Koboldai.net/", "https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L16859"]
+    },
+    {
+      "note": "Local story storage does not establish private inference. Horde routes story content to volunteers; some providers require a disclosed CORS proxy. A self-hosted frontend still needs a generation backend.",
+      "evidenceUrls": ["https://koboldai.com/Koboldai.net/", "https://github.com/LostRuins/lite.koboldai.net"]
+    }
+  ],
+  "unknowns": [
+    "No first-hand interaction, mobile keyboard/touch checks, accessibility audit, generation quality, latency or reliability measurements.",
+    "No verified deployed-site or bundled-copy match to the pinned source revision.",
+    "Migration fidelity for cards, lore, history, settings and branch saves was not round-trip tested.",
+    "Slots are established; character-centered story archives, search quality and exact-story retrieval usability are not established.",
+    "Network-loss recovery, interrupted generation recovery and media-provider reliability were not tested.",
+    "The main-interface guide's Remote Support link returned HTTP 404 at https://koboldai.com/Guides/Kobold_Lite/KoboldLite_Main/API_Providers.md."
+  ],
+  "reusablePatterns": [
+    {
+      "proposal": "Preview the premise and opening message before starting a story; distinguish character definition from saved conversation.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L13017"]
+    },
+    {
+      "proposal": "Offer request inspection beside response details and explain memory/lore contributions in plain language before exposing raw JSON.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L14067"]
+    },
+    {
+      "proposal": "Keep save location, export and storage-loss warnings beside resume actions.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L16859"]
+    },
+    {
+      "proposal": "Explain branch scope before creation; reserve full-state checkpoint language for snapshots that include memory, lore and settings.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L30462"]
+    }
+  ],
+  "doNotCopy": [
+    {
+      "pattern": "Numbered slots as the primary story-history navigation.",
+      "reason": "Resume usability and character-centered exact-story retrieval were not established by source inspection.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L16859"]
+    },
+    {
+      "pattern": "Automatic image generation and extensive provider configuration in the default writing path.",
+      "reason": "Availability does not establish that these choices help every roleplay session. Keep optional media and technical setup explicit.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L33955", "https://koboldai.com/Koboldai.net/"]
+    }
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "source-inspected",
+      "note": "Scenario preview shows premise and mode. Card import and Roleplay Character Creator are available; creator has name, avatar, persona, scenario and greeting fields. No onboarding interaction was tested.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L13017", "https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L34808"]
+    },
+    "storyOrganization": {
+      "status": "source-inspected",
+      "note": "Browser and KoboldCpp server slots save stories/settings; a separate scenario library omits generation settings. Slot load and download paths exist. Character-centered archive and search are not established.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L16859"]
+    },
+    "editRetryBranch": {
+      "status": "source-inspected",
+      "note": "Edit, Back, Redo and Retry are documented. Branch source clones conversation text, caps branches at eight and does not snapshot memory/lore/settings. No visual story tree established.",
+      "evidenceUrls": ["https://koboldai.com/KoboldAILite/#what-are-the-buttons-above-the-user-text-input-box", "https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L30462"]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Persistent Memory, recent Author's Note and keyword-triggered World Info are documented. Context limits still trim older history. Continuity quality was not tested.",
+      "evidenceUrls": ["https://koboldai.com/KoboldAILite/#how-do-i-make-the-ai-remember-things"]
+    },
+    "promptTransparency": {
+      "status": "source-inspected",
+      "note": "show_last_req displays last_request_str with a timestamp and captured response or stream log. Submitted payload serialization is present. Per-entry context attribution and usability are not established.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L14067"]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "AI Horde, local/remote Kobold APIs and multiple provider APIs are documented. Custom OpenAI-compatible Completions and Chat Completions URLs are supported. Compatibility and availability were not exercised.",
+      "evidenceUrls": ["https://koboldai.com/Koboldai.net/", "https://github.com/LostRuins/lite.koboldai.net"]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Modes, samplers, presets, context limits, stop sequences and instruct formatting are documented. Backend support varies and effective novice disclosure was not tested.",
+      "evidenceUrls": ["https://koboldai.com/KoboldAILite/"]
+    },
+    "groupRoleplay": {
+      "status": "source-inspected",
+      "note": "Group participant import, add/select controls and multiple AI names appear in source. Participant orchestration and conversation quality were not tested.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html"]
+    },
+    "imagesVoice": {
+      "status": "source-inspected",
+      "note": "Source includes image endpoints and automatic-image options, browser/KoboldCpp/XTTS/AllTalk/OpenAI-compatible TTS selection, and speech-to-text modes. No generation, voice quality or device compatibility was tested.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html#L33955"]
+    },
+    "mobile": {
+      "status": "source-inspected",
+      "note": "Viewport configuration, narrow-screen CSS and standalone portrait-primary PWA metadata establish mobile intent only. Installation, touch targets, keyboard behavior and small-screen readability were not tested.",
+      "evidenceUrls": ["https://raw.githubusercontent.com/LostRuins/lite.koboldai.net/f53b6561137e3bf1f3ebcab91e704a8c585b1617/manifest.json", "https://github.com/LostRuins/lite.koboldai.net/blob/f53b6561137e3bf1f3ebcab91e704a8c585b1617/index.html"]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Documented imports include KoboldAI saves, KAISTORY, Tavern/SillyTavern JSON/PNG/WebP cards, Oobabooga exports, lore formats and text. Downloaded story JSON can include settings. No lossless round-trip claim.",
+      "evidenceUrls": ["https://koboldai.com/KoboldAILite/", "https://koboldai.com/Koboldai.net/"]
+    },
+    "selfHosting": {
+      "status": "documented",
+      "note": "Standalone HTML can be opened locally or served, and Lite is bundled with KoboldCpp. AGPLv3 source is published. Frontend distribution does not supply model compute or prove an offline workflow with third-party services.",
+      "evidenceUrls": ["https://github.com/LostRuins/lite.koboldai.net", "https://koboldai.com/Guides/Kobold_Lite/KoboldLite_Main/", "https://koboldai.com/Koboldai.net/"]
+    }
+  }
+}

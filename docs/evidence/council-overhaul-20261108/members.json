@@ -1,0 +1,11 @@
+{
+  "assignment": "Continuous native council assignment through deliberation, implementation consultation and final review",
+  "members": [
+    {"name":"/root/council_story","lens":"Roleplay journeys and story coherence","owns":"story/"},
+    {"name":"/root/council_control","lens":"Native control, model integration and ownership","owns":"control/"},
+    {"name":"/root/council_quality","lens":"UI quality, mobile reliability and acceptance evidence","owns":"quality/"}
+  ],
+  "implementationOwner": "/root",
+  "runtimeBase": "v1.19.21",
+  "sourceBase": "24fbda8c25d6898fde1e99aa005303592dd3ddaf"
+}

@@ -1,0 +1,389 @@
+{
+  "slug": "agnai",
+  "product": "Agnai / Agnaistic",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://agnai.chat/",
+  "evidenceBoundary": "Public primary documentation and source review only. GitHub API returned dev head fccee00f5f7628d150760c787c4be87e6b1a652c. Repository links agnai.chat; agnai.guide links back to repository; agnaistic/guides identifies its guide purpose. Hosted revision unknown. No account, interaction, inference call, device test, deployment or migration test. Benefits are design inferences, not measured outcomes. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://github.com/agnaistic/agnai",
+      "title": "Agnaistic repository and README",
+      "supports": [
+        "Identity and official hosted URL",
+        "NPM and Docker self-hosting",
+        "Guest browser-storage warning",
+        "Multi-user and multi-bot groups"
+      ]
+    },
+    {
+      "url": "https://agnai.guide/",
+      "title": "Agnaistic Guides home",
+      "supports": [
+        "Agnai abbreviation",
+        "Link back to agnaistic/agnai"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/guides",
+      "title": "agnaistic/guides",
+      "supports": [
+        "Same-organization guide repository identity"
+      ]
+    },
+    {
+      "url": "https://agnai.chat/",
+      "title": "Agnaistic hosted root",
+      "supports": [
+        "Fetch returned no readable page text; no interaction evidence"
+      ]
+    },
+    {
+      "url": "https://agnai.guide/docs/creating-a-character/",
+      "title": "Creating a character",
+      "supports": [
+        "Minimal definition",
+        "Premise, greetings and creator notes",
+        "Advanced prompts",
+        "Character voice and image configuration"
+      ]
+    },
+    {
+      "url": "https://agnai.guide/docs/chat-settings/",
+      "title": "Chat settings",
+      "supports": [
+        "Provider selection and presets",
+        "General, Prompt, Memory, Advanced tabs",
+        "Context reservation",
+        "Unfinished guide sections"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/CreateChatForm.tsx",
+      "title": "CreateChatForm.tsx",
+      "supports": [
+        "Conversation naming",
+        "Per-chat overrides and scenario selection",
+        "Companion restrictions"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ChatList.tsx",
+      "title": "ChatList.tsx",
+      "supports": [
+        "Search, character filter, activity sort",
+        "Exact chat-ID links and recency"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/components/Message.tsx",
+      "title": "Message.tsx",
+      "supports": [
+        "Edit, regenerate, earlier-message fork actions",
+        "Companion exclusion for message actions"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/instructions/memory.md",
+      "title": "Memory book instructions",
+      "supports": [
+        "Keywords, priority, weight, token budget",
+        "Initial 100-message loading caveat"
+      ]
+    },
+    {
+      "url": "https://agnai.guide/docs/memory/embeddings.html",
+      "title": "User Embeds and Chat Embeds",
+      "supports": [
+        "Retrieved chat and document context",
+        "Template placeholders",
+        "Loaded-history dependency"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/components/PromptModal.tsx",
+      "title": "PromptModal.tsx",
+      "supports": [
+        "Approximate prompt warning",
+        "Authenticated-server and OpenAI Turbo differences"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ImportCharacter.tsx",
+      "title": "ImportCharacter.tsx",
+      "supports": [
+        "File import",
+        "Separate success and failure lists"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ImportChat.tsx",
+      "title": "ImportChat.tsx",
+      "supports": [
+        "Validation and warning",
+        "Agnaistic and TavernAI format labels"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/DownloadModal.tsx",
+      "title": "DownloadModal.tsx",
+      "supports": [
+        "Character JSON and image-card downloads",
+        "Tavern, Agnaistic and Textgen format choices"
+      ]
+    },
+    {
+      "url": "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/ChatExport.tsx",
+      "title": "ChatExport.tsx",
+      "supports": [
+        "JSON message export",
+        "Parent references and treeLeafId",
+        "No tested round-trip guarantee"
+      ]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Start with name and plain-text personality; optional scenario, greeting and creator notes explain premise.",
+      "benefitInference": "Authors may begin with fewer decisions; readers may understand the intended situation sooner.",
+      "evidenceUrls": [
+        "https://agnai.guide/docs/creating-a-character/"
+      ]
+    },
+    {
+      "mechanism": "Conversation names, scenarios and character-definition overrides apply to the new chat.",
+      "benefitInference": "A reusable character may support different story premises without duplicate cards.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/CreateChatForm.tsx"
+      ]
+    },
+    {
+      "mechanism": "Searchable conversation list links exact chat IDs; message actions support edit, regenerate and fork.",
+      "benefitInference": "Users may resume an intended story and explore alternatives with less ambiguity.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ChatList.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/components/Message.tsx"
+      ]
+    },
+    {
+      "mechanism": "Keyword lore has priority, ordering weight and context budget; embeddings retrieve chat or uploaded material.",
+      "benefitInference": "Authors may allocate limited context to relevant details; recall quality is not established.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/instructions/memory.md",
+        "https://agnai.guide/docs/memory/embeddings.html"
+      ]
+    },
+    {
+      "mechanism": "Configured global AI services appear in chat presets with separate control tabs.",
+      "benefitInference": "Users may tune a conversation while retaining access to advanced options.",
+      "evidenceUrls": [
+        "https://agnai.guide/docs/chat-settings/"
+      ]
+    }
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "source-inspected",
+      "note": "Guide supports minimal creation and premise fields. Source imports character files and lists successes separately from failures. No onboarding interaction tested.",
+      "evidenceUrls": [
+        "https://agnai.guide/docs/creating-a-character/",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ImportCharacter.tsx"
+      ]
+    },
+    "storyOrganization": {
+      "status": "source-inspected",
+      "note": "Named chat, scenario and conversation-only overrides; list searches chat or character names, filters character and links chat IDs.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/CreateChatForm.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ChatList.tsx"
+      ]
+    },
+    "editRetryBranch": {
+      "status": "source-inspected",
+      "note": "Message actions implement edit, Regenerate and Fork on earlier messages. Companion mode excludes message controls and warns about unavailable edit/retry/delete. No branch persistence test.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/components/Message.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/CreateChatForm.tsx"
+      ]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Budgeted keyword lore and retrieved chat/document context. Loaded-history and placeholder requirements are explicit; current runtime recall not tested.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/instructions/memory.md",
+        "https://agnai.guide/docs/memory/embeddings.html"
+      ]
+    },
+    "promptTransparency": {
+      "status": "source-inspected",
+      "note": "Message Prompt reconstructs an approximation. Server may add history; OpenAI Turbo payload differs and is server-only. Not an exact historical request record.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/components/PromptModal.tsx"
+      ]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "Global configured providers become selectable in chat presets. Integration operation and hosted model availability were not tested.",
+      "evidenceUrls": [
+        "https://agnai.guide/docs/chat-settings/"
+      ]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Preset tabs expose prompt, memory and advanced categories; character guide explains system, post-history and depth instructions. Several settings-guide sections are unfinished.",
+      "evidenceUrls": [
+        "https://agnai.guide/docs/chat-settings/",
+        "https://agnai.guide/docs/creating-a-character/"
+      ]
+    },
+    "groupRoleplay": {
+      "status": "documented",
+      "note": "README explicitly supports multiple human users with multiple bots. Turn behavior and permissions were not tested.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai"
+      ]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "Guide describes global and character-specific image settings and voice services. Browser speech, ElevenLabs and NovelAI are named. No service calls or entitlement verification.",
+      "evidenceUrls": [
+        "https://agnai.guide/docs/creating-a-character/"
+      ]
+    },
+    "mobile": {
+      "status": "unknown",
+      "note": "No mobile device, touch, keyboard, offline or accessibility behavior was tested. Source inspection alone does not establish mobile usability.",
+      "evidenceUrls": []
+    },
+    "portability": {
+      "status": "source-inspected",
+      "note": "Character downloads offer JSON/image cards. Chat import labels Agnaistic and TavernAI formats; chat export includes parent references. Lossless round trips, branches and provider settings migration remain untested.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/DownloadModal.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ImportChat.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/ChatExport.tsx"
+      ]
+    },
+    "selfHosting": {
+      "status": "documented",
+      "note": "README supplies NPM and Docker paths with optional database services. Guest browser data is deleted if browser application data is cleared. No installation tested.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai"
+      ]
+    }
+  },
+  "tradeoffs": [
+    {
+      "note": "Prompt display is approximate and may omit server context; cannot certify a past generation payload.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/components/PromptModal.tsx"
+      ]
+    },
+    {
+      "note": "Memory depends on loaded messages; depths above initial 100-message fetch may behave unexpectedly. User embeds require a template placeholder.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/instructions/memory.md",
+        "https://agnai.guide/docs/memory/embeddings.html"
+      ]
+    },
+    {
+      "note": "Companion mode explicitly removes edit, retry and delete capabilities.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/CreateChatForm.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/components/Message.tsx"
+      ]
+    },
+    {
+      "note": "Expert guidance is incomplete: Prompt, Memory, Advanced and Troubleshooting sections contain placeholder text.",
+      "evidenceUrls": [
+        "https://agnai.guide/docs/chat-settings/"
+      ]
+    },
+    {
+      "note": "Guest persistence is browser-bound and vulnerable to application-data deletion. Self-hosting documentation does not prove backup or recovery behavior.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai"
+      ]
+    },
+    {
+      "note": "Exports and format selectors establish available mechanisms, not full migration fidelity.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/DownloadModal.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/ChatExport.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ImportChat.tsx"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Hosted deployment revision and correspondence to inspected dev source.",
+    "Mobile touch, keyboard, accessibility and offline usability.",
+    "Network failure recovery, unsent-text preservation and duplicate-generation handling.",
+    "Actual long-story recall, branch persistence and exact import/export round trips.",
+    "Current model, voice and image service operation or entitlements; no prices verified."
+  ],
+  "reusablePatterns": [
+    {
+      "proposal": "Distinguish reusable character, exact chat and conversation-only overrides in the workspace.",
+      "benefitInference": "May reduce wrong-story continuation and accidental changes to shared character definitions.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/CreateChatForm.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ChatList.tsx"
+      ]
+    },
+    {
+      "proposal": "Provide a minimal character definition with premise and greeting near the start action.",
+      "benefitInference": "May reduce author setup and explain the first interaction.",
+      "evidenceUrls": [
+        "https://agnai.guide/docs/creating-a-character/"
+      ]
+    },
+    {
+      "proposal": "Explain memory inclusion, budget and loaded-history coverage.",
+      "benefitInference": "May help users diagnose missing story facts.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/instructions/memory.md",
+        "https://agnai.guide/docs/memory/embeddings.html"
+      ]
+    },
+    {
+      "proposal": "Label reconstructed prompts and explain server-only differences.",
+      "benefitInference": "May prevent approximate displays being mistaken for generation records.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/components/PromptModal.tsx"
+      ]
+    },
+    {
+      "proposal": "Separate successful imports from failures with retry guidance.",
+      "benefitInference": "May avoid repeating successful work during partial failures.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ImportCharacter.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ImportChat.tsx"
+      ]
+    }
+  ],
+  "doNotCopy": [
+    {
+      "pattern": "Permanent Companion restrictions in ordinary story editing.",
+      "reason": "They remove corrections and retry, which are useful during authored roleplay.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/CreateChatForm.tsx"
+      ]
+    },
+    {
+      "pattern": "Unexplained dependence on scrolling to load memory candidates.",
+      "reason": "A configured retrieval budget does not establish that older story facts were considered.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/instructions/memory.md",
+        "https://agnai.guide/docs/memory/embeddings.html"
+      ]
+    },
+    {
+      "pattern": "Treating an export affordance as proof of lossless migration.",
+      "reason": "No round-trip tests establish preservation of branches, metadata or configuration.",
+      "evidenceUrls": [
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Chat/ChatExport.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/ImportChat.tsx",
+        "https://github.com/agnaistic/agnai/blob/fccee00f5f7628d150760c787c4be87e6b1a652c/web/pages/Character/DownloadModal.tsx"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,131 @@
+{
+  "slug": "novelai",
+  "product": "NovelAI",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://novelai.net/",
+  "evidenceBoundary": "Public official documentation reviewed through web search/open only. Anlatan lists NovelAI; NovelAI's links page links docs.novelai.net. No account, inference, live editor, device tests, or source-code inspection. Benefits are hypotheses. Unknown means not established, not absent.",
+  "sources": [
+    {"url":"https://anlatan.ai/","title":"Anlatan","supports":["Company identity and NovelAI project link"]},
+    {"url":"https://novelai.net/links","title":"Links - NovelAI","supports":["Official product-to-documentation link"]},
+    {"url":"https://docs.novelai.net/en/text/editor/","title":"Editor","supports":["Branching edit history, Retry, inline generation, text origin, Editor V2"]},
+    {"url":"https://docs.novelai.net/en/text/editor/storysettings/","title":"Story Settings","supports":["Scenario descriptions/placeholders, history-bearing export, storage, model selector, Memory and Author's Note"]},
+    {"url":"https://docs.novelai.net/en/text/editor/advancedsettings/","title":"Advanced Settings","supports":["Context Viewer and inclusion reasons, budgets, advanced controls"]},
+    {"url":"https://docs.novelai.net/en/text/lorebook/","title":"Lorebook","supports":["Key activation, Always On, hidden entries, lore portability"]},
+    {"url":"https://docs.novelai.net/en/text/chatformat/","title":"Advanced: Chat Format","supports":["Manual two-character chat setup and incomplete-generation workaround"]},
+    {"url":"https://docs.novelai.net/en/faq/","title":"Frequently Asked Questions","supports":["Story shelves, PWA, data-loss recovery limits, older context figures"]},
+    {"url":"https://docs.novelai.net/en/text/models/","title":"Models","supports":["Current and retired models, model-specific context, released retired-model weights"]},
+    {"url":"https://docs.novelai.net/en/text/usersettings/tts/","title":"Text To Speech","supports":["Local and streamed TTS, automatic reading, audio download"]},
+    {"url":"https://docs.novelai.net/en/image/basics/","title":"Image Generation Basics & Prompt Basics","supports":["Image prompts, suggestions, editing and generation controls"]}
+  ],
+  "strengths": [
+    {
+      "mechanism":"Context Viewer reports composition, insertion stages, tokens and inclusion/exclusion reasons.",
+      "benefitInference":"Could help diagnose missing memory before changing prompts.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/editor/advancedsettings/"]
+    },
+    {
+      "mechanism":"Edit history preserves alternatives; History chooses a continuation and Retry regenerates.",
+      "benefitInference":"Could reduce the cost of exploring alternate continuations.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/editor/"]
+    },
+    {
+      "mechanism":"Key-activated lore can be exported independently.",
+      "benefitInference":"Could reuse world material while limiting routine context use.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/lorebook/"]
+    },
+    {
+      "mechanism":"Scenario exports personalize a premise; story exports retain history.",
+      "benefitInference":"Could clarify replay versus continuation when labels explain the distinction.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/editor/storysettings/"]
+    }
+  ],
+  "tradeoffs": [
+    "Documented chat setup requires Memory, sample dialogue, Phrase Bias and Stop Sequences, including a workaround for incomplete generations.",
+    "Hidden lore entries also hide from the Context Viewer until revealed.",
+    "Full .story sharing exposes retries and branches; plaintext loses structured state.",
+    "Browser-storage clearing and password reset can cause permanent story loss. Downloaded backups matter.",
+    "Advanced controls improve author control but increase setup burden.",
+    "FAQ context limits conflict with newer model-specific documentation; do not reuse its numbers as universal limits."
+  ],
+  "unknowns": [
+    "Live usability, output quality, latency, touch interaction and successful export/import round trips were not tested.",
+    "Current-model applicability of the older chat guide is unverified; it references retired Clio.",
+    "Character-card interoperability, character marketplace and managed multi-speaker roleplay were not established.",
+    "Arbitrary external model endpoints and a self-hosted equivalent of the full app were not established.",
+    "Automatic story-to-image integration, per-character conversational voices and migration fidelity to other tools were not established."
+  ],
+  "reusablePatterns": [
+    "Expose existing context diagnostics beside memory, with exclusion reasons and optional expert detail.",
+    "Separate exact-story continuation from reusable-premise creation; show premise variables before starting.",
+    "Offer complete-history versus selected-narrative export with a rejected-reply warning.",
+    "Explain backup, storage and recovery consequences beside archive/export actions."
+  ],
+  "doNotCopy": [
+    "Manual bias setup as routine character onboarding.",
+    "Hidden active lore without an explicit reveal path.",
+    "Treating browser-local storage as a backup.",
+    "Treating retired-model weight releases as proof of full-service portability."
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status":"documented",
+      "note":"Manual character information and dialogue setup; scenario descriptions/placeholders. Standard character-card support unknown.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/chatformat/","https://docs.novelai.net/en/text/editor/storysettings/"]
+    },
+    "storyOrganization": {
+      "status":"documented",
+      "note":"Story shelves; exact-story navigation and resumption reliability untested.",
+      "evidenceUrls":["https://docs.novelai.net/en/faq/"]
+    },
+    "editRetryBranch": {
+      "status":"documented",
+      "note":"Undo/Redo, Retry, branching history, continuation selector and inline generation.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/editor/"]
+    },
+    "memoryLore": {
+      "status":"documented",
+      "note":"Memory, Author's Note and keyed/Always On lore. No unlimited or automatic recall claim established.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/editor/storysettings/","https://docs.novelai.net/en/text/lorebook/"]
+    },
+    "promptTransparency": {
+      "status":"documented",
+      "note":"Last/Current Context with inclusion reasons and budgets; hidden lore qualifies visibility.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/editor/advancedsettings/","https://docs.novelai.net/en/text/lorebook/"]
+    },
+    "modelConnections": {
+      "status":"documented",
+      "note":"NovelAI model selection. Arbitrary external endpoints unknown; catalog distinguishes current and retired models.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/editor/storysettings/","https://docs.novelai.net/en/text/models/"]
+    },
+    "advancedControls": {
+      "status":"documented",
+      "note":"Context positioning/trimming, Phrase Bias, banned tokens and stop sequences.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/editor/advancedsettings/"]
+    },
+    "groupRoleplay": {
+      "status":"unknown",
+      "note":"Two-character guide does not establish managed group speakers or group turn control.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/chatformat/"]
+    },
+    "imagesVoice": {
+      "status":"documented",
+      "note":"Image editor/generation controls; local or streamed TTS and downloads. Automatic scene images and per-character voices unknown.",
+      "evidenceUrls":["https://docs.novelai.net/en/image/basics/","https://docs.novelai.net/en/text/usersettings/tts/"]
+    },
+    "mobile": {
+      "status":"documented",
+      "note":"Mobile browser/PWA and Editor V2 mobile provisions. No device interaction test.",
+      "evidenceUrls":["https://docs.novelai.net/en/faq/","https://docs.novelai.net/en/text/editor/"]
+    },
+    "portability": {
+      "status":"documented",
+      "note":".story, .scenario, plaintext, bulk ZIP and lore exports. Cross-tool fidelity untested.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/editor/storysettings/","https://docs.novelai.net/en/text/lorebook/"]
+    },
+    "selfHosting": {
+      "status":"unknown",
+      "note":"Full app/service self-hosting unestablished. Retired-model weight releases do not establish current-service equivalence.",
+      "evidenceUrls":["https://docs.novelai.net/en/text/models/"]
+    }
+  }
+}

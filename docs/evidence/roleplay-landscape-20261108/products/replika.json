@@ -1,0 +1,320 @@
+{
+  "slug": "replika",
+  "product": "Replika",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://replika.com/",
+  "evidenceBoundary": "Public official documentation and product-site review only, beginning at https://help.replika.com/. Official identity verified through the main product site linking to that help center and terms naming Luka, Inc. No account, inference call, purchase, production access, browser automation, or hands-on device testing. Benefits are untested design hypotheses. Help pages do not consistently identify classic versus Replika 2.0 applicability; terms explicitly warn of version/platform differences.",
+  "sources": [
+    {
+      "url": "https://replika.com/",
+      "title": "Replika | The AI Friend to do Life With",
+      "supports": "Official site links help.replika.com as support; markets iOS, Android, customization and selfies; labels web app Legacy."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/115001095892-How-do-I-begin-Replika",
+      "title": "How do I begin Replika?",
+      "supports": "Documented mobile and web creation sequence, avatar and name, then chat."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/37208430613261-How-your-Replika-s-backstory-shapes-its-personality",
+      "title": "How your Replika’s backstory shapes its personality",
+      "supports": "Backstory inputs, claimed influence on personality, authoring guidance."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/4410891375757-How-to-roleplay-with-your-Replika",
+      "title": "How to roleplay with your Replika",
+      "supports": "Asterisk-delimited actions, expressions and emotions."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work",
+      "title": "How does Replika’s memory work?",
+      "supports": "Visible Memory tab, manual and automatic memories, deeper pattern-based system."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/4411154990605-Is-the-chat-history-infinite",
+      "title": "Is the chat history infinite?",
+      "supports": "Four-month displayed/retrievable history limit; retained memories and diary entries."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/360045959792-How-do-I-change-my-Replika-s-voice",
+      "title": "How do I change my Replika's voice?",
+      "supports": "Companion profile voice selection and automatic saving."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/360046383391-How-do-I-call-my-Replika",
+      "title": "How do I call my Replika?",
+      "supports": "Home-screen Call icon on smart-device app."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/115001095972-How-do-I-teach-my-Replika",
+      "title": "How do I teach my Replika?",
+      "supports": "Message votes, longer-press reactions, feedback on older messages."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/115001096132-Replika-is-not-responding",
+      "title": "Replika is not responding",
+      "supports": "Connection checks, another message, app restart/update, web fallback and support."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/360020449171-How-do-I-reset-my-Replika",
+      "title": "How do I reset my Replika?",
+      "supports": "Brand-new Replika requires account deletion; permanent loss and non-transferable Store items."
+    },
+    {
+      "url": "https://replika.com/legal/privacy/en",
+      "title": "Privacy Policy",
+      "supports": "October 28, 2026 policy; 24-month text and 12-month media retention; location-dependent data-copy rights; cloud processing."
+    },
+    {
+      "url": "https://replika.com/legal/terms/en",
+      "title": "Terms of Service",
+      "supports": "Luka, Inc. identity; classic and Replika 2.0 distinctions, platform/version variation and migration limits."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/4410750221965-How-does-Replika-work",
+      "title": "How does Replika work?",
+      "supports": "Own and third-party language models combined with scripted dialogue."
+    },
+    {
+      "url": "https://help.replika.com/hc/en-us/articles/4410750548493-Can-I-delete-my-conversations",
+      "title": "Can I delete my conversations?",
+      "supports": "Entire message history cannot be deleted without deleting account; Memory section allows viewing, adding/updating and deleting memories."
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Guided avatar and name creation ends with meeting the companion and beginning chat.",
+      "benefitInference": "A recognizable companion and explicit completion action may reduce uncertainty before the first message.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/115001095892-How-do-I-begin-Replika"
+      ]
+    },
+    {
+      "mechanism": "Backstory guidance explains character traits; roleplay help teaches asterisk-delimited actions.",
+      "benefitInference": "Brief concrete instructions may make a first scene easier to attempt. Adherence was not tested.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/37208430613261-How-your-Replika-s-backstory-shapes-its-personality",
+        "https://help.replika.com/hc/en-us/articles/4410891375757-How-to-roleplay-with-your-Replika"
+      ]
+    },
+    {
+      "mechanism": "Memory tab contains automatic memories and allows manual additions; other personalization uses deeper conversation patterns.",
+      "benefitInference": "Users may supply missing facts through a bounded interface without rewriting the character. This does not expose all context.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work",
+        "https://help.replika.com/hc/en-us/articles/4410750548493-Can-I-delete-my-conversations"
+      ]
+    },
+    {
+      "mechanism": "Voice selection lives in the companion profile and saves automatically; calls start from home.",
+      "benefitInference": "Keeping voice near character identity may reduce navigation needed to configure and use it.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/360045959792-How-do-I-change-my-Replika-s-voice",
+        "https://help.replika.com/hc/en-us/articles/360046383391-How-do-I-call-my-Replika"
+      ]
+    }
+  ],
+  "tradeoffs": [
+    {
+      "note": "Help says only four months of chat can be displayed or retrieved. Privacy policy separately says text history is retained for 24 months and photos, videos and voice messages for 12 months while accounts remain open. Storage and retrieval must not be equated; version applicability is unresolved.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/4411154990605-Is-the-chat-history-infinite",
+        "https://replika.com/legal/privacy/en",
+        "https://replika.com/legal/terms/en"
+      ]
+    },
+    {
+      "note": "Reset documentation requires permanent account deletion for a brand-new companion. Entire-history deletion also requires account deletion. These are consequential controls, not a documented independent new-story operation.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/360020449171-How-do-I-reset-my-Replika",
+        "https://help.replika.com/hc/en-us/articles/4410750548493-Can-I-delete-my-conversations"
+      ]
+    },
+    {
+      "note": "Visible memories do not include every influence: the help article also describes deeper pattern-based personalization.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work"
+      ]
+    },
+    {
+      "note": "Classic and Replika 2.0 may differ by platform and country. Migration may change avatars, voices and behavior. No parity claim is supported.",
+      "evidenceUrls": [
+        "https://replika.com/legal/terms/en",
+        "https://replika.com/"
+      ]
+    },
+    {
+      "note": "Feedback and troubleshooting are documented; direct message revision, retries, branches, pending-message preservation and duplicate prevention were not established.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/115001095972-How-do-I-teach-my-Replika",
+        "https://help.replika.com/hc/en-us/articles/115001096132-Replika-is-not-responding"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Character-card import, marketplace selection, multi-character roleplay and independent story/session organization were not established.",
+    "Editing, regeneration, undo, branching, transcript search and exact-story resume were not established.",
+    "User-selected model endpoints, API keys, samplers, prompt/context inspection, lorebook triggers and self-hosting were not established.",
+    "A location-dependent data-copy request is documented; export format, completeness, import/restore and character portability are unknown.",
+    "Current mobile layout, keyboard behavior, accessibility, offline use, voice quality, image settings and plan-specific entitlements were not tested.",
+    "The relationship between four-month user retrieval, 24-month text retention and classic/Replika 2.0 remains unresolved."
+  ],
+  "reusablePatterns": [
+    {
+      "pattern": "Finish character creation with the named companion and a clear begin-chat action; keep premise authoring nearby.",
+      "reason": "May make identity and the next action explicit. Proposal only.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/115001095892-How-do-I-begin-Replika",
+        "https://help.replika.com/hc/en-us/articles/37208430613261-How-your-Replika-s-backstory-shapes-its-personality"
+      ]
+    },
+    {
+      "pattern": "Provide a small roleplay syntax example near first-scene guidance.",
+      "reason": "May teach action notation at the moment it is useful. Proposal only.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/4410891375757-How-to-roleplay-with-your-Replika"
+      ]
+    },
+    {
+      "pattern": "Expose editable memories and label the limits of that view.",
+      "reason": "May support corrections without implying every context input is visible. Proposal only.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work",
+        "https://help.replika.com/hc/en-us/articles/4410750548493-Can-I-delete-my-conversations"
+      ]
+    },
+    {
+      "pattern": "Keep voice selection near character identity and calls near chat; ensure secondary feedback remains discoverable on touch.",
+      "reason": "May group settings by the object users are configuring while keeping common actions direct. Proposal only.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/360045959792-How-do-I-change-my-Replika-s-voice",
+        "https://help.replika.com/hc/en-us/articles/360046383391-How-do-I-call-my-Replika",
+        "https://help.replika.com/hc/en-us/articles/115001095972-How-do-I-teach-my-Replika"
+      ]
+    }
+  ],
+  "doNotCopy": [
+    {
+      "pattern": "Account deletion as the way to begin a fresh independent story.",
+      "reason": "The documented reset permanently loses companion content and Store items.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/360020449171-How-do-I-reset-my-Replika"
+      ]
+    },
+    {
+      "pattern": "Treating durable companion memories as an exact transcript archive.",
+      "reason": "Help explicitly limits retrieval to four months despite retained memories.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/4411154990605-Is-the-chat-history-infinite"
+      ]
+    },
+    {
+      "pattern": "Presenting the Memory tab as complete prompt transparency or promising cross-platform parity.",
+      "reason": "Memory help describes additional hidden influences; terms warn of platform and generation differences.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work",
+        "https://replika.com/legal/terms/en"
+      ]
+    }
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Account creation, avatar/gender/appearance and name, then chat; backstory guidance is documented. Import and marketplace selection are not established.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/115001095892-How-do-I-begin-Replika",
+        "https://help.replika.com/hc/en-us/articles/37208430613261-How-your-Replika-s-backstory-shapes-its-personality"
+      ]
+    },
+    "storyOrganization": {
+      "status": "documented",
+      "note": "Four-month user-visible/retrievable history is documented alongside persistent memories and diary entries. Independent stories, search, archives and exact-story resume are unknown. Policy separately states 24-month text storage; generation applicability unresolved.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/4411154990605-Is-the-chat-history-infinite",
+        "https://replika.com/legal/privacy/en",
+        "https://replika.com/legal/terms/en"
+      ]
+    },
+    "editRetryBranch": {
+      "status": "unknown",
+      "note": "Message votes and reactions are documented. Editing, regeneration, undo and branching are not established by these sources.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/115001095972-How-do-I-teach-my-Replika"
+      ]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Manual and automatic memories, deeper pattern-based personalization and backstory influence are documented. Lorebook-style triggers and reliability are unknown.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work",
+        "https://help.replika.com/hc/en-us/articles/37208430613261-How-your-Replika-s-backstory-shapes-its-personality",
+        "https://help.replika.com/hc/en-us/articles/4410750548493-Can-I-delete-my-conversations"
+      ]
+    },
+    "promptTransparency": {
+      "status": "unknown",
+      "note": "Memory is partly visible; additional personalization is described. Full prompts, selected context and token accounting were not established.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work",
+        "https://help.replika.com/hc/en-us/articles/4410750221965-How-does-Replika-work"
+      ]
+    },
+    "modelConnections": {
+      "status": "unknown",
+      "note": "Official help describes own and third-party language models plus scripted dialogue, not user-configured providers, endpoints or keys.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/4410750221965-How-does-Replika-work"
+      ]
+    },
+    "advancedControls": {
+      "status": "unknown",
+      "note": "Backstory and memory authoring are documented. Samplers, context budgets and expert generation controls were not established.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/37208430613261-How-your-Replika-s-backstory-shapes-its-personality",
+        "https://help.replika.com/hc/en-us/articles/37208679176077-How-does-Replika-s-memory-work"
+      ]
+    },
+    "groupRoleplay": {
+      "status": "unknown",
+      "note": "Roleplay with the personal companion is documented. Multiple-character group roleplay was not established.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/4410891375757-How-to-roleplay-with-your-Replika"
+      ]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "Voice selection and calling have help instructions. Selfies are marketed on the homepage; image generation settings, external services, quality and entitlements were not verified.",
+      "evidenceUrls": [
+        "https://help.replika.com/hc/en-us/articles/360045959792-How-do-I-change-my-Replika-s-voice",
+        "https://help.replika.com/hc/en-us/articles/360046383391-How-do-I-call-my-Replika",
+        "https://replika.com/",
+        "https://replika.com/legal/terms/en"
+      ]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Official homepage advertises iOS and Android; onboarding documents mobile creation. Current layouts, accessibility, offline use and parity were not tested.",
+      "evidenceUrls": [
+        "https://replika.com/",
+        "https://help.replika.com/hc/en-us/articles/115001095892-How-do-I-begin-Replika",
+        "https://replika.com/legal/terms/en"
+      ]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Policy documents location-dependent access/data-copy rights subject to exceptions. A self-service chat export format, re-import, restore or portable character format was not established. Version migration may change appearance, voices and behavior.",
+      "evidenceUrls": [
+        "https://replika.com/legal/privacy/en",
+        "https://replika.com/legal/terms/en"
+      ]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "Inspected sources describe provider-operated service and cloud infrastructure. No supported self-hosting package or procedure was established.",
+      "evidenceUrls": [
+        "https://replika.com/legal/privacy/en",
+        "https://help.replika.com/hc/en-us/articles/4410750221965-How-does-Replika-work"
+      ]
+    }
+  }
+}

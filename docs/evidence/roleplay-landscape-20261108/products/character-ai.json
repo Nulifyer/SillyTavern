@@ -1,0 +1,348 @@
+{
+  "slug": "character-ai",
+  "product": "Character.AI",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://character.ai/",
+  "evidenceBoundary": "Public official documentation and announcements only. Homepage yielded no readable text. About page names Character Technologies Inc. dba Character.ai and links the blog; Help Center links company, app, blog and mobile stores. No account, inference call, purchase, device test, preview automation, production access, or runtime/source-code inspection. Benefits are untested hypotheses. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://character.ai/about",
+      "title": "About Character.AI",
+      "supports": [
+        "Operator identity and official blog linkage"
+      ]
+    },
+    {
+      "url": "https://support.character.ai/hc/en-us/articles/50608869548699-2-Creating-a-Character-Quickstart-Guide-%CF%89",
+      "title": "2. Creating a Character: Quickstart Guide",
+      "supports": [
+        "Creation steps, discovery tags, visibility, optional Definition, avatar and voice choices, mobile/web entry points; updated 2026-06-17"
+      ]
+    },
+    {
+      "url": "https://blog.character.ai/memory/",
+      "title": "Smarter Memory for Smarter Chats",
+      "supports": [
+        "Memory controls and subscription qualifications; announced 2026-05-21"
+      ]
+    },
+    {
+      "url": "https://support.character.ai/hc/en-us/articles/52739596326811-Lorebooks",
+      "title": "Lorebooks",
+      "supports": [
+        "Keyword activation, shared canon, viewer, content visibility, beta access; updated 2026-09-17"
+      ]
+    },
+    {
+      "url": "https://support.character.ai/hc/en-us/articles/54347105439515-Importing-Lorebooks",
+      "title": "Importing Lorebooks",
+      "supports": [
+        "Import representation, discarded settings, eight-keyword limit; updated 2026-08-13"
+      ]
+    },
+    {
+      "url": "https://support.character.ai/hc/en-us/articles/34428285052827-Community-Update-February-2025",
+      "title": "Community Update - February 2025",
+      "supports": [
+        "Destructive rewind and original-preserving duplication"
+      ]
+    },
+    {
+      "url": "https://support.character.ai/hc/en-us/articles/50609303987099-6-Refining-and-Testing-your-Character",
+      "title": "6. Refining and Testing your Character",
+      "supports": [
+        "Swipe alternatives and local reply correction; updated 2026-06-17"
+      ]
+    },
+    {
+      "url": "https://blog.character.ai/imagine-gallery/",
+      "title": "Introducing Imagine Gallery",
+      "supports": [
+        "Message-based image generation, mobile retrieval and download; announced 2026-03-18"
+      ]
+    },
+    {
+      "url": "https://blog.character.ai/new-styles-new-plan/",
+      "title": "introducing PipSqueak 3, ShortSqueak, and (c.ai) lite",
+      "supports": [
+        "Named internal choices, retained style for existing chats, subscription-dependent controls; announced 2026-09-28"
+      ]
+    },
+    {
+      "url": "https://support.character.ai/hc/en-us/articles/56967715028891-How-do-I-download-my-data",
+      "title": "How do I download my data?",
+      "supports": [
+        "Account export wait and link expiration; updated 2026-10-08"
+      ]
+    },
+    {
+      "url": "https://blog.character.ai/chapter-11-update-and-transaction-notice/",
+      "title": "Chapter 11 Update and Transaction Notice",
+      "supports": [
+        "Ongoing asset-sale process; published 2026-11-05"
+      ]
+    },
+    {
+      "url": "https://support.character.ai/hc/en-us/articles/50609614596251-10-Troubleshooting-and-Limitations",
+      "title": "10. Troubleshooting and Limitations",
+      "supports": [
+        "Failure categories and platform filtering; stale future-tense worldbuilding section"
+      ]
+    },
+    {
+      "url": "https://support.character.ai/hc/en-us/articles/41760067000475-Community-Update-September-2025",
+      "title": "Community Update - September 2025",
+      "supports": [
+        "Recent-chat description lines; limited multi-character testing, not current universal availability"
+      ]
+    },
+    {
+      "url": "https://support.character.ai/hc/en-us/articles/28987281244827-The-old-beta-has-been-fully-retired-Please-use-character-ai-or-the-mobile-app",
+      "title": "The old/beta has been fully retired. Please use character.ai or the mobile app.",
+      "supports": [
+        "2024 announcement of archive/rename rollout; historical evidence only"
+      ]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Basic character setup precedes optional descriptive and Definition fields; greetings and tags convey premise.",
+      "benefitInference": "May reduce first-creation effort and help readers choose a suitable premise.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/50608869548699-2-Creating-a-Character-Quickstart-Guide-%CF%89"
+      ]
+    },
+    {
+      "mechanism": "One Memory screen combines story context, pins, editable Facts and usage; new chats offer optional Facts carryover.",
+      "benefitInference": "May reduce backstory repetition and clarify deliberate continuity choices.",
+      "evidenceUrls": [
+        "https://blog.character.ai/memory/"
+      ]
+    },
+    {
+      "mechanism": "Shared keyword-triggered Lorebooks have an in-chat viewer and owner editing.",
+      "benefitInference": "May reduce canon duplication and interruptions while consulting world details.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/52739596326811-Lorebooks"
+      ]
+    },
+    {
+      "mechanism": "Distinct rewind and duplicate-from-message operations; swipe, edit and remove for replies.",
+      "benefitInference": "May make alternate paths and local recovery easier.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/34428285052827-Community-Update-February-2025",
+        "https://support.character.ai/hc/en-us/articles/50609303987099-6-Refining-and-Testing-your-Character"
+      ]
+    },
+    {
+      "mechanism": "Message-linked image generation and a mobile gallery with Persona filters and downloads.",
+      "benefitInference": "May make visual story moments easier to find and reuse.",
+      "evidenceUrls": [
+        "https://blog.character.ai/imagine-gallery/"
+      ]
+    }
+  ],
+  "tradeoffs": [
+    {
+      "note": "Lorebook import maps comment, key and content. Other fields are discarded, including secondary conditions, pattern rules, probabilities, timing, ordering and position. Eight keywords per entry; always-on semantics are not retained.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/54347105439515-Importing-Lorebooks"
+      ]
+    },
+    {
+      "note": "Export requests may take 3-4 weeks and emailed download links last seven days. This does not establish chat-level export, archive format or reimport.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/56967715028891-How-do-I-download-my-data"
+      ]
+    },
+    {
+      "note": "Ongoing Chapter 11 asset-sale process creates a continuity consideration. No shutdown was observed or established.",
+      "evidenceUrls": [
+        "https://blog.character.ai/chapter-11-update-and-transaction-notice/"
+      ]
+    },
+    {
+      "note": "Platform filters override Definition choices and may not explain a block.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/50609614596251-10-Troubleshooting-and-Limitations"
+      ]
+    },
+    {
+      "note": "Facts and full memory visualization are subscription-qualified in the May announcement; Lorebooks remain documented as beta with paid access. Current account entitlements were not tested.",
+      "evidenceUrls": [
+        "https://blog.character.ai/memory/",
+        "https://support.character.ai/hc/en-us/articles/52739596326811-Lorebooks"
+      ]
+    },
+    {
+      "note": "Optional Definition visibility and Hint Only lore visibility can conceal author context. They do not expose the complete assembled prompt.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/50608869548699-2-Creating-a-Character-Quickstart-Guide-%CF%89",
+        "https://support.character.ai/hc/en-us/articles/52739596326811-Lorebooks"
+      ]
+    },
+    {
+      "note": "Troubleshooting still describes Lorebook as forthcoming, while the newer Lorebooks guide documents operation. Use newer feature-specific documentation.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/50609614596251-10-Troubleshooting-and-Limitations",
+        "https://support.character.ai/hc/en-us/articles/52739596326811-Lorebooks"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Character-card import, complete assembled prompts, external model endpoints and sampler controls were not established.",
+    "Export payload completeness, round-trip fidelity and actual processing times were not tested.",
+    "Exact-story selection quality, current archive/rename rollout and current group availability across platforms were not verified.",
+    "Memory recall, compression fidelity, accessibility, touch usability, offline operation and self-hosting were not established."
+  ],
+  "reusablePatterns": [
+    {
+      "proposal": "Group memory inspection and correction near the conversation, retaining access to advanced controls.",
+      "evidenceUrls": [
+        "https://blog.character.ai/memory/"
+      ]
+    },
+    {
+      "proposal": "Make fact carryover an explicit choice when starting a story.",
+      "evidenceUrls": [
+        "https://blog.character.ai/memory/"
+      ]
+    },
+    {
+      "proposal": "Name the preservation and deletion consequences of branching and rewind separately.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/34428285052827-Community-Update-February-2025"
+      ]
+    },
+    {
+      "proposal": "Offer lore inspection during a scene and disclose hidden content.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/52739596326811-Lorebooks"
+      ]
+    },
+    {
+      "proposal": "Link generated images to source messages and support later retrieval by story or persona.",
+      "evidenceUrls": [
+        "https://blog.character.ai/imagine-gallery/"
+      ]
+    }
+  ],
+  "doNotCopy": [
+    {
+      "note": "Do not silently discard import settings; show a compatibility report before accepting changed semantics.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/54347105439515-Importing-Lorebooks"
+      ]
+    },
+    {
+      "note": "Do not promise reliable memory retention without evidence.",
+      "evidenceUrls": [
+        "https://blog.character.ai/memory/",
+        "https://support.character.ai/hc/en-us/articles/50609614596251-10-Troubleshooting-and-Limitations"
+      ]
+    },
+    {
+      "note": "Do not make a delayed account export the only migration mechanism.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/56967715028891-How-do-I-download-my-data"
+      ]
+    },
+    {
+      "note": "Do not replace expert controls with style names alone; use progressive disclosure.",
+      "evidenceUrls": [
+        "https://blog.character.ai/new-styles-new-plan/"
+      ]
+    }
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Guided create flow, premise greetings, tags, visibility and optional Definition. Character-card import unknown.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/50608869548699-2-Creating-a-Character-Quickstart-Guide-%CF%89"
+      ]
+    },
+    "storyOrganization": {
+      "status": "documented",
+      "note": "Historical rename/archive rollout announcement and later recent-chat descriptions. Current exact-story selection and rollout not verified.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/28987281244827-The-old-beta-has-been-fully-retired-Please-use-character-ai-or-the-mobile-app",
+        "https://support.character.ai/hc/en-us/articles/41760067000475-Community-Update-September-2025"
+      ]
+    },
+    "editRetryBranch": {
+      "status": "documented",
+      "note": "Swipe alternatives, local edit/remove, destructive Rewind to Here, and original-preserving Start New Chat From Here.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/50609303987099-6-Refining-and-Testing-your-Character",
+        "https://support.character.ai/hc/en-us/articles/34428285052827-Community-Update-February-2025"
+      ]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Authored/pinned memory, Facts and usage display; shared keyword lore. Paid/beta qualifications apply; recall untested.",
+      "evidenceUrls": [
+        "https://blog.character.ai/memory/",
+        "https://support.character.ai/hc/en-us/articles/52739596326811-Lorebooks"
+      ]
+    },
+    "promptTransparency": {
+      "status": "documented",
+      "note": "Partial author-context visibility only: Definition can be hidden; lore can show hints without content. Full assembled-prompt inspection unknown.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/50608869548699-2-Creating-a-Character-Quickstart-Guide-%CF%89",
+        "https://support.character.ai/hc/en-us/articles/52739596326811-Lorebooks"
+      ]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "Internal Chat Styles picker and Legacy menu documented. External provider or local endpoint configuration unknown.",
+      "evidenceUrls": [
+        "https://blog.character.ai/new-styles-new-plan/"
+      ]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Paid Style Control named but dimensions not inspected. Low-level sampling/context controls unknown.",
+      "evidenceUrls": [
+        "https://blog.character.ai/new-styles-new-plan/"
+      ]
+    },
+    "groupRoleplay": {
+      "status": "unknown",
+      "note": "September 2025 update describes limited testing of improved multi-character interaction. Current broad access and platform parity not established.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/41760067000475-Community-Update-September-2025"
+      ]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "Avatar generation/upload and voice library or clip creation documented; Imagine Message and image gallery documented. Quality and current quotas untested.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/50608869548699-2-Creating-a-Character-Quickstart-Guide-%CF%89",
+        "https://blog.character.ai/imagine-gallery/"
+      ]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Mobile creation entry point and mobile image-gallery workflow documented. No device, accessibility or offline tests.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/50608869548699-2-Creating-a-Character-Quickstart-Guide-%CF%89",
+        "https://blog.character.ai/imagine-gallery/"
+      ]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Simplified lore imports and delayed account export documented. Character/chat interchange and export fidelity unknown.",
+      "evidenceUrls": [
+        "https://support.character.ai/hc/en-us/articles/54347105439515-Importing-Lorebooks",
+        "https://support.character.ai/hc/en-us/articles/56967715028891-How-do-I-download-my-data"
+      ]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "No self-hosted distribution or deployment instructions established by the reviewed sources.",
+      "evidenceUrls": []
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "scope": "Research artifact only. HTML previews at desktop and phone widths, not competitor interaction or application regression.",
+  "previews": [
+    {
+      "width": 728,
+      "contentHeight": 1313,
+      "capturedHeight": 1313,
+      "consoleMessages": []
+    },
+    {
+      "width": 390,
+      "contentHeight": 1920,
+      "capturedHeight": 1920,
+      "consoleMessages": []
+    }
+  ],
+  "sourceAfterTextRefinementNeedsFinalPreview": false,
+  "htmlSHA256": "d54b283e20d8e2407c4092c49a9f0fb72a657b3b1807a4720aebe3a2b9c457f0"
+}

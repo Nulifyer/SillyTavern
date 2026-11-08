@@ -1,0 +1,290 @@
+{
+  "slug": "sakura",
+  "product": "Sakura AI",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://www.sakura.fm/",
+  "evidenceBoundary": "Public web search/open extracts and publisher descriptions only. Official identity corroborated through Sakura AI, LLC in the privacy policy and App Store seller plus reciprocal sakura.fm links. No accounts, sign-in, purchases, generated chat, inference calls, browser automation, production access, device tests, or application source inspection. Mira is user-authored content, not official documentation; its returned extract was cached several months earlier. Unknown means not established, not absent. Benefits and proposals are explicitly inferences, not tested outcomes.",
+  "sources": [
+    {
+      "url": "https://www.sakura.fm/",
+      "title": "Sakura AI | Chat with AI Characters, Explore",
+      "supports": [
+        "Public search and thematic tags",
+        "Character portraits, descriptions, creator attribution",
+        "Some very long catalog descriptions"
+      ]
+    },
+    {
+      "url": "https://www.sakura.fm/chat/N28DH9O",
+      "title": "Chat with Mira",
+      "supports": [
+        "Public greeting, Description, Scenario, Creator",
+        "User-authored example only; cached extract several months old",
+        "Does not prove assembled prompt transparency"
+      ]
+    },
+    {
+      "url": "https://www.sakura.fm/buy",
+      "title": "Sakura+ subscription page",
+      "supports": [
+        "Diamond Fusion Mode multiple-response marketing",
+        "Dragonfruit and Glowing Dragonfruit model labels",
+        "Infinite Memory and images marketing",
+        "Daily message limits and Discord free-message applications",
+        "Feature bundling; no prices asserted"
+      ]
+    },
+    {
+      "url": "https://apps.apple.com/us/app/sakura-chat-with-ai-bots/id6467520779",
+      "title": "Sakura - Chat with AI Bots, App Store",
+      "supports": [
+        "Seller Sakura AI, LLC and sakura.fm developer/policy links",
+        "App ID 6467520779",
+        "iPhone/iPad compatibility",
+        "Publisher-advertised character creation; no interaction verified"
+      ]
+    },
+    {
+      "url": "https://www.sakura.fm/privacy",
+      "title": "Sakura AI privacy policy",
+      "supports": [
+        "Operator Sakura AI, LLC",
+        "Website sakura.fm",
+        "Stated update date January 06, 2024; no chat-specific guarantee established"
+      ]
+    },
+    {
+      "url": "https://www.sakura.fm/support",
+      "title": "Support for sakura.fm",
+      "supports": [
+        "Discord dedicated support channel; not failure-recovery behavior"
+      ]
+    },
+    {
+      "url": "https://www.sakura.fm/create",
+      "title": "Create a Character, unauthenticated extract",
+      "supports": [
+        "Sign-up/log-in boundary; editor and import workflow unverified"
+      ]
+    },
+    {
+      "url": "https://www.sakura.fm/chats",
+      "title": "Chat History, unauthenticated extract",
+      "supports": [
+        "Sign-up/log-in boundary; story organization and exact continuation unverified"
+      ]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Explore combines search, thematic tags, portraits, premise descriptions, and creator attribution.",
+      "benefitInference": "Users may choose a desired story before service configuration; discovery quality was not tested.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/"
+      ]
+    },
+    {
+      "mechanism": "Public character pages separate a greeting, description, scenario, and creator.",
+      "benefitInference": "Readers may judge premise and opening voice before investing in a conversation. Mira is a user-authored example, not official instructions.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/chat/N28DH9O"
+      ]
+    },
+    {
+      "mechanism": "Diamond markets Fusion Mode as response alternatives for each message.",
+      "benefitInference": "Alternative continuations may let writers select tone or direction without drafting a replacement. Selection, persistence, and branching are unverified.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy"
+      ]
+    },
+    {
+      "mechanism": "Official App Store distribution documents iPhone and iPad compatibility.",
+      "benefitInference": "Dedicated mobile access may support frequent use. No installation, touch, keyboard, synchronization, accessibility, or parity tests were performed.",
+      "evidenceUrls": [
+        "https://apps.apple.com/us/app/sakura-chat-with-ai-bots/id6467520779"
+      ]
+    }
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Public catalog search, tags, descriptions and example greeting/scenario/creator are visible in extracts. Publisher advertises creation, but create page shows sign-in prompts; editor fields and import formats remain unknown.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/",
+        "https://www.sakura.fm/chat/N28DH9O",
+        "https://apps.apple.com/us/app/sakura-chat-with-ai-bots/id6467520779",
+        "https://www.sakura.fm/create"
+      ]
+    },
+    "storyOrganization": {
+      "status": "unknown",
+      "note": "Chat History exists as a titled route but its unauthenticated extract shows sign-in prompts. Exact-story continuation, multiple stories per character, archives and naming are not established.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/chats"
+      ]
+    },
+    "editRetryBranch": {
+      "status": "marketing-only",
+      "note": "Fusion Mode advertises multiple response options. Editing, explicit regeneration, branch creation, selection semantics and preserved alternatives are not established.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy"
+      ]
+    },
+    "memoryLore": {
+      "status": "marketing-only",
+      "note": "Dragonfruit advertises better memory; Infinite advertises Infinite Memory. Context limits, memory editing/retrieval, summaries and lorebooks are not established. No retention guarantee is verified.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy"
+      ]
+    },
+    "promptTransparency": {
+      "status": "unknown",
+      "note": "Public description/scenario and greeting show author content only. Assembled model prompts, hidden instructions and context composition are not established.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/chat/N28DH9O"
+      ]
+    },
+    "modelConnections": {
+      "status": "marketing-only",
+      "note": "Sakura+ names Dragonfruit and Glowing Dragonfruit. Actual selection workflow, provider connections, API keys and local endpoints are not established.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy"
+      ]
+    },
+    "advancedControls": {
+      "status": "unknown",
+      "note": "No inspected primary source establishes sampler, context-budget or other expert generation controls. Unknown does not mean absent.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy",
+        "https://www.sakura.fm/create"
+      ]
+    },
+    "groupRoleplay": {
+      "status": "unknown",
+      "note": "Native multi-character orchestration is not established. Multi-character fiction would not prove a group-chat mechanism.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/"
+      ]
+    },
+    "imagesVoice": {
+      "status": "marketing-only",
+      "note": "Infinite marketing associates Glowing Dragonfruit with images. Generation controls, image handling and voice configuration are not established.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy"
+      ]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "App Store ID 6467520779 names Sakura AI, LLC and documents iPhone/iPad compatibility. No device, layout, touch, accessibility, synchronization or parity testing.",
+      "evidenceUrls": [
+        "https://apps.apple.com/us/app/sakura-chat-with-ai-bots/id6467520779"
+      ]
+    },
+    "portability": {
+      "status": "unknown",
+      "note": "Character-card import/export, conversation export, backups and migration fidelity were not established. Sign-in-bound pages do not prove absence.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/create",
+        "https://www.sakura.fm/chats"
+      ]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "Reviewed public pages describe a hosted product; no official source repository or self-hosting procedure was established. This is not evidence that self-hosting is impossible.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/",
+        "https://www.sakura.fm/privacy"
+      ]
+    }
+  },
+  "tradeoffs": [
+    {
+      "note": "Creation and Chat History show sign-in prompts in public extracts, limiting workflow verification.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/create",
+        "https://www.sakura.fm/chats"
+      ]
+    },
+    {
+      "note": "Subscription tiers bundle model, memory, response-choice and image claims. Free-message applications use Discord and the page acknowledges daily message limits. No prices are reported; comparative model quality was not tested.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy"
+      ]
+    },
+    {
+      "note": "Support page directs users to Discord. This establishes a help route, not draft preservation, in-chat recovery or response times.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/support"
+      ]
+    },
+    {
+      "note": "Some catalog descriptions are very long in extracted text, which may burden premise scanning. No rendered layout was inspected.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/"
+      ]
+    },
+    {
+      "note": "Privacy policy states January 06, 2024 as its update date. Reviewed evidence does not establish chat-specific privacy, local storage or retention guarantees.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/privacy"
+      ]
+    }
+  ],
+  "unknowns": [
+    "Character import formats and actual creation editor fields.",
+    "Exact conversation continuation, separate story identity, archive, checkpoints and naming.",
+    "Message editing, regeneration, branch creation and preservation of Fusion Mode alternatives.",
+    "Memory limits, memory inspection/editing, lorebooks, retrieval and summaries.",
+    "Assembled prompt inspection, provider/local connections, samplers and context controls.",
+    "Native group orchestration, voice setup, image generation controls and image portability.",
+    "Mobile usability, synchronization, accessibility and feature parity; no device tests.",
+    "Failure recovery, draft retention, outage handling and support response times.",
+    "Character/conversation exports, migration fidelity, public source repository and self-hosting."
+  ],
+  "reusablePatterns": [
+    {
+      "proposal": "Keep a short premise and creator attribution beside character selection; expand long definitions separately.",
+      "rationaleInference": "Helps readers choose a premise without scanning the full definition.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/"
+      ]
+    },
+    {
+      "proposal": "Separate character description, scenario and opening message in a profile preview.",
+      "rationaleInference": "Helps readers distinguish identity, situation and starting voice.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/chat/N28DH9O"
+      ]
+    },
+    {
+      "proposal": "Consider optional response alternatives and define selection/preservation explicitly.",
+      "rationaleInference": "May support authorial direction; Fusion Mode does not establish branching.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy"
+      ]
+    },
+    {
+      "proposal": "Disclose model, memory, image and voice capabilities and limits at service selection while keeping advanced controls reachable.",
+      "rationaleInference": "May make capability choice clearer. This is a proposal, not evidence that the fork lacks native controls or that Sakura documents voice setup.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy"
+      ]
+    }
+  ],
+  "doNotCopy": [
+    {
+      "pattern": "Absolute memory promises without inspectable memory or limits.",
+      "reason": "Marketing does not verify recall quality or retention guarantees.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/buy"
+      ]
+    },
+    {
+      "pattern": "Discord as the only recovery instruction.",
+      "reason": "Users need actionable errors and retained drafts inside the workspace. Sakura actual in-chat recovery remains unknown.",
+      "evidenceUrls": [
+        "https://www.sakura.fm/support"
+      ]
+    }
+  ]
+}

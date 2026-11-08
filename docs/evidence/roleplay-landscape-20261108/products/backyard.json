@@ -1,0 +1,153 @@
+{
+  "slug": "backyard",
+  "product": "Backyard AI",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://backyard.ai/",
+  "evidenceBoundary": "Public primary-source review only. Terms identify Ahoy Labs, Inc. and backyard.ai. Homepage says shut down and self-service download window closed. Historical documentation survives in search-indexed copies or older web-open results; several live documentation routes return closure notices. Capability statuses describe evidence, not current availability. No accounts, purchases, inference, installation, production access, browser automation, device tests or source-code inspection. Benefits are untested design judgments.",
+  "sources": [
+    {
+      "url": "https://backyard.ai/",
+      "title": "Backyard AI: current closure notice; historical homepage indexed separately",
+      "supports": ["Current shutdown", "New accounts and normal cloud features closed", "Self-service data download window closed", "Historical voice marketing only"]
+    },
+    {
+      "url": "https://backyard.ai/terms",
+      "title": "Backyard AI: Terms of Use, updated October 29, 2024",
+      "supports": ["Operator Ahoy Labs, Inc.", "Explicit association with backyard.ai", "Adult audience"]
+    },
+    {
+      "url": "https://backyard.ai/docs/creating-characters/character-prompt",
+      "title": "Backyard AI: Character Prompt, historical indexed copy",
+      "supports": ["Character and premise fields", "Advanced instructions", "Keyword lore", "Oldest-first context eviction", "Reply editing mentioned", "Display name excluded from model input"]
+    },
+    {
+      "url": "https://backyard.ai/docs/models/model-parameters",
+      "title": "Backyard AI: Model Parameters, older page returned by web open",
+      "supports": ["Base and optional controls", "Temperature, Min-P, Repeat Penalty, Top P and Top K explanations"]
+    },
+    {
+      "url": "https://backyard.ai/blog/mobile-tethering",
+      "title": "Backyard AI: Mobile Tethering, February 28, 2024 indexed announcement; earlier closure notice on open",
+      "supports": ["Historical opt-in remote local-model access", "Same-account and running-desktop prerequisites", "Backyard web routing dependency", "Earlier archive notice and expired deadlines", "JSONL, BYAF, README.txt, byaf/index.json, unavailable-media.jsonl"]
+    },
+    {
+      "url": "https://desktop.backyard.ai/",
+      "title": "Backyard AI: Desktop App",
+      "supports": ["Deprecated and unsupported desktop application", "Windows and macOS downloads", "llama.cpp attribution", "Main-site identity link"]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Historical scenario, first message and persona fields with advanced instructions.",
+      "benefitInference": "Could connect a character premise to the opening exchange while deferring expert setup.",
+      "evidenceUrls": ["https://backyard.ai/docs/creating-characters/character-prompt"]
+    },
+    {
+      "mechanism": "Historical keyword lore activation over the last four messages.",
+      "benefitInference": "Could reserve context for relevant facts. This is not durable memory.",
+      "evidenceUrls": ["https://backyard.ai/docs/creating-characters/character-prompt"]
+    },
+    {
+      "mechanism": "Documented base and optional sampler controls with explanations.",
+      "benefitInference": "Could support deliberate troubleshooting of repetition and output variety.",
+      "evidenceUrls": ["https://backyard.ai/docs/models/model-parameters"]
+    },
+    {
+      "mechanism": "Historical opt-in mobile tethering to desktop models and content.",
+      "benefitInference": "Could continue local chats through a phone without running models on the phone.",
+      "evidenceUrls": ["https://backyard.ai/blog/mobile-tethering"]
+    }
+  ],
+  "tradeoffs": [
+    "Current homepage reports shutdown, closed normal cloud features and closed self-service downloads. Historical strengths are not a current availability recommendation.",
+    "Desktop application is deprecated and unsupported. Local inference does not establish maintained self-hosting or post-closure tethering.",
+    "Historical tethering required a running desktop, the same Backyard account and Backyard web routing.",
+    "Earlier closure notice limited BYAF coverage to compatible single-character chats; unavailable older images were separately listed.",
+    "Earlier archive requests ended November 4, 2026 at 11:59 p.m. Pacific; downloads ended November 6, 2026 at 11:59 p.m. Pacific. Homepage now reports the window closed.",
+    "Expert sampler documentation establishes described controls, not present availability on all clients or models.",
+    "Historical context eviction removes old history. Keyword lore does not guarantee long-story recall."
+  ],
+  "unknowns": [
+    "Exact-story selection, archives and continuation workflow.",
+    "Retry, branch preservation and failure recovery behavior.",
+    "Group-roleplay workflow and group-chat archive compatibility.",
+    "Live assembled-prompt inspection, external model-provider connections and per-client control coverage.",
+    "Voice setup, image generation, current mobile operation and accessibility.",
+    "Archive completeness, round-trip import fidelity and support-assisted recovery after the download window closed.",
+    "Existing desktop offline operation after shutdown and independently deployable server support."
+  ],
+  "reusablePatterns": [
+    "Present the scenario beside the first exchange when preparing a story.",
+    "Keep editable instructions discoverable behind an advanced control and distinguish generation inputs from display labels.",
+    "Expose lore activation reasons and history eviction to explain memory boundaries.",
+    "Provide routine exports with explicit format coverage and missing-media reports."
+  ],
+  "doNotCopy": [
+    "Do not equate account-dependent tethering with independently self-hosted access.",
+    "Do not describe keyword lore as complete memory.",
+    "Do not rely on a shutdown-only archive window for routine portability.",
+    "Do not present historical features as currently available after the shutdown notice."
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Historical authoring fields documented; current hub selection and import workflow unverified. Service closed.",
+      "evidenceUrls": ["https://backyard.ai/docs/creating-characters/character-prompt", "https://backyard.ai/"]
+    },
+    "storyOrganization": {
+      "status": "unknown",
+      "note": "Exact-story selection, naming, archives and continuation were not established. Unknown does not mean absent.",
+      "evidenceUrls": []
+    },
+    "editRetryBranch": {
+      "status": "documented",
+      "note": "Historical guide mentions editing replies. Retry and branching remain unknown.",
+      "evidenceUrls": ["https://backyard.ai/docs/creating-characters/character-prompt"]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Historical keyword lore and oldest-first eviction documented; persistent story memory unverified.",
+      "evidenceUrls": ["https://backyard.ai/docs/creating-characters/character-prompt"]
+    },
+    "promptTransparency": {
+      "status": "documented",
+      "note": "Historical instructions and display-only naming explained. Live assembled-prompt inspection unknown.",
+      "evidenceUrls": ["https://backyard.ai/docs/creating-characters/character-prompt"]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "Historical local desktop models and tethering documented. External provider connections unknown. Desktop unsupported; cloud features closed.",
+      "evidenceUrls": ["https://backyard.ai/blog/mobile-tethering", "https://desktop.backyard.ai/", "https://backyard.ai/"]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Older guide explains base and optional samplers. Current operation and client/model coverage unverified.",
+      "evidenceUrls": ["https://backyard.ai/docs/models/model-parameters"]
+    },
+    "groupRoleplay": {
+      "status": "unknown",
+      "note": "Group interaction workflow not established. Single-character BYAF coverage does not establish absence of groups.",
+      "evidenceUrls": ["https://backyard.ai/blog/mobile-tethering"]
+    },
+    "imagesVoice": {
+      "status": "marketing-only",
+      "note": "Indexed historical homepage advertised dynamic voices and audio. Voice setup and image generation unknown. Earlier archive notice mentions unavailable older images.",
+      "evidenceUrls": ["https://backyard.ai/", "https://backyard.ai/blog/mobile-tethering"]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Historical mobile-browser tethering documented. No device test. Current mobile availability unknown after shutdown.",
+      "evidenceUrls": ["https://backyard.ai/blog/mobile-tethering", "https://backyard.ai/"]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Earlier closure notice describes JSONL and compatible single-character BYAF archives, README.txt, byaf/index.json and unavailable-media.jsonl. Current homepage says downloads closed. Fidelity untested.",
+      "evidenceUrls": ["https://backyard.ai/blog/mobile-tethering", "https://backyard.ai/"]
+    },
+    "selfHosting": {
+      "status": "documented",
+      "note": "Historical local desktop inference documented; downloads now marked deprecated and unsupported. Maintained self-hosted server and post-closure offline operation unknown.",
+      "evidenceUrls": ["https://backyard.ai/blog/mobile-tethering", "https://desktop.backyard.ai/"]
+    }
+  }
+}

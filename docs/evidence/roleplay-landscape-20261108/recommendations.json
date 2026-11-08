@@ -1,0 +1,189 @@
+[
+  {
+    "id": "scene-memory",
+    "priority": "first",
+    "proposal": "Show this story's summary, authored facts and attached lore together in Scene details.",
+    "current": "Native Summarize, World Info and Vector Storage exist; the scene inspector does not consolidate them.",
+    "classification": "Presentation plus native-owner integration",
+    "inspiration": [
+      "risuai",
+      "character-ai",
+      "kindroid",
+      "spicychat",
+      "voxta",
+      "nomi",
+      "perchance"
+    ],
+    "preserve": "Native summary, lore and retrieval owners; distinguish visible summaries from underlying recall.",
+    "acceptance": "Opening or correcting memory preserves transcript, draft, focus and story identity. Show coverage and stale/unavailable states. Never convert character replies into user drafts."
+  },
+  {
+    "id": "reply-context",
+    "priority": "first",
+    "proposal": "Add a readable explanation of the context used for a selected reply, with expert detail available.",
+    "current": "Native client-side itemization and prompt manager exist. Backend compatibility post-processing can change messages before the provider call. Inclusion/exclusion reasons may need native-owner instrumentation.",
+    "classification": "Presentation; bounded diagnostics integration",
+    "inspiration": [
+      "novelai",
+      "ai-dungeon",
+      "voxta",
+      "kobold-lite",
+      "kindroid"
+    ],
+    "preserve": "Native client assembly, backend compatibility processing, recorded generation identity and explicit settings. Provider-side chat templates remain a separate visibility boundary.",
+    "acceptance": "Label recorded client assembly, recorded compatibility processing and unavailable provider-side stages. Never present reconstructed content as a captured final provider request. Show model, budget and available contributions without inference or remounting chat."
+  },
+  {
+    "id": "branch-history",
+    "priority": "first",
+    "proposal": "Present existing branches and checkpoints as navigable story relationships.",
+    "current": "Native branch and bookmark operations exist; workspace story rows are a flat conversation list.",
+    "classification": "Presentation and ancestry indexing",
+    "inspiration": [
+      "risuai",
+      "chub",
+      "wyvern",
+      "novelai",
+      "agnai"
+    ],
+    "preserve": "Native transcript files, swipe selection, integrity and full character/group identity.",
+    "acceptance": "Create/open a branch at an earlier saved reply; the original file, selected reply and draft remain intact. Mobile ancestry navigation stays usable at 448px."
+  },
+  {
+    "id": "edit-scope",
+    "priority": "first",
+    "proposal": "Show whether an edit affects this story, the reusable character, a preset or a service connection.",
+    "current": "Native character, preset and service scopes exist. A chat-specific scenario override already exists in public/script.js:9064\u20139113. Complete isolated scenario snapshots are not established.",
+    "classification": "Presentation; scope mapping requires verification",
+    "inspiration": [
+      "agnai",
+      "dreamgen",
+      "voxta",
+      "kindroid"
+    ],
+    "preserve": "Current native persistence semantics; do not create an override store to make labels look consistent.",
+    "acceptance": "Explain the actual affected scope before save/apply. Switching stories proves that story-only changes do not become shared character/provider changes."
+  },
+  {
+    "id": "character-creation",
+    "priority": "next",
+    "proposal": "Lead creation with identity, premise and opening; keep full native fields reachable as detail.",
+    "current": "Native character editor and imports remain available. Workspace profiles already separate premise, opening and full description.",
+    "classification": "Creation-flow presentation",
+    "inspiration": [
+      "character-ai",
+      "agnai",
+      "kindroid",
+      "layla",
+      "replika"
+    ],
+    "preserve": "Character-card fields, metadata, import/export, alternate greetings and advanced controls.",
+    "acceptance": "A minimal card can start a story without a required title or a mandatory multi-step wizard. Existing detailed cards retain every field."
+  },
+  {
+    "id": "optional-openings",
+    "priority": "next",
+    "proposal": "Offer optional scenario/opening choices beside Start new story and clearly distinguish a new scene from continuation.",
+    "current": "Immediate start, premise preview, exact-history continuation, alternate greetings and a native chat-specific scenario override already exist. A reusable scenario library or full isolated scenario snapshot needs separate verification.",
+    "classification": "Presentation; optional scenario authoring integration",
+    "inspiration": [
+      "dreamgen",
+      "wyvern",
+      "nomi",
+      "chub"
+    ],
+    "preserve": "One-click default start, native automatic names and no mandatory title prompt.",
+    "acceptance": "Default start remains immediate. Optional suggestions require an explicit request, can be cancelled, and never replace the saved character or silently consume inference."
+  },
+  {
+    "id": "authoring-controls",
+    "priority": "next",
+    "proposal": "Make edit, retry, continue and alternative selection easier to discover while explaining how they affect history.",
+    "current": "Native message editing, swipes, generation and branch operations exist.",
+    "classification": "Discoverability and operation copy",
+    "inspiration": [
+      "novelai",
+      "ai-dungeon",
+      "kindroid",
+      "character-ai",
+      "layla"
+    ],
+    "preserve": "Native event ancestry and generation cancellation; expert generation controls remain available.",
+    "acceptance": "Touch and keyboard can find each action. Retry preserves alternatives; destructive rewind and branch have distinct consequences. Menus dismiss outside without losing the draft."
+  },
+  {
+    "id": "service-diagnostics",
+    "priority": "next",
+    "proposal": "Show effective service settings and an optional per-service test beside connection choices.",
+    "current": "One-server discovery, native service settings, context discovery, failure/retry and optional writer already exist.",
+    "classification": "Extend existing service presentation",
+    "inspiration": [
+      "voxta",
+      "agnai",
+      "layla",
+      "janitor"
+    ],
+    "preserve": "Native keys, profiles, exact model IDs, explicit overrides and optional services; no new registry or protocol proxy.",
+    "acceptance": "Separate discovery success from successful generation. Explicit tests disclose that they send a request, can Stop, and never change a model policy or story selection."
+  },
+  {
+    "id": "portable-stories",
+    "priority": "next",
+    "proposal": "Explain export scope and make ordinary backup/export easy before a service or device move.",
+    "current": "Native character/chat/lore exports exist. Complete branch/media/preset round-trip fidelity is not established by current browser acceptance.",
+    "classification": "Export presentation and fidelity verification",
+    "inspiration": [
+      "novelai",
+      "ai-dungeon",
+      "chub",
+      "backyard",
+      "voxta"
+    ],
+    "preserve": "Standard formats, original files and privacy; export must not imply automatic sharing.",
+    "acceptance": "Distinguish selected text, structured story, character and complete backup. Report included/excluded variants, media and hidden context. Test synthetic round trips before promising lossless migration."
+  },
+  {
+    "id": "cast-direction",
+    "priority": "later",
+    "proposal": "Keep active speaker, turn mode and shared scene context close to group chat.",
+    "current": "Native group member, activation and reply-order controls already exist and are linked from Scene details.",
+    "classification": "Discoverability",
+    "inspiration": [
+      "nomi",
+      "voxta",
+      "kindroid",
+      "agnai"
+    ],
+    "preserve": "Native cast scheduler and shared versus individual memory boundaries.",
+    "acceptance": "Manual and automatic turns remain distinguishable. Stop ends the queue; changing a speaker never changes the saved character or another story's context."
+  },
+  {
+    "id": "story-media",
+    "priority": "later",
+    "proposal": "Make it easy to revisit a story's images and voice settings from its messages.",
+    "current": "Native media/gallery and voice mapping exist; manual image and opt-in narration controls are already near chat.",
+    "classification": "Discoverability and media indexing",
+    "inspiration": [
+      "character-ai",
+      "replika",
+      "kindroid",
+      "voxta"
+    ],
+    "preserve": "Native media storage, per-character mapping and audio opt-in.",
+    "acceptance": "Image selection returns to the originating message. Service or voice changes show their scope. No automatic microphone or continuous call is introduced."
+  },
+  {
+    "id": "mobile-continuity",
+    "priority": "preserve",
+    "proposal": "Retain the mounted conversation and predictable transient controls when the tab returns.",
+    "current": "Actual release has synthetic desktop/Pixel hidden-freeze, draft, history-position, portrait and menu regressions. Physical phone locking remains unqualified.",
+    "classification": "Existing behavior to preserve; physical validation gap",
+    "inspiration": [
+      "layla",
+      "replika",
+      "kindroid"
+    ],
+    "preserve": "Native replies, scroll ownership, drafts, optional audio and explicit retry.",
+    "acceptance": "No reply-recovery popup, replayed inference, portrait overlap or cut-off final line. Test a physical Pixel 9 Pro XL separately before claiming lock/GPU qualification."
+  }
+]

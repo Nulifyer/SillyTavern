@@ -1,0 +1,140 @@
+{
+  "sakura": {
+    "status": "integrated for synthesis",
+    "primaryPagesChecked": [
+      "https://www.sakura.fm/",
+      "https://www.sakura.fm/buy"
+    ],
+    "supported": [
+      "Public search/tags/creator/premise discovery",
+      "Subscription page advertises response alternatives and memory"
+    ],
+    "qualifications": [
+      "No signed-in or mobile interaction",
+      "No evidence of memory quality or editable memory",
+      "Response alternatives already exist natively as swipes in the fork",
+      "Public Discord support route does not prove actual in-chat recovery is absent"
+    ]
+  },
+  "backyard": {
+    "status": "key claim checked",
+    "primaryPagesChecked": [
+      "https://backyard.ai/",
+      "https://desktop.backyard.ai/"
+    ],
+    "qualification": "Current closure and deprecated desktop confirmed; keep as historical reference only."
+  },
+  "novelai": {
+    "status": "key claim checked",
+    "primaryPagesChecked": [
+      "https://docs.novelai.net/en/text/editor/advancedsettings/"
+    ],
+    "qualification": "Context composition and inclusion/exclusion reasons documented; no interaction test."
+  },
+  "ai-dungeon": {
+    "status": "key claim checked",
+    "primaryPagesChecked": [
+      "https://help.aidungeon.com/how-do-i-manage-context"
+    ],
+    "qualification": "Required/dynamic context documented; no interaction test."
+  },
+  "voxta": {
+    "status": "key claim checked",
+    "primaryPagesChecked": [
+      "https://doc.voxta.ai/docs/server/interface/diagnostics"
+    ],
+    "qualification": "Resolved messages, raw results and call diagnostics documented; no interaction test."
+  },
+  "kindroid": {
+    "status": "key claim checked",
+    "primaryPagesChecked": [
+      "https://kindroid.ai/v2/docs/memory/"
+    ],
+    "qualification": "Per-reply recall and editable learned context documented; hidden cascaded memory remains distinct."
+  },
+  "nomi": {
+    "status": "key qualification checked",
+    "primaryPagesChecked": [
+      "https://wiki.nomi.ai/Are_Mind_Map_Entries_Memories_And_How_Are_They_Unique"
+    ],
+    "qualification": "Editing dossiers does not edit underlying memories."
+  },
+  "character-ai": {
+    "status": "key claim checked",
+    "primaryPagesChecked": [
+      "https://blog.character.ai/memory/"
+    ],
+    "qualification": "Memory overview and explicit carryover documented; paid features qualified."
+  },
+  "chub": {
+    "status": "key claim checked",
+    "primaryPagesChecked": [
+      "https://docs.chub.ai/docs/the-basics/just-chatting"
+    ],
+    "qualification": "Full chat tree and chat memory documented; no interface interaction."
+  },
+  "agnai": {
+    "status": "provider organization checked",
+    "primaryPagesChecked": [
+      "https://agnai.guide/docs/chat-settings/"
+    ],
+    "qualification": "Provider presets documented. Per-chat source findings rely on dedicated reviewer inspection."
+  },
+  "layla": {
+    "status": "key claim checked",
+    "primaryPagesChecked": [
+      "https://help.layla-network.ai/getting-started/"
+    ],
+    "qualification": "Reversible setup and later inference configuration documented; no device test."
+  },
+  "dreamgen": {
+    "status": "agent evidence retained; parent retrieval limited",
+    "parentRetrievalAttempt": [
+      "https://dreamgen.com/docs/migrating-from-v1-to-v2"
+    ],
+    "qualification": "Parent open returned Internal Error. Dedicated reviewer documents source; not independently re-established by parent."
+  },
+  "janitor": {
+    "status": "agent evidence retained; parent retrieval limited",
+    "parentRetrievalAttempt": [
+      "https://help.janitorai.com/en/article/how-to-use-scripts-your-beginner-friendly-step-by-step-guide-1bdk5hc/"
+    ],
+    "qualification": "Parent open returned Internal Error. Dedicated reviewer documents source; not a product outage claim."
+  },
+  "chai": {
+    "status": "qualified evidence only",
+    "qualification": "Do not use separately branded web FAQ as an authoritative basis for native-app parity or shared storage. Founder incident statement is not restoration proof."
+  },
+  "risuai": {
+    "status": "key source checked",
+    "primaryPagesChecked": [
+      "https://raw.githubusercontent.com/kwaroran/Risuai/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/Others/HypaV3Modal/modal-summary-item.svelte"
+    ],
+    "qualification": "Pinned summary editor source. No deployed interface, recall or device testing."
+  },
+  "kobold-lite": {
+    "status": "memory and format documentation checked",
+    "primaryPagesChecked": [
+      "https://koboldai.com/KoboldAILite/"
+    ],
+    "qualification": "Native source findings for request inspector/branch bounds remain dedicated reviewer evidence. No branch full-state guarantee."
+  },
+  "spicychat": {
+    "status": "key documentation checked",
+    "primaryPagesChecked": [
+      "https://docs.spicychat.ai/product-guides/premium-features/memory-manager.md"
+    ],
+    "qualification": "Memory editing/pinning documented. Prompt inclusion is not guaranteed model adherence."
+  },
+  "perchance": {
+    "status": "agent source evidence retained; parent docs reader limited",
+    "primaryPagesChecked": [
+      "https://perchance.org/ai-character-chat-docs"
+    ],
+    "qualification": "Parent reader returned iframe shell. Dedicated reviewer used the public source-download endpoint without executing JavaScript."
+  },
+  "replika": {
+    "status": "dedicated reviewer evidence integrated",
+    "qualification": "Generation-specific help/terms and retrieval/retention distinctions retained. No fresh parent interaction or device test."
+  }
+}

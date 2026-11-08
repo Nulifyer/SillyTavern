@@ -1,0 +1,338 @@
+{
+  "slug": "nomi",
+  "product": "Nomi",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://nomi.ai/",
+  "evidenceBoundary": "Public primary documentation review only. Homepage links establish Nomipedia as an endorsed knowledge source; terms identify Glimpse.ai, Inc. as owner. No account, purchases, inference calls, production access, browser automation, or first-hand product interaction. Benefits and reusable patterns are explicitly untested inferences/proposals. Older guide details may be stale. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://nomi.ai/",
+      "title": "AI Companion With Memory, Selfies & Group Chat - Nomi.ai",
+      "supports": [
+        "Product positioning; links to Nomipedia and terms; advertised hands-free calls."
+      ]
+    },
+    {
+      "url": "https://nomi.ai/terms-of-service/",
+      "title": "Nomi.ai - Terms of Service",
+      "supports": [
+        "Identifies Glimpse.ai, Inc. as platform owner."
+      ]
+    },
+    {
+      "url": "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/",
+      "title": "Nomi 101: A Beginner's Guide to Getting Started with Your AI Companion",
+      "supports": [
+        "2024 creation workflow and optional Shared Notes; media and voice configuration; no response editing/regeneration; OOC recovery. Exact current UI and integration details remain unverified."
+      ]
+    },
+    {
+      "url": "https://wiki.nomi.ai/How_do_I_use_Roleplay_Starters%3F",
+      "title": "How do I use Roleplay Starters?",
+      "supports": [
+        "Editable contextual scenario options; New Roleplay entry point; clearing Current Roleplay. Wiki revision 2026-08-24."
+      ]
+    },
+    {
+      "url": "https://nomi.ai/updates/mind-map-2-0-bringing-nomi-memory-into-view/",
+      "title": "Mind Map 2.0: Bringing Nomi Memory Into View",
+      "supports": [
+        "2025-10-09 announcement; graph/table; searchable editable dossiers; separate room maps; approximate automatic formation delay."
+      ]
+    },
+    {
+      "url": "https://wiki.nomi.ai/Are_Mind_Map_Entries_Memories_And_How_Are_They_Unique",
+      "title": "Are Mind Map Entries Memories?",
+      "supports": [
+        "Dossiers versus inaccessible underlying memories; locks; automatic updates and dynamic recall; authored Backstory+. Wiki revision 2026-08-24."
+      ]
+    },
+    {
+      "url": "https://wiki.nomi.ai/How_does_group_chat_work%3F",
+      "title": "How does group chat work?",
+      "supports": [
+        "Shared Backstory and Mind Map; manual next speaker or Auto-play; limits on individual Backstory+ sharing. Wiki revision 2026-08-24."
+      ]
+    },
+    {
+      "url": "https://wiki.nomi.ai/Can_I_delete_my_Nomi%27s_messages%3F",
+      "title": "Can I delete my Nomi's messages?",
+      "supports": [
+        "Explicitly no message deletion or rerolls; conversational correction recommendation. Wiki revision 2026-08-23."
+      ]
+    },
+    {
+      "url": "https://wiki.nomi.ai/What_platforms_does_Nomi_support%3F",
+      "title": "What platforms does Nomi support?",
+      "supports": [
+        "Web, iOS, Android, and PWA availability. Wiki revision 2026-08-24."
+      ]
+    },
+    {
+      "url": "https://wiki.nomi.ai/Can_I_run_Nomi_locally%3F",
+      "title": "Can I run Nomi locally?",
+      "supports": [
+        "Explicitly no local operation. Wiki revision 2026-08-23."
+      ]
+    },
+    {
+      "url": "https://wiki.nomi.ai/How_do_I_move_another_AI_to_Nomi%3F",
+      "title": "How do I move another AI to Nomi?",
+      "supports": [
+        "No direct AI transfer; manual reconstruction using Backstory+ and Mind Maps. Wiki revision 2026-08-23."
+      ]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Short character setup with optional authored context later.",
+      "benefitInference": "May reduce initial setup burden while retaining a path to character detail.",
+      "evidenceUrls": [
+        "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/"
+      ]
+    },
+    {
+      "mechanism": "Roleplay Starters use existing context to suggest premises that users can adjust before the next turn.",
+      "benefitInference": "May help users begin a scene when they do not have a premise ready.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_do_I_use_Roleplay_Starters%3F"
+      ]
+    },
+    {
+      "mechanism": "Mind Map graph and searchable table expose editable conceptual dossiers for individual and group chats.",
+      "benefitInference": "May make missing lore and mistaken associations easier to locate and correct.",
+      "evidenceUrls": [
+        "https://nomi.ai/updates/mind-map-2-0-bringing-nomi-memory-into-view/"
+      ]
+    },
+    {
+      "mechanism": "Group-level context accompanies manual next-speaker selection and Auto-play.",
+      "benefitInference": "May support both directed ensemble scenes and less supervised cast interaction.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_does_group_chat_work%3F"
+      ]
+    }
+  ],
+  "tradeoffs": [
+    {
+      "note": "Nomi explicitly does not support message deletion or rerolls. The older guide also rejects response editing/regeneration and recommends OOC correction.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Can_I_delete_my_Nomi%27s_messages%3F",
+        "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/"
+      ]
+    },
+    {
+      "note": "Editing a Mind Map dossier does not edit underlying memories. Those memories cannot be inspected, edited, or removed by users.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Are_Mind_Map_Entries_Memories_And_How_Are_They_Unique"
+      ]
+    },
+    {
+      "note": "Automatic Mind Map formation can take roughly 500+ messages according to the 2025 announcement. This is a vendor estimate, not a measured threshold.",
+      "evidenceUrls": [
+        "https://nomi.ai/updates/mind-map-2-0-bringing-nomi-memory-into-view/"
+      ]
+    },
+    {
+      "note": "Individual Backstory+ information is not fully shared across group participants; common facts need group Backstory.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_does_group_chat_work%3F"
+      ]
+    },
+    {
+      "note": "Local operation is explicitly unsupported.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Can_I_run_Nomi_locally%3F"
+      ]
+    },
+    {
+      "note": "Migration is manual reconstruction, not direct transfer of an existing AI.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_do_I_move_another_AI_to_Nomi%3F"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "note": "Exact-conversation archive, checkpoints, branch creation/navigation, and restoration of prior story state were not established. Roleplay Starters do not establish these capabilities.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_do_I_use_Roleplay_Starters%3F",
+        "https://wiki.nomi.ai/How_does_group_chat_work%3F"
+      ]
+    },
+    {
+      "note": "Full prompt inspection, per-response context selection trace, arbitrary model endpoints, sampler parameters, and context-budget controls were not established.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Are_Mind_Map_Entries_Memories_And_How_Are_They_Unique",
+        "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/"
+      ]
+    },
+    {
+      "note": "Native transcript export, standard character-card import, and round-trip backup were not established. Inbound reconstruction documentation does not prove export is absent.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_do_I_move_another_AI_to_Nomi%3F"
+      ]
+    },
+    {
+      "note": "Mobile feature parity, accessibility, responsiveness, voice latency, media consistency, and transport-failure recovery were not tested.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/What_platforms_does_Nomi_support%3F",
+        "https://nomi.ai/",
+        "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/"
+      ]
+    },
+    {
+      "note": "The guide dates to 2024; its exact UI labels, ElevenLabs setup, and current entitlement details were not verified by interaction.",
+      "evidenceUrls": [
+        "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/"
+      ]
+    }
+  ],
+  "reusablePatterns": [
+    {
+      "pattern": "Editable premise suggestions at new-story creation.",
+      "rationale": "May reduce blank-composer friction. Clearly distinguish creating a new story from changing current context.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_do_I_use_Roleplay_Starters%3F"
+      ]
+    },
+    {
+      "pattern": "Searchable and correctable remembered-lore entries.",
+      "rationale": "May help repair context. Distinguish authored facts, generated summaries, and information selected for each reply.",
+      "evidenceUrls": [
+        "https://nomi.ai/updates/mind-map-2-0-bringing-nomi-memory-into-view/",
+        "https://wiki.nomi.ai/Are_Mind_Map_Entries_Memories_And_How_Are_They_Unique"
+      ]
+    },
+    {
+      "pattern": "Simple initial character setup with optional detail later.",
+      "rationale": "May reduce onboarding effort while keeping native expert controls available.",
+      "evidenceUrls": [
+        "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/"
+      ]
+    },
+    {
+      "pattern": "Shared scene and cast-role context beside group speaker controls.",
+      "rationale": "May help authors direct an ensemble and understand which facts belong to a story or character.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_does_group_chat_work%3F"
+      ]
+    }
+  ],
+  "doNotCopy": [
+    {
+      "note": "Do not prohibit transcript correction or rerolls as a character-autonomy rule; direct story authorship needs reversible correction. This is a design objection, not a claim about user outcomes.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Can_I_delete_my_Nomi%27s_messages%3F"
+      ]
+    },
+    {
+      "note": "Do not imply that changing a dossier repairs or exposes all memory.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Are_Mind_Map_Entries_Memories_And_How_Are_They_Unique"
+      ]
+    },
+    {
+      "note": "Do not replace searchable context and exact-story recovery with a memory graph.",
+      "evidenceUrls": [
+        "https://nomi.ai/updates/mind-map-2-0-bringing-nomi-memory-into-view/"
+      ]
+    },
+    {
+      "note": "Do not repeat human-level recall claims without evaluation.",
+      "evidenceUrls": [
+        "https://nomi.ai/"
+      ]
+    }
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Guide describes relationship, name, traits, interests, and appearance setup with optional Shared Notes. Standard card import is unknown; migration uses reconstruction.",
+      "evidenceUrls": [
+        "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/",
+        "https://wiki.nomi.ai/How_do_I_move_another_AI_to_Nomi%3F"
+      ]
+    },
+    "storyOrganization": {
+      "status": "documented",
+      "note": "Individual/group chats and a Current Roleplay field are documented. Exact-story archives, checkpoint restoration, and branches remain unknown.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_do_I_use_Roleplay_Starters%3F",
+        "https://wiki.nomi.ai/How_does_group_chat_work%3F"
+      ]
+    },
+    "editRetryBranch": {
+      "status": "documented",
+      "note": "Explicitly no deletion of Nomi messages or rerolls. Older guide also rejects response editing/regeneration and recommends OOC. Branching is unknown.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Can_I_delete_my_Nomi%27s_messages%3F",
+        "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/"
+      ]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Authored Backstory+ and editable/lockable, dynamically recalled Mind Map dossiers are documented. Underlying memories are not user-inspectable or editable.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Are_Mind_Map_Entries_Memories_And_How_Are_They_Unique",
+        "https://nomi.ai/updates/mind-map-2-0-bringing-nomi-memory-into-view/"
+      ]
+    },
+    "promptTransparency": {
+      "status": "documented",
+      "note": "Partial transparency through Backstory+ and Mind Map dossiers. Complete prompts and a per-response context inspector are not established.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Are_Mind_Map_Entries_Memories_And_How_Are_They_Unique",
+        "https://nomi.ai/updates/mind-map-2-0-bringing-nomi-memory-into-view/"
+      ]
+    },
+    "modelConnections": {
+      "status": "unknown",
+      "note": "No evidence in inspected workflow documentation establishes user-configured model providers or arbitrary inference endpoints. Unknown does not mean absent.",
+      "evidenceUrls": []
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Authored context and dossier locks are documented. Sampler controls, context budgets, and system-prompt editing remain unestablished.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Are_Mind_Map_Entries_Memories_And_How_Are_They_Unique"
+      ]
+    },
+    "groupRoleplay": {
+      "status": "documented",
+      "note": "Multiple Nomis share a conversation, group Backstory, and group Mind Map. Manual next speaker or Auto-play is documented. Individual Backstory+ is not fully shared.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_does_group_chat_work%3F"
+      ]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "2024 guide documents contextual selfies, prompted art, voice messages, and ElevenLabs connection. Current homepage advertises hands-free calls. Present setup details, quality, and latency are unverified.",
+      "evidenceUrls": [
+        "https://nomi.ai/nomi-knowledge/nomi-101-a-beginners-guide-to-getting-started-with-your-ai-companion/",
+        "https://nomi.ai/"
+      ]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Web, iOS, Android, and PWA are documented. No device tests or feature-parity checks were performed.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/What_platforms_does_Nomi_support%3F"
+      ]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Inbound companion reconstruction via Backstory+ and Mind Maps is documented, with no direct transfer. Native export, standard card import, and round-trip backup are unknown.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/How_do_I_move_another_AI_to_Nomi%3F"
+      ]
+    },
+    "selfHosting": {
+      "status": "documented",
+      "note": "Official knowledge base explicitly says Nomi cannot run locally. No self-hosting was established.",
+      "evidenceUrls": [
+        "https://wiki.nomi.ai/Can_I_run_Nomi_locally%3F"
+      ]
+    }
+  }
+}

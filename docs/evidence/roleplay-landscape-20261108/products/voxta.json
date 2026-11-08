@@ -1,0 +1,69 @@
+{
+  "slug": "voxta",
+  "product": "Voxta",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://voxta.ai/",
+  "evidenceBoundary": "Current public official documentation and linked official site/GitHub identity only. No application interaction, source implementation inspection, account, inference call, purchase, production access, device test or performance benchmark. Benefit statements are reviewer inferences. Unknown means not established, not absent. Parent owns fork verification and integration.",
+  "sources": [
+    {"url":"https://voxta.ai/","title":"Voxta official product site","supports":["Links to doc.voxta.ai", "Product audience", "No macOS build or iOS app stated"]},
+    {"url":"https://github.com/voxta-ai","title":"Voxta GitHub organization","supports":["Linked by documentation", "Identifies itself as official and links back to voxta.ai"]},
+    {"url":"https://doc.voxta.ai/","title":"Voxta Documentation","supports":["Links to voxta.ai and voxta-ai GitHub organization"]},
+    {"url":"https://doc.voxta.ai/docs/server/interface/characters","title":"Characters screen","supports":["Browse/create/import/export", "Readme and scenario selection", "New Chat and Resume Last Chat"]},
+    {"url":"https://doc.voxta.ai/docs/server/interface/chat-history","title":"Chat history","supports":["Exact conversation selection", "Summary cards", "Explore and chat downloads"]},
+    {"url":"https://doc.voxta.ai/docs/server/studio/memory-books","title":"Memory books","supports":["Authored lore and experimental automatic memory", "Recall rules", "Editable history", "Import/export"]},
+    {"url":"https://doc.voxta.ai/docs/server/interface/chat","title":"Chat","supports":["Views and detailed message controls", "Multi-character turn-taking", "Live inspector"]},
+    {"url":"https://doc.voxta.ai/docs/server/interface/diagnostics","title":"Diagnostics","supports":["Resolved prompts and raw results", "Generation settings and call identifiers", "Timings and reports"]},
+    {"url":"https://doc.voxta.ai/docs/server/interface/settings","title":"Manage Modules","supports":["Providers, presets, configurations and precedence"]},
+    {"url":"https://doc.voxta.ai/docs/server/studio/scenarios","title":"Scenarios","supports":["Role assignment and scripted authoring"]},
+    {"url":"https://doc.voxta.ai/docs/server/interface/test-services","title":"Service tests","supports":["Individual service testing", "Retry and error output", "Settings link"]},
+    {"url":"https://doc.voxta.ai/docs/server/get-started/install","title":"Install Voxta","supports":["Windows and Linux editions", "Subscriber Android APK", "Account/subscription prerequisites", "Cloud-only Lite"]},
+    {"url":"https://doc.voxta.ai/docs/server/studio/characters","title":"Character editor","supports":["Card-v2 import claim", "Prompt strategy and reply limits", "Voice and image overrides", "Assets require packages"]},
+    {"url":"https://doc.voxta.ai/docs/server/reference/backups","title":"Back up your data","supports":["Database and asset backup", "Windows device-key migration limits", "Device-mode encryption preparation", "Cloud Storage excludes chats/settings/keys"]},
+    {"url":"https://doc.voxta.ai/docs/cloud/terms","title":"Terms of Service, updated October 4, 2026","supports":["Software identified as proprietary and licensed for personal use"]}
+  ],
+  "strengths": [
+    {"mechanism":"Character readme and replaceable default scenario accompany distinct new/resume actions.","benefitInference":"Users can understand the premise and choose a fresh story deliberately.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/characters"]},
+    {"mechanism":"Searchable conversation history includes summary cards and creator-enabled Explore.","benefitInference":"Users can select the intended story and investigate its remembered state.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/chat-history"]},
+    {"mechanism":"Editable lore and experimental private memories retain superseded entries; recall has a token budget.","benefitInference":"Creators can correct continuity errors and control recalled material.","evidenceUrls":["https://doc.voxta.ai/docs/server/studio/memory-books"]},
+    {"mechanism":"Chat Inspector and Diagnostics expose resolved contexts, prompts, raw results and generation parameters.","benefitInference":"Unexpected behavior becomes easier to trace to prompt construction or provider output.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/chat","https://doc.voxta.ai/docs/server/interface/diagnostics"]},
+    {"mechanism":"Saved configurations and individual service tests.","benefitInference":"Reuse setups and isolate failures.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/settings","https://doc.voxta.ai/docs/server/interface/test-services"]}
+  ],
+  "tradeoffs": [
+    {"note":"Editing, deletion and regeneration are exposed in Chat view, not simpler views. Discovery cost is a reviewer concern, not an observed usability failure.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/chat"]},
+    {"note":"Automatic memories and understanding are explicitly experimental and require a memory service.","evidenceUrls":["https://doc.voxta.ai/docs/server/studio/memory-books"]},
+    {"note":"No configuration switch during chat. Precedence: forced scenario, forced character, selected configuration.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/settings"]},
+    {"note":"Full Windows desktop, Linux server and Android editions require a subscription; Lite is cloud-only. Software is proprietary.","evidenceUrls":["https://doc.voxta.ai/docs/server/get-started/install","https://doc.voxta.ai/docs/cloud/terms"]},
+    {"note":"Assets require .voxpak. Backups need database and Users/ together. Windows device.key is machine-bound; Device-mode encrypted content needs preparation before moving. Cloud Storage does not carry chats, settings or keys.","evidenceUrls":["https://doc.voxta.ai/docs/server/studio/characters","https://doc.voxta.ai/docs/server/reference/backups"]}
+  ],
+  "unknowns": [
+    {"note":"Conversation forks/checkpoints, alternate-reply preservation and edit-triggered state rollback were not established. Scripted story branching is not evidence of conversation forking.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/chat","https://doc.voxta.ai/docs/server/interface/chat-history"]},
+    {"note":"No response-quality, memory-accuracy, latency, accessibility, responsive-web, touch-editing or reconnect test was performed.","evidenceUrls":[]},
+    {"note":"Cross-tool import/export fidelity and chat-download round-trip restoration were not established. The gallery says Voxta-format PNG; the editor claims character-card-v2 import.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/characters","https://doc.voxta.ai/docs/server/studio/characters","https://doc.voxta.ai/docs/server/interface/chat-history"]},
+    {"note":"Full sampler coverage and provider-specific advanced-setting parity were not verified.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/settings","https://doc.voxta.ai/docs/server/studio/characters"]}
+  ],
+  "reusablePatterns": [
+    {"pattern":"Distinct new-story and exact-history actions with a visible premise and scenario.","benefitInference":"Reduce mistaken continuation.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/characters","https://doc.voxta.ai/docs/server/interface/chat-history"]},
+    {"pattern":"Compact recalled-memory and summary explanation with correction links to existing owners.","benefitInference":"Make continuity mistakes inspectable.","evidenceUrls":["https://doc.voxta.ai/docs/server/studio/memory-books","https://doc.voxta.ai/docs/server/interface/chat-history"]},
+    {"pattern":"Reach prompt diagnostics from the active story.","benefitInference":"Investigate a surprising reply without losing story context.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/diagnostics"]},
+    {"pattern":"Show effective service configuration and the source of each override.","benefitInference":"Explain which settings apply.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/settings"]}
+  ],
+  "doNotCopy": [
+    {"pattern":"Correction controls discoverable only in a different view.","reason":"Users need a visible route to editing and retry.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/chat"]},
+    {"pattern":"An unexplained experimental understanding layer.","reason":"Automatic participant interpretation needs clear consent and correction. This is a proposal, not a claim Voxta lacks either.","evidenceUrls":["https://doc.voxta.ai/docs/server/studio/memory-books"]},
+    {"pattern":"The complete scenario scripting system without a separate authoring need.","reason":"It would expand scope and maintenance beyond ordinary chat.","evidenceUrls":["https://doc.voxta.ai/docs/server/studio/scenarios"]}
+  ],
+  "capabilities": {
+    "characterOnboarding":{"status":"documented","note":"Search/tag gallery, readmes, scenario choice, manual/AI-assisted/VRoid creation and card/package import.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/characters"]},
+    "storyOrganization":{"status":"documented","note":"Search/filter/sort exact chats, summaries, rename/favorite/resume and creator Explore. An open chat cannot resume on another window/device until closed.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/chat-history"]},
+    "editRetryBranch":{"status":"documented","note":"Edit, delete and regenerate in Chat view. Branch/checkpoint and alternate-reply preservation remain unknown, not absent.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/chat"]},
+    "memoryLore":{"status":"documented","note":"Keyword lore, pinning/weights, lexical or embedding-assisted recall, experimental automatic memories/understanding; JSON/YAML/.voxpak export and Agnaistic lore-book JSON import.","evidenceUrls":["https://doc.voxta.ai/docs/server/studio/memory-books"]},
+    "promptTransparency":{"status":"documented","note":"Inspector plus resolved prompt, raw result, tools, parameters and downloadable diagnostic report.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/chat","https://doc.voxta.ai/docs/server/interface/diagnostics"]},
+    "modelConnections":{"status":"documented","note":"Saved per-function modules/presets; optional separate summarization model.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/settings"]},
+    "advancedControls":{"status":"documented","note":"System-prompt strategy, post-history instructions, context and reply caps documented. Full sampler coverage unknown.","evidenceUrls":["https://doc.voxta.ai/docs/server/studio/characters"]},
+    "groupRoleplay":{"status":"documented","note":"Scenario-assigned characters speak in turns; scenario or script controls the next speaker.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/chat"]},
+    "imagesVoice":{"status":"documented","note":"Voice, transcription and image-generation modules; character voice selection and image prompt overrides. Quality untested.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/settings","https://doc.voxta.ai/docs/server/studio/characters"]},
+    "mobile":{"status":"documented","note":"Subscriber Android APK, Android 8+ and 13+ for on-device speech recognition; standalone or PC connection. Official site says no iOS app. No device or responsive-web test.","evidenceUrls":["https://doc.voxta.ai/docs/server/get-started/install","https://voxta.ai/"]},
+    "portability":{"status":"documented","note":"PNG cards, .voxpak assets, memory-book exports and chat downloads. Cross-tool fidelity and chat round-trip unknown; device-key migration caveats apply.","evidenceUrls":["https://doc.voxta.ai/docs/server/interface/characters","https://doc.voxta.ai/docs/server/studio/memory-books","https://doc.voxta.ai/docs/server/interface/chat-history","https://doc.voxta.ai/docs/server/reference/backups"]},
+    "selfHosting":{"status":"documented","note":"Installed Windows runtime and Linux x64/arm64 server with web UI; full editions require a subscription. Proprietary software; no deployment performed.","evidenceUrls":["https://doc.voxta.ai/docs/server/get-started/install","https://doc.voxta.ai/docs/cloud/terms"]}
+  }
+}

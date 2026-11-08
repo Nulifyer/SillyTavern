@@ -1,0 +1,122 @@
+[
+  {
+    "slug": "risuai",
+    "product": "RisuAI",
+    "startingUrl": "https://risuai.net/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "agnai",
+    "product": "Agnai / Agnaistic",
+    "startingUrl": "https://github.com/agnaistic/agnai",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "backyard",
+    "product": "Backyard AI",
+    "startingUrl": "https://backyard.ai/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "kobold-lite",
+    "product": "KoboldAI Lite",
+    "startingUrl": "https://github.com/LostRuins/lite.koboldai.net",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "character-ai",
+    "product": "Character.AI",
+    "startingUrl": "https://character.ai/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "chub",
+    "product": "Chub AI",
+    "startingUrl": "https://docs.chub.ai/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "janitor",
+    "product": "JanitorAI",
+    "startingUrl": "https://janitorai.com/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "dreamgen",
+    "product": "DreamGen",
+    "startingUrl": "https://dreamgen.com/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "novelai",
+    "product": "NovelAI",
+    "startingUrl": "https://docs.novelai.net/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "ai-dungeon",
+    "product": "AI Dungeon",
+    "startingUrl": "https://help.aidungeon.com/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "kindroid",
+    "product": "Kindroid",
+    "startingUrl": "https://docs.kindroid.ai/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "nomi",
+    "product": "Nomi",
+    "startingUrl": "https://nomi.ai/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "replika",
+    "product": "Replika",
+    "startingUrl": "https://help.replika.com/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "spicychat",
+    "product": "SpicyChat",
+    "startingUrl": "https://docs.spicychat.ai/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "perchance",
+    "product": "Perchance AI Character Chat",
+    "startingUrl": "https://perchance.org/ai-character-chat",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "voxta",
+    "product": "Voxta",
+    "startingUrl": "https://doc.voxta.ai/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "layla",
+    "product": "Layla",
+    "startingUrl": "https://www.layla-network.ai/ai-roleplay",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "chai",
+    "product": "CHAI",
+    "startingUrl": "https://www.chai-research.com/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "sakura",
+    "product": "Sakura AI",
+    "startingUrl": "https://www.sakura.fm/",
+    "status": "dedicated review complete; integrated"
+  },
+  {
+    "slug": "wyvern",
+    "product": "WyvernChat",
+    "startingUrl": "https://app.wyvern.chat/",
+    "status": "dedicated review complete; integrated"
+  }
+]

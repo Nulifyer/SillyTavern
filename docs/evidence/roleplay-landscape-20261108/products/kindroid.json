@@ -1,0 +1,66 @@
+{
+  "slug": "kindroid",
+  "product": "Kindroid",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://kindroid.ai/",
+  "evidenceBoundary": "Public official documentation only. docs.kindroid.ai redirected to kindroid.ai, whose Documentation link opens kindroid.ai/v2/docs/. No account, first-hand interaction, inference call, device test, browser automation, production access, or implementation inspection. Benefits are design inferences. Unknown means not established, not absent.",
+  "sources": [
+    {"url": "https://kindroid.ai/", "title": "Kindroid product homepage", "supports": ["Product identity, adult audience, official Help Center linkage"]},
+    {"url": "https://kindroid.ai/v2/docs/customizing-personality/", "title": "Customizing personality", "supports": ["Creation, optional tuning, expert controls, identity choices"]},
+    {"url": "https://kindroid.ai/v2/docs/chat-features-and-tools/", "title": "Chat features and tools", "supports": ["Correction, history, bounded branching and rewind"]},
+    {"url": "https://kindroid.ai/v2/docs/memory/", "title": "Memory", "supports": ["Recall inspection, editable memory, hidden context limits"]},
+    {"url": "https://kindroid.ai/v2/docs/voice-calls-and-video-calls/", "title": "Voice, calls, and video calls", "supports": ["Voice configuration, continuity toggle, concurrent-chat warning"]},
+    {"url": "https://kindroid.ai/v2/docs/selfies-video-selfies-avatars/", "title": "Selfies, video selfies, & avatars", "supports": ["Media controls and video model overrides"]},
+    {"url": "https://kindroid.ai/v2/docs/faqs/", "title": "FAQs", "supports": ["Export, read-only retention, mobile availability and image moderation"]},
+    {"url": "https://kindroid.ai/v2/docs/sharing-kindroids-referrals/", "title": "Sharing Kindroids & Referrals", "supports": ["Templates and explicit sharing exclusions"]},
+    {"url": "https://kindroid.ai/v2/docs/groupchats/", "title": "Groupchats", "supports": ["Group configuration, turns, memory boundaries"]},
+    {"url": "https://kindroid.ai/v2/docs/update-log/", "title": "Update log", "supports": ["October 12 Vignette default announcement conflicts with selfie guidance"]}
+  ],
+  "strengths": [
+    {"mechanism": "Required personality and greeting with optional fine-tuning.", "benefitInference": "Beginners can establish a premise before learning controls.", "evidenceUrls": ["https://kindroid.ai/v2/docs/customizing-personality/"]},
+    {"mechanism": "Versioned retries, targeted correction, Scenarios, and history navigation.", "benefitInference": "Users can repair replies and revisit divergence points.", "evidenceUrls": ["https://kindroid.ai/v2/docs/chat-features-and-tools/"]},
+    {"mechanism": "Reply-level recall inspection and memory editing.", "benefitInference": "Continuity problems become easier to diagnose.", "evidenceUrls": ["https://kindroid.ai/v2/docs/memory/"]},
+    {"mechanism": "Call/text continuity settings and persistent versus temporary media configuration.", "benefitInference": "Users can change mode or experiment with less repeated setup.", "evidenceUrls": ["https://kindroid.ai/v2/docs/voice-calls-and-video-calls/", "https://kindroid.ai/v2/docs/selfies-video-selfies-avatars/"]}
+  ],
+  "tradeoffs": [
+    {"note": "Scenarios need subscription/group capacity; bounded copying excludes unshown call context. Rewind has eligibility limits.", "evidenceUrls": ["https://kindroid.ai/v2/docs/chat-features-and-tools/"]},
+    {"note": "Cascaded Memory is hidden; recall inspection is partial and retrieval fallible.", "evidenceUrls": ["https://kindroid.ai/v2/docs/memory/"]},
+    {"note": "Group participation can affect individual memories; group existence does not establish story isolation.", "evidenceUrls": ["https://kindroid.ai/v2/docs/groupchats/"]},
+    {"note": "Kin creation offers Male or Female; personas also offer Nonbinary.", "evidenceUrls": ["https://kindroid.ai/v2/docs/customizing-personality/"]},
+    {"note": "Export normally has a 30-day interval and links media. Lapsed accounts retain read-only access and export.", "evidenceUrls": ["https://kindroid.ai/v2/docs/faqs/"]},
+    {"note": "Shared templates exclude history, journals, long-term memory, custom voices, and avatar boosts.", "evidenceUrls": ["https://kindroid.ai/v2/docs/sharing-kindroids-referrals/"]},
+    {"note": "Parallel text chat with Shared chat history during calls can cause undefined behavior and lost memory.", "evidenceUrls": ["https://kindroid.ai/v2/docs/voice-calls-and-video-calls/"]},
+    {"note": "Mobile image moderation can remove generated selfies with automatic credit refund.", "evidenceUrls": ["https://kindroid.ai/v2/docs/faqs/"]}
+  ],
+  "unknowns": [
+    {"note": "Full prompt inspection, arbitrary provider connections, external character-card import, export restoration, and self-hosting are not established.", "evidenceUrls": ["https://kindroid.ai/v2/docs/customizing-personality/", "https://kindroid.ai/v2/docs/memory/", "https://kindroid.ai/v2/docs/faqs/"]},
+    {"note": "Current default selfie model is unresolved: selfie guidance names Atelier, October 12 changelog names Vignette.", "evidenceUrls": ["https://kindroid.ai/v2/docs/selfies-video-selfies-avatars/", "https://kindroid.ai/v2/docs/update-log/"]},
+    {"note": "No recall-quality, latency, mobile usability, accessibility, recovery, or export round-trip tests.", "evidenceUrls": []}
+  ],
+  "reusablePatterns": [
+    {"proposal": "Lead creation with premise and greeting, then disclose expert controls.", "evidenceUrls": ["https://kindroid.ai/v2/docs/customizing-personality/"]},
+    {"proposal": "Place recalled material and correction beside each reply.", "evidenceUrls": ["https://kindroid.ai/v2/docs/memory/"]},
+    {"proposal": "Explain operation scope before retry, edit, rewind, or branch.", "evidenceUrls": ["https://kindroid.ai/v2/docs/chat-features-and-tools/"]},
+    {"proposal": "Separate saved media defaults from request overrides.", "evidenceUrls": ["https://kindroid.ai/v2/docs/selfies-video-selfies-avatars/"]}
+  ],
+  "doNotCopy": [
+    {"pattern": "Hidden memory as the only continuity mechanism.", "reason": "Users need to understand what survives resets."},
+    {"pattern": "Bounded Scenario presented as an exact checkpoint.", "reason": "Copied text does not establish complete state preservation."},
+    {"pattern": "Template sharing presented as a backup.", "reason": "Explicit sharing exclusions omit story state."},
+    {"pattern": "Binary-only Kin creation.", "reason": "It restricts character identity choices."}
+  ],
+  "capabilities": {
+    "characterOnboarding": {"status": "documented", "note": "Community/Create paths, greeting, optional tuning; external-card import unknown.", "evidenceUrls": ["https://kindroid.ai/v2/docs/customizing-personality/"]},
+    "storyOrganization": {"status": "documented", "note": "Favorites, dated History, Scenarios; exact archived-state resume unknown.", "evidenceUrls": ["https://kindroid.ai/v2/docs/chat-features-and-tools/"]},
+    "editRetryBranch": {"status": "documented", "note": "Regenerate/Suggest/Tweak, 10-message Rewind, Scenarios copying up to 150 messages or last chat break.", "evidenceUrls": ["https://kindroid.ai/v2/docs/chat-features-and-tools/"]},
+    "memoryLore": {"status": "documented", "note": "Persistent, cascaded, retrievable memory; editable Learned Context; keyword journals and approval workflow.", "evidenceUrls": ["https://kindroid.ai/v2/docs/memory/"]},
+    "promptTransparency": {"status": "documented", "note": "Partial recall inspection and Deprioritize; no established full assembled-prompt view.", "evidenceUrls": ["https://kindroid.ai/v2/docs/memory/"]},
+    "modelConnections": {"status": "documented", "note": "Kindroid model selection; arbitrary external endpoints unknown.", "evidenceUrls": ["https://kindroid.ai/v2/docs/customizing-personality/"]},
+    "advancedControls": {"status": "documented", "note": "Directives, dynamism, reasoning effort, flairs; complete sampler interface unknown.", "evidenceUrls": ["https://kindroid.ai/v2/docs/customizing-personality/"]},
+    "groupRoleplay": {"status": "documented", "note": "Subscriber groups support up to 10 Kins, shared context/scene/directive, automatic or manual turns, and separate memory switches.", "evidenceUrls": ["https://kindroid.ai/v2/docs/groupchats/"]},
+    "imagesVoice": {"status": "documented", "note": "Selfies/video, custom voices, calls; video-model defaults and request overrides. Not generated or tested.", "evidenceUrls": ["https://kindroid.ai/v2/docs/selfies-video-selfies-avatars/", "https://kindroid.ai/v2/docs/voice-calls-and-video-calls/"]},
+    "mobile": {"status": "documented", "note": "iOS/Android availability; no device or responsive-layout testing.", "evidenceUrls": ["https://kindroid.ai/v2/docs/faqs/"]},
+    "portability": {"status": "documented", "note": "Verified-email .jsonl export includes account/chat data and media links; restore/import unknown.", "evidenceUrls": ["https://kindroid.ai/v2/docs/faqs/"]},
+    "selfHosting": {"status": "unknown", "note": "Reviewed hosted-service documentation does not establish self-hosting. Unknown does not mean absent.", "evidenceUrls": ["https://kindroid.ai/"]}
+  }
+}

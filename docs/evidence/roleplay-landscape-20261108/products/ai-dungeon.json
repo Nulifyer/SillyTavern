@@ -1,0 +1,417 @@
+{
+  "slug": "ai-dungeon",
+  "product": "AI Dungeon",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://aidungeon.com/",
+  "evidenceBoundary": "Public official documentation inspected on 2026-11-08. Identity checked through the homepage's help-domain terms link and Latitude, Inc. identification there. No account, purchase, generated chat/image, inference call, preview automation, device interaction, source-code inspection, or production access. Benefits are untested design inferences required by the brief. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://aidungeon.com/",
+      "title": "AI Dungeon | Free AI Text Adventure Game",
+      "supports": [
+        "Product spelling; links to help-domain terms and Latitude"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/",
+      "title": "AI Dungeon Guidebook",
+      "supports": [
+        "Research starting point; official documentation navigation"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/terms-of-service",
+      "title": "Terms of Service",
+      "supports": [
+        "Latitude, Inc. identity; named product and associated domains"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/getting-started",
+      "title": "Getting Started",
+      "supports": [
+        "Mobile apps and web; cloud account storage; no offline play"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/what-are-scenarios",
+      "title": "What are Scenarios?",
+      "supports": [
+        "Reusable setup versus Adventure; premise and lore before play; Scenario creation"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/whats-the-difference-between-scenarios-and-worlds",
+      "title": "Creating Character Creator Scenarios",
+      "supports": [
+        "Character options; player Notes versus AI Entry; generated setup limitations"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/my-stuff",
+      "title": "Where do I find my old Adventures or Scenarios?",
+      "supports": [
+        "Saved story organization; Duplicate; bookmarks; Trash Restore"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/how-to-play",
+      "title": "How do I play AI Dungeon?",
+      "supports": [
+        "Do/Say/Story/See; direct edit; Retry Stack; session-limited Undo"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/the-memory-system",
+      "title": "What is the Memory System?",
+      "supports": [
+        "Auto Summarization; editable Story Summary; Memory Bank retrieval"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/how-do-i-manage-context",
+      "title": "How do I manage my Context?",
+      "supports": [
+        "Response-level View Context; component budget; disabled after refresh/erase"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/understanding-settings",
+      "title": "Understanding AI Dungeon System Settings",
+      "supports": [
+        "Inspect Input; Context Warning; image-model selector; ZIP text download"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/how-do-i-change-the-ai-model-im-using",
+      "title": "How do I change the AI model I'm using?",
+      "supports": [
+        "Switcher shortcut; per-model persistent settings; varying controls"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/what-are-advanced-settings",
+      "title": "What are AI Model Settings?",
+      "supports": [
+        "Sampler and context controls; model and membership constraints"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/story-cards-import-and-export",
+      "title": "Story Cards Import and Export",
+      "supports": [
+        "JSON transfer; overwrite warning; native-app exclusion; schema ambiguity"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/do-you-support-multiplayer",
+      "title": "Do you support Multiplayer?",
+      "supports": [
+        "Human multiplayer; host model settings"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/the-ai-isnt-generating-anything-why-is-that",
+      "title": "Why isn't the AI generating anything?",
+      "supports": [
+        "Empty-output recovery; script ERROR badge; Raw Model Output"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/faq/story-cards",
+      "title": "What are Story Cards?",
+      "supports": [
+        "Keyword-triggered lore; Entry visible to AI; optional character/world notes"
+      ]
+    },
+    {
+      "url": "https://help.aidungeon.com/ai-model-differences",
+      "title": "AI Models and their Differences",
+      "supports": [
+        "Dynamic Small uses an undisclosed model mixture with streamlined controls"
+      ]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Inspect lore before starting a Scenario; Character Creator separates player Notes from AI Entry.",
+      "benefitInference": "Players may understand their premise and choices before beginning.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/what-are-scenarios",
+        "https://help.aidungeon.com/faq/whats-the-difference-between-scenarios-and-worlds"
+      ]
+    },
+    {
+      "mechanism": "Separate saved content types, search, bookmarks, Duplicate, and Trash Restore.",
+      "benefitInference": "Players may find an exact story and protect experiments more easily.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/my-stuff"
+      ]
+    },
+    {
+      "mechanism": "Direct text edit, Retry Stack alternatives, session Undo/Redo, and targeted empty-output diagnosis.",
+      "benefitInference": "Players may correct a bad turn without abandoning the story.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/how-to-play",
+        "https://help.aidungeon.com/faq/the-ai-isnt-generating-anything-why-is-that"
+      ]
+    },
+    {
+      "mechanism": "Editable Story Summary, Memory Bank retrieval, response-level context viewing, Inspect Input, and overflow warnings.",
+      "benefitInference": "Players may diagnose why a story lost continuity and adjust relevant information.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/the-memory-system",
+        "https://help.aidungeon.com/how-do-i-manage-context",
+        "https://help.aidungeon.com/understanding-settings"
+      ]
+    },
+    {
+      "mechanism": "Model-switching shortcut with persistent settings per model.",
+      "benefitInference": "Players may switch models while retaining preferred tuning.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/how-do-i-change-the-ai-model-im-using"
+      ]
+    }
+  ],
+  "tradeoffs": [
+    {
+      "note": "Undo cannot recover actions preceding a refresh. Retry may consume credits.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/how-to-play"
+      ]
+    },
+    {
+      "note": "Story Card JSON import replaces all existing cards; backups are explicitly advised. Native iOS/Android apps lack this transfer workflow.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/story-cards-import-and-export"
+      ]
+    },
+    {
+      "note": "Context capacity depends on model and membership; controls vary by model.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/what-are-advanced-settings",
+        "https://help.aidungeon.com/faq/how-do-i-change-the-ai-model-im-using"
+      ]
+    },
+    {
+      "note": "Dynamic Small switches among undisclosed models and exposes only response length; this limits reproducible model selection and tuning.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/ai-model-differences"
+      ]
+    },
+    {
+      "note": "Documented cloud play requires connectivity; offline play is explicitly unavailable.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/getting-started"
+      ]
+    },
+    {
+      "note": "Character Creator can generate inaccurate Plot Essentials; random Quickstart may combine incompatible options.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/whats-the-difference-between-scenarios-and-worlds"
+      ]
+    },
+    {
+      "note": "View Context is disabled after refresh or erasure until a new action.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/how-do-i-manage-context"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "note": "No live interaction, responsiveness, keyboard, touch, accessibility, output quality, or failure-recovery reliability was tested.",
+      "evidenceUrls": []
+    },
+    {
+      "note": "A supported self-hosted application and arbitrary external/BYOK model endpoints were not established. Offline unavailability is not proof that every self-hosting route is absent.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/getting-started",
+        "https://help.aidungeon.com/faq/how-do-i-change-the-ai-model-im-using"
+      ]
+    },
+    {
+      "note": "Durable checkpoint ancestry and a visual branch tree were not established by Duplicate or session Undo documentation.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/my-stuff",
+        "https://help.aidungeon.com/faq/how-to-play"
+      ]
+    },
+    {
+      "note": "Character-card compatibility, complete Adventure-state restoration, and cross-tool round trips were not established by JSON lore transfer or ZIP text download.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/story-cards-import-and-export",
+        "https://help.aidungeon.com/understanding-settings"
+      ]
+    },
+    {
+      "note": "Voice selection, TTS, and dictation were not established in inspected sources.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/understanding-settings"
+      ]
+    },
+    {
+      "note": "Independent AI-character scheduling was not established by human multiplayer documentation.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/do-you-support-multiplayer"
+      ]
+    },
+    {
+      "note": "Import documentation prose names useForCharacterCreator, while its JSON examples use useForCharacterCreation. Accepted spelling was not tested; do not treat this page as a validated schema.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/story-cards-import-and-export"
+      ]
+    }
+  ],
+  "reusablePatterns": [
+    {
+      "proposal": "Show premise and optional lore beside Start; separate player-facing explanation from AI instructions.",
+      "rationale": "Makes scenario choices understandable before story creation.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/what-are-scenarios",
+        "https://help.aidungeon.com/faq/whats-the-difference-between-scenarios-and-worlds"
+      ]
+    },
+    {
+      "proposal": "Distinguish reusable setup from exact saved stories; expose duplicate and restore clearly.",
+      "rationale": "Makes the consequences of starting, resuming, and experimenting explicit.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/my-stuff",
+        "https://help.aidungeon.com/faq/what-are-scenarios"
+      ]
+    },
+    {
+      "proposal": "Connect each response to existing context inspection and capacity warnings.",
+      "rationale": "Explains included information at the point where a continuity problem appears.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/how-do-i-manage-context",
+        "https://help.aidungeon.com/understanding-settings"
+      ]
+    },
+    {
+      "proposal": "Keep model switching near play while preserving per-model advanced settings.",
+      "rationale": "Offers a short common path without removing expert controls.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/how-do-i-change-the-ai-model-im-using"
+      ]
+    }
+  ],
+  "doNotCopy": [
+    {
+      "pattern": "Replacement-only lore import without preview, backup, and explicit replacement choice.",
+      "reason": "A valid import overwrites existing cards.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/story-cards-import-and-export"
+      ]
+    },
+    {
+      "pattern": "Presenting session Undo as durable story history.",
+      "reason": "Undo loses access to actions before refresh.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/how-to-play"
+      ]
+    },
+    {
+      "pattern": "Random character selection without compatibility checks.",
+      "reason": "Official guidance acknowledges incompatible Quickstart combinations.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/whats-the-difference-between-scenarios-and-worlds"
+      ]
+    }
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Create a Scenario or use community setup; Character Creator provides predefined character choices. Story Card JSON can carry character lore; standard character-card import compatibility is unknown.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/what-are-scenarios",
+        "https://help.aidungeon.com/faq/whats-the-difference-between-scenarios-and-worlds",
+        "https://help.aidungeon.com/story-cards-import-and-export"
+      ]
+    },
+    "storyOrganization": {
+      "status": "documented",
+      "note": "Account-saved Adventures and Scenarios are separate types with search, bookmarks, duplication, and Trash Restore.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/my-stuff"
+      ]
+    },
+    "editRetryBranch": {
+      "status": "documented",
+      "note": "Edit inputs/outputs, select Retry Stack alternatives, Undo/Redo within a session, or Duplicate an Adventure. Durable branch ancestry is unknown.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/how-to-play",
+        "https://help.aidungeon.com/faq/my-stuff"
+      ]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Keyword-triggered Story Cards plus Auto Summarization, editable Story Summary, and Memory Bank retrieval. Recall quality was not tested.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/story-cards",
+        "https://help.aidungeon.com/faq/the-memory-system"
+      ]
+    },
+    "promptTransparency": {
+      "status": "documented",
+      "note": "View Context is attached to the latest response; Inspect Input exposes last sent text and Context Warning flags omitted components. Viewing is unavailable after refresh/erase until another action.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/how-do-i-manage-context",
+        "https://help.aidungeon.com/understanding-settings"
+      ]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "Select hosted models/versions through settings or shortcut; settings persist per model. Arbitrary external endpoints and BYOK were not established.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/how-do-i-change-the-ai-model-im-using"
+      ]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Context/response length, temperature, Top-K, Top-P, and penalties are documented. Availability varies by model; context also depends on membership.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/what-are-advanced-settings",
+        "https://help.aidungeon.com/faq/how-do-i-change-the-ai-model-im-using"
+      ]
+    },
+    "groupRoleplay": {
+      "status": "documented",
+      "note": "Human multiplayer shares the host's model settings. This does not establish independently configured or scheduled AI character groups.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/do-you-support-multiplayer"
+      ]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "See mode and an image-model selector are documented. Voice configuration, TTS, and dictation remain unknown.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/faq/how-to-play",
+        "https://help.aidungeon.com/understanding-settings"
+      ]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Native iOS/Android and mobile web are documented. Story Card import/export requires web. No device test was performed.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/getting-started",
+        "https://help.aidungeon.com/story-cards-import-and-export"
+      ]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Story Card JSON import/export and ZIP Adventure-text download. Import replaces existing lore. Full state round-trip and character-card compatibility are unknown.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/story-cards-import-and-export",
+        "https://help.aidungeon.com/understanding-settings"
+      ]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "Documentation describes cloud models and explicitly no offline play. A supported self-hosted application/distribution was not established.",
+      "evidenceUrls": [
+        "https://help.aidungeon.com/getting-started"
+      ]
+    }
+  }
+}

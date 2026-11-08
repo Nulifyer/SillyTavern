@@ -1,0 +1,158 @@
+{
+  "slug": "chai",
+  "product": "CHAI",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://www.chai-research.com/",
+  "evidenceBoundary": "Public primary-source documentation only. Research homepage and Google Play reciprocally link and identify Chai Research Corp. Web FAQ self-identifies the same operator and links its policy; no reciprocal research-homepage link to chai-ai.com was found. Web claims are attributed separately. No accounts, inference calls, purchases, device tests, browser automation, runtime inspection or source-code inspection. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://www.chai-research.com/",
+      "title": "CHAI | AI Characters & Stories",
+      "supports": ["Official outbound app and subreddit links", "Company-operated character platform", "Vendor-managed models"]
+    },
+    {
+      "url": "https://play.google.com/store/apps/details?id=com.Beauchamp.Messenger.external&hl=en_US",
+      "title": "Chai: Chat AI Platform - Google Play",
+      "supports": ["Chai Research Corp. identity and reciprocal website link", "Character selection and creation promotion", "Android distribution", "Ads and in-app purchases", "Observed Mature 17+ listing"]
+    },
+    {
+      "url": "https://chai-research.com/privacy/",
+      "title": "Privacy policy of Chai Research Corp., November 5, 2026",
+      "supports": ["Private/public bots", "Saved memories and personas", "Media generation and web voice", "Model-improvement processing", "Supplier disclosures", "EU/UK portability request"]
+    },
+    {
+      "url": "https://www.chai-research.com/safety.html",
+      "title": "Safety Center | CHAI",
+      "supports": ["Adults-only service", "Reporting and filtering controls", "Restricted-content refusals", "Regional paid access", "Store-rating claim differs from inspected Play listing"]
+    },
+    {
+      "url": "https://www.chai-ai.com/faq",
+      "title": "Frequently Asked Questions | Chai AI",
+      "supports": ["Self-declared operator and policy link", "Community character rankings", "Mobile-browser access", "Separate Web Pro/app data", "Broad privacy claim requiring qualification"]
+    },
+    {
+      "url": "https://www.reddit.com/r/ChaiApp/comments/1xnb7a6/persona_memory_update/",
+      "title": "Persona & Memory - Update",
+      "supports": ["Founder-signed technical-problem announcement in company-linked subreddit", "Expected restoration is not confirmation", "Retrieved relative timestamp does not establish an exact date"]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Choose existing characters; web FAQ describes community rankings and creation.",
+      "benefitInference": "A ready premise can reduce the work needed to start roleplay.",
+      "evidenceUrls": ["https://play.google.com/store/apps/details?id=com.Beauchamp.Messenger.external&hl=en_US", "https://www.chai-ai.com/faq"]
+    },
+    {
+      "mechanism": "Private or shared bot creation.",
+      "benefitInference": "Develop a premise before publication.",
+      "evidenceUrls": ["https://chai-research.com/privacy/"]
+    },
+    {
+      "mechanism": "Saved memories and personas, with unresolved availability qualification.",
+      "benefitInference": "Persistent facts may reduce repeated exposition; recall was not tested.",
+      "evidenceUrls": ["https://chai-research.com/privacy/", "https://www.reddit.com/r/ChaiApp/comments/1xnb7a6/persona_memory_update/"]
+    },
+    {
+      "mechanism": "Anonymous reports, search filters, message hiding and character blocking.",
+      "benefitInference": "Remove unwanted encounters while continuing to use the catalog.",
+      "evidenceUrls": ["https://www.chai-research.com/safety.html"]
+    }
+  ],
+  "tradeoffs": [
+    "Web FAQ says Web Pro and app have no data sharing; cross-platform story continuation must not be promised.",
+    "Founder-signed Persona & Memory incident has no established restoration confirmation. No permanent-removal claim is justified.",
+    "Model-improvement use follows identifier removal; supplier disclosure qualifies FAQ privacy wording.",
+    "Adults-only access includes restricted-content refusals and regional paid requirements.",
+    "Safety Center claims both stores rate the app 18+, but inspected Google Play showed Mature 17+.",
+    "No documented expert-control or self-hosting workflow was established. This does not prove absence."
+  ],
+  "unknowns": [
+    "Character-card import, creation fields, defaults and opening preview",
+    "Exact-story selection, archives and durable history organization",
+    "Message editing, retries and branches",
+    "Memory scope, capacity, retrieval and present availability",
+    "Visible assembled prompts, context use and lorebook behavior",
+    "External connections, sampler controls and group roleplay",
+    "Media provider and voice configuration",
+    "In-product export, backup restoration and content migration",
+    "Failed-send recovery and offline behavior",
+    "Current iOS distribution: linked Apple listing fetch returned 404; delisting is not established",
+    "Deployable self-hosting and web/app feature parity",
+    "Reciprocal official endorsement of chai-ai.com from the research homepage"
+  ],
+  "reusablePatterns": [
+    "Proposal: place premise and opening beside the character start action.",
+    "Proposal: expose private versus shared creation before publication.",
+    "Proposal: make persona and story-memory scope visible.",
+    "Proposal: show continuity incidents and recovery actions where stories resume."
+  ],
+  "doNotCopy": [
+    "Do not make separate platform histories look interchangeable.",
+    "Do not repeat unqualified privacy assurances when detailed policies disclose suppliers.",
+    "Do not imply unlimited availability or proven recall from marketing.",
+    "Do not let discovery obscure the exact saved story.",
+    "Do not interpret missing documentation as a missing feature."
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Selection and private/public creation described; import, fields and premise-preview workflow unknown.",
+      "evidenceUrls": ["https://play.google.com/store/apps/details?id=com.Beauchamp.Messenger.external&hl=en_US", "https://chai-research.com/privacy/"]
+    },
+    "storyOrganization": {
+      "status": "unknown",
+      "note": "Exact conversations and archive workflow unestablished. FAQ explicitly separates web/app data.",
+      "evidenceUrls": ["https://www.chai-ai.com/faq"]
+    },
+    "editRetryBranch": {
+      "status": "unknown",
+      "note": "No established edit, retry or branch controls in reviewed sources.",
+      "evidenceUrls": []
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Saved memories/personas named. Incident reported; restoration, scope, recall and lorebooks unestablished.",
+      "evidenceUrls": ["https://chai-research.com/privacy/", "https://www.reddit.com/r/ChaiApp/comments/1xnb7a6/persona_memory_update/"]
+    },
+    "promptTransparency": {
+      "status": "unknown",
+      "note": "No established assembled-prompt or context inspector.",
+      "evidenceUrls": []
+    },
+    "modelConnections": {
+      "status": "marketing-only",
+      "note": "Vendor describes its in-house models; user-selectable models and external-provider connections unestablished.",
+      "evidenceUrls": ["https://www.chai-research.com/"]
+    },
+    "advancedControls": {
+      "status": "unknown",
+      "note": "Sampler, token-budget and context override controls unestablished.",
+      "evidenceUrls": []
+    },
+    "groupRoleplay": {
+      "status": "unknown",
+      "note": "No established multi-character group-chat workflow.",
+      "evidenceUrls": []
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "Policy names images/video and web voice; configuration and app parity unknown.",
+      "evidenceUrls": ["https://chai-research.com/privacy/"]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Android listing inspected. FAQ claims mobile-browser support. Apple fetch failed; no device test or delisting conclusion.",
+      "evidenceUrls": ["https://play.google.com/store/apps/details?id=com.Beauchamp.Messenger.external&hl=en_US", "https://www.chai-ai.com/faq", "https://www.chai-research.com/"]
+    },
+    "portability": {
+      "status": "unknown",
+      "note": "EU/UK personal-data request documented; usable chat/card import/export unestablished.",
+      "evidenceUrls": ["https://chai-research.com/privacy/"]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "Company-operated service documented; deployable user-hosted product unestablished.",
+      "evidenceUrls": ["https://www.chai-research.com/"]
+    }
+  }
+}

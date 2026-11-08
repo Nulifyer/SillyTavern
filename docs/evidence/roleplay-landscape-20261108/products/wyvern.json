@@ -1,0 +1,148 @@
+{
+  "slug": "wyvern",
+  "product": "WyvernChat",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://app.wyvern.chat/",
+  "evidenceBoundary": "Public official app guide, release note, companion marketing, and indexed official wiki text only. App and guide link WyvernWiki, verifying its relationship. Some wiki opens returned empty extracts or 403 Forbidden. No account, inference, browser automation, production access, device tests, or source-code inspection. Documented means published behavior, not first-hand validation. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://app.wyvern.chat/",
+      "title": "WyvernChat: AI Roleplay, Characters & Worlds",
+      "supports": ["Exact product spelling and app identity", "Official navigation links to WyvernWiki"]
+    },
+    {
+      "url": "https://app.wyvern.chat/guide",
+      "title": "Guide & Site Map",
+      "supports": ["Free Queue onboarding", "Character creation", "Connections and prompt tooling", "Lorebooks and group chats", "Continuation and troubleshooting destinations", "Wyldfire Bundle destination", "Official wiki links"]
+    },
+    {
+      "url": "https://wiki.wyvern.chat/en/Features/Character-Scenarios/Creating",
+      "title": "Create a Character Scenario",
+      "supports": ["Indexed official documentation", "Reader-facing greeting descriptions excluded from AI context", "Ordered opening messages and optional personas", "World lore attachment does not start a World party or simulation"]
+    },
+    {
+      "url": "https://app.wyvern.chat/blog/visual-novel-mega-patch",
+      "title": "Visual Novel Mega Patch",
+      "supports": ["October 22, 2026 release note", "Chat trees and alternate-reply branching", "Shared World party state and unavailable exact active StoryEngine branching", "Optional visual-novel mode and phone controls", "Empty-reply recovery actions", "Sprites and backgrounds"]
+    },
+    {
+      "url": "https://wiki.wyvern.chat/en/Features/Stories/Chat-Conversion",
+      "title": "Convert a chat into a story",
+      "supports": ["Indexed official documentation", "Selected source ranges, lore budget, and writing connection", "Chunk review, approval, and saved checkpoints", "Unchanged source chat and no automatic publication", "Page must stay open during generation"]
+    },
+    {
+      "url": "https://app.wyvern.chat/wyldfire",
+      "title": "Wyldfire - Your Characters, Your Data, Your Rules",
+      "supports": ["Official companion identity", "Marketing claims for local storage and offline access", "Conflicting local-model readiness claims", "Does not establish web self-hosting"]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "First conversation can use the Free Queue before optional provider setup.",
+      "benefitInference": "A newcomer can choose a story before managing credentials.",
+      "evidenceUrls": ["https://app.wyvern.chat/guide"]
+    },
+    {
+      "mechanism": "Alternative scenario greetings have player-facing descriptions distinct from AI context.",
+      "benefitInference": "Players can understand and choose a premise before replying.",
+      "evidenceUrls": ["https://wiki.wyvern.chat/en/Features/Character-Scenarios/Creating"]
+    },
+    {
+      "mechanism": "Chat trees support branching from a saved alternate reply without changing the original's selected reply.",
+      "benefitInference": "Precise story decisions become easier to revisit.",
+      "evidenceUrls": ["https://app.wyvern.chat/blog/visual-novel-mega-patch"]
+    },
+    {
+      "mechanism": "Chat conversion requires reviewed, approved chunks and retains checkpoints.",
+      "benefitInference": "Derived prose can be revised and resumed without replacing the source conversation.",
+      "evidenceUrls": ["https://wiki.wyvern.chat/en/Features/Stories/Chat-Conversion"]
+    }
+  ],
+  "tradeoffs": [
+    "World branches do not rewind party inventory, relationships, location, or simulation effects. Exact branching for active StoryEngine sessions is unavailable.",
+    "Conversion runs while its page stays open; an interrupted unfinished stage may require rerunning. Prose edits clear verification and approval.",
+    "Expert prompt and sampler tooling is documented, but complete final-request inspection was not established.",
+    "Wyldfire is an official companion, not evidence of self-hostable WyvernChat web service. Local-model readiness claims conflict on its marketing page."
+  ],
+  "unknowns": [
+    "Lossless character/chat import and export formats, complete bundle contents, and round-trip fidelity",
+    "Exact-story archive discovery and large-history navigation in practice",
+    "Final assembled prompt inspection, per-reply activated-lore inspection, and long-memory accuracy",
+    "Voice configuration and image-generation provider setup",
+    "Group turn scheduling, device behavior, accessibility, and failure recovery in practice",
+    "Web self-hosting, deployment source, and licensing"
+  ],
+  "reusablePatterns": [
+    "Separate player-facing opening descriptions from prompt text.",
+    "Show branch ancestry and saved-reply previews; explain copied-state boundaries.",
+    "Keep derived prose in a draft with source ranges, checkpoints, and approval.",
+    "Postpone provider setup until after a useful story choice while keeping advanced controls accessible."
+  ],
+  "doNotCopy": [
+    "An apparently independent branch that silently shares simulation state",
+    "Offline-inference promises based only on offline-library support",
+    "Visual-novel presentation as the only chat view"
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Browse and create paths plus scenario openings are documented. General external-card import formats remain unknown.",
+      "evidenceUrls": ["https://app.wyvern.chat/guide", "https://wiki.wyvern.chat/en/Features/Character-Scenarios/Creating"]
+    },
+    "storyOrganization": {
+      "status": "documented",
+      "note": "Continuation destinations, named branches, tree navigation, and a separate chapter/scene writing workspace. Archive usability untested.",
+      "evidenceUrls": ["https://app.wyvern.chat/guide", "https://app.wyvern.chat/blog/visual-novel-mega-patch"]
+    },
+    "editRetryBranch": {
+      "status": "documented",
+      "note": "Edit, regenerate, swipe, and alternate-reply branching. World branches share party state; exact active StoryEngine branching is unavailable.",
+      "evidenceUrls": ["https://app.wyvern.chat/blog/visual-novel-mega-patch"]
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Lorebooks, scenario lore attachments, and conversion lore budgets. Summary-copy boundaries are documented; memory accuracy and full summarization workflow were not validated.",
+      "evidenceUrls": ["https://app.wyvern.chat/guide", "https://wiki.wyvern.chat/en/Features/Character-Scenarios/Creating", "https://wiki.wyvern.chat/en/Features/Stories/Chat-Conversion", "https://app.wyvern.chat/blog/visual-novel-mega-patch"]
+    },
+    "promptTransparency": {
+      "status": "unknown",
+      "note": "Prompt pieces and assemblies are documented, but a complete final-request or activated-lore inspector was not established.",
+      "evidenceUrls": ["https://app.wyvern.chat/guide"]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "Provider key, model connection, and chat selection workflow; Free Queue needs no API key. Exact provider compatibility unverified.",
+      "evidenceUrls": ["https://app.wyvern.chat/guide"]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Prompt assemblies, sampler presets, instruct templates, and deeper character studio destinations. No parameter coverage or runtime behavior tested.",
+      "evidenceUrls": ["https://app.wyvern.chat/guide"]
+    },
+    "groupRoleplay": {
+      "status": "documented",
+      "note": "Multiple characters or human participants are described. Scenario openings can assign sender slots; turn scheduling remains unknown.",
+      "evidenceUrls": ["https://app.wyvern.chat/guide", "https://wiki.wyvern.chat/en/Features/Character-Scenarios/Creating"]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "Sprites, backgrounds, and optional visual-novel mode are documented. This status does not establish image generation, TTS, or dictation.",
+      "evidenceUrls": ["https://app.wyvern.chat/blog/visual-novel-mega-patch"]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Phone stage, touch controls, keyboard/home-indicator accommodation, and editor behavior are described. No device test performed.",
+      "evidenceUrls": ["https://app.wyvern.chat/blog/visual-novel-mega-patch"]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Guide names Wyldfire Bundle export. Companion import is advertised; complete chat transfer, supported formats, and fidelity remain unknown.",
+      "evidenceUrls": ["https://app.wyvern.chat/guide", "https://app.wyvern.chat/wyldfire"]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "Official desktop companion marketing does not establish a deployable WyvernChat web server. No deployment source or license reviewed.",
+      "evidenceUrls": ["https://app.wyvern.chat/wyldfire"]
+    }
+  }
+}

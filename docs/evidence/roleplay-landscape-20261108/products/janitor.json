@@ -1,0 +1,167 @@
+{
+  "slug": "janitor",
+  "product": "JanitorAI",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://janitorai.com/",
+  "evidenceBoundary": "Public official help documentation retrieved by plain HTTP, not first-hand interaction or source-code inspection. Homepage plain HTTP request returned 403; web open could not retrieve homepage or help center. Official help URL FAQ explicitly identifies janitorai.com. No accounts, purchases, inference calls, browser automation, device tests, production access, or price/model inventory verification. Benefit statements are untested design hypotheses. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://help.janitorai.com/en/",
+      "title": "JanitorAI help center",
+      "supports": ["Official-domain help navigation", "Links to reviewed articles and janitorai.com"]
+    },
+    {
+      "url": "https://help.janitorai.com/en/article/faq-whats-the-website-url-1yojful/",
+      "title": "FAQ: What's the website URL?",
+      "supports": ["Explicit identification of https://janitorai.com/ as the product website"]
+    },
+    {
+      "url": "https://help.janitorai.com/en/article/the-basics-the-character-creation-page-overview-15xevon/",
+      "title": "The Basics: The Character Creation Page Overview",
+      "supports": ["Bio is reader-facing and excluded from bot context", "Personality, Scenario, Initial Message and searchable tags", "Permanent-token guidance, not measured recall"]
+    },
+    {
+      "url": "https://help.janitorai.com/en/article/how-to-use-scripts-your-beginner-friendly-step-by-step-guide-1bdk5hc/",
+      "title": "How to Use Scripts - Your Beginner Friendly Step-by-Step Guide",
+      "supports": ["Lorebook forms, keywords and character assignment", "Test Chat, Show Debug Panel and Changes tab", "Per-entry Advanced scripts", "JSON Editor transfer of entries array", "+ New Chat", "Changing group-selection terminology within the guide"]
+    },
+    {
+      "url": "https://help.janitorai.com/en/article/chat-memory-context-management-9oivt3/",
+      "title": "Chat Memory & Context Management",
+      "supports": ["Structured story memory template", "Recap prompting and use as memory", "Approximate JLLM context discussion, not universal current limit"]
+    },
+    {
+      "url": "https://help.janitorai.com/en/article/janitor-router-1dyrzul/",
+      "title": "janitor+ Router",
+      "supports": ["Subscriber-only web model routing", "Model context and token-rate visibility", "Custom prompts and generation controls", "Wallet and per-token billing", "External proxies remain available", "Mobile support planned, not established as released"]
+    },
+    {
+      "url": "https://help.janitorai.com/en/article/faq-mobile-app-moderation-vttat8/",
+      "title": "FAQ: Mobile App Moderation",
+      "supports": ["iOS and Android app documentation", "Default content restrictions", "Enable NSFW for App web setting", "Approved-link restriction", "Blanket parity wording conflicts with narrower Router availability"]
+    },
+    {
+      "url": "https://help.janitorai.com/en/article/missing-chats-1ybet2f/",
+      "title": "Missing Chats",
+      "supports": ["Suggested send-message and refresh recovery steps", "Warning that some migration losses cannot be restored; not a measured incident rate"]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Reader-facing Character Bio is separate from Personality, Scenario and Initial Message; tags support discovery.",
+      "benefitInference": "Could explain the premise before chat without consuming model context with reader-facing promotional text; not interaction-tested.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/the-basics-the-character-creation-page-overview-15xevon/"]
+    },
+    {
+      "mechanism": "Lorebook forms progress to per-entry Advanced scripts, with Test Chat and a Changes debug panel.",
+      "benefitInference": "Could let beginners add conditional lore and let experts diagnose activation without making every entry require code; not tested.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/how-to-use-scripts-your-beginner-friendly-step-by-step-guide-1bdk5hc/"]
+    },
+    {
+      "mechanism": "Memory guide separates environment, relationship, current plot, character facts, user facts and consequential past events; documents recap prompts.",
+      "benefitInference": "Could help writers preserve story decisions with less repeated scene text; no recall or automatic summarization claim.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/chat-memory-context-management-9oivt3/"]
+    },
+    {
+      "mechanism": "janitor+ Router documents model selection with context limits, token rates, generation settings and a wallet, without external API-key setup.",
+      "benefitInference": "Could reduce connection setup mistakes and support informed model selection; no current catalog or price verification.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/janitor-router-1dyrzul/"]
+    }
+  ],
+  "tradeoffs": [
+    "Router documentation requires janitor+ and per-token billing; Router is documented as web only, with mobile support planned.",
+    "Mobile moderation requires changing Enable NSFW for App on the web to synchronize broader content access; approved-link restrictions are also described.",
+    "The mobile FAQ's blanket website-parity wording conflicts with Router's web-only documentation. Current app parity was not established.",
+    "Memory consumes limited context and needs concise curation; the guide's approximate JLLM context figure is not a universal current limit.",
+    "Script Changes debugging does not establish visibility into the complete assembled prompt.",
+    "Missing Chats warns that some server-migration losses cannot be restored. This is documentary evidence, not an observed loss or failure-rate estimate.",
+    "The Scripts walkthrough changes terminology for group selection; exact selection semantics were not tested."
+  ],
+  "unknowns": [
+    "Finding and continuing an exact prior conversation, archive and branch organization",
+    "Message editing, retry and branch workflows in the selected evidence",
+    "Complete prompt assembly, ordering, token allocation and sampler coverage",
+    "Character import and complete native chat export/import or backup restoration",
+    "Group roleplay orchestration",
+    "Native image generation, voice and speech input",
+    "Self-hosting or a verified official source distribution",
+    "Mobile touch behavior, accessibility and current app feature parity",
+    "Current model inventory, prices and performance",
+    "Compatibility of documented entries-array transfer with real exported lorebooks"
+  ],
+  "reusablePatterns": [
+    "Label reader-facing premise text separately from model instructions and explain context inclusion.",
+    "Offer simple lore-entry forms, per-entry advanced editing and visible activation diagnostics.",
+    "Place structured story-state prompts beside editable memory without promising permanent recall.",
+    "Show provider-supplied context limits and cost information beside model choice."
+  ],
+  "doNotCopy": [
+    "Blanket mobile/web parity promises when individual capabilities have narrower availability.",
+    "Treating generated summaries as backups or implying guaranteed recall.",
+    "Presenting lorebook transfer as complete conversation and character portability.",
+    "Changing names for group-selection controls across one setup guide.",
+    "Treating these proposals as evidence that the fork lacks its existing native expert controls."
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Creation fields, reader-facing bio, initial premise and search/filter tags are documented. Actual selection flow and character import were not tested or established.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/the-basics-the-character-creation-page-overview-15xevon/"]
+    },
+    "storyOrganization": {
+      "status": "documented",
+      "note": "Scripts walkthrough explicitly mentions + New Chat. Exact-story history, archive, naming, retrieval and continuation remain unknown.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/how-to-use-scripts-your-beginner-friendly-step-by-step-guide-1bdk5hc/"]
+    },
+    "editRetryBranch": {
+      "status": "unknown",
+      "note": "Selected primary sources do not establish message editing, retry or branching workflows. This does not mean they are absent.",
+      "evidenceUrls": []
+    },
+    "memoryLore": {
+      "status": "documented",
+      "note": "Structured chat memory guidance, recap prompting, keyword lorebook entries and advanced scripts. No automatic-summary or recall reliability verification.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/chat-memory-context-management-9oivt3/", "https://help.janitorai.com/en/article/how-to-use-scripts-your-beginner-friendly-step-by-step-guide-1bdk5hc/"]
+    },
+    "promptTransparency": {
+      "status": "documented",
+      "note": "Scripts Test Chat exposes Show Debug Panel and Changes. Complete assembled-request inspection and prompt ordering remain unknown.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/how-to-use-scripts-your-beginner-friendly-step-by-step-guide-1bdk5hc/"]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "janitor+ Router connects third-party models without external API keys and retains external proxies as an option. Router is subscriber-only and web-only in the inspected guide; current catalog unknown.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/janitor-router-1dyrzul/"]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Custom prompts and generation settings are documented for Router; lorebook conditions and per-entry Advanced scripts are documented. Exact sampler coverage unknown.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/janitor-router-1dyrzul/", "https://help.janitorai.com/en/article/how-to-use-scripts-your-beginner-friendly-step-by-step-guide-1bdk5hc/"]
+    },
+    "groupRoleplay": {
+      "status": "unknown",
+      "note": "Lorebook inclusion groups do not establish multi-character group chat orchestration.",
+      "evidenceUrls": []
+    },
+    "imagesVoice": {
+      "status": "unknown",
+      "note": "Character image upload and custom-CSS images do not establish native image generation, voices or dictation.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/the-basics-the-character-creation-page-overview-15xevon/", "https://help.janitorai.com/en/article/faq-mobile-app-moderation-vttat8/"]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Official help describes iOS and Android apps and content settings synchronized through the web. No device test; Router remains web-only in its guide, so blanket parity is unsupported.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/faq-mobile-app-moderation-vttat8/", "https://help.janitorai.com/en/article/janitor-router-1dyrzul/"]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "Scripts walkthrough documents copying the entries array into JSON Editor. This limited inbound lorebook path does not establish character/chat migration, native export or backup restoration; not tested.",
+      "evidenceUrls": ["https://help.janitorai.com/en/article/how-to-use-scripts-your-beginner-friendly-step-by-step-guide-1bdk5hc/"]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "No self-hosting instructions or verified official application source distribution established. External model routing is not evidence of self-hosting the product.",
+      "evidenceUrls": []
+    }
+  }
+}

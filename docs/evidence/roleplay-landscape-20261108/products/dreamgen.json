@@ -1,0 +1,57 @@
+{
+  "slug": "dreamgen",
+  "product": "DreamGen",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://dreamgen.com/",
+  "evidenceBoundary": "Public primary documentation only. Homepage links establish the documentation relationship; the migration guide explicitly identifies v2.dreamgen.com. No account, inference call, purchase, browser automation, production access, or device testing. Benefits are reviewer inferences. Documented means described by the publisher, not tested. Unknown means not established, not absent.",
+  "sources": [
+    {"url": "https://dreamgen.com/", "title": "AI Role-Play and Story Generator | DreamGen", "supports": ["Product identity and audience", "Official Docs link"]},
+    {"url": "https://dreamgen.com/docs", "title": "DreamGen Documentation", "supports": ["Official documentation navigation"]},
+    {"url": "https://dreamgen.com/docs/scenario-editor", "title": "How to Create Story & Role-Play Scenarios", "supports": ["Optional scenario fields", "Opening descriptions", "History", "Hidden and Excluded interactions", "Personas"]},
+    {"url": "https://dreamgen.com/docs/migrating-from-v1-to-v2", "title": "Migrating From DreamGen V1 to V2", "supports": ["V2 identity", "Session scenario copies", "Create Sequel", "V1 JSON import", "Original synchronization described as forthcoming"]},
+    {"url": "https://dreamgen.com/docs/how-to-role-play", "title": "How to Role-Play on DreamGen", "supports": ["Retry and forks", "Context limits", "Export", "Mobile toolbar", "Hosted model selection", "Behavior modes"]},
+    {"url": "https://dreamgen.com/docs/how-to-generate-images/animuse", "title": "AniMuse Image Generation Guide", "supports": ["Image prompt controls", "Presets", "CFG and steps", "Turbo mode"]}
+  ],
+  "strengths": [
+    {"mechanism": "Optional named scenario sections and opening descriptions.", "benefitInference": "Makes premise and starting situation easier to understand.", "evidenceUrls": ["https://dreamgen.com/docs/scenario-editor"]},
+    {"mechanism": "Session-specific scenario copies.", "benefitInference": "Protects story continuity from reusable-definition changes.", "evidenceUrls": ["https://dreamgen.com/docs/migrating-from-v1-to-v2"]},
+    {"mechanism": "Create Sequel builds a summary and updated character descriptions.", "benefitInference": "Provides an explicit transition for a long story.", "evidenceUrls": ["https://dreamgen.com/docs/migrating-from-v1-to-v2"]},
+    {"mechanism": "Preserved retries and independent forks.", "benefitInference": "Reduces the cost of experimenting.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-role-play"]}
+  ],
+  "tradeoffs": [
+    {"note": "Truncation and over-pinning warning; no lossless-memory claim.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-role-play"]},
+    {"note": "Hidden and Excluded interactions separate reader-visible content from AI-visible content.", "evidenceUrls": ["https://dreamgen.com/docs/scenario-editor"]},
+    {"note": "Sequel summary fidelity untested; original synchronization remains forthcoming in this guide.", "evidenceUrls": ["https://dreamgen.com/docs/migrating-from-v1-to-v2"]}
+  ],
+  "unknowns": [
+    {"note": "Raw prompt inspection, BYOK/local endpoints, full text sampler controls, and application self-hosting were not established.", "evidenceUrls": []},
+    {"note": "No device tests, export round-trip test, or failure/input-retention test.", "evidenceUrls": []},
+    {"note": "External-card compatibility unverified. Both public routes returned HTTP 500 through the fetch tool; this does not establish a product outage.", "evidenceUrls": ["https://dreamgen.com/app/tools/import", "https://dreamgen.com/app/tools/scenario-importer"]},
+    {"note": "Voice, TTS, dictation, and chat-linked image workflow not established.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-generate-images/animuse"]}
+  ],
+  "reusablePatterns": [
+    {"proposal": "Expose reusable-definition versus story-only edit scope.", "evidenceUrls": ["https://dreamgen.com/docs/migrating-from-v1-to-v2"]},
+    {"proposal": "Review a sequel recap against its source story before starting.", "evidenceUrls": ["https://dreamgen.com/docs/migrating-from-v1-to-v2"]},
+    {"proposal": "Directed retry actions beside expert controls, with preserved alternatives.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-role-play"]},
+    {"proposal": "Explain openings before starting; keep optional world details optional.", "evidenceUrls": ["https://dreamgen.com/docs/scenario-editor"]}
+  ],
+  "doNotCopy": [
+    "Silent prompt contributions without an inspection path.",
+    "Treating generated recaps as faithful archives.",
+    "Promising portability based only on a JSON file extension."
+  ],
+  "capabilities": {
+    "characterOnboarding": {"status": "documented", "note": "Personas and optional scenario sections; external cards unverified.", "evidenceUrls": ["https://dreamgen.com/docs/scenario-editor"]},
+    "storyOrganization": {"status": "documented", "note": "Scenarios and sessions separated; exact-session resume UX untested.", "evidenceUrls": ["https://dreamgen.com/docs/migrating-from-v1-to-v2"]},
+    "editRetryBranch": {"status": "documented", "note": "Editable interactions, retry alternatives, forks.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-role-play"]},
+    "memoryLore": {"status": "documented", "note": "History, lore sections, Create Sequel; fidelity untested.", "evidenceUrls": ["https://dreamgen.com/docs/scenario-editor", "https://dreamgen.com/docs/migrating-from-v1-to-v2"]},
+    "promptTransparency": {"status": "documented", "note": "Hidden/Excluded flags documented; assembled prompt inspection unknown.", "evidenceUrls": ["https://dreamgen.com/docs/scenario-editor"]},
+    "modelConnections": {"status": "documented", "note": "Hosted model switching; BYOK/local endpoints unknown.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-role-play"]},
+    "advancedControls": {"status": "documented", "note": "Behavior modes; complete text sampler set unknown.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-role-play"]},
+    "groupRoleplay": {"status": "documented", "note": "Multiple AI characters; multiplayer not established.", "evidenceUrls": ["https://dreamgen.com/docs/scenario-editor"]},
+    "imagesVoice": {"status": "documented", "note": "AniMuse image controls; voice unknown.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-generate-images/animuse"]},
+    "mobile": {"status": "documented", "note": "Mobile toolbar documented; no device test.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-role-play"]},
+    "portability": {"status": "documented", "note": "Markdown/JSON export; cross-tool fidelity unknown.", "evidenceUrls": ["https://dreamgen.com/docs/how-to-role-play"]},
+    "selfHosting": {"status": "unknown", "note": "No application self-hosting established by inspected sources.", "evidenceUrls": []}
+  }
+}

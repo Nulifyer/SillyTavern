@@ -1,0 +1,117 @@
+{
+  "slug": "perchance",
+  "product": "Perchance AI Character Chat",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://perchance.org/ai-character-chat",
+  "evidenceBoundary": "Current public documentation and read-only source inspection only. Web open returned iframe shells; Python HTTP GET of public downloadGenerator endpoints exposed preloaded-generator-data.modelText and outputTemplate without executing JavaScript. No accounts, inference, production access, browser automation, device tests, recovery tests or migration round trips. Benefits are inferences. Unknown means not established, not absent. officialUrl identifies the verified app, not independently verified legal authorship.",
+  "sourceIdentity": {
+    "pageTitle": "AI Character Chat (online, free, no sign-up, unlimited)",
+    "generatorName": "ai-character-chat",
+    "generatorPublicId": "04f1a4119d30b5672a3e08fddd12fce4",
+    "generatorLastEditTime": "1791003894561",
+    "sourceContentSha256": "157b15b0885b63056e3b29a292d7f92d621443ab94c6813b8ffb742f715c5a1d",
+    "sourceHashDefinition": "SHA-256 of UTF-8 modelText + newline + outputTemplate from the app's preloaded-generator-data",
+    "documentationRelationship": "App tipsButton opens https://perchance.org/ai-character-chat-docs#tips. Documentation read from https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat-docs outputTemplate.",
+    "qualification": "Perchance privacy policy states anyone can create generators. Matching app iframe and public source identifiers plus the direct documentation link establish the reviewed artifact. Legal author identity and similarly named external domains are not established. No community fork capabilities are attributed to this app."
+  },
+  "sources": [
+    {
+      "url": "https://perchance.org/ai-character-chat",
+      "title": "AI Character Chat (online, free, no sign-up, unlimited)",
+      "supports": ["Exact product title", "Live iframe public identifier", "Entry URL; title claims were not tested as service guarantees"]
+    },
+    {
+      "url": "https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat",
+      "title": "AI Character Chat public generator source download",
+      "supports": ["Artifact identity and direct documentation link", "Character onboarding and progressive disclosure", "Thread records, drafts, folders and duplication", "Editing and regeneration variants", "Export and emergency recovery handlers", "Character and TavernAI chat import parsers", "Touch-specific handlers and limits of expert-control evidence"]
+    },
+    {
+      "url": "https://perchance.org/ai-character-chat-docs",
+      "title": "AI Character Chat app-linked documentation",
+      "supports": ["Initial-message visibility and premise instructions", "Memory and lore controls", "Image commands", "Group chat instructions", "Custom-code voice example", "Browser-storage loss warning"]
+    },
+    {
+      "url": "https://perchance.org/ai-text-plugin",
+      "title": "AI Text Plugin",
+      "supports": ["Hosted generation dependency", "Server-dependent plugin code", "Concurrency and quota-error caveats; no measured availability claim"]
+    },
+    {
+      "url": "https://perchance.org/perchance-faq",
+      "title": "Perchance FAQ",
+      "supports": ["Platform HTML download and remix support", "AI plugins run through servers", "Generator download does not establish offline inference"]
+    },
+    {
+      "url": "https://perchance.org/privacy-policy",
+      "title": "Privacy policy for perchance.org",
+      "supports": ["Anyone can publish generators, so domain alone is not authorship proof", "AI text plugin data-handling statements distinguish ordinary requests from explicit uploads", "Policy is not an independent security audit"]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Starter character taglines, manual creation, character-file import, and an explicit new-chat character list. Initial messages may show premise guidance hidden from the AI; optional editor inputs use show more settings.",
+      "benefitInference": "Several entry paths should reduce character setup effort, while premise guidance can explain the intended role before a user writes.",
+      "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat", "https://perchance.org/ai-character-chat-docs#initial-messages"]
+    },
+    {
+      "mechanism": "Thread IDs, names, folders, favorites and saved unsent drafts distinguish conversation records. Regeneration stores variants; duplicateThreadBtn copies a thread and messages.",
+      "benefitInference": "Users should be able to resume an exact story and preserve an original while trying another continuation. Whole-thread copies do not establish a navigable branch tree.",
+      "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat"]
+    },
+    {
+      "mechanism": "Summaries and retrieved memories accompany editable thread lore and character lorebook URLs. Brain control documents per-message memory search queries.",
+      "benefitInference": "Users have concrete places to inspect retrieval and repair remembered facts. Recall quality and complete prompt visibility remain untested.",
+      "evidenceUrls": ["https://perchance.org/ai-character-chat-docs#memories-and-lore"]
+    },
+    {
+      "mechanism": "Per-thread JSON including characters or message-text export, character-card and TavernAI chat parsers, and emergency export during stalled initialization.",
+      "benefitInference": "Content movement and recovery may remain possible even when the normal conversation interface fails. No successful recovery or lossless conversion is claimed.",
+      "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat"]
+    }
+  ],
+  "tradeoffs": [
+    "Docs warn that clearing Perchance site data loses characters and threads; app source warns of browser storage eviction. Backup is a user responsibility.",
+    "Custom-code extensions broaden creator control but require JavaScript knowledge. Documented voice setup uses such code rather than establishing a built-in voice selector.",
+    "The temperature editor line is commented out. Stored temperature fields are not proof of an active user-facing sampler control.",
+    "Documentation says character instruction/reminder changes affect existing threads and describes no thread-specific equivalent. Current source contains thread.character.reminderMessage overrides. Treat exact override availability as unresolved rather than asserting that old documentation is current.",
+    "Documentation says existing threads do not automatically receive updated character lorebook URLs; users must reload lore through the lore editor.",
+    "AI plugin source depends on hosted servers. General downloadable HTML and remixability do not prove independent self-hosting of inference.",
+    "The unlimited title is not a verified availability guarantee. Plugin documentation mentions limited concurrent requests and quota_exceeded for ticket creation; this review does not establish actual chat quotas."
+  ],
+  "unknowns": [
+    "Underlying current generation model identity, selectable model behavior and external endpoint or local model configuration were not established.",
+    "Complete assembled-prompt inspection was not established. Memory query visibility is narrower evidence.",
+    "Branch ancestry navigation and checkpoint semantics were not established; whole-thread duplication and response variants were inspected.",
+    "Cross-device synchronization, mobile layout, keyboard operation and accessibility were not tested.",
+    "Import/export fidelity, lore preservation across external formats and recovery success were not tested.",
+    "Memory accuracy, long-story coherence, generation speed and service reliability were not measured.",
+    "Independent self-hosting, offline inference and built-in voice selection were not established.",
+    "Legal authorship of the app and ownership of similarly named external sites were not established."
+  ],
+  "reusablePatterns": [
+    {"pattern": "Separate character choice from exact-story continuation, with stable thread identifiers and restored drafts.", "reason": "Should reduce accidental restarts and ambiguity between stories.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat"]},
+    {"pattern": "Put per-message memory evidence beside editable memory and lore records.", "reason": "Should make retrieval mistakes easier to diagnose and repair.", "evidenceUrls": ["https://perchance.org/ai-character-chat-docs#memories-and-lore"]},
+    {"pattern": "Expose export even if normal app initialization stalls.", "reason": "Should give users a recovery option before resetting stored content.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat"]},
+    {"pattern": "Disclose creator options explicitly while showing premise guidance early.", "reason": "Should keep first interaction understandable without removing expert configuration.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat", "https://perchance.org/ai-character-chat-docs#initial-messages"]}
+  ],
+  "doNotCopy": [
+    "Browser-only persistence without a clear backup and recovery path.",
+    "Requiring JavaScript for ordinary voice setup.",
+    "Calling whole-thread duplication a branch-history interface.",
+    "Calling memory search queries a complete prompt inspector.",
+    "Treating title promises about unlimited usage as measured guarantees."
+  ],
+  "capabilities": {
+    "characterOnboarding": {"status": "source-inspected", "note": "Starter taglines, manual character editor, imported cards, initial messages and new-chat character selection. Selecting a character creates a new thread. No onboarding interaction was performed.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat", "https://perchance.org/ai-character-chat-docs#initial-messages"]},
+    "storyOrganization": {"status": "source-inspected", "note": "Separate thread IDs, names, folders, favorites, recent activity, saved drafts and existing-thread opening. Cross-device synchronization is unknown.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat"]},
+    "editRetryBranch": {"status": "source-inspected", "note": "Message editing including double-tap, regenerateMessage variants, and duplicateThreadBtn whole-thread copying. A branch ancestry tree or checkpoint interface was not established.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat"]},
+    "memoryLore": {"status": "documented", "note": "Summaries, retrieved memories, /mem editor, /lore editor, and character lorebook URLs. Existing-thread lore reload is manual after changing URLs. Accuracy and scale claims were not tested.", "evidenceUrls": ["https://perchance.org/ai-character-chat-docs#memories-and-lore"]},
+    "promptTransparency": {"status": "documented", "note": "Role/reminder editing, initial-message visibility rules, and message memory-query display are documented. These establish partial transparency only. Full assembled-prompt inspection remains unknown.", "evidenceUrls": ["https://perchance.org/ai-character-chat-docs#instruction-and-reminder", "https://perchance.org/ai-character-chat-docs#initial-messages", "https://perchance.org/ai-character-chat-docs#memories-and-lore"]},
+    "modelConnections": {"status": "source-inspected", "note": "App imports ai-text-plugin and includes modelName fields and threadModelSelector code. Hosted server dependency is established. Active model choices, model identity, BYO endpoints and local model support are not established; commented OpenAI-key code is not treated as a working connection.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat", "https://perchance.org/ai-text-plugin"]},
+    "advancedControls": {"status": "source-inspected", "note": "Role/reminder editing, response-length limits, context strategy, memory controls, shortcuts and custom JavaScript. Temperature editor is commented out. Stored sampler fields do not establish active controls. Documentation and source differ on thread reminder overrides.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat", "https://perchance.org/ai-character-chat-docs#custom-code"]},
+    "groupRoleplay": {"status": "documented", "note": "Docs instruct adding characters using the pencil above the reply box and addressing specific character IDs with /ai. Group turn-taking quality and complete per-character setting behavior were not tested.", "evidenceUrls": ["https://perchance.org/ai-character-chat-docs#tips"]},
+    "imagesVoice": {"status": "documented", "note": "Image generation uses /image or image tags, with documented seed, negative-prompt and resolution syntax. Voice is documented through custom-code examples. Built-in voice selection and dictation are unknown. No media was generated.", "evidenceUrls": ["https://perchance.org/ai-character-chat-docs#tips", "https://perchance.org/ai-character-chat-docs#custom-code-examples"]},
+    "mobile": {"status": "source-inspected", "note": "Docs describe tapping messages for memory controls; source has touch and mobile-specific controls. No device, narrow-layout, keyboard or accessibility testing was performed. Source contains an iOS Safari maximum-scale=1 adjustment, which merits separate accessibility review rather than a claim of usability.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat", "https://perchance.org/ai-character-chat-docs#memories-and-lore"]},
+    "portability": {"status": "source-inspected", "note": "Character PNG/JSON parser, TavernAI-style JSONL chat import, whole-thread JSON including characters, message-text export, and emergencyExportClickHandler. Supported external chat shape requires user_name, character_name and create_date header fields plus name, is_user, mes and send_date message fields. Not a tested lossless round trip.", "evidenceUrls": ["https://perchance.org/api/downloadGenerator?generatorName=ai-character-chat", "https://perchance.org/ai-character-chat-docs#tips"]},
+    "selfHosting": {"status": "unknown", "note": "Platform documents HTML generator downloads and remixing. AI text plugin uses hosted inference and warns its code is coupled to server behavior. No complete independent self-hosting or offline AI deployment was established.", "evidenceUrls": ["https://perchance.org/perchance-faq", "https://perchance.org/ai-text-plugin"]}
+  }
+}

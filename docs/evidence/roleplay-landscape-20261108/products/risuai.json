@@ -1,0 +1,305 @@
+{
+  "slug": "risuai",
+  "product": "RisuAI",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://risuai.net/",
+  "evidenceBoundary": "Public primary-source documentation and source review only. Official identity corroborated by kwaroran/Risuai linking risuai.net as its website and recommended installation. Source inspected at 8e1fee403a903e0c608c2a86dfa2c3e96b93acef; deployed-version parity unknown. No accounts, purchases, inference calls, installation, preview/browser automation, production access or device testing. Expected benefits and reusable patterns are explicitly analytical proposals, not observed outcomes.",
+  "sources": [
+    {
+      "url": "https://risuai.net/",
+      "title": "RisuAI official website",
+      "supports": [
+        "Exact product spelling; roleplay audience; RisuRealm discovery claim; advertised platforms."
+      ]
+    },
+    {
+      "url": "https://github.com/kwaroran/Risuai",
+      "title": "kwaroran/Risuai official repository and README",
+      "supports": [
+        "Website identity; documented providers, prompt controls, lorebooks, group chats, media and TTS; work-in-progress wiki; Docker installation."
+      ]
+    },
+    {
+      "url": "https://kwaroran.github.io/docs/guides/making-bots/",
+      "title": "Making Bots (Basic), maintainer documentation",
+      "supports": [
+        "Creation through name, description, greeting and image; premise template. Documentation currency was not established."
+      ]
+    },
+    {
+      "url": "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte",
+      "title": "Chat.svelte at 8e1fee403a903e0c608c2a86dfa2c3e96b93acef",
+      "supports": [
+        "Message editing and reroll controls; branch copying and origin link; bookmarks; conditional model-information action; 640-pixel menu change."
+      ]
+    },
+    {
+      "url": "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/SideBars/SideChatList.svelte",
+      "title": "SideChatList.svelte at 8e1fee403a903e0c608c2a86dfa2c3e96b93acef",
+      "supports": [
+        "Per-character named chats; selection; folders; duplication; new chat; import/export entry points."
+      ]
+    },
+    {
+      "url": "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/Others/HypaV3Modal/modal-summary-item.svelte",
+      "title": "HypaV3 modal-summary-item.svelte at 8e1fee403a903e0c608c2a86dfa2c3e96b93acef",
+      "supports": [
+        "Editable summaries; source-message references; regenerate/apply/cancel; Important/Recent/Similar selection labels; regeneration error handler."
+      ]
+    },
+    {
+      "url": "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/ts/characters.ts",
+      "title": "characters.ts at 8e1fee403a903e0c608c2a86dfa2c3e96b93acef",
+      "supports": [
+        "JSON/TXT/HTML export; native chat schemas; JSONL import; folder identifier collision remapping."
+      ]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Character creation separates description, greeting and image.",
+      "benefitInference": "Specific premise fields may help creators establish a scene.",
+      "evidenceUrls": [
+        "https://kwaroran.github.io/docs/guides/making-bots/"
+      ]
+    },
+    {
+      "mechanism": "Per-character named chats, folders, duplication and New Chat.",
+      "benefitInference": "Readers may resume exact stories while keeping alternatives separate.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/SideBars/SideChatList.svelte"
+      ]
+    },
+    {
+      "mechanism": "A branch copies messages through a chosen point and retains an origin link.",
+      "benefitInference": "Readers may explore alternatives and return to the original scene.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte"
+      ]
+    },
+    {
+      "mechanism": "HypaV3 summaries support edits, regeneration with apply/cancel, source references and selection labels.",
+      "benefitInference": "Readers may diagnose and repair compressed story memory. Recall quality was not tested.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/Others/HypaV3Modal/modal-summary-item.svelte"
+      ]
+    },
+    {
+      "mechanism": "Multiple transcript exports and recognized native/JSONL imports.",
+      "benefitInference": "Readers gain preservation and migration routes. Lossless migration is not established.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/ts/characters.ts"
+      ]
+    }
+  ],
+  "tradeoffs": [
+    {
+      "note": "Many documented settings and extension mechanisms create concepts to learn. Successful progressive disclosure was not established.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai"
+      ]
+    },
+    {
+      "note": "Small-screen message menus consolidate actions; discoverability and touch usability remain untested.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte"
+      ]
+    },
+    {
+      "note": "Import support establishes parsing paths, not preservation of every message, branch, asset or extension.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/ts/characters.ts"
+      ]
+    },
+    {
+      "note": "Docker instructions establish a self-hosting route, not operational reliability or multiuser isolation.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai"
+      ]
+    },
+    {
+      "note": "The README labels its linked wiki work in progress. The inspected creation guide does not establish current deployed navigation.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai",
+        "https://kwaroran.github.io/docs/guides/making-bots/"
+      ]
+    }
+  ],
+  "unknowns": [
+    {
+      "note": "Full assembled-request visibility, activated-lore inspection and token allocation were not established. A model-information button alone is insufficient.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte"
+      ]
+    },
+    {
+      "note": "Character-card migration fidelity and media round trips were not verified.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/ts/characters.ts"
+      ]
+    },
+    {
+      "note": "Memory accuracy, long-chat performance and recovery from failed provider requests were not tested.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/Others/HypaV3Modal/modal-summary-item.svelte"
+      ]
+    },
+    {
+      "note": "Actual mobile layouts, keyboard use, touch targets and Android installation were not tested.",
+      "evidenceUrls": [
+        "https://risuai.net/",
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte"
+      ]
+    },
+    {
+      "note": "Voice setup and image-generation configuration were not established. Embedded assets and TTS are documented.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai"
+      ]
+    },
+    {
+      "note": "Self-host authentication, backups, upgrade safety and deployment parity remain unknown.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai"
+      ]
+    }
+  ],
+  "reusablePatterns": [
+    {
+      "note": "Proposal: show each branch origin and group related branches to preserve exact-story navigation.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte"
+      ]
+    },
+    {
+      "note": "Proposal: expose editable summaries, source-message links and selection reasons before adding more memory automation.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/Others/HypaV3Modal/modal-summary-item.svelte"
+      ]
+    },
+    {
+      "note": "Proposal: keep New Chat distinct from named-story selection; test with several similar stories.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/SideBars/SideChatList.svelte"
+      ]
+    },
+    {
+      "note": "Proposal: place export beside story management and distinguish editable archives from readable transcripts.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/SideBars/SideChatList.svelte",
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/ts/characters.ts"
+      ]
+    }
+  ],
+  "doNotCopy": [
+    {
+      "note": "Do not promise unlimited or accurate memory without evidence, or treat generated summaries as canonical story text.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai",
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/Others/HypaV3Modal/modal-summary-item.svelte"
+      ]
+    },
+    {
+      "note": "Do not adopt condensed icon menus without testing discovery of branch, retry and recovery actions.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte"
+      ]
+    },
+    {
+      "note": "Do not promise universal export compatibility without migration fixtures.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/ts/characters.ts"
+      ]
+    }
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Maintainer guide covers character name, description, greeting and image. Website advertises RisuRealm discovery. Import fidelity and current deployed onboarding were not verified.",
+      "evidenceUrls": [
+        "https://kwaroran.github.io/docs/guides/making-bots/",
+        "https://risuai.net/"
+      ]
+    },
+    "storyOrganization": {
+      "status": "source-inspected",
+      "note": "Per-character named chats, folders, copying, selection and New Chat are implemented in the sidebar.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/SideBars/SideChatList.svelte"
+      ]
+    },
+    "editRetryBranch": {
+      "status": "source-inspected",
+      "note": "Edit and reroll controls; branch copies through the chosen message, receives a new id and records a navigable origin.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte"
+      ]
+    },
+    "memoryLore": {
+      "status": "source-inspected",
+      "note": "Editable HypaV3 summaries, source references, regeneration with apply/cancel and selection labels. Lorebooks are documented in README. Quality was not tested.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/Others/HypaV3Modal/modal-summary-item.svelte",
+        "https://github.com/kwaroran/Risuai"
+      ]
+    },
+    "promptTransparency": {
+      "status": "unknown",
+      "note": "Prompt reordering, conditions and variables are documented. Source exposes conditional model information; complete request/context inspection remains unknown.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai",
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte"
+      ]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "README lists OpenAI, Claude, Gemini, DeepInfra, Ooba and OpenRouter support. Connections and failover were not exercised.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai"
+      ]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "README documents regex scripts, plugins, prompt ordering, variables and conditions. Defaults and ease of use remain untested.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai"
+      ]
+    },
+    "groupRoleplay": {
+      "status": "documented",
+      "note": "README documents multiple characters in one chat. Turn-taking behavior was not tested.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai"
+      ]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "Emotion images, embedded images/audio/video and TTS are documented. Generation-provider configuration, voice quality and dictation were not established.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai"
+      ]
+    },
+    "mobile": {
+      "status": "source-inspected",
+      "note": "Message controls use a named popup below 640 pixels. Website advertises Android and web; no device testing or install verification.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/lib/ChatScreens/Chat.svelte",
+        "https://risuai.net/"
+      ]
+    },
+    "portability": {
+      "status": "source-inspected",
+      "note": "Chat export offers JSON, TXT and HTML variants; import recognizes native schemas and JSONL. No lossless migration or character-card round trip verified.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai/blob/8e1fee403a903e0c608c2a86dfa2c3e96b93acef/src/ts/characters.ts"
+      ]
+    },
+    "selfHosting": {
+      "status": "documented",
+      "note": "README provides Docker hosting instructions. No deployment, operational or security checks ran.",
+      "evidenceUrls": [
+        "https://github.com/kwaroran/Risuai"
+      ]
+    }
+  }
+}

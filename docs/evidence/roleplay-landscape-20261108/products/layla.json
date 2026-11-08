@@ -1,0 +1,170 @@
+{
+  "slug": "layla",
+  "product": "Layla",
+  "reviewedAt": "2026-11-08",
+  "officialUrl": "https://www.layla-network.ai/ai-roleplay",
+  "evidenceBoundary": "Public official product pages, linked wiki instructions and documentation repository only. Product page links to Help; Help links back to the website and to l3utterfly/help.layla-network.ai, whose README confirms wiki publication. No application source inspection, app interaction, accounts, purchases, model inference, device tests or production access. Benefits are inferences, not measured outcomes. Conflicting documentation remains unresolved. Unknown means not established, not absent.",
+  "sources": [
+    {
+      "url": "https://www.layla-network.ai/ai-roleplay",
+      "title": "AI Roleplay Chat With Characters, Offline | Layla",
+      "supports": ["Product identity and Help link", "Marketing claims for memory, lorebooks and local voices"]
+    },
+    {
+      "url": "https://github.com/l3utterfly/help.layla-network.ai",
+      "title": "l3utterfly/help.layla-network.ai",
+      "supports": ["Repository README confirms it publishes the linked help wiki; not application source"]
+    },
+    {
+      "url": "https://help.layla-network.ai/getting-started/",
+      "title": "Getting started with Layla",
+      "supports": ["Reversible use-case setup", "Android and iOS", "Local versus cloud selection", "Multi-character roleplay", "Hardware constraints"]
+    },
+    {
+      "url": "https://help.layla-network.ai/how-do-i-create-custom-characters/",
+      "title": "How to create a custom AI character in Layla",
+      "supports": ["Character premise fields and Summary", "Advanced integrations", "TavernPNG import/export", "Random greeting selection"]
+    },
+    {
+      "url": "https://help.layla-network.ai/how-does-conversation-history-work-in-layla/",
+      "title": "How does conversation history work in Layla?",
+      "supports": ["History search and previews", "Export copies", "Deletion and backup warnings"]
+    },
+    {
+      "url": "https://help.layla-network.ai/edit-regenerate-branch-messages-layla/",
+      "title": "Can you edit, regenerate, and branch messages in Layla?",
+      "supports": ["Message edits", "Reply alternatives", "Continue", "Branches", "Long-press and overflow access"]
+    },
+    {
+      "url": "https://help.layla-network.ai/how-to-set-up-custom-prompt-templates-for-models/",
+      "title": "How to set up custom prompt templates for models in Layla",
+      "supports": ["Prompt presets and formatting controls", "Example Live Preview", "{{instruction}} dependencies and recovery guidance"]
+    },
+    {
+      "url": "https://help.layla-network.ai/how-to-connect-layla-to-any-openai-compatible-api/",
+      "title": "How to connect Layla to any OpenAI-compatible API",
+      "supports": ["Self-hosted inference connections", "Endpoint and model fields", "Discovery", "Extra JSON", "Troubleshooting"]
+    },
+    {
+      "url": "https://help.layla-network.ai/how-layla-chat-histories-work-across-characters-personas-models-and-roleplay-scenarios/",
+      "title": "How Layla chat histories work across characters, personas, models, and roleplay scenarios",
+      "supports": ["Conversation and configuration distinction", "Internally conflicting save/restore claims", "Deletion semantics conflict with History guide"]
+    }
+  ],
+  "strengths": [
+    {
+      "mechanism": "Reversible use-case onboarding installs recommended features, with an Expert route.",
+      "benefitInference": "Fewer initial decisions while retaining expert access.",
+      "evidenceUrls": ["https://help.layla-network.ai/getting-started/"]
+    },
+    {
+      "mechanism": "Premise fields and combined Summary precede optional integrations; TavernPNG import/export is documented.",
+      "benefitInference": "Authors can inspect character setup and move compatible cards.",
+      "evidenceUrls": ["https://help.layla-network.ai/how-do-i-create-custom-characters/"]
+    },
+    {
+      "mechanism": "Searchable conversation previews, edits, retained reply alternatives and message-level branches.",
+      "benefitInference": "Find an exact story and explore another outcome with the original retained.",
+      "evidenceUrls": ["https://help.layla-network.ai/how-does-conversation-history-work-in-layla/", "https://help.layla-network.ai/edit-regenerate-branch-messages-layla/"]
+    },
+    {
+      "mechanism": "Prompt template controls include example Live Preview and dependency explanations.",
+      "benefitInference": "Formatting failures become easier to diagnose.",
+      "evidenceUrls": ["https://help.layla-network.ai/how-to-set-up-custom-prompt-templates-for-models/"]
+    },
+    {
+      "mechanism": "Named compatible API connections support discovery and optional Extra JSON overrides.",
+      "benefitInference": "Phone users can use other hardware without exposing every advanced field initially.",
+      "evidenceUrls": ["https://help.layla-network.ai/how-to-connect-layla-to-any-openai-compatible-api/"]
+    }
+  ],
+  "tradeoffs": [
+    "History-configuration matrix says configuration is not saved; prose and specification say it is restored. Behavior is unresolved.",
+    "History warns that character deletion removes associated chats and memories, conflicting with the configuration guide's separation of deletion operations.",
+    "Permanent deletion is unrecoverable; device transfer needs an independent backup or export.",
+    "Local models require suitable hardware and storage. Cloud switching changes privacy and connectivity conditions.",
+    "Prompt changes can remove task instructions; dependency guidance does not establish automatic validation."
+  ],
+  "unknowns": [
+    "Actual runtime behavior and applicable installed version",
+    "Memory accuracy, retrieval inspection and lorebook round-trip fidelity",
+    "Full actual-request context visibility",
+    "Chat export format, reimport and complete migration",
+    "Self-hostable Layla application, distinct from self-hosted inference",
+    "Group turn scheduling and context controls",
+    "Mobile accessibility, touch usability, battery use and performance"
+  ],
+  "reusablePatterns": [
+    "Proposal: reversible setup choices that reveal relevant controls without duplicating ownership.",
+    "Proposal: assembled character-premise preview beside scenario and greeting fields.",
+    "Proposal: visible conversation identity, branch origin and searchable previews.",
+    "Proposal: prompt examples and dependency explanations beside advanced settings."
+  ],
+  "doNotCopy": [
+    "Random greeting selection without showing the selected opening",
+    "Essential recovery actions available only through long-press",
+    "Ambiguous restoration promises or destructive character deletion without explicit scope and recovery design"
+  ],
+  "capabilities": {
+    "characterOnboarding": {
+      "status": "documented",
+      "note": "Selection, creator fields, Summary and TavernPNG import; optional integrations are in Advanced.",
+      "evidenceUrls": ["https://help.layla-network.ai/getting-started/", "https://help.layla-network.ai/how-do-i-create-custom-characters/"]
+    },
+    "storyOrganization": {
+      "status": "documented",
+      "note": "History has search and conversation previews. Configuration restoration is internally contradictory, not verified.",
+      "evidenceUrls": ["https://help.layla-network.ai/how-does-conversation-history-work-in-layla/", "https://help.layla-network.ai/how-layla-chat-histories-work-across-characters-personas-models-and-roleplay-scenarios/"]
+    },
+    "editRetryBranch": {
+      "status": "documented",
+      "note": "Both speakers editable; regenerate retains alternatives; Continue handles cut-off text; branch preserves original. Earlier edits may require regenerating later replies.",
+      "evidenceUrls": ["https://help.layla-network.ai/edit-regenerate-branch-messages-layla/"]
+    },
+    "memoryLore": {
+      "status": "marketing-only",
+      "note": "Roleplay page claims long-term memory, keyword-based SillyTavern JSON lorebook import and semantic PDF/ePub retrieval. No operation or fidelity verified.",
+      "evidenceUrls": ["https://www.layla-network.ai/ai-roleplay"]
+    },
+    "promptTransparency": {
+      "status": "documented",
+      "note": "Template editor and example Live Preview; actual complete per-request context visibility unknown.",
+      "evidenceUrls": ["https://help.layla-network.ai/how-to-set-up-custom-prompt-templates-for-models/"]
+    },
+    "modelConnections": {
+      "status": "documented",
+      "note": "On-device models, cloud and compatible API endpoints, including own-server inference; exact endpoint/model fields and discovery.",
+      "evidenceUrls": ["https://help.layla-network.ai/getting-started/", "https://help.layla-network.ai/how-to-connect-layla-to-any-openai-compatible-api/"]
+    },
+    "advancedControls": {
+      "status": "documented",
+      "note": "Expert setup, custom prompt formatting and expandable Extra JSON overrides. No runtime validation performed.",
+      "evidenceUrls": ["https://help.layla-network.ai/getting-started/", "https://help.layla-network.ai/how-to-set-up-custom-prompt-templates-for-models/", "https://help.layla-network.ai/how-to-connect-layla-to-any-openai-compatible-api/"]
+    },
+    "groupRoleplay": {
+      "status": "documented",
+      "note": "Roleplay setup supports multiple AI characters interacting; scheduling and context policy unknown.",
+      "evidenceUrls": ["https://help.layla-network.ai/getting-started/"]
+    },
+    "imagesVoice": {
+      "status": "documented",
+      "note": "Per-character voice search/preview and optional configured image model. No output quality tested.",
+      "evidenceUrls": ["https://help.layla-network.ai/how-do-i-create-custom-characters/"]
+    },
+    "mobile": {
+      "status": "documented",
+      "note": "Android/iOS documented; no device interaction, accessibility or performance test.",
+      "evidenceUrls": ["https://help.layla-network.ai/getting-started/"]
+    },
+    "portability": {
+      "status": "documented",
+      "note": "TavernPNG import/export and conversation export copies. Chat format, reimport and complete migration unknown.",
+      "evidenceUrls": ["https://help.layla-network.ai/how-do-i-create-custom-characters/", "https://help.layla-network.ai/how-does-conversation-history-work-in-layla/"]
+    },
+    "selfHosting": {
+      "status": "unknown",
+      "note": "Own-server model connections documented; hosting the Layla application itself is not established. Wiki repository is not application source.",
+      "evidenceUrls": ["https://help.layla-network.ai/how-to-connect-layla-to-any-openai-compatible-api/", "https://github.com/l3utterfly/help.layla-network.ai"]
+    }
+  }
+}
