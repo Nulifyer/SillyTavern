@@ -1,0 +1,8 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+    "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8034/script.js:7534:19)\n    at async saveChatConditional (http://127.0.0.1:8034/script.js:9550:84)\n    at async saveMetadata (http://127.0.0.1:8034/script.js:9533:12)\n    at async Popup.onClosing (http://127.0.0.1:8034/script.js:9158:25)\n    at async Popup.complete (http://127.0.0.1:8034/scripts/popup.js:787:33)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8034/scripts/popup.js:557:62)"
+  ],
+  "failedRequests": []
+}

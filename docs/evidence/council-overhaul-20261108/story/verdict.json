@@ -1,12 +1,12 @@
 {
   "member": "story",
-  "phase": "implementation_review",
+  "phase": "replacement_source_review",
   "implementationVerdict": "accept",
   "scopeSatisfied": true,
   "finalReleaseVerdict": "pending",
   "openStoryFindings": [],
-  "sourceManifest": "../source-final/runtime-sha256.json",
-  "sourceHashMatches": 18,
+  "sourceManifest": "../rename-delta/runtime-sha256.json",
+  "sourceHashMatches": 19,
   "manualFixture": "http://127.0.0.1:8036",
   "manualFixtureKind": "fresh_synthetic_source_overlay",
   "evidence": [
@@ -17,16 +17,31 @@
     "mobile-320-override.png",
     "../source-final/st-council-final-units.log",
     "../source-final/st-council-newest.log",
-    "../source-final/st-council-final-contract.log"
+    "../source-final/st-council-final-contract.log",
+    "../rename-delta/st-council-delta-final.log",
+    "../rename-delta/st-council-v23-units.log"
   ],
   "pending": [
-    "completed combined regression run",
-    "actual published image source identity and acceptance proof",
-    "quality member disposition of its own rendering findings"
+    "completed99-case source run",
+    "actual v1.19.23 image full acceptance evidence"
   ],
   "limits": [
     "manual review used source overlays, not the released image",
     "no physical phone lock or GPU qualification",
     "no audible quality or paid-provider qualification"
+  ],
+  "resolvedFindings": [
+    {
+      "id": "S-rename-draft",
+      "state": "verified_source_fix",
+      "evidence": "../rename-delta/st-council-delta-final.log",
+      "releaseRecheck": "pending actual v1.19.23 image"
+    },
+    {
+      "id": "S-stale-rename-draft",
+      "state": "implemented_source_recheck",
+      "evidence": "native guard before moveDraft plus persisted-input unit",
+      "verification": "parent unit/lint rerun pending"
+    }
   ]
 }

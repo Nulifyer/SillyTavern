@@ -1,0 +1,44 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep acknowledged rename preserves|identical story filenames --repeat-each=3 --output=/tmp/st-council-rename-after-results --reporter=line
+(node:2972624) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 6 tests using 1 worker
+
+(node:2972655) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:2972655) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:2972655) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/6] workspace.e2e.js:3427:1 › acknowledged rename preserves a draft typed while native character persistence is pending
+[2/6] workspace.e2e.js:3462:1 › identical story filenames on different characters never share a recovered draft
+(node:2973115) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:2973115) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:2973115) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[3/6] workspace.e2e.js:3427:1 › acknowledged rename preserves a draft typed while native character persistence is pending
+[4/6] workspace.e2e.js:3462:1 › identical story filenames on different characters never share a recovered draft
+(node:2973469) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:2973469) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:2973469) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[5/6] workspace.e2e.js:3427:1 › acknowledged rename preserves a draft typed while native character persistence is pending
+[6/6] workspace.e2e.js:3462:1 › identical story filenames on different characters never share a recovered draft
+  6 passed (29.8s)

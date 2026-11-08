@@ -1,0 +1,135 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - link "Skip to message" [ref=e3] [cursor=pointer]:
+    - /url: "#send_textarea"
+  - complementary "Workspace" [ref=e4]:
+    - link "SillyTavern" [ref=e5] [cursor=pointer]:
+      - /url: "#"
+      - generic [ref=e6]: SillyTavern
+    - button "Find anything Ctrl K" [ref=e7] [cursor=pointer]:
+      - generic [ref=e8]: 
+      - generic [ref=e9]: Find anything
+      - generic [ref=e10]: Ctrl K
+    - button "New story" [ref=e11] [cursor=pointer]:
+      - generic [ref=e12]: +
+      - generic [ref=e13]: New story
+    - navigation "Main navigation" [ref=e14]:
+      - button "Stories" [ref=e15] [cursor=pointer]:
+        - generic [ref=e16]: 
+        - generic [ref=e17]: Stories
+      - button "Characters" [ref=e18] [cursor=pointer]:
+        - generic [ref=e19]: 
+        - generic [ref=e20]: Characters
+      - button "Archive" [ref=e21] [cursor=pointer]:
+        - generic [ref=e22]: 
+        - generic [ref=e23]: Archive
+    - text: 
+    - generic [ref=e25]:
+      - generic [ref=e26]: Recent stories
+      - button "View all stories" [ref=e27] [cursor=pointer]:
+        - generic [ref=e28]: 
+    - generic [ref=e29]:
+      - button "Settings" [ref=e30] [cursor=pointer]:
+        - generic [ref=e31]: 
+        - generic [ref=e32]: Settings
+      - text: 
+      - button "Storyteller Manage persona" [ref=e33] [cursor=pointer]:
+        - generic [ref=e35]: 
+        - generic [ref=e36]:
+          - strong [ref=e37]: Storyteller
+          - generic [ref=e38]: Manage persona
+        - generic [ref=e39]: 
+  - banner [ref=e40]:
+    - text: 
+    - generic [ref=e41]:
+      - strong [ref=e42]: Stories
+      - generic [ref=e43]: Roleplay workspace
+    - generic:  +
+  - text:  
+  - generic:
+    - generic:                                         + No items                            ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☑ ☰ ☐ ☰ ☐ ☰ ☐ ☰                                  + No items      ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰  ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰ ☰                   +     No items   X                                      
+    - generic:                                                                         
+    - generic:                                                
+    - generic:                 +     
+    - generic:                                    
+    - generic:        +                            
+    - generic:          +                                                                                     +                      +   + +  +     +        +        +        +                                               
+    - generic:                     
+    - generic:                                                       Group is empty.          No characters available                       
+  - generic:                      +                                                                               +    + +                  
+  - generic:                  
+  - generic [ref=e44]:
+    - text:                 
+    - region "Roleplay workspace" [ref=e45]:
+      - generic [ref=e46]:
+        - button "All characters" [ref=e47] [cursor=pointer]:
+          - generic [ref=e48]: 
+          - generic [ref=e49]: All characters
+        - generic [ref=e50]:
+          - complementary [ref=e51]:
+            - generic [ref=e52]:
+              - heading "Seraphina" [level=1] [ref=e53]
+              - paragraph [ref=e54]: You were attacked by beasts while wandering the magical forest of Eldoria. Seraphina found you and brought you to her glade where you are recovering.
+              - generic [ref=e55]:
+                - button "Start new story" [ref=e56] [cursor=pointer]:
+                  - generic [ref=e57]: +
+                  - generic [ref=e58]: Start new story
+                - button "Edit character" [ref=e59] [cursor=pointer]:
+                  - generic [ref=e60]: 
+                  - generic [ref=e61]: Edit character
+          - generic [ref=e62]:
+            - generic [ref=e63]:
+              - heading "Pick up where you left off" [level=2] [ref=e64]
+              - strong [ref=e65]: Seraphina - 2026-11-08@14h38m43s856ms
+              - paragraph [ref=e66]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+              - button "Continue latest story" [ref=e67] [cursor=pointer]:
+                - generic [ref=e68]: 
+                - generic [ref=e69]: Continue latest story
+            - generic [ref=e70]:
+              - group [ref=e71]:
+                - generic "Opening message" [ref=e72] [cursor=pointer]
+              - group [ref=e73]:
+                - generic "Full character description" [ref=e74] [cursor=pointer]
+            - generic [ref=e75]:
+              - heading "Story history" [level=2] [ref=e76]
+              - generic [ref=e77]:
+                - button "Active" [pressed] [ref=e78] [cursor=pointer]
+                - button "Archived" [ref=e79] [cursor=pointer]
+            - region "Story list" [ref=e80]:
+              - article [ref=e82]:
+                - button "Continue Seraphina - 2026-11-08@14h38m43s856ms with Seraphina" [ref=e83] [cursor=pointer]:
+                  - generic [ref=e84]:
+                    - strong [ref=e85]: Seraphina - 2026-11-08@14h38m43s856ms
+                    - generic [ref=e86]: Seraphina
+                    - generic [ref=e87]: You wake with a start, recalling the events that led you deep into the forest and the beasts that assailed you. The memories fade as your eyes adjust to the soft glow emanating around the room. "Ah, you're awake at last. I was so worried, I found you bloodied and unconscious." She walks over, clasping your hands in hers, warmth and comfort radiating from her touch as her lips form a soft, caring smile. "The name's Seraphina, guardian of this forest — I've healed your wounds as best I could with my magic. How are you feeling? I hope the tea helps restore your strength." Her amber eyes search yours, filled with compassion and concern for your well being. "Please, rest. You're safe here. I'll look after you, but you need to rest. My magic can only do so much to heal you."
+                - time [ref=e88]: Nov 8
+                - group [ref=e89]:
+                  - generic "Actions for Seraphina - 2026-11-08@14h38m43s856ms" [ref=e90]:
+                    - generic [ref=e91]: 
+                  - text:   
+    - text:                                                                                                 
+  - text:                      1  
+  - generic [ref=e93]: 
+  - status [ref=e94]
+  - status [ref=e95]
+  - status [ref=e96]
+  - status [ref=e97]
+  - status [ref=e98]
+  - status [ref=e99]
+  - status [ref=e100]
+  - status [ref=e101]
+  - status [ref=e102]
+  - status [ref=e103]
+  - status [ref=e104]
+  - status [ref=e105]
+  - text: 
+  - dialog [ref=e106]:
+    - generic [ref=e107]:
+      - generic [ref=e108]:
+        - 'heading "ERROR: The active character is no longer available." [level=3] [ref=e109]'
+        - text: The page will be refreshed to prevent data loss. Press "OK" to continue.
+      - button "OK" [active] [ref=e111] [cursor=pointer]
+    - text: 
+```

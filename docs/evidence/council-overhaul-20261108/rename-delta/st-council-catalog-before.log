@@ -1,0 +1,77 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep character discovery publishes|malformed character collection --output=/tmp/st-council-catalog-before-results --reporter=line
+(node:2978830) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:2978860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:2978860) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:2978860) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/2] workspace.e2e.js:3462:1 › character discovery publishes a complete list and keeps the mounted draft while JSON is pending
+  1) workspace.e2e.js:3462:1 › character discovery publishes a complete list and keeps the mounted draft while JSON is pending
+
+    Error: expect(received).toBe(expected) // Object.is equality
+
+    Expected: 1
+    Received: 0
+
+      2187 |     try {
+      2188 |         await expect.poll(() => page.evaluate(() => window.__catalogJSONWaiting)).toBe(true);
+    > 2189 |         expect(await page.evaluate(async () => (await import('/script.js')).characters.length)).toBe(before.count);
+           |                                                                                                 ^
+      2190 |         await page.evaluate(async () => { const script = await import('/script.js'); await script.eventSource.emit(script.event_types.SETTINGS_UPDATED); });
+      2191 |         await expect(page.locator('#send_textarea')).toBeVisible();
+      2192 |         await page.locator('#send_textarea').fill('A turn typed while the character response is being parsed.');
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:2189:97
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-council-catalog-before-results/workspace.e2e.js-character-33236-draft-while-JSON-is-pending/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-council-catalog-before-results/workspace.e2e.js-character-33236-draft-while-JSON-is-pending/error-context.md
+
+
+(node:2979306) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:2979306) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:2979306) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[2/2] workspace.e2e.js:3511:1 › malformed character collection never replaces the last valid owner or mounted conversation
+  2) workspace.e2e.js:3511:1 › malformed character collection never replaces the last valid owner or mounted conversation
+
+    Test timeout of 90000ms exceeded.
+
+    Error: page.evaluate: Test timeout of 90000ms exceeded.
+
+      2202 | test('malformed character collection never replaces the last valid owner or mounted conversation', async ({ page }, testInfo) => {
+      2203 |     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} malformed collection`);
+    > 2204 |     const result = await page.evaluate(async () => {
+           |                               ^
+      2205 |         const script = await import('/script.js'); const nativeFetch = window.fetch;
+      2206 |         const before = script.getCurrentChatIdentity(); const cards = [...script.characters];
+      2207 |         const failures = [];
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:2204:31
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-council-catalog-before-results/workspace.e2e.js-malformed-f67ca-ner-or-mounted-conversation/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-council-catalog-before-results/workspace.e2e.js-malformed-f67ca-ner-or-mounted-conversation/error-context.md
+
+
+  2 failed
+    workspace.e2e.js:3462:1 › character discovery publishes a complete list and keeps the mounted draft while JSON is pending
+    workspace.e2e.js:3511:1 › malformed character collection never replaces the last valid owner or mounted conversation

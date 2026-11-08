@@ -55,3 +55,31 @@ No known implementation finding remains open. Implementation acceptance and sati
 I read `../source-final/summary.json` after the parent completed the combined source run. It reports 93 expected passes, zero skips, zero unexpected failures, zero flaky results and no uncaught page errors, in 669.43 seconds. Both live Juiced cases are included according to the parent. The summary retains 53 console-error records and 91 failed-request records, mostly aborted requests. I do not reinterpret those counts as zero browser diagnostics.
 
 The source summary explicitly records a later native-footer paint/copy correction and its separate regression. The final published image must run the full suite against that final code. I recomputed the refreshed 18-file manifest and all hashes matched. Source acceptance remains satisfied, with the image hold unchanged.
+
+## First actual-image run held
+
+The first v1.19.22 actual-image combined run passed 92 of 93 cases. The same-filename draft case received an empty composer when it expected the original character's draft. I read the failure record, diagnostics and native selection/load/draft source. Its browser diagnostics report no uncaught page errors, console errors or failed requests. This is an unresolved acceptance failure, not proof of cross-character draft leakage or a confirmed product cause.
+
+The test calls `selectCharacterById` and then a default-owner `openCharacterChat` without checking either result. Native selection explicitly returns false during saving, and the following open captures the current owner before waiting. That contract can make the test address the previous owner after a rejected selection, but the failed run did not record the return values. The parent is tracing native results, identities and storage before deciding whether runtime or test changes are needed. An original-draft restoration assertion must remain in the corrected proof. Release acceptance stays held.
+
+## Rename race established
+
+The parent reproduced a real rename gap on the actual v1.19.22 implementation. I read `/tmp/st-council-rename-before.log` and the controlled test. It holds native character persistence after the server has acknowledged the file rename, exposes the accepted title through a normal settings update, types a draft, then releases the save. The composer becomes empty. This establishes lost input during the rename phase; the ignored selection returns were not a sufficient explanation.
+
+I support a native file-rename acknowledgement event before client pointer mutation, while keeping the existing completed-rename event for current consumers. BrowserRecovery should own one bounded old/new identity transition, preserve destination-draft conflicts and reject unrelated owners. Staging a parsed character collection before publishing it also avoids a transient empty owner during `getCharacters`. The parent owns the fix and proof. Implementation satisfaction for these draft-preservation criteria is reopened until the controlled regression and affected identity checks pass. Release remains held.
+
+## v1.19.23 delta review in progress
+
+The initial v1.19.23 delta uses the intended native file acknowledgement event and keeps the established completion event. I read the seven affected browser cases and their 32.2 second passing log in `../rename-delta/st-council-delta-final.log`, plus the 492-test unit output. The browser cases cover held and failed character/cast metadata, delayed and malformed collection parsing, and original same-filename draft restoration. This addresses the reproduced v1.19.22 loss rather than substituting a test delay.
+
+Two bounded lifetime gaps remained in the first delta. `changeChat` ignored an authoritative transition to the old filename, which could retain the renamed draft when a different conversation reopened that now-vacant path. Native rename also guarded active mutation by avatar and filename without the loaded transcript integrity. I sent both findings. The parent agreed to retire the transition on native chat change, bind active pointer/reload/composer decisions to the captured request identity, and leave persisted source-key migration independent. A focused unit will retain that old-name distinction. Quality also requested validation of character avatar identifiers before publishing a parsed list.
+
+The in-progress full source run was stopped before those runtime edits and retained as superseded evidence. Acceptance of the final delta waits for its concrete source and affected results. No atomic file/character-card/group-metadata transaction is required by this correction.
+
+## Final v1.19.23 source acceptance
+
+I accept the final bounded v1.19.23 correction and am satisfied for source freeze. The stale-incarnation guard now returns before any migration or write when the live old/new key belongs to another native request identity. Its unit dispatches normal input before the stale acknowledgement and verifies that the new incarnation keeps its old-name record, with no borrowed renamed record. Native chat changes retire the old-name permission. Exact integrity-bearing identity gates active character mutation, composer capture and transcript reload. Parsed collections require nonempty stable avatar identifiers before publication.
+
+I re-read those source changes and units, inspected the final 494-test, 26-suite log at `../rename-delta/st-council-v23-final-units.log`, and recomputed the refreshed manifest. All 19 hashes match current bytes. The eight affected browser cases passed in the recorded 43.9 second run; the final unit rerun after the stale-incarnation guard passed in 1.176 seconds. My inspection of parent-run tests and logs is separate from the earlier independent browser review.
+
+No control implementation or delta objection remains. The observed v1.19.22 loss and all superseded runs stay in the evidence. Final acceptance still requires the combined final-source run and the actual v1.19.23 image proof. This fix does not claim atomic file, PNG character metadata and group metadata persistence.

@@ -75,3 +75,36 @@ lint/actionlint pass; test lint0errors53warnings. Late footer paint/reduced-heig
 copy was separately verified by quality and an8.6s regression. Final release
 verdicts remain pending published-image full-suite proof. Research/approved scope
 commit6cc7a957b excludes private delegation routing and prior production receipt.
+
+## Publication in progress
+
+Source/release tag8a26aa977c0f505631e768905be70898ac9506d2, v1.19.22.
+GitHub Release published; workflow42515510635 running native amd64/arm64 gates.
+https://github.com/Nulifyer/SillyTavern/actions/runs/42515510635
+Next: verify success/index digests; pull/run fresh no-overlay image on8039; run
+all93 browser cases/both live services; provide proof to same council for final
+release verdicts. No production update.
+
+## Actual-image hold and native delta
+
+v1.19.22 workflow42515510635 succeeded, index042dba048097ccbef521e219d11465bb55d7b4c48e8ac856971571e8e3748164.
+Actual fresh image92/93, one untraced identical-filename draft failure. Repeating
+that case8times passed, which does not disprove the original failure. A controlled
+held metadata request proved the native rename-ack gap clears newly typed input.
+The event/draft-owner fix passes6focused runs. Two controlled old22 collection
+cases fail and both pass source after staging valid JSON before publication.
+All same-council verdicts reopened; final delivery requires23replacement gates.
+Parent owns public/script.js/browser-recovery/events and regression tests. No
+production access/update. Current action: group/error acceptance and full23
+source run, delta review, then immutable23publication and full actual-image run.
+
+## Frozen v1.19.23 delta
+
+Same three members accept source freeze after two further ownership critiques.
+Native authoritative CHAT_CHANGED retires old-name permission. Exact captured
+request identity guards live composer, stored-record migration, character pointer
+and reload; stale acknowledgement cannot claim a new incarnation. Character
+candidates require nonempty avatar identifiers.494unit tests/26suites pass; root
+lint/actionlint pass,testlint0errors53warnings. The second partial source run was
+stopped before the last guard edit and retained as superseded2 evidence. Final99
+source run on8035 uses frozen19manifest bytes. No release acceptance claim yet.

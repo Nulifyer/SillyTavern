@@ -1,6 +1,6 @@
 # Story implementation review
 
-The implemented scope satisfies the story workflow I approved. I found no remaining story defect in the inspected source and isolated manual journey. Final release acceptance remains pending the completed combined run and proof from the actual published image.
+The selected story scope remains appropriate, but final acceptance is held. The parent reproduced a real draft-loss race on the v1.19.22 image after the source-stage review below. That new defect must be fixed and rechecked before approval.
 
 ## Evidence and identity
 
@@ -37,3 +37,25 @@ Physical phone locking/GPU restoration, audible quality and paid-provider behavi
 I read `source-final/summary.json` after the combined run. It reports 93 expected, zero skipped, zero unexpected and zero flaky results, with 93 diagnostic files and no page errors. It also records 53 console errors and 91 failed requests from the exercised runs; this is not a claim of a clean console or network. The late footer correction has separate affected-state evidence because it changed after the broad run began. The quality member rechecked the rendered correction and closed its finding.
 
 I recomputed the current 18-file manifest again with no mismatch. Source-stage acceptance is complete from my story perspective. The actual published image still needs the full suite against its final code before release acceptance.
+
+## Release-stage finding
+
+The first actual-image run passed 92 of 93 cases and failed the identical-filename draft case. The parent then established a real native rename race. With character persistence held after the server acknowledges a rename, the workspace displays the new title through SETTINGS_UPDATED. A user can type a turn during this gap. Releasing persistence clears that draft. The parent preserved reproduction evidence in `/tmp/st-council-rename-before.log` and its results directory and is fixing the native acknowledgement and draft-owner transition.
+
+This is a major continuity defect, not a visual preference or an acceptable test-only failure. The acceptance impact is loss of an unsent user turn after an apparently completed rename. The replacement needs to preserve the native CHAT_RENAMED completion contract and demonstrate typing during the held transition, preservation of the earlier draft, migration to the new identity, and subsequent reload. The earlier source-stage approval does not close this newly observed finding. Final release verdict remains pending.
+
+## v1.19.23 delta review
+
+S-rename-draft is closed for the replacement source. I inspected the native rename delta, BrowserRecovery transition and collection publication, the affected unit and browser test bodies, and `rename-delta/st-council-delta-final.log`. The seven focused browser cases passed in 32.2 seconds, including real input while character/cast metadata persistence is delayed or fails, reload after that transition, delayed/malformed character JSON and the original sibling-filename isolation case. The unit log reports 492 passed tests in 26 suites. I recomputed all 19 hashes in `rename-delta/runtime-sha256.json` with no mismatch.
+
+The native owner now publishes CHAT_RENAME_ACKNOWLEDGED after the file rename succeeds and before slower definition persistence or reload. BrowserRecovery moves that one draft identity at acknowledgement and permits only its bounded old/new transition. Completion retires the transition without moving the draft a second time. Switching to an unrelated story retires it too. The existing CHAT_RENAMED completion contract remains. Conflict handling preserves both stored drafts; a cleared destination is not resurrected by the later completion event. The tests cover these conditions, another account/entity and a subsequent rename.
+
+Character discovery now parses and normalizes a candidate list before replacing the live collection. A pending or malformed response therefore cannot temporarily remove the active character owner while the user types. The focused cases demonstrate unchanged owner, message node and draft during pending JSON and unchanged valid collection after malformed results.
+
+This fixes the observed continuity failure through existing native owners. It adds no alias registry, recovered-reply workflow, automatic inference or change to the native draft opt-out. I have no new story objection in this delta. Implementation scope is satisfied again. Full 99-case source and actual v1.19.23 image acceptance remain pending; final release approval is still held.
+
+## Further bounded delta finding
+
+On the strengthened integrity guard recheck, I found that `acknowledgeRename` still calls `moveDraft` when the live old filename belongs to a different integrity. Its new unit changed the composer without dispatching input before the acknowledgement. An actual typed turn would already be stored under the live old key. The stale acknowledgement could then migrate that new incarnation's stored draft to the renamed original story, despite leaving the visible composer alone. I sent this ownership gap to the parent and control member. Source acceptance is held until migration also respects the guard and the persisted-input variant is checked.
+
+The persisted-input gap is corrected on source recheck. The full-identity mismatch guard now returns before either draft migration or composer capture when the current old/new path belongs to another incarnation. The revised unit dispatches input before the stale acknowledgement and requires the current old-key record to remain, with no renamed-key record. No bounded story objection remains. I approve freezing those bytes after the parent's unit/lint rerun; release acceptance still awaits final combined and actual-image results.

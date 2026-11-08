@@ -1,0 +1,41 @@
+{
+  "member": "control",
+  "phase": "implementation_review",
+  "decision": "accept",
+  "satisfied": true,
+  "sourceIdentity": "../rename-delta/runtime-sha256.json",
+  "sourceHashMatches": 19,
+  "fixture": "st-council-control-20261108 http://127.0.0.1:8037",
+  "releaseVerdict": "pending_final_source_and_actual_v1.19.23_image_proof",
+  "openFindings": [],
+  "resolvedFindings": [
+    "Optional diagnostics failure containment and explicit capture omissions",
+    "Immutable model and input/output/context budgets",
+    "Full owner, message, swipe and response-revision capture identity",
+    "Truthful summary editor scope and persistence feedback",
+    "Exact or unique parent and inverse ancestry",
+    "Rename capture readiness and native branch cache-await ownership",
+    "Group registration failure and exact saved-child retry",
+    "Narrow classic return and active Continue capture visibility",
+    "Native override retry paint and enlarged footer, peer-rendered recheck",
+    "Observed v1.19.22 draft loss during acknowledged rename",
+    "Staged and validated character collection publication",
+    "Old-filename transition retirement and stale-incarnation persisted-draft protection"
+  ],
+  "evidence": [
+    "render-checks.json",
+    "desktop-context.png",
+    "phone390-context.png",
+    "phone320-override-retry.png",
+    "../rename-delta/st-council-v23-final-units.log",
+    "../rename-delta/st-council-v23-delta-final.log",
+    "../quality/review.md"
+  ],
+  "limits": [
+    "Independent browser review used fresh synthetic source overlays, not the immutable image.",
+    "v1.19.22 actual-image attempt failed one identity case and remains held evidence.",
+    "Final combined v1.19.23 source and actual-image acceptance are pending.",
+    "No atomic file and character/group metadata transaction is claimed.",
+    "Physical phone lock/GPU, real microphone hardware, audible quality and paid-provider behavior remain unqualified."
+  ]
+}

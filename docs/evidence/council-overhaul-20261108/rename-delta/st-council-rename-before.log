@@ -1,0 +1,52 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep acknowledged rename preserves --output=/tmp/st-council-rename-before-results --reporter=line
+(node:2945025) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:2945059) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+(node:2945059) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+
+(node:2945059) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+
+
+[1/1] workspace.e2e.js:3427:1 › acknowledged rename preserves a draft typed while native character persistence is pending
+  1) workspace.e2e.js:3427:1 › acknowledged rename preserves a draft typed while native character persistence is pending
+
+    Error: expect(locator).toHaveValue(expected) failed
+
+    Locator:  locator('#send_textarea')
+    Expected: "A turn typed after the visible rename acknowledgement."
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveValue" with timeout 5000ms
+      - waiting for locator('#send_textarea')
+        9 × locator resolved to <textarea name="text" class="mdHotkeys" id="send_textarea" autocomplete="off" aria-label="Message" no_connection_text="Not connected to API!" aria-describedby="workspace-composer-hint" connected_text="Type a message, or /? for help" placeholder="Write your next turn with Seraphina…" data-i18n="[no_connection_text]Not connected to API!;[connected_text]Type a message, or /? for help"></textarea>
+          - unexpected value ""
+
+
+      2165 |     await page.locator('#send_textarea').fill('A turn typed after the visible rename acknowledgement.');
+      2166 |     release(); await page.evaluate(() => window.__pendingDraftRename);
+    > 2167 |     await expect(page.locator('#send_textarea')).toHaveValue('A turn typed after the visible rename acknowledgement.');
+           |                                                  ^
+      2168 |     await page.evaluate(async () => (await import('/script.js')).reloadCurrentChat());
+      2169 |     await expect(page.locator('#send_textarea')).toHaveValue('A turn typed after the visible rename acknowledgement.');
+      2170 | });
+        at /home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js:2167:50
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../../../../../tmp/st-council-rename-before-results/workspace.e2e.js-acknowled-fdb71-cter-persistence-is-pending/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../../../../../tmp/st-council-rename-before-results/workspace.e2e.js-acknowled-fdb71-cter-persistence-is-pending/error-context.md
+
+
+  1 failed
+    workspace.e2e.js:3427:1 › acknowledged rename preserves a draft typed while native character persistence is pending

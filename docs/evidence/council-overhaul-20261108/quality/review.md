@@ -1,6 +1,6 @@
 # Quality implementation review
 
-Decision: accept the implementation. I am satisfied with the agreed workflow and checked quality criteria. All observed implementation findings are resolved. Final release-image acceptance remains pending actual-image evidence.
+Decision: accept the replacement implementation delta. The original actual-image rename/draft defect is resolved in source with focused before/after coverage. No source objection remains. Final release satisfaction is pending the replacement image and complete regression evidence. See the actual-image hold and delta review below.
 
 ## Reviewed identity and method
 
@@ -30,3 +30,9 @@ The source-final unit log reports487 passing tests in26 suites. The newest focus
 Initial source/UI findings and their fixes are recorded in source-critique.md. No observed implementation finding remains open. The new long failure footer initially clipped Cancel at320x400 with native font1.5 and root20px. The parent shortened the status and affirmative label and bounded the scrollable footer. final-failure-enlarged.png shows both Apply and Cancel inside the viewport, each55px high. Clicking Cancel works. A separate fresh controlled500 followed by Apply succeeds, closes the editor and retains the user draft. The fetch wrappers were restored after each test. These rechecks close the paint and enlarged-footer objections. The plan's hierarchy, ordinary correction journey and native-owner choices now meet my expectations. Release acceptance still needs actual-image identity and regression evidence.
 
 Physical phone lock/GPU restoration, real microphone hardware, audible quality and paid-provider quality remain unqualified. My CSS viewport checks are not touch-device emulation. Failed review selectors and typing before readiness are documented and excluded from application findings.
+
+## Actual-image hold and replacement review
+
+The first actual v1.19.22 run passed92 of93 cases and failed identical-filename draft return. I read the failure in release-first-attempt/report.json. The original character's expected draft was empty after returning. The parent subsequently reproduced a real rename acknowledgement window: after the file rename succeeds but before the delayed character edit acknowledgement, the UI can reveal the new title while the draft owner still uses the previous identity. A user draft typed in that window is cleared later. This violates the agreed draft/rename contract. The release handoff is held, and the parent is preparing a native-owner fix and v1.19.23 replacement. This new evidence supersedes unconditional implementation satisfaction until the focused delta and actual replacement image are verified. The earlier Q1 paint correction remains verified.
+
+The final native rename/collection delta is reviewed in rename-delta-review.md. Its8 focused browser passes and494 unit passes directly cover the reported window, stale/foreign ownership, malformed candidates and prior sibling draft. Q2 is resolved in source. The held v1.19.22 image is not accepted; final v1.19.23 image evidence remains required.

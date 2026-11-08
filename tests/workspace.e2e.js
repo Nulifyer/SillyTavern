@@ -109,8 +109,10 @@ test('Scene overrides Apply Cancel Escape and failed save honor the native story
         await page.setViewportSize({ width, height: width === 320 ? 400 : 600 });
         await page.locator('#font_scale').evaluate((input, value) => {
             input.value = value; input.dispatchEvent(new Event('input', { bubbles: true }));
+            input.dispatchEvent(new MouseEvent('mouseup', { bubbles: true }));
             document.documentElement.style.fontSize = value === '1.5' ? '20px' : '';
         }, width === 320 ? '1.5' : '1');
+        await expect.poll(() => page.evaluate(() => getComputedStyle(document.documentElement).getPropertyValue('--fontScale').trim())).toBe(width === 320 ? '1.5' : '1');
         await page.mouse.move(1, 1);
         await expect(page.locator('dialog[open] .popup-button-ok')).toBeInViewport();
         await expect(page.locator('dialog[open] .popup-button-cancel')).toBeInViewport();
@@ -118,7 +120,7 @@ test('Scene overrides Apply Cancel Escape and failed save honor the native story
         await page.screenshot({ path: testInfo.outputPath(`override-failure-before-hover-${width}.png`) });
     }
     await page.setViewportSize({ width: 1280, height: 800 });
-    await page.locator('#font_scale').evaluate(input => { input.value = '1'; input.dispatchEvent(new Event('input', { bubbles: true })); document.documentElement.style.fontSize = ''; });
+    await page.locator('#font_scale').evaluate(input => { input.value = '1'; input.dispatchEvent(new Event('input', { bubbles: true })); input.dispatchEvent(new MouseEvent('mouseup', { bubbles: true })); document.documentElement.style.fontSize = ''; });
     expect(await page.evaluate(async () => (await import('/script.js')).chat_metadata.scenario)).toBe('A quiet library with a blue book.');
     await page.unroute('**/api/chats/save');
     await page.locator('dialog[open] .popup-button-cancel').click();
@@ -299,7 +301,12 @@ async function startStory(page, title) {
 async function renameCurrentStory(page, title) {
     await currentAction(page, 'rename-chat');
     await page.locator('dialog[open] .popup-input').fill(title);
+    await page.evaluate(async () => {
+        const script = await import('/script.js');
+        window.__workspaceRenameCompleted = new Promise(resolve => script.eventSource.once(script.event_types.CHAT_RENAMED, resolve));
+    });
     await page.locator('dialog[open] .popup-button-ok').click();
+    await page.evaluate(() => window.__workspaceRenameCompleted);
     await expect(page.locator('#workspace-chat-title')).toHaveText(title, { timeout: 20000 });
     await expect(page.locator('#send_textarea')).toBeVisible();
 }
@@ -366,6 +373,8 @@ test.beforeEach(async ({ page }) => {
 
 test.afterEach(async ({ page }, testInfo) => {
     if (page.isClosed()) return;
+    const draftTrace = await page.evaluate(() => window.__draftIdentityTrace || null);
+    if (draftTrace) fs.writeFileSync(testInfo.outputPath('draft-identity-trace.json'), JSON.stringify(draftTrace, null, 2));
     if (page.workspaceRecoveryRoutes) fs.writeFileSync(testInfo.outputPath('recovery-events.json'), JSON.stringify({ routes: page.workspaceRecoveryRoutes, browser: await page.evaluate(() => window.__recoveryTrace) }, null, 2));
     fs.writeFileSync(testInfo.outputPath('browser-diagnostics.json'), JSON.stringify(page.workspaceDiagnostics, null, 2));
     expect(page.workspaceDiagnostics.pageErrors).toEqual([]);
@@ -2146,7 +2155,135 @@ test('old global drafts never interrupt chat and blocked storage retains the cur
     await expect(page.locator('#browser-recovery')).toContainText('copy your text before reloading');
 });
 
+test('acknowledged rename preserves a draft typed while native character persistence is pending', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} before rename`;
+    const renamed = `${title} renamed`;
+    await startStory(page, title);
+    let requested, release;
+    const ready = new Promise(resolve => requested = resolve); const held = new Promise(resolve => release = resolve);
+    await page.route('**/api/characters/edit', async route => { requested(); await held; await route.continue(); });
+    await page.evaluate(async renamed => {
+        const script = await import('/script.js');
+        window.__pendingDraftRename = script.renameGroupOrCharacterChat({ characterId: script.this_chid, oldFileName: script.getCurrentChatId(), newFileName: renamed });
+    }, renamed);
+    await ready;
+    await page.evaluate(async () => { const script = await import('/script.js'); await script.eventSource.emit(script.event_types.SETTINGS_UPDATED); });
+    await expect(page.locator('#workspace-chat-title')).toHaveText(renamed);
+    await page.locator('#send_textarea').fill('A turn typed after the visible rename acknowledgement.');
+    release(); await page.evaluate(() => window.__pendingDraftRename);
+    await expect(page.locator('#send_textarea')).toHaveValue('A turn typed after the visible rename acknowledgement.');
+    await page.evaluate(async () => (await import('/script.js')).reloadCurrentChat());
+    await expect(page.locator('#send_textarea')).toHaveValue('A turn typed after the visible rename acknowledgement.');
+});
+
+test('file acknowledgement preserves the typed draft after a failed character metadata save', async ({ page }, testInfo) => {
+    const title = `Workspace e2e ${testInfo.testId}-${runId} metadata failure`;
+    await startStory(page, title);
+    let requested, release;
+    const ready = new Promise(resolve => requested = resolve); const held = new Promise(resolve => release = resolve);
+    await page.route('**/api/characters/edit', async route => { requested(); await held; await route.fulfill({ status: 503, json: { error: 'Synthetic metadata failure' } }); });
+    await page.evaluate(async renamed => {
+        const script = await import('/script.js');
+        window.__pendingMetadataRename = script.renameGroupOrCharacterChat({ characterId: script.this_chid, oldFileName: script.getCurrentChatId(), newFileName: renamed });
+    }, `${title} renamed`);
+    await ready;
+    await page.locator('#send_textarea').fill('Preserve my turn even if the definition write fails.');
+    release(); await page.evaluate(() => window.__pendingMetadataRename);
+    await expect(page.locator('#send_textarea')).toHaveValue('Preserve my turn even if the definition write fails.');
+    await expect(page.locator('#toast-container')).toContainText('Something went wrong');
+    await page.unroute('**/api/characters/edit');
+    await page.evaluate(async () => { const script = await import('/script.js'); await script.createOrEditCharacter(); await script.reloadCurrentChat(); });
+    await expect(page.locator('#send_textarea')).toHaveValue('Preserve my turn even if the definition write fails.');
+});
+
+for (const failedMetadata of [false, true]) test(`cast rename keeps the draft across ${failedMetadata ? 'failed' : 'delayed'} metadata persistence`, async ({ page }, testInfo) => {
+    const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
+    await startStory(page, `${prefix} character`);
+    const avatar = await page.evaluate(async () => (await import('/script.js')).characters[0].avatar);
+    const duplicate = await api(page, '/api/characters/duplicate', { avatar_url: avatar });
+    const companion = await api(page, '/api/characters/rename', { avatar_url: duplicate.path, new_name: `${prefix} companion` });
+    const group = await page.evaluate(async ({ name, members }) => { const script = await import('/script.js'); await script.getCharacters(); return (await import('/scripts/group-chats.js')).createGroupWithMembers(name, members); }, { name: `${prefix} cast`, members: [avatar, companion.avatar] });
+    await page.evaluate(async id => (await import('/scripts/group-chats.js')).openGroupById(id, { newChat: true }), group.id);
+    let requested, release;
+    const ready = new Promise(resolve => requested = resolve); const held = new Promise(resolve => release = resolve);
+    await page.route('**/api/groups/edit', async route => { requested(); await held; if (failedMetadata) await route.fulfill({ status: 503, json: { error: 'Synthetic cast metadata failure' } }); else await route.continue(); });
+    await page.evaluate(async ({ id, title }) => { const script = await import('/script.js'); window.__pendingCastRename = script.renameGroupOrCharacterChat({ groupId: id, oldFileName: script.getCurrentChatId(), newFileName: title }); }, { id: group.id, title: `${prefix} renamed cast` });
+    await ready;
+    await page.evaluate(async () => { const script = await import('/script.js'); await script.eventSource.emit(script.event_types.SETTINGS_UPDATED); });
+    await expect(page.locator('#workspace-chat-title')).toHaveText(`${prefix} renamed cast`);
+    await page.locator('#send_textarea').fill('A cast turn typed while rename metadata waits.');
+    release(); await page.evaluate(() => window.__pendingCastRename);
+    await expect(page.locator('#send_textarea')).toHaveValue('A cast turn typed while rename metadata waits.');
+    await page.unroute('**/api/groups/edit');
+    expect(await page.evaluate(async id => (await import('/scripts/group-chats.js')).editGroup(id, true, false), group.id)).toBe(true);
+    await page.evaluate(async () => (await import('/script.js')).reloadCurrentChat());
+    await expect(page.locator('#send_textarea')).toHaveValue('A cast turn typed while rename metadata waits.');
+});
+
+test('character discovery publishes a complete list and keeps the mounted draft while JSON is pending', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} collection`);
+    const before = await page.evaluate(async () => {
+        const script = await import('/script.js'); const nativeFetch = window.fetch;
+        window.__catalogMessage = document.querySelector('#chat .mes');
+        window.__catalogGate = new Promise(resolve => window.__releaseCatalog = resolve);
+        window.fetch = async (url, options) => {
+            const response = await nativeFetch(url, options);
+            if (!String(url).endsWith('/api/characters/all')) return response;
+            return { ok: true, json: async () => { window.__catalogJSONWaiting = true; await window.__catalogGate; return response.json(); } };
+        };
+        window.__restoreCatalogFetch = () => window.fetch = nativeFetch;
+        const state = { count: script.characters.length, owner: script.getCurrentChatIdentity() };
+        window.__pendingCatalog = script.getCharacters(); return state;
+    });
+    try {
+        await expect.poll(() => page.evaluate(() => window.__catalogJSONWaiting)).toBe(true);
+        expect(await page.evaluate(async () => (await import('/script.js')).characters.length)).toBe(before.count);
+        await page.evaluate(async () => { const script = await import('/script.js'); await script.eventSource.emit(script.event_types.SETTINGS_UPDATED); });
+        await expect(page.locator('#send_textarea')).toBeVisible();
+        await page.locator('#send_textarea').fill('A turn typed while the character response is being parsed.');
+        expect(await page.evaluate(async () => (await import('/script.js')).getCurrentChatIdentity())).toBe(before.owner);
+        expect(await page.evaluate(() => window.__catalogMessage === document.querySelector('#chat .mes'))).toBe(true);
+    } finally {
+        await page.evaluate(() => { window.__restoreCatalogFetch(); window.__releaseCatalog(); });
+        await page.evaluate(() => window.__pendingCatalog);
+    }
+    await expect(page.locator('#send_textarea')).toHaveValue('A turn typed while the character response is being parsed.');
+});
+
+test('malformed character collection never replaces the last valid owner or mounted conversation', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} malformed collection`);
+    const result = await page.evaluate(async () => {
+        const script = await import('/script.js'); const nativeFetch = window.fetch;
+        const before = script.getCurrentChatIdentity(); const cards = [...script.characters];
+        const failures = [];
+        try {
+            for (const data of [{ invalid: true }, [null], [{}], [{ avatar: null }], [{ avatar: '' }]]) {
+                window.fetch = async (url, options) => String(url).endsWith('/api/characters/all') ? { ok: true, json: async () => data } : nativeFetch(url, options);
+                try { await script.getCharacters(); } catch (error) { failures.push(error.message); }
+                if (script.getCurrentChatIdentity() !== before || cards.some((card, index) => script.characters[index] !== card)) throw new Error('A malformed list replaced the valid owner.');
+            }
+        } finally { window.fetch = nativeFetch; }
+        return failures;
+    });
+    expect(result).toHaveLength(5); await expect(page.locator('#send_textarea')).toBeVisible();
+});
+
 test('identical story filenames on different characters never share a recovered draft', async ({ page }, testInfo) => {
+    await page.evaluate(async () => {
+        const script = await import('/script.js');
+        window.__draftIdentityTrace = [];
+        const mark = (phase, extra = {}) => window.__draftIdentityTrace.push({ phase, owner: script.getCurrentChatIdentity(), text: document.getElementById('send_textarea').value, ...extra });
+        window.__markDraftIdentity = mark;
+        for (const method of ['setItem', 'removeItem']) {
+            const original = Storage.prototype[method];
+            Storage.prototype[method] = function (key, ...args) {
+                if (key.startsWith('st-recovery:draft:')) mark(method, { key, value: args[0] });
+                return original.call(this, key, ...args);
+            };
+        }
+        script.eventSource.on(script.event_types.CHAT_CHANGED, () => mark('CHAT_CHANGED'));
+        document.getElementById('send_textarea').addEventListener('input', () => mark('input'), { capture: true });
+    });
     const prefix = `Workspace e2e ${testInfo.testId}-${runId}`;
     const title = `${prefix} same filename`;
     await startStory(page, title);
@@ -2157,7 +2294,9 @@ test('identical story filenames on different characters never share a recovered 
     await page.evaluate(async avatar => {
         const script = await import('/script.js');
         await script.getCharacters();
-        await script.selectCharacterById(script.characters.findIndex(character => character.avatar === avatar), { newChat: true });
+        const selected = await script.selectCharacterById(script.characters.findIndex(character => character.avatar === avatar), { newChat: true });
+        window.__markDraftIdentity('selected-companion', { selected });
+        if (!selected) throw new Error('Native companion selection was refused; draft ownership was not changed.');
     }, companion.avatar);
     await returnToChat(page);
     await renameCurrentStory(page, title);
@@ -2165,8 +2304,11 @@ test('identical story filenames on different characters never share a recovered 
     await page.locator('#send_textarea').fill('Only the companion gets this draft.');
     await page.evaluate(async ({ avatar, title }) => {
         const script = await import('/script.js');
-        await script.selectCharacterById(script.characters.findIndex(character => character.avatar === avatar));
-        await script.openCharacterChat(title);
+        const selected = await script.selectCharacterById(script.characters.findIndex(character => character.avatar === avatar));
+        window.__markDraftIdentity('selected-original', { selected });
+        if (!selected) throw new Error('Native original selection was refused; the test cannot open it through a different owner.');
+        const opened = await script.openCharacterChat(title);
+        window.__markDraftIdentity('opened-original', { opened });
     }, { avatar: original, title });
     await expect(page.locator('#send_textarea')).toHaveValue('Only the original character gets this draft.');
 });

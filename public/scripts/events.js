@@ -55,6 +55,7 @@ export const event_types = {
     CHAT_DELETED: 'chat_deleted',
     CHAT_CREATED: 'chat_created',
     CHAT_RENAMED: 'chat_renamed',
+    CHAT_RENAME_ACKNOWLEDGED: 'chat_rename_acknowledged',
     GROUP_CHAT_DELETED: 'group_chat_deleted',
     GROUP_CHAT_CREATED: 'group_chat_created',
     GENERATE_BEFORE_COMBINE_PROMPTS: 'generate_before_combine_prompts',

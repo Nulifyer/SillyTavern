@@ -1316,21 +1316,25 @@ export async function getCharacters() {
         body: JSON.stringify({}),
     });
     if (response.ok) {
-        const previousAvatar = this_chid !== undefined ? characters[this_chid]?.avatar : null;
-        characters.splice(0, characters.length);
+        // Parse and normalize a complete candidate before publishing the shared list.
+        // Other requests and user input can run while response.json() is pending.
         const getData = await response.json();
+        if (!Array.isArray(getData) || getData.some(card => !card || typeof card !== 'object' || Array.isArray(card) || typeof card.avatar !== 'string' || !card.avatar.trim())) {
+            throw new Error('The server returned an invalid character list. Existing characters have not been replaced.');
+        }
         for (let i = 0; i < getData.length; i++) {
-            characters[i] = getData[i];
-            characters[i].name = DOMPurify.sanitize(characters[i].name);
+            getData[i].name = DOMPurify.sanitize(getData[i].name);
 
             // For dropped-in cards
-            if (!characters[i].chat) {
-                characters[i].chat = `${characters[i].name} - ${humanizedDateTime()}`;
+            if (!getData[i].chat) {
+                getData[i].chat = `${getData[i].name} - ${humanizedDateTime()}`;
             }
 
-            characters[i].chat = String(characters[i].chat);
+            getData[i].chat = String(getData[i].chat);
         }
 
+        const previousAvatar = this_chid !== undefined ? characters[this_chid]?.avatar : null;
+        characters.splice(0, characters.length, ...getData);
         if (previousAvatar) {
             const newCharacterId = characters.findIndex(x => x.avatar === previousAvatar);
             if (newCharacterId >= 0) {
@@ -10762,7 +10766,8 @@ export async function doNewChat({ deleteCurrentChat = false } = {}) {
  * @returns {Promise<string|undefined>} The accepted title, or undefined if renaming failed or was cancelled.
  */
 export async function renameGroupOrCharacterChat({ characterId, groupId, oldFileName, newFileName, loader: showLoader }) {
-    const currentChatId = getCurrentChatId();
+    const accountHandle = getCurrentUserHandle();
+    const activeIdentity = getCurrentChatIdentity();
     const body = {
         is_group: !!groupId,
         avatar_url: characters[characterId]?.avatar,
@@ -10807,19 +10812,27 @@ export async function renameGroupOrCharacterChat({ characterId, groupId, oldFile
             newFileName = data.sanitizedFileName;
         }
 
+        if (accountHandle !== getCurrentUserHandle()) return newFileName;
+        const eventData = { accountHandle, activeIdentity, avatarId: body.avatar_url, groupId, oldFileName: body.original_file, newFileName: `${newFileName}.jsonl` };
+        // File acknowledgement precedes the slower definition write and transcript reload.
+        // Draft ownership must move before a refreshed header can accept new input.
+        await eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, eventData);
+        eventData.fileAcknowledged = true;
+
         if (groupId) {
             await renameGroupChat(groupId, oldFileName, newFileName);
-        } else if (characterId !== undefined && String(characterId) === String(this_chid) && characters[characterId]?.chat === oldFileName) {
-            characters[characterId].chat = newFileName;
-            $('#selected_chat_pole').val(characters[characterId].chat);
+        } else if (getCurrentChatIdentity() === activeIdentity && characterId !== undefined && characters[this_chid]?.avatar === body.avatar_url && characters[this_chid]?.chat === oldFileName) {
+            characters[this_chid].chat = newFileName;
+            $('#selected_chat_pole').val(newFileName);
             await createOrEditCharacter();
         }
 
-        if (currentChatId) {
-            await reloadCurrentChat();
-        }
-
-        const eventData = { avatarId: body.avatar_url, groupId, oldFileName: body.original_file, newFileName: `${newFileName}.jsonl` };
+        const expectedOwner = JSON.parse(activeIdentity);
+        expectedOwner[3] = newFileName;
+        const renamedActiveStory = getCurrentChatIdentity() === JSON.stringify(expectedOwner) && getCurrentChatId() === newFileName && (groupId
+            ? String(selected_group) === String(groupId)
+            : !selected_group && characters[this_chid]?.avatar === body.avatar_url);
+        if (renamedActiveStory) await reloadCurrentChat();
         await eventSource.emit(event_types.CHAT_RENAMED, eventData);
         return newFileName;
     } catch {

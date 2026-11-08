@@ -8,6 +8,7 @@ const events = () => {
     const handlers = new Map();
     return {
         on(name, callback) { handlers.set(name, [...handlers.get(name) || [], callback]); },
+        makeFirst(name, callback) { handlers.set(name, [callback, ...handlers.get(name) || []]); },
         emit(name, ...args) { for (const callback of handlers.get(name) || []) callback(...args); },
     };
 };
@@ -49,7 +50,7 @@ class Node extends EventTarget {
     removeAttribute() {}
 }
 
-async function recoveryFixture() {
+async function recoveryFixture({ group = null } = {}) {
     const input = new Node();
     const nodes = [];
     const document = new Node();
@@ -58,13 +59,14 @@ async function recoveryFixture() {
     document.createElement = () => { const node = new Node(); nodes.push(node); return node; };
     const native = {
         captureChatViewport: () => null, characters: [{ avatar: 'old.png' }], eventSource: events(), event_types,
-        getCurrentChatId: () => 'active', isGenerating: () => false, main_api: 'openai', online_status: 'Valid',
+        getCurrentChatId: () => native.fileName || 'active', isGenerating: () => false, main_api: 'openai', online_status: 'Valid',
+        getCurrentChatIdentity: () => native.owner || 'original-owner',
         refreshChatViewport: async () => {}, refreshServerConnection: async () => true, setOnlineStatus: jest.fn(), this_chid: 0,
     };
     const localStorage = storage();
     const refreshChatCompletionStatus = jest.fn().mockResolvedValue(null);
     const module = await loadModule('browser-recovery.js', {
-        '../script.js': native, './group-chats.js': { selected_group: null },
+        '../script.js': native, './group-chats.js': { selected_group: group },
         './openai.js': { getChatCompletionModel: () => 'model', oai_settings: { chat_completion_source: 'claude' }, refreshChatCompletionStatus },
         './power-user.js': { power_user: { restore_user_input: true } }, './user.js': { getCurrentUserHandle: () => 'current-user' },
     }, { document, window: new Node(), localStorage });
@@ -74,6 +76,95 @@ async function recoveryFixture() {
 
 const draftId = (avatar, story, user = 'current-user', kind = 'character') => `st-recovery:draft:${JSON.stringify([user, kind, avatar, story])}`;
 const saveDraft = (store, key, text) => store.setItem(key, JSON.stringify({ text }));
+
+describe('acknowledged story rename draft ownership', () => {
+    const ack = (overrides = {}) => ({ accountHandle: 'current-user', avatarId: 'old.png', oldFileName: 'active.jsonl', newFileName: 'renamed.jsonl', ...overrides });
+    test('reopening the old filename retires acknowledged permission and keeps the renamed draft separate', async () => {
+        const { input, native, localStorage } = await recoveryFixture();
+        input.value = 'Original turn'; input.dispatchEvent(new Event('input'));
+        native.eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, ack());
+        input.value = 'Renamed story turn'; input.dispatchEvent(new Event('input'));
+        native.eventSource.emit(event_types.CHAT_CHANGED);
+        expect(input.value).toBe('');
+        input.value = 'A distinct story under the old filename'; input.dispatchEvent(new Event('input'));
+        expect(localStorage.getItem(draftId('old.png', 'renamed'))).toContain('Renamed story turn');
+        expect(localStorage.getItem(draftId('old.png', 'active'))).toContain('A distinct story under the old filename');
+    });
+    test('a different incarnation never lends its composer to an earlier rename acknowledgement', async () => {
+        const { input, native, localStorage } = await recoveryFixture();
+        input.value = 'Persisted original turn'; input.dispatchEvent(new Event('input'));
+        native.owner = 'different-integrity'; input.value = 'New incarnation typed turn'; input.dispatchEvent(new Event('input'));
+        native.eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, ack({ activeIdentity: 'original-owner' }));
+        expect(input.value).toBe('New incarnation typed turn');
+        expect(localStorage.getItem(draftId('old.png', 'active'))).toContain('New incarnation typed turn');
+        expect(localStorage.getItem(draftId('old.png', 'renamed'))).toBeNull();
+        input.value = 'Still belongs to the old filename'; input.dispatchEvent(new Event('input'));
+        expect(localStorage.getItem(draftId('old.png', 'active'))).toContain('Still belongs to the old filename');
+    });
+    test('preserves input before and after visible identity changes, then retires the old-name permission', async () => {
+        const { input, native, localStorage } = await recoveryFixture();
+        input.value = 'Before rename'; input.dispatchEvent(new Event('input'));
+        native.eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, ack());
+        input.value = 'Typed while metadata waits'; input.dispatchEvent(new Event('input'));
+        expect(localStorage.getItem(draftId('old.png', 'renamed'))).toContain('Typed while metadata waits');
+        native.fileName = 'renamed';
+        input.value = 'Typed under the new visible name'; input.dispatchEvent(new Event('input'));
+        native.eventSource.emit(event_types.CHAT_CHANGED);
+        expect(input.value).toBe('Typed under the new visible name');
+        native.eventSource.emit(event_types.CHAT_RENAMED, { ...ack(), fileAcknowledged: true });
+        native.fileName = 'active'; input.value = 'Stale old owner'; input.dispatchEvent(new Event('input'));
+        expect(localStorage.getItem(draftId('old.png', 'renamed'))).toContain('Typed under the new visible name');
+        expect(localStorage.getItem(draftId('old.png', 'active'))).toBeNull();
+    });
+    test('an unrelated story retires the transition even when later metadata persistence failed', async () => {
+        const { input, native, localStorage } = await recoveryFixture({ group: 'cast-1' });
+        input.value = 'Cast draft'; input.dispatchEvent(new Event('input'));
+        native.eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, ack({ groupId: 'cast-1' }));
+        input.value = 'Keep despite metadata failure'; input.dispatchEvent(new Event('input'));
+        native.fileName = 'different'; native.eventSource.emit(event_types.CHAT_CHANGED);
+        input.value = 'Other story'; input.dispatchEvent(new Event('input'));
+        native.fileName = 'active'; input.value = 'Delayed stale input'; input.dispatchEvent(new Event('input'));
+        expect(localStorage.getItem(draftId('cast-1', 'renamed', 'current-user', 'group'))).toContain('Keep despite metadata failure');
+        expect(localStorage.getItem(draftId('cast-1', 'active', 'current-user', 'group'))).toBeNull();
+    });
+    test('another account or entity never captures this composer', async () => {
+        const { input, native, localStorage } = await recoveryFixture();
+        input.value = 'Current composer'; input.dispatchEvent(new Event('input'));
+        saveDraft(localStorage, draftId('other.png', 'active'), 'Inactive saved draft');
+        native.eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, ack({ accountHandle: 'foreign-user' }));
+        native.eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, ack({ avatarId: 'other.png' }));
+        expect(input.value).toBe('Current composer');
+        expect(localStorage.getItem(draftId('old.png', 'active'))).toContain('Current composer');
+        expect(localStorage.getItem(draftId('other.png', 'renamed'))).toContain('Inactive saved draft');
+        expect(localStorage.getItem(draftId('old.png', 'renamed'))).toBeNull();
+    });
+    test('destination conflict preserves both records and completion cannot resurrect deliberately cleared text', async () => {
+        const { input, native, localStorage } = await recoveryFixture();
+        input.value = 'Original draft'; input.dispatchEvent(new Event('input'));
+        saveDraft(localStorage, draftId('old.png', 'renamed'), 'Destination draft');
+        native.eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, ack());
+        expect(input.value).toBe('Destination draft');
+        expect(localStorage.getItem(draftId('old.png', 'active'))).toContain('Original draft');
+        native.fileName = 'renamed';
+        input.value = ''; input.dispatchEvent(new Event('input'));
+        native.eventSource.emit(event_types.CHAT_CHANGED);
+        native.eventSource.emit(event_types.CHAT_RENAMED, { ...ack(), fileAcknowledged: true });
+        expect(input.value).toBe(''); expect(localStorage.getItem(draftId('old.png', 'renamed'))).toBeNull();
+        expect(localStorage.getItem(draftId('old.png', 'active'))).toContain('Original draft');
+    });
+    test('a newer acknowledged rename supersedes only the active transition', async () => {
+        const { input, native, localStorage } = await recoveryFixture();
+        input.value = 'First draft'; input.dispatchEvent(new Event('input'));
+        native.eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, ack());
+        native.fileName = 'renamed'; native.eventSource.emit(event_types.CHAT_CHANGED);
+        const second = ack({ oldFileName: 'renamed.jsonl', newFileName: 'final.jsonl' });
+        native.eventSource.emit(event_types.CHAT_RENAME_ACKNOWLEDGED, second);
+        native.eventSource.emit(event_types.CHAT_RENAMED, { ...ack(), fileAcknowledged: true });
+        input.value = 'Latest draft'; input.dispatchEvent(new Event('input'));
+        expect(localStorage.getItem(draftId('old.png', 'final'))).toContain('Latest draft');
+        expect(localStorage.getItem(draftId('old.png', 'renamed'))).toBeNull();
+    });
+});
 
 describe('character rename state ownership', () => {
     test('migrates active and inactive drafts for only this user and character', async () => {

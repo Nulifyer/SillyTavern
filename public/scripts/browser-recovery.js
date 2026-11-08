@@ -1,4 +1,4 @@
-import { captureChatViewport, characters, eventSource, event_types, getCurrentChatId, isGenerating, main_api, online_status, refreshChatViewport, refreshServerConnection, setOnlineStatus, this_chid } from '../script.js';
+import { captureChatViewport, characters, eventSource, event_types, getCurrentChatId, getCurrentChatIdentity, isGenerating, main_api, online_status, refreshChatViewport, refreshServerConnection, setOnlineStatus, this_chid } from '../script.js';
 import { selected_group } from './group-chats.js';
 import { getChatCompletionModel, oai_settings, refreshChatCompletionStatus } from './openai.js';
 import { power_user } from './power-user.js';
@@ -44,11 +44,17 @@ class BrowserRecovery {
         this.input.addEventListener('input', () => this.saveDraft());
         eventSource.on(event_types.CHAT_CHANGED, () => this.changeChat());
         eventSource.on(event_types.CHARACTER_RENAMED, (oldAvatar, newAvatar) => this.renameCharacter(oldAvatar, newAvatar));
-        eventSource.on(event_types.CHAT_RENAMED, ({ avatarId, groupId, oldFileName, newFileName }) => {
-            const oldKey = identity({ group: groupId || '', avatar: avatarId, fileName: oldFileName.replace(/\.jsonl$/, '') });
-            const newKey = identity({ group: groupId || '', avatar: avatarId, fileName: newFileName.replace(/\.jsonl$/, '') });
-            this.moveDraft(oldKey, newKey);
-            if (this.key === newKey) this.changeChat(true);
+        eventSource.makeFirst(event_types.CHAT_RENAME_ACKNOWLEDGED, data => this.acknowledgeRename(data));
+        eventSource.on(event_types.CHAT_RENAMED, data => {
+            if (data.accountHandle && data.accountHandle !== getCurrentUserHandle()) return;
+            const { oldKey, newKey } = this.renameKeys(data);
+            if (this.renameTransition?.oldKey === oldKey && this.renameTransition?.newKey === newKey) this.renameTransition = null;
+            // Older extensions can still emit the established completion event.
+            // A native operation already moved its draft at file acknowledgement.
+            if (!data.fileAcknowledged) {
+                this.moveDraft(oldKey, newKey);
+                if (this.key === newKey) this.changeChat(true);
+            }
         });
         eventSource.on(event_types.APP_READY, () => { this.changeChat(true); if (document.wasDiscarded) void this.foreground(); });
         eventSource.on(event_types.GENERATION_STARTED, (_type, _options, dryRun) => {
@@ -116,16 +122,46 @@ class BrowserRecovery {
     }
 
     moveDraft(oldKey, newKey) {
-        if (oldKey === newKey) return;
+        if (oldKey === newKey) return true;
         const record = this.readDraft(oldKey);
-        if (!record) return;
+        if (!record) return true;
         const destination = this.readDraft(newKey);
         if (destination && destination.text !== record.text) {
             this.show('A draft already exists for the renamed story. That draft is preserved; the earlier draft remains in browser storage under its previous name.');
-            return;
+            return false;
         }
         // Keep the source if browser storage cannot persist its new identity.
-        if (this.writeDraft(newKey, record)) this.writeDraft(oldKey, null);
+        if (!this.writeDraft(newKey, record)) return false;
+        this.writeDraft(oldKey, null);
+        return true;
+    }
+
+    renameKeys({ avatarId, groupId, oldFileName, newFileName }) {
+        return {
+            oldKey: identity({ group: groupId || '', avatar: avatarId, fileName: oldFileName.replace(/\.jsonl$/, '') }),
+            newKey: identity({ group: groupId || '', avatar: avatarId, fileName: newFileName.replace(/\.jsonl$/, '') }),
+        };
+    }
+
+    acknowledgeRename(data) {
+        if (data.accountHandle && data.accountHandle !== getCurrentUserHandle()) return;
+        const { oldKey, newKey } = this.renameKeys(data);
+        const live = identity();
+        // A newly loaded incarnation can already have written its own draft at this path.
+        // An older acknowledgement cannot migrate that live owner's stored record.
+        if (data.activeIdentity && data.activeIdentity !== getCurrentChatIdentity() && (live === oldKey || live === newKey)) return;
+        const active = this.key === oldKey && (live === oldKey || live === newKey) && (!data.activeIdentity || data.activeIdentity === getCurrentChatIdentity());
+        if (active && power_user.restore_user_input) this.writeDraft(oldKey, this.input.value ? { text: this.input.value } : null);
+        const moved = this.moveDraft(oldKey, newKey);
+        if (!active) return;
+        this.key = newKey;
+        this.viewport = null;
+        // One acknowledged rename, never an alias table or a guessed filename match.
+        this.renameTransition = { oldKey, newKey };
+        if (!moved && power_user.restore_user_input) {
+            this.input.value = this.readDraft(newKey)?.text || '';
+            this.input.dispatchEvent(new Event('input', { bubbles: true }));
+        }
     }
 
     renameCharacter(oldAvatar, newAvatar) {
@@ -148,12 +184,17 @@ class BrowserRecovery {
     }
 
     saveDraft() {
-        if (!power_user.restore_user_input || this.key !== identity()) return;
+        const live = identity();
+        const acknowledgedOldName = this.renameTransition?.newKey === this.key && this.renameTransition?.oldKey === live;
+        if (!power_user.restore_user_input || (this.key !== live && !acknowledgedOldName)) return;
         this.writeDraft(this.key, this.input.value ? { text: this.input.value } : null);
     }
 
     changeChat(initial = false) {
         const next = identity();
+        if (this.renameTransition && next !== this.renameTransition.newKey) {
+            this.renameTransition = null;
+        }
         if (!initial && next === this.key) return;
         if (next !== this.key) {
             this.viewport = null;

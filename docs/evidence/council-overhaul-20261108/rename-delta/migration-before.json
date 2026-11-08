@@ -1,0 +1,11 @@
+{
+  "context": 32768,
+  "draft": "Synthetic same-story reload draft",
+  "model": "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL",
+  "owner": "[\"default-user\",\"character\",\"default_Seraphina.png\",\"Seraphina - 2026-11-08@14h39m28s807ms\",\"591ef03a-8ecf-4185-96c7-0c8944a6b60e\"]",
+  "premise": "A quiet library with a blue book and red teapot.",
+  "provider": "custom",
+  "temperature": 0.83,
+  "url": "https://juiced.swarm.nulteck.com/v1",
+  "version": "1.19.22"
+}

@@ -1,11 +1,11 @@
 {
   "member": "quality",
-  "phase": "implementation_review",
+  "phase": "replacement_source_review",
   "decision": "accept",
   "satisfied": true,
   "sourceIdentity": "../source-final/runtime-sha256.json",
   "fixture": "st-council-quality-20261108 http://localhost:8038",
-  "releaseVerdict": "pending_actual_image_proof",
+  "releaseVerdict": "pending_actual_v1.19.23_image_full99",
   "findings": [
     {
       "id": "Q1",
@@ -22,6 +22,22 @@
       ],
       "cause": "unknown; filter/compositing is an inference",
       "resolution": "Scoped noncomposited popup footer style; fresh controlled500 screenshots before hover at448x600 and320x400 enlarged text show visible Apply/Cancel, Cancel and retry both exercised."
+    },
+    {
+      "id": "Q2",
+      "severity": "major",
+      "status": "resolved_in_source_pending_release",
+      "trigger": "File rename acknowledged while character edit acknowledgement is delayed; type a draft after new title appears.",
+      "observed": "Draft owner has not transitioned and the newly typed draft is cleared after rename completion.",
+      "acceptanceImpact": "Violates rename/draft preservation contract.",
+      "evidence": [
+        "../release-first-attempt/report.json",
+        "Parent deterministic reproduction communicated through native council message",
+        "rename-delta-review.md",
+        "../rename-delta/st-council-v23-delta-final.log",
+        "../rename-delta/st-council-v23-final-units.log"
+      ],
+      "resolution": "Native file acknowledgement and bounded draft transition, active integrity guard, atomic candidate publication and avatar validation;8 relevant browser cases and494 units pass."
     }
   ],
   "limits": [
