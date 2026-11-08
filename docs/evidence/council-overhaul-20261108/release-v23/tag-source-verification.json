@@ -1,0 +1,26 @@
+{
+  "tag": "v1.19.23",
+  "source": "640283d97ec54996b6b91d0bff88ff7c79213cd4",
+  "matches": {
+    "package.json": true,
+    "package-lock.json": true,
+    "public/css/workspace.css": true,
+    "public/script.js": true,
+    "public/scripts/bookmarks.js": true,
+    "public/scripts/events.js": true,
+    "public/scripts/extensions/memory/index.js": true,
+    "public/scripts/group-chats.js": true,
+    "public/scripts/openai.js": true,
+    "public/scripts/templates/scenarioOverride.html": true,
+    "public/scripts/workspace-chats.js": true,
+    "public/scripts/workspace-settings.js": true,
+    "public/scripts/workspace-views.js": true,
+    "public/scripts/workspace.js": true,
+    "public/scripts/world-info.js": true,
+    "public/scripts/itemized-captures.js": true,
+    "public/scripts/workspace-scene.js": true,
+    "src/endpoints/stable-diffusion.js": true,
+    "public/scripts/browser-recovery.js": true,
+    "public/scripts/keyboard.js": true
+  }
+}

@@ -1,93 +1,58 @@
-# Control implementation review
+# Final control review
 
-I accept the implementation for the agreed control and integration scope. I am satisfied with its native ownership, correction behavior and diagnostic honesty. Final release acceptance is held until the actual published image and combined regression evidence are available. This is not approval of a production deployment.
+Accept v1.19.23. I am satisfied with the agreed control and integration scope. No control objection remains open. This accepts the verified release and does not authorize a production deployment.
 
-## Reviewed identity and evidence
+## Finished identity
 
-The frozen source is v1.19.22, identified by `../source-final/runtime-sha256.json`. I recomputed its 18 listed file hashes from the repository and all 18 matched. My assigned browser fixture was `st-council-control-20261108` at `http://127.0.0.1:8037`, with fresh synthetic volumes and source overlays. I used only my own tab, then closed it. These renders are source evidence, not published-image evidence.
+The release source is `640283d97ec54996b6b91d0bff88ff7c79213cd4`. The immutable image index is `sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72`. I compared the 20-file source manifest, current repository bytes and the parent-recorded image hashes. All 20 match. `../release-v23/tag-source-verification.json` also records 20 matches to the release source.
 
-Own exercised results are in `render-checks.json`. Final captures are `desktop-context.png` and `phone390-context.png`. The 320 by 400 editor failure and retry capture is `phone320-override-retry.png`. Earlier screenshots and source hashes remain marked initial.
+I read the registry, architecture labels and workflow artifacts. Workflow `42524646047` completed successfully, including native amd64 and arm64 startup gates. Both image architectures identify the same source and v1.19.23. The actual acceptance container is `st-council-v11923-release-20261108` at `http://127.0.0.1:8041`, with five fresh synthetic volumes and no source overlays. Its runtime artifact records v1.19.23, a passing native heartbeat, stock image handler preservation and Juiced HTTPS status 200.
 
-I inspected the parent's `source-final/st-council-newest.log`, `st-council-final-contract.log`, `st-council-final-focus.log`, unit output and their corresponding test cases. The seven-case affected run covers real cast stop/network behavior and cast creation alongside the new details contracts. The five-case contract run covers override failure and retry, both native capture modes, cast registration retry and image writer preservation. All passed in their recorded runs. The unit log reports 487 tests in 26 suites. Root lint and actionlint report no errors; test lint reports zero errors and 53 warnings. These counts establish those runs, not every acceptance path or the forthcoming combined suite.
+## Evidence and review boundaries
 
-## Satisfied outcomes
+My independent browser work used only the assigned fresh synthetic source fixture `st-council-control-20261108` at port 8037 and my own tab. I exercised native configuration, generated captures, correction, persistence, failure and retry, alternatives, Continue, rename, narrow layouts and classic restoration. `render-checks.json`, `desktop-context.png`, `phone390-context.png` and `phone320-override-retry.png` record that work. I closed my tab and restored every temporary fetch interception.
 
-The reader can inspect the exact story's current premise, native summary and attached lore, then open the existing correction owners. Scope copy distinguishes story summary text from shared automation and prompt settings. A native summary edit acknowledged persistence and survived full reload into the same story. No new summary engine, model registry or prompt assembler was introduced.
+The final image runs and migration were performed by the parent. I inspected their artifacts and the affected test implementations. I also inspected the parent's actual-image desktop and 448px chat/Scene details screenshots, plus the 320px enlarged override-failure capture. That is review of recorded actual-image renders, not another independent interaction run by me.
 
-Scenario Escape preserved the previous metadata. Apply persisted the intended story premise without changing its shared character scenario. A synthetic 503 left the editor and pending text available, rolled committed metadata back and permitted successful Apply retry. The final source retains that save gate and replaces the temporary dialog-wide inert state with busy and field state, preserving readable failure controls.
+| Evidence | Result |
+| --- | --- |
+| `../source-v23-final/summary.json` | 99 source browser cases passed in 691.693 seconds; zero skips, unexpected failures, flaky results or uncaught page errors. |
+| `../release-v23/summary.json` and `report.json` | 99 actual-image cases passed in 759.512 seconds, including both named live Juiced cases; zero skips, unexpected failures, flaky results or uncaught page errors. |
+| `../source-v23-final/st-council-v23-keyboard-units.log` | 501 unit tests passed in 27 suites. |
+| Final lint artifacts | Root lint and actionlint passed; test lint has zero errors and 53 warnings. |
+| `../release-v23/migration-after.json` | Synthetic v1.19.22 to v1.19.23 migration preserved all eight checked fields: full owner, premise, draft, URL, exact model, context 32768, temperature 0.83 and provider. |
+| `../release-v23/manual-review.json` | Existing synthetic profile stayed disconnected because auto-connect was off; configuration and draft persisted without inference or resets. |
 
-Real native requests through the local deterministic provider produced captures with exact model `council-neutral-fixture`, provider, preset and readable configured/input/output budgets. Changing today's model and budgets did not rewrite those recorded values. Native Continue produced a new matching revision. A new native swipe had its own capture, and returning to the previous swipe restored the previous capture. Native rename and reload retained the association. Greeting and missing capture states were explicitly unavailable rather than borrowed from the legacy filename cache.
+The actual-image summary retains 54 console-error records and 85 failed-request records, including 81 aborted requests. I do not relabel those diagnostics as zero errors. The source summary retains its own diagnostics. Both reports show zero uncaught page errors and all expected cases passing.
 
-Capture projection excludes complete endpoint/configuration objects, authorization/header settings, arbitrary additional body fields, media bodies and tool payloads. Synthetic header and body sentinels sent through the actual native request did not appear in the stored capture. Text-safe rendering and explicit captured/unavailable stage labels preserve the visibility boundary at the SillyTavern client request. The view makes no claim about a final provider request, model template, complete recall or additive token accounting.
+## Satisfied control outcomes
 
-An actual held synthetic Continue changed the current reply while generation remained active. After the fix, that changing revision showed in progress and hid the stale capture. An older unchanged reply remained inspectable and branch mutation was disabled. Completion saved a new matching capture. All temporary fetch interception was restored.
+Scene details connects current premise, native summary, attached lore, correction destinations, selected reply evidence and exact related stories. It remains optional. Immediate Start, ordinary character chat, optional media and native advanced settings remain available.
 
-Desktop and narrow views retained readable identity and a return path. Native message nodes, draft text and draft selection survived details inspection. At 320 by 400 pixels, the corrected classic return control passed hit testing and a real click. Native summary and model controls remained the same unique nodes through classic restoration and return. The new phone reply picker measures 44 pixels high.
+Native summary selection and editing retain one owner. Scope copy distinguishes story summary text from shared automation, prompts and injection settings. My native summary edit acknowledged persistence and survived reload. Story overrides use a real native Apply/Cancel operation. Escape leaves metadata unchanged. Failed persistence retains pending text, rolls committed metadata back and permits retry. The final image's enlarged failure screenshot visibly paints both Apply and Cancel.
 
-Branch and checkpoint mutations remain in their native owners. Source now rechecks owner identity after the legacy cache await. Related-story resolution requires a recorded exact file or unique integrity match in both directions. The cast regression exercises registration failure after a real saved child, verifies no phantom membership, then retries the same selected alternative and confirms one registered child, its scenario and its original parent text. This closes my group retry objection. Exact-snapshot reuse removes only the new child integrity for comparison and never forces overwrite or deletes an unrelated file.
+Captured context uses an allowlisted native client stage, immutable exact model/provider/preset/budgets and account/entity/file/message/swipe/revision identity. Today's settings do not rewrite recorded values. My actual native request check excluded synthetic header and arbitrary-body sentinels from stored captures. Native Continue and response alternatives retained separate matching references. A changing active reply shows in progress while older unchanged replies remain inspectable. Legacy, edited, copied, missing and evicted captures stay unavailable. The view does not claim final provider/template visibility, perfect recall or additive token accounting.
 
-## Findings resolved
+Native branch/checkpoint, transcript, provider, prompt and media owners remain intact. Parent and inverse ancestry use exact or unique resolution. Failed group registration can retry only an exactly matching saved child without force overwrite or unrelated deletion. The actual native cast regression verifies selected-alternative preservation, no phantom membership and successful retry. Native cache-await operations recheck owner identity.
 
-The parent addressed optional capture failure containment, silent truncation labels, immutable budgets, misleading summary scope copy, ambiguous inverse ancestry and rename readiness. The narrow classic return and changing-Continue capture findings are also closed after affected source and interaction rechecks. The group registration retry finding is closed by source inspection and the actual native cast failure-to-retry regression. No implementation blocker or unresolved control defect remains from this review.
+The verified rename correction addresses the reproduced v1.19.22 loss. File acknowledgement precedes slower metadata persistence, with one bounded BrowserRecovery transition. Native chat changes retire old-name permission. Exact integrity-bearing request identity protects current composer, pointer and reload decisions. A stale acknowledgement cannot migrate a newer incarnation's persisted draft. Destination conflicts preserve both records. Character refresh parses, validates and normalizes before publishing, so delayed or malformed JSON cannot expose a temporarily empty owner.
 
-The first held-Continue experiment did not reach the request because the provider had not reconnected after reload. It established no result. The repeated experiment explicitly reconnected, confirmed the held stream and exercised completion. An initial classic click failed before its correction. Both failed attempts remain in the evidence and are not counted as passes.
+Keyboard activation remains with the shared native owner. Native controls, editable content, prevented defaults, IME and modifiers retain their existing ownership. Eligible custom controls receive one consumed Enter activation. The real file-chooser check verifies one activation, cancellation and returned focus. No dictation-specific workaround was added.
 
-## Remaining limits and release hold
+My inspection preserved native message nodes, draft text and selection. At 320 by 400 pixels, the corrected classic return control passed a real click. Summary and model controls remained the same unique nodes through restoration. Source and actual-image evidence cover the remaining agreed desktop, phone, suspension, media and expert-control regressions.
 
-The final combined browser suite and actual published image remain pending. I have not independently rendered every provider, imported card, theme or extension. Native owner isolation and crypto/storage failure checks include focused unit evidence; my own browser did not simulate every account and same-filename combination. Source review and the named checks support the bounded delivery, not universal upstream correctness.
+## Failed evidence retained and findings closed
 
-Physical phone lock/GPU restoration, audible quality, microphone hardware and paid-provider behavior remain unqualified. No production, shared test85, infrastructure, runtime, cache or model policy access occurred. I will review the final immutable image proof and any relevant source delta in this same council assignment before the final release verdict.
+The first v1.19.22 image run passed 92 of 93 cases and lost a draft in the same-filename case. Subsequent controlled tests established real rename and character-publication races. Their failures and after-fix evidence remain in `../release-first-attempt/` and `../rename-delta/`. Repeated passing attempts alone were not used to dismiss the failure.
 
-## Peer visual finding retained
+A later source run passed 98 of 99 and exposed duplicate Enter activation of a native file chooser. Its failure, event observations and failing-before units remain in `../source-keyboard-before/` and `../source-v23-final/`. The final 99-case source and image runs include the shared-owner correction.
 
-After this implementation review, the quality member reported Q1 against the frozen source. Following a failed override save, the Apply control can retain a visible, focused and hit-testable DOM node while its label is not painted until hover or focus changes. The quality member reproduced it after the dialog-wide inert state was removed. This remains an open visual acceptance dependency. My earlier 320 by 400 capture `browser-screenshot-127-0-0-1-mw875h8m-b2078bb9.png` also showed a blank Apply region, followed by a later painted capture and successful retry. That later success does not disprove the repeated paint defect.
+Initial capture containment, omission labels, budgets, summary scope, ancestry, rename readiness, group retry, classic return and active-revision findings are resolved. The quality member's footer paint/clipping finding was rechecked in the corrected source and the final image render. The rename transition, stale-incarnation and staged-collection findings are resolved in their affected tests and final combined runs. There are no open bugs or preferences blocking this scope.
 
-My native control, capture and save-contract findings remain resolved. Final release acceptance also requires the quality member's affected Q1 visual recheck. I am not claiming that every implementation acceptance criterion currently passes.
+## Limits
 
-## Peer visual finding resolved
+My own interactions used source overlays. The parent supplied immutable-image execution, migration and render evidence. ARM64 has native startup proof; browser and live-service acceptance ran on amd64. The manual migration screenshots use CSS resizing, with Android/touch/DPR behavior covered separately by the automated suite.
 
-The quality member rechecked the updated source and closed Q1. I read `../quality/review.md` and `../quality/verdict.json`, and inspected the scoped popup-footer style. The quality member's fresh controlled-failure captures show Apply painted before hover or refocus. Its enlarged 320 by 400 recheck also found and resolved a clipped Cancel action. `../quality/final-failure-phone.png` and `../quality/final-failure-enlarged.png` record the corrected states. Cancel and failure-to-Apply retry were exercised. This is peer-rendered evidence, not another browser run by me.
+Physical phone lock/GPU restoration, microphone hardware, audible quality and paid-provider behavior remain unqualified. A captured client stage does not expose every provider transformation or model template. File rename and character/group metadata persistence are not one atomic backend transaction. This acceptance covers the agreed journey and observed build, not every untouched upstream behavior.
 
-No known implementation finding remains open. Implementation acceptance and satisfaction remain accept. The actual-image release hold remains.
-
-## Combined source evidence
-
-I read `../source-final/summary.json` after the parent completed the combined source run. It reports 93 expected passes, zero skips, zero unexpected failures, zero flaky results and no uncaught page errors, in 669.43 seconds. Both live Juiced cases are included according to the parent. The summary retains 53 console-error records and 91 failed-request records, mostly aborted requests. I do not reinterpret those counts as zero browser diagnostics.
-
-The source summary explicitly records a later native-footer paint/copy correction and its separate regression. The final published image must run the full suite against that final code. I recomputed the refreshed 18-file manifest and all hashes matched. Source acceptance remains satisfied, with the image hold unchanged.
-
-## First actual-image run held
-
-The first v1.19.22 actual-image combined run passed 92 of 93 cases. The same-filename draft case received an empty composer when it expected the original character's draft. I read the failure record, diagnostics and native selection/load/draft source. Its browser diagnostics report no uncaught page errors, console errors or failed requests. This is an unresolved acceptance failure, not proof of cross-character draft leakage or a confirmed product cause.
-
-The test calls `selectCharacterById` and then a default-owner `openCharacterChat` without checking either result. Native selection explicitly returns false during saving, and the following open captures the current owner before waiting. That contract can make the test address the previous owner after a rejected selection, but the failed run did not record the return values. The parent is tracing native results, identities and storage before deciding whether runtime or test changes are needed. An original-draft restoration assertion must remain in the corrected proof. Release acceptance stays held.
-
-## Rename race established
-
-The parent reproduced a real rename gap on the actual v1.19.22 implementation. I read `/tmp/st-council-rename-before.log` and the controlled test. It holds native character persistence after the server has acknowledged the file rename, exposes the accepted title through a normal settings update, types a draft, then releases the save. The composer becomes empty. This establishes lost input during the rename phase; the ignored selection returns were not a sufficient explanation.
-
-I support a native file-rename acknowledgement event before client pointer mutation, while keeping the existing completed-rename event for current consumers. BrowserRecovery should own one bounded old/new identity transition, preserve destination-draft conflicts and reject unrelated owners. Staging a parsed character collection before publishing it also avoids a transient empty owner during `getCharacters`. The parent owns the fix and proof. Implementation satisfaction for these draft-preservation criteria is reopened until the controlled regression and affected identity checks pass. Release remains held.
-
-## v1.19.23 delta review in progress
-
-The initial v1.19.23 delta uses the intended native file acknowledgement event and keeps the established completion event. I read the seven affected browser cases and their 32.2 second passing log in `../rename-delta/st-council-delta-final.log`, plus the 492-test unit output. The browser cases cover held and failed character/cast metadata, delayed and malformed collection parsing, and original same-filename draft restoration. This addresses the reproduced v1.19.22 loss rather than substituting a test delay.
-
-Two bounded lifetime gaps remained in the first delta. `changeChat` ignored an authoritative transition to the old filename, which could retain the renamed draft when a different conversation reopened that now-vacant path. Native rename also guarded active mutation by avatar and filename without the loaded transcript integrity. I sent both findings. The parent agreed to retire the transition on native chat change, bind active pointer/reload/composer decisions to the captured request identity, and leave persisted source-key migration independent. A focused unit will retain that old-name distinction. Quality also requested validation of character avatar identifiers before publishing a parsed list.
-
-The in-progress full source run was stopped before those runtime edits and retained as superseded evidence. Acceptance of the final delta waits for its concrete source and affected results. No atomic file/character-card/group-metadata transaction is required by this correction.
-
-## Final v1.19.23 source acceptance
-
-I accept the final bounded v1.19.23 correction and am satisfied for source freeze. The stale-incarnation guard now returns before any migration or write when the live old/new key belongs to another native request identity. Its unit dispatches normal input before the stale acknowledgement and verifies that the new incarnation keeps its old-name record, with no borrowed renamed record. Native chat changes retire the old-name permission. Exact integrity-bearing identity gates active character mutation, composer capture and transcript reload. Parsed collections require nonempty stable avatar identifiers before publication.
-
-I re-read those source changes and units, inspected the final 494-test, 26-suite log at `../rename-delta/st-council-v23-final-units.log`, and recomputed the refreshed manifest. All 19 hashes match current bytes. The eight affected browser cases passed in the recorded 43.9 second run; the final unit rerun after the stale-incarnation guard passed in 1.176 seconds. My inspection of parent-run tests and logs is separate from the earlier independent browser review.
-
-No control implementation or delta objection remains. The observed v1.19.22 loss and all superseded runs stay in the evidence. Final acceptance still requires the combined final-source run and the actual v1.19.23 image proof. This fix does not claim atomic file, PNG character metadata and group metadata persistence.
-
-## Shared keyboard correction accepted
-
-The next clean source run passed 98 of 99 cases and exposed a real shared keyboard defect before publication. One Enter on the native Choose audio file button produced both a synthetic and a browser click. I read `public/scripts/keyboard.js`, the seven failing-before units, the passing-after unit log and the actual browser assertions.
-
-The correction belongs in the shared keyboard owner. Native buttons, links, inputs, summaries and editable content retain browser or local-handler ownership. The fallback respects prevented defaults, composition and modifiers, including Meta. It synthesizes one consumed Enter activation only for eligible custom controls. No dictation-specific workaround was added. The existing real file-chooser case now also checks native, custom, locally owned and editing controls.
-
-I accept this bounded correction. The source-v23-final log reports 501 passing units in 27 suites, following seven failing-before cases. All 20 hashes in `../source-v23-final/runtime-sha256.json` match the inspected files. Final combined source and actual-image runs must identify these final keyboard bytes. Prior partial and failed runs remain evidence, not release acceptance.
+No production or shared test85 access occurred in this review. No infrastructure, model runtime, policy or cache change is part of this acceptance.

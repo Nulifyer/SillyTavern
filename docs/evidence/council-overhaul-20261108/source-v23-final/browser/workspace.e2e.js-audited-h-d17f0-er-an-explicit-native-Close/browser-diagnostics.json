@@ -1,0 +1,10 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8042/api/chats/get",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

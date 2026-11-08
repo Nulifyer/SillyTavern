@@ -1,12 +1,12 @@
 {
   "member": "control",
-  "phase": "implementation_review",
+  "phase": "final_release_review",
   "decision": "accept",
   "satisfied": true,
   "sourceIdentity": "../source-v23-final/runtime-sha256.json",
   "sourceHashMatches": 20,
   "fixture": "st-council-control-20261108 http://127.0.0.1:8037",
-  "releaseVerdict": "pending_final_source_and_actual_v1.19.23_image_proof",
+  "releaseVerdict": "accept",
   "openFindings": [],
   "resolvedFindings": [
     "Optional diagnostics failure containment and explicit capture omissions",
@@ -32,13 +32,51 @@
     "../rename-delta/st-council-v23-delta-final.log",
     "../quality/review.md",
     "../source-v23-final/st-council-keyboard-before-units.log",
-    "../source-v23-final/st-council-v23-keyboard-units.log"
+    "../source-v23-final/st-council-v23-keyboard-units.log",
+    "../release-v23/summary.json",
+    "../release-v23/report.json",
+    "../release-v23/runtime.json",
+    "../release-v23/tag-source-verification.json",
+    "../release-v23/workflow.json",
+    "../release-v23/registry.json",
+    "../release-v23/architecture-labels.json",
+    "../release-v23/migration-after.json",
+    "../release-v23/manual-review.json"
   ],
   "limits": [
-    "Independent browser review used fresh synthetic source overlays, not the immutable image.",
-    "v1.19.22 actual-image attempt failed one identity case and remains held evidence.",
-    "Final combined v1.19.23 source and actual-image acceptance are pending.",
-    "No atomic file and character/group metadata transaction is claimed.",
-    "Physical phone lock/GPU, real microphone hardware, audible quality and paid-provider behavior remain unqualified."
-  ]
+    "Independent interactions used source overlays; final image execution and renders are parent-provided evidence reviewed by this member.",
+    "ARM64 has native startup evidence; browser and live-service acceptance ran on amd64.",
+    "Physical phone lock/GPU restoration, microphone hardware, audible quality and paid-provider behavior remain unqualified.",
+    "Captured client requests do not establish final provider transformations, model templates or recall accuracy.",
+    "File rename and character/group metadata persistence are not one atomic backend transaction.",
+    "No production deployment is authorized by this verdict."
+  ],
+  "finalReleaseVerdict": "accept",
+  "sourceCommit": "640283d97ec54996b6b91d0bff88ff7c79213cd4",
+  "version": "1.19.23",
+  "imageDigest": "sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72",
+  "workflowId": "42524646047",
+  "actualImage": {
+    "container": "st-council-v11923-release-20261108",
+    "port": 8041,
+    "sourceOverlays": false,
+    "freshSyntheticVolumes": 5,
+    "runtimeFileMatches": 20,
+    "browserPassed": 99,
+    "browserSkipped": 0,
+    "browserUnexpected": 0,
+    "browserFlaky": 0,
+    "pageErrors": 0,
+    "durationSeconds": 759.512,
+    "liveJuicedCasesPassed": 2
+  },
+  "sourceChecks": {
+    "browserPassed": 99,
+    "durationSeconds": 691.693,
+    "unitTestsPassed": 501,
+    "unitSuitesPassed": 27,
+    "testLintErrors": 0,
+    "testLintWarnings": 53
+  },
+  "migrationPreservedFields": 8
 }

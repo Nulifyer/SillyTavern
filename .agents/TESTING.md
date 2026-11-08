@@ -51,7 +51,7 @@ docs/evidence/mobile-portraits-20261106/.
 
 ## Environment
 
-Latest verified v1.19.21: http://127.0.0.1:8033,
+Earlier verified v1.19.21: http://127.0.0.1:8033,
 st-fork-fixes-release-20261108, five fresh volumes/no overlays. All 86 browser
 cases passed together in 10.6 minutes, both live Juiced cases, no
 skipped/flaky results or uncaught errors. 37 runtime matches/version/heartbeat/
@@ -159,3 +159,33 @@ selection/scroll, frozen details, 320/390/448/768/1024/1280 widths, and selected
 alternative cast registration failure/retry without phantom membership. Evidence:
 `docs/evidence/council-overhaul-20261108/source-final/`. Separate council fixtures
 8036/8037/8038 contain neutral data and source overlays; none is image proof.
+
+## Verified council release v1.19.23
+
+Source `640283d97ec54996b6b91d0bff88ff7c79213cd4` passes 501 unit tests in 27 suites,
+root lint/actionlint and test lint with 0 errors and 53 warnings. Final source
+99/99 passes in 691.69 seconds. The actual pulled amd64 image passes 99/99 in
+759.51 seconds, both live Juiced cases, zero skipped/flaky/page errors. Exact
+actual diagnostics: 54 console errors/85 failed requests, including 81 aborts,
+3 ERR_FAILED and 1 controlled incomplete chunk. All 99 diagnostics retained.
+
+Actual fixture `st-council-v11923-release-20261108` on 8041 has five fresh synthetic
+volumes, no overlays, 20 tagged runtime matches and version/heartbeat/TLS proof.
+Both native architecture startup gates pass workflow 42524646047. Own synthetic
+8040 profile upgrade from v1.19.22 to v1.19.23 preserves eight exact fields and all five volume names.
+
+```sh
+cd tests
+ST_BASE_URL=http://127.0.0.1:8041 ST_JUICED_URL=https://juiced.swarm.nulteck.com npx playwright test workspace.e2e.js --workers=1 --reporter=json --output=/tmp/st-council-v23-release-results
+```
+
+Coverage includes Scene details/native correction, immutable client captures,
+exact branch lineage/cast registration retry, settings/advanced/classic, Pixel
+profiles, enlarged text, hidden/frozen resume, renamed drafts/stale incarnations,
+pending/malformed collections and native/custom keyboard activation with a real
+Enter/filechooser. The held v1.19.22 image 92/93 failure, 95/99 preference fixture and 98/99
+keyboard attempts remain separate evidence, never relabeled successful runs.
+
+[Evidence and handoff](../docs/evidence/council-overhaul-20261108/handoff.md).
+Physical phone/microphone/GPU, audible quality and paid providers remain
+unqualified. ARM64 native gates only. No production or shared test85 update.

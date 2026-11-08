@@ -247,3 +247,8 @@ tree. Override Apply waits for acknowledgement; failure preserves pending fields
 for retry and restores the previous in-memory setup. Cancel/Escape discard pending edits.
 Archives remain inspectable and require explicit Restore before mutation. Opening
 details never generates a summary, saves a transcript or changes the draft.
+
+Native keyboard activation keeps browser buttons, links, disclosures and text
+editors under browser ownership. The legacy keyboard helper activates only custom
+interactables and respects an existing key handler. One Enter must never produce
+a synthetic click followed by a second native click, including audio selection.

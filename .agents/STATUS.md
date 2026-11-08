@@ -1,57 +1,35 @@
 # Status
 
-## Project state
+## Current release
 
-Latest verified baseline v1.19.21, source24fbda8c25d6898fde1e99aa005303592dd3ddaf.
-Indexsha256:a2831236504e74d4eb4c20fb8eb8736b38b9897bbffd20e3de7ea537e510aaa0.
+Verified v1.19.23, source `640283d97ec54996b6b91d0bff88ff7c79213cd4`.
+Published branch: release. Tag and image source remain immutable.
+Workflow 42524646047 passed native amd64/arm64 HTTP and heartbeat startup gates.
+Index: `sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72`.
 
-## Active batch
+## Completed batch
 
-[Council-selected overhaul](work/council-overhaul.md), same story/control/quality
-members. Council agreed scope, parent implemented, members reviewed own fresh
-synthetic fixtures and exact source. All accept frozen v1.19.23 source delta.
-Actual-image final verdicts remain pending. No production deployment authorized
-for this batch; never inspect production app/data/screens/logs/volumes.
+The same story, control and quality council selected scope, reviewed independent
+source fixtures, raised defects, and accepted the finished release. All three
+report satisfied=true and no open findings. Parent owns implementation, tests
+and delivery. [Canonical record](work/council-overhaul.md).
+
+501 unit tests in 27 suites, root lint/actionlint pass. Test lint 0 errors/53 warnings.
+Final source 99/99 passes in 691.69 seconds; actual pulled image 99/99 passes in 759.51 seconds.
+Both live Juiced cases ran in both suites, zero skipped/flaky/uncaught page errors.
+Actual diagnostics: 54 console errors/85 failed requests retained. Five fresh volumes,
+no overlays, 20 runtime hash matches, version/heartbeat/TLS and synthetic v1.19.22 to v1.19.23
+migration pass. Physical phone lock/GPU, real microphone, audible quality and
+paid providers remain unqualified. ARM64 native startup proof only.
 
 ## Next action
 
-Complete final99case clean source run on8042, then commit/publish immutable v1.19.23,
-wait native multiarch gates and test fresh actual image without source overlays.
-Give the same three members release proof and obtain final verdicts. Preserve
-failed v1.19.22 and superseded source evidence; do not move published tags.
+Use [the verified handoff](../docs/evidence/council-overhaul-20261108/handoff.md)
+for a later Homelab update with all existing volume identities preserved. This
+batch did not inspect or update production69 or shared test85. Never inspect their
+app/data/config/screens/logs/volumes. No model/runtime/policy/cache changes.
 
-## Evidence
-
-v1.19.22 source8a26aa977c0f505631e768905be70898ac9506d2 published by workflow42515510635,
-indexsha256:042dba048097ccbef521e219d11465bb55d7b4c48e8ac856971571e8e3748164.
-Actual92/93 failed sibling-filename draft isolation. Controlled rename metadata
-gap and transient/invalid character collection cases fail22 and pass replacement.
-
-Final23delta uses native file acknowledgement, bounded draft transition, full
-request integrity guard and complete valid character publication.501unit tests/
-27suites pass, rootlint/actionlint pass. Testlint0errors53warnings. Earlier focused8
-cases pass43.9s; last stale-incarnation guard has focusedunit proof and must run
-in final99browser.20runtime hashes identify frozenbytes in source-v23-final/.
-All evidence: docs/evidence/council-overhaul-20261108/.
-
-## Limits
-
-Physical phone lock/GPU, real microphone hardware, audible quality and paid
-providers remain unqualified. ARM64 native startup gates only; browser/live on
-amd64. No model/runtime/policy/cache or production/sharedtest changes.
-
-## Source fixture correction
-
-Frozen runtime8035full95/99,4failures with persisted synthetic restore_user_input=false.
-Initial fixture settings now explicitly enable restoration; within-case opt-out
-reload remainsfalse. Affected4plus1 nativecharacter cases pass. No runtimechange.
-Finalclean99runs8042 with fivefreshvolumes and sourceoverlays. Original22failure
-remainsunattributed; its controlled runtimebugs remainfixed.
-
-## Keyboard correction
-
-Clean source99completed98/99, realkeyboardfilechooserfailed. Testinstrumentation
-provedoneEntercausedsynthetic+nativeclicks. Sharedkeyboardowner nowrespectsnative
-controls/editors/defaultPrevented/IME/Meta, customEnteronce.7unitsfailbefore;501
-units/27suitespassafter.4affectedbrowsercasespass43.8s. Same3councilsacceptfreeze.
-Final99source8042active on20manifestbytes, actualimagepending.23notpublishedyet.
+Local actual-image fixtures: 8041 fresh acceptance, 8040 own synthetic migrated profile.
+Source fixture containers and the CPU-only council provider are stopped. Their
+volumes and retained failure evidence are preserved. v1.19.22 remains
+held, with its original untraced failure retained. Rollback is verified v1.19.21.

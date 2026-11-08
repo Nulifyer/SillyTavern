@@ -1,47 +1,54 @@
 {
   "member": "story",
-  "phase": "replacement_source_review",
+  "phase": "final_release_review",
   "implementationVerdict": "accept",
+  "finalReleaseVerdict": "accept",
   "scopeSatisfied": true,
-  "finalReleaseVerdict": "pending",
+  "satisfied": true,
   "openStoryFindings": [],
-  "sourceManifest": "../rename-delta/runtime-sha256.json",
-  "sourceHashMatches": 19,
+  "release": "v1.19.23",
+  "source": "640283d97ec54996b6b91d0bff88ff7c79213cd4",
+  "image": "ghcr.io/nulifyer/sillytavern@sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72",
+  "sourceManifest": "../source-v23-final/runtime-sha256.json",
+  "sourceHashMatches": 20,
+  "actualImageHashMatches": 20,
+  "actualImageBrowserCases": 99,
+  "unitTests": 501,
+  "unitSuites": 27,
   "manualFixture": "http://127.0.0.1:8036",
   "manualFixtureKind": "fresh_synthetic_source_overlay",
+  "independentActualImageBrowserInteraction": false,
   "evidence": [
     "review.md",
+    "review-history.md",
     "implementation-critique.md",
     "desktop-setup.png",
     "mobile-390-setup.png",
     "mobile-320-override.png",
-    "../source-final/st-council-final-units.log",
-    "../source-final/st-council-newest.log",
-    "../source-final/st-council-final-contract.log",
-    "../rename-delta/st-council-delta-final.log",
-    "../rename-delta/st-council-v23-units.log"
-  ],
-  "pending": [
-    "completed99-case source run",
-    "actual v1.19.23 image full acceptance evidence"
-  ],
-  "limits": [
-    "manual review used source overlays, not the released image",
-    "no physical phone lock or GPU qualification",
-    "no audible quality or paid-provider qualification"
+    "../release-v23/summary.json",
+    "../release-v23/report.json",
+    "../release-v23/runtime.json",
+    "../release-v23/tag-source-verification.json",
+    "../release-v23/migration-after.json",
+    "../release-v23/manual-review.json",
+    "../source-v23-final/st-council-v23-keyboard-units.log"
   ],
   "resolvedFindings": [
-    {
-      "id": "S-rename-draft",
-      "state": "verified_source_fix",
-      "evidence": "../rename-delta/st-council-delta-final.log",
-      "releaseRecheck": "pending actual v1.19.23 image"
-    },
-    {
-      "id": "S-stale-rename-draft",
-      "state": "implemented_source_recheck",
-      "evidence": "native guard before moveDraft plus persisted-input unit",
-      "verification": "parent unit/lint rerun pending"
-    }
+    "unswiped branch activation",
+    "illustration busy mutation gate",
+    "attached lore and honest source scope",
+    "related index failure and ambiguity",
+    "branch/checkpoint cache-await owner race",
+    "S-rename-draft",
+    "S-stale-rename-draft",
+    "native editor and custom keyboard activation ownership"
+  ],
+  "pending": [],
+  "limits": [
+    "direct manual interaction used source overlays; actual image evidence was supplied by parent",
+    "no physical phone lock or GPU qualification",
+    "no audible quality or paid-provider qualification",
+    "ARM64 native startup proof; browser acceptance on amd64",
+    "no production inspection or redeploy"
   ]
 }

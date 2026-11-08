@@ -1,0 +1,14 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8041/api/ping",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "blob:http://127.0.0.1:8041/b149e234-2435-4b00-a95f-e7b390378a95",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

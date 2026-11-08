@@ -1,0 +1,21 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+    "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8042/script.js:7534:19)\n    at async saveChatConditional (http://127.0.0.1:8042/script.js:9550:84)\n    at async StreamingProcessor.onFinishStreaming (http://127.0.0.1:8042/script.js:3862:15)\n    at async finishGenerating (http://127.0.0.1:8042/script.js:5506:17)\n    at async SimpleMutex.sendTextareaMessage [as callback] (http://127.0.0.1:8042/script.js:1769:22)\n    at async SimpleMutex.update (http://127.0.0.1:8042/scripts/util/SimpleMutex.js:38:13)\n    at async HTMLDivElement.<anonymous> (http://127.0.0.1:8042/script.js:11283:9)"
+  ],
+  "failedRequests": [
+    {
+      "url": "http://127.0.0.1:8042/api/ping",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8042/api/chats/save",
+      "error": "net::ERR_ABORTED"
+    },
+    {
+      "url": "http://127.0.0.1:8042/api/settings/save",
+      "error": "net::ERR_ABORTED"
+    }
+  ]
+}

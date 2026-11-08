@@ -1,0 +1,8 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+    "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8041/script.js:7534:19)\n    at async saveChatConditional (http://127.0.0.1:8041/script.js:9550:84)\n    at async http://127.0.0.1:8041/scripts/extensions/memory/index.js:98:19"
+  ],
+  "failedRequests": []
+}

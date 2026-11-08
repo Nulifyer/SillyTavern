@@ -141,3 +141,16 @@ Physical Pixel lock/GPU restoration, audible quality and paid-provider behavior
 remain unqualified without their own evidence. The council's final satisfaction
 applies to this accepted scope and observed build, not a guarantee that every
 untouched upstream path is defect-free.
+
+## Verified delivery
+
+All three original council members accept v1.19.23 and report satisfaction with
+the agreed scope, with no open findings. Parent implemented and corrected their
+review findings, then qualified the actual published image. The final source
+passes 501 unit tests and 99 browser cases; the fresh no-overlay amd64 release
+image passes all 99 browser cases and both live Juiced cases. Native amd64/arm64
+startup gates and synthetic settings/story/draft migration pass.
+
+[Release handoff and council verdicts](evidence/council-overhaul-20261108/handoff.md).
+Production remains unchanged for this task. Physical-device and provider limits
+remain recorded; acceptance covers the agreed scope and observed checks.

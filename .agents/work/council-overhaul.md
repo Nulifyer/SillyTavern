@@ -1,6 +1,6 @@
 # Council-selected roleplay overhaul
 
-Status: active
+Status: complete
 Owner: root
 Repository: /home/nulifyer/Projects/SillyTavern
 Base: feat/cohesive-workspace, 40a0a114cf82d1fff86699d1e4dc10f6fbc3db7f; runtime v1.19.21
@@ -16,18 +16,18 @@ SillyTavern power, then obtain evidence-based verdicts from the same three membe
 - [x] Three named council members discuss the research and source and agree on scope, exclusions, ownership and observable criteria.
 - [x] Parent implements the agreed scope without replacing native owners or removing advanced capabilities.
 - [x] Meaningful source unit/lint/browser and real service checks cover changes and preserved workflows; final image acceptance remains part of delivery.
-- [ ] The same three members review the finished implementation and evidence, with objections resolved or explicitly retained.
-- [ ] Release and continuity records match the verified result and normal project delivery process.
+- [x] The same three members review the finished implementation and evidence, with objections resolved or explicitly retained.
+- [x] Release and continuity records match the verified result and normal project delivery process.
 
 ## Scope
 In: council decisions, parent implementation, synthetic local tests, council review and verified project delivery.
 Out: production app/data/screens/logs/volumes, a production redeploy, shared test85, model/runtime/policy/cache changes and unrelated work.
 
 ## Current state
-Phase: parent implementation present; same council source/render review and acceptance fixes active
+Phase: complete; same council final release acceptance received
 Dependencies: completed 20-product research and current source
 Integration: parent is the only runtime/test implementer; council members own separate decision/review notes.
-Next action: complete final combined source acceptance, resolve remaining same-council findings, publish and verify the actual immutable image without production deployment.
+Next action: Homelab owns a later deployment from the verified handoff, preserving existing volumes.
 
 ## Decisions
 | Decision | Reason | Evidence |
@@ -125,3 +125,22 @@ contenteditable/defaultPrevented/IME/Meta andcustomclickonce.7unitsfailbefore;50
 units/27suitespassafter;4keyboard/search/desktop+Pixelmenucasespass43.8s. Allsame
 councilmembersacceptboundedsource.20runtime manifest in source-v23-final/. Final
 99source8042runsuniqueoutput /tmp/st-council-v23-final-source-results.23unpublished.
+
+## v1.19.23 publication
+
+Final20hashsource99/99passes691.693s,bothlive,0skip/flaky/pageerrors.56console/87
+failedrequestdiagnosticsretained. Source640283d97ec54996b6b91d0bff88ff7c79213cd4
+pushedrelease/tag23;GitHubReleasepublished. Workflow42524646047runningnative
+architecturegates. Actualfresh8041image/full99 andown8040migrationnext; allsame
+councilfinalverdictspending. No productionupdate.
+
+## Completed delivery
+
+All three original members accept v1.19.23, satisfied=true, no open findings.
+Source640283d97ec54996b6b91d0bff88ff7c79213cd4;workflow42524646047success;index
+14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72.501unit tests/
+27suites;source99/99in691.69s;actual99/99in759.51s,bothlive,0skip/flaky/pageerrors.
+20tagged/runtime matches,5freshvolumes/nooverlays,heartbeat/TLS/version and8field
+synthetic22to23migration pass. Final reviews distinguish own source interaction
+from parent actual proof. Handoff:docs/evidence/council-overhaul-20261108/handoff.md.
+No production/sharedtest deployment or model policy/runtime changes.

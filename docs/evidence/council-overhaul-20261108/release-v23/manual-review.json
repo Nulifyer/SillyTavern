@@ -1,0 +1,23 @@
+{
+  "kind": "unmocked_existing_synthetic_profile_upgrade_v1.19.22_to_v1.19.23",
+  "observed": {
+    "autoConnect": false,
+    "draft": "Synthetic same-story reload draft",
+    "height": 921,
+    "onlineStatus": "no_connection",
+    "owner": "[\"default-user\",\"character\",\"default_Seraphina.png\",\"Seraphina - 2026-11-08@14h39m28s807ms\",\"591ef03a-8ecf-4185-96c7-0c8944a6b60e\"]",
+    "sceneClosed": true,
+    "version": "1.19.23",
+    "width": 448
+  },
+  "screenshots": [
+    "migration-desktop-chat.png",
+    "migration-phone-chat-448.png",
+    "migration-phone-scene-448.png"
+  ],
+  "limits": [
+    "Preview resize changes CSS viewport only, not Android UA/DPR. Full browser suite separately emulates Android/touch/DPR3.",
+    "Auto-connect remains disabled. Configured model persists; no inference was sent in this manual migration check.",
+    "Not production data or physical phone qualification."
+  ]
+}

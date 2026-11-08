@@ -1,0 +1,9 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Chat load failed: Error: The server returned invalid chat data. Your existing conversation has not been replaced.\n    at readChatFile (http://127.0.0.1:8042/scripts/chat-loader.js:11:15)\n    at async getChat (http://127.0.0.1:8042/script.js:7721:22)\n    at async Module.openCharacterChat (http://127.0.0.1:8042/script.js:7827:10)\n    at async <anonymous>:316:30",
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+    "Chat load failed: Error: Chat could not be loaded. Your existing conversation has not been replaced.\n    at readChatFile (http://127.0.0.1:8042/scripts/chat-loader.js:7:29)\n    at async getChat (http://127.0.0.1:8042/script.js:7721:22)\n    at async SimpleMutex.reloadCurrentChatUnsafe [as callback] (http://127.0.0.1:8042/script.js:1721:9)\n    at async SimpleMutex.update (http://127.0.0.1:8042/scripts/util/SimpleMutex.js:38:13)\n    at async <anonymous>:316:30"
+  ],
+  "failedRequests": []
+}

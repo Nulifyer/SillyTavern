@@ -1,0 +1,20 @@
+{
+  "stats": {
+    "startTime": "2026-11-08T21:07:32.052Z",
+    "duration": 691693.4689999999,
+    "expected": 99,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "diagnosticFiles": 99,
+  "pageErrors": [],
+  "consoleErrorCount": 56,
+  "failedRequestCount": 87,
+  "failedRequestErrors": {
+    "net::ERR_ABORTED": 83,
+    "net::ERR_INCOMPLETE_CHUNKED_ENCODING": 1,
+    "net::ERR_FAILED": 3
+  },
+  "runtimeManifest": "runtime-sha256.json"
+}

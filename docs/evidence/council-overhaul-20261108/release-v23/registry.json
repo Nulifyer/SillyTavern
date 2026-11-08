@@ -1,0 +1,23 @@
+{
+  "v1.19.23": {
+    "digest": "sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72",
+    "architectures": {
+      "amd64": "sha256:2aaa54b777919f4503e20905b5567bf1da8938998a6576f8c2f3c99e2ffca964",
+      "arm64": "sha256:a9845bf2f1d3380792fbe7ccf71c4403de3b8a1f808e8ceed789227d41a0f3be"
+    }
+  },
+  "latest": {
+    "digest": "sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72",
+    "architectures": {
+      "amd64": "sha256:2aaa54b777919f4503e20905b5567bf1da8938998a6576f8c2f3c99e2ffca964",
+      "arm64": "sha256:a9845bf2f1d3380792fbe7ccf71c4403de3b8a1f808e8ceed789227d41a0f3be"
+    }
+  },
+  "sha-640283d97ec54996b6b91d0bff88ff7c79213cd4": {
+    "digest": "sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72",
+    "architectures": {
+      "amd64": "sha256:2aaa54b777919f4503e20905b5567bf1da8938998a6576f8c2f3c99e2ffca964",
+      "arm64": "sha256:a9845bf2f1d3380792fbe7ccf71c4403de3b8a1f808e8ceed789227d41a0f3be"
+    }
+  }
+}

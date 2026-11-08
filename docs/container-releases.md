@@ -100,6 +100,47 @@ explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
 
+### v1.19.23
+
+[Release v1.19.23](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.23)
+is source `640283d97ec54996b6b91d0bff88ff7c79213cd4`.
+[Workflow 42524646047](https://github.com/Nulifyer/SillyTavern/actions/runs/42524646047)
+passed native amd64/arm64 HTTP and heartbeat startup gates and publication.
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72
+```
+
+- linux/amd64: `sha256:2aaa54b777919f4503e20905b5567bf1da8938998a6576f8c2f3c99e2ffca964`
+- linux/arm64: `sha256:a9845bf2f1d3380792fbe7ccf71c4403de3b8a1f808e8ceed789227d41a0f3be`
+
+Adds optional Scene details for setup/memory, selected-reply client context and
+related stories. Native advanced controls, prompt editors, providers and classic
+layout remain available. Native save acknowledgement, branch alternatives and
+failed-save retry remain explicit. Draft ownership follows acknowledged rename,
+rejects stale incarnations and survives failed metadata. Character refresh
+publishes complete validated collections. Shared keyboard activation leaves
+native controls to the browser and activates custom controls once.
+
+Source and actual pulled amd64 image each passed all 99 browser cases, both live
+Juiced cases, zero skipped/flaky results or uncaught page errors. Actual run:
+759.51 seconds. 501 unit tests in 27 suites, root lint/actionlint pass. Test lint
+reports 0 errors and 53 warnings. Five fresh synthetic volumes/no overlays, 20 runtime matches, version,
+heartbeat, TLS and both architecture labels pass. Existing synthetic v1.19.22 to v1.19.23
+settings/story/draft migration preserves eight exact fields and volume identities.
+Final same-council verdicts are recorded with the handoff. Production not updated.
+
+[Handoff, council verdicts, evidence, connections and rollback](evidence/council-overhaul-20261108/handoff.md).
+
+### v1.19.22, held
+
+Source `8a26aa977c0f505631e768905be70898ac9506d2` published by
+[workflow 42515510635](https://github.com/Nulifyer/SillyTavern/actions/runs/42515510635).
+The actual image passed 92 of 93 browser cases and failed draft isolation. The same
+council reopened acceptance. Controlled rename timing and collection failures
+were repaired in v1.19.23. Use the verified v1.19.23 replacement above. Its original immutable
+index and failure evidence remain in the [council record](evidence/council-overhaul-20261108/index.md).
+
 ### v1.19.21
 
 [Release v1.19.21](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.21)

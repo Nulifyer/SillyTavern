@@ -1,0 +1,84 @@
+{
+  "version": "v1.19.23",
+  "source": "640283d97ec54996b6b91d0bff88ff7c79213cd4",
+  "release": "https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.23",
+  "workflow": "https://github.com/Nulifyer/SillyTavern/actions/runs/42524646047",
+  "workflowStatus": "success",
+  "image": "ghcr.io/nulifyer/sillytavern@sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72",
+  "indexDigest": "sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72",
+  "architectureDigests": {
+    "amd64": "sha256:2aaa54b777919f4503e20905b5567bf1da8938998a6576f8c2f3c99e2ffca964",
+    "arm64": "sha256:a9845bf2f1d3380792fbe7ccf71c4403de3b8a1f808e8ceed789227d41a0f3be"
+  },
+  "sourceUnitTests": 501,
+  "sourceUnitSuites": 27,
+  "sourceBrowser": {
+    "stats": {
+      "startTime": "2026-11-08T21:07:32.052Z",
+      "duration": 691693.4689999999,
+      "expected": 99,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "diagnosticFiles": 99,
+    "pageErrors": [],
+    "consoleErrorCount": 56,
+    "failedRequestCount": 87,
+    "failedRequestErrors": {
+      "net::ERR_ABORTED": 83,
+      "net::ERR_INCOMPLETE_CHUNKED_ENCODING": 1,
+      "net::ERR_FAILED": 3
+    },
+    "runtimeManifest": "source-v23-final/runtime-sha256.json"
+  },
+  "actualImageAcceptance": "verified",
+  "syntheticMigration": "release-v23/migration-after.json",
+  "productionUpdate": false,
+  "rollback": "ghcr.io/nulifyer/sillytavern@sha256:a2831236504e74d4eb4c20fb8eb8736b38b9897bbffd20e3de7ea537e510aaa0",
+  "actualBrowser": {
+    "stats": {
+      "startTime": "2026-11-08T21:23:17.347Z",
+      "duration": 759512.2189999999,
+      "expected": 99,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "diagnosticFiles": 99,
+    "pageErrors": [],
+    "consoleErrorCount": 54,
+    "failedRequestCount": 85,
+    "failedRequestErrors": {
+      "net::ERR_ABORTED": 81,
+      "net::ERR_INCOMPLETE_CHUNKED_ENCODING": 1,
+      "net::ERR_FAILED": 3
+    },
+    "runtimeManifest": "source-v23-final/runtime-sha256.json"
+  },
+  "sourceBrowserEvidence": "source-v23-final/summary.json",
+  "actualBrowserEvidence": "release-v23/summary.json",
+  "runtimeEvidence": "release-v23/runtime.json",
+  "council": {
+    "story": {
+      "finalReleaseVerdict": "accept",
+      "satisfied": true,
+      "record": "story/verdict.json",
+      "review": "story/review.md"
+    },
+    "control": {
+      "finalReleaseVerdict": "accept",
+      "satisfied": true,
+      "record": "control/verdict.json",
+      "review": "control/review.md"
+    },
+    "quality": {
+      "finalReleaseVerdict": "accept",
+      "satisfied": true,
+      "record": "quality/verdict.json",
+      "review": "quality/review.md"
+    }
+  },
+  "sourceManifest": "source-v23-final/runtime-sha256.json",
+  "actualRuntimeHashMatches": 20
+}

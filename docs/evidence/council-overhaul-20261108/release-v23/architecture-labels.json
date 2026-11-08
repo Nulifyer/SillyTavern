@@ -1,0 +1,24 @@
+{
+  "amd64": {
+    "digest": "sha256:2aaa54b777919f4503e20905b5567bf1da8938998a6576f8c2f3c99e2ffca964",
+    "labels": {
+      "org.opencontainers.image.licenses": "AGPL-3.0",
+      "org.opencontainers.image.revision": "640283d97ec54996b6b91d0bff88ff7c79213cd4",
+      "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+      "org.opencontainers.image.version": "v1.19.23"
+    },
+    "architecture": "amd64",
+    "os": "linux"
+  },
+  "arm64": {
+    "digest": "sha256:a9845bf2f1d3380792fbe7ccf71c4403de3b8a1f808e8ceed789227d41a0f3be",
+    "labels": {
+      "org.opencontainers.image.licenses": "AGPL-3.0",
+      "org.opencontainers.image.revision": "640283d97ec54996b6b91d0bff88ff7c79213cd4",
+      "org.opencontainers.image.source": "https://github.com/Nulifyer/SillyTavern",
+      "org.opencontainers.image.version": "v1.19.23"
+    },
+    "architecture": "arm64",
+    "os": "linux"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "pageErrors": [],
+  "consoleErrors": [
+    "Failed to load resource: the server responded with a status of 503 (Service Unavailable)",
+    "Error: Service Unavailable\n    at saveChat (http://127.0.0.1:8042/script.js:7534:19)\n    at async createBranch (http://127.0.0.1:8042/scripts/bookmarks.js:238:11)\n    at async branchChat (http://127.0.0.1:8042/scripts/bookmarks.js:469:22)\n    at async handleAction (http://127.0.0.1:8042/scripts/workspace.js:454:22)"
+  ],
+  "failedRequests": []
+}
