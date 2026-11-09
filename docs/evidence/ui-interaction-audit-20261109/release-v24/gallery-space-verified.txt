@@ -1,0 +1,21 @@
+npm notice run npx
+npm notice run 'playwright' test ui-audit.e2e.js --workers=1 --grep native extension dialogs --repeat-each=2 --output ../docs/evidence/ui-interaction-audit-20261109/gallery-space-verified
+(node:1030791) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 2 tests using 1 worker
+
+(node:1030805) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1030805) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1030805) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 ui-audit.e2e.js:771:1 › native extension dialogs gallery and file entry points remain reachable with a selected background (23.1s)
+(node:1031262) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1031262) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1031262) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  2 ui-audit.e2e.js:771:1 › native extension dialogs gallery and file entry points remain reachable with a selected background (22.7s)
+
+  2 passed (47.1s)

@@ -140,6 +140,7 @@ export async function deriveTemplatesFromChatTemplate(chat_template, hash) {
 
 export async function bindModelTemplates(power_user, online_status) {
     if (online_status === 'no_connection') {
+        toastr.info(t`Connect a model before binding its templates.`);
         return false;
     }
 

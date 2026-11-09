@@ -1,0 +1,74 @@
+{
+  "capturedAt": "2026-11-09T23:12:15.471086+00:00",
+  "base": "e4f5f726019a7e7f9ac1a936663d24d30d98e157",
+  "files": {
+    "public/css/workspace.css": {
+      "sha256": "91682d3c8bec61565bccfe5d795f9f4496cd412c0dd5432838db7c52c117cb9d",
+      "bytes": 71114
+    },
+    "public/index.html": {
+      "sha256": "5b7a90c17802c9d6fb623a5997b8018a6335eda4db9600fe81be6fd9c030facf",
+      "bytes": 740412
+    },
+    "public/script.js": {
+      "sha256": "22b9ca5167a121848b4e17f0b1f91637055a814da3faf842030f75eb600227d4",
+      "bytes": 510354
+    },
+    "public/scripts/backgrounds.js": {
+      "sha256": "ce044afeaaffa7cacba0b063d9b90a3399a2f438c8e3aee33d7d40b4502541db",
+      "bytes": 68782
+    },
+    "public/scripts/chat-templates.js": {
+      "sha256": "abc092dc72a6cf5b831dd4cc1ddea8a1d9e13602eab0055d0517031f4f20a357",
+      "bytes": 6935
+    },
+    "public/scripts/extensions.js": {
+      "sha256": "4ce91600ddbb1bdbb8821c1097e9cab2bee8f761002ca54a545ac2163deb6f06",
+      "bytes": 88660
+    },
+    "public/scripts/extensions/gallery/index.js": {
+      "sha256": "0add02f60b64986c25cdff6f6becbeaa372be13a18a005a5b801469322b46300",
+      "bytes": 32769
+    },
+    "public/scripts/extensions/gallery/style.css": {
+      "sha256": "1d9904cbd7f749d74eb3310d2bbd5c4c4fd173620483ae17fa57b7da57bd1437",
+      "bytes": 1155
+    },
+    "public/scripts/extensions/stable-diffusion/index.js": {
+      "sha256": "ac397e8a731ef3a18d944ba30e9a85bade74b8890ba633eed39b681fb30fd2a3",
+      "bytes": 230563
+    },
+    "public/scripts/extensions/tts/index.js": {
+      "sha256": "20867e705d481ae2ed742cb66c016bda74426f6f1dd4d3cda1cc14d2c9bc9d91",
+      "bytes": 60861
+    },
+    "public/scripts/extensions/tts/settings.html": {
+      "sha256": "a60fce590db2f40d1ae308906f9f5732a63d10dac1d1d4213300fd2b532ad90a",
+      "bytes": 6788
+    },
+    "public/scripts/extensions/tts/xtts.js": {
+      "sha256": "780ef92574e4e81da3d57aba92ef76ea7b5edaa1225a657babb57d32ac47194d",
+      "bytes": 14155
+    },
+    "public/scripts/keyboard.js": {
+      "sha256": "14c7c1804f7ed84f69cda84b20190f7716cee2af118b5fb8dc0a51040d9e29a1",
+      "bytes": 11875
+    },
+    "public/scripts/power-user.js": {
+      "sha256": "9be29c2ecaca5e86bb98749fe922269ded114da361be53ff7f86fb98af0eb0b0",
+      "bytes": 172908
+    },
+    "public/scripts/utils.js": {
+      "sha256": "5ebb9929dac63017f47281ba03e794c5c8195109a69960c1829e79ae946f1580",
+      "bytes": 113800
+    },
+    "tests/workspace.e2e.js": {
+      "sha256": "5c25965aef315a17c2ec9e55887db0630ddbfb9d7449cd7785ef31faddfdf8f4",
+      "bytes": 254848
+    },
+    "tests/ui-audit.e2e.js": {
+      "sha256": "c3a193b756f7c921118170ae2a54ea624c91b99a9f8759e5157e883153f41e70",
+      "bytes": 41610
+    }
+  }
+}

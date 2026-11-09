@@ -1,0 +1,66 @@
+npm notice run npx
+npm notice run 'playwright' test ui-audit.e2e.js --workers=1 --output ../docs/evidence/ui-interaction-audit-20261109/accepted-audit-contained
+(node:1013360) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 13 tests using 1 worker
+
+(node:1013390) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1013390) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1013390) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 ui-audit.e2e.js:282:1 › audit background menus folders selection fitting and portrait layering with selected backgrounds (40.3s)
+  ✓   2 ui-audit.e2e.js:431:1 › audit every settings destination and expanded section at eight viewport sizes (1.4m)
+  ✓   3 ui-audit.e2e.js:460:1 › audit provider-specific forms and dependent controls on desktop and phone (3.3m)
+  ✓   4 ui-audit.e2e.js:510:1 › audit enlarged text insertion controls and reading surfaces with bright backgrounds (7.7s)
+  ✓   5 ui-audit.e2e.js:562:1 › audit native message editors and chat panels above selected backgrounds at every size (40.9s)
+  ✓   6 ui-audit.e2e.js:634:1 › native popovers remain reachable after classic layout restoration in short windows (4.3s)
+  ✓   7 ui-audit.e2e.js:659:1 › audit checkbox and radio states including newly revealed settings controls (2.2m)
+  ✓   8 ui-audit.e2e.js:684:1 › speech provider load failures remain in settings and switching provider clears the failure (3.8s)
+  ✓   9 ui-audit.e2e.js:699:1 › a rejected background deletion preserves the selected image and can be retried (5.2s)
+  ✓  10 ui-audit.e2e.js:740:1 › XTTS settings failures keep local edits and Reload retries the speech server (3.8s)
+  ✘  11 ui-audit.e2e.js:771:1 › native extension dialogs gallery and file entry points remain reachable with a selected background (13.2s)
+(node:1027265) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1027265) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1027265) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  12 ui-audit.e2e.js:844:1 › populated lorebook editor and persona dialogs retain usable controls with a selected background (14.7s)
+  ✓  13 ui-audit.e2e.js:897:1 › advanced provider rows fit phone panels without horizontal scrolling (10.8s)
+
+
+  1) ui-audit.e2e.js:771:1 › native extension dialogs gallery and file entry points remain reachable with a selected background
+
+    Error: expect(locator).toHaveAttribute(expected) failed
+
+    Locator:  locator('#gallery').locator('.dragClose')
+    Expected: "button"
+    Received: ""
+    Timeout:  5000ms
+
+    Call log:
+      - Expect "toHaveAttribute" with timeout 5000ms
+      - waiting for locator('#gallery').locator('.dragClose')
+        9 × locator resolved to <div tabindex="0" id="galleryclose" title="Close gallery" data-related-id="gallery" aria-label="Close gallery" data-i18n="[aria-label]Close panel;[title]Close panel" class="fa-fw fa-solid fa-circle-xmark dragClose interactable"></div>
+          - unexpected value "null"
+
+
+      573 |         await expect(gallery.locator('.gallery-upload-help')).toContainText('Drop images here');
+      574 |         const close = gallery.locator('.dragClose');
+    > 575 |         await expect(close).toHaveAttribute('role', 'button');
+          |                             ^
+      576 |         await expect(close).toHaveAccessibleName('Close gallery');
+      577 |         expect(await close.evaluate(n => {
+      578 |             const r = n.getBoundingClientRect(); return n === document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+        at /home/nulifyer/Projects/SillyTavern/tests/ui-audit.e2e.js:575:29
+
+    attachment #1: screenshot (image/png) ──────────────────────────────────────────────────────────
+    ../docs/evidence/ui-interaction-audit-20261109/accepted-audit-contained/ui-audit.e2e.js-native-ext-09417--with-a-selected-background/test-failed-1.png
+    ────────────────────────────────────────────────────────────────────────────────────────────────
+
+    Error Context: ../docs/evidence/ui-interaction-audit-20261109/accepted-audit-contained/ui-audit.e2e.js-native-ext-09417--with-a-selected-background/error-context.md
+
+  1 failed
+    ui-audit.e2e.js:771:1 › native extension dialogs gallery and file entry points remain reachable with a selected background
+  12 passed (9.3m)

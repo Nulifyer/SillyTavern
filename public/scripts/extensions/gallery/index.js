@@ -317,7 +317,6 @@ async function showCharGallery(deleteModeState = false) {
             'js',
         );
         firstTime = false;
-        toastr.info('Images can also be found in the folder `user/images`', 'Drag and drop images onto the gallery to upload them', { timeOut: 6000 });
     }
 
     try {
@@ -380,6 +379,7 @@ async function makeMovable(url) {
     newElement.css({ 'background-color': 'var(--SmartThemeBlurTintColor)', 'opacity': 0 });
     newElement.attr('forChar', id);
     newElement.attr('id', id);
+    newElement.find('.dragClose').attr({ 'aria-label': t`Close gallery`, title: t`Close gallery` });
     newElement.find('.drag-grabber').attr('id', `${id}header`);
     const dragTitle = newElement.find('.dragTitle');
     dragTitle.addClass('flex-container justifySpaceBetween alignItemsBaseline');
@@ -538,6 +538,11 @@ async function makeMovable(url) {
             minLength: 0,
         })
         .on('focus', () => $(galleryFolderInput).autocomplete('search', ''));
+
+    const uploadHelp = document.createElement('p');
+    uploadHelp.className = 'gallery-upload-help';
+    uploadHelp.textContent = t`Drop images here or use Add Image to upload them.`;
+    newElement.append(uploadHelp);
 
     //add a div for the gallery
     newElement.append('<div id="dragGallery"></div>');

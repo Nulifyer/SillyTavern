@@ -1,4 +1,7 @@
 /* Layout overrides are scoped so the classic UI and third-party themes remain available. */
+/* Native html has a transform and a fixed body. Give fixed popovers a real
+   viewport-height containing block, including in short landscape windows. */
+html:has(> body.workspace-ui) { min-height: 100dvh; }
 body.workspace-ui {
     --ws-base: #171b26;
     --ws-sidebar: #121620;
@@ -159,11 +162,23 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-ui #chat .mes[is_user="true"] .mes_text { padding-top: 3px; }
 .workspace-ui #chat .mes_text { font-size: var(--ws-font-body); line-height: 1.625; max-width: 80ch; padding-top: 8px; }
 .workspace-ui #chat .ch_name { font-size: var(--ws-font-ui); font-weight: 600; gap: 8px; }
+.workspace-ui #chat .mes_edit_buttons { flex-wrap: wrap; min-width: 0; max-width: 100%; gap: 4px; }
+.workspace-ui #chat .mes_edit_buttons .menu_button { flex-shrink: 0; }
+.workspace-ui :is(#options, #extensionsMenu, #sd_dropdown) { max-width: calc(100dvw - 16px); max-height: calc(100dvh - 16px); overflow-y: auto; }
+.workspace-ui #options .options-content { max-height: calc(100dvh - 28px); overflow-y: auto; }
+.workspace-ui #tts_status { overflow-wrap: anywhere; }
+.workspace-ui .workspace-mounted-panel .toggle-description { width: auto; max-width: 100%; overflow-wrap: anywhere; }
+.workspace-ui #tts_status.tts-status-error { color: #f3a6b2 !important; }
 .workspace-ui #chat .timestamp { font-size: var(--ws-font-meta); color: var(--ws-muted); }
 .workspace-ui #chat .avatar { width: 38px; height: 46px; border-radius: var(--ws-radius-control); }
 .workspace-ui #chat .mesAvatarWrapper { flex-shrink: 0; }
 .workspace-ui #chat .avatar img { width: 100%; height: 100%; border-radius: inherit; box-shadow: none; }
 .workspace-ui #chat .mes_buttons { color: var(--ws-muted); }
+.workspace-ui #chat :is(.mes_buttons, .extraMesButtons) { flex-wrap: wrap; min-width: 0; max-width: 100%; }
+.workspace-ui #chat .ch_name:has(.extraMesButtons.visible) { flex-wrap: wrap; }
+.workspace-ui #chat .mes_buttons:has(.extraMesButtons.visible) { flex-basis: 100%; }
+.workspace-ui #chat .mes_buttons .mes_button { min-width: 24px; min-height: 24px; text-align: center; }
+.workspace-ui #chat :is(.mes_buttons .mes_button, .mes_edit_buttons .menu_button):not(.disabled) { opacity: 1; filter: none; }
 .workspace-ui #chat .mes[is_system="true"] { color: var(--ws-muted); }
 .workspace-ui #form_sheld {
     --bottomFormIconSize: var(--ws-icon-size);
@@ -331,6 +346,26 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-restore { position: fixed; right: 12px; top: calc(var(--topBarBlockSize, 48px) + 12px); bottom: auto; z-index: 5000; font-size: var(--ws-font-meta, 0.75rem); width: auto; padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
 .workspace-ui dialog { background: var(--ws-base); color: var(--ws-text); border: 1px solid var(--ws-border); border-radius: var(--ws-radius-panel); }
 .workspace-ui dialog::backdrop { background: #090d16b3; backdrop-filter: blur(4px); }
+/* Native modal lifetime keeps portraits above navigation, backgrounds and editors. */
+.workspace-ui .workspace-portrait-popup { width: fit-content; max-width: calc(100dvw - 24px); min-height: 0; padding: 12px; }
+.workspace-ui .workspace-portrait-popup .popup-content { margin: 0; padding: 0; flex: 0 1 auto; }
+.workspace-ui .workspace-portrait-image { display: block; width: auto; height: auto; max-width: 100%; max-height: calc(100dvh - 140px); object-fit: contain; border-radius: var(--ws-radius-control); }
+.workspace-ui .workspace-portrait-popup .popup-controls { flex-shrink: 0; }
+/* Keep insertion labels readable while depth and role controls wrap together. */
+.workspace-ui #floatingPrompt .floating_prompt_radio_group label:has(input[type="number"]) { flex-wrap: wrap; gap: 8px; }
+.workspace-ui #floatingPrompt .floating_prompt_radio_group label:has(input[type="number"]) > span { flex-shrink: 0; }
+.workspace-ui #floatingPrompt .floating_prompt_radio_group input[type="number"] { flex: 0 1 5rem; min-width: 4rem; }
+.workspace-ui #floatingPrompt .floating_prompt_radio_group select { flex: 0 1 auto; max-width: 100%; }
+.workspace-ui #Backgrounds :is(#bg_menu_content, #bg_custom_content, .bg_folder_grid) { grid-template-columns: repeat(var(--bg-thumb-columns, 2), minmax(0, 1fr)); }
+.workspace-ui #Backgrounds :is(.BGSampleTitle, .bg_folder_tile_overlay) { background: #121620e6; color: var(--ws-text); text-shadow: none; }
+.workspace-ui #image_list .expression_list_item { min-height: 140px; min-width: 120px; }
+@media (max-width: 900px) {
+    .workspace-ui #qr--settings .qr--head { flex-wrap: wrap; }
+    .workspace-ui #qr--settings .qr--head > .qr--actions { flex-wrap: wrap; min-width: 0; max-width: 100%; }
+    .workspace-ui #Backgrounds :is(.bg_example, .bg_folder_tile).mobile-menu-open { min-height: 104px; }
+    .workspace-ui #Backgrounds .jg-menu { flex-wrap: wrap; max-width: calc(100% - 4px); }
+    .workspace-ui #Backgrounds :is(.bg_example, .bg_folder_tile) .jg-button { width: 44px; height: 44px; flex-shrink: 0; }
+}
 .workspace-ui #workspace-command { width: min(560px, calc(100vw - 32px)); max-height: min(660px, calc(100dvh - 48px)); padding: 20px; box-shadow: 0 16px 80px #00000080; }
 .workspace-command-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .workspace-command-heading h2 { font-size: var(--ws-font-body); margin: 0; }
@@ -570,6 +605,7 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
     .workspace-ui #chat .mes { gap: 10px; padding-inline: 0; }
     .workspace-ui #chat .mes[is_user="true"] { padding-inline: 10px; }
     .workspace-ui #chat .avatar { width: 30px; height: 38px; }
+    .workspace-ui #chat :is(.mes_buttons .mes_button, .mes_edit_buttons .menu_button) { min-width: 44px; min-height: 44px; }
     .workspace-ui #workspace-command { padding: 16px; }
 }
 @media (max-width: 600px) {
@@ -597,7 +633,6 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
     .workspace-ui .workspace-mounted-panel :is(.flex-container, .openai_logit_bias_preset_form):has(> select):has(.menu_button) { flex-wrap: wrap; }
     .workspace-ui .workspace-mounted-panel :is(.flex-container, .openai_logit_bias_preset_form):has(.menu_button) > select,
     .workspace-ui .workspace-mounted-panel .flex-container:has(> select):has(.menu_button) > .select2-container { flex: 1 1 100%; width: 100% !important; min-width: 0; }
-    .workspace-ui #Backgrounds #bg_menu_content { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .workspace-ui #Backgrounds .mobile-only-menu-toggle { min-width: 44px; min-height: 44px; }
     .workspace-ui .workspace-page { padding: 24px 16px 64px; }
     .workspace-page-heading { margin-bottom: 24px; }

@@ -202,10 +202,25 @@ function applyThumbnailColumns(count) {
     background_settings.thumbnailColumns = newCount;
     document.documentElement.style.setProperty('--bg-thumb-columns', newCount.toString());
 
-    $('#bg_thumb_zoom_in').prop('disabled', newCount <= THUMBNAIL_COLUMNS_MIN);
-    $('#bg_thumb_zoom_out').prop('disabled', newCount >= THUMBNAIL_COLUMNS_MAX);
-
+    syncThumbnailColumns();
     saveSettingsDebounced();
+}
+
+/** Keep thumbnail actions usable at the mounted gallery's actual width. */
+function syncThumbnailColumns() {
+    const galleries = [...document.querySelectorAll('#bg_menu_content, #bg_custom_content, #bg_folder_grid')];
+    const gallery = galleries.find(node => node.checkVisibility() && node.clientWidth > 0);
+    const workspace = document.body.classList.contains('workspace-ui');
+    const max = workspace && gallery ? Math.max(1, Math.min(THUMBNAIL_COLUMNS_MAX, Math.floor((gallery.clientWidth + 5) / 117))) : THUMBNAIL_COLUMNS_MAX;
+    const min = Math.min(THUMBNAIL_COLUMNS_MIN, max);
+    const columns = Math.max(min, Math.min(background_settings.thumbnailColumns, max));
+    for (const node of galleries) {
+        if (workspace) node.style.setProperty('--bg-thumb-columns', String(columns));
+        else node.style.removeProperty('--bg-thumb-columns');
+    }
+    $('#bg_thumb_zoom_in').prop('disabled', columns <= min);
+    $('#bg_thumb_zoom_out').prop('disabled', columns >= max);
+    return columns;
 }
 
 export function loadBackgroundSettings(settings) {
@@ -551,7 +566,7 @@ async function onDeleteBackgroundClick(e) {
     if (confirm) {
         // If it's not custom, it's a built-in background. Delete it from the server
         if (!isCustom) {
-            await delBackground(bg);
+            if (!await delBackground(bg)) return;
             // Remove from cache to prevent reappearing on sort change
             const cacheIndex = cachedSystemBackgrounds.findIndex(s => s.filename === bg);
             if (cacheIndex !== -1) {
@@ -829,6 +844,7 @@ function renderFolderGrid() {
 function createFolderTileElement(folder) {
     const tile = $('#bg_folder_tile_template .bg_folder_tile').clone();
     tile.attr('data-folder-id', folder.id);
+    tile.attr('title', folder.name);
     tile.find('.bg_folder_tile_name').text(folder.name);
 
     // Set cover image (async, update when resolved)
@@ -944,7 +960,7 @@ function setBackgroundSelectionMode(enabled) {
         selectedSystemBackgroundFiles.clear();
     }
     // Clear any open mobile menus
-    $('#bg_menu_content .bg_example.mobile-menu-open').removeClass('mobile-menu-open');
+    closeBackgroundMenus();
     syncGroupSelectionUi();
 }
 
@@ -1447,19 +1463,25 @@ async function setBackground(bg, url) {
 }
 
 async function delBackground(bg) {
-    await fetch('/api/backgrounds/delete', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify({
-            bg: bg,
-        }),
-    });
+    try {
+        const response = await fetch('/api/backgrounds/delete', {
+            method: 'POST',
+            headers: getRequestHeaders(),
+            body: JSON.stringify({ bg }),
+        });
+        if (!response.ok) throw new Error(`Background deletion failed: ${response.status}`);
+    } catch (error) {
+        console.error('Background deletion failed', error);
+        toastr.error(t`Failed to delete background. Try again.`);
+        return false;
+    }
 
     await THUMBNAIL_STORAGE.removeItem(bg);
     if (THUMBNAIL_BLOBS.has(bg)) {
         URL.revokeObjectURL(THUMBNAIL_BLOBS.get(bg));
         THUMBNAIL_BLOBS.delete(bg);
     }
+    return true;
 }
 
 /**
@@ -1690,9 +1712,40 @@ export function getActiveBackgroundTab() {
     return tabs.tabs('option', 'active');
 }
 
+/** Dismiss thumbnail/folder action menus before their surrounding settings. */
+function closeBackgroundMenus(except = null, restoreFocus = false) {
+    const menus = [...document.querySelectorAll('#Backgrounds .mobile-menu-open')].filter(menu => menu !== except);
+    for (const menu of menus) {
+        menu.classList.remove('mobile-menu-open');
+        const trigger = menu.querySelector('.mobile-only-menu-toggle');
+        trigger?.setAttribute('aria-expanded', 'false');
+        if (restoreFocus) trigger?.focus({ preventScroll: true });
+    }
+    return menus.length > 0;
+}
+
 export function initBackgrounds() {
     eventSource.on(event_types.CHAT_CHANGED, onChatChanged);
     eventSource.on(event_types.FORCE_SET_BACKGROUND, forceSetBackground);
+
+    document.addEventListener('click', event => {
+        if (event.isTrusted && event.target instanceof Element) closeBackgroundMenus(event.target.closest('.bg_example, .bg_folder_tile'));
+    }, { capture: true });
+    let tabbing = false;
+    document.addEventListener('keydown', event => {
+        tabbing = event.key === 'Tab';
+        const visibleMenu = document.querySelector('#Backgrounds .mobile-menu-open')?.checkVisibility();
+        if (event.key === 'Escape' && !event.isComposing && visibleMenu && !document.querySelector('dialog[open]') && closeBackgroundMenus(null, true)) {
+            event.preventDefault();
+            event.stopImmediatePropagation();
+        }
+    }, { capture: true });
+    document.addEventListener('keyup', () => { tabbing = false; }, { capture: true });
+    document.addEventListener('focusout', event => {
+        if (!tabbing || !(event.target instanceof Element)) return;
+        const menu = event.target.closest('.mobile-menu-open');
+        if (menu && event.relatedTarget instanceof Node && !menu.contains(event.relatedTarget)) closeBackgroundMenus();
+    });
 
     // Folder event handlers
     $(document)
@@ -1722,10 +1775,10 @@ export function initBackgrounds() {
             const $context = $(this).closest('.bg_folder_tile');
             const wasOpen = $context.hasClass('mobile-menu-open');
             // Close all other open menus before opening a new one.
-            $('.bg_folder_tile.mobile-menu-open').removeClass('mobile-menu-open');
-            $('.bg_example.mobile-menu-open').removeClass('mobile-menu-open');
+            closeBackgroundMenus();
             if (!wasOpen) {
                 $context.addClass('mobile-menu-open');
+                $(this).attr('aria-expanded', 'true');
             }
         });
 
@@ -1736,15 +1789,10 @@ export function initBackgrounds() {
             const $context = $(this).closest('.bg_example');
             const wasOpen = $context.hasClass('mobile-menu-open');
             // Close all other open menus before opening a new one.
-            $('.bg_example.mobile-menu-open').removeClass('mobile-menu-open');
-            $('.bg_folder_tile.mobile-menu-open').removeClass('mobile-menu-open');
+            closeBackgroundMenus();
             if (!wasOpen) {
                 $context.addClass('mobile-menu-open');
-            }
-        })
-        .off('blur', '.bg_example.mobile-menu-open').on('blur', '.bg_example.mobile-menu-open', function () {
-            if (!$(this).is(':focus-within')) {
-                $(this).removeClass('mobile-menu-open');
+                $(this).attr('aria-expanded', 'true');
             }
         })
         .off('click', '.jg-button').on('click', '.jg-button', function (e) {
@@ -1753,6 +1801,7 @@ export function initBackgrounds() {
                 return;
             }
             const action = $(this).data('action');
+            closeBackgroundMenus();
 
             switch (action) {
                 case 'lock':
@@ -1788,11 +1837,14 @@ export function initBackgrounds() {
         });
 
     $('#bg_thumb_zoom_in').on('click', () => {
-        applyThumbnailColumns(background_settings.thumbnailColumns - 1);
+        applyThumbnailColumns(syncThumbnailColumns() - 1);
     });
     $('#bg_thumb_zoom_out').on('click', () => {
-        applyThumbnailColumns(background_settings.thumbnailColumns + 1);
+        applyThumbnailColumns(syncThumbnailColumns() + 1);
     });
+    const thumbnailResize = new ResizeObserver(syncThumbnailColumns);
+    document.querySelectorAll('#bg_menu_content, #bg_custom_content, #bg_folder_grid').forEach(node => thumbnailResize.observe(node));
+    window.addEventListener('resize', syncThumbnailColumns);
     $('#auto_background').on('click', autoBackgroundCommand);
     $('#bg_selection_mode_button').on('click', () => setBackgroundSelectionMode(!isBackgroundSelectionMode));
     $('#bg_group_add_to_folder_button').on('click', onAddSelectedToFolder);

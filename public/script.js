@@ -156,6 +156,7 @@ import {
     download,
     isDataURL,
     getCharaFilename,
+    getMenuPopperOptions,
     PAGINATION_TEMPLATE,
     waitUntilCondition,
     escapeRegex,
@@ -440,9 +441,7 @@ export const system_avatar = 'img/five.png';
 export const comment_avatar = 'img/quill.png';
 export const default_user_avatar = 'img/user-default.png';
 export let CLIENT_VERSION = 'SillyTavern:UNKNOWN:Cohee#1207'; // For Horde header
-let optionsPopper = Popper.createPopper(document.getElementById('options_button'), document.getElementById('options'), {
-    placement: 'top-start',
-});
+let optionsPopper = Popper.createPopper(document.getElementById('options_button'), document.getElementById('options'), getMenuPopperOptions());
 let exportPopper = Popper.createPopper(document.getElementById('export_button'), document.getElementById('export_format_popup'), {
     placement: 'left',
 });
@@ -2662,7 +2661,8 @@ export function updateMessageElement(mes, { messageId = chat.length - 1, message
         'type': mes.extra?.type ?? '',
     });
 
-    messageElement.find('.avatar img').attr('src', avatarImg);
+    messageElement.find('.avatar').attr({ role: 'button', tabindex: 0, 'aria-label': t`Enlarge portrait: ${mes.name}` });
+    messageElement.find('.avatar img').attr({ src: avatarImg, alt: '' });
     messageElement.find('.ch_name .name_text').text(mes.name);
     messageElement.find('.timestamp').text(timestamp).attr('title', `${mes.extra?.api ? mes.extra.api + ' - ' : ''}${mes.extra?.model ?? ''}`);
     messageElement.find('.mesIDDisplay').text(`#${messageId}`);
@@ -3687,7 +3687,9 @@ class StreamingProcessor {
             this.markUIGenStarted();
         }
         hideSwipeButtons({ hideCounters: true });
-        scrollChatToBottom({ waitForFrame: true });
+        // The reader may have scrolled into history while the first token was
+        // pending, including after a suspended tab resumes.
+        if (!scrollLock) scrollChatToBottom({ waitForFrame: true });
         return messageId;
     }
 
@@ -3903,7 +3905,6 @@ class StreamingProcessor {
         if (this.messageId == -1) {
             this.messageId = await this.onStartStreaming(this.firstMessageText);
             await delay(1); // delay for message to be rendered
-            scrollLock = false;
         }
 
         // Stopping strings are expensive to calculate, especially with macros enabled. To remove stopping strings
@@ -6766,7 +6767,7 @@ export async function saveReply({ type, getMessage, fromStreaming = false, title
             }
             const chat_id = (chat.length - 1);
             !fromStreaming && await eventSource.emit(event_types.MESSAGE_RECEIVED, chat_id, type);
-            addOneMessage(chat[chat_id], { type: 'swipe' });
+            addOneMessage(chat[chat_id], { type: 'swipe', scroll: !fromStreaming || !scrollLock });
             !fromStreaming && await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, chat_id, type);
         } else {
             lastMessage.mes = getMessage;
@@ -6791,7 +6792,7 @@ export async function saveReply({ type, getMessage, fromStreaming = false, title
         }
         const chat_id = (chat.length - 1);
         !fromStreaming && await eventSource.emit(event_types.MESSAGE_RECEIVED, chat_id, type);
-        addOneMessage(chat[chat_id], { type: 'swipe' });
+        addOneMessage(chat[chat_id], { type: 'swipe', scroll: !fromStreaming || !scrollLock });
         !fromStreaming && await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, chat_id, type);
     } else if (type === 'appendFinal') {
         oldMessage = lastMessage.mes;
@@ -6813,7 +6814,7 @@ export async function saveReply({ type, getMessage, fromStreaming = false, title
         }
         const chat_id = (chat.length - 1);
         !fromStreaming && await eventSource.emit(event_types.MESSAGE_RECEIVED, chat_id, type);
-        addOneMessage(chat[chat_id], { type: 'swipe' });
+        addOneMessage(chat[chat_id], { type: 'swipe', scroll: !fromStreaming || !scrollLock });
         !fromStreaming && await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, chat_id, type);
     } else {
         console.debug('entering chat update routine for non-swipe post');
@@ -6856,7 +6857,7 @@ export async function saveReply({ type, getMessage, fromStreaming = false, title
         const chat_id = (chat.length - 1);
 
         !fromStreaming && await eventSource.emit(event_types.MESSAGE_RECEIVED, chat_id, type);
-        addOneMessage(chat[chat_id]);
+        addOneMessage(chat[chat_id], { scroll: !fromStreaming || !scrollLock });
         !fromStreaming && await eventSource.emit(event_types.CHARACTER_MESSAGE_RENDERED, chat_id, type);
     }
 
@@ -12347,6 +12348,14 @@ jQuery(async function () {
         resetMovableStyles(drawerId);
     });
 
+    $(document).on('keydown', '.mes .avatar', function (event) {
+        if (event.key === 'Enter' || event.key === ' ') {
+            event.preventDefault();
+            event.stopPropagation();
+            this.click();
+        }
+    });
+
     $(document).on('click', '.mes .avatar', function () {
         const messageElement = $(this).closest('.mes');
         const thumbURL = $(this).children('img').attr('src');
@@ -12367,6 +12376,30 @@ jQuery(async function () {
         }
 
         const avatarSrc = (isDataURL(thumbURL) || /^\/?img\/(?:.+)/.test(thumbURL)) ? thumbURL : charsPath + targetAvatarImg;
+        const personaAvatar = messageElement.attr('is_user') === 'true' || (messageElement.attr('is_system') === 'true' && !isValidCharacter);
+        const portraitSrc = personaAvatar
+            ? (decodeURIComponent(targetAvatarImg) in power_user.personas ? getUserAvatar(targetAvatarImg) : thumbURL)
+            : avatarSrc;
+        if (document.body.classList.contains('workspace-ui')) {
+            const image = document.createElement('img');
+            image.className = 'workspace-portrait-image';
+            image.alt = messageElement.attr('ch_name') || t`Portrait`;
+            image.src = portraitSrc;
+            const holder = document.createElement('div');
+            holder.className = 'workspace-portrait-holder';
+            holder.append(image);
+            const popup = new Popup(holder, POPUP_TYPE.TEXT, '', {
+                okButton: t`Close portrait`,
+                onOpen: () => {
+                    if (power_user.zoomed_avatar_magnification) $(holder).izoomify({ magnify: 1.8, url: portraitSrc });
+                },
+                onClose: () => { if (this.isConnected) this.focus({ preventScroll: true }); },
+            });
+            popup.dlg.classList.add('workspace-portrait-popup');
+            popup.dlg.setAttribute('aria-label', t`Portrait: ${image.alt}`);
+            void popup.show();
+            return;
+        }
         if ($(`.zoomed_avatar[forChar="${charname}"]`).length) {
             console.debug('removing container as it already existed');
             $(`.zoomed_avatar[forChar="${charname}"]`).fadeOut(animation_duration, () => {
@@ -12384,21 +12417,7 @@ jQuery(async function () {
             $('body').append(newElement);
             newElement.fadeIn(animation_duration);
             const zoomedAvatarImgElement = $(`.zoomed_avatar[forChar="${charname}"] img`);
-            if (messageElement.attr('is_user') == 'true' || (messageElement.attr('is_system') == 'true' && !isValidCharacter)) {
-                //handle user and system avatars
-                const isValidPersona = decodeURIComponent(targetAvatarImg) in power_user.personas;
-                if (isValidPersona) {
-                    const personaSrc = getUserAvatar(targetAvatarImg);
-                    zoomedAvatarImgElement.attr('src', personaSrc);
-                    zoomedAvatarImgElement.attr('data-izoomify-url', personaSrc);
-                } else {
-                    zoomedAvatarImgElement.attr('src', thumbURL);
-                    zoomedAvatarImgElement.attr('data-izoomify-url', thumbURL);
-                }
-            } else if (messageElement.attr('is_user') == 'false') { //handle char avatars
-                zoomedAvatarImgElement.attr('src', avatarSrc);
-                zoomedAvatarImgElement.attr('data-izoomify-url', avatarSrc);
-            }
+            zoomedAvatarImgElement.attr({ src: portraitSrc, 'data-izoomify-url': portraitSrc });
             loadMovingUIState();
             $(`.zoomed_avatar[forChar="${charname}"]`).css('display', 'flex');
             dragElement(newElement);

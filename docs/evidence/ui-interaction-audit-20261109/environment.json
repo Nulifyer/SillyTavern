@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-09T22:43:01.181552+00:00",
+  "node": "v26.13.0",
+  "playwright": "1.56.1",
+  "browser": "Playwright Chromium, headless; shared T3 browser used for initial reproduction and follow-up visual checks",
+  "servers": [
+    {
+      "url": "http://127.0.0.1:8050",
+      "dataRoot": "/tmp/st-ui-audit-20261109/data",
+      "use": "UI audit; restarted after first final-audit fixture exited"
+    },
+    {
+      "url": "http://127.0.0.1:8051",
+      "dataRoot": "/tmp/st-ui-audit-20261109/delta-data",
+      "use": "Workspace regressions"
+    }
+  ],
+  "privacy": "Synthetic local data only; no production application route, logs, volumes or data inspected",
+  "release": "Local uncommitted source only; no deployment"
+}

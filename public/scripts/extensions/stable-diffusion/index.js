@@ -34,6 +34,7 @@ import {
     delay,
     getBase64Async,
     getCharaFilename,
+    getMenuPopperOptions,
     initScrollHeight,
     isFalseBoolean,
     isTrueBoolean,
@@ -5179,9 +5180,7 @@ async function addSDGenButtons() {
         if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); event.stopPropagation(); this.click(); }
     });
 
-    let popper = Popper.createPopper(button.get(0), dropdown.get(0), {
-        placement: 'top',
-    });
+    let popper = Popper.createPopper(button.get(0), dropdown.get(0), getMenuPopperOptions('top'));
 
     $(document).on('click', '.sd_message_gen', (e) => sdMessageButton($(e.currentTarget), { animate: false }));
 

@@ -5,6 +5,7 @@ const interactableSelectors = [
     '.menu_button', // General menu button in ST
     '.right_menu_button', // Button-likes in many menus
     '.drawer-icon', // Main "menu bar" icons
+    '.draggable .dragClose', // Close controls on native floating panels
     '.inline-drawer-icon', // Buttons/icons inside the drawer menus
     '.paginationjs-pages li a', // Pagination buttons
     '.group_select, .character_select, .bogus_folder_select', // Cards to select char, group or folder in character list and other places
@@ -13,6 +14,7 @@ const interactableSelectors = [
     '.tag .tag_remove', // Remove button in removable tags
     '.bg_example', // Background elements in the background menu
     '.bg_example .jg-button, .bg_example .mobile-only-menu-toggle', // The inline buttons on the backgrounds
+    '.bg_folder_tile, .bg_folder_tile .jg-button, .bg_folder_tile .mobile-only-menu-toggle', // Background folders and their actions
     '#options a', // Option entries in the popup options menu
     '.mes_buttons .mes_button', // Small inline buttons on the chat messages
     '.extraMesButtons>div:not(.mes_button)', // The extra/extension buttons inline on the chat messages
@@ -206,13 +208,14 @@ function initializeScrollResetBehaviors(element = document) {
 }
 
 /**
- * Handles keydown events on the document to trigger click on Enter key press for interactables
+ * Handles Enter for interactables and Space for floating-panel close buttons.
  *
  * @param {KeyboardEvent} event - The keyboard event
  */
 function handleGlobalKeyDown(event) {
     if (event.defaultPrevented || event.isComposing) return;
-    if (event.key === 'Enter') {
+    const floatingCloseSpace = event.key === ' ' && event.target instanceof Element && event.target.closest('.draggable .dragClose');
+    if (event.key === 'Enter' || floatingCloseSpace) {
         if (!(event.target instanceof HTMLElement))
             return;
 
@@ -232,7 +235,7 @@ function handleGlobalKeyDown(event) {
 
         // Trigger click if a valid interactable is found and it's not disabled
         if (target && !target.classList.contains(DISABLED_CONTROL_CLASS)) {
-            console.debug('Triggering click on keyboard-focused interactable control via Enter', target);
+            console.debug('Triggering click on keyboard-focused interactable control', event.key, target);
             event.preventDefault();
             target.click();
         }

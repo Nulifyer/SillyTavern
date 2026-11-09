@@ -6479,7 +6479,7 @@
                 <div class="dragTitle"></div>
                 <div class="panelControlBar flex-container">
                     <div class="fa-fw fa-solid fa-grip drag-grabber"></div>
-                    <div class="fa-fw fa-solid fa-circle-xmark dragClose"></div>
+                    <div class="fa-fw fa-solid fa-circle-xmark dragClose" role="button" aria-label="Close panel" title="Close panel" data-i18n="[aria-label]Close panel;[title]Close panel"></div>
                 </div>
             </div>
         </template>
@@ -6744,7 +6744,7 @@
         <div id="background_template" class="template_element">
             <div class="bg_example flex-container" bgfile="" title="">
                 <div class="bg_example_img"></div>
-                <div class="mobile-only-menu-toggle">
+                <div class="mobile-only-menu-toggle" aria-label="Background actions" aria-expanded="false">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
                 <div class="jg-menu">
@@ -6766,7 +6766,7 @@
                     <i class="fa-solid fa-folder"></i>
                     <span class="bg_folder_tile_name"></span>
                 </div>
-                <div class="mobile-only-menu-toggle">
+                <div class="mobile-only-menu-toggle" aria-label="Folder actions" aria-expanded="false">
                     <i class="fa-solid fa-ellipsis-vertical"></i>
                 </div>
                 <div class="bg_folder_tile_menu jg-menu">
@@ -8172,10 +8172,6 @@
     <!-- popups live outside sheld to avoid blur conflicts -->
     <div id="options" class="font-family-reset" style="display: none;">
         <div class="options-content">
-            <a id="option_close_chat" class="displayNone">
-                <i class="fa-lg fa-solid fa-times"></i>
-                <span data-i18n="Close chat">Close chat</span>
-            </a>
             <a id="option_settings" class="displayNone">
                 <i class="fa-lg fa-solid fa-cog"></i>
                 <span data-i18n="Toggle Panels">Toggle Panels</span>

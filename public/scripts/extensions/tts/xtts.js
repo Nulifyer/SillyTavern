@@ -1,5 +1,5 @@
 import { doExtrasFetch, getApiUrl, modules } from '../../extensions.js';
-import { saveTtsProviderSettings } from './index.js';
+import { saveTtsProviderSettings, setTtsStatus } from './index.js';
 
 export { XTTSTtsProvider };
 
@@ -143,7 +143,10 @@ class XTTSTtsProvider {
         $('#xtts_stream_chunk_size_output').text(this.settings.stream_chunk_size);
 
         saveTtsProviderSettings();
-        this.changeTTSSettings();
+        void this.changeTTSSettings().catch(error => {
+            console.error('XTTS settings could not be applied', error);
+            if ($('#tts_provider').val() === 'XTTSv2') setTtsStatus('XTTS settings saved locally, but the speech server could not apply them. Check the endpoint and use Reload to retry.', false);
+        });
     }
 
     async loadSettings(settings) {
@@ -216,11 +219,11 @@ class XTTSTtsProvider {
 
     // Perform a simple readiness check by trying to fetch voiceIds
     async checkReady() {
-        await Promise.allSettled([this.fetchTtsVoiceObjects(), this.changeTTSSettings()]);
+        await Promise.all([this.fetchTtsVoiceObjects(), this.changeTTSSettings()]);
     }
 
     async onRefreshClick() {
-        return;
+        await this.checkReady();
     }
 
     //#################//
@@ -283,6 +286,7 @@ class XTTSTtsProvider {
                 }),
             },
         );
+        if (!response.ok) throw new Error(`XTTS settings request failed: ${response.status}`);
         return response;
     }
 

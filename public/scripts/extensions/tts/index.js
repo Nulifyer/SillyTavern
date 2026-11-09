@@ -117,7 +117,7 @@ export function registerTtsProvider(name, provider) {
 
     // Load if it was previously selected
     if (extension_settings.tts.currentProvider === name) {
-        loadTtsProvider(name);
+        loadTtsProviderForUi(name);
     }
 }
 
@@ -912,8 +912,9 @@ const defaultSettings = {
     regex_pattern: '',
 };
 
-function setTtsStatus(status, success) {
+export function setTtsStatus(status, success) {
     $('#tts_status').text(status);
+    $('#tts_status').toggleClass('tts-status-error', !success);
     if (success) {
         $('#tts_status').removeAttr('style');
     } else {
@@ -1070,6 +1071,7 @@ async function loadTtsProvider(provider) {
     extension_settings.tts.currentProvider = provider;
     ttsProviderName = provider;
     ttsProvider = new ttsProviders[provider];
+    setTtsStatus('Loading provider settings...', true);
 
     // Init provider settings
     $('#tts_provider_settings').append(ttsProvider.settingsHtml);
@@ -1078,7 +1080,16 @@ async function loadTtsProvider(provider) {
         extension_settings.tts[ttsProviderName] = {};
     }
     await ttsProvider.loadSettings(extension_settings.tts[ttsProviderName]);
+    if (extension_settings.tts.currentProvider === provider) setTtsStatus('Provider settings loaded', true);
     await initVoiceMap();
+}
+
+/** Interactive/startup loads report failures in the native Speech status. */
+function loadTtsProviderForUi(provider) {
+    void loadTtsProvider(provider).catch(error => {
+        console.error(`TTS provider ${provider} could not load`, error);
+        if (extension_settings.tts.currentProvider === provider) setTtsStatus(`${provider} could not load. ${error?.message || error}`, false);
+    });
 }
 
 function onTtsProviderChange() {
@@ -1088,7 +1099,7 @@ function onTtsProviderChange() {
     const ttsProviderSelection = $('#tts_provider').val();
     extension_settings.tts.currentProvider = ttsProviderSelection;
     $('#playback_rate_block').toggle(extension_settings.tts.currentProvider !== 'System');
-    loadTtsProvider(ttsProviderSelection);
+    loadTtsProviderForUi(ttsProviderSelection);
 }
 
 // Ensure that TTS provider settings are saved to extension settings.
@@ -1582,7 +1593,7 @@ export async function init() {
     }
     await addExtensionControls(); // No init dependencies
     loadSettings(); // Depends on Extension Controls and loadTtsProvider
-    loadTtsProvider(extension_settings.tts.currentProvider); // No dependencies
+    loadTtsProviderForUi(extension_settings.tts.currentProvider); // No dependencies
     addAudioControl(); // Depends on Extension Controls
     setInterval(wrapper.update.bind(wrapper), UPDATE_INTERVAL); // Init depends on all the things
     eventSource.on(event_types.MESSAGE_SWIPED, resetTtsPlayback);

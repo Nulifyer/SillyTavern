@@ -1,0 +1,25 @@
+npm notice run npx
+npm notice run 'playwright' test workspace.e2e.js --workers=1 --grep Foreground chat layout|stream after freeze|healthy reply completed|foreground retry coalesces|roleplay pages and composer stay within a 320px --output ../docs/evidence/ui-interaction-audit-20261109/stream-reader-verified
+(node:984295) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 11 tests using 1 worker
+
+(node:984319) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:984319) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:984319) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 workspace.e2e.js:2902:1 › a healthy reply completed while frozen resumes once and preserves the next draft (5.8s)
+  ✓   2 workspace.e2e.js:2973:7 › Foreground chat layout: desktop › resume shows the final character line without a recovery popup (5.8s)
+  ✓   3 workspace.e2e.js:2973:7 › Foreground chat layout: desktop › resume preserves the history reading position without a recovery popup (5.8s)
+  ✓   4 workspace.e2e.js:2973:7 › Foreground chat layout: desktop › resume preserves the history reading position without a recovery popup when the reply starts after resume (5.9s)
+  ✓   5 workspace.e2e.js:2973:7 › Foreground chat layout: Pixel 9 Pro XL › resume shows the final character line without a recovery popup (6.0s)
+  ✓   6 workspace.e2e.js:2973:7 › Foreground chat layout: Pixel 9 Pro XL › resume preserves the history reading position without a recovery popup (6.0s)
+  ✓   7 workspace.e2e.js:2973:7 › Foreground chat layout: Pixel 9 Pro XL › resume preserves the history reading position without a recovery popup when the reply starts after resume (6.1s)
+  ✓   8 workspace.e2e.js:3142:3 › a reset stream after freeze preserves partial text without success actions or replay (8.4s)
+  ✓   9 workspace.e2e.js:3142:3 › a early-eof stream after freeze preserves partial text without success actions or replay (8.6s)
+  ✓  10 workspace.e2e.js:3272:1 › foreground retry coalesces events, refreshes CSRF and preserves explicit model settings (7.1s)
+  ✓  11 workspace.e2e.js:4552:3 › roleplay pages and composer stay within a 320px viewport (7.0s)
+
+  11 passed (1.2m)

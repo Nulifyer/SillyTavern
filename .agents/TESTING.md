@@ -89,6 +89,16 @@ template beyond APP_READY. Images recover without navigation; switching away
 keeps native/model node identity, focus and unapplied choice. Repeated native
 readiness signals do not duplicate sections or collapse opened details.
 
+## UI interaction audit
+
+On a fresh synthetic data root, run `cd tests && ST_BASE_URL=http://127.0.0.1:8050 ST_UI_AUDIT=1 ST_PROVIDER_HOST=127.0.0.1 npx playwright test workspace.e2e.js ui-audit.e2e.js --workers=1 --grep-invert 'live Juiced'`.
+For container fixtures, omit ST_PROVIDER_HOST to retain host.containers.internal.
+The opt-in audit records reachable controls, provider forms and actual actions.
+It exercises background/folder lifecycle, thumbnail sizing, native overlays,
+message editing, enlarged portraits and text at desktop/phone/short heights.
+Inventory geometry is not proof of every provider's external behavior. See
+`work/ui-interaction-audit.md` for current evidence and limits.
+
 ## Known gaps
 
 Menu dismissal: run `--grep 'transient menus dismiss|search opens character profiles and a fixture'`.

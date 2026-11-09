@@ -22,6 +22,25 @@ export const shiftUpByOne = (e, i, a) => a[i] = e + 1;
 export const shiftDownByOne = (e, i, a) => a[i] = e - 1;
 
 /**
+ * Keep body-mounted native menus inside the viewport even when their trigger
+ * is in a scrolling workspace menu.
+ * @param {import('@popperjs/core').Placement} [placement] Menu placement
+ * @returns {Partial<import('@popperjs/core').Options>} Popper options
+ */
+export function getMenuPopperOptions(placement = 'top-start') {
+    return {
+        placement,
+        strategy: 'fixed',
+        modifiers: [
+            { name: 'preventOverflow', options: { altAxis: true, tether: false, padding: 8 } },
+            // Classic layout retains a transformed, zero-height html element.
+            // Use top/left coordinates instead of adaptive bottom/right insets.
+            { name: 'computeStyles', options: { adaptive: false } },
+        ],
+    };
+}
+
+/**
  * Pagination status string template.
  * @type {string}
  */

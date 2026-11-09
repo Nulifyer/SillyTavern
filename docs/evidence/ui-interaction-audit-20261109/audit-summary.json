@@ -1,0 +1,189 @@
+{
+  "status": "verified local audit",
+  "date": "2026-11-09T23:14:57.884373+00:00",
+  "sourceManifest": "source-sha256.json",
+  "sourceManifestMatches": true,
+  "scope": "Current workspace UI and its shipped native controls on synthetic local fixtures. Classic layout restoration and short-window menus receive regression checks.",
+  "viewports": [
+    [
+      1440,
+      900
+    ],
+    [
+      1024,
+      768
+    ],
+    [
+      768,
+      1024
+    ],
+    [
+      448,
+      921
+    ],
+    [
+      390,
+      844
+    ],
+    [
+      320,
+      568
+    ],
+    [
+      844,
+      390
+    ],
+    [
+      320,
+      400
+    ]
+  ],
+  "portraits": {
+    "selectedBackgrounds": [
+      "_white.jpg",
+      "landscape winter lake house.jpg",
+      "cityscape medieval night.jpg"
+    ],
+    "combinations": 24,
+    "checks": [
+      "image loaded and above navigation",
+      "viewport containment",
+      "resize while open",
+      "Close and Escape",
+      "Enter and Space",
+      "magnification preference",
+      "focus return",
+      "draft and transcript identity"
+    ]
+  },
+  "settingsInventory": {
+    "states": 184,
+    "controlObservations": 8852,
+    "distinctControlIdentities": 562,
+    "horizontalOverflowStates": 0,
+    "obscuredOrOffscreenEnabledControls": 0,
+    "artifact": "accepted-audit-contained/ui-audit.e2e.js-audit-ever-839d5-ion-at-eight-viewport-sizes/control-inventory.json"
+  },
+  "providerInventory": {
+    "states": 480,
+    "controlObservations": 21351,
+    "distinctControlIdentities": 588,
+    "horizontalOverflowStates": 0,
+    "obscuredOrOffscreenEnabledControls": 0,
+    "artifact": "accepted-audit-contained/ui-audit.e2e.js-audit-prov-da1db-ntrols-on-desktop-and-phone/provider-control-inventory.json"
+  },
+  "providerChoices": {
+    "main_api": 5,
+    "chat_completion_source": 25,
+    "textgen_type": 15,
+    "sd_source": 24,
+    "tts_provider": 28,
+    "vectors_source": 20,
+    "caption_source": 4,
+    "caption_multimodal_api": 23,
+    "translation_provider": 8,
+    "expression_api": 5,
+    "summary_source": 3
+  },
+  "toggleActions": {
+    "settings": 438,
+    "settingsDistinctControls": 173,
+    "refusedWithVisibleFeedback": 2,
+    "provider": 103
+  },
+  "actualActionCoverage": [
+    "story create/continue/rename/archive/restore/delete and failure paths",
+    "character browse/profile/create/native edit and cast lifecycle",
+    "search and navigation",
+    "scene details/context/overrides/branching",
+    "composer, native streaming/nonstreaming generation, Stop, partial replies and resume",
+    "images, writer, voice and dictation setup/failure/retry using synthetic providers",
+    "background upload/select/fit/sort/search/lock/rename/delete and folders/bulk/zoom",
+    "message actions/editing, CFG, logprobs and chat file panels",
+    "Data Bank search/sort/bulk controls, Token Counter, gallery open/close and file chooser entry points",
+    "populated lorebook editor and persona create/rename/delete dialogs",
+    "settings categories/sections/disclosures/provider choices and checkbox/radio branches"
+  ],
+  "manualBrowserReview": [
+    "initial portrait overlap reproduction and portrait correction",
+    "short-landscape native menu placement",
+    "320px Quick Replies actions, World & lore, Account, nested Settings Snapshots at 320x400; screenshots under review/"
+  ],
+  "verification": {
+    "workspace": {
+      "distinctCases": 100,
+      "broadRun": "99 passed, 1 failed",
+      "artifact": "accepted-workspace.log",
+      "remainingFailure": "Fixture expected a new writer profile although native Connection Manager correctly reused a matching existing profile.",
+      "correction": "Assert native reuse and preserve existing profiles; corrected case passed 3 repeats on the fixture containing the existing profile.",
+      "correctionArtifact": "service-existing-profile-verified.log"
+    },
+    "uiAudit": {
+      "distinctCases": 13,
+      "broadRun": "12 passed, 1 failed",
+      "artifact": "accepted-audit-contained.log",
+      "remainingFailure": "Floating gallery Close lacked an explicit button role.",
+      "correction": "Native template role, accessible name and keyboard owner; 3 Enter runs passed, then 2 final Enter/Space runs.",
+      "correctionArtifacts": [
+        "gallery-keyboard-verified.log",
+        "gallery-space-verified.log"
+      ],
+      "finalKeyboardRunComplete": true
+    },
+    "resumeRegression": "stream-reader-verified.log: 11 passed; deterministic delayed-start cases failed on both desktop and phone before the native stream fix.",
+    "units": "unit.log: 501 passed in 27 suites",
+    "rootLint": "lint.log: exit 0",
+    "testLint": "test-lint.log: 0 errors, warnings retained",
+    "diffCheck": "git diff --check passed",
+    "continuity": "continuity.log: no structural errors; existing TESTING.md compactness warning retained"
+  },
+  "diagnostics": {
+    "accepted-workspace": {
+      "pageErrors": 0,
+      "consoleErrors": 54,
+      "failedRequests": 90
+    },
+    "accepted-audit-contained": {
+      "pageErrors": 0,
+      "consoleErrors": 88,
+      "failedRequests": 25
+    },
+    "service-existing-profile-verified": {
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 3
+    },
+    "gallery-space-verified": {
+      "pageErrors": 0,
+      "consoleErrors": 16,
+      "failedRequests": 0
+    }
+  },
+  "exceptions": [
+    "Hidden Select2 native proxies are recorded but their visible replacement owns interaction. They are not scrolled for screenshots.",
+    "Overlapping dual-range input rails share a hit region; their center-point proxy is excluded from obstruction assertions.",
+    "Console/network diagnostics are retained, including unavailable-provider probes, intentional rejections and 404s; zero uncaught page errors is not a claim of zero failed HTTP requests."
+  ],
+  "limits": [
+    "Not every possible combination of user content, settings, custom theme and third-party extension.",
+    "Provider forms and synthetic request/retry flows are qualified; paid/external service output is not.",
+    "Headless/emulated sizes and shared Chromium browser are not physical-device, microphone or audible-quality qualification.",
+    "Account/snapshot views were inspected; destructive account resets, real restores, external documentation links and third-party installation were not executed.",
+    "Production application/data/logs/volumes were not inspected. No release, commit or deployment was performed."
+  ],
+  "priorAttempts": "Earlier failing/interrupted runs are retained as attempts. Do not treat their initial inventories or pass counts as the final acceptance record.",
+  "versionedLogCopies": {
+    "normalization": "ANSI color escapes and trailing whitespace removed; raw logs remain local and unchanged.",
+    "files": {
+      "accepted-workspace.log": "release-v24/accepted-workspace.txt",
+      "accepted-audit-contained.log": "release-v24/accepted-audit-contained.txt",
+      "service-existing-profile-verified.log": "release-v24/service-existing-profile-verified.txt",
+      "gallery-space-verified.log": "release-v24/gallery-space-verified.txt",
+      "stream-reader-verified.log": "release-v24/stream-reader-verified.txt",
+      "lint.log": "release-v24/lint.txt",
+      "test-lint.log": "release-v24/test-lint.txt",
+      "unit.log": "release-v24/unit.txt",
+      "continuity.log": "release-v24/continuity.txt"
+    }
+  }
+}

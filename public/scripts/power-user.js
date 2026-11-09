@@ -3266,8 +3266,8 @@ jQuery(() => {
         $('#context_story_string_inject_settings').toggle(value === extension_prompt_types.IN_CHAT);
     });
 
-    $('#bind_model_templates').on('input', function () {
-        if (bindModelTemplates(power_user, online_status)) {
+    $('#bind_model_templates').on('input', async function () {
+        if (await bindModelTemplates(power_user, online_status)) {
             saveSettingsDebounced();
         }
     });

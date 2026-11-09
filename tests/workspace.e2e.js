@@ -6,6 +6,52 @@ test.use({ channel: 'chromium', video: 'off', viewport: { width: 1280, height: 8
 test.setTimeout(90000);
 const runId = Date.now().toString(36);
 
+test('enlarged message portraits stay above navigation and backgrounds and dismiss without losing the draft', async ({ page }, testInfo) => {
+    await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} portrait`);
+    await page.locator('#send_textarea').fill('Keep my next turn.');
+    await page.evaluate(() => { window.__portraitMessage = document.querySelector('#chat .mes'); });
+    for (const background of ['_white.jpg', 'landscape winter lake house.jpg', 'cityscape medieval night.jpg']) {
+        await settingsCategory(page, 'backgrounds');
+        await page.locator(`.bg_example[bgfile="${background}"]`).click();
+        await page.locator('[data-workspace-action="close-panel"]').click();
+        for (const [width, height] of [[1440, 900], [1024, 768], [768, 1024], [448, 921], [390, 844], [320, 568], [844, 390], [320, 400]]) {
+            await page.setViewportSize({ width, height });
+            const avatar = page.locator('#chat .mes .avatar').first();
+            await avatar.click();
+            const popup = page.locator('dialog[open]:has(.workspace-portrait-image)');
+            await expect(popup).toBeVisible();
+            const image = popup.locator('.workspace-portrait-image');
+            await expect(image).toBeVisible();
+            expect(await image.evaluate(img => img.complete && img.naturalWidth > 0)).toBe(true);
+            expect(await image.evaluate(img => {
+                const r = img.getBoundingClientRect();
+                return r.left >= 0 && r.top >= 0 && r.right <= innerWidth && r.bottom <= innerHeight
+                    && img === document.elementFromPoint(r.x + r.width / 2, r.y + r.height / 2);
+            })).toBe(true);
+            await expect(popup.getByRole('button', { name: 'Close portrait', exact: true })).toBeInViewport();
+            await page.screenshot({ path: testInfo.outputPath(`portrait-${background}-${width}x${height}.png`) });
+            // Resize an already-open image, including a phone keyboard-sized height.
+            await page.setViewportSize({ width: 320, height: 400 });
+            await expect(popup.getByRole('button', { name: 'Close portrait', exact: true })).toBeInViewport();
+            await page.keyboard.press('Escape');
+            await expect(popup).toHaveCount(0);
+            await expect(avatar).toBeFocused();
+            await expect(page.locator('#send_textarea')).toHaveValue('Keep my next turn.');
+        }
+        await page.setViewportSize({ width: 1280, height: 800 });
+    }
+    await page.locator('#chat .mes .avatar').first().press('Enter');
+    await page.getByRole('button', { name: 'Close portrait', exact: true }).click();
+    await page.locator('#chat .mes .avatar').first().press('Space');
+    await page.keyboard.press('Escape');
+    await page.locator('#zoomed_avatar_magnification').evaluate(input => { input.checked = true; input.dispatchEvent(new Event('input', { bubbles: true })); });
+    await page.locator('#chat .mes .avatar').first().click();
+    await page.locator('.workspace-portrait-image').hover();
+    await expect(page.locator('.workspace-portrait-holder')).toHaveClass(/izoomify-in/);
+    await page.getByRole('button', { name: 'Close portrait', exact: true }).click();
+    expect(await page.evaluate(() => window.__portraitMessage === document.querySelector('#chat .mes'))).toBe(true);
+});
+
 test('Scene summary uses native effective anchor and truthful save feedback with one settings tree', async ({ page }, testInfo) => {
     await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} summary`);
     await page.evaluate(async () => {
@@ -290,7 +336,7 @@ async function startStory(page, title) {
     await profile(page);
     await page.getByRole('button', { name: 'Start new story', exact: true }).click();
     await expect(page.locator('dialog[open]')).toHaveCount(0);
-    await expect(page.locator('#send_textarea')).toBeVisible();
+    await expect(page.locator('#send_textarea')).toBeVisible({ timeout: 20000 });
     const current = await page.evaluate(async () => (await import('/script.js')).getCurrentChatId());
     page.workspaceCreatedTitles ||= [];
     page.workspaceCreatedTitles.push(current);
@@ -330,6 +376,13 @@ test.beforeEach(async ({ page }) => {
     page.setDefaultTimeout(10000);
     page.setDefaultNavigationTimeout(30000);
     page.workspaceDiagnostics = { pageErrors: [], consoleErrors: [], failedRequests: [] };
+    if (process.env.ST_UI_AUDIT) await page.addInitScript(() => {
+        window.__uiAuditActions = [];
+        for (const type of ['click', 'change']) document.addEventListener(type, event => {
+            const target = event.target instanceof Element && event.target.closest('button,input,select,textarea,a,summary,[role="button"]');
+            if (target) window.__uiAuditActions.push({ type, id: target.id, action: target.dataset.workspaceAction || target.dataset.action || target.dataset.serviceDestination, label: target.getAttribute('aria-label') || target.title || target.textContent.trim().slice(0, 100) });
+        }, true);
+    });
     page.on('pageerror', error => page.workspaceDiagnostics.pageErrors.push(error.message));
     page.on('console', message => { if (message.type() === 'error') page.workspaceDiagnostics.consoleErrors.push(message.text()); });
     page.on('requestfailed', request => page.workspaceDiagnostics.failedRequests.push({ url: request.url(), error: request.failure()?.errorText }));
@@ -376,6 +429,7 @@ test.beforeEach(async ({ page }) => {
 
 test.afterEach(async ({ page }, testInfo) => {
     if (page.isClosed()) return;
+    if (process.env.ST_UI_AUDIT) fs.writeFileSync(testInfo.outputPath('actual-ui-actions.json'), JSON.stringify(await page.evaluate(() => window.__uiAuditActions), null, 2));
     const draftTrace = await page.evaluate(() => window.__draftIdentityTrace || null);
     if (draftTrace) fs.writeFileSync(testInfo.outputPath('draft-identity-trace.json'), JSON.stringify(draftTrace, null, 2));
     if (page.workspaceRecoveryRoutes) fs.writeFileSync(testInfo.outputPath('recovery-events.json'), JSON.stringify({ routes: page.workspaceRecoveryRoutes, browser: await page.evaluate(() => window.__recoveryTrace) }, null, 2));
@@ -961,6 +1015,7 @@ test('dictation settings remain available when the optional TTS extension is dis
         const settings = JSON.parse(body.settings);
         settings.firstRun = false;
         settings.extension_settings.disabledExtensions = [...new Set([...settings.extension_settings.disabledExtensions, 'tts'])];
+        settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true', workspaceAdvancedSettings: 'false' };
         body.settings = JSON.stringify(settings);
         await route.fulfill({ response, json: body });
     });
@@ -1097,7 +1152,11 @@ test('one server configures native services and survives reload without replacin
     });
     expect(configured.chat).toEqual({ model: 'story-fixture', url: 'https://synthetic.example/v1', temp: previous.temp });
     expect(configured.sd).toMatchObject({ source: 'sdcpp', sdcpp_url: 'https://synthetic.example', model: 'image-fixture', steps: 13, scale: 2.5, prompt_writer_max_tokens: 384, prompt_writer_instructions: 'Preserve the scene and the blue book.', enabled: previous.sd });
-    expect(configured.profiles).toHaveLength(previous.profiles.length + 1);
+    // Native Connection Manager reuses a matching profile when this synthetic
+    // fixture already contains one from an earlier persistence check.
+    const existingWriter = previous.profiles.find(profile => profile.mode === 'cc' && profile.api === 'custom' && profile['api-url'] === 'https://synthetic.example/v1' && profile.model === 'writer-fixture');
+    expect(configured.profiles).toHaveLength(previous.profiles.length + (existingWriter ? 0 : 1));
+    if (existingWriter) expect(configured.sd.prompt_writer_profile).toBe(existingWriter.id);
     expect(configured.profiles.slice(0, previous.profiles.length)).toEqual(previous.profiles);
     expect(configured.profiles.find(profile => profile.id === configured.sd.prompt_writer_profile)).toMatchObject({ model: 'writer-fixture', 'api-url': 'https://synthetic.example/v1', api: 'custom' });
     expect(configured.tts).toMatchObject({ enabled: previous.tts, currentProvider: 'OpenAI Compatible', 'OpenAI Compatible': { model: 'speech-fixture', available_voices: ['voice-a', 'voice-b'], voiceMap: { '[Default Voice]': 'voice-b' } } });
@@ -1841,8 +1900,8 @@ test('a healthy reply completed while frozen resumes once and preserves the next
 for (const mobile of [false, true]) {
     test.describe(`Foreground chat layout: ${mobile ? 'Pixel 9 Pro XL' : 'desktop'}`, () => {
         test.use({ viewport: mobile ? { width: 448, height: 921 } : { width: 1280, height: 800 }, screen: mobile ? { width: 448, height: 997 } : { width: 1280, height: 800 }, userAgent: mobile ? devices['Pixel 7'].userAgent.replace('Pixel 7', 'Pixel 9 Pro XL') : undefined, isMobile: mobile, hasTouch: mobile, deviceScaleFactor: mobile ? 3 : 1 });
-        for (const readingHistory of [false, true]) {
-            test(`resume ${readingHistory ? 'preserves the history reading position' : 'shows the final character line'} without a recovery popup`, async ({ page }, testInfo) => {
+        for (const [readingHistory, delayedStart] of [[false, false], [true, false], [true, true]]) {
+            test(`resume ${readingHistory ? 'preserves the history reading position' : 'shows the final character line'} without a recovery popup${delayedStart ? ' when the reply starts after resume' : ''}`, async ({ page }, testInfo) => {
                 await startStory(page, `Workspace e2e ${testInfo.testId}-${runId} viewport`);
                 await connectRecoveryFixture(page);
                 const reply = Array.from({ length: 15 }, (_, i) => `Lantern paragraph ${i + 1}. Seraphina walks beside the river and describes the quiet forest.`).join('\n\n') + '\n\nThe final lantern line is visible.';
@@ -1875,14 +1934,41 @@ for (const mobile of [false, true]) {
                     input.setSelectionRange(5, 12);
                     window.__viewportNodes = { chat, input, first: chat.querySelector('.mes'), scrollTop: chat.scrollTop, position: document.documentElement.style.position };
                 }, readingHistory);
+                await page.evaluate(async () => {
+                    const { captureChatViewport } = await import('/script.js');
+                    window.__viewportTrace = [];
+                    const chat = document.getElementById('chat');
+                    const scroll = Object.getOwnPropertyDescriptor(Element.prototype, 'scrollTop');
+                    Object.defineProperty(chat, 'scrollTop', {
+                        get() { return scroll.get.call(this); },
+                        set(value) {
+                            window.__viewportTrace.push({ event: 'set-scroll', at: performance.now(), from: scroll.get.call(this), to: value, stack: new Error().stack });
+                            scroll.set.call(this, value);
+                        },
+                    });
+                    const record = event => {
+                        const view = captureChatViewport();
+                        window.__viewportTrace.push({ event: event.type, at: performance.now(), visibility: document.visibilityState, top: view?.scrollTop, locked: view?.locked, follow: view?.follow });
+                    };
+                    for (const type of ['visibilitychange', 'freeze', 'resume']) document.addEventListener(type, record);
+                    chat.addEventListener('scroll', record);
+                    record({ type: 'before-freeze' });
+                });
                 // Let the native scroll owner observe the deliberate history/bottom position.
                 await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
                 const cdp = await freezePage(page);
                 await page.setViewportSize({ width: mobile ? 448 : 1280, height: 400 });
                 await page.route('**/api/ping', async route => { await pingHeld; await route.fulfill({ status: 204 }); });
                 try {
-                    release(); await finished;
-                    await resumePage(page, cdp);
+                    if (delayedStart) {
+                        await resumePage(page, cdp);
+                        await page.evaluate(() => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(() => requestAnimationFrame(resolve)))));
+                        expect(await page.locator('#chat').evaluate(n => n.scrollTop)).toBe(160);
+                        release(); await finished;
+                    } else {
+                        release(); await finished;
+                        await resumePage(page, cdp);
+                    }
                     await expect(page.locator('#chat .mes_text').last()).toHaveText(reply);
                     await expect(page.locator('#mes_stop')).toBeHidden();
                     await expect(page.locator('#browser-recovery')).toBeHidden();
@@ -1902,7 +1988,10 @@ for (const mobile of [false, true]) {
                     }, readingHistory)).toEqual({ same: true, selection: [5, 12], reading: true, final: true, fits: true });
                     expect(requests).toBe(1);
                     await page.screenshot({ path: testInfo.outputPath(`resumed-${readingHistory ? 'history' : 'latest'}-${mobile ? 'pixel' : 'desktop'}.png`) });
-                } finally { releasePing(); release(); }
+                } finally {
+                    fs.writeFileSync(testInfo.outputPath('viewport-events.json'), JSON.stringify(await page.evaluate(() => window.__viewportTrace), null, 2));
+                    releasePing(); release();
+                }
             });
         }
     });
@@ -1923,7 +2012,8 @@ for (const loss of ['reset', 'early-eof']) {
         });
         await new Promise(resolve => server.listen(0, '0.0.0.0', resolve));
         try {
-            await connectRecoveryFixture(page, `http://host.containers.internal:${server.address().port}/v1`);
+            const providerHost = process.env.ST_PROVIDER_HOST || 'host.containers.internal';
+            await connectRecoveryFixture(page, `http://${providerHost}:${server.address().port}/v1`);
             await page.evaluate(async () => {
                 window.__receivedOnFailure = 0;
                 const { eventSource, event_types } = await import('/script.js');

@@ -147,6 +147,9 @@ Native forms keep their fields and actions. The workspace owns their layout.
 When changing a native form from flex to grid, reset inherited percentage heights
 and nested scrolling so wrapped actions grow their containing row. Check both
 horizontal bounds and vertical overlap with the next section.
+Native max-content descriptions must wrap within mounted forms. Quick Replies
+headings and action rows wrap at phone widths. Scrolling a control into view does
+not qualify a panel that still requires horizontal panning.
 
 The character editor uses a compact portrait followed by native actions, More,
 tags and notes in document flow. On phones, its character name has a full row
@@ -159,6 +162,40 @@ Regression checks compare the image, box, name and text bounds, including
 Pixel 9 Pro XL portrait/landscape and enlarged text; panel width alone cannot
 detect an image overflowing inside a correctly sized message.
 
+## Portraits, native menus and background controls
+
+Enlarged message portraits use the native modal Popup in workspace layout.
+Enter and Space open the portrait. Close and Escape return focus to its message
+without replacing the transcript or draft. Native avatar resolution and the
+magnification preference remain shared with classic layout.
+
+The transformed native HTML element contains fixed-position popovers. Workspace
+layout gives that element a viewport minimum height because the fixed body does
+not give it a natural height. Native chat, extension and image menus share Popper
+containment options, use top/left coordinates in both layouts, and scroll within
+short windows. Do not compensate for a zero-height containing block with another
+local z-index override.
+
+Message editing and expanded action toolbars wrap within their message column.
+Phone actions retain 44px targets. Author Note insertion labels retain their text
+width while depth and role controls wrap. Empty expression cards reserve enough
+height to separate upload/delete controls from the expression label.
+
+Backgrounds owns thumbnail and folder menu dismissal. Escape closes the visible
+menu before Settings, returns focus, and leaves native dialogs in charge when
+open. Outside clicks, selected actions and intentional Tab navigation dismiss
+menus. Programmatic focus changes do not dismiss them. Folder entry and actions
+use the native keyboard owner.
+
+The native thumbnail owner limits effective workspace columns to the mounted
+gallery width. Both zoom buttons reflect that limit. Resizing preserves the saved
+column preference, while explicit zoom starts from the effective visible size.
+Global, chat and folder grids share the effective count. Selected backgrounds
+retain the workspace's subdued background opacity and opaque control surfaces.
+Gallery upload help stays inside its panel so a welcome toast cannot cover the
+phone close control. Native floating-panel close controls have accessible names
+and use the shared keyboard activation owner.
+
 ## Returning to a suspended chat
 
 Returning to a tab restores the existing chat layout. Reuse native mobile
@@ -168,6 +205,11 @@ visible history anchor when the reader had scrolled upward. Do not replace
 message nodes, remount the composer, move focus or replay generation.
 Layout repair runs independently of connectivity checks and ignores delayed
 work for a different story, hidden tab or Settings view.
+Streaming placeholder insertion and startup respect the current reader scroll
+lock. A first token arriving after resume must not pull a history reader to the
+bottom or reset that lock. Readers already following the latest reply keep
+following. Verify both completion during freeze and a first token after layout
+has resumed; their ordering exposes different races.
 
 Character replies stay in character bubbles. The composer contains the user's
 unsent draft. There is no recovered-reply panel, copy-to-draft action or automatic

@@ -45,6 +45,11 @@
     min-height: 25dvh;
 }
 
+.gallery-upload-help {
+    margin: 8px 5px;
+    font-size: 0.9em;
+}
+
 #gallery .right_menu_button.warning {
     opacity: 1;
     filter: unset;
