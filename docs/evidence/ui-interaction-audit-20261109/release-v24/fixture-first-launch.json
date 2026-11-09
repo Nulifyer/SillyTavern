@@ -1,0 +1,18 @@
+{
+  "containers": [
+    {
+      "name": "st-ui-v24-workspace",
+      "id": "6a1684d3c62a05ba7308bf373e50c83ab8f9ea70a54884735c5b756055b6ffb2",
+      "port": 8053,
+      "image": "ghcr.io/nulifyer/sillytavern@sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42"
+    },
+    {
+      "name": "st-ui-v24-audit",
+      "id": "c2b955f502657ae8ab13f67779710eec41f40ee60ba6d6e777ae72a8c50b4908",
+      "port": 8054,
+      "image": "ghcr.io/nulifyer/sillytavern@sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42"
+    }
+  ],
+  "result": "Exited before tests because fixture disabled whitelisting while listening beyond localhost; native security guard behaved correctly.",
+  "correction": "Host network with explicit loopback-only server listen=false and task-specific ports; existing fresh synthetic volumes retained."
+}

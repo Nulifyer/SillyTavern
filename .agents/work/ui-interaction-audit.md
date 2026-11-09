@@ -22,10 +22,10 @@ In: Local synthetic app fixture, workspace/native UI integration, shared layerin
 Out: Production app/data/volumes, deployment/release, paid provider credentials and physical device qualification.
 
 ## Current state
-Phase: Verified local changes; no release or deployment performed.
+Phase: Audit complete; subsequent delivery is recorded in ui-audit-production-release.md.
 Dependencies: Independent source servers on localhost:8050, 8051 and 8052, synthetic data/config under /tmp/st-ui-audit-20261109. Previously documented Docker fixtures are not running on this host.
-Integration: Uncommitted local source changes only. Preserve pre-existing changes to project records and evidence.
-Next action: None required for the local audit. Continue from the summary and exact source manifest if delivery is requested; preserve unrelated work and private operational receipts.
+Integration: Audited source is committed/published as b3675f243f443f494b77a1af272e1b02088a3553, v1.19.24. The later user request “update prod” was completed through the separate release task. Unrelated work and private receipts remain separate.
+Next action: None required for this audit. See the release task for actual-image acceptance and metadata-only production verification.
 
 ## Decisions
 | Decision | Reason | Evidence |

@@ -1,0 +1,19 @@
+{
+  "storyModel": "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL",
+  "writerModel": "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0",
+  "visionModel": "Ornith-1.5-35B-A3B-GGUF-Q6_K",
+  "audio": {
+    "type": "audio/wav",
+    "bytes": 276044,
+    "duration": 2.875
+  },
+  "seconds": {
+    "chatAndSetup": 49.196,
+    "writerAndImage": 39.372,
+    "speech": 10.865,
+    "transcription": 0.422
+  },
+  "syntheticOnly": true,
+  "source": "b3675f243f443f494b77a1af272e1b02088a3553",
+  "passed": true
+}

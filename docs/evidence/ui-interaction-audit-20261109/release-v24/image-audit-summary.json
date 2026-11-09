@@ -1,0 +1,38 @@
+{
+  "date": "2026-11-09T23:45:47.781114+00:00",
+  "version": "v1.19.24",
+  "imageDigest": "sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42",
+  "source": "b3675f243f443f494b77a1af272e1b02088a3553",
+  "testsPassed": 13,
+  "failures": 0,
+  "inventories": {
+    "control-inventory.json": {
+      "states": 184,
+      "controlObservations": 8836,
+      "horizontalOverflow": 0,
+      "obscuredOrOutsideEnabled": 0
+    },
+    "provider-control-inventory.json": {
+      "states": 480,
+      "controlObservations": 21371,
+      "horizontalOverflow": 0,
+      "obscuredOrOutsideEnabled": 0
+    },
+    "toggle-control-inventory.json": {
+      "states": 20,
+      "controlObservations": 2992,
+      "horizontalOverflow": 0,
+      "obscuredOrOutsideEnabled": 0
+    },
+    "provider-toggle-inventory.json": {
+      "states": 4,
+      "controlObservations": 125,
+      "horizontalOverflow": 0,
+      "obscuredOrOutsideEnabled": 0
+    }
+  },
+  "pageErrors": 0,
+  "consoleErrors": 102,
+  "failedRequests": 25,
+  "qualification": "Fresh synthetic volumes, actual published image, no source overlays; diagnostics retained. External paid providers and physical devices remain unqualified."
+}

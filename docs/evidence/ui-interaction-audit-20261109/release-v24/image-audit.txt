@@ -1,0 +1,29 @@
+npm notice run npx
+npm notice run 'playwright' test ui-audit.e2e.js --workers=1 --output ../docs/evidence/ui-interaction-audit-20261109/release-v24/image-audit
+(node:1068610) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 13 tests using 1 worker
+
+(node:1068760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1068760) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1068760) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 ui-audit.e2e.js:282:1 › audit background menus folders selection fitting and portrait layering with selected backgrounds (44.2s)
+  ✓   2 ui-audit.e2e.js:431:1 › audit every settings destination and expanded section at eight viewport sizes (1.1m)
+  ✓   3 ui-audit.e2e.js:460:1 › audit provider-specific forms and dependent controls on desktop and phone (3.6m)
+  ✓   4 ui-audit.e2e.js:510:1 › audit enlarged text insertion controls and reading surfaces with bright backgrounds (7.9s)
+  ✓   5 ui-audit.e2e.js:562:1 › audit native message editors and chat panels above selected backgrounds at every size (39.6s)
+  ✓   6 ui-audit.e2e.js:634:1 › native popovers remain reachable after classic layout restoration in short windows (4.2s)
+  ✓   7 ui-audit.e2e.js:659:1 › audit checkbox and radio states including newly revealed settings controls (2.2m)
+  ✓   8 ui-audit.e2e.js:684:1 › speech provider load failures remain in settings and switching provider clears the failure (3.8s)
+  ✓   9 ui-audit.e2e.js:699:1 › a rejected background deletion preserves the selected image and can be retried (5.2s)
+  ✓  10 ui-audit.e2e.js:740:1 › XTTS settings failures keep local edits and Reload retries the speech server (3.9s)
+  ✓  11 ui-audit.e2e.js:771:1 › native extension dialogs gallery and file entry points remain reachable with a selected background (23.2s)
+  ✓  12 ui-audit.e2e.js:844:1 › populated lorebook editor and persona dialogs retain usable controls with a selected background (15.3s)
+  ✓  13 ui-audit.e2e.js:897:1 › advanced provider rows fit phone panels without horizontal scrolling (11.9s)
+
+  Slow test file: ui-audit.e2e.js (9.6m)
+  Consider running tests from slow files in parallel. See: https://playwright.dev/docs/test-parallel
+  13 passed (9.6m)

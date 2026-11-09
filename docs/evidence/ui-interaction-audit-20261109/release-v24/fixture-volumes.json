@@ -1,0 +1,15 @@
+{
+  "freshVolumes": [
+    "st-ui-v24-workspace-config",
+    "st-ui-v24-workspace-data",
+    "st-ui-v24-workspace-plugins",
+    "st-ui-v24-workspace-extensions",
+    "st-ui-v24-workspace-backups",
+    "st-ui-v24-audit-config",
+    "st-ui-v24-audit-data",
+    "st-ui-v24-audit-plugins",
+    "st-ui-v24-audit-extensions",
+    "st-ui-v24-audit-backups"
+  ],
+  "productionVolumesReferenced": false
+}

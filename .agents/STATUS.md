@@ -1,35 +1,60 @@
 # Status
 
-## Current release
+## Project state
 
-Verified v1.19.23, source `640283d97ec54996b6b91d0bff88ff7c79213cd4`.
-Published branch: release. Tag and image source remain immutable.
-Workflow 42524646047 passed native amd64/arm64 HTTP and heartbeat startup gates.
-Index: `sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72`.
+Published and deployed v1.19.24, source `b3675f243f443f494b77a1af272e1b02088a3553`.
+Published branch: release. Tags and image source remain immutable.
+Workflow 42720940996 passed native amd64/arm64 HTTP and heartbeat startup gates.
+Index: `sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42`.
 
-## Completed batch
+## Verification
 
-The same story, control and quality council selected scope, reviewed independent
-source fixtures, raised defects, and accepted the finished release. All three
-report satisfied=true and no open findings. Parent owns implementation, tests
-and delivery. [Canonical record](work/council-overhaul.md).
+Actual pulled amd64 image: 102/102 workspace cases, including both live Juiced
+cases, and 13/13 UI audit cases pass in 14.1 and 9.6 minutes. Zero skipped/flaky
+cases or uncaught page errors. Console/network diagnostics are retained.
+All 15 changed public-file hashes and 14 served JS/CSS hashes match source;
+fixtures use ten fresh synthetic volumes and no source overlays. Native health
+passes. A separate actual v1.19.23 to v1.19.24 upgrade preserves eight exact
+settings/transcript/draft fields and all five synthetic volume identities.
 
-501 unit tests in 27 suites, root lint/actionlint pass. Test lint 0 errors/53 warnings.
-Final source 99/99 passes in 691.69 seconds; actual pulled image 99/99 passes in 759.51 seconds.
-Both live Juiced cases ran in both suites, zero skipped/flaky/uncaught page errors.
-Actual diagnostics: 54 console errors/85 failed requests retained. Five fresh volumes,
-no overlays, 20 runtime hash matches, version/heartbeat/TLS and synthetic v1.19.22 to v1.19.23
-migration pass. Physical phone lock/GPU, real microphone, audible quality and
-paid providers remain unqualified. ARM64 native startup proof only.
+501 unit tests in 27 suites, root lint/actionlint and diff checks pass. Test lint
+has 0 errors/82 warnings. ARM64 has native startup proof; full browser/live
+acceptance ran on amd64. Physical phone/microphone, audible quality and paid
+provider output remain unqualified.
+
+## Active tasks
+
+None. Both requested tasks below are complete.
+
+[UI interaction audit](work/ui-interaction-audit.md): enlarged portraits remain
+above navigation and selected backgrounds; native menus, editors, provider hints,
+Quick Replies, background/folder controls and gallery fit small windows. Speech
+and deletion failures remain visible/retriable. Delayed streaming respects the
+history reader. Coverage includes 18 settings destinations, 160 provider choices,
+664 rendered settings/provider states and 541 toggle actions.
+
+[Publication and production update](work/ui-audit-production-release.md): user
+requested “update prod”. Endpoint 7 / stack 69 now uses the verified v1.19.24
+image and Docker reports healthy with zero restarts in repeated metadata checks.
+The saved image remains ghcr.io/nulifyer/sillytavern:latest. Stack source and
+Portainer environment, four volume identities/mounts, network membership and
+Traefik labels are unchanged. No production app route, screens, logs or volume
+contents were read.
+
+Private receipt: ../docs/evidence/ui-interaction-audit-20261109/release-v24/production-update.private.json.
+Do not publish private operational receipts. The previous v1.19.23 release and
+council acceptance remain in [their canonical record](work/council-overhaul.md);
+its private production receipt remains under council-overhaul-20261108/release-v23/.
 
 ## Next action
 
-Use [the verified handoff](../docs/evidence/council-overhaul-20261108/handoff.md)
-for a later Homelab update with all existing volume identities preserved. This
-batch did not inspect or update production69 or shared test85. Never inspect their
-app/data/config/screens/logs/volumes. No model/runtime/policy/cache changes.
+None for the requested production update. Actual-image synthetic fixtures
+8053/8054 and migration fixture8055 remain for review; production application
+behavior remains uninspected under the privacy boundary. Rollback is verified
+v1.19.23, preserving volume identities and the owner's backup/recovery plan.
+The previously held v1.19.22 remains held.
 
-Local actual-image fixtures: 8041 fresh acceptance, 8040 own synthetic migrated profile.
-Source fixture containers and the CPU-only council provider are stopped. Their
-volumes and retained failure evidence are preserved. v1.19.22 remains
-held, with its original untraced failure retained. Rollback is verified v1.19.21.
+## Blockers
+
+None. Production image identity and native Docker health are verified; this does
+not claim production data or UI inspection.

@@ -1,0 +1,95 @@
+{
+  "version": "1.19.24",
+  "revision": "b3675f243f443f494b77a1af272e1b02088a3553",
+  "publicFileHashMatches": 15,
+  "files": {
+    "public/css/workspace.css": "91682d3c8bec61565bccfe5d795f9f4496cd412c0dd5432838db7c52c117cb9d",
+    "public/index.html": "5b7a90c17802c9d6fb623a5997b8018a6335eda4db9600fe81be6fd9c030facf",
+    "public/script.js": "22b9ca5167a121848b4e17f0b1f91637055a814da3faf842030f75eb600227d4",
+    "public/scripts/backgrounds.js": "ce044afeaaffa7cacba0b063d9b90a3399a2f438c8e3aee33d7d40b4502541db",
+    "public/scripts/chat-templates.js": "abc092dc72a6cf5b831dd4cc1ddea8a1d9e13602eab0055d0517031f4f20a357",
+    "public/scripts/extensions.js": "4ce91600ddbb1bdbb8821c1097e9cab2bee8f761002ca54a545ac2163deb6f06",
+    "public/scripts/extensions/gallery/index.js": "0add02f60b64986c25cdff6f6becbeaa372be13a18a005a5b801469322b46300",
+    "public/scripts/extensions/gallery/style.css": "1d9904cbd7f749d74eb3310d2bbd5c4c4fd173620483ae17fa57b7da57bd1437",
+    "public/scripts/extensions/stable-diffusion/index.js": "ac397e8a731ef3a18d944ba30e9a85bade74b8890ba633eed39b681fb30fd2a3",
+    "public/scripts/extensions/tts/index.js": "20867e705d481ae2ed742cb66c016bda74426f6f1dd4d3cda1cc14d2c9bc9d91",
+    "public/scripts/extensions/tts/settings.html": "a60fce590db2f40d1ae308906f9f5732a63d10dac1d1d4213300fd2b532ad90a",
+    "public/scripts/extensions/tts/xtts.js": "780ef92574e4e81da3d57aba92ef76ea7b5edaa1225a657babb57d32ac47194d",
+    "public/scripts/keyboard.js": "14c7c1804f7ed84f69cda84b20190f7716cee2af118b5fb8dc0a51040d9e29a1",
+    "public/scripts/power-user.js": "9be29c2ecaca5e86bb98749fe922269ded114da361be53ff7f86fb98af0eb0b0",
+    "public/scripts/utils.js": "5ebb9929dac63017f47281ba03e794c5c8195109a69960c1829e79ae946f1580"
+  },
+  "containers": [
+    {
+      "name": "st-ui-v24-workspace",
+      "image": "acf8bc39f0900fb4bb6edb8167a4564eba52ae3c81f3bf73600ead6e776f8122",
+      "mounts": [
+        {
+          "name": "st-ui-v24-workspace-plugins",
+          "destination": "/home/node/app/plugins"
+        },
+        {
+          "name": "st-ui-v24-workspace-extensions",
+          "destination": "/home/node/app/public/scripts/extensions/third-party"
+        },
+        {
+          "name": "st-ui-v24-workspace-backups",
+          "destination": "/home/node/app/backups"
+        },
+        {
+          "name": "st-ui-v24-workspace-config",
+          "destination": "/home/node/app/config"
+        },
+        {
+          "name": "st-ui-v24-workspace-data",
+          "destination": "/home/node/app/data"
+        }
+      ]
+    },
+    {
+      "name": "st-ui-v24-audit",
+      "image": "acf8bc39f0900fb4bb6edb8167a4564eba52ae3c81f3bf73600ead6e776f8122",
+      "mounts": [
+        {
+          "name": "st-ui-v24-audit-backups",
+          "destination": "/home/node/app/backups"
+        },
+        {
+          "name": "st-ui-v24-audit-config",
+          "destination": "/home/node/app/config"
+        },
+        {
+          "name": "st-ui-v24-audit-data",
+          "destination": "/home/node/app/data"
+        },
+        {
+          "name": "st-ui-v24-audit-plugins",
+          "destination": "/home/node/app/plugins"
+        },
+        {
+          "name": "st-ui-v24-audit-extensions",
+          "destination": "/home/node/app/public/scripts/extensions/third-party"
+        }
+      ]
+    }
+  ],
+  "sourceOverlays": false,
+  "freshSyntheticVolumes": 10,
+  "servedPublicFileHashMatches": 14,
+  "servedFiles": {
+    "public/css/workspace.css": "91682d3c8bec61565bccfe5d795f9f4496cd412c0dd5432838db7c52c117cb9d",
+    "public/script.js": "22b9ca5167a121848b4e17f0b1f91637055a814da3faf842030f75eb600227d4",
+    "public/scripts/backgrounds.js": "ce044afeaaffa7cacba0b063d9b90a3399a2f438c8e3aee33d7d40b4502541db",
+    "public/scripts/chat-templates.js": "abc092dc72a6cf5b831dd4cc1ddea8a1d9e13602eab0055d0517031f4f20a357",
+    "public/scripts/extensions.js": "4ce91600ddbb1bdbb8821c1097e9cab2bee8f761002ca54a545ac2163deb6f06",
+    "public/scripts/extensions/gallery/index.js": "0add02f60b64986c25cdff6f6becbeaa372be13a18a005a5b801469322b46300",
+    "public/scripts/extensions/gallery/style.css": "1d9904cbd7f749d74eb3310d2bbd5c4c4fd173620483ae17fa57b7da57bd1437",
+    "public/scripts/extensions/stable-diffusion/index.js": "ac397e8a731ef3a18d944ba30e9a85bade74b8890ba633eed39b681fb30fd2a3",
+    "public/scripts/extensions/tts/index.js": "20867e705d481ae2ed742cb66c016bda74426f6f1dd4d3cda1cc14d2c9bc9d91",
+    "public/scripts/extensions/tts/settings.html": "a60fce590db2f40d1ae308906f9f5732a63d10dac1d1d4213300fd2b532ad90a",
+    "public/scripts/extensions/tts/xtts.js": "780ef92574e4e81da3d57aba92ef76ea7b5edaa1225a657babb57d32ac47194d",
+    "public/scripts/keyboard.js": "14c7c1804f7ed84f69cda84b20190f7716cee2af118b5fb8dc0a51040d9e29a1",
+    "public/scripts/power-user.js": "9be29c2ecaca5e86bb98749fe922269ded114da361be53ff7f86fb98af0eb0b0",
+    "public/scripts/utils.js": "5ebb9929dac63017f47281ba03e794c5c8195109a69960c1829e79ae946f1580"
+  }
+}

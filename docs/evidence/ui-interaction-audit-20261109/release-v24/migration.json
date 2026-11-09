@@ -1,0 +1,64 @@
+{
+  "status": "passed",
+  "oldImage": "ghcr.io/nulifyer/sillytavern@sha256:14327cb00f8adf4504502f1abc7395dcf64dcc9c9aa200394146ae428d009d72",
+  "newImage": "ghcr.io/nulifyer/sillytavern@sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42",
+  "before": {
+    "story": "Seraphina - 2026-11-09@18h41m32s713ms",
+    "transcript": [
+      "A neutral lantern waits beside the river."
+    ],
+    "fontScale": 1.25,
+    "backgroundName": "_white.jpg",
+    "backgroundUrl": "url(\"backgrounds/_white.jpg\")",
+    "backgroundFitting": "cover",
+    "theme": "Dark Lite",
+    "draft": "My neutral migration draft stays here."
+  },
+  "after": {
+    "story": "Seraphina - 2026-11-09@18h41m32s713ms",
+    "transcript": [
+      "A neutral lantern waits beside the river."
+    ],
+    "fontScale": 1.25,
+    "backgroundName": "_white.jpg",
+    "backgroundUrl": "url(\"backgrounds/_white.jpg\")",
+    "backgroundFitting": "cover",
+    "theme": "Dark Lite",
+    "draft": "My neutral migration draft stays here."
+  },
+  "exactFields": [
+    "story",
+    "transcript",
+    "fontScale",
+    "backgroundName",
+    "backgroundUrl",
+    "backgroundFitting",
+    "theme",
+    "draft"
+  ],
+  "volumeIdentitiesPreserved": true,
+  "mounts": [
+    {
+      "name": "st-ui-v24-migration-r2-backups",
+      "destination": "/home/node/app/backups"
+    },
+    {
+      "name": "st-ui-v24-migration-r2-config",
+      "destination": "/home/node/app/config"
+    },
+    {
+      "name": "st-ui-v24-migration-r2-data",
+      "destination": "/home/node/app/data"
+    },
+    {
+      "name": "st-ui-v24-migration-r2-plugins",
+      "destination": "/home/node/app/plugins"
+    },
+    {
+      "name": "st-ui-v24-migration-r2-extensions",
+      "destination": "/home/node/app/public/scripts/extensions/third-party"
+    }
+  ],
+  "pageErrors": [],
+  "syntheticOnly": true
+}

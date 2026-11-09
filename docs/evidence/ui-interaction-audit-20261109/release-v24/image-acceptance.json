@@ -1,0 +1,39 @@
+{
+  "verifiedAt": "2026-11-09T23:50:32.249085+00:00",
+  "release": "v1.19.24",
+  "source": "b3675f243f443f494b77a1af272e1b02088a3553",
+  "indexDigest": "sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42",
+  "architectures": {
+    "amd64": "sha256:89ef40f0d25ad792459e0e0fa09d04e3c20f184d4804d71215fffbd67af9f2c1",
+    "arm64": "sha256:40a1fb9b0e1561f25ba32ed84c1c34d94d63a6b51b8efec86555e74d28057579"
+  },
+  "results": {
+    "image-workspace": {
+      "passed": 102,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "uncaughtPageErrors": 0,
+      "consoleErrors": 54,
+      "failedRequests": 95,
+      "duration": "14.1m"
+    },
+    "image-audit": {
+      "passed": 13,
+      "failed": 0,
+      "skipped": 0,
+      "flaky": 0,
+      "uncaughtPageErrors": 0,
+      "consoleErrors": 102,
+      "failedRequests": 25,
+      "duration": "9.6m"
+    }
+  },
+  "totalBrowserCases": 115,
+  "liveJuicedCasesPassed": 2,
+  "migrationExactFieldsPreserved": 8,
+  "migrationVolumesPreserved": true,
+  "nativeFixtureHealth": "healthy",
+  "productionAppInspected": false,
+  "sourceOverlays": false
+}

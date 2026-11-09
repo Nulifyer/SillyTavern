@@ -100,6 +100,52 @@ explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
 
+### v1.19.24
+
+[Release v1.19.24](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.24)
+is source `b3675f243f443f494b77a1af272e1b02088a3553`.
+[Workflow 42720940996](https://github.com/Nulifyer/SillyTavern/actions/runs/42720940996)
+passed native amd64/arm64 HTTP startup, heartbeat and publication gates.
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42
+```
+
+- linux/amd64: `sha256:89ef40f0d25ad792459e0e0fa09d04e3c20f184d4804d71215fffbd67af9f2c1`
+- linux/arm64: `sha256:40a1fb9b0e1561f25ba32ed84c1c34d94d63a6b51b8efec86555e74d28057579`
+
+Enlarged portraits use native modals above navigation and selected backgrounds.
+Native popovers, message editors, insertion controls, provider descriptions,
+Quick Replies and background/folder actions fit narrow or short windows. Gallery
+help stays inside its panel; Close supports pointer, Enter and Space. Failed
+speech setup/settings and background deletion retain useful state and offer
+retry. A delayed first streamed token respects a history reader's scroll lock.
+
+The actual published amd64 image passes all 102 workspace cases, both live
+Juiced cases included, and all 13 UI audit cases in 14.1 and 9.6 minutes. There
+are no skipped/flaky cases or uncaught page errors. The audit covers 18 settings
+destinations, 160 provider/source choices, 184 settings and 480 provider states,
+plus conditional fields, with zero unexpected enabled-control obstructions or
+root horizontal overflow. Fifteen changed public files and fourteen served
+JS/CSS responses match source; ten fresh volumes and no overlays are used.
+An actual synthetic v1.19.23 upgrade preserves eight exact settings/transcript/
+draft fields and all five volume identities. All 501 unit tests in 27 suites,
+root lint/actionlint and diff checks pass; test lint has 0 errors/82 warnings.
+
+The user authorized production's existing latest-image update on November 9.
+Production now runs the verified v1.19.24 image and Docker reports healthy
+with zero restarts. Stack definition/environment, four volume identities/mounts,
+network and routing metadata remain unchanged. Verification used deployment,
+container and image metadata only; no production app routes, logs, screens or
+volume contents were inspected. Private operational receipts remain local.
+
+[Image acceptance](evidence/ui-interaction-audit-20261109/release-v24/image-acceptance.json),
+[UI coverage](evidence/ui-interaction-audit-20261109/release-v24/image-audit-summary.json),
+[migration](evidence/ui-interaction-audit-20261109/release-v24/migration.json) and
+[release/deployment record](../.agents/work/ui-audit-production-release.md).
+ARM64 has native startup proof; physical devices, audible quality, paid-provider
+output and custom third-party combinations remain unqualified.
+
 ### v1.19.23
 
 [Release v1.19.23](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.23)

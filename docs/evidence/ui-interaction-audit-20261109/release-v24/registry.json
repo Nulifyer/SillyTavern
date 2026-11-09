@@ -1,0 +1,13 @@
+{
+  "release": "v1.19.24",
+  "source": "b3675f243f443f494b77a1af272e1b02088a3553",
+  "workflow": "https://github.com/Nulifyer/SillyTavern/actions/runs/42720940996",
+  "indexDigest": "sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42",
+  "architectures": {
+    "amd64": "sha256:89ef40f0d25ad792459e0e0fa09d04e3c20f184d4804d71215fffbd67af9f2c1",
+    "arm64": "sha256:40a1fb9b0e1561f25ba32ed84c1c34d94d63a6b51b8efec86555e74d28057579"
+  },
+  "amd64ConfigDigest": "sha256:acf8bc39f0900fb4bb6edb8167a4564eba52ae3c81f3bf73600ead6e776f8122",
+  "latestAndCommitTagsMatch": true,
+  "anonymousPullMetadata": true
+}

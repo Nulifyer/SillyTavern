@@ -1,0 +1,8 @@
+{
+  "endpoint": "https://juiced.swarm.nulteck.com/v1/models",
+  "requiredModelIdsPresent": {
+    "Qwen3.5-2B": true,
+    "TheDrummer_Skyfall-31B-v4.2-GGUF-IQ4_NL": true,
+    "Qwen3.5-4B-Uncensored-HauhauCS-Aggressive-Q8_0": true
+  }
+}

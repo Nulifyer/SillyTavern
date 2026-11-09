@@ -1,0 +1,18 @@
+[
+  {
+    "name": "st-ui-v24-workspace",
+    "id": "56b05b7af8c7ba02ff7f183a40d79af774203dd198ad5b63a89b4f0b47629dd1",
+    "port": 8053,
+    "image": "ghcr.io/nulifyer/sillytavern@sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42",
+    "network": "host",
+    "listen": "loopback only"
+  },
+  {
+    "name": "st-ui-v24-audit",
+    "id": "bbfd7623a436ee827342d2be6525c83bf236b443de07e0d57df3f4cc76e2a2f3",
+    "port": 8054,
+    "image": "ghcr.io/nulifyer/sillytavern@sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42",
+    "network": "host",
+    "listen": "loopback only"
+  }
+]
