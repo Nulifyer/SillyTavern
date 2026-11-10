@@ -1,0 +1,180 @@
+npm notice run lint
+npm notice run eslint "**/*.js" ./*.js
+
+/home/nulifyer/Projects/SillyTavern/tests/background-folder-lifetime.e2e.js
+  22:9  warning  Avoid having conditionals in tests  playwright/no-conditional-in-test
+  24:9  warning  Avoid having conditionals in tests  playwright/no-conditional-in-test
+  34:9  warning  Avoid having conditionals in tests  playwright/no-conditional-in-test
+
+/home/nulifyer/Projects/SillyTavern/tests/frontend/MacroEngine.e2e.js
+  738:13  warning  Avoid having conditionals in tests  playwright/no-conditional-in-test
+
+/home/nulifyer/Projects/SillyTavern/tests/frontend/MacroLexer.e2e.js
+  978:19  warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+
+/home/nulifyer/Projects/SillyTavern/tests/keyboard-activation.test.js
+  54:39  warning  Avoid having conditionals in tests  playwright/no-conditional-in-test
+
+/home/nulifyer/Projects/SillyTavern/tests/login-recovery.e2e.js
+  20:26  warning  Avoid having conditionals in tests  playwright/no-conditional-in-test
+
+/home/nulifyer/Projects/SillyTavern/tests/native-async-lifetimes.e2e.js
+   97:15  warning  Unexpected use of page.waitForTimeout()  playwright/no-wait-for-timeout
+  154:34  warning  Unexpected use of page.waitForTimeout()  playwright/no-wait-for-timeout
+  198:34  warning  Unexpected use of page.waitForTimeout()  playwright/no-wait-for-timeout
+  246:13  warning  Avoid having conditionals in tests       playwright/no-conditional-in-test
+  380:11  warning  Unexpected use of page.waitForTimeout()  playwright/no-wait-for-timeout
+
+/home/nulifyer/Projects/SillyTavern/tests/native-character-chat-actions.e2e.js
+  6:1  warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+
+/home/nulifyer/Projects/SillyTavern/tests/native-data-bank-quick-reply.e2e.js
+  7:1  warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+
+/home/nulifyer/Projects/SillyTavern/tests/native-editor-safety.e2e.js
+  109:9   warning  Avoid having conditionals in tests     playwright/no-conditional-in-test
+  109:37  warning  Avoid calling `expect` conditionally`  playwright/no-conditional-expect
+  109:72  warning  Avoid calling `expect` conditionally`  playwright/no-conditional-expect
+  110:16  warning  Avoid calling `expect` conditionally`  playwright/no-conditional-expect
+  110:50  warning  Avoid calling `expect` conditionally`  playwright/no-conditional-expect
+  110:89  warning  Avoid calling `expect` conditionally`  playwright/no-conditional-expect
+
+/home/nulifyer/Projects/SillyTavern/tests/native-lorebook-save.e2e.js
+  6:1  warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+
+/home/nulifyer/Projects/SillyTavern/tests/native-persona-image-ownership.e2e.js
+  6:1  warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+
+/home/nulifyer/Projects/SillyTavern/tests/native-persona-image-ownership.test.js
+  108:25  warning  Avoid having conditionals in tests  playwright/no-conditional-in-test
+
+/home/nulifyer/Projects/SillyTavern/tests/native-preset-popup.e2e.js
+  144:38  warning  Unexpected use of page.waitForTimeout()  playwright/no-wait-for-timeout
+  239:15  warning  Unexpected use of page.waitForTimeout()  playwright/no-wait-for-timeout
+
+/home/nulifyer/Projects/SillyTavern/tests/native-quick-reply-actions.e2e.js
+    6:1   warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+  141:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  149:26  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+
+/home/nulifyer/Projects/SillyTavern/tests/native-tag-injection-tokenizer.e2e.js
+    6:1   warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+  112:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  112:41  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+
+/home/nulifyer/Projects/SillyTavern/tests/native-tts-lifetime.e2e.js
+  6:1  warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+
+/home/nulifyer/Projects/SillyTavern/tests/native-ui-ownership.e2e.js
+  368:5    warning  Avoid having conditionals in tests       playwright/no-conditional-in-test
+  485:13   warning  Avoid having conditionals in tests       playwright/no-conditional-in-test
+  490:13   warning  Avoid having conditionals in tests       playwright/no-conditional-in-test
+  490:53   warning  Avoid calling `expect` conditionally`    playwright/no-conditional-expect
+  490:119  warning  Avoid calling `expect` conditionally`    playwright/no-conditional-expect
+  777:13   warning  Avoid having conditionals in tests       playwright/no-conditional-in-test
+  836:5    warning  Avoid having conditionals in tests       playwright/no-conditional-in-test
+  855:9    warning  Avoid having conditionals in tests       playwright/no-conditional-in-test
+  869:15   warning  Unexpected use of page.waitForTimeout()  playwright/no-wait-for-timeout
+
+/home/nulifyer/Projects/SillyTavern/tests/stream-recovery-lifecycle.e2e.js
+  14:1  warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+
+/home/nulifyer/Projects/SillyTavern/tests/stream-recovery.e2e.js
+  161:13  warning  Avoid having conditionals in tests     playwright/no-conditional-in-test
+  163:23  warning  Avoid calling `expect` conditionally`  playwright/no-conditional-expect
+  166:13  warning  Avoid having conditionals in tests     playwright/no-conditional-in-test
+  170:23  warning  Avoid calling `expect` conditionally`  playwright/no-conditional-expect
+  174:13  warning  Avoid having conditionals in tests     playwright/no-conditional-in-test
+  176:13  warning  Avoid having conditionals in tests     playwright/no-conditional-in-test
+
+/home/nulifyer/Projects/SillyTavern/tests/ui-audit.e2e.js
+     9:1   warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+   307:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   313:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   314:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   322:32  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   345:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   349:19  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+   350:19  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+   351:19  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+   354:19  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+   446:1   warning  Test has no assertions                      playwright/expect-expect
+   468:1   warning  Test has no assertions                      playwright/expect-expect
+   483:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   484:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   500:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   547:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   548:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   623:1   warning  Test has no assertions                      playwright/expect-expect
+   698:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   699:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   713:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   721:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+   741:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   795:1   warning  Test has no assertions                      playwright/expect-expect
+  1102:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  1128:5   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  1205:5   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  1252:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  1336:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  1344:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+
+/home/nulifyer/Projects/SillyTavern/tests/workspace.e2e.js
+   142:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   177:5   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   526:5   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   611:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   625:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   797:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   810:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   810:17  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   813:17  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+   814:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+   816:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+   821:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   979:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   979:17  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   980:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   980:17  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+   983:17  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+   991:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  1160:5   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  1160:25  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  1292:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  1292:29  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  1293:20  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  1459:5   warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+  1549:5   warning  Unexpected use of the `.skip()` annotation  playwright/no-skipped-test
+  1973:21  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  1976:25  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  2025:34  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  2037:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  2083:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  2084:19  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  2085:13  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  2086:22  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  2624:9   warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  3070:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  3077:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3085:26  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3090:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  3091:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3092:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3097:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3098:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3099:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3100:17  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3101:17  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3102:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3107:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  3108:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3109:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3111:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3112:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3123:41  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  3137:13  warning  Avoid having conditionals in tests          playwright/no-conditional-in-test
+  3140:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3141:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+  3143:23  warning  Avoid calling `expect` conditionally`       playwright/no-conditional-expect
+
+✖ 134 problems (0 errors, 134 warnings)

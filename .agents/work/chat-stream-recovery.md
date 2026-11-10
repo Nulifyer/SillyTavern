@@ -1,6 +1,6 @@
 # Interrupted chat stream recovery
 
-Status: in progress
+Status: complete
 Owner: Codex root; server worker owns durable relay, independent reviewer challenges recovery coverage
 Project: ../PLAN.md
 
@@ -15,18 +15,18 @@ is part of the reopened UI audit.
 
 ## Acceptance
 
-- [ ] Server generation survives subscriber disconnect and page reload.
-- [ ] Retained clients resume from their cursor; reloaded clients reconstruct the same native target from durable bytes.
-- [ ] One provider invocation, no duplicate message, no duplicated continuation prefix or swipe, no repeated tool effects.
-- [ ] Completion while absent, reload before first token and after partial output, repeated reload, reconnect and explicit Stop are covered.
-- [ ] Server restart retains partial output and marks interruption without repeating inference.
-- [ ] Native save failure retains recoverable output; concurrent story edits cannot be overwritten by recovery.
-- [ ] Authenticated accounts and story identities remain isolated; private journals contain no provider credentials.
-- [ ] Applicable browser, unit and integration checks pass with exact evidence and limitations.
+- [x] Server generation survives subscriber disconnect and page reload.
+- [x] Retained clients resume from their cursor; reloaded clients reconstruct the same native target from durable bytes.
+- [x] One provider invocation, no duplicate message, no duplicated continuation prefix or swipe, no repeated tool effects.
+- [x] Completion while absent, reload before first token and after partial output, repeated reload, reconnect and explicit Stop are covered.
+- [x] Server restart retains partial output and marks interruption without repeating inference.
+- [x] Native save failure retains recoverable output; concurrent story edits cannot be overwritten by recovery.
+- [x] Authenticated accounts and story identities remain isolated; private journals contain no provider credentials.
+- [x] Applicable browser, unit and integration checks pass with exact evidence and limitations.
 
 ## Current state
 
-Observed: native backend handlers abort provider work on browser socket close.
+Original failure: native backend handlers aborted provider work on browser socket close.
 StreamingProcessor holds unfinished text in browser memory. Browser recovery
 repairs layout/drafts/connectivity but cannot recover destroyed response bytes.
 
@@ -44,23 +44,21 @@ parsers, native transcript CAS/receipts, original parser-setting capture and
 explicit server Stop. Continue retains the user draft. A reloaded replay does not
 repeat tools, narration or remaining cast turns.
 
-Final frozen unit checks pass657 cases in34 suites, including job/transport,
-provider-error parsers and ownership tests. The ten isolated source lifecycle
-cases pass with stable hashes, zero uncaught page errors and owned8058 stopped:
-real SIGKILL/restart, repeated reload, swipe/multi-choice, changed provider
-settings, concurrent disk edit, lost commit acknowledgement and tool/cast replay.
-Console/network fault diagnostics remain recorded. Earlier mixed-source and
-focused core runs retain their narrower scopes in the evidence index.
+Final verification: 657 units in 34 suites pass. The immutable v1.19.25 image
+passes all 391 final browser cases, including native recovery and all 10 lifecycle
+cases: real SIGKILL/restart, repeated reload, swipe/multi-choice, original parser,
+concurrent disk edit, lost acknowledgement and tool/cast replay. No failed,
+skipped, flaky or uncaught page errors. Namespace fixture I/O preserves file
+ownership/mode/inode; it changes no application code or permissions.
 
-The full source workspace102/live and native recovery cases pass within the
-recorded source batches. Source UI/translation/TTS fixture corrections and the
-subsequent bounded menu lifetime repair are tracked in source-qualification.json;
-those batches are not one clean final-source run. Immutable-image lifecycle and
-browser qualification remain required.
-See ../../docs/evidence/ui-followup-20261109/source-lifecycle-summary.json.
+Production now runs verified source `3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b`,
+index `sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09`.
+Native health is healthy; volumes and deployment metadata are unchanged.
+Exact attempts, diagnostics, architecture and qualification limits:
+../../docs/evidence/ui-followup-20261109/release-v25/acceptance.md.
 
-Next action: finish frozen source acceptance, publish the inspected source and
-qualify its actual immutable image before the production refresh.
+Next action: none for this request. Replayed completed tools/cast effects are
+qualified; browser death during a tool's own execution is not qualified.
 
 ## Boundaries
 

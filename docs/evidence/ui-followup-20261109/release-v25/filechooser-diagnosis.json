@@ -1,0 +1,145 @@
+{
+  "createdUtc": "2026-11-10T06:19:42.518250+00:00",
+  "scope": "Bounded diagnosis of immutable-image native audio upload Enter/filechooser timeout; no application runtime changes. Only authorized tests/workspace.e2e.js listener ordering and focus assertion changed.",
+  "classification": {
+    "observed": "Original immediate-listener-then-Enter sequence reproduced a missed chooser event while native activation occurred exactly once, focus stayed on the enabled connected button and input, and final event propagation was not prevented. CDP interception acknowledgment arrived after Enter keydown completed.",
+    "inference": "The timeout is caused by a Playwright/CDP first-listener interception race. Registering before awaited focus/assertion prevents Enter from overtaking interception in the controlled observations. No app interaction defect was observed in this witness.",
+    "limits": "This diagnosis covers the reproduced case and local Chromium/Playwright version on the specified image. It does not substitute for the pending full 102-case acceptance run or claim all browser implementations are identical."
+  },
+  "testChange": {
+    "beforeSha256": "eb4e9ae655fa40cb0d931ff21a940b520e56f72483f5890ac036c39885010269",
+    "afterSha256": "c9d61dab41bc5bc2e6cc5f4342235ffcaadc685b27bd2655cc38f63df030d54f",
+    "scope": "Only register filechooser before focus and assert focused before native Enter; post-action focus and exact one click checks retained."
+  },
+  "isolatedDiff": "workspace-keyboard-test.diff",
+  "fixture": {
+    "name": "st-filechooser-diag-20261110-1794290901",
+    "id": "4cadd6dd24e2824d7f44a308bb0ba5d979d8552dccad442c3e10d0d32e1a9b2f",
+    "port": 8064,
+    "requestedImage": "ghcr.io/nulifyer/sillytavern@sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09",
+    "imageId": "0c575c83f08a46d3a4348fbfeb4e0fe9a234fd0f292b7023218e51156beb24d0",
+    "revision": "3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b",
+    "fiveFreshNocopyVolumes": [
+      {
+        "name": "st-filechooser-diag-20261110-1794290901-config",
+        "destination": "/home/node/app/config",
+        "kind": "config"
+      },
+      {
+        "name": "st-filechooser-diag-20261110-1794290901-data",
+        "destination": "/home/node/app/data",
+        "kind": "data"
+      },
+      {
+        "name": "st-filechooser-diag-20261110-1794290901-plugins",
+        "destination": "/home/node/app/plugins",
+        "kind": "plugins"
+      },
+      {
+        "name": "st-filechooser-diag-20261110-1794290901-extensions",
+        "destination": "/home/node/app/public/scripts/extensions/third-party",
+        "kind": "extensions"
+      },
+      {
+        "name": "st-filechooser-diag-20261110-1794290901-backups",
+        "destination": "/home/node/app/backups",
+        "kind": "backups"
+      }
+    ],
+    "noSourceOverlays": true,
+    "runtimeCodeHashes": [
+      {
+        "file": "public/script.js",
+        "sha256": "6a8daee701c194bea60a8310092d7e481349fd15d7e3706f7b1e289745a86235"
+      },
+      {
+        "file": "public/scripts/keyboard.js",
+        "sha256": "f6c018456eec445b203c25de29a9b2c1d6e6f72f76291a049abe154c266c82ed"
+      },
+      {
+        "file": "public/scripts/workspace.js",
+        "sha256": "c6c49909645bf612abb92b8296a704b26ab7a237ac265eeee898864443291272"
+      },
+      {
+        "file": "public/scripts/workspace-settings.js",
+        "sha256": "b346a4701fc9b65c425a55c9164cc2f6ea2ad69d86720fc5a8bfcccfa7263dc3"
+      },
+      {
+        "file": "public/scripts/dictation.js",
+        "sha256": "0a949d827ddacdb95d37ab5de932c88ea76e14f3e53245ef6076ee225a450bb7"
+      },
+      {
+        "file": "public/scripts/service-connections.js",
+        "sha256": "6fd1be903235d03bd204acfa0fce2a061ec88bbde15591bbce396c8f3f28e054"
+      }
+    ],
+    "ownership": "Transferred running to root after 12/12; do not stop as part of this handoff."
+  },
+  "checks": {
+    "originalExistingCaseFiveRepeat": {
+      "startTime": "2026-11-10T06:08:45.246Z",
+      "duration": 48048.701,
+      "expected": 5,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "negativeProtocolTrace": {
+      "attempts": 3,
+      "keyboardPassed": 2,
+      "pointerPassed": 3,
+      "failedInterceptionWindow": {
+        "sessionId": "7821674E010A8AAF2978CE5A872B2588",
+        "kind": "keyboard",
+        "enableSent": "2026-11-10T06:14:02.713Z",
+        "enableAcknowledged": "2026-11-10T06:14:02.764Z",
+        "keyDownSent": "2026-11-10T06:14:02.713Z",
+        "enableAckBeforeKeyDownSend": false,
+        "fileChooserEvents": 0,
+        "fileChooserAt": []
+      },
+      "pageErrors": []
+    },
+    "earlyRegistrationDifferential": {
+      "attempts": 15,
+      "keyboardPassed": 15,
+      "pointerPassed": 15,
+      "interceptionAckBeforeEnterAll15": true,
+      "singleTrustedButtonClickAndSingleInputClickAll15": true,
+      "focusPreservedAndLateDefaultPreventedFalseAll15": true,
+      "pageErrors": []
+    },
+    "finalActualCaseTwelveRepeat": {
+      "startTime": "2026-11-10T06:17:52.483Z",
+      "duration": 72271.056,
+      "expected": 12,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "nodeCheck": "node --check tests/workspace.e2e.js exited 0"
+  },
+  "artifacts": [
+    "fixture.json",
+    "test-change.json",
+    "workspace-keyboard-test.diff",
+    "existing-case.json",
+    "trace-result.json",
+    "trace-failure-2.png",
+    "protocol-result.json",
+    "protocol-failure-2.png",
+    "protocol-raw.log",
+    "protocol-raw-filtered.json",
+    "early-result.json",
+    "early-protocol-raw.log",
+    "early-protocol-raw-filtered.json",
+    "passive-event-summary.json",
+    "final-case.json",
+    "final-case.log"
+  ],
+  "primaryInstalledSource": {
+    "client/channelOwner.js:53-63": "Listener subscription calls channel.updateSubscription asynchronously without awaiting before listener registration returns.",
+    "server/page.js:617-624": "Filechooser interception update awaits delegate.",
+    "server/chromium/crPage.js:881-886": "Delegate awaits Page.setInterceptFileChooserDialog."
+  }
+}

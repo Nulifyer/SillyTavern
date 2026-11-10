@@ -1,0 +1,5 @@
+{
+  "format": "git unified diff",
+  "sha256": "8e7539527da6eacb27fa1bfcce002eb39e76da4e6364aea6c454497a5db2c728",
+  "content": "diff --git a/tests/workspace.e2e.js b/tests/workspace.e2e.js\nindex 57e4e658d..450c01657 100644\n--- a/tests/workspace.e2e.js\n+++ b/tests/workspace.e2e.js\n@@ -513,8 +513,9 @@ test('native character editor owns Escape before its settings page and audio upl\n     await expect(page.getByLabel('Settings category')).toHaveValue('dictation-settings');\n     const choose = page.getByRole('button', { name: 'Choose audio file', exact: true });\n     await choose.evaluate(button => { window.__audioPickerClicks = 0; button.addEventListener('click', () => window.__audioPickerClicks++); });\n-    await choose.focus();\n     const chooser = page.waitForEvent('filechooser');\n+    await choose.focus();\n+    await expect(choose).toBeFocused();\n     await page.keyboard.press('Enter');\n     await (await chooser).setFiles([]);\n     await expect(choose).toBeFocused();\n"
+}

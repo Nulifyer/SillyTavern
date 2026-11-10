@@ -1,0 +1,115 @@
+{
+  "at": "2026-11-10T06:15:04.704557+00:00",
+  "scope": "Harness-only rootless image fixture data boundary and actual immutable-image lifecycle acceptance.",
+  "ownedFile": "tests/stream-recovery-lifecycle.e2e.js",
+  "harnessSha256": "d5f76479e26236e40c5dccc03a74dae3647614f50a4a0179943c927cfd89d6f2",
+  "harnessDiffSha256": "8cc507fce6661c8c7dcf99dce22869a5fceaa1c472c5947f4d877655ce1fcc17",
+  "stats": {
+    "startTime": "2026-11-10T06:08:39.386Z",
+    "duration": 337550.00200000004,
+    "expected": 10,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "image": "ghcr.io/nulifyer/sillytavern@sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09",
+  "revisions": [
+    "3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b"
+  ],
+  "versions": [
+    "1.19.25"
+  ],
+  "imageIds": [
+    "0c575c83f08a46d3a4348fbfeb4e0fe9a234fd0f292b7023218e51156beb24d0"
+  ],
+  "fixtureCount": 10,
+  "imageStartReceipts": 11,
+  "sourceHashesPerImageReceipt": [
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13,
+    13
+  ],
+  "sourceChanges": [],
+  "pageErrorCount": 0,
+  "consoleErrorCount": 3,
+  "failedRequestCount": 44,
+  "dataWrites": 11,
+  "allDataWritesPreservedMetadata": true,
+  "dataOwnerModeSet": [
+    [
+      0,
+      1000,
+      "0o644"
+    ],
+    [
+      1000,
+      1000,
+      "0o644"
+    ]
+  ],
+  "privateTranscriptWriteCount": 1,
+  "allContainersRemoved": true,
+  "retainedOwnedVolumeCount": 50,
+  "boundaryProof": "/tmp/st-ui-followup-20261109/immutable-image/lifecycle-data-boundary-proof.json",
+  "failedFirstAttemptPreserved": {
+    "log": "/tmp/st-ui-followup-20261109/immutable-image/lifecycle.log",
+    "json": "/tmp/st-ui-followup-20261109/immutable-image/lifecycle.json",
+    "logSha256": "ea1977d561e074745c14cc2573982f2880321f341fba8884b87d057fe19a5bdf"
+  },
+  "validation": {
+    "nodeCheck": "passed",
+    "eslint": "0errors; existing1opt-in skip warning",
+    "gitDiffCheck": "passed"
+  },
+  "limits": [
+    "Synthetic local HTTP provider and fresh image volumes only; no production or paid provider calls.",
+    "Only file data helper executes in podman unshare; browser and source-fixture filesystem stay native.",
+    "No chmod/chown performed; preserved original mode/owner/inode by write-in-place.",
+    "Expected interrupted-network/provider/conflict paths may log browser console errors and failed requests; no page errors occurred.",
+    "First attempt failed before browser due harness host filesystem permissions; second run independently qualifies all10 actual image cases."
+  ],
+  "diagnosticClassification": {
+    "consoleErrors": [
+      "Client-version fetch cancelled during navigation",
+      "Deliberately aborted commit HTTP acknowledgement",
+      "Expected interrupted-reply error after forced server restart"
+    ],
+    "failedRequestClasses": [
+      {
+        "error": "net::ERR_ABORTED",
+        "kind": "/api/ping",
+        "count": 15
+      },
+      {
+        "error": "net::ERR_ABORTED",
+        "kind": "generation-job stream",
+        "count": 21
+      },
+      {
+        "error": "net::ERR_ABORTED",
+        "kind": "asset/navigation",
+        "count": 6
+      },
+      {
+        "error": "net::ERR_FAILED",
+        "kind": "generation-job commit",
+        "count": 1
+      },
+      {
+        "error": "net::ERR_ABORTED",
+        "kind": "/api/settings/save",
+        "count": 1
+      }
+    ],
+    "unclassifiedPageErrors": 0,
+    "note": "Classifications checked against sanitized actual diagnostics; no raw request headers copied."
+  }
+}

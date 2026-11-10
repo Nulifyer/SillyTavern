@@ -202,7 +202,11 @@ async function exerciseToggles(page, testInfo, label, visited = new Set()) {
     const fields = () => page.locator('.workspace-mounted-panel input, .workspace-mounted-panel select, .workspace-mounted-panel textarea').evaluateAll(nodes => nodes.filter(n => n.checkVisibility()).map(n => n.id || n.name));
     const visit = async depth => {
         if (depth > 8) throw new Error('Unreviewed settings disclosure nesting');
-        for (const input of await page.locator('.workspace-mounted-panel input[type="checkbox"], .workspace-mounted-panel input[type="radio"]').elementHandles()) {
+        for (const original of await page.locator('.workspace-mounted-panel input[type="checkbox"], .workspace-mounted-panel input[type="radio"]').elementHandles()) {
+            const selector = await original.evaluate(node => node.id ? `input#${CSS.escape(node.id)}` : null);
+            // Native provider forms may redraw while conditional fields are audited.
+            // Resolve identified controls again for every action and restoration.
+            const input = selector ? page.locator('.workspace-mounted-panel').locator(selector) : original;
             if (!await input.isVisible() || await input.isDisabled()) continue;
             const key = await input.evaluate(n => n.id || `${n.name}:${n.value}`);
             if (key === 'workspace-layout-toggle' || visited.has(key)) continue;
@@ -211,6 +215,7 @@ async function exerciseToggles(page, testInfo, label, visited = new Set()) {
             const radio = await input.evaluate(n => n.type === 'radio');
             if (radio && checked) continue;
             const previousRadio = radio ? await input.evaluateHandle(n => [...document.querySelectorAll('input[type="radio"]')].find(other => other.name === n.name && other.checked)) : null;
+            const previousSelector = previousRadio ? await previousRadio.evaluate(node => node?.id ? `input#${CSS.escape(node.id)}` : null) : null;
             const before = await fields();
             await input.click(); await settle(page);
             const current = await input.isChecked();
@@ -226,11 +231,32 @@ async function exerciseToggles(page, testInfo, label, visited = new Set()) {
                 states.push(await inspect(page, `toggle-${label}-${key}`.replace(/[^a-zA-Z0-9_-]/g, '_'), testInfo));
                 await visit(depth + 1);
             }
-            if (radio) {
-                const previous = previousRadio?.asElement();
-                if (previous) await previous.check();
-                await previousRadio?.dispose();
-            } else await input.setChecked(checked);
+            try {
+                if (radio) {
+                    const previous = previousSelector ? page.locator(previousSelector) : previousRadio?.asElement();
+                    if (previous) await previous.check();
+                    await previousRadio?.dispose();
+                } else await input.setChecked(checked);
+            } catch (error) {
+                const control = await original.evaluate(node => {
+                    const snapshotControl = candidate => {
+                        if (!candidate) return null;
+                        const box = candidate.getBoundingClientRect(), style = getComputedStyle(candidate);
+                        const hit = document.elementFromPoint(box.x + box.width / 2, box.y + box.height / 2);
+                        return { id: candidate.id, connected: candidate.isConnected, checked: candidate.checked,
+                            disabled: candidate.disabled, visible: candidate.checkVisibility(), display: style.display,
+                            visibility: style.visibility, opacity: style.opacity, transform: style.transform,
+                            rect: { x: box.x, y: box.y, width: box.width, height: box.height },
+                            hit: hit ? { tag: hit.tagName, id: hit.id, className: hit.className } : null };
+                    };
+                    const current = node.id ? document.querySelector(`input#${CSS.escape(node.id)}`) : null;
+                    return { original: snapshotControl(node), current: snapshotControl(current), sameNode: node === current,
+                        matches: node.id ? document.querySelectorAll(`input#${CSS.escape(node.id)}`).length : null,
+                        focus: { tag: document.activeElement?.tagName, id: document.activeElement?.id } };
+                });
+                fs.writeFileSync(testInfo.outputPath('toggle-restoration-failure.json'), JSON.stringify({ label, key, checked, radio, control, error: error.message }, null, 2));
+                throw error;
+            }
             await settle(page);
         }
     };
@@ -1151,6 +1177,28 @@ test('wrapped composer tools leave the textarea edge clickable with native menus
 });
 
 test('inactive prompt names remain readable while their native toggles stay operable', async ({ page }, testInfo) => {
+    await page.evaluate(() => {
+        const trace = window.__promptViewportTrace = { mutations: [], scrolls: [], samples: [] };
+        const snapshot = () => {
+            const row = document.querySelector('#completion_prompt_manager_list [data-pm-identifier="enhanceDefinitions"]');
+            const scroller = row?.closest('.scrollableInner');
+            const rect = row?.getBoundingClientRect();
+            return { time: performance.now(), connected: row?.isConnected, scrollTop: scroller?.scrollTop,
+                rect: rect ? { x: rect.x, y: rect.y, width: rect.width, height: rect.height } : null };
+        };
+        new MutationObserver(records => {
+            if (records.some(record => record.target instanceof Element && (record.target.id === 'completion_prompt_manager_list' || record.target.closest('#completion_prompt_manager_list')))) {
+                trace.mutations.push(snapshot());
+                if (trace.mutations.length > 200) trace.mutations.shift();
+            }
+        }).observe(document.body, { subtree: true, childList: true });
+        document.addEventListener('scroll', event => {
+            if (event.target instanceof Element && event.target.contains(document.querySelector('#completion_prompt_manager_list'))) {
+                trace.scrolls.push({ ...snapshot(), target: event.target.id || event.target.className });
+                if (trace.scrolls.length > 200) trace.scrolls.shift();
+            }
+        }, true);
+    });
     await category(page, 'generation'); await expand(page);
     const row = page.locator('#completion_prompt_manager_list [data-pm-identifier="enhanceDefinitions"]');
     const toggle = row.locator('.prompt-manager-toggle-action');
@@ -1161,8 +1209,25 @@ test('inactive prompt names remain readable while their native toggles stay oper
     for (const width of [1280, 390, 320]) {
         await page.setViewportSize({ width, height: 844 });
         // Native dry-run completion can replace the prompt list during a resize.
-        await name.evaluate(node => node.scrollIntoView({ block: 'center', inline: 'nearest' }));
-        await expect(name).toBeInViewport(); await page.mouse.move(1, 1); await settle(page);
+        try { await expect(async () => {
+            await name.evaluate(node => {
+                const snapshot = phase => {
+                    const rect = node.getBoundingClientRect();
+                    window.__promptViewportTrace.samples.push({ phase, time: performance.now(), connected: node.isConnected,
+                        currentNode: node === document.querySelector('#completion_prompt_manager_list [data-pm-identifier="enhanceDefinitions"] .completion_prompt_manager_prompt_name'),
+                        scrollTop: node.closest('.scrollableInner')?.scrollTop,
+                        rect: { x: rect.x, y: rect.y, width: rect.width, height: rect.height } });
+                };
+                snapshot('before-scroll');
+                if (!node.isConnected) throw new Error('Native prompt row was replaced before scrolling.');
+                node.scrollIntoView({ block: 'center', inline: 'nearest' }); snapshot('after-scroll');
+            });
+            await expect(name).toBeInViewport({ timeout: 250 });
+        }).toPass({ timeout: 5000, intervals: [50, 100, 250] }); } catch (error) {
+            fs.writeFileSync(testInfo.outputPath('prompt-viewport-failure.json'), JSON.stringify(await page.evaluate(() => window.__promptViewportTrace), null, 2));
+            throw error;
+        }
+        await page.mouse.move(1, 1); await settle(page);
         const color = await name.locator('.prompt-manager-inspect-action').evaluate(node => getComputedStyle(node).color);
         const state = { width, color, ratio: contrastRatio(color, 'rgb(18, 22, 32)') }; states.push(state);
         fs.writeFileSync(testInfo.outputPath('inactive-prompt-colors.json'), JSON.stringify(states, null, 2));
@@ -1171,6 +1236,7 @@ test('inactive prompt names remain readable while their native toggles stay oper
     }
     await toggle.click(); await expect(row).not.toHaveClass(/completion_prompt_manager_prompt_disabled/);
     await toggle.click(); await expect(row).toHaveClass(/completion_prompt_manager_prompt_disabled/);
+    fs.writeFileSync(testInfo.outputPath('prompt-viewport-trace.json'), JSON.stringify(await page.evaluate(() => window.__promptViewportTrace), null, 2));
 });
 
 test('future-provider prompt controls remain readable and retain edits across provider and layout switches', async ({ page }, testInfo) => {

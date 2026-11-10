@@ -1,0 +1,40 @@
+{
+  "status": "verified",
+  "verifiedAt": "2026-11-10T06:59:51.847584+00:00",
+  "source": "3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b",
+  "version": "v1.19.25",
+  "indexDigest": "sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09",
+  "previousVersion": "v1.19.24",
+  "health": "healthy",
+  "restartCount": 0,
+  "configuredImage": "ghcr.io/nulifyer/sillytavern:latest",
+  "volumeCount": 4,
+  "unchanged": {
+    "stackDefinition": true,
+    "stackEnvironment": true,
+    "volumeIdentitiesAndMounts": true,
+    "networkMembership": true,
+    "traefikLabels": true,
+    "configuredImage": true
+  },
+  "firstPartySourceOverlays": false,
+  "healthSamples": [
+    {
+      "at": "2026-11-10T06:58:23.328042+00:00",
+      "health": "healthy",
+      "restartCount": 0
+    },
+    {
+      "at": "2026-11-10T06:59:51.847566+00:00",
+      "health": "healthy",
+      "restartCount": 0
+    }
+  ],
+  "privacy": {
+    "productionApplicationDataRead": false,
+    "productionScreensOpened": false,
+    "productionLogsRead": false,
+    "volumeContentsCopiedOrMounted": false
+  },
+  "operationalReceipt": "Private receipt retained locally and excluded from Git."
+}

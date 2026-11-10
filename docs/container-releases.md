@@ -100,6 +100,48 @@ explicit advanced access and will supersede this unfinished acceptance handoff.
 
 ## Verified release
 
+### v1.19.25
+
+[Release v1.19.25](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.25)
+is source `3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b`.
+[Workflow 42765176165](https://github.com/Nulifyer/SillyTavern/actions/runs/42765176165)
+passed native amd64/arm64 startup, heartbeat and publication.
+
+```text
+ghcr.io/nulifyer/sillytavern@sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09
+```
+
+- linux/amd64: `sha256:f9d805fa872d603668c8e092598bff800be44491821c4260b58d1bb046202e10`
+- linux/arm64: `sha256:5b37b0982351a7c2af02cc1d9c3197f8c5630a567f78d32becc8cc176e097445`
+
+Visible streamed replies use server-owned jobs, native parser replay and commit
+receipts across reload/reconnect. Server restart retains partial output without
+repeating inference. Continue is visible and preserves drafts. Composer paint,
+selected-background/portrait layering, contrast, keyboard actions and delayed
+native operation ownership receive expanded review and regression coverage.
+
+The actual immutable amd64 image passes all 391 browser cases: UI 28,
+workspace 102 with both live Juiced cases, native 251 and lifecycle 10; no failed,
+skipped, flaky or uncaught page errors. 657 unit tests in 34 suites, root lint,
+actionlint and diff checks pass; test lint has zero errors and 134 warnings.
+All 370 first-party frontend files and 2,037 static registrations are reviewed,
+with 266 expanded registrations recorded separately. After suites 378 runtime
+files, 369 served source files and the compiled bundle match in each final
+fixture; fresh volumes/no overlays. Actual v1.19.24 migration preserves eight
+exact fields and all five migration volumes.
+
+Production now runs this verified image, healthy with zero restarts in two
+metadata samples. All four volume identities/mounts, stack/environment, network
+and routing remain unchanged. No production app routes, screens, logs or volume
+contents were inspected. Reload an existing browser page once to load the new UI.
+
+[Acceptance, exact cases, earlier attempts and limits](evidence/ui-followup-20261109/release-v25/acceptance.md),
+[image proof](evidence/ui-followup-20261109/release-v25/image-acceptance.json) and
+[production metadata proof](evidence/ui-followup-20261109/release-v25/production-verification.json).
+ARM64 has native startup proof; full browser/live acceptance ran on amd64.
+Physical hardware, audible quality, paid providers and arbitrary themes or
+third-party combinations remain unqualified. Private operational receipts stay local.
+
 ### v1.19.24
 
 [Release v1.19.24](https://github.com/Nulifyer/SillyTavern/releases/tag/v1.19.24)

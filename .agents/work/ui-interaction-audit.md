@@ -1,6 +1,6 @@
 # UI interaction audit
 
-Status: reopened after user screenshot disproved visual completeness
+Status: complete; reopened follow-up verified and deployed as v1.19.25
 Owner: Codex root; independent source/visual review and bounded implementation workers
 Repository: /home/nulifyer/Projects/SillyTavern
 Base: e4f5f726019a7e7f9ac1a936663d24d30d98e157
@@ -22,10 +22,20 @@ In: Local synthetic app fixture, workspace/native UI integration, shared layerin
 Out: Production app/data/volumes, deployment/release, paid provider credentials and physical device qualification.
 
 ## Current state
-Phase: Follow-up source, component, listener and rendered-state review in progress. The previous geometry/action suite did not establish visual completeness.
-Dependencies: Independent source servers on localhost:8050, 8051 and 8052, synthetic data/config under /tmp/st-ui-audit-20261109. Previously documented Docker fixtures are not running on this host.
-Integration: Audited source is committed/published as b3675f243f443f494b77a1af272e1b02088a3553, v1.19.24. The later user request “update prod” was completed through the separate release task. Unrelated work and private receipts remain separate.
-Next action: Correct the composer background seam, verified keyboard defects and visual-state gaps; qualify the visible native Continue action. Interrupted-stream recovery is owned by chat-stream-recovery.md. Preserve the prior release evidence as bounded regression evidence.
+
+The reopened audit is complete. All 370 first-party frontend files and 2,037 static
+candidates are reconciled at current hashes, with 266 expanded registrations kept
+separate. Final actual-image UI 28, workspace 102/live, native 251 and lifecycle 10
+pass with no failed/skipped/flaky/uncaught page errors.657 units pass. The actual
+settings/provider inventories have664 states and 30,222 control observations,
+zero unexpected enabled-control obstructions or horizontal panel overflow.
+
+Production runs healthy v1.19.25, source `3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b`.
+Volumes and deployment metadata remain unchanged; production app/data was never
+inspected. Release/image/privacy scope and exact failed/qualified attempts are
+owned by ui-followup-release.md and the linked final acceptance record:
+../../docs/evidence/ui-followup-20261109/release-v25/acceptance.md.
+Next action: none; preserve earlier v1.19.24 evidence as historical coverage.
 
 ## November 9 follow-up
 
@@ -39,7 +49,7 @@ this. Current evidence adds real composited-color assertions and settled screens
 - [x] Independent listener review found duplicate keyboard registration, tabindex loss and search navigation defects; focused checks pass.
 - [x] Native ownership review found stale lore/gallery windows, repeated popup cleanup, DND listener leaks, failed Data Bank deletes and stale Quick Reply operations; targeted browser checks pass.
 - [x] All source cases qualified across explicitly recorded attempts and corrected followups; no single clean combined source-run claim.
-- [ ] Final actual published image checks and production delivery complete.
+- [x] Final actual published image checks and production delivery complete.
 
 The source inventory lists every shipped public JS/CSS/HTML file and static event
 registration candidates. It does not assert that every implementation line or

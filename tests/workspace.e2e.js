@@ -513,8 +513,9 @@ test('native character editor owns Escape before its settings page and audio upl
     await expect(page.getByLabel('Settings category')).toHaveValue('dictation-settings');
     const choose = page.getByRole('button', { name: 'Choose audio file', exact: true });
     await choose.evaluate(button => { window.__audioPickerClicks = 0; button.addEventListener('click', () => window.__audioPickerClicks++); });
-    await choose.focus();
     const chooser = page.waitForEvent('filechooser');
+    await choose.focus();
+    await expect(choose).toBeFocused();
     await page.keyboard.press('Enter');
     await (await chooser).setFiles([]);
     await expect(choose).toBeFocused();

@@ -1,0 +1,248 @@
+{
+  "at": "2026-11-10T06:56:36.875222+00:00",
+  "status": "passed",
+  "scope": "Full final28-case UI audit on actual immutable amd64 image; test harness changes only.",
+  "image": "ghcr.io/nulifyer/sillytavern@sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09",
+  "revision": "3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b",
+  "testSHA256": "654e8f2c56a3d7b5963bf3323143c48d7bbb1c906a38ba86dd6d98925d3e9a0f",
+  "stats": {
+    "startTime": "2026-11-10T06:35:01.292Z",
+    "duration": 1197345.2349999999,
+    "expected": 28,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "report": "/tmp/st-ui-followup-20261109/immutable-image/ui-r3.json",
+  "reportSHA256": "b2cf89909bdd1f9ffdbfd2a0b91c5e9fb43ada3a700f23d27dca32dc78b74a5e",
+  "outputDirectory": "/tmp/st-ui-followup-20261109/immutable-image/ui-r3",
+  "diagnosticTotals": {
+    "pageErrors": 0,
+    "consoleErrors": 113,
+    "failedRequests": 25
+  },
+  "caseDiagnostics": [
+    {
+      "case": "ui-audit.e2e.js-AllTalk-st-4cfd8-s-one-model-change-listener",
+      "pageErrors": 0,
+      "consoleErrors": 8,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-Extras-con-87a93-adable-native-palette-roles",
+      "pageErrors": 0,
+      "consoleErrors": 3,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-XTTS-setti-b7602-d-retries-the-speech-server",
+      "pageErrors": 0,
+      "consoleErrors": 2,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-a-rejected-769ea-ed-image-and-can-be-retried",
+      "pageErrors": 0,
+      "consoleErrors": 2,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-advanced-p-f0eca-ithout-horizontal-scrolling",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-audit-back-e9966-g-with-selected-backgrounds",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-audit-chec-f38ef--revealed-settings-controls",
+      "pageErrors": 0,
+      "consoleErrors": 10,
+      "failedRequests": 2
+    },
+    {
+      "case": "ui-audit.e2e.js-audit-enla-1526d-ces-with-bright-backgrounds",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-audit-ever-839d5-ion-at-eight-viewport-sizes",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-audit-nati-7f30b-d-backgrounds-at-every-size",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-audit-prov-da1db-ntrols-on-desktop-and-phone",
+      "pageErrors": 0,
+      "consoleErrors": 79,
+      "failedRequests": 22
+    },
+    {
+      "case": "ui-audit.e2e.js-character--f258c--in-short-landscape-windows",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-command-se-46240--and-wraps-without-skipping",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-composer-h-ba9ba-inted-states-across-layouts",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-future-pro-335d1-rovider-and-layout-switches",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-inactive-l-a5aa0-eir-state-animation-settles",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-inactive-p-fdfae-ative-toggles-stay-operable",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-native-cha-9617d-ter-returning-from-Settings",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-native-ext-09417--with-a-selected-background",
+      "pageErrors": 0,
+      "consoleErrors": 8,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-native-pop-6ebfc-estoration-in-short-windows",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-native-suc-5c8cf-xt-links-and-close-controls",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-populated--72c7f--with-a-selected-background",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-settled-ex-e873d-ions-retain-readable-colors",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-speech-pro-87c01-provider-clears-the-failure",
+      "pageErrors": 0,
+      "consoleErrors": 1,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-visible-Co-e5244-d-preserves-an-unsent-draft",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 1
+    },
+    {
+      "case": "ui-audit.e2e.js-workspace--0c9aa-tain-readable-palette-roles",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-workspace--8d14e-ithout-hiding-checked-state",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "ui-audit.e2e.js-wrapped-co-1fc75-able-with-native-menus-open",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    }
+  ],
+  "coverage": {
+    "control-inventory.json": {
+      "statesOrActions": 184,
+      "controlObservations": 8836,
+      "contrastSamples": 12629
+    },
+    "provider-control-inventory.json": {
+      "statesOrActions": 480,
+      "controlObservations": 21386,
+      "contrastSamples": 31067
+    },
+    "provider-toggle-actions.json": {
+      "statesOrActions": 103,
+      "controlObservations": 0,
+      "contrastSamples": 0
+    },
+    "provider-toggle-inventory.json": {
+      "statesOrActions": 4,
+      "controlObservations": 125,
+      "contrastSamples": 356
+    }
+  },
+  "sourceBefore": "source-before.json",
+  "diagnosis": "diagnosis.json",
+  "exactTestDiff": "test-final.diff",
+  "harnessChanges": [
+    "Resolve identified toggle controls and previous radios as fresh input-specific locators across native redraws; keep actual native clicks and setChecked restoration.",
+    "Retry a fresh connected prompt row scroll and the same strict viewport assertion together within5seconds. Preserve contrast and actual toggle checks.",
+    "Retain failure-only toggle node diagnostics and passive prompt render/scroll traces."
+  ],
+  "observedCause": "Prompt scroll callback received a detached0x0 old node. The replacement remained offscreen because the old scroll had no effect.",
+  "unresolvedOriginalCause": "Original expressions_reroll_if_same ElementHandle timeout was not reproduced; no claim that stale handles caused that exact timeout. Strict original actions passed focused provider case, and final fresh-locator full28 passes.",
+  "retainedFailedAttempts": [
+    "Parent first image UI report",
+    "prompt-trace:7passed/1failed before connected-row correction",
+    "ui-r2 interrupted after overly broad locator matched a label and input; corrected to input#id"
+  ],
+  "checks": {
+    "nodeSyntax": "passed",
+    "eslintErrors": 0,
+    "eslintWarnings": 30,
+    "diffCheck": "passed",
+    "nativeHeartbeatAfter": "passed",
+    "containerHealthAfter": "healthy"
+  },
+  "runtimeSourceEdits": false,
+  "sourceOverlays": false,
+  "fixture": "st-ui-v25-toggle-review-20261110",
+  "fixtureRetainedForRootPostValidation": true,
+  "limits": [
+    "Synthetic fresh local account data only; no production application/data access.",
+    "Provider form and UI checks do not certify paid-provider output, physical devices or audible quality.",
+    "Original timeout remains classified as unconfirmed cause; retained attempts were not promoted into final pass counts."
+  ]
+}

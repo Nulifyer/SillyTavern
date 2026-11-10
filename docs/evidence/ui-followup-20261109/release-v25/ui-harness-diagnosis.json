@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-10T06:31:47.121023+00:00",
+  "scope": "Test harness only; tests/ui-audit.e2e.js. App/runtime unchanged.",
+  "publishedSource": "3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b",
+  "image": "ghcr.io/nulifyer/sillytavern@sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09",
+  "fixture": "fixture.json",
+  "initialSourceProof": "source-before.json",
+  "findings": [
+    {
+      "case": "provider-specific forms",
+      "originalFailure": "Retained parent immutable-image/ui/... toggle restore timed out after 8 seconds on expressions_reroll_if_same; original handle identity was not captured.",
+      "reproduction": {
+        "startTime": "2026-11-10T06:16:49.267Z",
+        "duration": 313751.83900000004,
+        "expected": 1,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      },
+      "observed": "Focused strict original actions with failure-only diagnostics passed all provider/options states. No failure diagnostic triggered.",
+      "inference": "Long-lived ElementHandles can outlive native redraws, so identified controls and prior radio controls now resolve by stable keyed Locator for each native action/restoration.",
+      "limitation": "This does not establish stale handles as the cause of the original reroll timeout. No app defect was established and no app patch was made."
+    },
+    {
+      "case": "inactive prompt viewport",
+      "negative": {
+        "startTime": "2026-11-10T06:23:24.244Z",
+        "duration": 76901.773,
+        "expected": 7,
+        "skipped": 0,
+        "unexpected": 1,
+        "flaky": 0
+      },
+      "negativeArtifact": "prompt-trace/ui-audit.e2e.js-inactive-p-fdfae-ative-toggles-stay-operable-repeat7/prompt-viewport-failure.json",
+      "observed": "The scroll callback received connected:false,currentNode:false and a 0x0 element. The replacement was found by later locator assertions but remained offscreen because the prior scroll targeted a detached node.",
+      "correction": "Bounded fresh connected-node scroll and unchanged strict viewport assertion retried together; same contrast and toggle outcomes remain.",
+      "positive": {
+        "startTime": "2026-11-10T06:27:32.694Z",
+        "duration": 69453.833,
+        "expected": 8,
+        "skipped": 0,
+        "unexpected": 0,
+        "flaky": 0
+      }
+    }
+  ],
+  "testSHA256": "654e8f2c56a3d7b5963bf3323143c48d7bbb1c906a38ba86dd6d98925d3e9a0f",
+  "checks": {
+    "eslintErrors": 0,
+    "eslintWarnings": 30,
+    "diffCheck": "passed"
+  },
+  "fullUI28": {
+    "status": "passed",
+    "stats": {
+      "startTime": "2026-11-10T06:35:01.292Z",
+      "duration": 1197345.2349999999,
+      "expected": 28,
+      "skipped": 0,
+      "unexpected": 0,
+      "flaky": 0
+    },
+    "report": "/tmp/st-ui-followup-20261109/immutable-image/ui-r3.json",
+    "testSHA256": "654e8f2c56a3d7b5963bf3323143c48d7bbb1c906a38ba86dd6d98925d3e9a0f"
+  },
+  "runtimeSourceEdits": false,
+  "fixtureRetainedForRootPostValidation": true,
+  "retainedHarnessCorrection": {
+    "attempt": "immutable-image/ui-r2.json/log",
+    "cause": "Fresh locator selector used generic#id while native memory HTML gives the same id to a label and its input. That broadened the original inputs-only helper domain.",
+    "correction": "Use input#id for both active controls and prior radio controls, retaining strict unique control lookup.",
+    "runtimeChanged": false,
+    "runInterruptedAfterDiagnostic": true
+  }
+}

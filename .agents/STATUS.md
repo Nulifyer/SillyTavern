@@ -2,50 +2,47 @@
 
 ## Project state
 
-Production remains v1.19.24, source `b3675f243f443f494b77a1af272e1b02088a3553`,
-index `sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42`.
-Candidate v1.19.25 repairs UI paint/interaction ownership, adds durable streaming
-recovery and visible Continue preserving drafts. User authority includes release
-publication and the existing latest-image production refresh. No production app,
-screens, logs or volume contents are inspected.
+Production runs verified v1.19.25, source
+`3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b`, image index
+`sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09`.
+Native health is healthy with zero restarts in two metadata samples. All four
+production volume identities/mounts, stack/environment, network and routing are
+unchanged. No production application routes, screens, logs or volume contents
+were inspected. Private operational receipts remain local and excluded from Git.
 
 ## Active tasks
 
-- [Follow-up release](work/ui-followup-release.md): root owns publication, image acceptance and deployment.
-- [UI audit](work/ui-interaction-audit.md): root owns final image integration.
-- [Stream recovery](work/chat-stream-recovery.md): root owns final image acceptance.
+No active tasks. [UI audit](work/ui-interaction-audit.md),
+[stream recovery](work/chat-stream-recovery.md) and
+[follow-up release](work/ui-followup-release.md) are complete.
 
 ## Verification
 
-Final manual source gate:370/370 current first-party files,2,037/2,037 current
-static event candidates and266 separate expanded registrations; zero drift,
-missing owners, substantive read gaps, unclassified candidates or syntax failures.
-[Source qualification](../docs/evidence/ui-followup-20261109/source-qualification.json)
-retains exact hashes and distinguishes the first failed attempts from followups.
+The actual immutable amd64 image passes all 391 final browser cases: UI 28,
+workspace 102 with both live Juiced cases, native 251 and lifecycle 10; zero failed,
+skipped, flaky or uncaught page errors. 657 units in 34 suites pass. Root lint,
+actionlint and diff checks pass; test lint has zero errors and 134 warnings.
+Manual source coverage reconciles 370 first-party files, 2,037 current static event
+candidates and 266 separately expanded registrations with no gaps or drift.
 
-657 units in 34 suites, root lint/actionlint/diff checks pass. Test lint has zero
-errors and 134 warnings. Source workspace102/live and lifecycle10 pass at their
-recorded first-freeze hashes. First UI attempt26/28 and native 242/250 exposed two
-test timing/render races and eight wrong-entity fixture failures. Corrected UI 2/2
-and all 21 translation/TTS cases pass on accumulated synthetic data. Isolated
-translation 17+17 and all 8 former failures with a first-favorite cast also pass.
-The independent menu probe found a real late-close/focus defect; final source
-`6a8daee7` passes the new regression and 6 normal pointer/focus repeats. This is
-bounded source batch evidence, not one clean 391-case final-source run.
+All 378 runtime files, 369 served source files and the compiled bundle match after
+suites in each final main fixture; fresh named volumes/no source overlays.
+Native heartbeat passes. Actual v1.19.24 migration preserves eight exact fields
+and all five migration volumes. Earlier failed source/image attempts and test-only
+harness corrections remain distinct in the evidence.
+
+[Acceptance and deployment](../docs/evidence/ui-followup-20261109/release-v25/acceptance.md)
+owns exact source/digest, cases, diagnostics, scope and limitations.
 
 ## Next action
 
-Commit only inspected candidate paths; publish v1.19.25. Qualify the immutable
-image on fresh 8060/8061/8063 volumes/no overlays with all final 391 browser/live/
-native/lifecycle cases, exact runtime hashes and actual v1.19.24 migration8062.
-Then refresh production's existing latest image and verify health/source/digest
-and unchanged stack/environment, volumes, network and routing metadata.
-Private receipt: `docs/evidence/ui-followup-20261109/release-v25/production-update.private.json`.
-Never stage it. Current source fixtures8056/8057/8059 contain only synthetic data.
+No further work is required for this request. For a new issue, reproduce against
+the tagged immutable image and resume from the acceptance record. Browser clients
+need one page reload to load the new UI. Preserve unrelated pending council,
+handoff and earlier authorization edits.
 
 ## Blockers
 
-No external blocker. Publication, full actual-image acceptance and deployment are
-outstanding. Preserve unrelated council/handoff/earlier authorization edits and
-old untracked artifacts. Physical devices, audible quality, paid providers and
-arbitrary custom themes/third-party combinations remain unqualified.
+None. Physical devices/microphones, audible quality, paid providers and arbitrary
+custom themes/third-party combinations remain unqualified. Source-only leads and
+the unreproduced original inspector timeout are retained without inventing closure.

@@ -1,0 +1,36 @@
+{
+  "scope": "Completed settings/provider inventory cases only; full UI gate recorded separately.",
+  "inventories": {
+    "control-inventory.json": {
+      "recordedStates": 184,
+      "controlObservations": 8836,
+      "unexpectedEnabledControlObstructions": 0,
+      "horizontalPanelOverflowStates": 0,
+      "viewports": [
+        "{'width': 1024, 'height': 768}",
+        "{'width': 1440, 'height': 900}",
+        "{'width': 320, 'height': 400}",
+        "{'width': 320, 'height': 568}",
+        "{'width': 390, 'height': 844}",
+        "{'width': 448, 'height': 921}",
+        "{'width': 768, 'height': 1024}",
+        "{'width': 844, 'height': 390}"
+      ],
+      "labels": 184,
+      "rawArtifact": "/tmp/st-ui-followup-20261109/immutable-image/ui-r3/ui-audit.e2e.js-audit-ever-839d5-ion-at-eight-viewport-sizes/control-inventory.json"
+    },
+    "provider-control-inventory.json": {
+      "recordedStates": 480,
+      "controlObservations": 21386,
+      "unexpectedEnabledControlObstructions": 0,
+      "horizontalPanelOverflowStates": 0,
+      "viewports": [
+        "{'width': 1280, 'height': 800}",
+        "{'width': 320, 'height': 400}",
+        "{'width': 390, 'height': 844}"
+      ],
+      "labels": 480,
+      "rawArtifact": "/tmp/st-ui-followup-20261109/immutable-image/ui-r3/ui-audit.e2e.js-audit-prov-da1db-ntrols-on-desktop-and-phone/provider-control-inventory.json"
+    }
+  }
+}

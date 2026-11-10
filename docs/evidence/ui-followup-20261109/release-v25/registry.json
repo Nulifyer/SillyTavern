@@ -1,0 +1,25 @@
+{
+  "at": "2026-11-10T06:57:09.150391+00:00",
+  "anonymousRegistryAccess": true,
+  "source": "3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b",
+  "tags": {
+    "v1.19.25": "sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09",
+    "sha-3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b": "sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09",
+    "latest": "sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09"
+  },
+  "platforms": {
+    "amd64": {
+      "manifestDigest": "sha256:f9d805fa872d603668c8e092598bff800be44491821c4260b58d1bb046202e10",
+      "configDigest": "sha256:0c575c83f08a46d3a4348fbfeb4e0fe9a234fd0f292b7023218e51156beb24d0",
+      "revision": "3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b",
+      "version": "v1.19.25"
+    },
+    "arm64": {
+      "manifestDigest": "sha256:5b37b0982351a7c2af02cc1d9c3197f8c5630a567f78d32becc8cc176e097445",
+      "configDigest": "sha256:7653ba2aa4deef01806c982458968cdf8bb0bbf85de66ede399df546cb8b1168",
+      "revision": "3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b",
+      "version": "v1.19.25"
+    }
+  },
+  "image": "ghcr.io/nulifyer/sillytavern@sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09"
+}

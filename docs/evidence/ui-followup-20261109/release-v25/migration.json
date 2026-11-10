@@ -1,0 +1,81 @@
+{
+  "status": "passed",
+  "oldImage": "ghcr.io/nulifyer/sillytavern@sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42",
+  "newImage": "ghcr.io/nulifyer/sillytavern@sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09",
+  "before": {
+    "story": "Seraphina - 2026-11-10@01h03m07s918ms",
+    "transcript": [
+      "A neutral lantern waits beside the river."
+    ],
+    "fontScale": 1.25,
+    "backgroundName": "_white.jpg",
+    "backgroundUrl": "url(\"backgrounds/_white.jpg\")",
+    "backgroundFitting": "cover",
+    "theme": "Dark Lite",
+    "draft": "My neutral migration draft stays here."
+  },
+  "after": {
+    "story": "Seraphina - 2026-11-10@01h03m07s918ms",
+    "transcript": [
+      "A neutral lantern waits beside the river."
+    ],
+    "fontScale": 1.25,
+    "backgroundName": "_white.jpg",
+    "backgroundUrl": "url(\"backgrounds/_white.jpg\")",
+    "backgroundFitting": "cover",
+    "theme": "Dark Lite",
+    "draft": "My neutral migration draft stays here."
+  },
+  "exactFields": [
+    "story",
+    "transcript",
+    "fontScale",
+    "backgroundName",
+    "backgroundUrl",
+    "backgroundFitting",
+    "theme",
+    "draft"
+  ],
+  "volumeIdentitiesPreserved": true,
+  "mounts": [
+    {
+      "name": "st-ui-v25-migration-backups",
+      "destination": "/home/node/app/backups"
+    },
+    {
+      "name": "st-ui-v25-migration-config",
+      "destination": "/home/node/app/config"
+    },
+    {
+      "name": "st-ui-v25-migration-data",
+      "destination": "/home/node/app/data"
+    },
+    {
+      "name": "st-ui-v25-migration-plugins",
+      "destination": "/home/node/app/plugins"
+    },
+    {
+      "name": "st-ui-v25-migration-extensions",
+      "destination": "/home/node/app/public/scripts/extensions/third-party"
+    }
+  ],
+  "pageErrors": [],
+  "syntheticOnly": true,
+  "actualContainers": {
+    "before": {
+      "containerId": "2c5dd83361c7b112e76bd459cf9d7b6f1b4b27e3b9e50084fbff8fd7fce98a7d",
+      "imageId": "acf8bc39f0900fb4bb6edb8167a4564eba52ae3c81f3bf73600ead6e776f8122",
+      "configuredImage": "ghcr.io/nulifyer/sillytavern@sha256:c955042e0cc754aa32c713e7a539879769b518c8a436574efe7a575b3fae6f42",
+      "revision": "b3675f243f443f494b77a1af272e1b02088a3553",
+      "version": "v1.19.24"
+    },
+    "after": {
+      "containerId": "6f03fb94a514fab47dc66b995abf9363a9083afed23fe913be58f7c492ffcb38",
+      "imageId": "0c575c83f08a46d3a4348fbfeb4e0fe9a234fd0f292b7023218e51156beb24d0",
+      "configuredImage": "ghcr.io/nulifyer/sillytavern@sha256:6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09",
+      "revision": "3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b",
+      "version": "v1.19.25"
+    }
+  },
+  "nativeHeartbeatAfter": "passed"
+}

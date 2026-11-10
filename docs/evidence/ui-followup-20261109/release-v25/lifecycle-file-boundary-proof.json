@@ -1,0 +1,41 @@
+{
+  "at": "2026-11-10T06:08:07.658Z",
+  "harnessSha256": "d5f76479e26236e40c5dccc03a74dae3647614f50a4a0179943c927cfd89d6f2",
+  "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-data-boundary-proof-aMK2Wo",
+  "volume": {
+    "name": "st-lifecycle-data-boundary-proof-aMK2Wo-data",
+    "mountpoint": "/home/nulifyer/.local/share/containers/storage/volumes/st-lifecycle-data-boundary-proof-aMK2Wo-data/_data"
+  },
+  "containerStarted": false,
+  "readBefore": "before",
+  "readAfter": "after",
+  "writeReceipts": [
+    {
+      "file": "synthetic-private.json",
+      "namespace": "podman-unshare",
+      "before": {
+        "uid": 0,
+        "gid": 0,
+        "mode": 33152,
+        "inode": 300025696,
+        "device": 57
+      },
+      "after": {
+        "uid": 0,
+        "gid": 0,
+        "mode": 33152,
+        "inode": 300025696,
+        "device": 57
+      }
+    }
+  ],
+  "rejected": [
+    "normalized outside path rejected",
+    "normalized outside path rejected",
+    "symlink escape rejected"
+  ],
+  "modePreserved": true,
+  "ownerPreserved": true,
+  "inodePreserved": true,
+  "note": "Owned fresh synthetic volume; private0600 file created without chmod/chown. Actual fixture class methods used; no browser or production access."
+}

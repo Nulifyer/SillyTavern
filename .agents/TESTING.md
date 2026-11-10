@@ -51,20 +51,26 @@ docs/evidence/mobile-portraits-20261106/.
 
 ## Environment
 
-Earlier verified v1.19.21: http://127.0.0.1:8033,
-st-fork-fixes-release-20261108, five fresh volumes/no overlays. All 86 browser
-cases passed together in 10.6 minutes, both live Juiced cases, no
-skipped/flaky results or uncaught errors. 37 runtime matches/version/heartbeat/
-HTTPS and both architecture labels pass. 478 unit tests in 24 suites, root lint
-and actionlint pass; test lint has 0 errors and 51 warnings. Evidence and limits:
-`docs/evidence/audit-fixes-20261108/`. Source 8032 uses overlays, not image proof.
-Run the full suite with ST_BASE_URL=http://127.0.0.1:8033 and ST_JUICED_URL set.
-Use `--grep 'audited'` for failed character/group/reload reads, exact-history and
-Close races, rename/reload, stale status, recorder, writer Stop, late upload and
-missing-integrity save guards. Strict JSONL/I/O and native owner units are in
-chat-loading, chat-load-ownership, chat-integrity, workspace-state-ownership and
-image-operation-ownership tests. Earlier fixtures/evidence remain preserved.
-Do not overlap persistence checks with fixture runs. Never use production data.
+Current verified release: v1.19.25, source 3a6e1cc6a4dc5299a870f9bdbfc36397b6208e3b,
+immutable index 6d0432fbfd5c7bf562a10a22a4f4164d8b7d61d6f77e306e2fa099f68c545d09.
+Final local synthetic image fixtures: 8064 workspace,8065 UI,8063 native actions.
+All have five fresh named volumes/no overlays; heartbeat and exact source bytes
+pass. Full final browser 391, units 657 and migration pass. Production is verified
+using metadata only. Exact commands, cases, earlier attempts and scope are in
+../docs/evidence/ui-followup-20261109/release-v25/acceptance.md.
+
+Use ST_BASE_URL for a fresh synthetic fixture, ST_UI_AUDIT=1 for ui-audit.e2e.js,
+and ST_NATIVE_UI_AUDIT=1 for native-*.e2e.js. Native bundle also includes
+background-*.e2e.js, login-recovery.e2e.js, service-apply-ownership.e2e.js and
+stream-recovery.e2e.js. Keep workers=1 for one shared synthetic account.
+Independent fixture data roots can run concurrently. Enable both live workspace
+cases only with ST_JUICED_URL=https://juiced.swarm.nulteck.com.
+
+Lifecycle owns port 8058: set ST_STREAM_LIFECYCLE=1, ST_LIFECYCLE_IMAGE to an
+immutable digest and ST_LIFECYCLE_EXPECTED_REVISION to its source; run
+stream-recovery-lifecycle.e2e.js with workers=1. Its rootless image file boundary
+uses only generated fixture volumes and preserves file owner/mode/inode. It
+never changes application permissions. Do not target production data.
 
 ## Shared-screen follow-up
 

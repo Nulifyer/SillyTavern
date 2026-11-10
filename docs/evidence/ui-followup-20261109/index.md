@@ -1,6 +1,9 @@
 # UI and interrupted-stream follow-up
 
-Status: source batches qualified; publication, immutable-image and production checks pending.
+Status: complete. Production runs healthy v1.19.25 with preserved deployment
+metadata and volumes. [Final acceptance and deployment](release-v25/acceptance.md)
+records 391 passing actual-image browser cases, 657 units, source coverage,
+migration, exact hashes and limitations.
 This record follows the user-reported composer seam and interrupted-reply failures.
 The prior v1.19.24 acceptance did not establish visual completeness.
 
@@ -28,19 +31,19 @@ lifetime shared by import/rename/delete; failed saves retain a retryable draft.
 ## Final source review
 
 The [merged coverage receipt](source-review/merged-source-review-coverage.json)
-reconciles370/370 first-party public files at current hashes,2037/2037 static
-registration candidates and266 separately expanded command/inline/wrapper
+reconciles 370/370 first-party public files at current hashes,2037/2037 static
+registration candidates and 266 separately expanded command/inline/wrapper
 registrations. There are no missing owners, source/extraction drift, substantive
 read-range gaps, unclassified candidates or syntax failures. Partition ledgers
 and exact final delta reviews are retained alongside it. Source-only leads remain
 explicit; a reviewed registration is not proof of every runtime path.
 
-The final frozen unit run passes657 cases in34 suites. The
+The final frozen unit run passes657 cases in 34 suites. The
 [source qualification record](source-qualification.json) distinguishes all first
-attempts and corrected followups: workspace102/live and lifecycle10 pass; first
+attempts and corrected followups: workspace 102/live and lifecycle 10 pass; first
 UI26/28 and native242/250 retain their failures. UI2 and translation/TTS21 rechecks
 pass, with independent mixed-library and menu lifetime proofs. This is not one
-clean391-case final-source run. Full immutable-image acceptance is pending.
+clean391-case final-source run. Final immutable-image acceptance passes391 cases; see the final record above.
 The earlier artifacts below retain their original scopes and must not be summed
 into final-run claims.
 

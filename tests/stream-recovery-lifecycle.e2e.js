@@ -1,6 +1,6 @@
 import { test, expect } from '@playwright/test';
 import { createServer } from 'node:http';
-import { spawn, execFile } from 'node:child_process';
+import { spawn, execFile, execFileSync } from 'node:child_process';
 import { once } from 'node:events';
 import { promisify } from 'node:util';
 import fs from 'node:fs';
@@ -19,6 +19,27 @@ const baseURL = 'http://127.0.0.1:8058';
 const sourceFiles = ['public/script.js', 'public/scripts/generation-transport.js', 'public/scripts/browser-recovery.js', 'public/scripts/openai.js', 'public/scripts/textgen-settings.js', 'public/scripts/kai-settings.js', 'public/scripts/nai-settings.js', 'public/scripts/group-chats.js', 'public/scripts/tool-calling.js', 'src/generation-jobs.js', 'src/endpoints/generation-jobs.js', 'src/endpoints/chats.js', 'src/server-startup.js'];
 const sourceSnapshot = () => Object.fromEntries(sourceFiles.map(file => [file, crypto.createHash('sha256').update(fs.readFileSync(path.join(projectRoot, file))).digest('hex')]));
 const execute = promisify(execFile);
+const imageDataAccessScript = String.raw`
+const fs = require('node:fs'), path = require('node:path');
+const [operation, rootArgument, fileArgument] = process.argv.slice(1);
+const root = fs.realpathSync(rootArgument), file = path.resolve(fileArgument);
+const inside = candidate => candidate.startsWith(root + path.sep);
+const parent = fs.realpathSync(path.dirname(file));
+if (!inside(file) || (parent !== root && !inside(parent)) || fs.lstatSync(file).isSymbolicLink()) throw new Error('Fixture data path escapes its owned volume.');
+const metadata = () => {
+    const value = fs.statSync(file);
+    if (!value.isFile()) throw new Error('Fixture data access requires an existing regular file.');
+    return { uid: value.uid, gid: value.gid, mode: value.mode, inode: value.ino, device: value.dev };
+};
+if (operation === 'read') process.stdout.write(fs.readFileSync(file));
+else if (operation === 'write') {
+    const before = metadata();
+    fs.writeFileSync(file, fs.readFileSync(0));
+    const after = metadata();
+    if (JSON.stringify(before) !== JSON.stringify(after)) throw new Error('Fixture write changed file ownership, mode or inode.');
+    process.stdout.write(JSON.stringify({ before, after }));
+} else throw new Error('Unsupported fixture data operation.');
+`;
 
 class LifecycleFixture {
     constructor(name) {
@@ -32,6 +53,7 @@ class LifecycleFixture {
         this.starts = 0;
         this.image = process.env.ST_LIFECYCLE_IMAGE;
         this.imageReceipts = [];
+        this.dataAccessReceipts = [];
         this.volumes = [];
         if (this.image && !/(?:@|^)sha256:[a-f0-9]{64}$/.test(this.image)) throw new Error('ST_LIFECYCLE_IMAGE must be an immutable image digest.');
     }
@@ -126,6 +148,29 @@ class LifecycleFixture {
         const [handle, kind, owner, name] = JSON.parse(identity);
         return kind === 'character' ? path.join(this.data, handle, 'chats', owner.replace('.png', ''), `${name}.jsonl`) : path.join(this.data, handle, 'group chats', `${name}.jsonl`);
     }
+
+    dataPath(file) {
+        const root = path.resolve(this.data), resolved = path.resolve(file);
+        if (!resolved.startsWith(root + path.sep)) throw new Error('Fixture data path escapes its owned data directory.');
+        if (this.image) {
+            const volume = this.volumes.find(item => item.kind === 'data');
+            if (!volume || volume.name !== `${this.containerName}-data` || path.resolve(volume.mountpoint) !== root) throw new Error('Fixture data access requires its fresh owned volume.');
+        }
+        return resolved;
+    }
+
+    readDataFile(file) {
+        const resolved = this.dataPath(file);
+        if (!this.image) return fs.readFileSync(resolved, 'utf8');
+        return execFileSync('podman', ['unshare', process.execPath, '--input-type=commonjs', '-e', imageDataAccessScript, '--', 'read', this.data, resolved], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+    }
+
+    writeDataFile(file, contents) {
+        const resolved = this.dataPath(file);
+        if (!this.image) return fs.writeFileSync(resolved, contents);
+        const receipt = JSON.parse(execFileSync('podman', ['unshare', process.execPath, '--input-type=commonjs', '-e', imageDataAccessScript, '--', 'write', this.data, resolved], { input: contents, encoding: 'utf8', maxBuffer: 1024 * 1024 }));
+        this.dataAccessReceipts.push({ file: path.relative(this.data, resolved), namespace: 'podman-unshare', ...receipt });
+    }
 }
 
 async function nativeState(page) {
@@ -211,14 +256,14 @@ test.beforeEach(async ({ page }, info) => {
     page.lifecycleFixture = new LifecycleFixture(info.testId.replace(/[^a-z0-9]/gi, '').slice(-12));
     await page.lifecycleFixture.start();
     const settingsFile = path.join(page.lifecycleFixture.data, 'default-user', 'settings.json');
-    const settings = JSON.parse(fs.readFileSync(settingsFile, 'utf8'));
+    const settings = JSON.parse(page.lifecycleFixture.readDataFile(settingsFile));
     settings.firstRun = false; settings.active_character = null; settings.active_group = null; settings.main_api = 'openai';
     Object.assign(settings.power_user, { auto_connect: false, font_scale: 1, restore_user_input: true, auto_swipe: false });
     settings.power_user.auto_continue = { ...settings.power_user.auto_continue, enabled: false };
     settings.accountStorage = { ...settings.accountStorage, workspaceLayout: 'true', workspaceAdvancedSettings: 'false', workspaceArchivedChats: '[]' };
     settings.extension_settings.tts = { ...settings.extension_settings.tts, enabled: false, currentProvider: 'System' };
     settings.extension_settings.serviceConnections = { url: '' };
-    fs.writeFileSync(settingsFile, JSON.stringify(settings));
+    page.lifecycleFixture.writeDataFile(settingsFile, JSON.stringify(settings));
     await page.goto(baseURL);
     await expect(page.locator('#preloader')).toHaveCount(0, { timeout: 30000 });
     await page.locator('#workspace-navigation [data-workspace-action="characters"]').click();
@@ -245,6 +290,7 @@ test.afterEach(async ({ page }, info) => {
         const sources = sourceSnapshot();
         fs.writeFileSync(info.outputPath('source-final.json'), JSON.stringify({ sources, changed: sourceFiles.filter(file => sources[file] !== page.lifecycleSources[file]) }, null, 2));
         if (page.lifecycleFixture.image) fs.writeFileSync(info.outputPath('image-receipts.json'), JSON.stringify(page.lifecycleFixture.imageReceipts, null, 2));
+        if (page.lifecycleFixture.image) fs.writeFileSync(info.outputPath('data-access-receipts.json'), JSON.stringify(page.lifecycleFixture.dataAccessReceipts, null, 2));
         expect(page.lifecycleDiagnostics.pageErrors).toEqual([]);
     } finally {
         for (const fixture of page.lifecycleProviders || []) await fixture.close();
@@ -370,15 +416,15 @@ test('a same-integrity concurrent disk edit is preserved and prevents a second i
     const state = await nativeState(page);
     const file = page.lifecycleFixture.transcript(state.identity);
     await page.goto('about:blank');
-    const rows = fs.readFileSync(file, 'utf8').trim().split('\n').map(line => JSON.parse(line));
+    const rows = page.lifecycleFixture.readDataFile(file).trim().split('\n').map(line => JSON.parse(line));
     rows.push({ name: 'User', is_user: true, is_system: false, mes: 'A concurrent edit to the same story.', send_date: 'concurrent-edit', extra: {} });
     const expected = rows.map(row => JSON.stringify(row)).join('\n');
-    fs.writeFileSync(file, expected);
+    page.lifecycleFixture.writeDataFile(file, expected);
     fixture.finish(call, 'must remain separate.');
     await reopen(page, page.lifecycleTitle);
     await expect(page.locator('#browser-recovery')).toContainText('story changed');
     await expect(page.locator('#chat .mes_text').last()).toHaveText('A concurrent edit to the same story.');
-    expect(fs.readFileSync(file, 'utf8')).toBe(expected);
+    expect(page.lifecycleFixture.readDataFile(file)).toBe(expected);
     expect(await jobs(page)).toHaveLength(1);
     await page.evaluate(async () => (await import('/script.js')).setOnlineStatus('lifecycle-model'));
     await page.getByRole('button', { name: 'Retry connection', exact: true }).click();
@@ -387,7 +433,7 @@ test('a same-integrity concurrent disk edit is preserved and prevents a second i
     await expect(page.locator('#send_but')).toBeVisible();
     await page.locator('#send_textarea').fill('Do not lose this next draft.'); await page.locator('#send_but').click();
     await expect(page.locator('#send_textarea')).toHaveValue('Do not lose this next draft.');
-    expect(fs.readFileSync(file, 'utf8')).toBe(expected);
+    expect(page.lifecycleFixture.readDataFile(file)).toBe(expected);
     expect(fixture.calls).toHaveLength(1);
     fs.writeFileSync(info.outputPath('concurrent-transcript.json'), JSON.stringify(rows, null, 2));
     const discard = page.getByRole('button', { name: 'Discard interrupted reply', exact: true });
@@ -407,12 +453,12 @@ test('a same-integrity concurrent disk edit is preserved and prevents a second i
     await discard.click();
     await page.getByRole('button', { name: 'Keep reply', exact: true }).click();
     expect(await jobs(page)).toHaveLength(1);
-    expect(fs.readFileSync(file, 'utf8')).toBe(expected);
+    expect(page.lifecycleFixture.readDataFile(file)).toBe(expected);
     await expect(page.locator('#send_textarea')).toHaveValue('Do not lose this next draft.');
     await discard.click();
     await page.getByRole('button', { name: 'Discard reply', exact: true }).click();
     await expect.poll(async () => (await jobs(page)).length).toBe(0);
-    expect(fs.readFileSync(file, 'utf8')).toBe(expected);
+    expect(page.lifecycleFixture.readDataFile(file)).toBe(expected);
     await expect(page.locator('#send_textarea')).toHaveValue('Do not lose this next draft.');
     expect(fixture.calls).toHaveLength(1);
     await page.locator('#send_but').click();
@@ -438,12 +484,12 @@ test('a lost HTTP commit acknowledgement leaves the saved last reply intact afte
     await applied;
     const state = await nativeState(page);
     const file = page.lifecycleFixture.transcript(state.identity);
-    const expected = fs.readFileSync(file, 'utf8');
+    const expected = page.lifecycleFixture.readDataFile(file);
     await page.unroute('**/api/generation-jobs/*/commit');
     await reloadStory(page, page.lifecycleTitle);
     await expect(page.locator('#chat .mes_text').last()).toHaveText('The saved lantern stays exactly here.');
     await expect.poll(async () => (await jobs(page)).length).toBe(0);
-    expect(fs.readFileSync(file, 'utf8')).toBe(expected);
+    expect(page.lifecycleFixture.readDataFile(file)).toBe(expected);
     expect(fixture.calls).toHaveLength(1);
     expect((await nativeState(page)).chat.filter(message => message.extra?.generation_job)).toHaveLength(1);
 });
