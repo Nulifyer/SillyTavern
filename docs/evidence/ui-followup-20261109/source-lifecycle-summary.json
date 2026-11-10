@@ -1,0 +1,168 @@
+{
+  "suite": "stream-recovery-lifecycle.e2e.js",
+  "passed": 10,
+  "failed": 0,
+  "skipped": 0,
+  "durationReported": "4.8m",
+  "sourceType": "source checkout with fresh synthetic data per case",
+  "sourceStableAcrossAllCases": true,
+  "sourceVersions": {
+    "public/script.js": [
+      "d9a3c529e037675e0abc42b44d7e15152c22e86485c1fc8dec589016f9013430"
+    ],
+    "public/scripts/generation-transport.js": [
+      "ed4c55c580dfb646982389bb908171ad9eed9ecd84bbb7aeea7e4e82d28e6886"
+    ],
+    "public/scripts/browser-recovery.js": [
+      "0f31ebd2ba42b86992f0d8d355beda867c1f82217c442763ea419f626ef24df6"
+    ],
+    "public/scripts/openai.js": [
+      "4f101b7fe22e033685b280f0374e763a14e7cf75ada14c14ff1d2ebe10c79d60"
+    ],
+    "public/scripts/textgen-settings.js": [
+      "4236ebd6697ed23fe2d26c3932db26c2d5bac70ee133d32c36bf4518776cdce1"
+    ],
+    "public/scripts/kai-settings.js": [
+      "29af22a2597a246757616baa22ac842ae07129c1b253ff247d070c03649349fc"
+    ],
+    "public/scripts/nai-settings.js": [
+      "783adab1a657b61bc64c7e081deb026cdb7c69259e7932747499547e52738651"
+    ],
+    "public/scripts/group-chats.js": [
+      "7996c0594d95babc60baea020643304f8a2d602264a3aa9321d5cf0906fff81e"
+    ],
+    "public/scripts/tool-calling.js": [
+      "9c85887906e7db1bf9cbb5383dd21da5cca83ce6a9f4e1367a7442ff54dfddf8"
+    ],
+    "src/generation-jobs.js": [
+      "3f7ffc6efaa1e786ee021f5858800e865087fdf16661e231d5e641013af7eb2a"
+    ],
+    "src/endpoints/generation-jobs.js": [
+      "56d0e0a4647f2c86d6f31257a36e05855998b930426c8be9435f461a298c1f98"
+    ],
+    "src/endpoints/chats.js": [
+      "846843c0517687f669dbdcf12ddcde61b1fcb84131fd8303292ddc0d2d5f849f"
+    ],
+    "src/server-startup.js": [
+      "1757b56e49099b16a92ea000947b528963377113c93e1f033a12020988b3a49e"
+    ]
+  },
+  "testFileSha256": "e4f51ca2148aa10c561a4324fd2c71895d7708512f032b9fbb4a9ee48f5a80b1",
+  "diagnostics": {
+    "pageErrors": 0,
+    "consoleErrors": 2,
+    "failedRequests": 43
+  },
+  "fixture8058Stopped": true,
+  "cases": [
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-16c8e-y-advance-to-another-member",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-84d696b5ce65-q9TO8r",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 4,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-1f050-prevents-a-second-inference",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-ca5270bfd909-9P1DFx",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 4,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-25745-ve-once-after-active-reload",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-fb99e160ef53-Cn0Z49",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 4,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-4b6b1--alternative-through-reload",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-6bccbc2f7aa5-Bu7qxZ",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 4,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-97d65-er-provider-settings-change",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-a50cb05e646c-SPtEQx",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 4,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-e1962-ng-its-original-alternative",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-57a026514d99-b8lJ4b",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 6,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-eefe1-nd-never-reissues-inference",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-3845071fc454-O48U0k",
+      "pageErrors": 0,
+      "consoleErrors": 1,
+      "failedRequests": 1,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-f4eda-y-intact-after-fresh-reload",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-174159946480-Nt448B",
+      "pageErrors": 0,
+      "consoleErrors": 1,
+      "failedRequests": 4,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-f5c9a--reply-resumes-after-reload",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-91c383d3114a-xb7PX3",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 5,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/frozen-source/lifecycle/stream-recovery-lifecycle.-fe3f7-ss-narrow-and-short-windows",
+      "fixtureDirectory": "/tmp/st-ui-followup-20261109/lifecycle-863361b39233-BkKJP5",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 7,
+      "sourceChangesDuringCase": [],
+      "imageReceipts": [],
+      "volumes": []
+    }
+  ],
+  "imageIdentities": [],
+  "imageRevisions": [],
+  "imageVersions": [],
+  "uniqueSyntheticVolumes": 0,
+  "limits": [
+    "Synthetic local custom OpenAI-compatible provider; no paid provider output",
+    "No production application requests, data, or logs",
+    "Tool action completed before the interrupted follow-up stream; mid-tool browser death is not qualified"
+  ]
+}

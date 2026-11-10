@@ -1,0 +1,119 @@
+{
+  "reviewer": "stream_architecture",
+  "reviewedAt": "2026-11-10T00:59:59.492418+00:00",
+  "scope": "Read-only source review of current uncommitted durable streaming implementation. No production access; no integration tests run by reviewer.",
+  "sourceSHA256": {
+    "src/generation-jobs.js": "652316f55e479f1bc7cd9f5575944de486ea7751711a2d285375cb099fe528d6",
+    "src/endpoints/generation-jobs.js": "2a72f567fd73bb688f12c9bd9947daa3141a53b63e189f744683f222c2d0d6f0",
+    "src/server-startup.js": "1757b56e49099b16a92ea000947b528963377113c93e1f033a12020988b3a49e",
+    "src/endpoints/chats.js": "846843c0517687f669dbdcf12ddcde61b1fcb84131fd8303292ddc0d2d5f849f",
+    "public/scripts/generation-transport.js": "5be79da98bba52c3de46fad76e08be4f91df0dc87326c1d51f6a06ad025020dc",
+    "public/script.js": "087126da82a3659e13109e484f9ee24e3e3275b57762b7402f7c09a8c478001a",
+    "public/scripts/browser-recovery.js": "89d396a70089b2c4fef54de7917e54c8ea0cad8a8cfa423d93af0b618b8e6b40",
+    "public/scripts/chat-loader.js": "57e2c827560988d2fd2aae5a905ebeb9cbae79339ead2ff90a16d4033e00316c",
+    "public/scripts/openai.js": "de777f1372a3dd1343610c93144beda86ef23d44f2861f05391ad6cdb26f8486",
+    "public/scripts/textgen-settings.js": "7217bd833020511b167556dcd43d0aead43af730523f44ae07ce10ae730aa29d",
+    "public/scripts/kai-settings.js": "dccfadb327d70d7be67f4ccfc419f3040d5efc60ba521c4246857a1444b98beb",
+    "public/scripts/nai-settings.js": "2a056c50fc1743d00e016a65796e4804d065020c837620cb8cb3950c9b2f235e"
+  },
+  "findings": [
+    {
+      "id": "S1",
+      "priority": "P1",
+      "finding": "Native Stop can settle transport before server cancellation acknowledgement, racing commit against running status.",
+      "evidence": [
+        "public/scripts/generation-transport.js abort()/catch()",
+        "src/endpoints/generation-jobs.js POST /:id/commit running guard"
+      ],
+      "status": "fixed-unverified",
+      "observedFix": "stopReceipt is awaited before settling; running cancellation conflicts get specific feedback. Stop failure still preserves recovery rather than proving cancellation.",
+      "verification": "Hold Stop response and transition; abort native signal; assert no commit before confirmed Stop and one provider invocation."
+    },
+    {
+      "id": "S2",
+      "priority": "P1",
+      "finding": "Reload parses failed provider HTTP response without native !response.ok handling, risking empty assistant commit.",
+      "evidence": [
+        "public/script.js restorePendingGeneration parse*Stream path",
+        "public/scripts/openai.js sendOpenAIRequest response.ok check"
+      ],
+      "status": "sent-accepted",
+      "verification": "Reload retained HTTP500 job; preserve baseline, show provider failure, do not commit empty assistant or consume replay."
+    },
+    {
+      "id": "S3",
+      "priority": "P1",
+      "finding": "Native transcript write followed by receipt persistence failure can leave unacknowledged job; new-page replay changes timestamps and exact candidate hash, causing permanent CAS conflict.",
+      "evidence": [
+        "src/endpoints/generation-jobs.js POST /:id/commit exact-candidate idempotency",
+        "public/script.js StreamingProcessor.onProgressStreaming gen_finished mutation"
+      ],
+      "status": "sent-accepted",
+      "parentPlan": "Server worker adding write-ahead pending hash and reconciliation. Not yet inspected as present.",
+      "verification": "Fail receipt persistence after transcript write, reload NEW PAGE and reconcile without rewriting text/timestamps or leaving blocked job."
+    },
+    {
+      "id": "S4",
+      "priority": "P1",
+      "finding": "OpenAI parser.n captured before actual generation parameters, so outer {prompt} always records n1 and breaks multiswipe replay.",
+      "evidence": [
+        "public/script.js finishGenerating outer openai generate_data={prompt}",
+        "public/scripts/openai.js createGenerationParameters and sendOpenAIRequest"
+      ],
+      "status": "fixed-unverified",
+      "observedFix": "setGenerationParser called after actual parameter assembly with source,n,canMultiSwipe,showThoughts; restored parser uses explicit canMultiSwipe.",
+      "verification": "Generate n2 interleaved choices, reload while active/completed, assert alternatives remain separate and finish counts correct."
+    },
+    {
+      "id": "S5",
+      "priority": "P1",
+      "finding": "onFinishStreaming failed save returned early, caller still triggered auto-continue and returned success to cast queue.",
+      "evidence": [
+        "public/script.js StreamingProcessor.onFinishStreaming",
+        "public/script.js finishGenerating isStreamFinished branch"
+      ],
+      "status": "fixed-unverified",
+      "observedFix": "Parent reports failure now throws to queue error path; inspect/run after parent integration complete.",
+      "verification": "Fail commit with auto-continue enabled and cast queue; assert no next inference or tool execution and retained output retryable."
+    },
+    {
+      "id": "S6",
+      "priority": "P1",
+      "finding": "New job permitted while same story has completed-but-unacknowledged output; restore jobs.find selects old job.",
+      "evidence": [
+        "src/generation-jobs.js start active.some per-story guard"
+      ],
+      "status": "sent-accepted",
+      "parentPlan": "Server worker changing guard to unresolved same-story work.",
+      "verification": "Complete job without commit; new ID same story rejected until acknowledged; other story remains available."
+    },
+    {
+      "id": "S7",
+      "priority": "P2",
+      "finding": "Start request retries fetch only; a dropped202 JSON body after headers loses acknowledgement despite running server job.",
+      "evidence": [
+        "public/scripts/generation-transport.js fetchGeneration response.json outside retry"
+      ],
+      "status": "sent-accepted",
+      "verification": "Return202+job header then reset JSON body; retry same idempotent ID or query it, provider invocation remains one."
+    },
+    {
+      "id": "S8",
+      "priority": "P2",
+      "finding": "Acknowledged receipts retain job.sink/job.socket and native close-listener closures, which can retain request/context and buffers for seven days despite record.context=null.",
+      "evidence": [
+        "src/generation-jobs.js acknowledge only replaces record and removes journal",
+        "src/generation-jobs.js GenerationResponse._destroy does not close socket after normal finish",
+        "src/util.js forwardFetchResponse to.socket.close closure retains upstream body and sink",
+        "src/endpoints/backends/text-completions.js native request.socket.close closure retains detached request"
+      ],
+      "status": "sent",
+      "verification": "After completed job acknowledgement, assert active timer and sink/socket references/listeners are released; provider already complete and receipt idempotency still works."
+    }
+  ],
+  "remainingIntegrationQuestions": [
+    "Native pending/unsaved job guards must block story mutation and native autosave races, not only workspace buttons.",
+    "Original browser orchestration for tools/cast remains intentionally unreplayed after reload; assert no duplicate side effects.",
+    "New-page recovery must be exercised through real native provider routers, not only fake Writable dispatch or transport mocks."
+  ]
+}

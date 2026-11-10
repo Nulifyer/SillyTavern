@@ -1,3 +1,4 @@
+import { getChatLoadToken } from '../../chat-loader.js';
 import { getStringHash, debounce, waitUntilCondition, extractAllWords, isTrueBoolean } from '../../utils.js';
 import { getContext, getApiUrl, extension_settings, doExtrasFetch, modules, renderExtensionTemplateAsync } from '../../extensions.js';
 import {
@@ -70,7 +71,7 @@ async function getSourceContextSize() {
         return overrideLength > 0 ? (maxContext - overrideLength) : Math.round(maxContext * 0.75);
     }
 
-    if (extension_settings.source === summary_sources.extras) {
+    if (extension_settings.memory.source === summary_sources.extras) {
         return 1024 - 64;
     }
 
@@ -418,9 +419,22 @@ function getIndexOfLatestChatSummary(chat) {
  * @param {{ groupId: any; chatId: any; characterId: any; }} context
  * @returns {boolean} True if the context has changed and the summary should be discarded
  */
-function isContextChanged(context) {
+function captureSummaryOwner(context) {
+    return {
+        load: getChatLoadToken(), editRevision: summaryEditRevision,
+        messages: context.chat.map(message => ({ message, text: message.mes, reasoning: message.extra?.reasoning })),
+    };
+}
+
+function isContextChanged(context, owner) {
     const newContext = getContext();
-    if (newContext.groupId !== context.groupId
+    if (newContext.chat !== context.chat
+        || (owner && (owner.load !== getChatLoadToken() || owner.editRevision !== summaryEditRevision
+            || owner.messages.length !== context.chat.length || owner.messages.some((saved, index) => {
+            const message = context.chat[index];
+            return message !== saved.message || message.mes !== saved.text || message.extra?.reasoning !== saved.reasoning;
+        })))
+        || newContext.groupId !== context.groupId
         || newContext.chatId !== context.chatId
         || (!newContext.groupId && (newContext.characterId !== context.characterId))) {
         console.log('Context changed, summary discarded');
@@ -507,11 +521,16 @@ async function forceSummarizeChat(quiet) {
     const skipWIAN = extension_settings.memory.SkipWIAN;
 
     const toast = quiet ? jQuery() : toastr.info('Summarizing chat...', 'Please wait', { timeOut: 0, extendedTimeOut: 0 });
-    const value = extension_settings.memory.source === summary_sources.main
-        ? await summarizeChatMain(context, true, skipWIAN)
-        : await summarizeChatWebLLM(context, true);
-
-    toastr.clear(toast);
+    let value;
+    try {
+        value = extension_settings.memory.source === summary_sources.main
+            ? await summarizeChatMain(context, true, skipWIAN)
+            : await summarizeChatWebLLM(context, true);
+    } catch (error) {
+        console.error('Summary generation failed', error);
+        toastr.error('The summary could not be generated. Check the connection and retry.');
+        return '';
+    } finally { toastr.clear(toast); }
 
     if (!value) {
         toastr.warning('Failed to summarize chat');
@@ -648,6 +667,7 @@ async function getSummaryPromptForNow(context, force) {
 }
 
 async function summarizeChatWebLLM(context, force) {
+    const owner = captureSummaryOwner(context);
     if (!isWebLlmSupported()) {
         return;
     }
@@ -689,7 +709,7 @@ async function summarizeChatWebLLM(context, force) {
         }
 
         // something changed during summarization request
-        if (isContextChanged(context)) {
+        if (isContextChanged(context, owner)) {
             return;
         }
 
@@ -701,6 +721,7 @@ async function summarizeChatWebLLM(context, force) {
 }
 
 async function summarizeChatMain(context, force, skipWIAN) {
+    const owner = captureSummaryOwner(context);
     const prompt = await getSummaryPromptForNow(context, force);
 
     if (!prompt) {
@@ -755,7 +776,7 @@ async function summarizeChatMain(context, force, skipWIAN) {
             index = lastUsedIndex;
         } finally {
             inApiCall = false;
-            if (lock) {
+            if (lock && !is_send_press) {
                 activateSendButtons();
             }
         }
@@ -766,7 +787,7 @@ async function summarizeChatMain(context, force, skipWIAN) {
         return;
     }
 
-    if (isContextChanged(context)) {
+    if (isContextChanged(context, owner)) {
         return;
     }
 
@@ -847,6 +868,7 @@ async function getRawSummaryPrompt(context, prompt) {
 }
 
 async function summarizeChatExtras(context) {
+    const owner = captureSummaryOwner(context);
     function getMemoryString() {
         return (longMemory + '\n\n' + memoryBuffer.slice().reverse().join('\n\n')).trim();
     }
@@ -898,7 +920,7 @@ async function summarizeChatExtras(context) {
             return;
         }
 
-        if (isContextChanged(context)) {
+        if (isContextChanged(context, owner)) {
             return;
         }
 

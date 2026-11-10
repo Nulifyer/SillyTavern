@@ -300,6 +300,8 @@ export class ServiceConnections {
             action.disabled = id !== 'writer' && !select.value;
             status.textContent = 'Selection not applied. Use model to save this service.';
         };
+        const data = this.data;
+        const isCurrent = () => this.data === data && this.rows.get(id) === controls && row.isConnected;
         this.rows.set(id, controls);
         select.addEventListener('change', controls.changed);
         action.addEventListener('click', async () => {
@@ -309,20 +311,23 @@ export class ServiceConnections {
             if (controls.voice) controls.voice.disabled = true;
             status.textContent = 'Applying connection…';
             try {
-                await apply(select.value);
+                const applied = await apply(select.value, isCurrent);
+                if (!isCurrent()) return;
+                if (applied === false) { controls.applied = null; return; }
                 controls.applied = JSON.stringify(this.selection(id));
                 status.textContent = 'Saved. This service uses the selected model. Test it in your story when ready.';
                 this.targets.get(id).native.open = Boolean(this.advanced);
                 this.updateContext();
                 this.updateWriter();
             } catch (error) {
-                status.textContent = `${error.message} Retry or open the provider settings.`;
+                if (isCurrent()) status.textContent = `${error.message} Retry or open the provider settings.`;
             } finally {
                 controls.pending = false;
-                if (row.isConnected) {
+                if (isCurrent()) {
                     action.disabled = id !== 'writer' && !select.value;
                     select.disabled = !service?.models?.length;
                     if (controls.voice) controls.voice.disabled = !controls.voices?.length;
+                    this.syncSelections();
                 }
             }
         });
@@ -367,10 +372,12 @@ export class ServiceConnections {
         }
         const imageAvailable = this.targets.has('images');
         if (imageAvailable && !this.rows.has('writer')) {
-            const writer = this.row('writer', 'Optional image prompt writer', data.services.chat, async model => {
+            const writer = this.row('writer', 'Optional image prompt writer', data.services.chat, async (model, isCurrent) => {
                 const sd = await import('./extensions/stable-diffusion/index.js');
                 const { saveCompatibleProfile } = await import('./extensions/connection-manager/index.js');
+                if (!isCurrent()) return false;
                 const id = model ? await saveCompatibleProfile(`Image writer ${model}`, data.base, model) : '';
+                if (!isCurrent()) return false;
                 sd.configureImageWriter(id);
             });
             writer.row.append(element('small', '', 'Uses the current scene. A separate writer keeps the story model selected and has its own instructions and output budget.'));
@@ -378,17 +385,21 @@ export class ServiceConnections {
         if (!data.juiced) return;
         const sdSupported = data.protocols.some(protocol => protocol.id === 'automatic1111' && protocol.features?.includes('txt2img'));
         if (imageAvailable && sdSupported && !this.rows.has('images')) {
-            const image = this.row('images', 'Image generation', data.services.images, async model => {
+            const image = this.row('images', 'Image generation', data.services.images, async (model, isCurrent) => {
                 const { configureSdcppConnection } = await import('./extensions/stable-diffusion/index.js');
-                await configureSdcppConnection(data.root, model);
+                if (!isCurrent()) return false;
+                return await configureSdcppConnection(data.root, model);
             });
             image.row.append(element('small', '', 'Uses stable-diffusion.cpp with the server root. Review size, steps, CFG and sampler in Image generation. Automatic image tools stay as configured.'));
         } else if (!imageAvailable || !sdSupported) this.results.append(element('p', '', 'Image generation needs the Image Generation extension and an advertised sd.cpp txt2img service.'));
         if (this.targets.has('speak') && !this.rows.has('speak')) {
-            const speech = this.row('speak', 'Voice narration', data.services.speak, async model => {
+            const speech = this.row('speak', 'Voice narration', data.services.speak, async (model, isCurrent) => {
                 if (!speech.voice.value || !speech.voices?.length) throw new Error('Discover voices and choose a voice first.');
+                const voice = speech.voice.value;
+                const voices = [...speech.voices];
                 const { configureCompatibleTts } = await import('./extensions/tts/index.js');
-                await configureCompatibleTts(`${data.base}/audio/speech`, model, speech.voices, speech.voice.value);
+                if (!isCurrent()) return false;
+                await configureCompatibleTts(`${data.base}/audio/speech`, model, voices, voice);
             });
             const label = element('label', '', 'Available voice');
             speech.voice = element('select', 'text_pole');
@@ -439,15 +450,18 @@ export class ServiceConnections {
             if (speech.select.value) void voices();
         }
         if (this.targets.has('transcribe') && !this.rows.has('transcribe')) {
-            this.row('transcribe', 'Microphone dictation', data.services.transcribe, async model => {
+            this.row('transcribe', 'Microphone dictation', data.services.transcribe, async (model, isCurrent) => {
                 const { configureDictation } = await import('./dictation.js');
+                if (!isCurrent()) return false;
                 configureDictation(`${data.base}/audio/transcriptions`, model);
             }).row.append(element('small', '', 'Dictation inserts text into your draft. It never sends the message. Microphone access needs HTTPS or localhost and browser permission.'));
         }
         if (this.targets.has('vision') && !this.rows.has('vision')) {
-            this.row('vision', 'Vision model', { models: data.services.chat?.models.filter(model => model.labels?.includes('vision')) || [] }, async model => {
+            this.row('vision', 'Vision model', { models: data.services.chat?.models.filter(model => model.labels?.includes('vision')) || [] }, async (model, isCurrent) => {
                 if (oai_settings.custom_url.replace(/\/$/, '') !== data.base) throw new Error('Connect the story service to this server first. Native custom captioning shares its compatible server address.');
                 const { configureCompatibleCaption } = await import('./extensions/caption/index.js');
+                if (!isCurrent()) return false;
+                if (oai_settings.custom_url.replace(/\/$/, '') !== data.base) throw new Error('The story connection changed before the vision model could be applied.');
                 configureCompatibleCaption(model);
             }).row.append(element('small', '', 'Uses the story service’s compatible server with its own vision model and caption prompt below. The story model stays selected.'));
         }

@@ -96,6 +96,7 @@ export class MacroBrowser {
         const root = document.createElement('div');
         root.classList.add('macroBrowser');
         this.dom = root;
+        root.addEventListener('keydown', event => this.#handleKeyDown(event));
 
         // Search bar and sort button
         const toolbar = document.createElement('div');
@@ -431,7 +432,8 @@ export function createTypeBadge(type) {
  * @returns {HTMLElement}
  */
 function renderMacroItem(macro) {
-    const item = document.createElement('div');
+    const item = document.createElement('button');
+    item.type = 'button';
     item.classList.add('macro-item');
     if (macro.aliasOf) item.classList.add('isAlias');
     item.dataset.macroName = macro.name;

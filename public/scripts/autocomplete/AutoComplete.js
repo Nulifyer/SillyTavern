@@ -30,6 +30,7 @@ export const AUTOCOMPLETE_STATE = {
 };
 
 export class AutoComplete {
+    #showRevision = 0;
     /**@type {HTMLTextAreaElement|HTMLInputElement}*/ textarea;
     /**@type {boolean}*/ isFloating = false;
     /**@type {()=>boolean}*/ checkIfActivate;
@@ -282,6 +283,8 @@ export class AutoComplete {
      * @param {boolean} isSelect Whether an autocomplete option was just selected.
      */
     async show(isInput = false, isForced = false, isSelect = false) {
+        const request = ++this.#showRevision;
+        const inputText = this.textarea.value, selectionStart = this.textarea.selectionStart, selectionEnd = this.textarea.selectionEnd;
         //TODO check if isInput and isForced are both required
         this.text = this.textarea.value;
         this.isReplaceable = false;
@@ -301,7 +304,10 @@ export class AutoComplete {
 
         // request provider to get name result (potentially "incomplete", i.e. not an actual existing name) for
         // cursor position
-        this.parserResult = await this.getNameAt(this.text, this.textarea.selectionStart);
+        const parserResult = await this.getNameAt(inputText, selectionStart);
+        if (request !== this.#showRevision || document.activeElement !== this.textarea || this.textarea.value !== inputText
+            || this.textarea.selectionStart !== selectionStart || this.textarea.selectionEnd !== selectionEnd || !this.checkIfActivate()) return;
+        this.parserResult = parserResult;
         this.secondaryParserResult = null;
 
         if (!this.parserResult) {
@@ -462,6 +468,7 @@ export class AutoComplete {
      * Hide autocomplete.
      */
     hide() {
+        this.#showRevision++;
         this.domWrap?.remove();
         this.detailsWrap?.remove();
         this.isActive = false;

@@ -1,6 +1,7 @@
 import { Fuse } from '../../../lib.js';
 
-import { characters, eventSource, event_types, generateQuietPrompt, generateRaw, getRequestHeaders, online_status, saveSettingsDebounced, substituteParams, substituteParamsExtended, system_message_types, this_chid } from '../../../script.js';
+import { characters, eventSource, event_types, generateQuietPrompt, generateRaw, getCurrentChatIdentity, getRequestHeaders, online_status, saveSettingsDebounced, substituteParams, substituteParamsExtended, system_message_types, this_chid } from '../../../script.js';
+import { getChatLoadToken } from '../../chat-loader.js';
 import { dragElement, isMobile } from '../../RossAscends-mods.js';
 import { getContext, getApiUrl, modules, extension_settings, ModuleWorkerWrapper, doExtrasFetch, renderExtensionTemplateAsync } from '../../extensions.js';
 import { loadMovingUIState, performFuzzySearch, power_user } from '../../power-user.js';
@@ -393,6 +394,7 @@ export async function visualNovelUpdateLayers(container) {
     await Promise.allSettled(setLayerIndicesPromises);
 }
 
+const imageRequests = new WeakMap();
 /**
  * Sets the expression for the given character image.
  * @param {JQuery<HTMLElement>} img - The image element to set the image on
@@ -400,6 +402,15 @@ export async function visualNovelUpdateLayers(container) {
  * @returns {Promise<void>} - A promise that resolves when the image is set
  */
 async function setImage(img, path) {
+    const holder = img.parent();
+    if (!holder[0]) return;
+    const request = {};
+    imageRequests.set(holder[0], request);
+    const owner = getCurrentChatIdentity(), load = getChatLoadToken(), filename = img.data('filename');
+    await holder.children('img').promise();
+    if (imageRequests.get(holder[0]) !== request || owner !== getCurrentChatIdentity() || load !== getChatLoadToken() || !holder[0].isConnected) return;
+    img = holder.children('img').filter((_, node) => $(node).data('filename') === filename);
+    if (!img.length) return;
     // Cohee: If something goes wrong, uncomment this to return to the old behavior
     /*
     img.attr('src', path);
@@ -717,7 +728,7 @@ async function classifyCallback(/** @type {{api: string?, filter: string?, promp
         return '';
     }
 
-    const expressionApi = EXPRESSION_API[api] || extension_settings.expressions.api;
+    const expressionApi = EXPRESSION_API[api] ?? extension_settings.expressions.api;
     const filterAvailable = !isFalseBoolean(filter);
 
     if (expressionApi === EXPRESSION_API.none) {
@@ -1064,19 +1075,6 @@ function getJsonSchema(emotions) {
     };
 }
 
-function onTextGenSettingsReady(args) {
-    // Only call if inside an API call
-    if (inApiCall && extension_settings.expressions.api === EXPRESSION_API.llm && isJsonSchemaSupported()) {
-        const emotions = DEFAULT_EXPRESSIONS;
-        Object.assign(args, {
-            top_k: 1,
-            stop: [],
-            stopping_strings: [],
-            custom_token_bans: [],
-            json_schema: getJsonSchema(emotions),
-        });
-    }
-}
 
 /**
  * Retrieves the label of an expression via classification based on the provided text.
@@ -1131,17 +1129,19 @@ export async function getExpressionLabel(text, expressionsApi = extension_settin
 
                 const expressionsList = await getExpressionsList({ filterAvailable: filterAvailable });
                 const prompt = substituteParamsExtended(customPrompt, { labels: expressionsList }) || await getLlmPrompt(expressionsList);
-                eventSource.once(event_types.TEXT_COMPLETION_SETTINGS_READY, onTextGenSettingsReady);
+                const textGenerationOverrides = isJsonSchemaSupported() ? {
+                    top_k: 1, stop: [], stopping_strings: [], custom_token_bans: [], json_schema: getJsonSchema(expressionsList),
+                } : null;
 
                 let emotionResponse;
                 try {
                     inApiCall = true;
                     switch (extension_settings.expressions.promptType) {
                         case PROMPT_TYPE.raw:
-                            emotionResponse = await generateRaw({ prompt: text, systemPrompt: prompt });
+                            emotionResponse = await generateRaw({ prompt: text, systemPrompt: prompt, textGenerationOverrides });
                             break;
                         case PROMPT_TYPE.full:
-                            emotionResponse = await generateQuietPrompt({ quietPrompt: prompt });
+                            emotionResponse = await generateQuietPrompt({ quietPrompt: prompt, textGenerationOverrides });
                             break;
                     }
                 } finally {
@@ -1600,8 +1600,15 @@ function chooseSpriteForExpression(spriteFolderName, expression, { prevExpressio
  * @param {string?} [options.overrideSpriteFile=null] - Set if a specific sprite file should be used. Must be sprite file name.
  * @returns {Promise<void>} A promise that resolves when the expression has been set.
  */
+let expressionRenderRequest = 0;
 async function setExpression(spriteFolderName, expression, { force = false, overrideSpriteFile = null } = {}) {
+    const request = ++expressionRenderRequest;
+    const owner = getCurrentChatIdentity(), load = getChatLoadToken();
+    const isCurrent = () => request === expressionRenderRequest && owner === getCurrentChatIdentity() && load === getChatLoadToken();
     await validateImages(spriteFolderName);
+    if (!isCurrent()) return;
+    await $('img.expression').promise();
+    if (!isCurrent()) return;
     const img = $('img.expression');
     const prevExpressionSrc = img.attr('src');
     const expressionClone = img.clone();
@@ -2138,10 +2145,11 @@ async function onClickExpressionDelete(event) {
 
     const expressionListItem = $(this).closest('.expression_list_item');
     const expression = expressionListItem.data('expression');
-
     if (expressionListItem.attr('data-expression-type') === 'failure') {
         return;
     }
+    const name = $('#image_list').data('name');
+    const fileName = withoutExtension(expressionListItem.attr('data-filename'));
 
     const confirmation = await Popup.show.confirm(t`Delete Expression`, t`Are you sure you want to delete this expression? Once deleted, it\'s gone forever!`
         + '<br /><br />'
@@ -2150,22 +2158,23 @@ async function onClickExpressionDelete(event) {
         return;
     }
 
-    const fileName = withoutExtension(expressionListItem.attr('data-filename'));
-    const name = $('#image_list').data('name');
-
     try {
-        await fetch('/api/sprites/delete', {
+        const response = await fetch('/api/sprites/delete', {
             method: 'POST',
             headers: getRequestHeaders(),
             body: JSON.stringify({ name, label: expression, spriteName: fileName }),
         });
+        if (!response.ok) throw new Error(`Expression could not be deleted (${response.status}).`);
     } catch (error) {
         toastr.error('Failed to delete image. Try again later.');
+        return;
     }
 
     // Refresh sprites list
     delete spriteCache[name];
+    if ($('#image_list').data('name') !== name) return;
     await fetchImagesNoCache();
+    if ($('#image_list').data('name') !== name) return;
     await validateImages(name);
 }
 

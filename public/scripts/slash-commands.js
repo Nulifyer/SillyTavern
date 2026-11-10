@@ -1,4 +1,5 @@
 import { Fuse, DOMPurify } from '../lib.js';
+import { getChatLoadToken } from './chat-loader.js';
 import { canUseNegativeLookbehind, copyText, findPersona, flashHighlight, resolveAvatarData } from './utils.js';
 
 import {
@@ -25,6 +26,7 @@ import {
     generateRaw,
     getCharacters,
     getCurrentChatDetails,
+    getCurrentChatIdentity,
     getCurrentChatId,
     getFirstDisplayedMessageId,
     getOneCharacter,
@@ -3815,8 +3817,8 @@ function injectCallback(args, value) {
         chat_metadata.script_injects = {};
     }
 
-    if (value) {
-        const inject = { value, position, depth, scan, role, filter };
+    const inject = value ? { value, position, depth, scan, role, filter } : null;
+    if (inject) {
         chat_metadata.script_injects[id] = inject;
     } else {
         delete chat_metadata.script_injects[id];
@@ -3825,20 +3827,26 @@ function injectCallback(args, value) {
     setExtensionPrompt(prefixedId, String(value), position, depth, scan, role, filterFunction);
     saveMetadataDebounced();
 
-    if (ephemeral) {
-        let deleted = false;
+    if (ephemeral && inject) {
+        const owner = getCurrentChatIdentity();
+        const load = getChatLoadToken();
+        const metadata = chat_metadata;
+        const clearListeners = () => {
+            eventSource.removeListener(event_types.GENERATION_ENDED, unsetInject);
+            eventSource.removeListener(event_types.GENERATION_STOPPED, unsetInject);
+            eventSource.removeListener(event_types.CHAT_CHANGED, clearListeners);
+        };
         const unsetInject = () => {
-            if (deleted) {
-                return;
-            }
+            clearListeners();
+            if (getCurrentChatIdentity() !== owner || getChatLoadToken() !== load || chat_metadata !== metadata || metadata.script_injects?.[id] !== inject) return;
             console.log('Removing ephemeral script injection', id);
-            delete chat_metadata.script_injects[id];
+            delete metadata.script_injects[id];
             setExtensionPrompt(prefixedId, '', position, depth, scan, role, filterFunction);
             saveMetadataDebounced();
-            deleted = true;
         };
-        eventSource.once(event_types.GENERATION_ENDED, unsetInject);
-        eventSource.once(event_types.GENERATION_STOPPED, unsetInject);
+        eventSource.on(event_types.GENERATION_ENDED, unsetInject);
+        eventSource.on(event_types.GENERATION_STOPPED, unsetInject);
+        eventSource.on(event_types.CHAT_CHANGED, clearListeners);
     }
 
     return id;

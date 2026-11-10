@@ -1,0 +1,10 @@
+{
+  "file": "public/scripts/extensions/expressions/index.js",
+  "sha256": "d1abc86d374a134b85877e68bf1e614702e837c88f8b0ae52f4316dd0e8bd1fb",
+  "observed": {
+    "requested": "grief",
+    "displayed": "/synthetic-expressions/grief.png",
+    "expression": "grief"
+  },
+  "pageErrors": []
+}

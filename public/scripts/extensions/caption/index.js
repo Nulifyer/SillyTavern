@@ -1,6 +1,7 @@
 import { ensureImageFormatSupported, getBase64Async, getFileExtension, isTrueBoolean, saveBase64AsFile } from '../../utils.js';
 import { getContext, getApiUrl, doExtrasFetch, extension_settings, modules, renderExtensionTemplateAsync } from '../../extensions.js';
-import { appendMediaToMessage, chat_metadata, eventSource, event_types, getRequestHeaders, saveChatConditional, saveSettingsDebounced, substituteParams } from '../../../script.js';
+import { appendMediaToMessage, chat_metadata, eventSource, event_types, getCurrentChatIdentity, getRequestHeaders, saveChatConditional, saveSettingsDebounced, substituteParams } from '../../../script.js';
+import { getChatLoadToken } from '../../chat-loader.js';
 import { getMessageTimeStamp } from '../../RossAscends-mods.js';
 import { SECRET_KEYS, secret_state } from '../../secrets.js';
 import { oai_settings, POLLINATIONS_ENDPOINT } from '../../openai.js';
@@ -15,6 +16,18 @@ import { debounce_timeout, MEDIA_DISPLAY, MEDIA_SOURCE, MEDIA_TYPE, SCROLL_BEHAV
 export { MODULE_NAME };
 
 const MODULE_NAME = 'caption';
+let captionSpinnerSequence = 0;
+
+function captureCaptionOwner(message = null) {
+    const identity = getCurrentChatIdentity();
+    const load = getChatLoadToken();
+    const context = getContext();
+    return { context, current: () => identity === getCurrentChatIdentity() && load === getChatLoadToken() && context.name1 === getContext().name1 && context.name2 === getContext().name2 && (!message || getContext().chat.includes(message)) };
+}
+
+function requireCaptionOwner(owner) {
+    if (!owner.current()) throw new Error('Caption cancelled because the story or image changed. Your current conversation was preserved.');
+}
 
 /** Use the existing compatible caption service with its own model, preserving story selection. */
 export function configureCompatibleCaption(model) {
@@ -147,6 +160,7 @@ async function wrapCaptionTemplate(caption) {
  * @returns {Promise<void>}
  */
 async function captionExistingMessage(message, mediaIndex) {
+    const owner = captureCaptionOwner(message);
     if (!Array.isArray(message?.extra?.media) || message.extra.media.length === 0) {
         return;
     }
@@ -156,6 +170,10 @@ async function captionExistingMessage(message, mediaIndex) {
     }
 
     const mediaAttachment = message.extra.media[mediaIndex];
+    const originalText = message.mes;
+    const originalTitle = mediaAttachment?.title;
+    const originalCaptioned = mediaAttachment?.captioned;
+    const current = () => owner.current() && message.extra?.media?.[mediaIndex] === mediaAttachment && message.mes === originalText && mediaAttachment.title === originalTitle && mediaAttachment.captioned === originalCaptioned;
 
     if (!mediaAttachment || !mediaAttachment.url || mediaAttachment.type === MEDIA_TYPE.AUDIO) {
         return;
@@ -167,6 +185,7 @@ async function captionExistingMessage(message, mediaIndex) {
 
     const imageData = await fetch(mediaAttachment.url);
     const blob = await imageData.blob();
+    requireCaptionOwner({ current });
     const fileName = mediaAttachment.url.split('/').pop().split('?')[0] || 'image.jpg';
     const file = new File([blob], fileName, { type: blob.type });
     const caption = await getCaptionForFile(file, null, true);
@@ -175,8 +194,10 @@ async function captionExistingMessage(message, mediaIndex) {
         console.warn('Failed to generate a caption for the image.');
         return;
     }
+    requireCaptionOwner({ current });
 
     const wrappedCaption = await wrapCaptionTemplate(caption);
+    requireCaptionOwner({ current });
 
     const messageText = String(message.mes).trim();
 
@@ -191,6 +212,7 @@ async function captionExistingMessage(message, mediaIndex) {
         mediaAttachment.title = wrappedCaption;
         mediaAttachment.captioned = true;
     }
+    return true;
 }
 
 /**
@@ -200,10 +222,12 @@ async function captionExistingMessage(message, mediaIndex) {
  * @param {string} mimeType Image MIME type
  * @returns {Promise<void>}
  */
-async function sendCaptionedMessage(caption, image, mimeType) {
+async function sendCaptionedMessage(caption, image, mimeType, owner) {
+    requireCaptionOwner(owner);
     const messageText = await wrapCaptionTemplate(caption);
+    requireCaptionOwner(owner);
 
-    const context = getContext();
+    const context = owner.context;
 
     /** @type {MediaAttachment} */
     const mediaAttachment = {
@@ -230,10 +254,12 @@ async function sendCaptionedMessage(caption, image, mimeType) {
     context.chat.push(message);
     const messageId = context.chat.length - 1;
     await eventSource.emit(event_types.MESSAGE_SENT, messageId);
+    requireCaptionOwner(owner);
     context.addOneMessage(message);
     await eventSource.emit(event_types.USER_MESSAGE_RENDERED, messageId);
+    requireCaptionOwner(owner);
     await context.saveChat();
-    setTimeout(() => context.scrollOnMediaLoad(), debounce_timeout.short);
+    setTimeout(() => { if (owner.current()) context.scrollOnMediaLoad(); }, debounce_timeout.short);
 }
 
 /**
@@ -384,20 +410,25 @@ async function onSelectImage(e, prompt, quiet) {
  * @returns {Promise<string>} Generated caption
  */
 async function getCaptionForFile(file, prompt, quiet) {
+    const owner = captureCaptionOwner();
+    const sequence = ++captionSpinnerSequence;
     try {
         if (file.type.startsWith('video/') && !isVideoCaptioningAvailable()) {
             throw new Error('Video captioning is not available for the current source.');
         }
 
         setSpinnerIcon();
-        const context = getContext();
+        const context = owner.context;
         const fileData = await getBase64Async(await ensureImageFormatSupported(file));
+        requireCaptionOwner(owner);
         const extension = getFileExtension(file);
         const base64Data = fileData.split(',')[1];
         const { caption } = await doCaptionRequest(base64Data, fileData, prompt);
+        requireCaptionOwner(owner);
         if (!quiet) {
             const imagePath = await saveBase64AsFile(base64Data, context.name2, '', extension);
-            await sendCaptionedMessage(caption, imagePath, file.type);
+            requireCaptionOwner(owner);
+            await sendCaptionedMessage(caption, imagePath, file.type, owner);
         }
         return caption;
     } catch (error) {
@@ -406,7 +437,7 @@ async function getCaptionForFile(file, prompt, quiet) {
         console.error(error);
         return '';
     } finally {
-        setImageIcon();
+        if (sequence === captionSpinnerSequence) setImageIcon();
     }
 }
 
@@ -481,6 +512,10 @@ function isVideoCaptioningAvailable() {
 }
 
 export async function init() {
+    eventSource.on(event_types.CHAT_CHANGED, () => {
+        ++captionSpinnerSequence;
+        setImageIcon();
+    });
     function addSendPictureButton() {
         const sendButton = $(`
         <div id="send_picture" class="list-group-item flex-container flexGap5">
@@ -625,6 +660,7 @@ export async function init() {
                 return;
             }
             const modelIds = await response.json();
+            if (extension_settings.caption.source !== 'multimodal' || extension_settings.caption.multimodal_api !== api || !dropdown.isConnected) return;
             if (Array.isArray(modelIds) && modelIds.length > 0) {
                 modelIds.sort().forEach((modelId) => {
                     if (!modelId || typeof modelId !== 'string' || options.some(o => o.value === modelId && o.dataset.type === api)) {
@@ -779,7 +815,10 @@ export async function init() {
             const messageId = Number(messageBlock.attr('mesid'));
             const mediaIndex = Number(mediaContainer.attr('data-index'));
             const data = getContext().chat[messageId];
-            await captionExistingMessage(data, mediaIndex);
+            const owner = captureCaptionOwner(data);
+            if (!await captionExistingMessage(data, mediaIndex)) return;
+            requireCaptionOwner(owner);
+            if (getContext().chat[messageId] !== data || !messageBlock.get(0)?.isConnected) return;
             appendMediaToMessage(data, messageBlock, SCROLL_BEHAVIOR.KEEP);
             await saveChatConditional();
         } catch (e) {

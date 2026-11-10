@@ -1,0 +1,558 @@
+{
+  "at": "2026-11-10T05:07:03.307281+00:00",
+  "files": [
+    {
+      "file": "public/index.html",
+      "previousReviewedSha256": "e2aa2db691082afb0956dde22e4471335d1c0d6f6454bad61c191dc3fc80ab19",
+      "currentSha256": "46af683c105a29c723ab7fa780734e382160402961b2483103c3b98f7b6cf264",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_index.html.diff",
+      "patchHunkRanges": [
+        [
+          7491,
+          7502
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          7490,
+          7503
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/power-user.js",
+      "previousReviewedSha256": "9be29c2ecaca5e86bb98749fe922269ded114da361be53ff7f86fb98af0eb0b0",
+      "currentSha256": "bf61aad242314bfec1118220e2427896e9c5b83f0ac9e8885e24013cf9c9edb5",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_power-user.js.diff",
+      "patchHunkRanges": [
+        [
+          1357,
+          1369
+        ],
+        [
+          1652,
+          1658
+        ],
+        [
+          2416,
+          2426
+        ],
+        [
+          2464,
+          2470
+        ],
+        [
+          2474,
+          2480
+        ],
+        [
+          2489,
+          2528
+        ],
+        [
+          3525,
+          3533
+        ],
+        [
+          4076,
+          4082
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          2350,
+          2555
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/utils.js",
+      "previousReviewedSha256": "5ebb9929dac63017f47281ba03e794c5c8195109a69960c1829e79ae946f1580",
+      "currentSha256": "39f0ef0fa8693d96f40e58795cdd8f3b1520beb5d444783f23ec2fd3ea0d6c62",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_utils.js.diff",
+      "patchHunkRanges": [
+        [
+          523,
+          531
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          520,
+          534
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/QuickReply.js",
+      "previousReviewedSha256": "36e53a6f19af5b799ce969a9fad2812993533f1229bb10b03aaac09c71122ca9",
+      "currentSha256": "1a3f97ef9ea1847ef3e8010e4c9eebe5b0094401a90e156b5906e2dbcb19dd5f",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_extensions_quick-reply_src_QuickReply.js.diff",
+      "patchHunkRanges": [
+        [
+          22,
+          34
+        ],
+        [
+          99,
+          106
+        ],
+        [
+          110,
+          116
+        ],
+        [
+          140,
+          150
+        ],
+        [
+          160,
+          170
+        ],
+        [
+          213,
+          223
+        ],
+        [
+          230,
+          244
+        ],
+        [
+          330,
+          341
+        ],
+        [
+          347,
+          358
+        ],
+        [
+          1152,
+          1158
+        ],
+        [
+          1164,
+          1170
+        ],
+        [
+          1791,
+          1797
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          90,
+          193
+        ],
+        [
+          1140,
+          1184
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/reasoning.js",
+      "previousReviewedSha256": "7dd73b874a659724bd50c40e6f4b64c8d628d9f63bd41697448323d5a64096ef",
+      "currentSha256": "522a9352cdfbea9d63d4215560051961f3a65100835a1627b1f5d638e7fd1b5c",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_reasoning.js.diff",
+      "patchHunkRanges": [
+        [
+          1,
+          8
+        ],
+        [
+          74,
+          85
+        ],
+        [
+          1221,
+          1232
+        ],
+        [
+          1238,
+          1245
+        ],
+        [
+          1309,
+          1315
+        ],
+        [
+          1321,
+          1327
+        ],
+        [
+          1377,
+          1408
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          65,
+          93
+        ],
+        [
+          1210,
+          1435
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/style.css",
+      "previousReviewedSha256": "0bb898b417fadf11b56bd161632a8813be69cabc18cbcb9af0f464dab1911b62",
+      "currentSha256": "f3b726eb9ee2e3400110fb38ea6d5f4cee7b4a431336b693acebe7ae8fbfe69a",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_extensions_quick-reply_style.css.diff",
+      "patchHunkRanges": [
+        [
+          149,
+          158
+        ],
+        [
+          169,
+          175
+        ],
+        [
+          188,
+          212
+        ],
+        [
+          221,
+          226
+        ]
+      ],
+      "additionalHandlerRanges": [],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/extensions/caption/index.js",
+      "previousReviewedSha256": "4de9eaff50a1407a392958773c45da957b1b62b4581fc3f554b908b675ec340a",
+      "currentSha256": "cdd39bba2f2be9b21236ad1d146cc6b8d8ace462652881393e6022c8f7b1c952",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_extensions_caption_index.js.diff",
+      "patchHunkRanges": [
+        [
+          1,
+          7
+        ],
+        [
+          16,
+          33
+        ],
+        [
+          160,
+          166
+        ],
+        [
+          170,
+          179
+        ],
+        [
+          185,
+          191
+        ],
+        [
+          194,
+          203
+        ],
+        [
+          212,
+          218
+        ],
+        [
+          222,
+          233
+        ],
+        [
+          254,
+          265
+        ],
+        [
+          410,
+          434
+        ],
+        [
+          437,
+          443
+        ],
+        [
+          512,
+          521
+        ],
+        [
+          660,
+          666
+        ],
+        [
+          815,
+          824
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          153,
+          269
+        ],
+        [
+          408,
+          448
+        ],
+        [
+          619,
+          703
+        ],
+        [
+          803,
+          840
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/extensions/translate/index.js",
+      "previousReviewedSha256": "0ba4327f56d8654840a8a550b17bc4d9fe8d2edb929503472a46e7b4399ef63e",
+      "currentSha256": "5cc14129b5018fe20151c55ef4fb862f393b3f2e0592263eb98af81689ebcfc1",
+      "method": "Retained complete original file read plus delegated full current implementation/diff review and17-case handoff; independent final-delta review accepted at matching hash.",
+      "reviewer": "/root/ui_corrections and /root/durable_generation_server",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_extensions_translate_index.js.diff",
+      "patchHunkRanges": [
+        [
+          3,
+          12
+        ],
+        [
+          21,
+          98
+        ],
+        [
+          257,
+          263
+        ],
+        [
+          265,
+          282
+        ],
+        [
+          284,
+          299
+        ],
+        [
+          530,
+          536
+        ],
+        [
+          576,
+          736
+        ],
+        [
+          741,
+          752
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          480,
+          578
+        ],
+        [
+          735,
+          785
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": "/tmp/st-ui-followup-20261109/translation-ownership-review.json"
+    },
+    {
+      "file": "public/css/macros.css",
+      "previousReviewedSha256": "7b7ddf1035eecafbfbe7eaa1b3bcb1361656812997aeb3a7d2c867c738120e5d",
+      "currentSha256": "38e72406631f1fb8e2fae5c74427a553fd4f98e86540a8d3b80621444bf68c79",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_css_macros.css.diff",
+      "patchHunkRanges": [
+        [
+          116,
+          127
+        ],
+        [
+          137,
+          148
+        ]
+      ],
+      "additionalHandlerRanges": [],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/streaming-display.js",
+      "previousReviewedSha256": "afe8f9cf28cc9731eb1c3937b55ff39c84e76d253cbb35806d705c2b492b2b98",
+      "currentSha256": "d94456f5469c39de27a9a4fa49771ea7beb89650db2f149d2652c12074f57725",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_streaming-display.js.diff",
+      "patchHunkRanges": [
+        [
+          208,
+          219
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          190,
+          242
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/extensions/tts/gpt-sovits-adapter.js",
+      "previousReviewedSha256": "9549c7ca8d13c75a9069056d80604f7049ca891ac0f6f2b4f50200772e501bac",
+      "currentSha256": "0af1a9505cd5e2bba61bc468bae794d4aa7954a074f389b2d57a6568735ec791",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_extensions_tts_gpt-sovits-adapter.js.diff",
+      "patchHunkRanges": [
+        [
+          112,
+          118
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          88,
+          132
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/extensions/tts/speecht5.js",
+      "previousReviewedSha256": "974ea8560d390d802af6b33184d831a8d59191bc3576451a5efef86f312799c8",
+      "currentSha256": "2300b77b5b3008011858331f976dae4595a245f37fe61de171d31b6f6420cd99",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_extensions_tts_speecht5.js.diff",
+      "patchHunkRanges": [
+        [
+          42,
+          48
+        ],
+        [
+          134,
+          140
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          95,
+          151
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ButtonUi.js",
+      "previousReviewedSha256": "458ef3cba4adcfd380b937757930acfae87921112c926f310cc63257a7059589",
+      "currentSha256": "c726a0984d87faef5ae66d5ab539e4dffe8e79c742c09c8253dcf4b75987f037",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_extensions_quick-reply_src_ui_ButtonUi.js.diff",
+      "patchHunkRanges": [
+        [
+          64,
+          73
+        ],
+        [
+          120,
+          140
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          1,
+          164
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ctx/SubMenu.js",
+      "previousReviewedSha256": "c5372b7f48202773a652a3f13e508ed17736763d02fe3c7772a613cf72ee6492",
+      "currentSha256": "c2615937336ef39fc95016c2457ee0089e2bcbacfbd0adeb2d17f0e6e1fd8841",
+      "method": "Retained complete original file read plus all git diff HEAD candidate changes manually read in current owner turn; unchanged bodies retain original review.",
+      "reviewer": "/root/native_ui_source_review",
+      "patchArtifact": "/tmp/st-ui-followup-20261109/partition1-final-current-public_scripts_extensions_quick-reply_src_ui_ctx_SubMenu.js.diff",
+      "patchHunkRanges": [
+        [
+          11,
+          17
+        ],
+        [
+          21,
+          29
+        ],
+        [
+          34,
+          62
+        ]
+      ],
+      "additionalHandlerRanges": [
+        [
+          1,
+          74
+        ]
+      ],
+      "independentReceipt": "/tmp/st-ui-followup-20261109/source-review-final-deltas.json",
+      "implementationHandoff": null
+    }
+  ],
+  "summary": {
+    "filesAssigned": 123,
+    "fullyRead": 123,
+    "currentHashFilesReviewed": 123,
+    "historicalIndexedBindingsReviewed": 825,
+    "currentIndexedBindingsReviewed": 829,
+    "currentIndexedBindingsTotal": 829,
+    "additionalCurrentHtmlInlineRegistrationsReviewed": 2,
+    "filesWithUnreviewedRanges": 0,
+    "finalDeltaFiles": 14,
+    "scopeLimit": "Complete retained manual source review plus exact current delta receipts. Original expanded registrations remain historical; current candidates are hash matched and individually classified. Browser qualification and production/image acceptance remain separate."
+  },
+  "newReasoningDeleteGuard": {
+    "sourceSha256": "522a9352cdfbea9d63d4215560051961f3a65100835a1627b1f5d638e7fd1b5c",
+    "artifact": "/tmp/st-ui-followup-20261109/native-reasoning-delete-owner",
+    "runStatus": "passed",
+    "testBodyReview": "Full native handlers1210\u20131435 and helper65\u201393 read; guard protects captured canonical message,story/load and displayed reasoning during confirmation."
+  },
+  "limits": [
+    "No source edits, production access or suites rerun.",
+    "Mixed-run aggregate failures retained; per-case passes are parent-reported unless an independent passed run is recorded.",
+    "Additional dynamic listeners and command expansions are not silently folded into current static candidate counts."
+  ]
+}

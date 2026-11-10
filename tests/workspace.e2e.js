@@ -1603,8 +1603,17 @@ test('live Juiced services use native providers from the tested container', asyn
     await expect(page.locator('#mes_stop')).toBeVisible();
     await navigate(page, 'characters');
     await returnToChat(page);
-    expect((await chatResponse).status()).toBe(200);
+    const storyResponse = await chatResponse;
+    expect(storyResponse.status()).toBe(202);
+    const storyJob = await storyResponse.json();
+    expect(storyJob.id).toBe(storyResponse.headers()['x-st-generation-job']);
+    expect(storyJob.context).toMatchObject({ version: 1, api: 'openai' });
     await expect(page.locator('#mes_stop')).toBeHidden({ timeout: 180000 });
+    const savedJob = await page.evaluate(async id => {
+        const script = await import('/script.js');
+        return (await fetch(`/api/generation-jobs/${id}`, { headers: script.getRequestHeaders() })).json();
+    }, storyJob.id);
+    expect(savedJob).toMatchObject({ status: 'completed', httpStatus: 200, acknowledged: true });
     const storyText = await page.locator('#chat .mes[is_user="false"]').last().innerText();
     expect(storyText.length).toBeGreaterThan(30);
     const chatSeconds = (Date.now() - start) / 1000;

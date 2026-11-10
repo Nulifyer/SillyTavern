@@ -1,0 +1,801 @@
+{
+  "at": "2026-11-10T05:50:20.886092+00:00",
+  "scope": "Independent closure of inactive partition1 and supplement drifts; no other worker ledger overwritten.",
+  "files": [
+    {
+      "file": "public/index.html",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "e2aa2db691082afb0956dde22e4471335d1c0d6f6454bad61c191dc3fc80ab19",
+      "currentSha256": "46af683c105a29c723ab7fa780734e382160402961b2483103c3b98f7b6cf264",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_index.html.diff",
+      "patchLines": 23,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          7491,
+          7502
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          7490,
+          7503
+        ]
+      ],
+      "frozenSha256": "46af683c105a29c723ab7fa780734e382160402961b2483103c3b98f7b6cf264",
+      "observedCurrentSha256": "46af683c105a29c723ab7fa780734e382160402961b2483103c3b98f7b6cf264",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/power-user.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "9be29c2ecaca5e86bb98749fe922269ded114da361be53ff7f86fb98af0eb0b0",
+      "currentSha256": "bf61aad242314bfec1118220e2427896e9c5b83f0ac9e8885e24013cf9c9edb5",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_power-user.js.diff",
+      "patchLines": 147,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          1357,
+          1369
+        ],
+        [
+          1652,
+          1658
+        ],
+        [
+          2416,
+          2426
+        ],
+        [
+          2464,
+          2470
+        ],
+        [
+          2474,
+          2480
+        ],
+        [
+          2489,
+          2528
+        ],
+        [
+          3525,
+          3533
+        ],
+        [
+          4076,
+          4082
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          2350,
+          2555
+        ]
+      ],
+      "frozenSha256": "bf61aad242314bfec1118220e2427896e9c5b83f0ac9e8885e24013cf9c9edb5",
+      "observedCurrentSha256": "bf61aad242314bfec1118220e2427896e9c5b83f0ac9e8885e24013cf9c9edb5",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/utils.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "5ebb9929dac63017f47281ba03e794c5c8195109a69960c1829e79ae946f1580",
+      "currentSha256": "39f0ef0fa8693d96f40e58795cdd8f3b1520beb5d444783f23ec2fd3ea0d6c62",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_utils.js.diff",
+      "patchLines": 15,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          523,
+          531
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          520,
+          534
+        ]
+      ],
+      "frozenSha256": "39f0ef0fa8693d96f40e58795cdd8f3b1520beb5d444783f23ec2fd3ea0d6c62",
+      "observedCurrentSha256": "39f0ef0fa8693d96f40e58795cdd8f3b1520beb5d444783f23ec2fd3ea0d6c62",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/QuickReply.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "36e53a6f19af5b799ce969a9fad2812993533f1229bb10b03aaac09c71122ca9",
+      "currentSha256": "1a3f97ef9ea1847ef3e8010e4c9eebe5b0094401a90e156b5906e2dbcb19dd5f",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_extensions_quick-reply_src_QuickReply.js.diff",
+      "patchLines": 157,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          22,
+          34
+        ],
+        [
+          99,
+          106
+        ],
+        [
+          110,
+          116
+        ],
+        [
+          140,
+          150
+        ],
+        [
+          160,
+          170
+        ],
+        [
+          213,
+          223
+        ],
+        [
+          230,
+          244
+        ],
+        [
+          330,
+          341
+        ],
+        [
+          347,
+          358
+        ],
+        [
+          1152,
+          1158
+        ],
+        [
+          1164,
+          1170
+        ],
+        [
+          1791,
+          1797
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          90,
+          193
+        ],
+        [
+          1140,
+          1184
+        ]
+      ],
+      "frozenSha256": "1a3f97ef9ea1847ef3e8010e4c9eebe5b0094401a90e156b5906e2dbcb19dd5f",
+      "observedCurrentSha256": "1a3f97ef9ea1847ef3e8010e4c9eebe5b0094401a90e156b5906e2dbcb19dd5f",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/reasoning.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "7dd73b874a659724bd50c40e6f4b64c8d628d9f63bd41697448323d5a64096ef",
+      "currentSha256": "9902754d8724fb92c9c67c947e9a2df21c7d041a0b6cefd9a3f85d5de2a81f27",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_reasoning.js.diff",
+      "patchLines": 41,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          1217,
+          1224
+        ],
+        [
+          1230,
+          1237
+        ],
+        [
+          1387,
+          1393
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          50,
+          105
+        ],
+        [
+          1190,
+          1250
+        ],
+        [
+          1324,
+          1408
+        ]
+      ],
+      "frozenSha256": "9902754d8724fb92c9c67c947e9a2df21c7d041a0b6cefd9a3f85d5de2a81f27",
+      "observedCurrentSha256": "9902754d8724fb92c9c67c947e9a2df21c7d041a0b6cefd9a3f85d5de2a81f27",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/style.css",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "0bb898b417fadf11b56bd161632a8813be69cabc18cbcb9af0f464dab1911b62",
+      "currentSha256": "f3b726eb9ee2e3400110fb38ea6d5f4cee7b4a431336b693acebe7ae8fbfe69a",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_extensions_quick-reply_style.css.diff",
+      "patchLines": 60,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          149,
+          158
+        ],
+        [
+          169,
+          175
+        ],
+        [
+          188,
+          212
+        ],
+        [
+          221,
+          226
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [],
+      "frozenSha256": "f3b726eb9ee2e3400110fb38ea6d5f4cee7b4a431336b693acebe7ae8fbfe69a",
+      "observedCurrentSha256": "f3b726eb9ee2e3400110fb38ea6d5f4cee7b4a431336b693acebe7ae8fbfe69a",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/extensions/caption/index.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "4de9eaff50a1407a392958773c45da957b1b62b4581fc3f554b908b675ec340a",
+      "currentSha256": "cdd39bba2f2be9b21236ad1d146cc6b8d8ace462652881393e6022c8f7b1c952",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_extensions_caption_index.js.diff",
+      "patchLines": 175,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          1,
+          7
+        ],
+        [
+          16,
+          33
+        ],
+        [
+          160,
+          166
+        ],
+        [
+          170,
+          179
+        ],
+        [
+          185,
+          191
+        ],
+        [
+          194,
+          203
+        ],
+        [
+          212,
+          218
+        ],
+        [
+          222,
+          233
+        ],
+        [
+          254,
+          265
+        ],
+        [
+          410,
+          434
+        ],
+        [
+          437,
+          443
+        ],
+        [
+          512,
+          521
+        ],
+        [
+          660,
+          666
+        ],
+        [
+          815,
+          824
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          153,
+          269
+        ],
+        [
+          408,
+          448
+        ],
+        [
+          619,
+          703
+        ],
+        [
+          803,
+          840
+        ]
+      ],
+      "frozenSha256": "cdd39bba2f2be9b21236ad1d146cc6b8d8ace462652881393e6022c8f7b1c952",
+      "observedCurrentSha256": "cdd39bba2f2be9b21236ad1d146cc6b8d8ace462652881393e6022c8f7b1c952",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/extensions/translate/index.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "0ba4327f56d8654840a8a550b17bc4d9fe8d2edb929503472a46e7b4399ef63e",
+      "currentSha256": "5cc14129b5018fe20151c55ef4fb862f393b3f2e0592263eb98af81689ebcfc1",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_extensions_translate_index.js.diff",
+      "patchLines": 480,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          3,
+          12
+        ],
+        [
+          21,
+          98
+        ],
+        [
+          257,
+          263
+        ],
+        [
+          265,
+          282
+        ],
+        [
+          284,
+          299
+        ],
+        [
+          530,
+          536
+        ],
+        [
+          576,
+          736
+        ],
+        [
+          741,
+          752
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          480,
+          578
+        ],
+        [
+          735,
+          785
+        ]
+      ],
+      "frozenSha256": "5cc14129b5018fe20151c55ef4fb862f393b3f2e0592263eb98af81689ebcfc1",
+      "observedCurrentSha256": "5cc14129b5018fe20151c55ef4fb862f393b3f2e0592263eb98af81689ebcfc1",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/css/macros.css",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "7b7ddf1035eecafbfbe7eaa1b3bcb1361656812997aeb3a7d2c867c738120e5d",
+      "currentSha256": "38e72406631f1fb8e2fae5c74427a553fd4f98e86540a8d3b80621444bf68c79",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_css_macros.css.diff",
+      "patchLines": 31,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          116,
+          127
+        ],
+        [
+          137,
+          148
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [],
+      "frozenSha256": "38e72406631f1fb8e2fae5c74427a553fd4f98e86540a8d3b80621444bf68c79",
+      "observedCurrentSha256": "38e72406631f1fb8e2fae5c74427a553fd4f98e86540a8d3b80621444bf68c79",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/streaming-display.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "afe8f9cf28cc9731eb1c3937b55ff39c84e76d253cbb35806d705c2b492b2b98",
+      "currentSha256": "d94456f5469c39de27a9a4fa49771ea7beb89650db2f149d2652c12074f57725",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_streaming-display.js.diff",
+      "patchLines": 17,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          208,
+          219
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          190,
+          242
+        ]
+      ],
+      "frozenSha256": "d94456f5469c39de27a9a4fa49771ea7beb89650db2f149d2652c12074f57725",
+      "observedCurrentSha256": "d94456f5469c39de27a9a4fa49771ea7beb89650db2f149d2652c12074f57725",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/extensions/tts/gpt-sovits-adapter.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "9549c7ca8d13c75a9069056d80604f7049ca891ac0f6f2b4f50200772e501bac",
+      "currentSha256": "0af1a9505cd5e2bba61bc468bae794d4aa7954a074f389b2d57a6568735ec791",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_extensions_tts_gpt-sovits-adapter.js.diff",
+      "patchLines": 13,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          112,
+          118
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          88,
+          132
+        ]
+      ],
+      "frozenSha256": "0af1a9505cd5e2bba61bc468bae794d4aa7954a074f389b2d57a6568735ec791",
+      "observedCurrentSha256": "0af1a9505cd5e2bba61bc468bae794d4aa7954a074f389b2d57a6568735ec791",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/extensions/tts/speecht5.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "974ea8560d390d802af6b33184d831a8d59191bc3576451a5efef86f312799c8",
+      "currentSha256": "2300b77b5b3008011858331f976dae4595a245f37fe61de171d31b6f6420cd99",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_extensions_tts_speecht5.js.diff",
+      "patchLines": 21,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          42,
+          48
+        ],
+        [
+          134,
+          140
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          95,
+          151
+        ]
+      ],
+      "frozenSha256": "2300b77b5b3008011858331f976dae4595a245f37fe61de171d31b6f6420cd99",
+      "observedCurrentSha256": "2300b77b5b3008011858331f976dae4595a245f37fe61de171d31b6f6420cd99",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ButtonUi.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "458ef3cba4adcfd380b937757930acfae87921112c926f310cc63257a7059589",
+      "currentSha256": "c726a0984d87faef5ae66d5ab539e4dffe8e79c742c09c8253dcf4b75987f037",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_extensions_quick-reply_src_ui_ButtonUi.js.diff",
+      "patchLines": 40,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          64,
+          73
+        ],
+        [
+          120,
+          140
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          1,
+          164
+        ]
+      ],
+      "frozenSha256": "c726a0984d87faef5ae66d5ab539e4dffe8e79c742c09c8253dcf4b75987f037",
+      "observedCurrentSha256": "c726a0984d87faef5ae66d5ab539e4dffe8e79c742c09c8253dcf4b75987f037",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ctx/SubMenu.js",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": "c5372b7f48202773a652a3f13e508ed17736763d02fe3c7772a613cf72ee6492",
+      "currentSha256": "c2615937336ef39fc95016c2457ee0089e2bcbacfbd0adeb2d17f0e6e1fd8841",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_extensions_quick-reply_src_ui_ctx_SubMenu.js.diff",
+      "patchLines": 64,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          11,
+          17
+        ],
+        [
+          21,
+          29
+        ],
+        [
+          34,
+          62
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          1,
+          74
+        ]
+      ],
+      "frozenSha256": "c2615937336ef39fc95016c2457ee0089e2bcbacfbd0adeb2d17f0e6e1fd8841",
+      "observedCurrentSha256": "c2615937336ef39fc95016c2457ee0089e2bcbacfbd0adeb2d17f0e6e1fd8841",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/kai-settings.js",
+      "ledger": "source-review-0-supplement.json",
+      "reviewedSha256": "dccfadb327d70d7be67f4ccfc419f3040d5efc60ba521c4246857a1444b98beb",
+      "currentSha256": "29af22a2597a246757616baa22ac842ae07129c1b253ff247d070c03649349fc",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_kai-settings.js.diff",
+      "patchLines": 57,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          1,
+          5
+        ],
+        [
+          211,
+          219
+        ],
+        [
+          223,
+          233
+        ],
+        [
+          239,
+          245
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          210,
+          265
+        ]
+      ],
+      "frozenSha256": "29af22a2597a246757616baa22ac842ae07129c1b253ff247d070c03649349fc",
+      "observedCurrentSha256": "29af22a2597a246757616baa22ac842ae07129c1b253ff247d070c03649349fc",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/templates/dataMaidDialog.html",
+      "ledger": "source-review-1.json",
+      "reviewedSha256": null,
+      "currentSha256": "a00de28ddbbeb224e2755b3794a67c703b70e53894d4c025109e4437c04fb3bc",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-public_scripts_templates_dataMaidDialog.html.diff",
+      "patchLines": 13,
+      "status": "independent_final_delta_read",
+      "method": "Full git diff HEAD for this file manually read, plus complete affected callback/helper bodies where needed; retained full-file owner reading supplies unchanged source. Root explicitly authorized HEAD diff as lossless superset of all candidate v25 changes.",
+      "patchHunkRangesActuallyRead": [
+        [
+          10,
+          16
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          1,
+          25
+        ]
+      ],
+      "frozenSha256": "a00de28ddbbeb224e2755b3794a67c703b70e53894d4c025109e4437c04fb3bc",
+      "observedCurrentSha256": "a00de28ddbbeb224e2755b3794a67c703b70e53894d4c025109e4437c04fb3bc",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/index.js",
+      "ledger": "source-review-2.json",
+      "reviewedSha256": "699bc10d351a6168900eb176a3c5824af5d6a933949b3abf9c2b957a40bf5ca0",
+      "currentSha256": "7f2fcaa56ba6bcdcc1370bcc9eaacd9bca37da9e99a5e846c095184a28181a52",
+      "frozenSha256": "7f2fcaa56ba6bcdcc1370bcc9eaacd9bca37da9e99a5e846c095184a28181a52",
+      "observedCurrentSha256": "7f2fcaa56ba6bcdcc1370bcc9eaacd9bca37da9e99a5e846c095184a28181a52",
+      "status": "independent_final_delta_read",
+      "method": "Only two exact new hunks manually read plus complete affected finally block/command argument. Reversing those hunks reconstructs SHA256699bc10d exactly, proving all other bytes match the already full-reviewed frozen source.",
+      "patch": "/tmp/st-ui-followup-20261109/final-delta-SD699-7f.diff",
+      "patchHunkRangesActuallyRead": [
+        [
+          5551,
+          5556
+        ],
+        [
+          5864,
+          5864
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          5544,
+          5563
+        ],
+        [
+          5857,
+          5873
+        ]
+      ],
+      "reconstructedBasisSnapshot": "/tmp/st-ui-followup-20261109/sd-reviewed-699bc10d.js",
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server"
+    },
+    {
+      "file": "public/script.js",
+      "ledger": "source-review-0.json",
+      "reviewedSha256": "d9a3c529e037675e0abc42b44d7e15152c22e86485c1fc8dec589016f9013430",
+      "currentSha256": "aedd9f4289d2565f683e9bea2f4c98a2fc53a2ac48c69500ac71c081ca963bfc",
+      "frozenSha256": "aedd9f4289d2565f683e9bea2f4c98a2fc53a2ac48c69500ac71c081ca963bfc",
+      "observedCurrentSha256": "aedd9f4289d2565f683e9bea2f4c98a2fc53a2ac48c69500ac71c081ca963bfc",
+      "status": "independent_final_delta_read",
+      "method": "Exact two-line move read against retained full-reviewed source, plus complete menu helpers and action callback. All other bytes unchanged by exact diff.",
+      "patch": "/tmp/st-ui-followup-20261109/review-0-actions-menu-final-delta.diff",
+      "patchHunkRangesActuallyRead": [
+        [
+          12028,
+          12048
+        ],
+        [
+          12134,
+          12153
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          11962,
+          12150
+        ]
+      ],
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server",
+      "runtimeQualification": "New native held-menu regression and final immutable image pending. Prior source-first suites retain their original fingerprints."
+    },
+    {
+      "file": "public/script.js",
+      "ledger": "source-review-0.json",
+      "reviewedSha256": "aedd9f4289d2565f683e9bea2f4c98a2fc53a2ac48c69500ac71c081ca963bfc",
+      "currentSha256": "e965fcd3dd533de0db1e74daf4db65dabb01fe3f68a7b951fbca0d97d008360f",
+      "frozenSha256": "e965fcd3dd533de0db1e74daf4db65dabb01fe3f68a7b951fbca0d97d008360f",
+      "observedCurrentSha256": "e965fcd3dd533de0db1e74daf4db65dabb01fe3f68a7b951fbca0d97d008360f",
+      "status": "independent_final_delta_read",
+      "method": "Exact focus capture/guard/click-removal delta read against retained reviewed version, plus complete affected async history/helper bodies.",
+      "patch": "/tmp/st-ui-followup-20261109/review-0-history-focus-final-delta.diff",
+      "patchHunkRangesActuallyRead": [
+        [
+          8793,
+          8817
+        ],
+        [
+          8819,
+          8845
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          8770,
+          8953
+        ]
+      ],
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server",
+      "runtimeQualification": "UI owner owns actual native held-menu regression and ordinary focus qualification. Older suites not relabelled final."
+    },
+    {
+      "file": "public/script.js",
+      "ledger": "source-review-0.json",
+      "reviewedSha256": "e965fcd3dd533de0db1e74daf4db65dabb01fe3f68a7b951fbca0d97d008360f",
+      "currentSha256": "6a8daee701c194bea60a8310092d7e481349fd15d7e3706f7b1e289745a86235",
+      "frozenSha256": "6a8daee701c194bea60a8310092d7e481349fd15d7e3706f7b1e289745a86235",
+      "observedCurrentSha256": "6a8daee701c194bea60a8310092d7e481349fd15d7e3706f7b1e289745a86235",
+      "status": "independent_final_delta_read",
+      "method": "Exact BODY-blur exception/reopened-Actions guard delta read plus complete affected async function; no repeated all-source or browser-pass claim.",
+      "patch": "/tmp/st-ui-followup-20261109/review-0-history-normal-focus-final-delta.diff",
+      "patchHunkRangesActuallyRead": [
+        [
+          8817,
+          8848
+        ]
+      ],
+      "additionalBodyRangesActuallyRead": [
+        [
+          8796,
+          8853
+        ]
+      ],
+      "currentHashMatches": true,
+      "unreviewedGaps": [],
+      "reviewer": "/root/durable_generation_server",
+      "runtimeQualification": "UI owner runs1held-menu+6normalfocus/selection/close cases. All prior browser suites retain original hashes; immutable final image acceptance pending."
+    }
+  ],
+  "excludedActiveOwners": [],
+  "findings": [
+    {
+      "file": "public/scripts/reasoning.js",
+      "evidence": "Actual delegated native handler with held confirmation, fresh canonical message at same index, save intercepted.",
+      "artifact": "/tmp/st-ui-followup-20261109/reasoning-delete-owner-proof.json",
+      "observedSha256": "9902754d8724fb92c9c67c947e9a2df21c7d041a0b6cefd9a3f85d5de2a81f27",
+      "finding": "Old reasoning-delete confirmation clears a replacement canonical message.",
+      "status": "Root implemented guard; partition1 reviewer read final522a9352; root reports2/2 native positives covering reload and revision."
+    }
+  ],
+  "limits": [
+    "Manual final delta review is source evidence, not exhaustive browser acceptance.",
+    "Retained source ranges may predate these HEAD changes; this receipt covers the entire candidate-change superset at the frozen hash.",
+    "No source edits, deployments, private/provider calls, commits, or other-ledger changes.",
+    "SD native18/18 and focused units40/40 reported by its owner; final two-hunk help/lint delta independently reviewed and cryptographically verified."
+  ]
+}

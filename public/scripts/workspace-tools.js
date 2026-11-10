@@ -13,6 +13,10 @@ export class WorkspaceTools {
 
     init() {
         const toolbar = element('div', 'workspace-only workspace-composer-tools');
+        this.continue = button('Continue', 'continue-story', {}, 'workspace-tool-button workspace-continue', 'fa-forward');
+        this.continue.id = 'workspace-continue';
+        this.continue.setAttribute('aria-label', 'Continue conversation');
+        this.continue.title = 'Continue the last reply without sending your draft';
         this.image = button('Illustrate scene', 'generate-scene-image', {}, 'workspace-tool-button', 'fa-image');
         this.image.id = 'workspace-image-button';
         this.image.title = 'Generate one illustration from the current story';
@@ -25,7 +29,7 @@ export class WorkspaceTools {
         microphone.id = 'workspace-dictation';
         microphone.setAttribute('aria-label', 'Dictate');
         microphone.append(element('i', 'fa-solid fa-microphone'), element('span', '', 'Dictate'));
-        toolbar.append(this.image, this.voice, microphone);
+        toolbar.append(this.continue, this.image, this.voice, microphone);
         const more = element('details', 'workspace-scene-menu workspace-creative-menu');
         const summary = element('summary', 'workspace-icon-button');
         summary.setAttribute('aria-label', 'Chat tools and options');
@@ -46,7 +50,9 @@ export class WorkspaceTools {
             if (!more.open) return;
             menu.style.translate = '';
             const header = document.getElementById('workspace-header').getBoundingClientRect();
-            menu.style.maxHeight = `${Math.max(44, more.getBoundingClientRect().top - header.bottom - 16)}px`;
+            const availableHeight = Math.max(44, toolbar.getBoundingClientRect().top - header.bottom - 16);
+            menu.style.maxHeight = `${availableHeight}px`;
+            document.body.style.setProperty('--ws-composer-menu-height', `${availableHeight}px`);
             const bounds = menu.getBoundingClientRect();
             const shift = Math.max(12 - bounds.left, Math.min(0, innerWidth - 12 - bounds.right));
             menu.style.translate = `${shift}px 0`;
@@ -93,7 +99,7 @@ export class WorkspaceTools {
         }
     }
 
-    update(generating, archived) {
+    update(generating, archived, connected) {
         this.dictation.update(generating || archived);
         const enabled = Boolean(extension_settings.tts?.enabled);
         this.voice.setAttribute('aria-pressed', String(enabled));
@@ -103,6 +109,14 @@ export class WorkspaceTools {
         this.image.disabled = this.busy || generating || archived;
         this.image.querySelector('span').textContent = this.busy ? 'Illustrating…' : 'Illustrate scene';
         this.image.setAttribute('aria-busy', String(this.busy));
+        this.continue.disabled = this.busy || generating || archived || !connected;
+    }
+
+    continueStory() {
+        if (this.continue.disabled) return;
+        this.continue.disabled = true;
+        // Native Continue owns editing restrictions, cast selection and generation.
+        try { document.getElementById('option_continue').click(); } finally { this.refresh(); }
     }
 
     async toggleVoice() {

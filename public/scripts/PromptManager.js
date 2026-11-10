@@ -1016,7 +1016,7 @@ class PromptManager {
 
         // Check whether the referenced prompts are present.
         this.serviceSettings.prompts.length === 0
-            ? this.setPrompts(chatCompletionDefaultPrompts.prompts)
+            ? this.setPrompts(structuredClone(chatCompletionDefaultPrompts.prompts))
             : this.checkForMissingPrompts(this.serviceSettings.prompts);
 
         // Add identifiers if there are none assigned to a prompt
@@ -1050,7 +1050,7 @@ class PromptManager {
         missingIdentifiers.forEach(identifier => {
             const defaultPrompt = chatCompletionDefaultPrompts.prompts.find(prompt => prompt?.identifier === identifier);
             if (defaultPrompt) {
-                prompts.push(defaultPrompt);
+                prompts.push(structuredClone(defaultPrompt));
                 this.log(`Missing system prompt: ${defaultPrompt.identifier}. Added default.`);
             }
         });
@@ -1298,11 +1298,12 @@ class PromptManager {
      */
     createQuickEdit(identifier, title) {
         const prompt = this.getPromptById(identifier);
+        if (!prompt) return;
         const textareaIdentifier = `${identifier}_prompt_quick_edit_textarea`;
         const html = `<div class="range-block m-t-1">
-                        <div class="justifyLeft">${title}</div>
+                        <div class="justifyLeft">${escapeHtml(String(title))}</div>
                         <div class="wide100p">
-                            <textarea id="${textareaIdentifier}" class="text_pole textarea_compact" rows="6" placeholder="">${prompt.content}</textarea>
+                            <textarea id="${escapeHtml(textareaIdentifier)}" class="text_pole textarea_compact" rows="6" placeholder=""></textarea>
                         </div>
                     </div>`;
 
@@ -1312,6 +1313,7 @@ class PromptManager {
         const debouncedSaveServiceSettings = debouncePromise(() => this.saveServiceSettings(), 300);
 
         const textarea = /** @type {HTMLTextAreaElement} */(document.getElementById(textareaIdentifier));
+        textarea.value = prompt.content ?? '';
         textarea.addEventListener('blur', () => {
             prompt.content = textarea.value;
             this.updatePromptByIdentifier(identifier, prompt);
@@ -1839,7 +1841,21 @@ class PromptManager {
             },
         };
 
-        if (false === this.validateObject(controlObj, importData)) {
+        const validPrompt = prompt => prompt && typeof prompt === 'object' && !Array.isArray(prompt)
+            && typeof prompt.identifier === 'string' && prompt.identifier.length > 0
+            && typeof prompt.name === 'string'
+            && (prompt.content === undefined || typeof prompt.content === 'string')
+            && (prompt.role === undefined || ['system', 'user', 'assistant'].includes(prompt.role))
+            && ['marker', 'system_prompt', 'forbid_overrides', 'injection_position'].every(key => prompt[key] === undefined
+                || (key === 'injection_position' ? [0, 1].includes(prompt[key]) : typeof prompt[key] === 'boolean'))
+            && ['injection_depth', 'injection_order'].every(key => prompt[key] === undefined || Number.isFinite(prompt[key]))
+            && (prompt.injection_trigger === undefined || (Array.isArray(prompt.injection_trigger) && prompt.injection_trigger.every(trigger => typeof trigger === 'string')));
+        const validOrder = order => order == null || (Array.isArray(order) && order.every(reference => reference
+            && typeof reference.identifier === 'string' && (reference.enabled === undefined || typeof reference.enabled === 'boolean'))
+            && new Set(order.map(reference => reference.identifier)).size === order.length);
+        if (!this.validateObject(controlObj, importData) || !importData.data.prompts.every(validPrompt) || !validOrder(importData.data.prompt_order)
+            || new Set(importData.data.prompts.map(prompt => prompt.identifier)).size !== importData.data.prompts.length
+            || (this.configuration.promptOrder.strategy === 'character' && importData.type === 'character' && !this.activeCharacter)) {
             toastr.warning(t`Could not import prompts. Export failed validation.`);
             return;
         }
@@ -1875,6 +1891,7 @@ class PromptManager {
      * @returns {boolean}
      */
     validateObject(controlObj, object) {
+        if (!object || typeof object !== 'object' || (Array.isArray(controlObj) && !Array.isArray(object))) return false;
         for (let key in controlObj) {
             if (!Object.hasOwn(object, key)) {
                 if (controlObj[key] === null) continue;

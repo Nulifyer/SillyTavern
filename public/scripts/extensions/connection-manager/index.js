@@ -1,6 +1,6 @@
 import { DOMPurify, Fuse } from '../../../lib.js';
 
-import { activateSendButtons, deactivateSendButtons, event_types, eventSource, main_api, online_status, saveSettingsDebounced } from '../../../script.js';
+import { activateSendButtons, deactivateSendButtons, event_types, eventSource, is_send_press, main_api, online_status, saveSettingsDebounced } from '../../../script.js';
 import { extension_settings, getContext, renderExtensionTemplateAsync } from '../../extensions.js';
 import { callGenericPopup, Popup, POPUP_RESULT, POPUP_TYPE } from '../../popup.js';
 import { SlashCommand } from '../../slash-commands/SlashCommand.js';
@@ -23,6 +23,8 @@ import { formatReasoning } from '/scripts/reasoning.js';
 const MODULE_NAME = 'connection-manager';
 const NONE = '<None>';
 const EMPTY = '<Empty>';
+const activeProfileStreams = new Set();
+const activeProfileLocks = new Set();
 
 const DEFAULT_SETTINGS = {
     profiles: [],
@@ -130,7 +132,8 @@ class ConnectionManagerSpinner {
     }
 
     stop() {
-        this.spinnerElement.classList.add('hidden');
+        ConnectionManagerSpinner.abortControllers = ConnectionManagerSpinner.abortControllers.filter(controller => controller !== this.abortController);
+        if (!ConnectionManagerSpinner.abortControllers.length) this.spinnerElement.classList.add('hidden');
     }
 
     isAborted() {
@@ -142,6 +145,7 @@ class ConnectionManagerSpinner {
             controller.abort();
         }
         ConnectionManagerSpinner.abortControllers = [];
+        document.getElementById('connection_profile_spinner')?.classList.add('hidden');
     }
 }
 
@@ -415,26 +419,27 @@ async function applyConnectionProfile(profile) {
     const commands = mode === 'cc' ? CC_COMMANDS : TC_COMMANDS;
     const spinner = new ConnectionManagerSpinner();
     spinner.start();
+    const commandAbort = new SlashCommandAbortController();
+    spinner.abortController.signal.addEventListener('abort', () => commandAbort.abort('Another connection profile was selected.', true), { once: true });
 
-    for (const command of commands) {
-        if (spinner.isAborted()) {
-            throw new Error('Profile application aborted');
-        }
+    try {
+        for (const command of commands) {
+            if (spinner.isAborted()) return false;
 
-        const argument = profile[command];
-        const allowEmpty = ALLOW_EMPTY.includes(command);
-        if (!argument && !(allowEmpty && argument === '')) {
-            continue;
+            const argument = profile[command];
+            const allowEmpty = ALLOW_EMPTY.includes(command);
+            if (!argument && !(allowEmpty && argument === '')) {
+                continue;
+            }
+            try {
+                const args = getNamedArguments({ ...(allowEmpty ? { force: 'true' } : {}), _abortController: commandAbort });
+                await SlashCommandParser.commands[command].callback(args, argument);
+            } catch (error) {
+                console.error(`Failed to execute command: ${command} ${argument}`, error);
+            }
         }
-        try {
-            const args = getNamedArguments(allowEmpty ? { force: 'true' } : {});
-            await SlashCommandParser.commands[command].callback(args, argument);
-        } catch (error) {
-            console.error(`Failed to execute command: ${command} ${argument}`, error);
-        }
-    }
-
-    spinner.stop();
+        return !spinner.isAborted();
+    } finally { spinner.stop(); }
 }
 
 /**
@@ -487,7 +492,7 @@ async function renderDetailsContent(detailsContent) {
             templateParams.omitted = profile.exclude.map(e => FANCY_NAMES[e]).join(', ');
         }
         const template = await renderExtensionTemplateAsync(MODULE_NAME, 'view', templateParams);
-        detailsContent.innerHTML = template;
+        if (extension_settings.connectionManager.selectedProfile === selectedProfile && !detailsContent.classList.contains('hidden')) detailsContent.innerHTML = template;
     } else {
         detailsContent.textContent = t`No profile selected`;
     }
@@ -540,7 +545,11 @@ async function generateStreamCallback(args, value) {
     }
 
     // Create abort controller for stop functionality (when stop is enabled)
-    const abortController = enableStop ? new AbortController() : null;
+    const abortController = new AbortController();
+    activeProfileStreams.add(abortController);
+    const commandAbort = () => abortController.abort();
+    args?._abortController?.addEventListener('abort', commandAbort, { once: true });
+    if (args?._abortController?.signal?.aborted) abortController.abort();
 
     // Compose the stop handler: abort the request + optionally invoke user closure
     const onStopHandler = enableStop ? async () => {
@@ -558,6 +567,7 @@ async function generateStreamCallback(args, value) {
 
     try {
         if (lock) {
+            activeProfileLocks.add(abortController);
             deactivateSendButtons();
         }
 
@@ -652,30 +662,12 @@ async function generateStreamCallback(args, value) {
                 return buildResultText();
             }
 
-            console.warn('[Slash Commands] Streaming failed, falling back to non-streaming:', error);
-            display.hide({ instant: true });
-
-            // Retry with non-streaming
-            const response = await ConnectionManagerRequestService.sendRequest(
-                effectiveProfileId,
-                messages,
-                maxTokens,
-                { extractData: true, includePreset: true, stream: false },
-            );
-
-            const extracted = /** @type {import('../../custom-request.js').ExtractedData} */ (response);
-            finalText = extracted?.content || '';
-            finalReasoning = extracted?.reasoning || '';
-
-            // Show quick non-streaming display
-            display.show({
-                label: generatingLabel,
-                icon: ConnectionManagerRequestService.getProfileIcon(effectiveProfileId),
-            });
-            if (finalReasoning) {
-                display.updateReasoning(finalReasoning);
-            }
-            display.updateContent(finalText);
+            // An interrupted subscription may already have generated billable
+            // output. Preserve it and let the user choose whether to try again.
+            console.error('[GenStream] Streaming failed:', error);
+            display.markStopped({ label: `${generatingLabel} [Interrupted]` });
+            toastr.error(error.message || t`The reply was interrupted.`, t`API Error`, { preventDuplicates: true });
+            return buildResultText();
         }
 
         // Mark as complete with delay (null = stay open until user closes)
@@ -703,7 +695,10 @@ async function generateStreamCallback(args, value) {
         toastr.error(err.message, t`API Error`, { preventDuplicates: true });
         return '';
     } finally {
-        if (lock) {
+        activeProfileStreams.delete(abortController);
+        activeProfileLocks.delete(abortController);
+        args?._abortController?.removeEventListener('abort', commandAbort);
+        if (lock && !activeProfileLocks.size && !is_send_press) {
             activateSendButtons();
         }
     }
@@ -735,6 +730,7 @@ export async function init() {
     toggleProfileSpecificButtons();
 
     profiles.addEventListener('change', async function () {
+        ConnectionManagerSpinner.abort();
         const selectedProfile = profiles.selectedOptions[0];
         if (!selectedProfile) {
             // Safety net for preventing the command getting stuck
@@ -743,9 +739,11 @@ export async function init() {
         }
 
         const profileId = selectedProfile.value;
+        if (!profileId) for (const controller of activeProfileStreams) controller.abort();
         extension_settings.connectionManager.selectedProfile = profileId;
         saveSettingsDebounced();
         await renderDetailsContent(detailsContent);
+        if (extension_settings.connectionManager.selectedProfile !== profileId) return;
 
         toggleProfileSpecificButtons();
 
@@ -762,7 +760,7 @@ export async function init() {
             return;
         }
 
-        await applyConnectionProfile(profile);
+        if (!await applyConnectionProfile(profile)) return;
         await eventSource.emit(event_types.CONNECTION_PROFILE_LOADED, profile.name);
     });
 
@@ -774,7 +772,7 @@ export async function init() {
             console.log('No profile selected');
             return;
         }
-        await applyConnectionProfile(profile);
+        if (!await applyConnectionProfile(profile)) return;
         await renderDetailsContent(detailsContent);
         await eventSource.emit(event_types.CONNECTION_PROFILE_LOADED, profile.name);
         toastr.success('Connection profile reloaded', '', { timeOut: 1500 });

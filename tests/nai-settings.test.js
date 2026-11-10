@@ -36,6 +36,7 @@ jest.unstable_mockModule('../public/scripts/tokenizers.js', () => ({
     tokenizers: { NONE: 0, NERD: 1, NERD2: 2, LLAMA3: 3 },
 }));
 jest.unstable_mockModule('../public/scripts/sse-stream.js', () => ({ getEventSourceStream: jest.fn() }));
+jest.unstable_mockModule('../public/scripts/openai.js', () => ({ tryParseStreamingError: jest.fn() }));
 jest.unstable_mockModule('../public/scripts/utils.js', () => ({
     getSortableDelay: jest.fn(),
     getStringHash: jest.fn(),

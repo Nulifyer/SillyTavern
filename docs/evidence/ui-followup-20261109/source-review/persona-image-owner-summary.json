@@ -1,0 +1,113 @@
+{
+  "batch": "native-persona-image-ownership",
+  "completedUtc": "2026-11-10T05:20:28.516797+00:00",
+  "scope": {
+    "source": [
+      "public/scripts/personas.js",
+      "public/scripts/extensions/stable-diffusion/index.js"
+    ],
+    "newTests": [
+      "tests/native-persona-image-ownership.e2e.js",
+      "tests/native-persona-image-ownership.test.js"
+    ],
+    "existingTestAdaptation": "tests/image-operation-ownership.test.js: native identity/load-token mocks and structuredClone VM global; existing 12 cases retained",
+    "preservation": "Existing parent SD discovery guards and staged changes preserved; no other owner files edited in this batch; no staging, commit or production writes."
+  },
+  "sha256": {
+    "public/scripts/personas.js": "a467a203969636be4969b9a2f51e63cad003762ca65e5bb4041cceb24e077b76",
+    "public/scripts/extensions/stable-diffusion/index.js": "7f2fcaa56ba6bcdcc1370bcc9eaacd9bca37da9e99a5e846c095184a28181a52",
+    "tests/native-persona-image-ownership.e2e.js": "a3a275c4b2f9b6dfb99a59b69c0e21380afa3f9ac413936679c7c02f09936512",
+    "tests/native-persona-image-ownership.test.js": "2534683ecc8b3370cfcfc168e806f2cf04bc3d0c2e283bb4196e4ab1c2079735",
+    "tests/image-operation-ownership.test.js": "010b5e2c7f35acb730a0cdbe0e6f5c91b1edf461006fdec3bf67c3728df82265"
+  },
+  "behavior": [
+    "Persona load cache uses complete native story identity/load token and only caches successful current loads. Avatar HTTP/malformed responses remain retryable and preserve rendered avatars. Explicit persona selection supersedes pending automatic selection.",
+    "Held persona sync confirms and saves only the captured story/load/message/name/avatar selection; native save acknowledgment controls reload. Null/malformed restore records are rejected before mutation/upload.",
+    "Image operations pin native identity/load, original canonical message refs/content/media/selection/edit draft and persona. Only explicit synchronous owned output publication advances allowed refs. Late or invalid results cannot attach to a new load or edited message.",
+    "Generation settings and slash overrides are operation-local snapshots passed through prompt selection, writer, providers, workflow preparation, dimensions and output. Overlapping generation and preference editing no longer share temporary global settings or finally restoration writes.",
+    "Model/sampler/scheduler/VAE discovery publishes only under captured provider/request/field-selection revision; inner model fetches return data without mutating newer preferences. VAE changes persist. Failed model changes cannot announce success.",
+    "Workflow editor reads and writes retain provider/file ownership. Placeholder removal removes exactly one entry; user labels stay literal and remove is a named keyboard-accessible native button.",
+    "GenerateImage tool rejects absent URLs after provider failure rather than returning successful string undefined; one controlled failed request, no fallback.",
+    "Command model help names existing AUTOMATIC1111 and SD.Next checkpoint limitation truthfully."
+  ],
+  "qualification": {
+    "browser": {
+      "passed": 18,
+      "failed": 0,
+      "command": "ST_NATIVE_UI_AUDIT=1 ST_BASE_URL=http://127.0.0.1:8057 npm exec -- playwright test native-persona-image-ownership.e2e.js --workers=1 --output=/tmp/st-ui-followup-20261109/persona-image-qualified",
+      "cwd": "/home/nulifyer/Projects/SillyTavern/tests",
+      "log": "/tmp/st-ui-followup-20261109/persona-image-qualified.txt",
+      "artifacts": "/tmp/st-ui-followup-20261109/persona-image-qualified",
+      "nativePaths": [
+        "persona selection/loading/retry/sync/restore",
+        "image paintbrush",
+        "image settings source/model/VAE",
+        "workflow editor and placeholder keyboard removal at 390px",
+        "native slash commands including overlapping requests and extend writer mode",
+        "ordinary image publication preserving newer unsent composer draft"
+      ],
+      "mocks": "Synthetic local 8057 data, deterministic image-provider/writer failures and delayed responses; real application click/change/keyboard/command handlers, native story loader and local image upload. No paid/external provider calls."
+    },
+    "unit": {
+      "passed": 40,
+      "failed": 0,
+      "suites": 2,
+      "command": "npm run test:unit -- --runInBand native-persona-image-ownership.test.js image-operation-ownership.test.js",
+      "cwd": "/home/nulifyer/Projects/SillyTavern/tests",
+      "log": "/tmp/st-ui-followup-20261109/persona-image-owner-unit.txt",
+      "actualFunctions": "Native persona function extraction and actual SD module under VM SourceTextModule, controlled I/O/imports. Includes provider body/settings ownership and GenerateImage failed-result behavior."
+    },
+    "lint": {
+      "sourceErrors": 0,
+      "sourceWarnings": 0,
+      "sourceLog": "/tmp/st-ui-followup-20261109/persona-image-source-eslint.txt",
+      "testErrors": 0,
+      "testWarnings": 2,
+      "testWarningsDetail": [
+        "Opt-in native test skip guard",
+        "Conditional in actual-function fixture helper"
+      ],
+      "testLog": "/tmp/st-ui-followup-20261109/persona-image-test-eslint.txt"
+    },
+    "diffCheck": "git diff --check passed",
+    "diagnostics": {
+      "files": 18,
+      "pageErrors": 0,
+      "consoleErrors": 10,
+      "httpErrors": 8,
+      "httpErrorBreakdown": {
+        "404 http://127.0.0.1:8057/Original-avatar.png": 6,
+        "503 http://127.0.0.1:8057/api/sd/set-model": 1,
+        "503 http://127.0.0.1:8057/api/avatars/get": 1
+      },
+      "explanation": "Two deliberately mocked HTTP503 failures plus their readable application logs. Six fixture-only Original-avatar.png404 resources from synthetic story records. No claim of a clean browser console."
+    },
+    "finalDelta": "18 browser cases qualified SD hash699bc10d351a6168900eb176a3c5824af5d6a933949b3abf9c2b957a40bf5ca0. Final SD hash changes only command-help prose and brace layout; final40 units and clean source lint ran after those changes. All other owned hashes match browser-qualified sources."
+  },
+  "beforeEvidence": [
+    "persona-owner-proofs.json",
+    "persona-image-before-qualified.txt",
+    "persona-image-confirmations-before.txt",
+    "sd-owner-additional-before.txt",
+    "sd-workflow-owner-before.txt"
+  ],
+  "independentReview": {
+    "agent": "/root/durable_generation_server",
+    "scope": "Whole function bodies for createImageOperation, generation/prompt/output paths, dimensions/Novel/Comfy helpers and command override application; bounded source/design review, not all-provider runtime. Reviewer found mode selection before snapshot merge and tool undefined result; both corrected and qualified. Final review reported no remaining blocker.",
+    "latestReviewedSdHash": "699bc10d351a6168900eb176a3c5824af5d6a933949b3abf9c2b957a40bf5ca0",
+    "subsequentDelta": "Only truthful model-help text and brace formatting; reviewer notified final hash."
+  },
+  "limits": [
+    "No exhaustive provider output-quality, third-party server, paid account, hardware or all-provider slash-argument certification.",
+    "Existing Auto/Vlad generation schema omits a per-request model/checkpoint field. AUTOMATIC1111 and SD.Next use checkpoint selected through Image generation settings; operation-local model arguments do not change their remote checkpoint. Provider protocol preserved; command help and this receipt state limitation.",
+    "Persona bulk avatar-upload transactional failure/rollback is outside this bounded qualification; invalid records and failed initial avatar listing are qualified.",
+    "getUserAvatars failure now returns null; automatic load and restore guard it. Successful return remains avatar array.",
+    "Native desktop paths at1280x844 and placeholder keyboard at390px are qualified here; complete application responsive coverage belongs parent audit.",
+    "No production deployment or source-control publication performed by this worker."
+  ],
+  "handoff": {
+    "ownershipReturned": true,
+    "syntheticServer": "8057 running under exec session89074, stream-config.yaml and stream-data; leave running for parent",
+    "receipt": "/tmp/st-ui-followup-20261109/persona-image-owner-summary.json"
+  }
+}

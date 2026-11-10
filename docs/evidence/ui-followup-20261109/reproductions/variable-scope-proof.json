@@ -1,0 +1,20 @@
+{
+  "file": "public/scripts/variables.js",
+  "sha256": "92e1bfa793e6072c2daeecdbb6d7429faf990e251bfc5f8d97c0ba7088a1282a",
+  "observed": [
+    {
+      "key": "syntheticLocal",
+      "value": "local value",
+      "scope": "local"
+    },
+    {
+      "key": "syntheticGlobal",
+      "value": "global value",
+      "scope": "global"
+    }
+  ],
+  "expectedKeys": [
+    "syntheticLocal"
+  ],
+  "note": "Controlled actual callback; returnhelper captures native payload; no network or private values."
+}

@@ -409,29 +409,41 @@ function callTokenizer(type, str) {
  * @param {string} str String to tokenize.
  * @returns {Promise<number>} Token count.
  */
-function callTokenizerAsync(type, str) {
-    return new Promise(resolve => {
-        if (type === tokenizers.NONE) {
-            return resolve(guesstimate(str));
-        }
+async function callTokenizerAsync(type, str) {
+    if (type === tokenizers.NONE) return guesstimate(str);
+    if (type === tokenizers.API_CURRENT) return callTokenizerAsync(currentRemoteTokenizerAPI(), str);
+    const endpoint = TOKENIZER_URLS[type]?.count;
+    if (!endpoint) {
+        console.warn('Unknown tokenizer type', type);
+        return apiFailureTokenCount(str);
+    }
+    const data = type === tokenizers.API_TEXTGENERATIONWEBUI ? getTextgenAPITokenizationParams(str)
+        : type === tokenizers.API_KOBOLD ? { text: str, url: kai_settings.api_server } : { text: str };
+    return requestTokenCount(endpoint, data, 'count');
+}
 
-        switch (type) {
-            case tokenizers.API_CURRENT:
-                return callTokenizerAsync(currentRemoteTokenizerAPI(), str).then(resolve);
-            case tokenizers.API_KOBOLD:
-                return countTokensFromKoboldAPI(str, resolve);
-            case tokenizers.API_TEXTGENERATIONWEBUI:
-                return countTokensFromTextgenAPI(str, resolve);
-            default: {
-                const endpointUrl = TOKENIZER_URLS[type]?.count;
-                if (!endpointUrl) {
-                    console.warn('Unknown tokenizer type', type);
-                    return resolve(apiFailureTokenCount(str));
-                }
-                return countTokensFromServer(endpointUrl, str, resolve);
-            }
-        }
-    });
+/** Complete or reject each asynchronous request; callers own how to display the error. */
+async function requestTokenCount(endpoint, payload, countKey) {
+    let data;
+    try {
+        data = await jQuery.ajax({
+            async: true,
+            timeout: 30000,
+            type: 'POST',
+            url: endpoint,
+            data: JSON.stringify(payload),
+            dataType: 'json',
+            contentType: 'application/json',
+        });
+    } catch (error) {
+        const detail = error?.statusText === 'timeout' ? 'request timed out' : error?.status ? `HTTP ${error.status}` : 'network error';
+        throw new Error(`Token counting failed (${detail}). Check the tokenizer connection and try again.`);
+    }
+    const count = data?.[countKey];
+    if (typeof count !== 'number' || !Number.isFinite(count) || count < 0) {
+        throw new Error('The tokenizer returned an invalid token count. Try again or select another tokenizer.');
+    }
+    return count;
 }
 
 /**
@@ -462,8 +474,11 @@ export async function getTokenCountAsync(str, padding = undefined) {
         tokenizerType = getTokenizerBestMatch(main_api);
     }
 
+    if (tokenizerType === tokenizers.API_CURRENT) tokenizerType = currentRemoteTokenizerAPI();
     if (tokenizerType === tokenizers.API_TEXTGENERATIONWEBUI) {
-        modelHash = getStringHash(getTextGenModel() || online_status).toString();
+        modelHash = getStringHash(JSON.stringify(getTextgenAPITokenizationParams(''))).toString();
+    } else if (tokenizerType === tokenizers.API_KOBOLD) {
+        modelHash = getStringHash(`${kai_settings.api_server}|${online_status}`).toString();
     }
 
     if (padding === undefined) {
@@ -518,8 +533,11 @@ export function getTokenCount(str, padding = undefined) {
         tokenizerType = getTokenizerBestMatch(main_api);
     }
 
+    if (tokenizerType === tokenizers.API_CURRENT) tokenizerType = currentRemoteTokenizerAPI();
     if (tokenizerType === tokenizers.API_TEXTGENERATIONWEBUI) {
-        modelHash = getStringHash(getTextGenModel() || online_status).toString();
+        modelHash = getStringHash(JSON.stringify(getTextgenAPITokenizationParams(''))).toString();
+    } else if (tokenizerType === tokenizers.API_KOBOLD) {
+        modelHash = getStringHash(`${kai_settings.api_server}|${online_status}`).toString();
     }
 
     if (padding === undefined) {
@@ -844,18 +862,15 @@ export function countTokensOpenAI(messages, full = false) {
  * @returns {Promise<number>} Token count.
  */
 export async function countTokensOpenAIAsync(messages, full = false) {
-    const tokenizerEndpoint = `/api/tokenizers/openai/count?model=${getTokenizerModel()}`;
+    const model = getTokenizerModel();
+    const tokenizerEndpoint = `/api/tokenizers/openai/count?model=${encodeURIComponent(model)}`;
     const cacheObject = getTokenCacheObject();
 
-    if (!Array.isArray(messages)) {
-        messages = [messages];
-    }
+    messages = structuredClone(Array.isArray(messages) ? messages : [messages]);
 
     let token_count = 0;
 
     for (const message of messages) {
-        const model = getTokenizerModel();
-
         if (model === 'claude') {
             full = true;
         }
@@ -867,17 +882,9 @@ export async function countTokensOpenAIAsync(messages, full = false) {
         if (typeof cachedCount === 'number') {
             token_count += cachedCount;
         } else {
-            const data = await jQuery.ajax({
-                async: true,
-                type: 'POST', //
-                url: tokenizerEndpoint,
-                data: JSON.stringify([message]),
-                dataType: 'json',
-                contentType: 'application/json',
-            });
-
-            token_count += Number(data.token_count);
-            cacheObject[cacheKey] = Number(data.token_count);
+            const count = await requestTokenCount(tokenizerEndpoint, [message], 'token_count');
+            token_count += count;
+            cacheObject[cacheKey] = count;
         }
     }
 
@@ -914,15 +921,13 @@ function getTokenCacheObject() {
  * Count tokens using the server API.
  * @param {string} endpoint API endpoint.
  * @param {string} str String to tokenize.
- * @param {function} [resolve] Promise resolve function.s
  * @returns {number} Token count.
  */
-function countTokensFromServer(endpoint, str, resolve) {
-    const isAsync = typeof resolve === 'function';
+function countTokensFromServer(endpoint, str) {
     let tokenCount = 0;
 
     jQuery.ajax({
-        async: isAsync,
+        async: false,
         type: 'POST',
         url: endpoint,
         data: JSON.stringify({ text: str }),
@@ -934,8 +939,6 @@ function countTokensFromServer(endpoint, str, resolve) {
             } else {
                 tokenCount = apiFailureTokenCount(str);
             }
-
-            isAsync && resolve(tokenCount);
         },
     });
 
@@ -945,15 +948,13 @@ function countTokensFromServer(endpoint, str, resolve) {
 /**
  * Count tokens using the AI provider's API.
  * @param {string} str String to tokenize.
- * @param {function} [resolve] Promise resolve function.
  * @returns {number} Token count.
  */
-function countTokensFromKoboldAPI(str, resolve) {
-    const isAsync = typeof resolve === 'function';
+function countTokensFromKoboldAPI(str) {
     let tokenCount = 0;
 
     jQuery.ajax({
-        async: isAsync,
+        async: false,
         type: 'POST',
         url: TOKENIZER_URLS[tokenizers.API_KOBOLD].count,
         data: JSON.stringify({
@@ -968,8 +969,6 @@ function countTokensFromKoboldAPI(str, resolve) {
             } else {
                 tokenCount = apiFailureTokenCount(str);
             }
-
-            isAsync && resolve(tokenCount);
         },
     });
 
@@ -988,15 +987,13 @@ function getTextgenAPITokenizationParams(str) {
 /**
  * Count tokens using the AI provider's API.
  * @param {string} str String to tokenize.
- * @param {function} [resolve] Promise resolve function.
  * @returns {number} Token count.
  */
-function countTokensFromTextgenAPI(str, resolve) {
-    const isAsync = typeof resolve === 'function';
+function countTokensFromTextgenAPI(str) {
     let tokenCount = 0;
 
     jQuery.ajax({
-        async: isAsync,
+        async: false,
         type: 'POST',
         url: TOKENIZER_URLS[tokenizers.API_TEXTGENERATIONWEBUI].count,
         data: JSON.stringify(getTextgenAPITokenizationParams(str)),
@@ -1008,8 +1005,6 @@ function countTokensFromTextgenAPI(str, resolve) {
             } else {
                 tokenCount = apiFailureTokenCount(str);
             }
-
-            isAsync && resolve(tokenCount);
         },
     });
 

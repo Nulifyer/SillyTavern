@@ -1,0 +1,86 @@
+{
+  "status": "verified_native_batch",
+  "at": "2026-11-10T05:00:24.019794+00:00",
+  "source": {
+    "public/scripts/preset-manager.js": "cb40dde4288fac533e25e04a26ff359e8779ddbde2f868daa581c0685a098a1c",
+    "public/scripts/popup.js": "11bbafe5c9097cfa2e512c3f571568c8a35d2d35175cf60aceb55b4344a8f095",
+    "tests/native-preset-popup.e2e.js": "e95c1cfa06f2eaec6da67a033393d2b820389a2842ff2543f672deb685b1b374"
+  },
+  "negativeWitnesses": [
+    "/tmp/st-ui-followup-20261109/preset-manager-owner-proof.json",
+    "/tmp/st-ui-followup-20261109/popup-hooks-proof.json",
+    "/tmp/st-ui-followup-20261109/preset-delete-draft-owner-proof.json"
+  ],
+  "readReview": "Both source owners read completely before edits,2238 original lines; own changed callbacks/helpers manually reviewed.",
+  "acceptedRuns": [
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-preset-popup-focus-r2",
+      "result": "5/5 passed32.6s"
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-preset-popup-final25",
+      "log": "/tmp/st-ui-followup-20261109/native-preset-popup-final25.txt",
+      "result": "23/23 passed1.6m. Directory name says25 but run contained23; two mapped cases appended after test collection."
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-preset-popup-mapped",
+      "result": "2/2 passed12.2s, same frozen source as23-case run; mapped Chat Completion rename snapshot/held selection and numeric-map delete failure/retry"
+    }
+  ],
+  "failedRuns": [
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-preset-popup-r1",
+      "result": "15/16 passed; one fixture tried real selectOption on hidden dropdown, fixed opening actual native form."
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-preset-popup-focus",
+      "result": "4/6 passed; hidden-select fixture still present at collection, plus real context extension loss during rename; corrected by retaining catalog extension metadata in native context snapshot."
+    }
+  ],
+  "changes": [
+    "PerAPI save/delete/rename ordering with acknowledged catalog mutations, no queued recursive notification waits.",
+    "Native SaveAs/Rename/Delete/Restore target/settings snapshot and selection/editor revision guard. Default restore overwrites without deletion first and validates expected target inside queue.",
+    "Accepted deletion with newer selected work retains explicit unsaved original-name option/draft; next Update saves original name without touching another preset.",
+    "Context snapshots retain extension metadata; Chat Completion snapshot uses native getChatCompletionPreset.",
+    "Native file imports parse with promise-safe File.text/JSON.parse, capture selection before read, reset chooser after failure for same-file retry.",
+    "Popup error hooks report feedback; onClosing only false vetoes. onClose rejection still cleans DOM/registry and settles original promise. Constructor registry after successful construction, classes string/array normalized.",
+    "Popup Enter activates actual custom action exactly once. Show promise installed before onOpen so immediate completion settles."
+  ],
+  "validation": [
+    "Two JS owners node --check passed",
+    "Two-owner focused ESLint passed",
+    "Owned source/test git diff --check passed"
+  ],
+  "limits": [
+    "Local synthetic8056 with intercepted preset writes only; no external provider/paid/hardware/production calls.",
+    "PerAPI queue covers PresetManager mutations; independent legacy provider-specific persistence owners remain outside this queue.",
+    "Accepted backend writes are retained; a partial rename can leave two files and reports that state.",
+    "Unsaved deleted preset drafts exist in current browser memory; reload persistence of that draft is not claimed."
+  ],
+  "totalQualifiedCases": 25,
+  "singleRunClaim": false,
+  "sourceReadDelta": {
+    "owners": {
+      "public/scripts/preset-manager.js": {
+        "sha256": "cb40dde4288fac533e25e04a26ff359e8779ddbde2f868daa581c0685a098a1c",
+        "readRanges": [
+          [
+            1,
+            1284
+          ]
+        ],
+        "method": "Original whole file plus authored changed bodies and complete source diff reviewed."
+      },
+      "public/scripts/popup.js": {
+        "sha256": "11bbafe5c9097cfa2e512c3f571568c8a35d2d35175cf60aceb55b4344a8f095",
+        "readRanges": [
+          [
+            1,
+            991
+          ]
+        ],
+        "method": "Original whole file plus authored changed bodies and complete source diff reviewed."
+      }
+    }
+  }
+}

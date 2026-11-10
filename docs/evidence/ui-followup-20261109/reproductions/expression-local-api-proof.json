@@ -1,0 +1,12 @@
+{
+  "file": "public/scripts/extensions/expressions/index.js",
+  "sha256": "8a22921607cb9ce8a2c00391fd412a3927ee7991e33b3170104d4b0bb3356067",
+  "observed": [
+    {
+      "text": "Synthetic emotion text",
+      "api": 2
+    }
+  ],
+  "expectedApi": 0,
+  "note": "Controlled actual callback only. No provider or network call."
+}

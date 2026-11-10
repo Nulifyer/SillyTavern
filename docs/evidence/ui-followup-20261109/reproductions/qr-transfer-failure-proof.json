@@ -1,0 +1,10 @@
+{
+  "file": "public/scripts/extensions/quick-reply/src/QuickReplySet.js",
+  "sha256": "6ef756987f47d60882aab046c9187d743f92174f945225c050d22607fc773fe7",
+  "method": "Actual unchanged QuickReplySet class; controlled DOM/popup and target save returning false, no requests.",
+  "sourcePersistedReplies": 0,
+  "targetPersistedReplies": 0,
+  "targetSaveAttempts": 1,
+  "sourceMemoryReplies": 0,
+  "targetMemoryReplies": 1
+}

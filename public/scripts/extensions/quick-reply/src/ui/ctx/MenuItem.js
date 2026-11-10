@@ -47,37 +47,54 @@ export class MenuItem {
                 // same as for the main QR list
                 item.title = this.title || this.value;
 
-                if (this.callback) {
-                    item.addEventListener('click', (evt) => this.callback(evt, this));
+                // Native action buttons support pointer, Enter and Space.
+                const action = document.createElement(this.callback ? 'button' : 'div');
+                action.classList.add('ctx-action');
+                if (action instanceof HTMLButtonElement) {
+                    action.type = 'button';
+                    action.setAttribute('aria-label', this.label || this.title || 'Quick Reply');
+                    action.addEventListener('click', (evt) => {
+                        evt.stopPropagation();
+                        this.callback(evt, this);
+                    });
                 }
+                item.append(action);
                 const icon = document.createElement('div'); {
                     icon.classList.add('qr--button-icon');
                     icon.classList.add('fa-solid');
                     if (!this.icon) icon.classList.add('qr--hidden');
                     else icon.classList.add(this.icon);
-                    item.append(icon);
+                    action.append(icon);
                 }
                 const lbl = document.createElement('div'); {
                     lbl.classList.add('qr--button-label');
                     if (this.icon && !this.showLabel) lbl.classList.add('qr--hidden');
                     lbl.textContent = this.label;
-                    item.append(lbl);
+                    action.append(lbl);
                 }
                 if (this.childList.length > 0) {
                     item.classList.add('ctx-has-children');
                     const sub = new SubMenu(this.childList);
                     this.subMenu = sub;
-                    const trigger = document.createElement('div'); {
+                    sub.onLeave = () => this.collapse();
+                    const trigger = document.createElement('button'); {
+                        trigger.type = 'button';
+                        trigger.setAttribute('aria-label', `Submenu for ${this.label}`);
+                        trigger.setAttribute('aria-expanded', 'false');
+                        trigger.setAttribute('aria-haspopup', 'true');
                         trigger.classList.add('ctx-expander');
                         trigger.textContent = '⋮';
                         trigger.addEventListener('click', (evt) => {
                             evt.stopPropagation();
                             this.toggle();
+                            if (evt.detail === 0 && this.subMenu.isActive) this.subMenu.root.querySelector('button')?.focus({ preventScroll: true });
                         });
                         item.append(trigger);
                     }
-                    item.addEventListener('mouseover', () => sub.show(item));
-                    item.addEventListener('mouseleave', () => sub.hide());
+                    item.addEventListener('pointerenter', event => { if (event.pointerType === 'mouse') this.expand(); });
+                    item.addEventListener('pointerleave', event => {
+                        if (event.pointerType === 'mouse' && !this.subMenu.contains(event.relatedTarget) && !this.subMenu.contains(document.activeElement)) this.collapse();
+                    });
                 }
             }
         }
@@ -87,18 +104,20 @@ export class MenuItem {
 
     expand() {
         this.subMenu?.show(this.root);
+        this.root?.querySelector(':scope > .ctx-expander')?.setAttribute('aria-expanded', 'true');
         if (this.onExpand) {
             this.onExpand();
         }
     }
     collapse() {
         this.subMenu?.hide();
+        this.root?.querySelector(':scope > .ctx-expander')?.setAttribute('aria-expanded', 'false');
     }
     toggle() {
         if (this.subMenu.isActive) {
-            this.expand();
-        } else {
             this.collapse();
+        } else {
+            this.expand();
         }
     }
 }

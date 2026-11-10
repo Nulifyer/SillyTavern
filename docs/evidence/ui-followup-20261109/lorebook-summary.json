@@ -1,0 +1,52 @@
+{
+  "cases": 6,
+  "passed": 6,
+  "rows": [
+    {
+      "case": "native-lorebook-save.e2e.j-ff188--a-pending-import-operation",
+      "pageErrors": 0,
+      "consoleErrors": 1,
+      "failedRequests": 0
+    },
+    {
+      "case": "native-lorebook-save.e2e.j-c5974--latest-draft-to-its-target",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "native-lorebook-save.e2e.j-a8417-ges-and-rejects-stale-saves",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "native-lorebook-save.e2e.j-2e923-aches-and-both-native-files",
+      "pageErrors": 0,
+      "consoleErrors": 1,
+      "failedRequests": 0
+    },
+    {
+      "case": "native-lorebook-save.e2e.j-8686c-ve-without-losing-its-draft",
+      "pageErrors": 0,
+      "consoleErrors": 1,
+      "failedRequests": 0
+    },
+    {
+      "case": "native-lorebook-save.e2e.j-fb525-d-save-of-the-same-lorebook",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    }
+  ],
+  "totals": {
+    "pageErrors": 0,
+    "consoleErrors": 3,
+    "failedRequests": 0
+  },
+  "sourceHashesAtCompletion": {
+    "public/scripts/world-info.js": "5ae5239c0f5277065ab006c2d5654e5a8f72d155da05a7cef0bcfabab6ccd958",
+    "public/script.js": "397de84faf57f80b466c2131c0a4040469e3b6685abad39a11d71df7aca4b99c",
+    "tests/native-lorebook-save.e2e.js": "5679103fcac3a746bc93c6dcaf009a029557aa975799f162c98bb139e62e47c6"
+  }
+}

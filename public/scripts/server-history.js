@@ -12,9 +12,9 @@ function findServers(request, resolve, serverLabel) {
         power_user.servers = [];
     }
 
-    const needle = request.term.toLowerCase();
+    const needle = request.term.trim();
     const result = power_user.servers.filter(x => x.label == serverLabel).sort((a, b) => b.lastConnection - a.lastConnection).map(x => x.url).slice(0, 5);
-    const hasExactMatch = result.findIndex(x => x.toLowerCase() == needle) !== -1;
+    const hasExactMatch = result.includes(needle);
 
     if (request.term && !hasExactMatch) {
         result.unshift(request.term);
@@ -61,7 +61,7 @@ function onServerConnectClick() {
             power_user.servers = [];
         }
 
-        const value = String($(`[data-server-history="${serverLabel}"]`).val()).toLowerCase().trim();
+        const value = String($(`[data-server-history="${serverLabel}"]`).val()).trim();
 
         // Don't save empty values or invalid URLs
         if (!value || !isValidUrl(value)) {

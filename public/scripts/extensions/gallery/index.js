@@ -3,6 +3,7 @@ import {
     this_chid,
     characters,
     getRequestHeaders,
+    getCurrentChatIdentity,
     event_types,
     animation_duration,
     animation_easing,
@@ -20,18 +21,26 @@ import { t, translate } from '../../i18n.js';
 import { Popup } from '../../popup.js';
 import { deleteMediaFromServer } from '../../chats.js';
 import { MEDIA_REQUEST_TYPE, VIDEO_EXTENSIONS } from '../../constants.js';
+import { getChatLoadToken } from '../../chat-loader.js';
 
 const isVideo = (/** @type {string} */ url) => VIDEO_EXTENSIONS.some(ext => new RegExp(`.${ext}$`, 'i').test(url));
 const extensionName = 'gallery';
 const extensionFolderPath = `scripts/extensions/${extensionName}/`;
 let firstTime = true;
 let deleteModeActive = false;
+let galleryRequest = 0;
+
+function galleryOwner() {
+    const context = SillyTavern.getContext();
+    return JSON.stringify(context.groupId ? ['group', String(context.groupId)] : ['character', context.characters[context.characterId]?.avatar || null]);
+}
 
 
 // Remove all draggables associated with the gallery
 $('#movingDivs').on('click', '.dragClose', function () {
     const relatedId = $(this).data('related-id');
     if (!relatedId) return;
+    if (relatedId === 'gallery') ++galleryRequest;
     const relatedElement = $(`#movingDivs > .draggable[id="${relatedId}"]`);
     relatedElement.transition({
         opacity: 0,
@@ -41,23 +50,6 @@ $('#movingDivs').on('click', '.dragClose', function () {
             relatedElement.remove();
         },
     });
-});
-
-const CUSTOM_GALLERY_REMOVED_EVENT = 'galleryRemoved';
-
-const mutationObserver = new MutationObserver((mutations) => {
-    mutations.forEach((mutation) => {
-        mutation.removedNodes.forEach((node) => {
-            if (node instanceof HTMLElement && node.tagName === 'DIV' && node.id === 'gallery') {
-                eventSource.emit(CUSTOM_GALLERY_REMOVED_EVENT);
-            }
-        });
-    });
-});
-
-mutationObserver.observe(document.body, {
-    childList: true,
-    subtree: false,
 });
 
 const SORT = Object.freeze({
@@ -122,6 +114,7 @@ async function getGalleryItems(url) {
             type: MEDIA_REQUEST_TYPE.IMAGE | MEDIA_REQUEST_TYPE.VIDEO,
         }),
     });
+    if (!response.ok) throw new Error(`The gallery could not be loaded (HTTP ${response.status}).`);
 
     url = await getSanitizedFilename(url);
 
@@ -169,7 +162,7 @@ async function getGalleryFolders() {
         return data;
     } catch (error) {
         console.error('Failed to fetch gallery folders:', error);
-        return [];
+        throw error;
     }
 }
 
@@ -182,6 +175,7 @@ async function deleteGalleryItem(url) {
     if (isDeleted) {
         toastr.success(t`Image deleted successfully.`);
     }
+    return isDeleted;
 }
 
 /**
@@ -211,7 +205,7 @@ function getSortOrder() {
  * @param {string} url - The URL to use when a file is dropped onto the gallery for uploading.
  * @returns {Promise<void>} - Promise representing the completion of the gallery initialization.
  */
-async function initGallery(items, url) {
+async function initGallery(items, url, mounted, isCurrent) {
     // Exposed defaults for future tweaking
     const thumbnailHeight = 150;
     const paginationVisiblePages = 5;
@@ -219,7 +213,8 @@ async function initGallery(items, url) {
     const galleryMaxRows = clamp(Math.floor((window.innerHeight * 0.9 - 75) / thumbnailHeight), 1, 10);
 
     const nonce = `nonce-${Math.random().toString(36).substring(2, 15)}`;
-    const gallery = $('#dragGallery');
+    const gallery = mounted.find('#dragGallery');
+    if (!isCurrent() || !mounted[0]?.isConnected) return;
     gallery.addClass(nonce);
     gallery.nanogallery2({
         'items': items,
@@ -241,7 +236,7 @@ async function initGallery(items, url) {
             pagination: { background: '#181818', backgroundSelected: '#666', color: '#fff', borderRadius: '2px', shapeBorder: '3px solid var(--SmartThemeQuoteColor)', shapeColor: '#444', shapeSelectedColor: '#aaa' },
         },
         galleryDisplayMode: 'pagination',
-        fnThumbnailOpen: viewWithDragbox,
+        fnThumbnailOpen: items => viewWithDragbox(items, isCurrent),
         fnThumbnailInit: function (/** @type {JQuery<HTMLElement>} */ $thumbnail, /** @type {{src: string}} */ item) {
             if (!item?.src) return;
             $thumbnail.attr('title', String(item.src).split('/').pop());
@@ -255,15 +250,11 @@ async function initGallery(items, url) {
 
         // Upload each file
         for (const file of files) {
-            await uploadFile(file, url);
+            if (!isCurrent() || !await uploadFile(file, url, isCurrent)) return;
         }
 
         // Refresh the gallery
-        const newItems = await getGalleryItems(url);
-        $('#dragGallery').closest('#gallery').remove();
-        await makeMovable(url);
-        await delay(100);
-        await initGallery(newItems, url);
+        if (isCurrent()) await showCharGallery(deleteModeActive);
     });
 
     const resizeHandler = function () {
@@ -272,21 +263,21 @@ async function initGallery(items, url) {
 
     eventSource.on('resizeUI', resizeHandler);
 
-    eventSource.once(event_types.CHAT_CHANGED, function () {
-        gallery.closest('#gallery').remove();
-    });
-
-    eventSource.once(CUSTOM_GALLERY_REMOVED_EVENT, function () {
+    const removalObserver = new MutationObserver(() => {
+        if (mounted[0].isConnected) return;
+        removalObserver.disconnect();
         gallery.nanogallery2('destroy');
         dragDropHandler.destroy();
         eventSource.removeListener('resizeUI', resizeHandler);
     });
+    removalObserver.observe(document.getElementById('movingDivs'), { childList: true });
 
     // Set dropzone height to be the same as the parent
     gallery.css('height', gallery.parent().css('height'));
 
     //let images populate first
     await delay(100);
+    if (!isCurrent() || !mounted[0]?.isConnected) return;
     //unset the height (which must be getting set by the gallery library at some point)
     gallery.css('height', 'unset');
     //force a resize to make images display correctly
@@ -306,20 +297,24 @@ async function initGallery(items, url) {
  * @returns {Promise<void>} - Promise representing the completion of the gallery display process.
  */
 async function showCharGallery(deleteModeState = false) {
-    // Load necessary files if it's the first time calling the function
-    if (firstTime) {
-        await loadFileToDocument(
-            `${extensionFolderPath}nanogallery2.woff.min.css`,
-            'css',
-        );
-        await loadFileToDocument(
-            `${extensionFolderPath}jquery.nanogallery2.min.js`,
-            'js',
-        );
-        firstTime = false;
-    }
-
+    const request = ++galleryRequest;
+    const owner = galleryOwner();
+    const identity = getCurrentChatIdentity(), load = getChatLoadToken();
+    const isCurrent = () => request === galleryRequest && owner === galleryOwner() && identity === getCurrentChatIdentity() && load === getChatLoadToken();
     try {
+        // A failed first load stays retryable and reports through the same owner.
+        if (firstTime) {
+            await loadFileToDocument(
+                `${extensionFolderPath}nanogallery2.woff.min.css`,
+                'css',
+            );
+            await loadFileToDocument(
+                `${extensionFolderPath}jquery.nanogallery2.min.js`,
+                'js',
+            );
+            firstTime = false;
+        }
+        if (!isCurrent()) return;
         deleteModeActive = deleteModeState;
         let url = selected_group || this_chid;
         if (!selected_group && this_chid !== undefined) {
@@ -327,13 +322,17 @@ async function showCharGallery(deleteModeState = false) {
         }
 
         const items = await getGalleryItems(url);
+        if (!isCurrent()) return;
         // if there already is a gallery, destroy it and place this one in its place
         $('#dragGallery').closest('#gallery').remove();
-        await makeMovable(url);
+        const mounted = await makeMovable(url, isCurrent);
+        if (!mounted) return;
         await delay(100);
-        await initGallery(items, url);
+        if (!isCurrent()) return;
+        await initGallery(items, url, mounted, isCurrent);
     } catch (err) {
         console.error(err);
+        if (isCurrent()) toastr.error(err.message || 'The gallery could not be loaded. Open it again to retry.');
     }
 }
 
@@ -346,20 +345,23 @@ async function showCharGallery(deleteModeState = false) {
  * @param {string} url - The URL indicating where the file should be uploaded.
  * @returns {Promise<void>} - Promise representing the completion of the file upload and gallery refresh.
  */
-async function uploadFile(file, url) {
+async function uploadFile(file, url, isCurrent) {
     try {
         // Convert the file to a base64 string
         const fileBase64 = await getBase64Async(file);
+        if (!isCurrent()) return false;
         const base64Data = fileBase64.split(',')[1];
         const extension = getFileExtension(file);
         const path = await saveBase64AsFile(base64Data, url, '', extension);
 
-        toastr.success(t`File uploaded successfully. Saved at: ${path}`);
+        if (isCurrent()) toastr.success(t`File uploaded successfully. Saved at: ${path}`);
+        return true;
     } catch (error) {
         console.error('There was an issue uploading the file:', error);
 
         // Replacing alert with toastr error notification
         toastr.error(t`Failed to upload the file.`);
+        return false;
     }
 }
 
@@ -371,14 +373,17 @@ async function uploadFile(file, url) {
  * @param {string} url - The URL of the image source.
  * @returns {Promise<void>} - Promise representing the completion of the draggable container creation.
  */
-async function makeMovable(url) {
+async function makeMovable(url, requestCurrent) {
     console.debug('making new container from template');
     const id = 'gallery';
+    const owner = galleryOwner();
+    const isCurrent = () => requestCurrent() && owner === galleryOwner() && document.getElementById(id) === newElement[0];
     const template = $('#generic_draggable_template').html();
     const newElement = $(template);
     newElement.css({ 'background-color': 'var(--SmartThemeBlurTintColor)', 'opacity': 0 });
     newElement.attr('forChar', id);
     newElement.attr('id', id);
+    newElement.attr('data-owner', owner);
     newElement.find('.dragClose').attr({ 'aria-label': t`Close gallery`, title: t`Close gallery` });
     newElement.find('.drag-grabber').attr('id', `${id}header`);
     const dragTitle = newElement.find('.dragTitle');
@@ -434,11 +439,10 @@ async function makeMovable(url) {
         const files = fileInput.files;
         if (files.length > 0) {
             for (const file of files) {
-                await uploadFile(file, url);
+                if (!isCurrent() || !await uploadFile(file, url, isCurrent)) return;
             }
             // Refresh the gallery
-            closeButton.trigger('click');
-            await showCharGallery();
+            if (isCurrent()) await showCharGallery(deleteModeActive);
         }
     });
 
@@ -464,6 +468,7 @@ async function makeMovable(url) {
 
         try {
             const newUrl = await getSanitizedFilename(galleryFolderInput.value);
+            if (!isCurrent()) return;
             updateGalleryFolder(newUrl);
             closeButton.trigger('click');
             await showCharGallery();
@@ -477,6 +482,7 @@ async function makeMovable(url) {
 
     const onRestoreFolder = async () => {
         try {
+            if (!isCurrent()) return;
             restoreGalleryFolder();
             closeButton.trigger('click');
             await showCharGallery();
@@ -524,6 +530,7 @@ async function makeMovable(url) {
 
     // Populate the gallery folder input with a list of available folders
     const folders = await getGalleryFolders();
+    if (!requestCurrent()) return null;
     $(galleryFolderInput)
         .autocomplete({
             source: (i, o) => {
@@ -559,12 +566,12 @@ async function makeMovable(url) {
         duration: animation_duration,
         easing: animation_easing,
     });
-
     $(`.draggable[forChar="${id}"] img`).on('dragstart', (e) => {
         console.log('saw drag on avatar!');
         e.preventDefault();
         return false;
     });
+    return newElement;
 }
 
 /**
@@ -735,16 +742,17 @@ function sanitizeHTMLId(id) {
  *
  * @param {Array} items - A list of items where each item has a responsiveURL method that returns a URL.
  */
-function viewWithDragbox(items) {
+function viewWithDragbox(items, isCurrent) {
+    if (!isCurrent()) return;
     if (items && items.length > 0) {
         const url = items[0].responsiveURL(); // Get the URL of the clicked image/video
         if (deleteModeActive) {
             Popup.show.confirm(t`Are you sure you want to delete this image?`, url)
                 .then(async (confirmed) => {
-                    if (!confirmed) {
+                    if (!confirmed || !isCurrent()) {
                         return;
                     }
-                    deleteGalleryItem(url).then(() => showCharGallery(deleteModeActive));
+                    if (await deleteGalleryItem(url) && isCurrent()) await showCharGallery(deleteModeActive);
                 });
         } else {
             // ID should just be the last part of the URL, removing the extension
@@ -825,6 +833,11 @@ function addGalleryWandButton() {
 // On extension load, ensure the settings are initialized
 export async function init() {
     initSettings();
+    eventSource.on(event_types.CHAT_CHANGED, () => {
+        ++galleryRequest;
+        const gallery = document.getElementById('gallery');
+        gallery?.remove();
+    });
     eventSource.on(event_types.CHARACTER_RENAMED, (oldAvatar, newAvatar) => {
         const context = SillyTavern.getContext();
         const galleryFolder = context.extensionSettings.gallery.folders[oldAvatar];

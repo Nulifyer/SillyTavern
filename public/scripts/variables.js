@@ -289,8 +289,8 @@ async function listVariablesCallback(args) {
     };
 
     const jsonVariables = [
-        ...Object.entries(chat_metadata.variables).map(x => ({ key: x[0], value: x[1], scope: 'local' })),
-        ...Object.entries(extension_settings.variables.global).map(x => ({ key: x[0], value: x[1], scope: 'global' })),
+        ...(includeLocalVariables ? Object.entries(chat_metadata.variables).map(x => ({ key: x[0], value: x[1], scope: 'local' })) : []),
+        ...(includeGlobalVariables ? Object.entries(extension_settings.variables.global).map(x => ({ key: x[0], value: x[1], scope: 'global' })) : []),
     ];
 
     return await slashCommandReturnHelper.doReturn(returnType ?? 'popup-html', jsonVariables, { objectToStringFunc: buildTextValue });

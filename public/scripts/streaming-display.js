@@ -208,6 +208,12 @@ export class StreamingDisplay {
 
         this.#isMinimized = !this.#isMinimized;
         this.#element.classList.toggle(`${CSS_PREFIX}-minimized`, this.#isMinimized);
+        const content = this.#element.querySelector(`.${CSS_PREFIX}-content`);
+        if (content) {
+            if (this.#isMinimized && content.contains(document.activeElement)) this.#minimizeButton?.focus();
+            content.inert = this.#isMinimized;
+            content.setAttribute('aria-hidden', String(this.#isMinimized));
+        }
 
         // Update minimize button icon/appearance
         if (this.#minimizeButton) {

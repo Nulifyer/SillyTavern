@@ -1,0 +1,236 @@
+{
+  "status": "assigned_partition2_native_behaviors_qualified",
+  "recorded_at_utc": "2026-11-10T04:21:38.539842+00:00",
+  "worker": "/root/quick_reply_actions",
+  "ownership": [
+    "public/scripts/tags.js: removeTagFromMap and native delete/merge dialog",
+    "public/scripts/slash-commands.js: /inject lifetime only",
+    "public/scripts/tokenizers.js: asynchronous counts and pinned count/cache identity",
+    "tests/native-tag-injection-tokenizer.test.js",
+    "tests/native-tag-injection-tokenizer.e2e.js"
+  ],
+  "source_sha256": {
+    "public/scripts/tags.js": "375d19d0058c6d1a901780b3682c27cb326f613ce043855e853dc9d77929d84a",
+    "public/scripts/slash-commands.js": "ee4dbccfb28003477fb55c9326fb850ad4af6132af66d7e981ffe5aa150b71da",
+    "public/scripts/tokenizers.js": "930974d28184a64ab8e06bd7ecdc9b7f7b45979b25276226f1ef388c248442b4",
+    "tests/native-tag-injection-tokenizer.test.js": "037b7344534c39faccea8c71a6bd282a669003caf2c15e9323300a07e298dcc2",
+    "tests/native-tag-injection-tokenizer.e2e.js": "6b73d6f1b65042a35cb0ffb14bafa6866e712a91276f342ac95673d47cf31bfb"
+  },
+  "fixture": "http://127.0.0.1:8057 synthetic source server; independent browser contexts; default_Seraphina fixture; no production or external/paid provider calls",
+  "staged_or_committed_by_worker": false,
+  "checks": [
+    {
+      "command": "ST_NATIVE_UI_AUDIT=1 ST_BASE_URL=http://127.0.0.1:8057 npx playwright test native-tag-injection-tokenizer.e2e.js --workers=1 --output=/tmp/st-ui-followup-20261109/partition2-final-native",
+      "result": "13 passed (2.1m); zero skipped; zero page errors",
+      "log": "/tmp/st-ui-followup-20261109/partition2-final-native.txt",
+      "artifacts": "/tmp/st-ui-followup-20261109/partition2-final-native"
+    },
+    {
+      "command": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.json --runInBand native-tag-injection-tokenizer.test.js",
+      "result": "20 passed",
+      "log": "/tmp/st-ui-followup-20261109/partition2-owner-unit-final.txt"
+    },
+    {
+      "command": "npx eslint public/scripts/tags.js public/scripts/slash-commands.js public/scripts/tokenizers.js",
+      "result": "pass, zero errors/warnings",
+      "log": "/tmp/st-ui-followup-20261109/partition2-owner-source-eslint-final.txt"
+    },
+    {
+      "command": "npx eslint native-tag-injection-tokenizer.e2e.js native-tag-injection-tokenizer.test.js",
+      "result": "zero errors; 3 opt-in/conditional test warnings",
+      "log": "/tmp/st-ui-followup-20261109/partition2-owner-test-eslint-final.txt"
+    },
+    {
+      "command": "git diff --check -- <the 5 owned files>",
+      "result": "pass"
+    },
+    {
+      "command": "sha256sum -c /tmp/st-ui-followup-20261109/partition2-owner-freeze.sha256",
+      "result": "5/5 match final frozen bytes"
+    }
+  ],
+  "changes": [
+    {
+      "owner": "tags.js",
+      "behavior": "Absent membership returns false before splice; remaining tag assignments are preserved. Native command /tag-remove confirms this."
+    },
+    {
+      "owner": "tags.js",
+      "behavior": "Delete/merge template gets one owned wrapper because its select was top-level. Retains selected target in Popup.onClose before DOM removal; rejects stale source or missing target and deduplicates target references."
+    },
+    {
+      "owner": "tags.js",
+      "behavior": "Actual Select2 dropdown now belongs to popup content so it stays in the modal layer. Closing captures selected value and destroys Select2. Actual dropdown/option clicks pass at1280/390; detached plugin data/dropdown cleanup is asserted."
+    },
+    {
+      "owner": "slash-commands.js",
+      "behavior": "Each ephemeral cleanup captures stable story identity, chat-load token, metadata object and exact injection object. It removes its generation/chat listeners before handling the first completion/Stop and on chat change. An old same-ID callback cannot remove a newer persistent or ephemeral replacement."
+    },
+    {
+      "owner": "tokenizers.js",
+      "behavior": "Native asynchronous local/remote/OpenAI counters await one request owner that rejects HTTP/network failure with readable Error and validates numeric results. Failed results are not cached. Legacy synchronous counters remain synchronous."
+    },
+    {
+      "owner": "tokenizers.js",
+      "behavior": "Resolve API_CURRENT before forming cache identity; remote keys include provider/server/model configuration. OpenAI multi-message counts pin the model, cache object, full-count semantics and cloned message contents before any await."
+    }
+  ],
+  "browser_coverage": [
+    "Actual native tag management and rendered dropdown/option selection at1280/390, target initially unassigned, selected target retained after popup removal, Select2 cleanup and normal successful persisted settings readback.",
+    "Native /tag-remove of absent membership preserves assigned membership.",
+    "Source tag disappears while merge dialog is open: confirmation does not splice another tag.",
+    "Composer Enter executes /inject; old ephemeral completion/Stop preserves same-story persistent replacement.",
+    "Current ephemeral clears exactly once on Stop and cannot remove later persistent replacement on GENERATION_ENDED.",
+    "Real story identity changes and same-story native reload both preserve newer same-ID injection when old completion arrives.",
+    "Held HTTP503 for LLAMA, remote Kobold and API_CURRENT rejects within3seconds of released failure; retry succeeds.",
+    "Composer Enter /tokens shows readable failure toast and native command retry returns the count.",
+    "Held multi-message count, real story change, changed model and mutated caller second message retain original request model/payload; subsequent new-story/new-model count uses new model."
+  ],
+  "unit_coverage": [
+    "Absent/present tag membership cases.",
+    "Persistent and ephemeral same-ID replacements; exactly-once removal; story/load/metadata/entry identity changes; listener detachment on chat change.",
+    "HTTP503 rejection/retry for local, remote Textgen, remote Kobold and API_CURRENT; network error; malformed/missing/negative/NaN/string results never cached.",
+    "Remote model/server request/cache pinning; OpenAI model-to-Claude change while held preserves original full-count adjustment, message snapshot and original chat cache; later cache hits/new model are separate."
+  ],
+  "negative_and_intermediate_evidence": [
+    "Original confirmed repros: partition2-tags-proof.json, partition2-inject-proof.json, partition2-tokenizer-proof.json.",
+    "partition2-owner-first.txt:12/13; last harness indexed unrelated new-story background tokenization as its second audited request. Tag setup had target already assigned and was weaker merge evidence.",
+    "partition2-owner-final-qualified.txt:11/13; initially unassigned target exposed top-level select lookup miss.",
+    "partition2-merge-final.txt:2/2 after owned wrapper; underlying select manipulation only.",
+    "partition2-owner-qualified.txt:13/13 before real rendered dropdown qualification; superseded by final native run.",
+    "partition2-merge-dropdown-before.txt: real option click fails because modal intercepts dropdown appended outside modal. This justified dropdownParent ownership fix.",
+    "partition2-final-native.txt: final13/13 after real dropdown and cleanup corrections."
+  ],
+  "diagnostics": {
+    "cases": [
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-06946-existing-assignments-intact",
+        "page_errors": 0,
+        "console_errors": 0,
+        "error_responses": []
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-107a4--HTTP503-and-retry-succeeds",
+        "page_errors": 0,
+        "console_errors": 1,
+        "error_responses": [
+          {
+            "status": 503,
+            "url": "http://127.0.0.1:8057/api/tokenizers/llama/encode"
+          }
+        ]
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-32caf-ter-popup-removal-at-1280px",
+        "page_errors": 0,
+        "console_errors": 0,
+        "error_responses": []
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-844f4-owner-and-message-snapshots",
+        "page_errors": 0,
+        "console_errors": 0,
+        "error_responses": []
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-97b04-tory-persistent-replacement",
+        "page_errors": 0,
+        "console_errors": 0,
+        "error_responses": []
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-9c437-ion-after-same-story-reload",
+        "page_errors": 0,
+        "console_errors": 0,
+        "error_responses": []
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-c6248--HTTP503-and-retry-succeeds",
+        "page_errors": 0,
+        "console_errors": 1,
+        "error_responses": [
+          {
+            "status": 503,
+            "url": "http://127.0.0.1:8057/api/tokenizers/remote/textgenerationwebui/encode"
+          }
+        ]
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-d03c0-r-failure-and-permits-retry",
+        "page_errors": 0,
+        "console_errors": 1,
+        "error_responses": [
+          {
+            "status": 503,
+            "url": "http://127.0.0.1:8057/api/tokenizers/llama/encode"
+          }
+        ]
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-dd2a8-fter-popup-removal-at-390px",
+        "page_errors": 0,
+        "console_errors": 0,
+        "error_responses": []
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-e9992--affect-a-later-replacement",
+        "page_errors": 0,
+        "console_errors": 0,
+        "error_responses": []
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-e9b9e-jection-after-another-story",
+        "page_errors": 0,
+        "console_errors": 0,
+        "error_responses": []
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-eae77--HTTP503-and-retry-succeeds",
+        "page_errors": 0,
+        "console_errors": 1,
+        "error_responses": [
+          {
+            "status": 503,
+            "url": "http://127.0.0.1:8057/api/tokenizers/remote/kobold/count"
+          }
+        ]
+      },
+      {
+        "artifact": "/tmp/st-ui-followup-20261109/partition2-final-native/native-tag-injection-token-fa9c6-n-cannot-delete-another-tag",
+        "page_errors": 0,
+        "console_errors": 0,
+        "error_responses": []
+      }
+    ],
+    "page_errors": 0,
+    "console_error_first_line_counts": {
+      "Failed to load resource: the server responded with a status of 503 (Service Unavailable)": 4
+    },
+    "error_response_counts": [
+      {
+        "status": 503,
+        "url": "http://127.0.0.1:8057/api/tokenizers/llama/encode",
+        "count": 2
+      },
+      {
+        "status": 503,
+        "url": "http://127.0.0.1:8057/api/tokenizers/remote/textgenerationwebui/encode",
+        "count": 1
+      },
+      {
+        "status": 503,
+        "url": "http://127.0.0.1:8057/api/tokenizers/remote/kobold/count",
+        "count": 1
+      }
+    ]
+  },
+  "limits": [
+    "Assigned tag/injection/tokenizer paths only; this is source fixture acceptance, not immutable-image or production acceptance.",
+    "Provider token counts are synthetic responses through actual native client requests. Real paid/provider-specific tokenizer correctness and physical hardware are not qualified.",
+    "Token-count failures now reject; callers retain responsibility for operation-specific error display/cancellation. Native /tokens readable UI failure is verified. This batch adds no deadline for a server that never responds.",
+    "Ephemeral cleanup registration remains current-load-local. Existing stored injection shape has no durable ephemeral flag, and processChatSlashCommands rehydration remains unchanged. Persisting/restoring ephemeral lifetime across full browser reload is not claimed.",
+    "The rejected early-return chat-clearing lead was not changed.",
+    "Normal successful tag persistence is verified. Tags continue using the existing debounced settings writer; transactionally rolling back a failed tag settings save was not added or fault-injected.",
+    "Final diagnostics contain only4 deliberate HTTP503 resource errors and zero page errors. Prior interrupted/weaker/failed runs remain separate evidence."
+  ]
+}

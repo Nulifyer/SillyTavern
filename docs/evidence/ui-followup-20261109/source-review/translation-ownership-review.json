@@ -1,0 +1,46 @@
+{
+  "files": {
+    "public/scripts/extensions/translate/index.js": "5cc14129b5018fe20151c55ef4fb862f393b3f2e0592263eb98af81689ebcfc1",
+    "tests/native-translation-ownership.e2e.js": "6741391648a0411da6600fd452e63432fe7f4dfe663f8d05b4615dcc27419094"
+  },
+  "sourceReview": "Read original native804-line module in full, all configured provider calls, language tables, callbacks and complete implementation diff. Changed only this native owner plus new focused browser file.",
+  "negativeWitness": "/tmp/st-ui-followup-20261109/partition1-translate-draft-reproductions.json",
+  "negativeObserved": [
+    "Held native input translation overwrote a newer draft.",
+    "HTTP503 assigned string undefined to draft."
+  ],
+  "verification": {
+    "path": "/tmp/st-ui-followup-20261109/translation-owner-verified",
+    "log": "/tmp/st-ui-followup-20261109/translation-owner-verified.txt",
+    "passed": 17,
+    "minutes": 1.6,
+    "uncaughtPageErrors": 0,
+    "coverage": [
+      "Draft edit then restore, story switch and same-file reload cannot accept old results.",
+      "Input/automatic impersonation preserve user typing;503 and empty200 preserve original; normal input dispatches native input.",
+      "Incoming/outgoing native event results cannot mutate new story data OR rendered DOM, with zero late new-story saves.",
+      "Saved edit/revert revisions, unsaved editor and reasoning edits invalidate prior translation work.",
+      "Manual message translation includes reasoning, renders normally, toggles off.",
+      "Manual batch does not start new-story messages/save after navigation; same-owner multi-message batch persists.",
+      "Clear confirmation belongs to captured story; normal clear persists and reloads only its original current owner.",
+      "Obsolete A batch cannot block B or clear B guard; repeat B click while pending sends no extra request."
+    ]
+  },
+  "supersededAttempts": {
+    "translation-owner-initial": "11/12 passed; cross-story fixture also held legitimate new-story automatic translation during load. Fixture now disables auto mode before switching and checks rendered DOM alongside data.",
+    "translation-owner-final": "16/16 passed before final batch-lifetime guard.",
+    "translation-owner-lifecycle": "3/3 passed after batch-lifetime guard."
+  },
+  "checks": [
+    "node --check public/scripts/extensions/translate/index.js",
+    "npx eslint public/scripts/extensions/translate/index.js tests/native-translation-ownership.e2e.js",
+    "git diff --check"
+  ],
+  "limits": [
+    "Synthetic8057 data and intercepted same-origin translation endpoints only; no external/paid translation calls or production data.",
+    "Functional ownership tests use1280px; broader eight-size UI layout/color matrix is separate.",
+    "Provider protocol response handling remains native. Returned undefined on public translate failure is retained; mutating callers now require an actual string.",
+    "Root owns final UI28 and release acceptance after all source review is complete."
+  ],
+  "ownership": "Handoff native translate owner and new browser file to root; resume partition2read-only source audit."
+}

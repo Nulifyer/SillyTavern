@@ -2,6 +2,8 @@
 // become empty conversations, and obsolete requests cannot replace a newer story.
 let activeLoad;
 
+export function getChatLoadToken() { return activeLoad; }
+
 export async function readChatFile(url, body, headers, signal, { allowHeaderless = false } = {}) {
     const response = await fetch(url, { method: 'POST', headers, cache: 'no-cache', body: JSON.stringify(body), signal });
     if (!response.ok) throw new Error('Chat could not be loaded. Your existing conversation has not been replaced.');

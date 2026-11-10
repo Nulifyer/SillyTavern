@@ -1,0 +1,122 @@
+{
+  "scope": "Controlled unchanged-source functions/modules with held dependencies. These are not full-browser qualification.",
+  "results": [
+    {
+      "id": "dnd-destroy",
+      "file": "public/scripts/dragdrop.js",
+      "lines": [
+        35,
+        66
+      ],
+      "kind": "unchanged module VM execution with jQuery-compatible handler identity stub",
+      "registered": 3,
+      "remainingAfterDestroy": 3,
+      "dropCallbacksAfterReopen": 2,
+      "remainingClasses": [
+        "drop_target",
+        "no_animation"
+      ],
+      "removeCalls": [
+        "drop_target no_animation"
+      ],
+      "sourceSHA256": "73fc448503f0d7b54bc232eb2181cc128ba94a705483b8a5af13621f88d1fc5c"
+    },
+    {
+      "id": "lorebook-late-read",
+      "file": "public/scripts/world-info.js",
+      "line": 2018,
+      "endLine": 2026,
+      "kind": "unchanged function VM execution with held native read dependencies",
+      "selectionOrder": [
+        "A",
+        "B"
+      ],
+      "displayOrder": [
+        "B",
+        "A"
+      ],
+      "lastDisplayed": "A",
+      "selectorStill": "B",
+      "sourceSHA256": "2ea8572e008cfe930d966199860b4d88e81aa8a75e8c3912c1156673624a08fb"
+    },
+    {
+      "id": "gallery-folder-late-owner",
+      "file": "public/scripts/extensions/gallery/index.js",
+      "line": 460,
+      "endLine": 476,
+      "kind": "unchanged handler and mutation-owner functions with controlled sanitize dependency",
+      "clickedCharacter": "A.png",
+      "activeAfterAwait": "B.png",
+      "savedFolders": {
+        "B.png": "A-renamed"
+      },
+      "sourceSHA256": "0add02f60b64986c25cdff6f6becbeaa372be13a18a005a5b801469322b46300"
+    },
+    {
+      "id": "popup-force-close-cleanup",
+      "file": "public/scripts/popup.js",
+      "line": 591,
+      "endLine": 594,
+      "kind": "unchanged force-close wrapper VM execution",
+      "originalCalls": 0,
+      "confirmationCalls": 1,
+      "sourceSHA256": "b36f36824c52b9d70d8db078f223e1c5ee4997a050934157e6e405879d6f46fd"
+    },
+    {
+      "id": "attachment-delete-failure",
+      "file": "public/scripts/chats.js",
+      "line": 1287,
+      "endLine": 1320,
+      "kind": "unchanged mutation-owner function VM execution with false native delete result",
+      "globalResult": {
+        "listLength": 0,
+        "settingSaves": 1,
+        "callbacks": 1
+      },
+      "characterResult": {
+        "listLength": 0,
+        "additionalSettingSaves": 0,
+        "callbacks": 2
+      },
+      "sourceSHA256": "2b870d44c55f99c622b5afcd7b1fd563219b9444bc70e8653611327d6e7f7be6"
+    },
+    {
+      "id": "quick-reply-paste-late-owner",
+      "file": "public/scripts/extensions/quick-reply/src/ui/SettingsUi.js",
+      "line": 142,
+      "endLine": 145,
+      "kind": "unchanged clipboard handler VM execution with held clipboard dependency",
+      "clickedSetItems": [],
+      "currentSetItems": [
+        "Neutral quick reply"
+      ],
+      "sourceSHA256": "4e112ec7cbd3bc80eb51f8b98d2246b407d82b94d1e9999a5c4bac7cff33067e"
+    },
+    {
+      "id": "popup-async-close-reentry",
+      "file": "public/scripts/popup.js",
+      "line": 755,
+      "endLine": 803,
+      "kind": "unchanged complete method in minimal class with held onClosing dependency, no browser qualification",
+      "clicks": 2,
+      "onClosingCallsBeforeFirstSettles": 2,
+      "onClosingCallsAfterSettles": 2
+    },
+    {
+      "id": "gallery-open-late-owner",
+      "file": "public/scripts/extensions/gallery/index.js",
+      "line": 308,
+      "endLine": 338,
+      "sourceRevision": "HEAD fb285fc22 before active parent correction",
+      "sourceSHA256": "0add02f60b64986c25cdff6f6becbeaa372be13a18a005a5b801469322b46300",
+      "kind": "unchanged baseline showCharGallery function with held items read; no full-browser qualification",
+      "trace": [
+        {
+          "url": "A",
+          "currentCharacter": "B.png"
+        }
+      ],
+      "currentState": "Parent current source now includes request/owner guards; fresh runtime verification still needed."
+    }
+  ]
+}

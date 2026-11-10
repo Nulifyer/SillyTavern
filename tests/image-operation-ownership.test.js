@@ -34,7 +34,8 @@ async function fixture() {
     const values = {
         eventSource, event_types, extension_settings,
         debounce: value => value, debounce_timeout: { short: 1, relaxed: 1 },
-        getContext: () => context, getCurrentChatId: () => 'same-story',
+        getContext: () => context, getCurrentChatId: () => 'same-story', getChatLoadToken: () => 'loaded-story',
+        getCurrentChatIdentity: () => JSON.stringify([context.groupId || context.characters[context.characterId]?.avatar, 'same-story']),
         this_chid: 0, selected_group: null, getRequestHeaders: () => ({}),
         ConnectionManagerRequestService: { sendRequest: writer, getProfile: () => ({ api: 'custom' }) },
         generateQuietPrompt: quiet, saveBase64AsFile: upload,
@@ -47,7 +48,7 @@ async function fixture() {
         loader: { show: options => { const handle = { options, hide: jest.fn(async () => {}) }; loaders.push(handle); return handle; } },
     };
     const scope = vm.createContext({
-        AbortController, DOMException, URL, console: { log() {}, warn() {}, error() {}, trace() {} },
+        AbortController, DOMException, URL, structuredClone, console: { log() {}, warn() {}, error() {}, trace() {} },
         fetch, toastr, t: strings => strings.join(''),
         document: { querySelector: () => null }, setTimeout: () => 1,
     });

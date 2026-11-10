@@ -208,11 +208,11 @@
 
 
 .success {
-    color: green;
+    color: var(--ws-success, green);
 }
 
 .failure {
-    color: red;
+    color: var(--ws-warning, red);
 }
 
 .optional {
@@ -492,6 +492,16 @@ textarea:disabled {
 
 #AdvancedFormatting .disabled {
     filter: brightness(0.5);
+}
+
+/* Turning a prompt feature off does not disable its configuration editor.
+   Keep staged and derived values readable; native toggles retain the off state. */
+body.workspace-ui #AdvancedFormatting :is(#instructSettingsBlock, #InstructSequencesColumn, #SystemPromptBlock, #instruct_system_sequence_block, #instruct_system_suffix_block).disabled {
+    filter: none;
+    color: var(--ws-muted);
+}
+body.workspace-ui #AdvancedFormatting :is(#instructSettingsBlock, #InstructSequencesColumn, #SystemPromptBlock, #instruct_system_sequence_block, #instruct_system_suffix_block).disabled small {
+    opacity: 1;
 }
 
 .debug-red {

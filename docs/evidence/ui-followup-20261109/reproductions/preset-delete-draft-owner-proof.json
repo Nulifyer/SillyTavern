@@ -1,0 +1,18 @@
+{
+  "file": "public/scripts/preset-manager.js",
+  "sha256": "e8c949ea8f4cbc670579705a5ad6437e1e578bea64ed4c14db154b0b5d342a5f",
+  "observed": {
+    "selected": "B",
+    "editor": {
+      "name": "A",
+      "story_string": "newer unsaved A draft"
+    },
+    "changes": 0,
+    "presetNames": [
+      "B"
+    ],
+    "note": "Delete starts while A selected; user edits A while HTTP acknowledgement held. The selected option is removed without applying change because owner predicate changed."
+  },
+  "pageErrors": [],
+  "note": "Actual exported PresetManager methods with detached synthetic select and intercepted local fetch in isolated instance on synthetic browser. No native saves, external providers, or script injection; harmless markup marker only."
+}

@@ -7,7 +7,7 @@ import { renderTemplateAsync } from './templates.js';
 import { POPUP_TYPE, callGenericPopup } from './popup.js';
 import { t } from './i18n.js';
 import { accountStorage } from './util/AccountStorage.js';
-import { localizePagination, PAGINATION_TEMPLATE, textValueMatcher } from './utils.js';
+import { escapeHtml, localizePagination, PAGINATION_TEMPLATE, textValueMatcher } from './utils.js';
 
 let mancerModels = [];
 let togetherModels = [];
@@ -1175,7 +1175,7 @@ function getOpenRouterModelTemplate(option) {
     const price = 0 === Number(model.pricing?.prompt) ? 'Free' : `${tokens_rounded}k t/$ `;
 
     return $((`
-        <div class="flex-container flexFlowColumn" title="${DOMPurify.sanitize(model.id)}">
+        <div class="flex-container flexFlowColumn" title="${escapeHtml(String(model.id))}">
             <div><strong>${DOMPurify.sanitize(model.name)}</strong> | ${model.context_length} ctx | <small>${price}</small></div>
         </div>
     `));
@@ -1375,9 +1375,10 @@ export function getCurrentOpenRouterModelTokenizer() {
 export function getCurrentDreamGenModelTokenizer() {
     const modelId = textgen_settings.dreamgen_model;
     const model = dreamGenModels.find(x => x.id === modelId);
-    if (model.id.startsWith('lucid-v1-medium') || model.id.startsWith('lucid-v1-base')) {
+    const id = String(model?.id || modelId || '');
+    if (id.startsWith('lucid-v1-medium') || id.startsWith('lucid-v1-base')) {
         return tokenizers.MISTRAL;
-    } else if (model.id.startsWith('lucid-v1-extra-large') || model.id.startsWith('lucid-v1-max')) {
+    } else if (id.startsWith('lucid-v1-extra-large') || id.startsWith('lucid-v1-max')) {
         return tokenizers.LLAMA3;
     } else {
         return tokenizers.MISTRAL;

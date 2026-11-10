@@ -1,0 +1,40 @@
+{
+  "source": "/home/nulifyer/Projects/SillyTavern/public/scripts/world-info.js",
+  "sha256": "13c02b88763a11e3edc2f9f46cd539318b324f35d00aa07a44d84f965b8daae7",
+  "method": "Actual unchanged-source functions with controlled native dependencies; these are not full-browser checks.",
+  "rows": [
+    {
+      "id": "same-book-save-notification",
+      "result": "completed",
+      "editRequests": 2,
+      "revision": 2,
+      "saved": 2
+    },
+    {
+      "id": "failed-delete-dirty-debounce",
+      "deleted": false,
+      "timersBefore": 1,
+      "timersAfter": 1,
+      "revision": 1,
+      "saved": 0,
+      "error": "",
+      "deleting": false,
+      "requests": [
+        {
+          "url": "/api/worldinfo/delete"
+        }
+      ]
+    },
+    {
+      "id": "failed-move-mutates-cached-books",
+      "moved": false,
+      "attemptedSaves": [
+        "B"
+      ],
+      "cachedSourceEntries": [
+        "0"
+      ],
+      "cachedTargetEntries": []
+    }
+  ]
+}

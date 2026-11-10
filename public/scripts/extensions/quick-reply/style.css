@@ -149,6 +149,10 @@
   display: block;
 }
 .qr--button-expander {
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  border: 0;
   border-left: 1px solid;
   margin-left: 1em;
   text-align: center;
@@ -165,7 +169,7 @@
   position: fixed;
   right: 0;
   top: 0;
-  z-index: 999;
+  z-index: 10000;
 }
 .ctx-menu {
   position: absolute;
@@ -184,7 +188,25 @@
 .ctx-item {
   position: relative;
 }
+.ctx-action {
+  display: flex;
+  align-items: center;
+  flex: 1;
+  min-width: 0;
+  gap: 0.5em;
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: inherit;
+}
 .ctx-expander {
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  border: 0;
   border-left: 1px solid;
   margin-left: 1em;
   text-align: center;
@@ -199,9 +221,6 @@
   left: 100%;
 }
 @media screen and (max-width: 1000px) {
-  .ctx-blocker {
-    position: absolute;
-  }
   .list-group .list-group-item.ctx-item {
     padding: 1em;
   }

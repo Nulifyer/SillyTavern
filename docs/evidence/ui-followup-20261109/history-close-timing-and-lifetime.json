@@ -1,0 +1,89 @@
+{
+  "at": "2026-11-10T05:40:41.589927+00:00",
+  "summary": [
+    {
+      "iteration": 0,
+      "immediateReachable": true,
+      "settledReachable": true,
+      "blockedFrames": 9,
+      "firstBlockedToFirstClearMs": 145.1,
+      "actualPointerCloseSucceeded": true
+    },
+    {
+      "iteration": 1,
+      "immediateReachable": false,
+      "settledReachable": true,
+      "blockedFrames": 9,
+      "firstBlockedToFirstClearMs": 138.2,
+      "actualPointerCloseSucceeded": true
+    },
+    {
+      "iteration": 2,
+      "immediateReachable": true,
+      "settledReachable": true,
+      "blockedFrames": 9,
+      "firstBlockedToFirstClearMs": 138.2,
+      "actualPointerCloseSucceeded": true
+    },
+    {
+      "iteration": 3,
+      "immediateReachable": true,
+      "settledReachable": true,
+      "blockedFrames": 9,
+      "firstBlockedToFirstClearMs": 134.4,
+      "actualPointerCloseSucceeded": true
+    },
+    {
+      "iteration": 4,
+      "immediateReachable": false,
+      "settledReachable": true,
+      "blockedFrames": 9,
+      "firstBlockedToFirstClearMs": 136.9,
+      "actualPointerCloseSucceeded": true
+    },
+    {
+      "iteration": 5,
+      "immediateReachable": false,
+      "settledReachable": true,
+      "blockedFrames": 9,
+      "firstBlockedToFirstClearMs": 131.6,
+      "actualPointerCloseSucceeded": true
+    }
+  ],
+  "persistentObstruction": false,
+  "instantaneousAuditOracleReproduced": true,
+  "cause": "Native options fadeOut retains pointer-events:auto at z-index29999 until jQuery fade completes; history shadow at4100 and popup at2066 are already visible during that interval. All settled samples hit select_chat_cross.",
+  "testTiming": "The failing reachable() checks elementFromPoint immediately after visibility and viewport assertions; it does not await options jQuery fade or shadow CSS transition. Existing settle() is scoped to workspace-view for this flow and would also miss these body-level overlays without a relevant root.",
+  "separateLifetimeFinding": {
+    "observed": {
+      "reopenedBeforeOldSearchCompleted": "true",
+      "afterOldSearchCompleted": "false",
+      "menuVisibleAfter": false,
+      "scope": "Actual pointer close/reopen of actions while original local history response held; no generation or provider calls."
+    },
+    "classification": "Confirmed old awaited history action hides a newer reopened Actions menu when its search completes. Source hideMenu runs unconditionally after await displayPastChats. No implementation changes in this probe."
+  },
+  "server8058Stopped": true,
+  "stopEvidence": "URLError: <urlopen error [Errno 111] Connection refused>",
+  "sourceEdited": false,
+  "testsEdited": false,
+  "otherFixtureTouched": false,
+  "limits": [
+    "Six local headless Chromium repeats at844x390 with actual pointer native menu/history/Close and selected white background. No claim for all browsers or physical devices.",
+    "Immediate center-hit failures are transient in this probe; a raw pointer click during the fade was not used to claim successful Close. Actual Close was clicked after animations settled.",
+    "Async newer-menu dismissal is a separate behavior defect, not evidence of a persistent Close obstruction."
+  ],
+  "source": {
+    "public/script.js": "d9a3c529e037675e0abc42b44d7e15152c22e86485c1fc8dec589016f9013430",
+    "public/scripts/workspace.js": "c6c49909645bf612abb92b8296a704b26ab7a237ac265eeee898864443291272",
+    "public/css/workspace.css": "7457f7b605de50c048d3b6f9ff8cc1852d84cbef7b506a1dddfc0f03ffafd8b4",
+    "tests/ui-audit.e2e.js": "561e9568d767cf91934e32667bf07cec26b55d4bec51572467a8a4305f170c71"
+  },
+  "animationDurationMs": 125,
+  "selectedBackground": "url(\"http://127.0.0.1:8058/backgrounds/_white.jpg\")",
+  "pageErrors": [],
+  "screenshots": {
+    "immediate": "/tmp/st-ui-followup-20261109/history-close-probe/history-immediate-1.png",
+    "settled": "/tmp/st-ui-followup-20261109/history-close-probe/history-settled-1.png"
+  }
+}

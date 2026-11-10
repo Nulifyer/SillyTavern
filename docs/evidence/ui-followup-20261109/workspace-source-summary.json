@@ -1,0 +1,19 @@
+{
+  "stats": {
+    "startTime": "2026-11-10T02:00:46.231Z",
+    "duration": 859224.5769999999,
+    "expected": 102,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "sourceRun": true,
+  "immutableImageAcceptance": false,
+  "attempt": "workspace-final-r2",
+  "coverage": "All102 workspace cases, both authorized live-service cases included. Source files continued to change during the run; final image run required.",
+  "diagnostics": {
+    "pageErrors": 0,
+    "consoleErrors": 51,
+    "failedRequests": 92
+  }
+}

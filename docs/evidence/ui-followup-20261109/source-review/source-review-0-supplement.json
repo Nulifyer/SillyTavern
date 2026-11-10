@@ -1,0 +1,2059 @@
+{
+  "scope": "Reserved partition0 supplemental review assigned after partition2; inventory is not source-reading evidence. Worker0 live ledger remains untouched.",
+  "status": "complete_read_only_review",
+  "files": [
+    {
+      "id": 15,
+      "file": "public/scripts/instruct-mode.js",
+      "kind": "js",
+      "lines": 870,
+      "sha256": "f54feef66a7b9e5b62878ab0189aefa60f8f8e178d2faa338501b4bb3228baae",
+      "readRanges": [
+        [
+          1,
+          870
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 136,
+          "endLine": 142,
+          "registration": "on",
+          "target": "$element",
+          "event": "'input'",
+          "selector": null,
+          "callback": "async function () {\n            power_user.instruct[control.property] = control.isCheckbox ? !!$(this).prop('checked') : $(this).val();\n            if (!CSS.supports('field-sizing'",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all controls/migrations, preset load/select/binding/regex, stopping strings, message/examples/story/prompt formatters, macro table and seven candidate registrations. Input callbacks update native settings; same-as-user makes real readonly fields. Existing CSS handles disabled presentation. No confirmed new high-impact defect. Repeated loadInstructMode would append options/listeners, but startup call frequency not qualified.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 788,
+          "endLine": 801,
+          "registration": "on",
+          "target": "$('#instruct_system_same_as_user')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        const state = !!$(this).prop('checked');\n        if (state) {\n            $('#instruct_system_sequence_block').addClass('disabled');\n            $('#instruct_",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all controls/migrations, preset load/select/binding/regex, stopping strings, message/examples/story/prompt formatters, macro table and seven candidate registrations. Input callbacks update native settings; same-as-user makes real readonly fields. Existing CSS handles disabled presentation. No confirmed new high-impact defect. Repeated loadInstructMode would append options/listeners, but startup call frequency not qualified.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 803,
+          "endLine": 816,
+          "registration": "on",
+          "target": "$('#instruct_enabled')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "function () {\n        //color toggle for the main switch\n        $('#instruct_enabled').parent().find('i').toggleClass('toggleEnabled', !!power_user.instruct.enabled);\n        $('#",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all controls/migrations, preset load/select/binding/regex, stopping strings, message/examples/story/prompt formatters, macro table and seven candidate registrations. Input callbacks update native settings; same-as-user makes real readonly fields. Existing CSS handles disabled presentation. No confirmed new high-impact defect. Repeated loadInstructMode would append options/listeners, but startup call frequency not qualified.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 818,
+          "endLine": 820,
+          "registration": "on",
+          "target": "$('#instruct_derived')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "function () {\n        $('#instruct_derived').parent().find('i').toggleClass('toggleEnabled', !!power_user.instruct_derived);\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all controls/migrations, preset load/select/binding/regex, stopping strings, message/examples/story/prompt formatters, macro table and seven candidate registrations. Input callbacks update native settings; same-as-user makes real readonly fields. Existing CSS handles disabled presentation. No confirmed new high-impact defect. Repeated loadInstructMode would append options/listeners, but startup call frequency not qualified.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 822,
+          "endLine": 824,
+          "registration": "on",
+          "target": "$('#instruct_bind_to_context')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "function () {\n        $('#instruct_bind_to_context').parent().find('i').toggleClass('toggleEnabled', !!power_user.instruct.bind_to_context);\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all controls/migrations, preset load/select/binding/regex, stopping strings, message/examples/story/prompt formatters, macro table and seven candidate registrations. Input callbacks update native settings; same-as-user makes real readonly fields. Existing CSS handles disabled presentation. No confirmed new high-impact defect. Repeated loadInstructMode would append options/listeners, but startup call frequency not qualified.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 826,
+          "endLine": 861,
+          "registration": "on",
+          "target": "$('#instruct_presets')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "function () {\n        const name = String($(this).find(':selected').val());\n        const preset = instruct_presets.find(x => x.name === name);\n\n        if (!preset) {\n            ",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all controls/migrations, preset load/select/binding/regex, stopping strings, message/examples/story/prompt formatters, macro table and seven candidate registrations. Input callbacks update native settings; same-as-user makes real readonly fields. Existing CSS handles disabled presentation. No confirmed new high-impact defect. Repeated loadInstructMode would append options/listeners, but startup call frequency not qualified.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 864,
+          "endLine": 868,
+          "registration": "on",
+          "target": "$('#InstructSequencesColumn details')",
+          "event": "'toggle'",
+          "selector": null,
+          "callback": "function () {\n            if ($(this).prop('open')) {\n                resetScrollHeight($(this).find('textarea'));\n            }\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all controls/migrations, preset load/select/binding/regex, stopping strings, message/examples/story/prompt formatters, macro table and seven candidate registrations. Input callbacks update native settings; same-as-user makes real readonly fields. Existing CSS handles disabled presentation. No confirmed new high-impact defect. Repeated loadInstructMode would append options/listeners, but startup call frequency not qualified.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [],
+      "reviewNotes": [
+        "Read all controls/migrations, preset load/select/binding/regex, stopping strings, message/examples/story/prompt formatters, macro table and seven candidate registrations. Input callbacks update native settings; same-as-user makes real readonly fields. Existing CSS handles disabled presentation. No confirmed new high-impact defect. Repeated loadInstructMode would append options/listeners, but startup call frequency not qualified."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "baselineSnapshot": "/tmp/st-ui-followup-20261109/source-review-0-baseline/public/scripts/instruct-mode.js",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/f54feef66a7b9e5b62878ab0189aefa60f8f8e178d2faa338501b4bb3228baae.txt",
+      "observedCurrentSha256": "f54feef66a7b9e5b62878ab0189aefa60f8f8e178d2faa338501b4bb3228baae",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "f54feef66a7b9e5b62878ab0189aefa60f8f8e178d2faa338501b4bb3228baae"
+    },
+    {
+      "id": 16,
+      "file": "public/scripts/extensions/shared.js",
+      "kind": "js",
+      "lines": 794,
+      "sha256": "9e02f7ac1b881c2bf8f278ceb262348ae52f240188b77a24d78cee752c936aad",
+      "readRanges": [
+        [
+          1,
+          794
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 717,
+          "endLine": 733,
+          "registration": "on",
+          "target": "context.eventSource",
+          "event": "context.eventTypes.CONNECTION_PROFILE_CREATED",
+          "selector": null,
+          "callback": "async (profile) => {\n            const isSupported = this.isProfileSupported(profile);\n            if (!isSupported) {\n                return;\n            }\n\n            const grou",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read whole caption validation/conversion/request, WebLLM support/token fallback, profile request construction/validation and dropdown lifecycle bodies. Four registrations are real event/change handlers. Provider data mapped through native request services; signal forwarded.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 735,
+          "endLine": 765,
+          "registration": "on",
+          "target": "context.eventSource",
+          "event": "context.eventTypes.CONNECTION_PROFILE_UPDATED",
+          "selector": null,
+          "callback": "async (oldProfile, newProfile) => {\n            const currentSelected = dropdown.val();\n            const isSelectedProfile = currentSelected === oldProfile.id;\n            await u",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read whole caption validation/conversion/request, WebLLM support/token fallback, profile request construction/validation and dropdown lifecycle bodies. Four registrations are real event/change handlers. Provider data mapped through native request services; signal forwarded.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 767,
+          "endLine": 786,
+          "registration": "on",
+          "target": "context.eventSource",
+          "event": "context.eventTypes.CONNECTION_PROFILE_DELETED",
+          "selector": null,
+          "callback": "async (profile) => {\n            const currentSelected = dropdown.val();\n            const isSelectedProfile = currentSelected === profile.id;\n            if (!this.isProfileSuppor",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read whole caption validation/conversion/request, WebLLM support/token fallback, profile request construction/validation and dropdown lifecycle bodies. Four registrations are real event/change handlers. Provider data mapped through native request services; signal forwarded.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 788,
+          "endLine": 792,
+          "registration": "on",
+          "target": "dropdown",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async () => {\n            const profileId = dropdown.val();\n            const profile = context.extensionSettings.connectionManager.profiles.find((p) => p.id === profileId);\n      ",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read whole caption validation/conversion/request, WebLLM support/token fallback, profile request construction/validation and dropdown lifecycle bodies. Four registrations are real event/change handlers. Provider data mapped through native request services; signal forwarded.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [
+        {
+          "severity": "source-lead",
+          "mechanism": "caption-request-snapshot",
+          "range": [
+            17,
+            166
+          ],
+          "evidence": "Provider flags are captured before awaited thumbnail conversion, provider/model/endpoints are reread afterward; configuration change could mix conversion rules and request provider. Runtime unqualified."
+        },
+        {
+          "severity": "source-lead",
+          "mechanism": "profile-validation",
+          "range": [
+            579,
+            596
+          ],
+          "evidence": "isProfileSupported uses CONNECT_API_MAP[profile.api].selected without unknown-api guard; validateProfile explicitly guards it."
+        },
+        {
+          "severity": "source-lead",
+          "mechanism": "dropdown-lifetime",
+          "range": [
+            626,
+            794
+          ],
+          "evidence": "UPDATED unsupported profile returns before removing old option; event subscriptions have no per-mount dispose. Repeated mounting not runtime-qualified."
+        }
+      ],
+      "reviewNotes": [
+        "Read whole caption validation/conversion/request, WebLLM support/token fallback, profile request construction/validation and dropdown lifecycle bodies. Four registrations are real event/change handlers. Provider data mapped through native request services; signal forwarded."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "baselineSnapshot": "/tmp/st-ui-followup-20261109/source-review-0-baseline/public/scripts/extensions/shared.js",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/9e02f7ac1b881c2bf8f278ceb262348ae52f240188b77a24d78cee752c936aad.txt",
+      "observedCurrentSha256": "9e02f7ac1b881c2bf8f278ceb262348ae52f240188b77a24d78cee752c936aad",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "9e02f7ac1b881c2bf8f278ceb262348ae52f240188b77a24d78cee752c936aad"
+    },
+    {
+      "id": 17,
+      "file": "public/scripts/bookmarks.js",
+      "kind": "js",
+      "lines": 753,
+      "sha256": "fdf2e6ed870fee0ea224b4641a3696bee3c17fdce1b09736e56a895dd64e0f73",
+      "readRanges": [
+        [
+          1,
+          753
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 104,
+          "endLine": 104,
+          "registration": "event shorthand candidate",
+          "target": "Popup.show",
+          "event": "input",
+          "callback": "suggestedName",
+          "reviewed": true,
+          "classification": "popup invocation, not event registration",
+          "reviewNotes": "Read complete checkpoint/branch snapshot and lineage paths, prompt saves, display/navigation, solo-to-group conversion, seven UI candidates and slash callbacks/help. Popup.show.input candidate is a popup call rather than registration. Branch/checkpoint paths guard story identity/message object across awaited operations.",
+          "handlerBodyRead": false
+        },
+        {
+          "line": 697,
+          "endLine": 697,
+          "registration": "on",
+          "target": "$('#option_new_bookmark')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "saveBookmarkMenu",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete checkpoint/branch snapshot and lineage paths, prompt saves, display/navigation, solo-to-group conversion, seven UI candidates and slash callbacks/help. Popup.show.input candidate is a popup call rather than registration. Branch/checkpoint paths guard story identity/message object across awaited operations.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 698,
+          "endLine": 698,
+          "registration": "on",
+          "target": "$('#option_back_to_main')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "backToMainChat",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete checkpoint/branch snapshot and lineage paths, prompt saves, display/navigation, solo-to-group conversion, seven UI candidates and slash callbacks/help. Popup.show.input candidate is a popup call rather than registration. Branch/checkpoint paths guard story identity/message object across awaited operations.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 699,
+          "endLine": 699,
+          "registration": "on",
+          "target": "$('#option_convert_to_group')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "convertSoloToGroupChat",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete checkpoint/branch snapshot and lineage paths, prompt saves, display/navigation, solo-to-group conversion, seven UI candidates and slash callbacks/help. Popup.show.input candidate is a popup call rather than registration. Branch/checkpoint paths guard story identity/message object across awaited operations.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 701,
+          "endLine": 736,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'click'",
+          "selector": ".select_chat_block, .mes_bookmark",
+          "callback": "async function (e) {\n        // If shift is held down, we are not following the bookmark, but creating a new one\n        const mes = $(this).closest('.mes');\n        if (e.shiftKey",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete checkpoint/branch snapshot and lineage paths, prompt saves, display/navigation, solo-to-group conversion, seven UI candidates and slash callbacks/help. Popup.show.input candidate is a popup call rather than registration. Branch/checkpoint paths guard story identity/message object across awaited operations.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 738,
+          "endLine": 743,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'click'",
+          "selector": ".mes_create_bookmark",
+          "callback": "async function () {\n        const mesId = $(this).closest('.mes').attr('mesid');\n        if (mesId !== undefined) {\n            await createNewBookmark(Number(mesId));\n        }\n  ",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete checkpoint/branch snapshot and lineage paths, prompt saves, display/navigation, solo-to-group conversion, seven UI candidates and slash callbacks/help. Popup.show.input candidate is a popup call rather than registration. Branch/checkpoint paths guard story identity/message object across awaited operations.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 745,
+          "endLine": 750,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'click'",
+          "selector": ".mes_create_branch",
+          "callback": "async function () {\n        const mesId = $(this).closest('.mes').attr('mesid');\n        if (mesId !== undefined) {\n            await branchChat(Number(mesId));\n        }\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete checkpoint/branch snapshot and lineage paths, prompt saves, display/navigation, solo-to-group conversion, seven UI candidates and slash callbacks/help. Popup.show.input candidate is a popup call rather than registration. Branch/checkpoint paths guard story identity/message object across awaited operations.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [
+        {
+          "severity": "high-source-lead",
+          "mechanism": "conversion-story-ownership",
+          "range": [
+            335,
+            450
+          ],
+          "evidence": "convertSoloToGroupChat captures character only after confirmation and clones global chat after group create plus getCharacters awaits; no story/load guard before copying transcript or final foreground open. Runtime unqualified."
+        },
+        {
+          "severity": "source-lead",
+          "mechanism": "navigation-ownership",
+          "range": [
+            315,
+            332
+          ],
+          "evidence": "backToMainChat awaits names then uses current selected_group/current character open without captured owner/load."
+        }
+      ],
+      "reviewNotes": [
+        "Read complete checkpoint/branch snapshot and lineage paths, prompt saves, display/navigation, solo-to-group conversion, seven UI candidates and slash callbacks/help. Popup.show.input candidate is a popup call rather than registration. Branch/checkpoint paths guard story identity/message object across awaited operations."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "baselineSnapshot": "/tmp/st-ui-followup-20261109/source-review-0-baseline/public/scripts/bookmarks.js",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/fdf2e6ed870fee0ea224b4641a3696bee3c17fdce1b09736e56a895dd64e0f73.txt",
+      "observedCurrentSha256": "fdf2e6ed870fee0ea224b4641a3696bee3c17fdce1b09736e56a895dd64e0f73",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "fdf2e6ed870fee0ea224b4641a3696bee3c17fdce1b09736e56a895dd64e0f73"
+    },
+    {
+      "id": 18,
+      "file": "public/scripts/workspace.js",
+      "kind": "js",
+      "lines": 709,
+      "sha256": "c6c49909645bf612abb92b8296a704b26ab7a237ac265eeee898864443291272",
+      "readRanges": [
+        [
+          1,
+          709
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 413,
+          "endLine": 416,
+          "registration": "addEventListener",
+          "target": "search",
+          "event": "'input'",
+          "selector": null,
+          "callback": "() => {\n        const query = search.value.toLocaleLowerCase();\n        for (const option of list.children) option.hidden = !option.textContent.toLocaleLowerCase().includes(query);",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 417,
+          "endLine": 421,
+          "registration": "addEventListener",
+          "target": "list",
+          "event": "'change'",
+          "selector": null,
+          "callback": "() => {\n        const selected = list.querySelectorAll('input:checked').length;\n        count.textContent = `${selected} characters selected`;\n        create.disabled = selected < ",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 611,
+          "endLine": 611,
+          "registration": "addEventListener",
+          "target": "layoutToggle",
+          "event": "'change'",
+          "selector": null,
+          "callback": "() => { accountStorage.setItem('workspaceLayout', String(layoutToggle.checked)); applyLayout(layoutToggle.checked); }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 614,
+          "endLine": 614,
+          "registration": "addEventListener",
+          "target": "document",
+          "event": "'click'",
+          "selector": null,
+          "callback": "{ capture: true }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 618,
+          "endLine": 618,
+          "registration": "addEventListener",
+          "target": "document",
+          "event": "'keydown'",
+          "selector": null,
+          "callback": "{ capture: true }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 619,
+          "endLine": 619,
+          "registration": "addEventListener",
+          "target": "document",
+          "event": "'keyup'",
+          "selector": null,
+          "callback": "{ capture: true }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 620,
+          "endLine": 620,
+          "registration": "addEventListener",
+          "target": "document",
+          "event": "'focusin'",
+          "selector": null,
+          "callback": "event => { if (tabbing) dismissOutsideActionMenus(event); }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 621,
+          "endLine": 647,
+          "registration": "addEventListener",
+          "target": "document",
+          "event": "'click'",
+          "selector": null,
+          "callback": "event => {\n        const target = event.target instanceof Element ? event.target.closest('[data-workspace-action], [data-service-destination]') : null;\n        if (!target) return;",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 648,
+          "endLine": 650,
+          "registration": "addEventListener",
+          "target": "document",
+          "event": "'input'",
+          "selector": null,
+          "callback": "event => {\n        if (event.target.id === 'workspace-view-search') { state.query = event.target.value; renderPage(); }\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 651,
+          "endLine": 655,
+          "registration": "addEventListener",
+          "target": "document",
+          "event": "'change'",
+          "selector": null,
+          "callback": "event => {\n        const target = event.target;\n        if (!(target instanceof HTMLInputElement)) return;\n        if (['tts_enabled', 'sd_enabled'].includes(target.id)) refreshWor",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 656,
+          "endLine": 656,
+          "registration": "addEventListener",
+          "target": "document.getElementById('workspace-search-button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "openSearch",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 657,
+          "endLine": 657,
+          "registration": "addEventListener",
+          "target": "document.getElementById('workspace-menu')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => setMobileNavigation(!document.body.classList.contains('workspace-nav-open'))",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 658,
+          "endLine": 658,
+          "registration": "addEventListener",
+          "target": "document.getElementById('workspace-scrim')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => { setMobileNavigation(false); document.getElementById('workspace-menu').focus(); }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 659,
+          "endLine": 659,
+          "registration": "addEventListener",
+          "target": "document.getElementById('workspace-command-input')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "renderSearch",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 660,
+          "endLine": 669,
+          "registration": "addEventListener",
+          "target": "document.getElementById('workspace-command')",
+          "event": "'keydown'",
+          "selector": null,
+          "callback": "event => {\n        const buttons = [...document.querySelectorAll('#workspace-command-results button')];\n        const index = buttons.indexOf(document.activeElement);\n        if (e",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 670,
+          "endLine": 694,
+          "registration": "addEventListener",
+          "target": "document",
+          "event": "'keydown'",
+          "selector": null,
+          "callback": "{ capture: true }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 695,
+          "endLine": 695,
+          "registration": "addEventListener",
+          "target": "matchMedia('(max-width: 900px)')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "() => { setMobileNavigation(false); refreshWorkspace(); }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 696,
+          "endLine": 696,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CLIENT_CONTEXT_UPDATED",
+          "selector": null,
+          "callback": "() => { if (sceneDetails) sceneDetails.signature = ''; refreshWorkspace(); }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 697,
+          "endLine": 697,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHAT_RENAMED",
+          "selector": null,
+          "callback": "data => { transcripts.renamed(data); scheduleChats(); }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 698,
+          "endLine": 698,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event",
+          "selector": null,
+          "callback": "scheduleChats",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 699,
+          "endLine": 699,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event",
+          "selector": null,
+          "callback": "refreshWorkspace",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 700,
+          "endLine": 700,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHARACTER_PAGE_LOADED",
+          "selector": null,
+          "callback": "() => { if (state.view !== 'chat') renderPage(); refreshWorkspace(); }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 701,
+          "endLine": 704,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHAT_CHANGED",
+          "selector": null,
+          "callback": "() => {\n        if (state.view === 'chat' && !transcripts.current()) state.view = 'chats';\n        refreshWorkspace(); scheduleChats();\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 705,
+          "endLine": 705,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.APP_READY",
+          "selector": null,
+          "callback": "() => void refreshChats()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [],
+      "reviewNotes": [
+        "Read entire rendering/state/navigation queue, morphdom focus preservation, cast dialog handlers, action dispatch, command search/arrows, layout switching/inert states, keyboard menu/inspector traps, event refresh subscriptions. All24 candidate bindings classified by actual handler body. Dataset copies protect queued node identity; UI transaction policy delegates native story operations. No new confirmed high-impact defect in this owner."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/c6c49909645bf612abb92b8296a704b26ab7a237ac265eeee898864443291272.txt",
+      "observedCurrentSha256": "c6c49909645bf612abb92b8296a704b26ab7a237ac265eeee898864443291272",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "c6c49909645bf612abb92b8296a704b26ab7a237ac265eeee898864443291272"
+    },
+    {
+      "id": 19,
+      "file": "public/scripts/extensions/tts/chatterbox.js",
+      "kind": "js",
+      "lines": 646,
+      "sha256": "03f1b74783975d507d264bd2ccf5cf6cea8417b022ed95193df7174f47f31c64",
+      "readRanges": [
+        [
+          1,
+          646
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 362,
+          "endLine": 365,
+          "registration": "on",
+          "target": "$('#chatterbox-endpoint')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "() => {\n            this.settings.provider_endpoint = $('#chatterbox-endpoint').val();\n            this.onSettingsChange();\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 368,
+          "endLine": 371,
+          "registration": "on",
+          "target": "$('#chatterbox-language')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "(e) => {\n            this.settings.language = e.target.value;\n            this.onSettingsChange();\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 374,
+          "endLine": 378,
+          "registration": "on",
+          "target": "$('#chatterbox-temperature')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "(e) => {\n            this.settings.temperature = parseFloat(e.target.value);\n            $('#chatterbox-temperature-value').text(this.settings.temperature);\n            this.onSett",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 380,
+          "endLine": 384,
+          "registration": "on",
+          "target": "$('#chatterbox-exaggeration')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "(e) => {\n            this.settings.exaggeration = parseFloat(e.target.value);\n            $('#chatterbox-exaggeration-value').text(this.settings.exaggeration);\n            this.onS",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 386,
+          "endLine": 390,
+          "registration": "on",
+          "target": "$('#chatterbox-cfg-weight')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "(e) => {\n            this.settings.cfg_weight = parseFloat(e.target.value);\n            $('#chatterbox-cfg-weight-value').text(this.settings.cfg_weight);\n            this.onSetting",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 392,
+          "endLine": 396,
+          "registration": "on",
+          "target": "$('#chatterbox-speed')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "(e) => {\n            this.settings.speed_factor = parseFloat(e.target.value);\n            $('#chatterbox-speed-value').text(this.settings.speed_factor);\n            this.onSettings",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 399,
+          "endLine": 402,
+          "registration": "on",
+          "target": "$('#chatterbox-seed')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "(e) => {\n            this.settings.seed = parseInt(e.target.value);\n            this.onSettingsChange();\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 405,
+          "endLine": 413,
+          "registration": "on",
+          "target": "$('#chatterbox-split-text')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "(e) => {\n            this.settings.split_text = e.target.checked;\n            if (e.target.checked) {\n                $('#chunk-size-row').show();\n            } else {\n            ",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 415,
+          "endLine": 418,
+          "registration": "on",
+          "target": "$('#chatterbox-chunk-size')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "(e) => {\n            this.settings.chunk_size = parseInt(e.target.value);\n            this.onSettingsChange();\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 421,
+          "endLine": 424,
+          "registration": "on",
+          "target": "$('#chatterbox-format')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "(e) => {\n            this.settings.output_format = e.target.value;\n            this.onSettingsChange();\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 514,
+          "endLine": 517,
+          "registration": "addEventListener",
+          "target": "audio",
+          "event": "'ended'",
+          "selector": null,
+          "callback": "() => {\n                URL.revokeObjectURL(audioUrl);\n                this.updateStatus('Ready');\n            }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [
+        {
+          "severity": "source-lead",
+          "mechanism": "provider-form-lifetime",
+          "range": [
+            218,
+            259
+          ],
+          "evidence": "loadSettings awaits checkReady and voice fetch before binding current global same-ID form; no instance/mount ownership check. A stale provider instance can bind later form if switching back. Not runtime qualified."
+        },
+        {
+          "severity": "source-lead",
+          "mechanism": "preview-resource-cleanup",
+          "range": [
+            448,
+            527
+          ],
+          "evidence": "Preview Audio is locally scoped; URL revoked only by ended, no error/failed-play revoke or instance dispose."
+        }
+      ],
+      "reviewNotes": [
+        "Read constructor, complete settingsHtml including inline CSS/layout/status colors and all inputs, settings initialization/readiness/voice-list requests, all ten settings callbacks, preview/generation, ended cleanup, fallbackvoice and status paint."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "baselineSnapshot": "/tmp/st-ui-followup-20261109/source-review-0-baseline/public/scripts/extensions/tts/chatterbox.js",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/03f1b74783975d507d264bd2ccf5cf6cea8417b022ed95193df7174f47f31c64.txt",
+      "observedCurrentSha256": "03f1b74783975d507d264bd2ccf5cf6cea8417b022ed95193df7174f47f31c64",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "03f1b74783975d507d264bd2ccf5cf6cea8417b022ed95193df7174f47f31c64",
+      "currentLines": 646
+    },
+    {
+      "id": 20,
+      "file": "public/scripts/authors-note.js",
+      "kind": "js",
+      "lines": 619,
+      "sha256": "6a7bf7bd185a4881a847350acf25861a44df24c528e746652bdb8a7150e5144b",
+      "readRanges": [
+        [
+          1,
+          619
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 477,
+          "endLine": 477,
+          "registration": "on",
+          "target": "$('#extension_floating_prompt')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onExtensionFloatingPromptInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 478,
+          "endLine": 478,
+          "registration": "on",
+          "target": "$('#extension_floating_interval')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onExtensionFloatingIntervalInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 479,
+          "endLine": 479,
+          "registration": "on",
+          "target": "$('#extension_floating_depth')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onExtensionFloatingDepthInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 480,
+          "endLine": 480,
+          "registration": "on",
+          "target": "$('#extension_floating_chara')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onExtensionFloatingCharaPromptInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 481,
+          "endLine": 481,
+          "registration": "on",
+          "target": "$('#extension_use_floating_chara')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onExtensionFloatingCharaCheckboxChanged",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 482,
+          "endLine": 482,
+          "registration": "on",
+          "target": "$('#extension_floating_default')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onExtensionFloatingDefaultInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 483,
+          "endLine": 483,
+          "registration": "on",
+          "target": "$('#extension_default_depth')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onDefaultDepthInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 484,
+          "endLine": 484,
+          "registration": "on",
+          "target": "$('#extension_default_interval')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onDefaultIntervalInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 485,
+          "endLine": 485,
+          "registration": "on",
+          "target": "$('#extension_floating_allow_wi_scan')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onAllowWIScanCheckboxChanged",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 486,
+          "endLine": 486,
+          "registration": "on",
+          "target": "$('#extension_floating_role')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onExtensionFloatingRoleInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 487,
+          "endLine": 487,
+          "registration": "on",
+          "target": "$('#extension_default_role')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onExtensionDefaultRoleInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 488,
+          "endLine": 488,
+          "registration": "on",
+          "target": "$('input[name=\"extension_floating_position\"]')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "onExtensionFloatingPositionInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 489,
+          "endLine": 489,
+          "registration": "on",
+          "target": "$('input[name=\"extension_default_position\"]')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "onDefaultPositionInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 490,
+          "endLine": 490,
+          "registration": "on",
+          "target": "$('input[name=\"extension_floating_char_position\"]')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "onExtensionFloatingCharPositionInput",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 491,
+          "endLine": 498,
+          "registration": "on",
+          "target": "$('#ANClose')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "function () {\n        $('#floatingPrompt').transition({\n            opacity: 0,\n            duration: animation_duration,\n            easing: 'ease-in-out',\n        });\n        set",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 499,
+          "endLine": 499,
+          "registration": "on",
+          "target": "$('#option_toggle_AN')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "onANMenuItemClick",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 582,
+          "endLine": 582,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHAT_CHANGED",
+          "selector": null,
+          "callback": "onChatChanged",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [
+        {
+          "severity": "source-lead",
+          "mechanism": "metadata-persistence",
+          "range": [
+            193,
+            197
+          ],
+          "evidence": "Current-chat role callback calls updateSettings but omits saveMetadataDebounced used by current prompt/depth/interval/position callbacks. Reload persistence not runtime-qualified."
+        },
+        {
+          "severity": "low-source-lead",
+          "mechanism": "token-counter-paint",
+          "range": [
+            143,
+            145,
+            442,
+            465
+          ],
+          "evidence": "Debounced and chat-changed token counts paint global IDs after await without value/story owner; presentation-only stale counts possible."
+        }
+      ],
+      "reviewNotes": [
+        "Read all native note settings/input callbacks, per-character/default/current-chat persistence, injection interval/role/depth computation, floating-panel animation handlers, token counters, slash commands/help and macro registrations. Seventeen inventory callbacks plus helper bodies read."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "baselineSnapshot": "/tmp/st-ui-followup-20261109/source-review-0-baseline/public/scripts/authors-note.js",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/6a7bf7bd185a4881a847350acf25861a44df24c528e746652bdb8a7150e5144b.txt",
+      "observedCurrentSha256": "6a7bf7bd185a4881a847350acf25861a44df24c528e746652bdb8a7150e5144b",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "6a7bf7bd185a4881a847350acf25861a44df24c528e746652bdb8a7150e5144b",
+      "currentLines": 619
+    },
+    {
+      "id": 21,
+      "file": "public/scripts/logprobs.js",
+      "kind": "js",
+      "lines": 614,
+      "sha256": "970780e6384070ae177dfe13bb8e33f17758a21c8d4bff21a49830987da038d1",
+      "readRanges": [
+        [
+          1,
+          614
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 105,
+          "endLine": 105,
+          "registration": "on",
+          "target": "REROLL_BUTTON.off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => onPrefixClicked(prefix.length)",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 119,
+          "endLine": 119,
+          "registration": "on",
+          "target": "span",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => onPrefixClicked(offset)",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 139,
+          "endLine": 139,
+          "registration": "on",
+          "target": "span",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => onSelectedTokenChanged(tokenData, span)",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 157,
+          "endLine": 161,
+          "registration": "event shorthand candidate",
+          "target": "element",
+          "event": "keydown",
+          "callback": "function (e) {\n        if (e.key === 'Enter' || e.key === ' ') {\n            element.click();\n        }\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 216,
+          "endLine": 216,
+          "registration": "on",
+          "target": "container",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => onAlternativeClicked(state.selectedTokenLogprobs, token.toString())",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 606,
+          "endLine": 606,
+          "registration": "on",
+          "target": "$('#logprobsViewerClose')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "onToggleLogprobsPanel",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 607,
+          "endLine": 607,
+          "registration": "on",
+          "target": "$('#option_toggle_logprobs')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "onToggleLogprobsPanel",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 608,
+          "endLine": 608,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHAT_CHANGED",
+          "selector": null,
+          "callback": "debouncedRender",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 609,
+          "endLine": 609,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHARACTER_MESSAGE_RENDERED",
+          "selector": null,
+          "callback": "debouncedRender",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 610,
+          "endLine": 610,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.IMPERSONATE_READY",
+          "selector": null,
+          "callback": "debouncedRender",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 611,
+          "endLine": 611,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.MESSAGE_DELETED",
+          "selector": null,
+          "callback": "debouncedRender",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 612,
+          "endLine": 612,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.MESSAGE_EDITED",
+          "selector": null,
+          "callback": "debouncedRender",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 613,
+          "endLine": 613,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.MESSAGE_SWIPED",
+          "selector": null,
+          "callback": "debouncedRender",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [
+        {
+          "severity": "source-lead",
+          "mechanism": "keyboard-double-activation",
+          "range": [
+            154,
+            163,
+            204,
+            213
+          ],
+          "evidence": "addKeyboardProps also attaches keydown\u2192click to native buttons without preventDefault. Native default activation may repeat action; runtime/global keyboard interaction unqualified."
+        },
+        {
+          "severity": "source-lead",
+          "mechanism": "stale-reroll-action",
+          "range": [
+            84,
+            105
+          ],
+          "evidence": "No-data/smooth-streaming return precedes REROLL_BUTTON toggle, retaining prior prefix action visibility."
+        },
+        {
+          "severity": "source-lead",
+          "mechanism": "swipe-generation-order",
+          "range": [
+            314,
+            320
+          ],
+          "evidence": "Reroll triggers native swipe_right then immediately Generate continue without await; native event handler asynchronous ownership must be qualified."
+        }
+      ],
+      "reviewNotes": [
+        "Read token/prefix rendering, candidates/probability transforms, explicit keyboard helper, reroll/swipe creation, reasoning parsing, logprob storage/hash/LRU/token ID decoder and all event subscriptions. Candidate shorthand keydown is a real binding, unlike bookmarks Popup input candidate."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "baselineSnapshot": "/tmp/st-ui-followup-20261109/source-review-0-baseline/public/scripts/logprobs.js",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/970780e6384070ae177dfe13bb8e33f17758a21c8d4bff21a49830987da038d1.txt",
+      "observedCurrentSha256": "970780e6384070ae177dfe13bb8e33f17758a21c8d4bff21a49830987da038d1",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "970780e6384070ae177dfe13bb8e33f17758a21c8d4bff21a49830987da038d1",
+      "currentLines": 614
+    },
+    {
+      "id": 22,
+      "file": "public/css/toggle-dependent.css",
+      "kind": "css",
+      "lines": 598,
+      "sha256": "fb8b4d0dfb8e99edf6b240188924096293e8f3d98afb85c889e05395228c3f5f",
+      "readRanges": [
+        [
+          1,
+          598
+        ]
+      ],
+      "registrations": [],
+      "templateControls": [],
+      "findings": [],
+      "reviewNotes": [
+        "Read all598lines, including avatar/grid/collage/bubble/document/waifu/movingUI/no-blur layout variants, feature/action toggles, warning states, CC capabilities and AdvancedFormatting reparented ancestors. Existing workspace semantic roles preserve editable inactive config readability. CSS-only owner has no registration candidates. No new confirmed defect."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/fb8b4d0dfb8e99edf6b240188924096293e8f3d98afb85c889e05395228c3f5f.txt",
+      "observedCurrentSha256": "fb8b4d0dfb8e99edf6b240188924096293e8f3d98afb85c889e05395228c3f5f",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "fb8b4d0dfb8e99edf6b240188924096293e8f3d98afb85c889e05395228c3f5f",
+      "currentLines": 598
+    },
+    {
+      "id": 23,
+      "file": "public/scripts/extensions/quick-reply/src/ui/SettingsUi.js",
+      "kind": "js",
+      "lines": 521,
+      "sha256": "761d3df08c0a666b3027dc8e784796591439fc0be18026b21ec092779f071f1e",
+      "readRanges": [
+        [
+          1,
+          521
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 72,
+          "endLine": 72,
+          "registration": "addEventListener",
+          "target": "this.isEnabled",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => this.onIsEnabled()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 76,
+          "endLine": 76,
+          "registration": "addEventListener",
+          "target": "this.isCombined",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => this.onIsCombined()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 80,
+          "endLine": 80,
+          "registration": "addEventListener",
+          "target": "this.showPopoutButton",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => this.onShowPopoutButton()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 127,
+          "endLine": 127,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-rename')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.renameQrSet()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 128,
+          "endLine": 128,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-new')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.addQrSet()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 131,
+          "endLine": 134,
+          "registration": "addEventListener",
+          "target": "importFile",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async () => {\n            await this.importQrSet(importFile.files);\n            importFile.value = null;\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 135,
+          "endLine": 135,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-import')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => importFile.click()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 136,
+          "endLine": 136,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-export')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.exportQrSet()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 137,
+          "endLine": 137,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-duplicate')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.duplicateQrSet()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 138,
+          "endLine": 138,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-delete')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.deleteQrSet()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 139,
+          "endLine": 141,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-add')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n            this.currentQrSet.addQuickReply();\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 142,
+          "endLine": 142,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-paste')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => void this.pasteQuickReply()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 143,
+          "endLine": 153,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-importQr')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n            const target = this.currentQrSet;\n            const inp = document.createElement('input'); {\n                inp.type = 'file';\n                inp.accept",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 148,
+          "endLine": 150,
+          "registration": "addEventListener",
+          "target": "inp",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async () => {\n                    if (inp.files.length > 0 && await this.importQuickReplies(target, Array.from(inp.files))) inp.value = '';\n                }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 156,
+          "endLine": 156,
+          "registration": "addEventListener",
+          "target": "this.currentSet",
+          "event": "'change'",
+          "selector": null,
+          "callback": "() => this.onQrSetChange()",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 165,
+          "endLine": 169,
+          "registration": "addEventListener",
+          "target": "this.disableSend",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n            const qrs = this.currentQrSet;\n            qrs.disableSend = this.disableSend.checked;\n            qrs.save();\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 171,
+          "endLine": 175,
+          "registration": "addEventListener",
+          "target": "this.placeBeforeInput",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n            const qrs = this.currentQrSet;\n            qrs.placeBeforeInput = this.placeBeforeInput.checked;\n            qrs.save();\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 177,
+          "endLine": 181,
+          "registration": "addEventListener",
+          "target": "this.injectInput",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n            const qrs = this.currentQrSet;\n            qrs.injectInput = this.injectInput.checked;\n            qrs.save();\n        }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 186,
+          "endLine": 199,
+          "registration": "addEventListener",
+          "target": "this.color",
+          "event": "'change'",
+          "selector": null,
+          "callback": "(evt) => {\n            if (!this.dom.closest('body')) return;\n            const qrs = this.currentQrSet;\n            if (initialColorChange) {\n                initialColorChange = ",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 201,
+          "endLine": 207,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--colorClear')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "(evt) => {\n            const qrs = this.currentQrSet;\n            // @ts-ignore\n            this.color.color = 'transparent';\n            qrs.save();\n            this.currentQrSet.",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 209,
+          "endLine": 214,
+          "registration": "addEventListener",
+          "target": "this.onlyBorderColor",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n            const qrs = this.currentQrSet;\n            qrs.onlyBorderColor = this.onlyBorderColor.checked;\n            qrs.save();\n            this.currentQrSet.updateColor",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [],
+      "reviewNotes": [
+        "Read complete current file including template mount/rebuild, general/global/chat/character controls, editor callbacks, sortable order, clipboard/file target ownership, batch validation/rollback, delete/rename/create/duplicate/import candidates and busy-state transaction rendering. Preserved concurrent worker code. All21 inventoried bindings read; candidate line offsets retain original inventory coordinates."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/261cf58fbbf583fcdb7f33f7131b8c707469500eab9af90ac10d1a9a4d907fac.txt",
+      "observedCurrentSha256": "761d3df08c0a666b3027dc8e784796591439fc0be18026b21ec092779f071f1e",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "261cf58fbbf583fcdb7f33f7131b8c707469500eab9af90ac10d1a9a4d907fac",
+      "currentLines": 521
+    },
+    {
+      "id": 24,
+      "file": "public/scripts/kai-settings.js",
+      "kind": "js",
+      "lines": 541,
+      "sha256": "29af22a2597a246757616baa22ac842ae07129c1b253ff247d070c03649349fc",
+      "readRanges": [
+        [
+          1,
+          527
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 460,
+          "endLine": 466,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n            const value = $(this).val();\n            const formattedValue = slider.format(value);\n            slider.setValue(value);\n            $(slider.counterId).",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read full settings schema/flags, URL formatting, preset loading/control map, payload builder, live/replay SSE parser, status feature detection and controls/sort callbacks. Sampler table read rather than skipped. Six inventory UI bindings plus sortable stop helper read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 469,
+          "endLine": 484,
+          "registration": "on",
+          "target": "$('#api_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "function (e) {\n        if ($('#api_url_text').val() != '') {\n            const value = formatKoboldUrl(String($('#api_url_text').val()).trim());\n\n            if (!value) {\n        ",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read full settings schema/flags, URL formatting, preset loading/control map, payload builder, live/replay SSE parser, status feature detection and controls/sort callbacks. Sampler table read rather than skipped. Six inventory UI bindings plus sortable stop helper read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 486,
+          "endLine": 490,
+          "registration": "on",
+          "target": "$('#streaming_kobold')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        const value = !!$(this).prop('checked');\n        kai_settings.streaming_kobold = value;\n        saveSettingsDebounced();\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read full settings schema/flags, URL formatting, preset loading/control map, payload builder, live/replay SSE parser, status feature detection and controls/sort callbacks. Sampler table read rather than skipped. Six inventory UI bindings plus sortable stop helper read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 492,
+          "endLine": 496,
+          "registration": "on",
+          "target": "$('#use_default_badwordsids')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        const value = !!$(this).prop('checked');\n        kai_settings.use_default_badwordsids = value;\n        saveSettingsDebounced();\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read full settings schema/flags, URL formatting, preset loading/control map, payload builder, live/replay SSE parser, status feature detection and controls/sort callbacks. Sampler table read rather than skipped. Six inventory UI bindings plus sortable stop helper read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 511,
+          "endLine": 515,
+          "registration": "on",
+          "target": "$('#samplers_order_recommended')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "function () {\n        kai_settings.sampler_order = KOBOLDCPP_ORDER;\n        sortItemsByOrder(kai_settings.sampler_order);\n        saveSettingsDebounced();\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read full settings schema/flags, URL formatting, preset loading/control map, payload builder, live/replay SSE parser, status feature detection and controls/sort callbacks. Sampler table read rather than skipped. Six inventory UI bindings plus sortable stop helper read.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 517,
+          "endLine": 540,
+          "registration": "on",
+          "target": "$('#settings_preset')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async function () {\n        if ($('#settings_preset').find(':selected').val() != 'gui') {\n            kai_settings.preset_settings = $('#settings_preset').find(':selected').text();",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read full settings schema/flags, URL formatting, preset loading/control map, payload builder, live/replay SSE parser, status feature detection and controls/sort callbacks. Sampler table read rather than skipped. Six inventory UI bindings plus sortable stop helper read.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [
+        {
+          "severity": "source-lead",
+          "mechanism": "stream-error-propagation",
+          "range": [
+            221,
+            278
+          ],
+          "evidence": "tryParseStreamingError catches its own thrown Error. parseKoboldStream reads token only; error frame can yield partial then normal EOF. Non-ok status caller still throws status; SSE semantic errors unqualified.",
+          "status": "source mechanism corrected in root delta, runtime evidence owned by root"
+        },
+        {
+          "severity": "source-lead",
+          "mechanism": "status-request-ownership",
+          "range": [
+            411,
+            452
+          ],
+          "evidence": "getStatusKobold awaits response then publishes model/instruct/feature flags with no captured endpoint/API revision check in this owner. Parent wrapper may limit; unqualified."
+        }
+      ],
+      "reviewNotes": [
+        "Read full settings schema/flags, URL formatting, preset loading/control map, payload builder, live/replay SSE parser, status feature detection and controls/sort callbacks. Sampler table read rather than skipped. Six inventory UI bindings plus sortable stop helper read."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/dccfadb327d70d7be67f4ccfc419f3040d5efc60ba521c4246857a1444b98beb.txt",
+      "observedCurrentSha256": "29af22a2597a246757616baa22ac842ae07129c1b253ff247d070c03649349fc",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "dccfadb327d70d7be67f4ccfc419f3040d5efc60ba521c4246857a1444b98beb",
+      "currentLines": 527,
+      "deltaReview": {
+        "from": "dccfadb327d70d7be67f4ccfc419f3040d5efc60ba521c4246857a1444b98beb",
+        "at": "2026-11-10T04:59:17.327699+00:00",
+        "review": "Read complete current diff: removed local throw-swallow parser, imports root openai streaming error parser; streamed error/detail/message frames now invoke throwing quiet parser before yielding tokens. Root owns browser qualification."
+      }
+    },
+    {
+      "id": 25,
+      "file": "public/scripts/extensions/quick-reply/api/QuickReplyApi.js",
+      "kind": "js",
+      "lines": 505,
+      "sha256": "689d64a0f85e240b988c1e9aa37271d2356fe5b4bcad3b5e9f8ed010daa591f6",
+      "readRanges": [
+        [
+          1,
+          505
+        ]
+      ],
+      "registrations": [],
+      "templateControls": [],
+      "findings": [
+        {
+          "severity": "source-lead",
+          "mechanism": "set-api-transaction",
+          "range": [
+            365,
+            400,
+            415,
+            453
+          ],
+          "evidence": "createSet replaces live list before awaited save and bypasses transactional create/replaceWith; save/delete false ignored; old config references remain. updateSet omitted properties reset false. Sent native_ui_source_review worker for current scope triage."
+        }
+      ],
+      "reviewNotes": [
+        "Read all505lines including indexed/named execution, global/chat config mutators, QR create/update/delete/context APIs, set create/update/delete and list helpers. No UI listener bindings, but mutating API helpers are reachable from native slash/UI owners."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "baselineSnapshot": "/tmp/st-ui-followup-20261109/source-review-0-baseline/public/scripts/extensions/quick-reply/api/QuickReplyApi.js",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/689d64a0f85e240b988c1e9aa37271d2356fe5b4bcad3b5e9f8ed010daa591f6.txt",
+      "observedCurrentSha256": "689d64a0f85e240b988c1e9aa37271d2356fe5b4bcad3b5e9f8ed010daa591f6",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "689d64a0f85e240b988c1e9aa37271d2356fe5b4bcad3b5e9f8ed010daa591f6",
+      "currentLines": 505
+    },
+    {
+      "id": 26,
+      "file": "public/scripts/horde.js",
+      "kind": "js",
+      "lines": 479,
+      "sha256": "f969d1aef5ab653127610e520c6f73ef151869517d6a4642865eab2f93f1254a",
+      "readRanges": [
+        [
+          1,
+          479
+        ]
+      ],
+      "registrations": [
+        {
+          "line": 417,
+          "endLine": 432,
+          "registration": "on",
+          "target": "$('#horde_model')",
+          "event": "'mousedown change'",
+          "selector": null,
+          "callback": "async function (e) {\n        console.log('Horde model change', e);\n        const modelValue = $('#horde_model').val();\n        horde_settings.models = Array.isArray(modelValue) ? m",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all479lines, model/worker/status/task requests, adjustment previews, generation submit/poll/cancel/retry/timeout, models reload, settings/secrets/kudos, Select2 metadata template and seven UI bindings.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 434,
+          "endLine": 438,
+          "registration": "on",
+          "target": "$('#horde_auto_adjust_response_length')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        horde_settings.auto_adjust_response_length = !!$(this).prop('checked');\n        setContextSizePreview();\n        saveSettingsDebounced();\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all479lines, model/worker/status/task requests, adjustment previews, generation submit/poll/cancel/retry/timeout, models reload, settings/secrets/kudos, Select2 metadata template and seven UI bindings.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 440,
+          "endLine": 444,
+          "registration": "on",
+          "target": "$('#horde_auto_adjust_context_length')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        horde_settings.auto_adjust_context_length = !!$(this).prop('checked');\n        setContextSizePreview();\n        saveSettingsDebounced();\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all479lines, model/worker/status/task requests, adjustment previews, generation submit/poll/cancel/retry/timeout, models reload, settings/secrets/kudos, Select2 metadata template and seven UI bindings.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 446,
+          "endLine": 450,
+          "registration": "on",
+          "target": "$('#horde_trusted_workers_only')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        horde_settings.trusted_workers_only = !!$(this).prop('checked');\n        setContextSizePreview();\n        saveSettingsDebounced();\n    }",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all479lines, model/worker/status/task requests, adjustment previews, generation submit/poll/cancel/retry/timeout, models reload, settings/secrets/kudos, Select2 metadata template and seven UI bindings.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 452,
+          "endLine": 459,
+          "registration": "on",
+          "target": "$('#horde_api_key_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function () {\n        const key = String($('#horde_api_key').val()).trim();\n        if (!key) {\n            toastr.warning(t`Please enter your Horde API key`);\n            re",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all479lines, model/worker/status/task requests, adjustment previews, generation submit/poll/cancel/retry/timeout, models reload, settings/secrets/kudos, Select2 metadata template and seven UI bindings.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 461,
+          "endLine": 461,
+          "registration": "on",
+          "target": "$('#horde_refresh')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => getHordeModels(true)",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all479lines, model/worker/status/task requests, adjustment previews, generation submit/poll/cancel/retry/timeout, models reload, settings/secrets/kudos, Select2 metadata template and seven UI bindings.",
+          "handlerBodyRead": true
+        },
+        {
+          "line": 462,
+          "endLine": 462,
+          "registration": "on",
+          "target": "$('#horde_kudos')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "showKudos",
+          "reviewed": true,
+          "classification": "native lifecycle/UI event binding",
+          "reviewNotes": "Read all479lines, model/worker/status/task requests, adjustment previews, generation submit/poll/cancel/retry/timeout, models reload, settings/secrets/kudos, Select2 metadata template and seven UI bindings.",
+          "handlerBodyRead": true
+        }
+      ],
+      "templateControls": [],
+      "findings": [
+        {
+          "severity": "high-source-lead",
+          "mechanism": "metadata-html-reinsertion",
+          "range": [
+            378,
+            413
+          ],
+          "evidence": "Template strips remote metadata via innerHTML\u2192text then interpolates decoded text into fresh HTML and URL href attribute. Decoded markup/quotes can be reinterpreted; runtime unqualified."
+        },
+        {
+          "severity": "source-lead",
+          "mechanism": "horde-cancellation",
+          "range": [
+            224,
+            301
+          ],
+          "evidence": "Signal not forwarded to submit/status fetch; abort checked before await only, completed response returned without post-await check; cancelTask unawaited."
+        },
+        {
+          "severity": "source-lead",
+          "mechanism": "model-refresh-ownership",
+          "range": [
+            311,
+            341
+          ],
+          "evidence": "Overlapping model refresh has no revision ownership, clears selection based on latest-completed response; unavailable selection clearing not explicitly saved."
+        }
+      ],
+      "reviewNotes": [
+        "Read all479lines, model/worker/status/task requests, adjustment previews, generation submit/poll/cancel/retry/timeout, models reload, settings/secrets/kudos, Select2 metadata template and seven UI bindings."
+      ],
+      "unreviewedGaps": [],
+      "status": "reviewed",
+      "baselineSnapshot": "/tmp/st-ui-followup-20261109/source-review-0-baseline/public/scripts/horde.js",
+      "snapshot": "/tmp/st-ui-followup-20261109/source-review-0-versions/f969d1aef5ab653127610e520c6f73ef151869517d6a4642865eab2f93f1254a.txt",
+      "observedCurrentSha256": "f969d1aef5ab653127610e520c6f73ef151869517d6a4642865eab2f93f1254a",
+      "currentDeltaNeedsReview": false,
+      "review": "full-file-manual-read",
+      "inventorySha256": "f969d1aef5ab653127610e520c6f73ef151869517d6a4642865eab2f93f1254a",
+      "currentLines": 479
+    }
+  ],
+  "findings": [],
+  "currentAction": "Waiting for native async lifetime batch final acceptance before full source read.",
+  "at": "2026-11-10T04:42:49.890384+00:00",
+  "summary": {
+    "reviewedFiles": 12,
+    "pendingFiles": 0,
+    "readLines": 7649,
+    "candidateBindings": 117,
+    "limits": [
+      "Source review qualifies mechanisms, not every runtime or provider state. All new findings source-only until linked proof.",
+      "Original inventory line positions retained where concurrent source additions shifted current code. Full current source was read.",
+      "No source code edits during supplemental read. Separate from native async implementation acceptance."
+    ]
+  }
+}

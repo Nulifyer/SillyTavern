@@ -1,0 +1,852 @@
+{
+  "at": "2026-11-10T05:17:37.281660+00:00",
+  "status": "complete_read_only_catalog_reconciliation",
+  "inventory": "/tmp/st-ui-followup-20261109/source-review-partition2-final-inventory.json",
+  "method": "Exact current static fingerprints aligned after prior full-owner/delta reads and direct reread of all50 changed candidates in their current helper context. Inventory extraction itself is not manual review.",
+  "files": [
+    {
+      "file": "public/scripts/slash-commands.js",
+      "sha256": "ee4dbccfb28003477fb55c9326fb850ad4af6132af66d7e981ffe5aa150b71da",
+      "changedFingerprints": 4,
+      "directReadRanges": [
+        [
+          3800,
+          3872
+        ],
+        [
+          4558,
+          4592
+        ]
+      ],
+      "review": "Reread three ephemeral injection listeners, full named cleanup/unset bodies and owner/load/metadata/inject-reference guards; reread Toastr onclick closure clearing progress and awaiting slash closure. Existing expanded command callbacks retained separately.",
+      "candidates": [
+        {
+          "line": 3847,
+          "endLine": 3847,
+          "registration": "on",
+          "event": "event_types.GENERATION_ENDED",
+          "selector": null,
+          "callback": "unsetInject",
+          "classification": "Script injection lifecycle or toast action callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 3848,
+          "endLine": 3848,
+          "registration": "on",
+          "event": "event_types.GENERATION_STOPPED",
+          "selector": null,
+          "callback": "unsetInject",
+          "classification": "Script injection lifecycle or toast action callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 3849,
+          "endLine": 3849,
+          "registration": "on",
+          "event": "event_types.CHAT_CHANGED",
+          "selector": null,
+          "callback": "clearListeners",
+          "classification": "Script injection lifecycle or toast action callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 4577,
+          "endLine": 4581,
+          "registration": "DOM handler assignment",
+          "event": "click",
+          "selector": null,
+          "callback": "async () => {\n                // Execute the slash command directly, with its internal scope and everything. Clear progress handler so it doesn't interfere with command execution p",
+          "classification": "Script injection lifecycle or toast action callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/index.js",
+      "sha256": "699bc10d351a6168900eb176a3c5824af5d6a933949b3abf9c2b957a40bf5ca0",
+      "changedFingerprints": 8,
+      "directReadRanges": [
+        [
+          2924,
+          2963
+        ],
+        [
+          3046,
+          3100
+        ],
+        [
+          3106,
+          3194
+        ],
+        [
+          3607,
+          3640
+        ],
+        [
+          4950,
+          5085
+        ],
+        [
+          5420,
+          5464
+        ],
+        [
+          5682,
+          5763
+        ]
+      ],
+      "review": "After worker freeze699bc10, reread final mode/quiet prompt snapshot flow; input message revision ownership remains pinned while own output append is adopted; final media completion checks load/content revision; GenerateImage missing URL throws. Reread all eight changed registration bodies: per-event checkStory listener; external abort forwarding; cancelUpload rejection listener; scoped workflow find/replace/remove/add/input callbacks with captured current guard. Original whole owner plus complete2399-line implementation diff were already read; no claim of rereading every unchanged line at freeze.",
+      "candidates": [
+        {
+          "line": 3075,
+          "endLine": 3075,
+          "registration": "on",
+          "event": "event",
+          "selector": null,
+          "callback": "checkStory",
+          "classification": "Image operation lifecycle or scoped workflow editor callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 3170,
+          "endLine": 3170,
+          "registration": "addEventListener",
+          "event": "'abort'",
+          "selector": null,
+          "callback": "{ once: true }",
+          "classification": "Image operation lifecycle or scoped workflow editor callback",
+          "isBinding": true,
+          "callbackExtractionNote": "Static extractor stores final options object; actual second-argument callback and full named helper body manually read in directReadRanges."
+        },
+        {
+          "line": 3630,
+          "endLine": 3630,
+          "registration": "addEventListener",
+          "event": "'abort'",
+          "selector": null,
+          "callback": "{ once: true }",
+          "classification": "Image operation lifecycle or scoped workflow editor callback",
+          "isBinding": true,
+          "callbackExtractionNote": "Static extractor stores final options object; actual second-argument callback and full named helper body manually read in directReadRanges."
+        },
+        {
+          "line": 5006,
+          "endLine": 5016,
+          "registration": "on",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n            if (!current()) return;\n            if (!(this instanceof HTMLInputElement)) {\n                return;\n            }\n            placeholder.find = this.v",
+          "classification": "Image operation lifecycle or scoped workflow editor callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 5018,
+          "endLine": 5025,
+          "registration": "on",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n            if (!current()) return;\n            if (!(this instanceof HTMLInputElement)) {\n                return;\n            }\n            placeholder.replace = thi",
+          "classification": "Image operation lifecycle or scoped workflow editor callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 5026,
+          "endLine": 5032,
+          "registration": "on",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n            if (!current()) return;\n            el.remove();\n            const index = settings.comfy_placeholders.indexOf(placeholder);\n            if (index >= 0) setting",
+          "classification": "Image operation lifecycle or scoped workflow editor callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 5034,
+          "endLine": 5046,
+          "registration": "on",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        if (!current()) return;\n        if (!settings.comfy_placeholders) {\n            settings.comfy_placeholders = [];\n        }\n        const placeholder = {\n          ",
+          "classification": "Image operation lifecycle or scoped workflow editor callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 5051,
+          "endLine": 5051,
+          "registration": "on",
+          "event": "'input'",
+          "selector": null,
+          "callback": "checkPlaceholders",
+          "classification": "Image operation lifecycle or scoped workflow editor callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/tags.js",
+      "sha256": "375d19d0058c6d1a901780b3682c27cb326f613ce043855e853dc9d77929d84a",
+      "changedFingerprints": 1,
+      "directReadRanges": [
+        [
+          1630,
+          1720
+        ]
+      ],
+      "review": "Reread createTagInput autocomplete chain and full onTagInputFocus helper, which searches current input value. Target fingerprint contains configured autocomplete callbacks; body reviewed with prior full owner.",
+      "candidates": [
+        {
+          "line": 1702,
+          "endLine": 1709,
+          "registration": "on",
+          "event": "'focus'",
+          "selector": null,
+          "callback": "onTagInputFocus",
+          "classification": "Tag autocomplete focus action",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions.js",
+      "sha256": "f8120107fb889314b865754048b51cfc3467eed016d0197a593f0a2c6c1dc51a",
+      "changedFingerprints": 4,
+      "directReadRanges": [
+        [
+          770,
+          850
+        ]
+      ],
+      "review": "Reread link onload/onerror and module-script onerror/onload, their promise resolve/reject closures, ready guard and mount conditions. These are resource lifecycle handlers, not clickable UI actions.",
+      "candidates": [
+        {
+          "line": 801,
+          "endLine": 803,
+          "registration": "DOM handler assignment",
+          "event": "load",
+          "selector": null,
+          "callback": "function () {\n                resolve();\n            }",
+          "classification": "Extension resource loading callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 804,
+          "endLine": 806,
+          "registration": "DOM handler assignment",
+          "event": "error",
+          "selector": null,
+          "callback": "function (e) {\n                reject(e);\n            }",
+          "classification": "Extension resource loading callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 834,
+          "endLine": 836,
+          "registration": "DOM handler assignment",
+          "event": "error",
+          "selector": null,
+          "callback": "function (err) {\n                reject(err);\n            }",
+          "classification": "Extension resource loading callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 837,
+          "endLine": 842,
+          "registration": "DOM handler assignment",
+          "event": "load",
+          "selector": null,
+          "callback": "function () {\n                if (!ready) {\n                    ready = true;\n                    resolve();\n                }\n            }",
+          "classification": "Extension resource loading callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/backgrounds.js",
+      "sha256": "a6a3ac3d3f24943e3c083fd7b7c85a672b1ae9fbdcf59d9f3dfb7ba72e5231ce",
+      "changedFingerprints": 9,
+      "directReadRanges": [
+        [
+          1740,
+          1910
+        ]
+      ],
+      "review": "Reread trusted outside-click capture, Tab/Escape/keyup capture, closeBackgroundMenus, chained folder create/back/rename/delete/toggle and jg-button lock/unlock/rename/delete/copy/folder/cover dispatch. Chained target fingerprints include earlier callback source; all concrete callbacks reviewed.",
+      "candidates": [
+        {
+          "line": 1798,
+          "endLine": 1800,
+          "registration": "addEventListener",
+          "event": "'click'",
+          "selector": null,
+          "callback": "{ capture: true }",
+          "classification": "Background menu dismissal and folder/image action dispatch",
+          "isBinding": true,
+          "callbackExtractionNote": "Static extractor stores final options object; actual second-argument callback and full named helper body manually read in directReadRanges."
+        },
+        {
+          "line": 1802,
+          "endLine": 1809,
+          "registration": "addEventListener",
+          "event": "'keydown'",
+          "selector": null,
+          "callback": "{ capture: true }",
+          "classification": "Background menu dismissal and folder/image action dispatch",
+          "isBinding": true,
+          "callbackExtractionNote": "Static extractor stores final options object; actual second-argument callback and full named helper body manually read in directReadRanges."
+        },
+        {
+          "line": 1810,
+          "endLine": 1810,
+          "registration": "addEventListener",
+          "event": "'keyup'",
+          "selector": null,
+          "callback": "{ capture: true }",
+          "classification": "Background menu dismissal and folder/image action dispatch",
+          "isBinding": true,
+          "callbackExtractionNote": "Static extractor stores final options object; actual second-argument callback and full named helper body manually read in directReadRanges."
+        },
+        {
+          "line": 1818,
+          "endLine": 1850,
+          "registration": "on",
+          "event": "'click'",
+          "selector": ".bg_folder_tile .mobile-only-menu-toggle",
+          "callback": "function (e) {\n            e.stopPropagation();\n            const $context = $(this).closest('.bg_folder_tile');\n            const wasOpen = $context.hasClass('mobile-menu-open');\n",
+          "classification": "Background menu dismissal and folder/image action dispatch",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 1818,
+          "endLine": 1839,
+          "registration": "on",
+          "event": "'click'",
+          "selector": ".bg_folder_tile [data-action=\"delete-folder\"]",
+          "callback": "function (e) {\n            e.stopPropagation();\n            const folderId = $(this).closest('.bg_folder_tile').attr('data-folder-id');\n            if (folderId) onDeleteFolder(fol",
+          "classification": "Background menu dismissal and folder/image action dispatch",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 1818,
+          "endLine": 1834,
+          "registration": "on",
+          "event": "'click'",
+          "selector": ".bg_folder_tile [data-action=\"rename-folder\"]",
+          "callback": "function (e) {\n            e.stopPropagation();\n            const folderId = $(this).closest('.bg_folder_tile').attr('data-folder-id');\n            if (folderId) onRenameFolder(fol",
+          "classification": "Background menu dismissal and folder/image action dispatch",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 1818,
+          "endLine": 1829,
+          "registration": "on",
+          "event": "'click'",
+          "selector": "#bg_back_to_folders",
+          "callback": "function () {\n            onBackToFolders();\n        }",
+          "classification": "Background menu dismissal and folder/image action dispatch",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 1818,
+          "endLine": 1826,
+          "registration": "on",
+          "event": "'click'",
+          "selector": "#bg_add_folder_button",
+          "callback": "function () {\n            onCreateFolder();\n        }",
+          "classification": "Background menu dismissal and folder/image action dispatch",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 1852,
+          "endLine": 1904,
+          "registration": "on",
+          "event": "'click'",
+          "selector": ".jg-button",
+          "callback": "function (e) {\n            e.stopPropagation();\n            if (isBackgroundSelectionMode && $(this).closest('#bg_menu_content').length) {\n                return;\n            }\n   ",
+          "classification": "Background menu dismissal and folder/image action dispatch",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/textgen-settings.js",
+      "sha256": "4236ebd6697ed23fe2d26c3932db26c2d5bac70ee133d32c36bf4518776cdce1",
+      "changedFingerprints": 1,
+      "directReadRanges": [
+        [
+          1014,
+          1068
+        ]
+      ],
+      "review": "Reread full setting_names loop delegated input callback. Checkbox/string/numeric values update captured setting ID, numeric counter mirrors value, backend-specific top_k zero maps to minus-one and settings save is scheduled.",
+      "candidates": [
+        {
+          "line": 1037,
+          "endLine": 1059,
+          "registration": "on",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n            const isCheckbox = $(this).attr('type') == 'checkbox';\n            const isText = $(this).attr('type') == 'text' || $(this).is('textarea');\n            co",
+          "classification": "Generated native text completion settings input callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/secrets.js",
+      "sha256": "128ac05aba80a229d12e4683de500dc50cf48446f7682b1f909a42b00b5bafd1",
+      "changedFingerprints": 1,
+      "directReadRanges": [
+        [
+          1135,
+          1190
+        ]
+      ],
+      "review": "Reread dynamic INPUT_MAP delegated input handler: increment per-input revision, detect matching saved-key ID for rotation, clear matching draft and toggle warning. No secret values read or external calls.",
+      "candidates": [
+        {
+          "line": 1154,
+          "endLine": 1177,
+          "registration": "on",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        secretInputRevisions.set(this, (secretInputRevisions.get(this) || 0) + 1);\n        const id = $(this).attr('id');\n        const value = $(this).val();\n\n      ",
+          "classification": "Native secret input revision/selection callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/connection-manager/index.js",
+      "sha256": "9e46d201bcc07fd88e9b790b0d1280c1021d8c753c2a124aa5bd1ec3a63f4ce7",
+      "changedFingerprints": 3,
+      "directReadRanges": [
+        [
+          410,
+          435
+        ],
+        [
+          535,
+          558
+        ],
+        [
+          705,
+          780
+        ]
+      ],
+      "review": "Reread spinner abort to SlashCommandAbortController forwarding, stream command abort forwarding and profiles change callback. Selection aborts prior work, None aborts native active streams, current profile guard follows details await, only successful apply emits loaded. All local helpers were read in full owner/delta review.",
+      "candidates": [
+        {
+          "line": 423,
+          "endLine": 423,
+          "registration": "addEventListener",
+          "event": "'abort'",
+          "selector": null,
+          "callback": "{ once: true }",
+          "classification": "Profile cancellation or selection lifecycle callback",
+          "isBinding": true,
+          "callbackExtractionNote": "Static extractor stores final options object; actual second-argument callback and full named helper body manually read in directReadRanges."
+        },
+        {
+          "line": 551,
+          "endLine": 551,
+          "registration": "addEventListener",
+          "event": "'abort'",
+          "selector": null,
+          "callback": "{ once: true }",
+          "classification": "Profile cancellation or selection lifecycle callback",
+          "isBinding": true,
+          "callbackExtractionNote": "Static extractor stores final options object; actual second-argument callback and full named helper body manually read in directReadRanges."
+        },
+        {
+          "line": 732,
+          "endLine": 765,
+          "registration": "addEventListener",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async function () {\n        ConnectionManagerSpinner.abort();\n        const selectedProfile = profiles.selectedOptions[0];\n        if (!selectedProfile) {\n            // Safety net",
+          "classification": "Profile cancellation or selection lifecycle callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/tts/minimax.js",
+      "sha256": "aa2cbb0f37bce208b8e2e4671aa603fcda98b8028159723f0510d5e782455e38",
+      "changedFingerprints": 6,
+      "directReadRanges": [
+        [
+          900,
+          962
+        ]
+      ],
+      "review": "Reread preview response/base64 and audio play flow. Null onended/onerror statements clear handlers; error callback reports playback failure; ended clears both handlers. Null assignments explicitly classified as cleanup, not registrations.",
+      "candidates": [
+        {
+          "line": 919,
+          "endLine": 919,
+          "registration": "DOM handler assignment",
+          "event": "ended",
+          "selector": null,
+          "callback": "null",
+          "classification": "Handler cleanup assignment, not a registration",
+          "isBinding": false,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 920,
+          "endLine": 920,
+          "registration": "DOM handler assignment",
+          "event": "error",
+          "selector": null,
+          "callback": "null",
+          "classification": "Handler cleanup assignment, not a registration",
+          "isBinding": false,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 926,
+          "endLine": 936,
+          "registration": "DOM handler assignment",
+          "event": "error",
+          "selector": null,
+          "callback": "(e) => {\n                console.error('MiniMax TTS: Audio element error:', e);\n                console.error('MiniMax TTS: Audio element error details:', {\n                    err",
+          "classification": "TTS preview media callback or cleanup assignment",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 946,
+          "endLine": 949,
+          "registration": "DOM handler assignment",
+          "event": "ended",
+          "selector": null,
+          "callback": "() => {\n                this.audioElement.onended = null;\n                this.audioElement.onerror = null;\n            }",
+          "classification": "TTS preview media callback or cleanup assignment",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 947,
+          "endLine": 947,
+          "registration": "DOM handler assignment",
+          "event": "ended",
+          "selector": null,
+          "callback": "null",
+          "classification": "Handler cleanup assignment, not a registration",
+          "isBinding": false,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 948,
+          "endLine": 948,
+          "registration": "DOM handler assignment",
+          "event": "error",
+          "selector": null,
+          "callback": "null",
+          "classification": "Handler cleanup assignment, not a registration",
+          "isBinding": false,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/gallery/index.js",
+      "sha256": "cb09e1e0c36158943a0f98b64646c92638c303eb05e086c71550fcd7d08c357a",
+      "changedFingerprints": 3,
+      "directReadRanges": [
+        [
+          410,
+          455
+        ],
+        [
+          510,
+          552
+        ],
+        [
+          826,
+          845
+        ]
+      ],
+      "review": "Reread file change loop current mount checks and upload awaits, chained autocomplete focus search and CHAT_CHANGED request invalidation plus old gallery removal. Prior owned native lifetime tests qualify specific races separately.",
+      "candidates": [
+        {
+          "line": 438,
+          "endLine": 447,
+          "registration": "addEventListener",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async () => {\n        const files = fileInput.files;\n        if (files.length > 0) {\n            for (const file of files) {\n                if (!isCurrent() || !await uploadFile(f",
+          "classification": "Gallery file/focus/story lifecycle callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 534,
+          "endLine": 547,
+          "registration": "on",
+          "event": "'focus'",
+          "selector": null,
+          "callback": "() => $(galleryFolderInput).autocomplete('search', '')",
+          "classification": "Gallery file/focus/story lifecycle callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 836,
+          "endLine": 840,
+          "registration": "on",
+          "event": "event_types.CHAT_CHANGED",
+          "selector": null,
+          "callback": "() => {\n        ++galleryRequest;\n        const gallery = document.getElementById('gallery');\n        gallery?.remove();\n    }",
+          "classification": "Gallery file/focus/story lifecycle callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroBrowser.js",
+      "sha256": "47f876b418961a017ee00c71948edf659a378f755017d2c45aa68818549c9491",
+      "changedFingerprints": 1,
+      "directReadRanges": [
+        [
+          70,
+          155
+        ],
+        [
+          278,
+          350
+        ]
+      ],
+      "review": "Reread root keydown registration and complete #handleKeyDown body. Ctrl+F with modifier/attachment/last-message guards focuses mounted search and stops browser/find propagation. No keyboard execution during this bookkeeping.",
+      "candidates": [
+        {
+          "line": 99,
+          "endLine": 99,
+          "registration": "addEventListener",
+          "event": "'keydown'",
+          "selector": null,
+          "callback": "event => this.#handleKeyDown(event)",
+          "classification": "Mounted Macro Browser keyboard shortcut",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/swipe-picker.js",
+      "sha256": "1c0882902e724ec6124c4a935ce51c71b4a25dc804a9ac2cb2afb4c41ea9ad8b",
+      "changedFingerprints": 2,
+      "directReadRanges": [
+        [
+          78,
+          258
+        ]
+      ],
+      "review": "Reread current cloned action setup, branch selection and popup close, guarded delete confirmation/result, returned swipe validation, selection clamp/input max and rerender. Both exact chained-target fingerprints mapped to concrete bodies; no new runtime claim.",
+      "candidates": [
+        {
+          "line": 174,
+          "endLine": 188,
+          "registration": "on",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async (event) => {\n                    event.preventDefault();\n                    event.stopPropagation();\n                    setSelectedSwipe(index);\n                    branchA",
+          "classification": "Swipe picker branch/delete action callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 190,
+          "endLine": 248,
+          "registration": "on",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async (event) => {\n                    event.preventDefault();\n                    event.stopPropagation();\n\n                    if (!canDeleteSwipe) {\n                        retu",
+          "classification": "Swipe picker branch/delete action callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/tts/electronhub.js",
+      "sha256": "59bd649b16e5cde0deca4f380c73b799803379c55542bba5fccd1e8d3813f131",
+      "changedFingerprints": 1,
+      "directReadRanges": [
+        [
+          370,
+          406
+        ]
+      ],
+      "review": "Reread preview request/blob/URL/play body and onended URL revoke assignment. No audio or provider execution during reconciliation; playback error cleanup is not established by this assignment.",
+      "candidates": [
+        {
+          "line": 399,
+          "endLine": 399,
+          "registration": "DOM handler assignment",
+          "event": "ended",
+          "selector": null,
+          "callback": "() => URL.revokeObjectURL(url)",
+          "classification": "TTS preview media lifecycle callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/generation-transport.js",
+      "sha256": "ed4c55c580dfb646982389bb908171ad9eed9ecd84bbb7aeea7e4e82d28e6886",
+      "changedFingerprints": 2,
+      "directReadRanges": [
+        [
+          1,
+          207
+        ]
+      ],
+      "review": "Reread full current transport including named stopBeforeAcknowledgement and abort listeners, stop receipt, cursor replay/backpressure/cancel and commit finally-settlement. Registration extractor records the once options; actual named handler body and cleanup were read.",
+      "candidates": [
+        {
+          "line": 42,
+          "endLine": 42,
+          "registration": "addEventListener",
+          "event": "'abort'",
+          "selector": null,
+          "callback": "{ once: true }",
+          "classification": "Native generation abort lifecycle listener",
+          "isBinding": true,
+          "callbackExtractionNote": "Static extractor stores final options object; actual second-argument callback and full named helper body manually read in directReadRanges."
+        },
+        {
+          "line": 95,
+          "endLine": 95,
+          "registration": "addEventListener",
+          "event": "'abort'",
+          "selector": null,
+          "callback": "{ once: true }",
+          "classification": "Native generation abort lifecycle listener",
+          "isBinding": true,
+          "callbackExtractionNote": "Static extractor stores final options object; actual second-argument callback and full named helper body manually read in directReadRanges."
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/tts/google-native.js",
+      "sha256": "af330c606c8cac8230edb3a0fae88f671cd0cb95d5448a7d5742c8e0c8a0c9d0",
+      "changedFingerprints": 1,
+      "directReadRanges": [
+        [
+          128,
+          160
+        ]
+      ],
+      "review": "Reread voice/preview generation/blob/URL/play and onended revoke assignment, with outer error toast. No external provider/audio execution.",
+      "candidates": [
+        {
+          "line": 153,
+          "endLine": 153,
+          "registration": "DOM handler assignment",
+          "event": "ended",
+          "selector": null,
+          "callback": "() => URL.revokeObjectURL(url)",
+          "classification": "TTS preview media lifecycle callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ctx/ContextMenu.js",
+      "sha256": "c2c5b372d2951acef94b864ac8d2eaa6e1dfba860a4512ad41cd9069d9f87b1a",
+      "changedFingerprints": 3,
+      "directReadRanges": [
+        [
+          1,
+          165
+        ]
+      ],
+      "review": "Reread complete current ContextMenu owner. Escape hides and restores anchor focus, resize repositions within viewport, CHAT_CHANGED hides, hide removes matching resize/story subscriptions and collapses children.",
+      "candidates": [
+        {
+          "line": 96,
+          "endLine": 101,
+          "registration": "addEventListener",
+          "event": "'keydown'",
+          "selector": null,
+          "callback": "event => {\n                    if (event.key !== 'Escape') return;\n                    event.preventDefault(); event.stopPropagation();\n                    this.hide();\n           ",
+          "classification": "Quick Reply context menu keyboard or lifetime callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 123,
+          "endLine": 123,
+          "registration": "addEventListener",
+          "event": "'resize'",
+          "selector": null,
+          "callback": "this.onResize",
+          "classification": "Quick Reply context menu keyboard or lifetime callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        },
+        {
+          "line": 124,
+          "endLine": 124,
+          "registration": "on",
+          "event": "event_types.CHAT_CHANGED",
+          "selector": null,
+          "callback": "this.onChatChanged",
+          "classification": "Quick Reply context menu keyboard or lifetime callback",
+          "isBinding": true,
+          "callbackExtractionNote": null
+        }
+      ]
+    }
+  ],
+  "sourceChanges": false,
+  "browserActions": false,
+  "serverActions": false,
+  "runtimeLimits": [
+    "No new UI/provider/audio execution; source/catalog alignment only.",
+    "Group muted keyboard and logprobs native button double activation remain unqualified source leads; this reconciliation neither repairs nor proves them.",
+    "Standing source-only findings keep their existing evidence strength and disposition."
+  ],
+  "changedFingerprintCount": 50,
+  "stableChangedFingerprintCount": 42,
+  "sdChangedFingerprintCount": 8,
+  "currentCandidateCount": 660,
+  "alignedFiles": 66,
+  "finalValidation": {
+    "at": "2026-11-10T05:18:34.642716+00:00",
+    "partition2ReviewedOwnerHashMatches": 124,
+    "partition2HashDrift": [],
+    "unmappedCurrentStaticFingerprints": [],
+    "supplementReviewedOwnerHashMatches": 12,
+    "supplementHashDrift": [],
+    "historicalOrExpandedCallbacksPreserved": 195
+  }
+}

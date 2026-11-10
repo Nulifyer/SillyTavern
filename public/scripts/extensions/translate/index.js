@@ -3,8 +3,10 @@ export { translate };
 import {
     eventSource,
     event_types,
+    getCurrentChatIdentity,
     getRequestHeaders,
     reloadCurrentChat,
+    saveChatConditional,
     saveSettingsDebounced,
     substituteParams,
     updateMessageBlock,
@@ -19,6 +21,78 @@ import { enumIcons } from '../../slash-commands/SlashCommandCommonEnumsProvider.
 import { enumTypes, SlashCommandEnumValue } from '../../slash-commands/SlashCommandEnumValue.js';
 import { SlashCommandParser } from '../../slash-commands/SlashCommandParser.js';
 import { splitRecursive } from '../../utils.js';
+import { getChatLoadToken } from '../../chat-loader.js';
+
+const messageRevisions = new WeakMap();
+const messageRequests = new WeakMap();
+const draftRevisions = new WeakMap();
+const draftRequests = new WeakMap();
+
+function captureTranslationStory() {
+    const identity = getCurrentChatIdentity(), load = getChatLoadToken(), context = getContext();
+    let notified = false;
+    return {
+        identity, context,
+        current: () => identity === getCurrentChatIdentity() && load === getChatLoadToken() && context.chat === getContext().chat,
+        notice() {
+            if (!notified) toastr.info('The story, message or draft changed. The earlier translation was not applied.');
+            notified = true;
+            return false;
+        },
+    };
+}
+
+function reviseMessage(messageId) {
+    const message = getContext().chat[messageId];
+    if (message) messageRevisions.set(message, (messageRevisions.get(message) || 0) + 1);
+}
+
+function captureTranslationMessage(messageId, story = captureTranslationStory()) {
+    const message = story.context.chat[messageId];
+    if (!message) return null;
+    const text = message.mes, reasoning = message.extra?.reasoning, swipe = message.swipe_id, name = message.name, isUser = message.is_user;
+    const revision = messageRevisions.get(message) || 0;
+    const node = document.querySelector(`#chat .mes[mesid="${Number(messageId)}"]`);
+    return {
+        story, message, messageId,
+        current: () => story.current() && getContext().chat[messageId] === message && message.mes === text
+            && message.extra?.reasoning === reasoning && message.swipe_id === swipe && message.name === name && message.is_user === isUser
+            && (messageRevisions.get(message) || 0) === revision
+            && (!node || (node.isConnected && document.querySelector(`#chat .mes[mesid="${Number(messageId)}"]`) === node
+                && ![...node.querySelectorAll('textarea')].some(input => input.checkVisibility()))),
+    };
+}
+
+function claimMessageTranslation(owner, field) {
+    const requests = messageRequests.get(owner.message) || {};
+    messageRequests.set(owner.message, requests);
+    const request = requests[field] = Symbol();
+    const previous = owner.message.extra?.[field];
+    return () => (owner.current() && requests[field] === request && owner.message.extra?.[field] === previous) || owner.story.notice();
+}
+
+function captureTranslationDraft() {
+    const input = document.getElementById('send_textarea');
+    if (!(input instanceof HTMLTextAreaElement)) return null;
+    const story = captureTranslationStory(), text = input.value, revision = draftRevisions.get(input) || 0;
+    const request = Symbol(); draftRequests.set(input, request);
+    return { input, text,
+        current: () => story.current() && input === document.getElementById('send_textarea') && input.isConnected
+            && input.value === text && (draftRevisions.get(input) || 0) === revision && draftRequests.get(input) === request,
+        notice: () => story.notice(),
+    };
+}
+
+async function translateDraft(language) {
+    const owner = captureTranslationDraft();
+    if (!owner) return false;
+    const text = await translate(owner.text, language);
+    if (typeof text !== 'string') return false;
+    if (!owner.current()) return owner.notice();
+    owner.input.value = text;
+    owner.input.dispatchEvent(new Event('input', { bubbles: true }));
+    return true;
+}
 
 export const autoModeOptions = {
     NONE: 'none',
@@ -183,10 +257,7 @@ function isGeneratingSwipe(messageId) {
 }
 
 async function translateImpersonate() {
-    const sendTextArea = $('#send_textarea');
-    const text = sendTextArea.val().toString();
-    const translatedText = await translate(text, extension_settings.translate.target_language);
-    sendTextArea.val(translatedText);
+    return await translateDraft(extension_settings.translate.target_language);
 }
 
 /**
@@ -194,27 +265,18 @@ async function translateImpersonate() {
  * @param {string | number} messageId Message ID
  * @returns {Promise<void>}
  */
-async function translateIncomingMessage(messageId) {
-    const context = getContext();
-    const message = context.chat[messageId];
-
-    if (!message) {
-        return;
-    }
-
-    if (typeof message.extra !== 'object') {
-        message.extra = {};
-    }
-
-    if (isGeneratingSwipe(messageId)) {
-        return;
-    }
-
+async function translateIncomingMessage(messageId, owner = captureTranslationMessage(messageId)) {
+    if (!owner?.current() || isGeneratingSwipe(messageId)) return false;
+    const message = owner.message;
+    const current = claimMessageTranslation(owner, 'display_text');
     const textToTranslate = substituteParams(message.mes, { name2Override: message.name });
     const translation = await translate(textToTranslate, extension_settings.translate.target_language);
+    if (typeof translation !== 'string' || !current()) return false;
+    if (!message.extra || typeof message.extra !== 'object') message.extra = {};
     message.extra.display_text = translation;
 
     updateMessageBlock(Number(messageId), message);
+    return true;
 }
 
 /**
@@ -222,24 +284,16 @@ async function translateIncomingMessage(messageId) {
  * @param {string | number} messageId
  * @returns {Promise<boolean>} translated or not
  */
-async function translateIncomingMessageReasoning(messageId) {
-    const context = getContext();
-    const message = context.chat[messageId];
-
-    if (!message) {
+async function translateIncomingMessageReasoning(messageId, owner = captureTranslationMessage(messageId)) {
+    if (!owner?.current()) return false;
+    const message = owner.message;
+    if (!message.extra?.reasoning || isGeneratingSwipe(messageId)) {
         return false;
     }
-
-    if (typeof message.extra !== 'object') {
-        message.extra = {};
-    }
-
-    if (!message.extra.reasoning || isGeneratingSwipe(messageId)) {
-        return false;
-    }
-
+    const current = claimMessageTranslation(owner, 'reasoning_display_text');
     const textToTranslate = substituteParams(message.extra.reasoning, { name2Override: message.name });
     const translation = await translate(textToTranslate, extension_settings.translate.target_language);
+    if (typeof translation !== 'string' || !current()) return false;
     message.extra.reasoning_display_text = translation;
 
     updateReasoningUI(Number(messageId));
@@ -476,7 +530,7 @@ async function translate(text, lang, provider = null) {
             result += await translateInner(chunks[i], lang, provider);
             if (i < links.length) result += links[i][0];
         }
-
+        if (String(text).trim() && !result.trim()) throw new Error('The translation provider returned no text.');
         return result;
     } catch (error) {
         console.log(error);
@@ -522,185 +576,161 @@ async function translateInner(text, lang, provider) {
 }
 
 async function translateOutgoingMessage(messageId) {
-    const context = getContext();
-    const message = context.chat[messageId];
-
-    if (typeof message.extra !== 'object') {
-        message.extra = {};
-    }
-
+    const owner = captureTranslationMessage(messageId);
+    if (!owner?.current()) return false;
+    const message = owner.message;
+    const current = claimMessageTranslation(owner, 'display_text');
     const originalText = message.mes;
+    const text = await translate(originalText, extension_settings.translate.internal_language);
+    if (typeof text !== 'string' || !current()) return false;
+    if (!message.extra || typeof message.extra !== 'object') message.extra = {};
     message.extra.display_text = originalText;
-    message.mes = await translate(originalText, extension_settings.translate.internal_language);
-    updateMessageBlock(messageId, message);
-
-    console.log('translateOutgoingMessage', messageId);
+    message.mes = text;
+    updateMessageBlock(Number(messageId), message);
+    return true;
 }
 
 function shouldTranslate(types) {
     return types.includes(extension_settings.translate.auto_mode);
 }
 
-function createEventHandler(translateFunction, shouldTranslateFunction) {
+function createEventHandler(translateFunction, shouldTranslateFunction, messageEvent = true) {
     return async (data) => {
-        if (shouldTranslateFunction()) {
-            await translateFunction(data);
-        }
+        if (messageEvent) reviseMessage(data);
+        if (shouldTranslateFunction()) return await translateFunction(data);
+        return false;
     };
 }
 
 async function onTranslateInputMessageClick() {
     const textarea = document.getElementById('send_textarea');
-
-    if (!(textarea instanceof HTMLTextAreaElement)) {
-        return;
-    }
-
-    if (!textarea.value) {
-        toastr.warning('Enter a message first');
-        return;
-    }
-
-    const toast = toastr.info('Input Message is translating', 'Please wait...');
-    const translatedText = await translate(textarea.value, extension_settings.translate.internal_language);
-    textarea.value = translatedText;
-    textarea.dispatchEvent(new Event('input', { bubbles: true }));
-    toastr.clear(toast);
+    if (!(textarea instanceof HTMLTextAreaElement)) return;
+    if (!textarea.value) { toastr.warning('Enter a message first'); return; }
+    const toast = toastr.info('Input Message is translating', 'Please wait...', { timeOut: 0, extendedTimeOut: 0 });
+    try { return await translateDraft(extension_settings.translate.internal_language); } finally { toastr.clear(toast); }
 }
 
-// Prevents the chat from being translated in parallel
-let translateChatExecuting = false;
+async function saveOwnedTranslation(story) {
+    if (!story.current()) return story.notice();
+    return await saveChatConditional({ expectedIdentity: story.identity });
+}
+
+// One batch per foreground story; an obsolete batch cannot block a new load or
+// clear the newer batch's guard when its own request eventually finishes.
+let translateChatExecuting = null;
 
 async function onTranslateChatClick() {
-    if (translateChatExecuting) {
-        return;
-    }
-
+    if (translateChatExecuting?.current()) { toastr.info('This conversation is already translating.'); return; }
+    const story = captureTranslationStory();
+    const owners = story.context.chat.map((_, index) => captureTranslationMessage(index, story));
     try {
-        translateChatExecuting = true;
-        const context = getContext();
-        const chat = context.chat;
-
-        toastr.info(`${chat.length} message(s) queued for translation.`, 'Please wait...');
-
-        for (let i = 0; i < chat.length; i++) {
-            await translateIncomingMessageReasoning(i);
-            await translateIncomingMessage(i);
+        translateChatExecuting = story;
+        toastr.info(`${owners.length} message(s) queued for translation.`, 'Please wait...');
+        let changed = false;
+        for (const owner of owners) {
+            if (!story.current()) return story.notice();
+            if (!owner?.current()) continue;
+            changed = await translateIncomingMessageReasoning(owner.messageId, owner) || changed;
+            if (!owner.current()) continue;
+            changed = await translateIncomingMessage(owner.messageId, owner) || changed;
         }
-
-        await context.saveChat();
+        if (changed) await saveOwnedTranslation(story);
     } catch (error) {
         console.log(error);
         toastr.error('Failed to translate chat');
-    } finally {
-        translateChatExecuting = false;
-    }
+    } finally { if (translateChatExecuting === story) translateChatExecuting = null; }
 }
 
 async function onTranslationsClearClick() {
+    const story = captureTranslationStory();
+    const owners = story.context.chat.map((_, index) => captureTranslationMessage(index, story));
     const popupHtml = await renderExtensionTemplateAsync('translate', 'deleteConfirmation');
+    if (!story.current()) return story.notice();
     const confirm = await callGenericPopup(popupHtml, POPUP_TYPE.CONFIRM);
-
-    if (!confirm) {
-        return;
+    if (!confirm) return;
+    if (!story.current()) return story.notice();
+    let changed = false;
+    for (const owner of owners) {
+        if (!owner?.current() || !owner.message.extra) continue;
+        delete owner.message.extra.display_text;
+        delete owner.message.extra.reasoning_display_text;
+        changed = true;
     }
-
-    const context = getContext();
-    const chat = context.chat;
-
-    for (const mes of chat) {
-        if (mes.extra) {
-            delete mes.extra.display_text;
-            delete mes.extra.reasoning_display_text;
-        }
-    }
-
-    await context.saveChat();
-    await reloadCurrentChat();
+    if (changed && await saveOwnedTranslation(story) && story.current()) await reloadCurrentChat();
 }
 
 async function translateMessageEdit(messageId) {
-    const context = getContext();
-    const chat = context.chat;
-    const message = chat[messageId];
-
-    let anyChange = false;
-    if (message.is_system || (extension_settings.translate.auto_mode == autoModeOptions.NONE && message.extra?.display_text)) {
-        delete message.extra.display_text;
-        updateMessageBlock(messageId, message);
-        anyChange = true;
+    const owner = captureTranslationMessage(messageId);
+    if (!owner?.current()) return false;
+    const message = owner.message;
+    let changed = false;
+    if (message.is_system || (extension_settings.translate.auto_mode === autoModeOptions.NONE && message.extra?.display_text)) {
+        if (message.extra && Object.hasOwn(message.extra, 'display_text')) {
+            delete message.extra.display_text;
+            updateMessageBlock(Number(messageId), message);
+            changed = true;
+        }
     } else if ((message.is_user && shouldTranslate(outgoingTypes)) || (!message.is_user && shouldTranslate(incomingTypes))) {
-        await translateIncomingMessage(messageId);
-        anyChange = true;
+        changed = await translateIncomingMessage(messageId, owner);
     }
-
-    if (anyChange) {
-        await context.saveChat();
-    }
+    if (changed && owner.current()) await saveOwnedTranslation(owner.story);
+    return changed;
 }
 
 async function translateMessageReasoningEdit(messageId) {
-    const context = getContext();
-    const chat = context.chat;
-    const message = chat[messageId];
-
-    let anyChange = false;
-    if (message.is_system || (extension_settings.translate.auto_mode == autoModeOptions.NONE && message.extra?.reasoning_display_text)) {
-        delete message.extra.reasoning_display_text;
-        updateReasoningUI(Number(messageId));
-        anyChange = true;
+    const owner = captureTranslationMessage(messageId);
+    if (!owner?.current()) return false;
+    const message = owner.message;
+    let changed = false;
+    if (message.is_system || (extension_settings.translate.auto_mode === autoModeOptions.NONE && message.extra?.reasoning_display_text)) {
+        if (message.extra && Object.hasOwn(message.extra, 'reasoning_display_text')) {
+            delete message.extra.reasoning_display_text;
+            updateReasoningUI(Number(messageId));
+            changed = true;
+        }
     } else if ((message.is_user && shouldTranslate(outgoingTypes)) || (!message.is_user && shouldTranslate(incomingTypes))) {
-        anyChange = await translateIncomingMessageReasoning(messageId);
+        changed = await translateIncomingMessageReasoning(messageId, owner);
     }
-
-    if (anyChange) {
-        await context.saveChat();
-    }
+    if (changed && owner.current()) await saveOwnedTranslation(owner.story);
+    return changed;
 }
 
 async function removeReasoningDisplayText(messageId) {
-    const context = getContext();
-    const message = context.chat[messageId];
-    if (message.extra?.reasoning_display_text) {
-        delete message.extra.reasoning_display_text;
+    const owner = captureTranslationMessage(messageId);
+    if (owner?.current() && owner.message.extra?.reasoning_display_text) {
+        delete owner.message.extra.reasoning_display_text;
         updateReasoningUI(Number(messageId));
-        await context.saveChat();
+        await saveOwnedTranslation(owner.story);
     }
 }
 
 async function onMessageTranslateClick() {
-    const context = getContext();
-    const messageId = $(this).closest('.mes').attr('mesid');
-    const message = context.chat[messageId];
-
-    // If the message is already translated, revert it back to the original text
-    let alreadyTranslated = false;
-    if (message?.extra?.display_text) {
+    const messageId = Number($(this).closest('.mes').attr('mesid'));
+    reviseMessage(messageId);
+    const owner = captureTranslationMessage(messageId);
+    if (!owner?.current()) return;
+    const message = owner.message;
+    let changed = false;
+    if (message.extra?.display_text || message.extra?.reasoning_display_text) {
         delete message.extra.display_text;
-        updateMessageBlock(Number(messageId), message);
-        alreadyTranslated = true;
-    }
-    if (message?.extra?.reasoning_display_text) {
         delete message.extra.reasoning_display_text;
-        updateReasoningUI(Number(messageId));
-        alreadyTranslated = true;
+        updateMessageBlock(messageId, message);
+        changed = true;
+    } else {
+        changed = await translateIncomingMessageReasoning(messageId, owner);
+        if (owner.current()) changed = await translateIncomingMessage(messageId, owner) || changed;
     }
-
-    // If the message is not translated, translate it
-    if (!alreadyTranslated) {
-        await translateIncomingMessageReasoning(messageId);
-        await translateIncomingMessage(messageId);
-    }
-
-    await context.saveChat();
+    if (changed && owner.current()) await saveOwnedTranslation(owner.story);
 }
 
 const handleIncomingMessage = createEventHandler(async (messageId) => {
-    await translateIncomingMessageReasoning(messageId);
-    await translateIncomingMessage(messageId);
+    const owner = captureTranslationMessage(messageId);
+    if (!owner?.current()) return false;
+    const reasoning = await translateIncomingMessageReasoning(messageId, owner);
+    return owner.current() ? await translateIncomingMessage(messageId, owner) || reasoning : false;
 }, () => shouldTranslate(incomingTypes));
 const handleOutgoingMessage = createEventHandler(translateOutgoingMessage, () => shouldTranslate(outgoingTypes));
-const handleImpersonateReady = createEventHandler(translateImpersonate, () => shouldTranslate(incomingTypes));
+const handleImpersonateReady = createEventHandler(translateImpersonate, () => shouldTranslate(incomingTypes), false);
 const handleMessageEdit = createEventHandler(translateMessageEdit, () => true);
 const handleMessageReasoningEdit = createEventHandler(translateMessageReasoningEdit, () => true);
 const handleMessageReasoningDelete = createEventHandler(removeReasoningDisplayText, () => true);
@@ -711,6 +741,12 @@ export async function init() {
     const html = await renderExtensionTemplateAsync('translate', 'index');
     const buttonHtml = await renderExtensionTemplateAsync('translate', 'buttons');
 
+    $(document).off('input.translateOwner', '#send_textarea').on('input.translateOwner', '#send_textarea', function () {
+        draftRevisions.set(this, (draftRevisions.get(this) || 0) + 1);
+    });
+    $(document).off('input.translateOwner', '#chat .mes textarea').on('input.translateOwner', '#chat .mes textarea', function () {
+        reviseMessage(Number(this.closest('.mes').getAttribute('mesid')));
+    });
     $('#translate_wand_container').append(buttonHtml);
     $('#translation_container').append(html);
     $('#translate_chat').on('click', onTranslateChatClick);

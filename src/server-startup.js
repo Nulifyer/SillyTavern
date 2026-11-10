@@ -51,6 +51,7 @@ import { router as dataMaidRouter } from './endpoints/data-maid.js';
 import { router as backupsRouter } from './endpoints/backups.js';
 import { router as imageMetadataRouter } from './endpoints/image-metadata.js';
 import { router as volcengineRouter } from './endpoints/volcengine.js';
+import { createGenerationJobsRouter } from './endpoints/generation-jobs.js';
 
 /**
  * @typedef {object} ServerStartupResult
@@ -138,6 +139,15 @@ export function redirectDeprecatedEndpoints(app) {
  * @param {import('express').Express} app The Express app to use
  */
 export function setupPrivateEndpoints(app) {
+    const nativeGenerationRouters = new Map([
+        ['/api/backends/chat-completions/generate', chatCompletionsRouter],
+        ['/api/backends/text-completions/generate', textCompletionsRouter],
+        ['/api/backends/kobold/generate', koboldRouter],
+        ['/api/novelai/generate', novelAiRouter],
+    ]);
+    const generationJobs = createGenerationJobsRouter(nativeGenerationRouters);
+    app.post([...nativeGenerationRouters.keys()], generationJobs.middleware);
+    app.use('/api/generation-jobs', generationJobs.router);
     app.use('/', userDataRouter);
     app.use('/api/users', usersPrivateRouter);
     app.use('/api/users', usersAdminRouter);

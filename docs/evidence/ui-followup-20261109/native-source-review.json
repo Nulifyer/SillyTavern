@@ -1,0 +1,3612 @@
+{
+  "scope": "Native first-party UI source review. Per-file ranges/symbols state exactly what was read. No production/browser fixture/data inspection. No implementation edits. Host does not expose another agent live session; assessment uses current worktree, canonical records and exact controlled-source experiments.",
+  "timestampUTC": "2026-11-10T01:38:27.086270+00:00",
+  "claimLimits": [
+    "The 408-file inventory indexes source; this manifest does not claim manual review of every file or execution of every listener.",
+    "Controlled experiments use unchanged source/functions with held dependencies and are not browser qualification.",
+    "Current source hashes may differ from negative experiment hashes because parent and assigned workers are fixing findings concurrently.",
+    "Existing inventory misses41 DOM event-property assignments (some cleanup) and1 shorthand callback site; property/event forms need indexing or claim narrowing."
+  ],
+  "summary": {
+    "applicationJSFilesListed": 216,
+    "filesWithScopedManualReview": 14,
+    "filesWithFullImplementationRead": [
+      "public/scripts/dragdrop.js",
+      "public/scripts/extensions/quick-reply/src/ui/SettingsUi.js",
+      "public/scripts/swipe-picker.js",
+      "public/scripts/setting-search.js"
+    ],
+    "reviewedIndexedRegistrationSites": 160,
+    "sourceControlledExperiments": 8
+  },
+  "findings": [
+    {
+      "id": "dnd-destroy",
+      "evidence": "/tmp/st-ui-followup-native-source-experiments.json",
+      "status": "source-controlled-reproduction; fixes owned by parent/assigned worker, not accepted here",
+      "file": "public/scripts/dragdrop.js",
+      "line": [
+        35,
+        66
+      ]
+    },
+    {
+      "id": "lorebook-late-read",
+      "evidence": "/tmp/st-ui-followup-native-source-experiments.json",
+      "status": "source-controlled-reproduction; fixes owned by parent/assigned worker, not accepted here",
+      "file": "public/scripts/world-info.js",
+      "line": 2018
+    },
+    {
+      "id": "gallery-folder-late-owner",
+      "evidence": "/tmp/st-ui-followup-native-source-experiments.json",
+      "status": "source-controlled-reproduction; fixes owned by parent/assigned worker, not accepted here",
+      "file": "public/scripts/extensions/gallery/index.js",
+      "line": 460
+    },
+    {
+      "id": "popup-force-close-cleanup",
+      "evidence": "/tmp/st-ui-followup-native-source-experiments.json",
+      "status": "source-controlled-reproduction; fixes owned by parent/assigned worker, not accepted here",
+      "file": "public/scripts/popup.js",
+      "line": 591
+    },
+    {
+      "id": "attachment-delete-failure",
+      "evidence": "/tmp/st-ui-followup-native-source-experiments.json",
+      "status": "source-controlled-reproduction; fixes owned by parent/assigned worker, not accepted here",
+      "file": "public/scripts/chats.js",
+      "line": 1287
+    },
+    {
+      "id": "quick-reply-paste-late-owner",
+      "evidence": "/tmp/st-ui-followup-native-source-experiments.json",
+      "status": "source-controlled-reproduction; fixes owned by parent/assigned worker, not accepted here",
+      "file": "public/scripts/extensions/quick-reply/src/ui/SettingsUi.js",
+      "line": 142
+    },
+    {
+      "id": "popup-async-close-reentry",
+      "evidence": "/tmp/st-ui-followup-native-source-experiments.json",
+      "status": "source-controlled-reproduction; fixes owned by parent/assigned worker, not accepted here",
+      "file": "public/scripts/popup.js",
+      "line": 755
+    },
+    {
+      "id": "gallery-open-late-owner",
+      "evidence": "/tmp/st-ui-followup-native-source-experiments.json",
+      "status": "source-controlled-reproduction; fixes owned by parent/assigned worker, not accepted here",
+      "file": "public/scripts/extensions/gallery/index.js",
+      "line": 308
+    },
+    {
+      "id": "quick-reply-input-error-feedback",
+      "status": "source-observed, browser error-state reproduction needed",
+      "file": "public/scripts/extensions/quick-reply/src/ui/SettingsUi.js",
+      "lines": [
+        142,
+        156
+      ],
+      "evidence": "clipboard read and single-QR file parsing have no catch/status, unlike importSingleQrSet"
+    },
+    {
+      "id": "swipe-picker-pointer-only-children",
+      "status": "source-observed; actual Tab/Enter qualification needed",
+      "file": "public/scripts/swipe-picker.js",
+      "lines": [
+        160,
+        275
+      ],
+      "evidence": "Copy/Delete/Branch divs lack keyboard semantics; renamed parent no longer matches existing native keyboard child selectors"
+    },
+    {
+      "id": "bulk-favorite-failed-write-paint",
+      "status": "source-observed, negative request/UI reproduction needed",
+      "file": "public/scripts/BulkEditOverlay.js",
+      "lines": [
+        72,
+        108
+      ],
+      "evidence": "favorite toggles is_fav after non-ok merge response without early return"
+    }
+  ],
+  "files": [
+    {
+      "file": "public/lib.js",
+      "indexedSourceSHA256": "df877daae2d037af354ceaa47a2f17ceedd43f697502a1241e757a831bc33a7e",
+      "currentSourceSHA256": "df877daae2d037af354ceaa47a2f17ceedd43f697502a1241e757a831bc33a7e",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/script.js",
+      "indexedSourceSHA256": "f00c942363739cc71ff2b434fe8fcd29224c6ff20d21a527bff44fc6982d496e",
+      "currentSourceSHA256": "d62c5fa643e7f5296934a972a37d4e52b311923afabc79fcd73ee6ae2f12cb3e",
+      "indexedRegistrationCount": 135,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/BulkEditOverlay.js",
+      "indexedSourceSHA256": "75e5974e53d92dadf2b21d49c94e9e208f795deeb3d0c001f6f5419b3b0b2129",
+      "currentSourceSHA256": "75e5974e53d92dadf2b21d49c94e9e208f795deeb3d0c001f6f5419b3b0b2129",
+      "indexedRegistrationCount": 20,
+      "coverage": "partial source: context-menu mutation owners and menu placement",
+      "ranges": [
+        [
+          1,
+          175
+        ]
+      ],
+      "symbols": [
+        "CharacterContextMenu.tag",
+        "duplicate",
+        "favorite",
+        "persona",
+        "delete",
+        "show"
+      ],
+      "findings": [
+        "bulk-favorite-failed-write-paint"
+      ],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 163,
+          "endLine": 163,
+          "registration": "addEventListener",
+          "target": "document.getElementById(contextMenuItem.id)",
+          "event": "'click'",
+          "selector": null,
+          "callback": "contextMenuItem.callback",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/PromptManager.js",
+      "indexedSourceSHA256": "b0054793b763d92b265f5f487645b68b4eca0867cb5ad6b5deb1034004b2c1cc",
+      "currentSourceSHA256": "b0054793b763d92b265f5f487645b68b4eca0867cb5ad6b5deb1034004b2c1cc",
+      "indexedRegistrationCount": 35,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/RossAscends-mods.js",
+      "indexedSourceSHA256": "64238b07955fb3fa1bbf408a648a845f2634556abe624661979d096d3fe6919e",
+      "currentSourceSHA256": "64238b07955fb3fa1bbf408a648a845f2634556abe624661979d096d3fe6919e",
+      "indexedRegistrationCount": 27,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/a11y.js",
+      "indexedSourceSHA256": "f07091a0e0d4b766e3873c71e5163ff91486944f2b9d8cb2bf773d08aba94e87",
+      "currentSourceSHA256": "f07091a0e0d4b766e3873c71e5163ff91486944f2b9d8cb2bf773d08aba94e87",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/action-loader-slashcommands.js",
+      "indexedSourceSHA256": "974fa17f413812b36665030e19b451c8414bd5d1e571521339dbcc78a8916291",
+      "currentSourceSHA256": "974fa17f413812b36665030e19b451c8414bd5d1e571521339dbcc78a8916291",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/action-loader.js",
+      "indexedSourceSHA256": "57a65605efe809743c28386e6e272c221fd1773d45e0da92dbc4c728b41f917b",
+      "currentSourceSHA256": "57a65605efe809743c28386e6e272c221fd1773d45e0da92dbc4c728b41f917b",
+      "indexedRegistrationCount": 2,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/audio-player.js",
+      "indexedSourceSHA256": "70b87a892c1f68307b43cf4ba70e593636e5e9be501668b69c9aac523fc46f7b",
+      "currentSourceSHA256": "70b87a892c1f68307b43cf4ba70e593636e5e9be501668b69c9aac523fc46f7b",
+      "indexedRegistrationCount": 13,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/audio-recording.js",
+      "indexedSourceSHA256": "5e4c9674f88504f5dc984a3a613f9162b9296e812f05e57a1c9aa7e1cd9f9dfa",
+      "currentSourceSHA256": "5e4c9674f88504f5dc984a3a613f9162b9296e812f05e57a1c9aa7e1cd9f9dfa",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/authors-note.js",
+      "indexedSourceSHA256": "6a7bf7bd185a4881a847350acf25861a44df24c528e746652bdb8a7150e5144b",
+      "currentSourceSHA256": "6a7bf7bd185a4881a847350acf25861a44df24c528e746652bdb8a7150e5144b",
+      "indexedRegistrationCount": 17,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/AutoComplete.js",
+      "indexedSourceSHA256": "f4320743bec5a5bc961bb355ddf933cf3f67aaa6318ca3d11f94b0928ca20825",
+      "currentSourceSHA256": "f4320743bec5a5bc961bb355ddf933cf3f67aaa6318ca3d11f94b0928ca20825",
+      "indexedRegistrationCount": 8,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/AutoCompleteFuzzyScore.js",
+      "indexedSourceSHA256": "283a454bf4bced07875595a08a15d3838651f4c0919ef47002be19893d2c29cd",
+      "currentSourceSHA256": "283a454bf4bced07875595a08a15d3838651f4c0919ef47002be19893d2c29cd",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/AutoCompleteNameResult.js",
+      "indexedSourceSHA256": "f1d61538c0952f04ec4ecfbe16c2c7891fe3503baa8e7e643a800bce4d8a0752",
+      "currentSourceSHA256": "f1d61538c0952f04ec4ecfbe16c2c7891fe3503baa8e7e643a800bce4d8a0752",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/AutoCompleteNameResultBase.js",
+      "indexedSourceSHA256": "861786a1ab31d15c4a4f3df7e3586cba9a763e5bbdc7e817e1fed270765de95d",
+      "currentSourceSHA256": "861786a1ab31d15c4a4f3df7e3586cba9a763e5bbdc7e817e1fed270765de95d",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/AutoCompleteOption.js",
+      "indexedSourceSHA256": "aea62b263d335c49637c0ac81b989ecddd1179701297391c4025cf3e5d175244",
+      "currentSourceSHA256": "aea62b263d335c49637c0ac81b989ecddd1179701297391c4025cf3e5d175244",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/AutoCompleteSecondaryNameResult.js",
+      "indexedSourceSHA256": "52adff3686e1d90caf89e1a458cdf7dd91de2c6b85253a458da1b8855029633d",
+      "currentSourceSHA256": "52adff3686e1d90caf89e1a458cdf7dd91de2c6b85253a458da1b8855029633d",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/BlankAutoCompleteOption.js",
+      "indexedSourceSHA256": "c33e211f11b4ae2362b4c479a3fc695eac5420348cd679f1a09c76e2b8bd35dd",
+      "currentSourceSHA256": "c33e211f11b4ae2362b4c479a3fc695eac5420348cd679f1a09c76e2b8bd35dd",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/EnhancedMacroAutoCompleteOption.js",
+      "indexedSourceSHA256": "5bd98618d64e86a73aa57ef3df20402b3dff4d618aa2da06aa0781fcd9db37ca",
+      "currentSourceSHA256": "5bd98618d64e86a73aa57ef3df20402b3dff4d618aa2da06aa0781fcd9db37ca",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/MacroAutoComplete.js",
+      "indexedSourceSHA256": "1f09661a92977b6df65701bb70bb82758ba48d749e95e219814cb0de621a352b",
+      "currentSourceSHA256": "1f09661a92977b6df65701bb70bb82758ba48d749e95e219814cb0de621a352b",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/MacroAutoCompleteHelper.js",
+      "indexedSourceSHA256": "1290d8362e21cee619eb8b70a01b44896dfbae7f7994b2642c047d888247a89c",
+      "currentSourceSHA256": "1290d8362e21cee619eb8b70a01b44896dfbae7f7994b2642c047d888247a89c",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/autocomplete/MacroAutoCompleteOption.js",
+      "indexedSourceSHA256": "93b94ce6fd4fddf7dc4e6c54a3f45bf6e768a849898ea1e2bd5c89e445faec7d",
+      "currentSourceSHA256": "93b94ce6fd4fddf7dc4e6c54a3f45bf6e768a849898ea1e2bd5c89e445faec7d",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/backgrounds.js",
+      "indexedSourceSHA256": "ce044afeaaffa7cacba0b063d9b90a3399a2f438c8e3aee33d7d40b4502541db",
+      "currentSourceSHA256": "ce044afeaaffa7cacba0b063d9b90a3399a2f438c8e3aee33d7d40b4502541db",
+      "indexedRegistrationCount": 28,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/bookmarks.js",
+      "indexedSourceSHA256": "fdf2e6ed870fee0ea224b4641a3696bee3c17fdce1b09736e56a895dd64e0f73",
+      "currentSourceSHA256": "fdf2e6ed870fee0ea224b4641a3696bee3c17fdce1b09736e56a895dd64e0f73",
+      "indexedRegistrationCount": 6,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/browser-fixes.js",
+      "indexedSourceSHA256": "90e8521cea3a7acb5462fa01dd56b29e5094392189e9ee7c2d8a015b74dfc372",
+      "currentSourceSHA256": "90e8521cea3a7acb5462fa01dd56b29e5094392189e9ee7c2d8a015b74dfc372",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/browser-recovery.js",
+      "indexedSourceSHA256": "89d396a70089b2c4fef54de7917e54c8ea0cad8a8cfa423d93af0b618b8e6b40",
+      "currentSourceSHA256": "89d396a70089b2c4fef54de7917e54c8ea0cad8a8cfa423d93af0b618b8e6b40",
+      "indexedRegistrationCount": 17,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/bulk-edit.js",
+      "indexedSourceSHA256": "64698d5ebd4e34e9550cca75e90047f64335d1ed8db539626c50f7d55fd212e1",
+      "currentSourceSHA256": "64698d5ebd4e34e9550cca75e90047f64335d1ed8db539626c50f7d55fd212e1",
+      "indexedRegistrationCount": 6,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/cfg-scale.js",
+      "indexedSourceSHA256": "2e507b047a34edf552bcba9965c0c8f05823db5bfc44e4c7bddc5dd1e5f86df6",
+      "currentSourceSHA256": "2e507b047a34edf552bcba9965c0c8f05823db5bfc44e4c7bddc5dd1e5f86df6",
+      "indexedRegistrationCount": 16,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/char-data.js",
+      "indexedSourceSHA256": "81237786ad20fc7127242afc9b32882d205e16fc71a7de76a870c4bf3897b0ea",
+      "currentSourceSHA256": "81237786ad20fc7127242afc9b32882d205e16fc71a7de76a870c4bf3897b0ea",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/chat-backups.js",
+      "indexedSourceSHA256": "15eeab6b1c2022755f4fec834661833915e2ea64950c84626db294c25d4e5f5a",
+      "currentSourceSHA256": "15eeab6b1c2022755f4fec834661833915e2ea64950c84626db294c25d4e5f5a",
+      "indexedRegistrationCount": 4,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/chat-loader.js",
+      "indexedSourceSHA256": "57e2c827560988d2fd2aae5a905ebeb9cbae79339ead2ff90a16d4033e00316c",
+      "currentSourceSHA256": "57e2c827560988d2fd2aae5a905ebeb9cbae79339ead2ff90a16d4033e00316c",
+      "indexedRegistrationCount": 0,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/chat-templates.js",
+      "indexedSourceSHA256": "abc092dc72a6cf5b831dd4cc1ddea8a1d9e13602eab0055d0517031f4f20a357",
+      "currentSourceSHA256": "abc092dc72a6cf5b831dd4cc1ddea8a1d9e13602eab0055d0517031f4f20a357",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/chats.js",
+      "indexedSourceSHA256": "2b870d44c55f99c622b5afcd7b1fd563219b9444bc70e8653611327d6e7f7be6",
+      "currentSourceSHA256": "263a024630695b22c97415e096ede196b68967be582aec8c9e874ccecd8294eb",
+      "indexedRegistrationCount": 58,
+      "coverage": "partial source: file delete, attachment mutation, manager rows/drop/cleanup and media-blocking context",
+      "ranges": [
+        [
+          1120,
+          1165
+        ],
+        [
+          1287,
+          1412
+        ],
+        [
+          1465,
+          1632
+        ],
+        [
+          2030,
+          2055
+        ]
+      ],
+      "symbols": [
+        "deleteFileFromServer",
+        "openFilePopup",
+        "deleteAttachment",
+        "openAttachmentManager",
+        "renderList",
+        "renderAttachments",
+        "Data Bank drag/drop callback",
+        "attachment manager cleanup"
+      ],
+      "findings": [
+        "attachment-delete-failure",
+        "dnd-destroy"
+      ],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 1395,
+          "endLine": 1395,
+          "registration": "on",
+          "target": "attachmentTemplate.find('.viewAttachmentButton')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => openFilePopup(attachment)",
+          "reviewed": false
+        },
+        {
+          "line": 1396,
+          "endLine": 1396,
+          "registration": "on",
+          "target": "attachmentTemplate.find('.editAttachmentButton')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => editAttachment(attachment, source, renderAttachments)",
+          "reviewed": false
+        },
+        {
+          "line": 1397,
+          "endLine": 1397,
+          "registration": "on",
+          "target": "attachmentTemplate.find('.deleteAttachmentButton')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => deleteAttachment(attachment, source, renderAttachments)",
+          "reviewed": false
+        },
+        {
+          "line": 1398,
+          "endLine": 1398,
+          "registration": "on",
+          "target": "attachmentTemplate.find('.downloadAttachmentButton')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => downloadAttachment(attachment)",
+          "reviewed": false
+        },
+        {
+          "line": 1399,
+          "endLine": 1399,
+          "registration": "on",
+          "target": "attachmentTemplate.find('.moveAttachmentButton')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => moveAttachment(attachment, source, renderAttachments)",
+          "reviewed": false
+        },
+        {
+          "line": 1400,
+          "endLine": 1400,
+          "registration": "on",
+          "target": "attachmentTemplate.find('.enableAttachmentButton').toggle(isDisabled)",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => enableAttachment(attachment, renderAttachments)",
+          "reviewed": false
+        },
+        {
+          "line": 1401,
+          "endLine": 1401,
+          "registration": "on",
+          "target": "attachmentTemplate.find('.disableAttachmentButton').toggle(!isDisabled)",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => disableAttachment(attachment, renderAttachments)",
+          "reviewed": false
+        },
+        {
+          "line": 1467,
+          "endLine": 1471,
+          "registration": "addEventListener",
+          "target": "button",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n                modal.attr('data-attachment-manager-target', source);\n                modal.toggle();\n                popper.update();\n            }",
+          "reviewed": false
+        },
+        {
+          "line": 1515,
+          "endLine": 1517,
+          "registration": "on",
+          "target": "targetSelectTemplate.find('.droppedFilesTarget')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n            selectedTarget = String($(this).val());\n        }",
+          "reviewed": false
+        },
+        {
+          "line": 1535,
+          "endLine": 1538,
+          "registration": "on",
+          "target": "template.find('.attachmentSearch')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        filterString = String($(this).val());\n        renderAttachments();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 1539,
+          "endLine": 1549,
+          "registration": "on",
+          "target": "template.find('.attachmentSort')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "function () {\n        if (!(this instanceof HTMLSelectElement) || this.selectedOptions.length === 0) {\n            return;\n        }\n\n        sortField = this.selectedOptions[0].da",
+          "reviewed": false
+        },
+        {
+          "line": 1592,
+          "endLine": 1594,
+          "registration": "on",
+          "target": "template.find('.bulkActionDisable')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "handleBulkAction({\n        perform: (attachment) => disableAttachment(attachment, () => { }),\n    })",
+          "reviewed": false
+        },
+        {
+          "line": 1596,
+          "endLine": 1598,
+          "registration": "on",
+          "target": "template.find('.bulkActionEnable')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "handleBulkAction({\n        perform: (attachment) => enableAttachment(attachment, () => { }),\n    })",
+          "reviewed": false
+        },
+        {
+          "line": 1600,
+          "endLine": 1603,
+          "registration": "on",
+          "target": "template.find('.bulkActionDelete')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "handleBulkAction({\n        confirmMessage: 'Are you sure you want to delete the selected attachments?',\n        perform: async (attachment, source) => await deleteAttachment(attach",
+          "reviewed": false
+        },
+        {
+          "line": 1605,
+          "endLine": 1611,
+          "registration": "on",
+          "target": "template.find('.bulkActionSelectAll')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        $('.attachmentListItemCheckbox:visible').each((_, checkbox) => {\n            if (checkbox instanceof HTMLInputElement) {\n                checkbox.checked = true;\n  ",
+          "reviewed": false
+        },
+        {
+          "line": 1612,
+          "endLine": 1618,
+          "registration": "on",
+          "target": "template.find('.bulkActionSelectNone')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        $('.attachmentListItemCheckbox:visible').each((_, checkbox) => {\n            if (checkbox instanceof HTMLInputElement) {\n                checkbox.checked = false;\n ",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/composer-surface.js",
+      "indexedSourceSHA256": "d007ce5b4e87adfc7696b80d3534bb257961c9e44c22eb9b60d813072463e2f4",
+      "currentSourceSHA256": "d007ce5b4e87adfc7696b80d3534bb257961c9e44c22eb9b60d813072463e2f4",
+      "indexedRegistrationCount": 0,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/constants.js",
+      "indexedSourceSHA256": "953a09a8cea181f6d82e2aafbb021e7bc3649a41a144d0e798d8e19b99cf4066",
+      "currentSourceSHA256": "953a09a8cea181f6d82e2aafbb021e7bc3649a41a144d0e798d8e19b99cf4066",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/custom-request.js",
+      "indexedSourceSHA256": "8472c22a5bb34eaa4066f898ba52a8271a1ad5ca130ea79acecfb55c3c79e5df",
+      "currentSourceSHA256": "8472c22a5bb34eaa4066f898ba52a8271a1ad5ca130ea79acecfb55c3c79e5df",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/data-maid.js",
+      "indexedSourceSHA256": "8b55769784adb4cbfa104be17fa066fff6c9d1d51565bfe54280c5e1ead8a09e",
+      "currentSourceSHA256": "8b55769784adb4cbfa104be17fa066fff6c9d1d51565bfe54280c5e1ead8a09e",
+      "indexedRegistrationCount": 6,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "indexedSourceSHA256": "0a949d827ddacdb95d37ab5de932c88ea76e14f3e53245ef6076ee225a450bb7",
+      "currentSourceSHA256": "0a949d827ddacdb95d37ab5de932c88ea76e14f3e53245ef6076ee225a450bb7",
+      "indexedRegistrationCount": 8,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/dom-handlers.js",
+      "indexedSourceSHA256": "10b166c49c6ec01377bd2e451303c3b41340be6e884917fdf9082b735776e247",
+      "currentSourceSHA256": "10b166c49c6ec01377bd2e451303c3b41340be6e884917fdf9082b735776e247",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/dragdrop.js",
+      "indexedSourceSHA256": "73fc448503f0d7b54bc232eb2181cc128ba94a705483b8a5af13621f88d1fc5c",
+      "currentSourceSHA256": "f09aa0f4d5500514aa44b8ffabb43a39fed32f0eb8f684b542934d18c2fb449f",
+      "indexedRegistrationCount": 6,
+      "coverage": "full module implementation read; controlled unchanged-source module execution",
+      "ranges": [
+        [
+          1,
+          107
+        ]
+      ],
+      "symbols": [
+        "DragAndDropHandler.constructor",
+        "init",
+        "destroy",
+        "handleDragOver",
+        "handleDragLeave",
+        "handleDrop"
+      ],
+      "findings": [
+        "dnd-destroy"
+      ],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 54,
+          "endLine": 54,
+          "registration": "on",
+          "target": "$(document.body)",
+          "event": "'dragover'",
+          "selector": null,
+          "callback": "this.handleDragOver.bind(this)",
+          "reviewed": false
+        },
+        {
+          "line": 55,
+          "endLine": 55,
+          "registration": "on",
+          "target": "$(document.body)",
+          "event": "'dragleave'",
+          "selector": null,
+          "callback": "this.handleDragLeave.bind(this)",
+          "reviewed": false
+        },
+        {
+          "line": 56,
+          "endLine": 56,
+          "registration": "on",
+          "target": "$(document.body)",
+          "event": "'drop'",
+          "selector": null,
+          "callback": "this.handleDrop.bind(this)",
+          "reviewed": false
+        },
+        {
+          "line": 58,
+          "endLine": 58,
+          "registration": "on",
+          "target": "$(document.body)",
+          "event": "'dragover'",
+          "selector": null,
+          "callback": "this.handleDragOver.bind(this)",
+          "reviewed": false
+        },
+        {
+          "line": 59,
+          "endLine": 59,
+          "registration": "on",
+          "target": "$(document.body)",
+          "event": "'dragleave'",
+          "selector": null,
+          "callback": "this.handleDragLeave.bind(this)",
+          "reviewed": false
+        },
+        {
+          "line": 60,
+          "endLine": 60,
+          "registration": "on",
+          "target": "$(document.body)",
+          "event": "'drop'",
+          "selector": null,
+          "callback": "this.handleDrop.bind(this)",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/dynamic-styles.js",
+      "indexedSourceSHA256": "a24cff71b67a1c6bf098dd430b9da85b6679e27334050aca88c410c42529f008",
+      "currentSourceSHA256": "a24cff71b67a1c6bf098dd430b9da85b6679e27334050aca88c410c42529f008",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/events.js",
+      "indexedSourceSHA256": "6c6b9fe587b9e671e0dd9573ac9b7662f2a36311d2acf6f8191bb91937958c2a",
+      "currentSourceSHA256": "6c6b9fe587b9e671e0dd9573ac9b7662f2a36311d2acf6f8191bb91937958c2a",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions-slashcommands.js",
+      "indexedSourceSHA256": "fc7e72a18eaa91da3cd345d790f209e028a0585cf7518f1ebb24f03ce6308af3",
+      "currentSourceSHA256": "fc7e72a18eaa91da3cd345d790f209e028a0585cf7518f1ebb24f03ce6308af3",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions.js",
+      "indexedSourceSHA256": "4ce91600ddbb1bdbb8821c1097e9cab2bee8f761002ca54a545ac2163deb6f06",
+      "currentSourceSHA256": "4ce91600ddbb1bdbb8821c1097e9cab2bee8f761002ca54a545ac2163deb6f06",
+      "indexedRegistrationCount": 21,
+      "coverage": "partial source: extension-management popup async close hook",
+      "ranges": [
+        [
+          1260,
+          1326
+        ]
+      ],
+      "symbols": [
+        "extension manager Popup.onClosing"
+      ],
+      "findings": [
+        "popup-async-close-reentry"
+      ],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 1265,
+          "endLine": 1269,
+          "registration": "addEventListener",
+          "target": "sortOrderButton",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n                abortController.abort();\n                accountStorage.setItem(sortOrderKey, sortByName ? 'false' : 'true');\n                await showExtensionsDeta",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/assets/index.js",
+      "indexedSourceSHA256": "8c1ff364658de07254ae010f68f3e92c8dc2705d67ca5fed8187e23a7e5b6191",
+      "currentSourceSHA256": "8c1ff364658de07254ae010f68f3e92c8dc2705d67ca5fed8187e23a7e5b6191",
+      "indexedRegistrationCount": 19,
+      "coverage": "partial source: character browser/install help/connect URL confirmation handlers",
+      "ranges": [
+        [
+          540,
+          580
+        ]
+      ],
+      "symbols": [
+        "assets characters button",
+        "install hint button",
+        "connect button",
+        "remember URL confirmation onClose"
+      ],
+      "findings": [],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 541,
+          "endLine": 543,
+          "registration": "on",
+          "target": "charactersButton",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function () {\n        openCharacterBrowser(false);\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 546,
+          "endLine": 550,
+          "registration": "on",
+          "target": "installHintButton",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function () {\n        const installButton = $('#third_party_extension_button');\n        flashHighlight(installButton, 5000);\n        toastr.info(t`Click the flashing button t",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/attachments/index.js",
+      "indexedSourceSHA256": "3d6ca95f22e50d1082b048d3d393431ff2967a613ac3dc94e020ddd3859deac5",
+      "currentSourceSHA256": "3d6ca95f22e50d1082b048d3d393431ff2967a613ac3dc94e020ddd3859deac5",
+      "indexedRegistrationCount": 3,
+      "coverage": "partial source: attachment ownership helpers, cleanup and initialization; latter slash command declarations not fully reviewed",
+      "ranges": [
+        [
+          1,
+          340
+        ]
+      ],
+      "symbols": [
+        "getAttachments",
+        "getAttachmentByField",
+        "getAttachmentByFields",
+        "listDataBankAttachments",
+        "getDataBankText",
+        "uploadDataBankAttachment",
+        "updateDataBankAttachment",
+        "deleteDataBankAttachment",
+        "disableDataBankAttachment",
+        "enableDataBankAttachment",
+        "cleanUpAttachments",
+        "cleanUpCharacterAttachments",
+        "handleCharacterRename",
+        "init"
+      ],
+      "findings": [],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 247,
+          "endLine": 247,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.APP_READY",
+          "selector": null,
+          "callback": "cleanUpAttachments",
+          "reviewed": false
+        },
+        {
+          "line": 248,
+          "endLine": 248,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHARACTER_DELETED",
+          "selector": null,
+          "callback": "cleanUpCharacterAttachments",
+          "reviewed": false
+        },
+        {
+          "line": 249,
+          "endLine": 249,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHARACTER_RENAMED",
+          "selector": null,
+          "callback": "handleCharacterRename",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/caption/index.js",
+      "indexedSourceSHA256": "c4fc4cb3453276a5f3ea218888941e837dc1aad44e955bd20c55e8b48a76ac9e",
+      "currentSourceSHA256": "c4fc4cb3453276a5f3ea218888941e837dc1aad44e955bd20c55e8b48a76ac9e",
+      "indexedRegistrationCount": 21,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/connection-manager/index.js",
+      "indexedSourceSHA256": "965949ec7f298623e6c1f9d7c2c489ff4e804f8c9c1d6ea191712469befa2daa",
+      "currentSourceSHA256": "965949ec7f298623e6c1f9d7c2c489ff4e804f8c9c1d6ea191712469befa2daa",
+      "indexedRegistrationCount": 9,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/expressions/index.js",
+      "indexedSourceSHA256": "8a22921607cb9ce8a2c00391fd412a3927ee7991e33b3170104d4b0bb3356067",
+      "currentSourceSHA256": "8a22921607cb9ce8a2c00391fd412a3927ee7991e33b3170104d4b0bb3356067",
+      "indexedRegistrationCount": 30,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/gallery/index.js",
+      "indexedSourceSHA256": "0add02f60b64986c25cdff6f6becbeaa372be13a18a005a5b801469322b46300",
+      "currentSourceSHA256": "c595a95cd547a18449ecefa11a60e0ba8aa590db1bbdf316abc0b58a0cecb85f",
+      "indexedRegistrationCount": 18,
+      "coverage": "partial source with all displayed gallery mutation/lifetime owners; no vendor library review",
+      "ranges": [
+        [
+          1,
+          130
+        ],
+        [
+          235,
+          295
+        ],
+        [
+          296,
+          353
+        ],
+        [
+          350,
+          575
+        ],
+        [
+          574,
+          625
+        ],
+        [
+          640,
+          710
+        ],
+        [
+          755,
+          859
+        ]
+      ],
+      "symbols": [
+        "initSettings",
+        "getGalleryFolder",
+        "getGalleryItems",
+        "initGallery cleanup",
+        "showCharGallery",
+        "uploadFile",
+        "makeMovable",
+        "onChangeFolder",
+        "onRestoreFolder",
+        "updateGalleryFolder",
+        "restoreGalleryFolder",
+        "makeDragImg",
+        "listGalleryCommand",
+        "addGalleryWandButton",
+        "init"
+      ],
+      "findings": [
+        "gallery-folder-late-owner",
+        "gallery-open-late-owner"
+      ],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 32,
+          "endLine": 44,
+          "registration": "on",
+          "target": "$('#movingDivs')",
+          "event": "'click'",
+          "selector": ".dragClose",
+          "callback": "function () {\n    const relatedId = $(this).data('related-id');\n    if (!relatedId) return;\n    const relatedElement = $(`#movingDivs > .draggable[id=\"${relatedId}\"]`);\n    related",
+          "reviewed": false
+        },
+        {
+          "line": 273,
+          "endLine": 273,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "'resizeUI'",
+          "selector": null,
+          "callback": "resizeHandler",
+          "reviewed": false
+        },
+        {
+          "line": 275,
+          "endLine": 277,
+          "registration": "once",
+          "target": "eventSource",
+          "event": "event_types.CHAT_CHANGED",
+          "selector": null,
+          "callback": "function () {\n        gallery.closest('#gallery').remove();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 279,
+          "endLine": 283,
+          "registration": "once",
+          "target": "eventSource",
+          "event": "CUSTOM_GALLERY_REMOVED_EVENT",
+          "selector": null,
+          "callback": "function () {\n        gallery.nanogallery2('destroy');\n        dragDropHandler.destroy();\n        eventSource.removeListener('resizeUI', resizeHandler);\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 404,
+          "endLine": 409,
+          "registration": "addEventListener",
+          "target": "sortSelect",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async () => {\n        const selectedOption = sortSelect.options[sortSelect.selectedIndex].value;\n        setSortOrder(selectedOption);\n        closeButton.trigger('click');\n       ",
+          "reviewed": false
+        },
+        {
+          "line": 428,
+          "endLine": 430,
+          "registration": "addEventListener",
+          "target": "addImageButton",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        fileInput.click();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 433,
+          "endLine": 443,
+          "registration": "addEventListener",
+          "target": "fileInput",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async () => {\n        const files = fileInput.files;\n        if (files.length > 0) {\n            for (const file of files) {\n                await uploadFile(file, url);\n          ",
+          "reviewed": false
+        },
+        {
+          "line": 495,
+          "endLine": 495,
+          "registration": "addEventListener",
+          "target": "galleryFolderInput",
+          "event": "'keyup'",
+          "selector": null,
+          "callback": "onChangeFolder",
+          "reviewed": false
+        },
+        {
+          "line": 500,
+          "endLine": 500,
+          "registration": "addEventListener",
+          "target": "galleryFolderAccept",
+          "event": "'click'",
+          "selector": null,
+          "callback": "onChangeFolder",
+          "reviewed": false
+        },
+        {
+          "line": 506,
+          "endLine": 512,
+          "registration": "addEventListener",
+          "target": "galleryDeleteMode",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        deleteModeActive = !deleteModeActive;\n        galleryDeleteMode.classList.toggle('warning', deleteModeActive);\n        if (deleteModeActive) {\n            toastr.in",
+          "reviewed": false
+        },
+        {
+          "line": 517,
+          "endLine": 517,
+          "registration": "addEventListener",
+          "target": "galleryFolderRestore",
+          "event": "'click'",
+          "selector": null,
+          "callback": "onRestoreFolder",
+          "reviewed": false
+        },
+        {
+          "line": 527,
+          "endLine": 540,
+          "registration": "on",
+          "target": "$(galleryFolderInput)\n        .autocomplete({\n            source: (i, o) => {\n                const term = i.term.toLowerCase();\n                const filtered = folders.filter(f => f.toLowerCase().includes(term));\n                o(filtered);\n            },\n            select: (e, u) => {\n                galleryFolderInput.value = u.item.value;\n                onChangeFolder(e);\n            },\n            minLength: 0,\n        })",
+          "event": "'focus'",
+          "selector": null,
+          "callback": "() => $(galleryFolderInput).autocomplete('search', '')",
+          "reviewed": false
+        },
+        {
+          "line": 563,
+          "endLine": 567,
+          "registration": "on",
+          "target": "$(`.draggable[forChar=\"${id}\"] img`)",
+          "event": "'dragstart'",
+          "selector": null,
+          "callback": "(e) => {\n        console.log('saw drag on avatar!');\n        e.preventDefault();\n        return false;\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 703,
+          "endLine": 707,
+          "registration": "on",
+          "target": "$(`#${uniqueId} img`)",
+          "event": "'dragstart'",
+          "selector": null,
+          "callback": "(e) => {\n            console.log('saw drag on avatar!');\n            e.preventDefault();\n            return false;\n        }",
+          "reviewed": false
+        },
+        {
+          "line": 819,
+          "endLine": 821,
+          "registration": "addEventListener",
+          "target": "showGalleryButton",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        showCharGallery();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 828,
+          "endLine": 836,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHARACTER_RENAMED",
+          "selector": null,
+          "callback": "(oldAvatar, newAvatar) => {\n        const context = SillyTavern.getContext();\n        const galleryFolder = context.extensionSettings.gallery.folders[oldAvatar];\n        if (galler",
+          "reviewed": false
+        },
+        {
+          "line": 837,
+          "endLine": 843,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHARACTER_DELETED",
+          "selector": null,
+          "callback": "(data) => {\n        const avatar = data?.character?.avatar;\n        if (!avatar) return;\n        const context = SillyTavern.getContext();\n        delete context.extensionSettings.",
+          "reviewed": false
+        },
+        {
+          "line": 844,
+          "endLine": 848,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHARACTER_MANAGEMENT_DROPDOWN",
+          "selector": null,
+          "callback": "(selectedOptionId) => {\n        if (selectedOptionId === 'show_char_gallery') {\n            showCharGallery();\n        }\n    }",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/memory/index.js",
+      "indexedSourceSHA256": "f205bfb903199631a8671b9d6f51200edfe5c9866f9f7d41f21848fcf5b9601c",
+      "currentSourceSHA256": "f205bfb903199631a8671b9d6f51200edfe5c9866f9f7d41f21848fcf5b9601c",
+      "indexedRegistrationCount": 29,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/api/QuickReplyApi.js",
+      "indexedSourceSHA256": "689d64a0f85e240b988c1e9aa37271d2356fe5b4bcad3b5e9f8ed010daa591f6",
+      "currentSourceSHA256": "689d64a0f85e240b988c1e9aa37271d2356fe5b4bcad3b5e9f8ed010daa591f6",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/index.js",
+      "indexedSourceSHA256": "d486692119260c299545f8b1a0390dedc003888c5508e2b4b59abb131c0b4911",
+      "currentSourceSHA256": "d486692119260c299545f8b1a0390dedc003888c5508e2b4b59abb131c0b4911",
+      "indexedRegistrationCount": 11,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/AutoExecuteHandler.js",
+      "indexedSourceSHA256": "435bbee8ae36c2ce393d2be7e6dab4e12f0e2ff1085b1c610b06d9ae686edff8",
+      "currentSourceSHA256": "435bbee8ae36c2ce393d2be7e6dab4e12f0e2ff1085b1c610b06d9ae686edff8",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/QuickReply.js",
+      "indexedSourceSHA256": "0209150d5a5366757eca23fbe911fee81c51c092aa4109e9ba1c7ce0f91fa46b",
+      "currentSourceSHA256": "0209150d5a5366757eca23fbe911fee81c51c092aa4109e9ba1c7ce0f91fa46b",
+      "indexedRegistrationCount": 70,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/QuickReplyConfig.js",
+      "indexedSourceSHA256": "0129d8b74159fb3357b2d7c355e6b1a3fa56bf8ee16171b4f4848b217bfbbe9f",
+      "currentSourceSHA256": "0129d8b74159fb3357b2d7c355e6b1a3fa56bf8ee16171b4f4848b217bfbbe9f",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/QuickReplyContextLink.js",
+      "indexedSourceSHA256": "dc913b36b9e5e50d10f50c6a487dd0bc6a87808ec1e0fb68ee8a7d91e7ff778e",
+      "currentSourceSHA256": "dc913b36b9e5e50d10f50c6a487dd0bc6a87808ec1e0fb68ee8a7d91e7ff778e",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/QuickReplySet.js",
+      "indexedSourceSHA256": "e0da437fde542002a7c0b4652a6cf4c4288923a35150d3d722f916eb7d32ab2e",
+      "currentSourceSHA256": "e0da437fde542002a7c0b4652a6cf4c4288923a35150d3d722f916eb7d32ab2e",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/QuickReplySetLink.js",
+      "indexedSourceSHA256": "7766d5b73f915350b981bcf17cd7aa18396a5bb0f12a23bf5d43b25ffd4c574f",
+      "currentSourceSHA256": "7766d5b73f915350b981bcf17cd7aa18396a5bb0f12a23bf5d43b25ffd4c574f",
+      "indexedRegistrationCount": 5,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/QuickReplySettings.js",
+      "indexedSourceSHA256": "6fd95d20b3cfc9e16e8831d3daad598edd770db3f8bcf9be0908f55bddd66e1c",
+      "currentSourceSHA256": "6fd95d20b3cfc9e16e8831d3daad598edd770db3f8bcf9be0908f55bddd66e1c",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/SlashCommandHandler.js",
+      "indexedSourceSHA256": "254ed00d7b141704003d86ffbe97fd638ed95d6bd521b4a57b0ac410eaca1b0e",
+      "currentSourceSHA256": "254ed00d7b141704003d86ffbe97fd638ed95d6bd521b4a57b0ac410eaca1b0e",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ButtonUi.js",
+      "indexedSourceSHA256": "ca3b18f1e2b3375c740914cec70e6b0ca39be0ae877c34f63da99de8181071a3",
+      "currentSourceSHA256": "ca3b18f1e2b3375c740914cec70e6b0ca39be0ae877c34f63da99de8181071a3",
+      "indexedRegistrationCount": 2,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/SettingsUi.js",
+      "indexedSourceSHA256": "4e112ec7cbd3bc80eb51f8b98d2246b407d82b94d1e9999a5c4bac7cff33067e",
+      "currentSourceSHA256": "4e112ec7cbd3bc80eb51f8b98d2246b407d82b94d1e9999a5c4bac7cff33067e",
+      "indexedRegistrationCount": 21,
+      "coverage": "full source file read; controlled clipboard callback execution",
+      "ranges": [
+        [
+          1,
+          541
+        ]
+      ],
+      "symbols": [
+        "render",
+        "rerender",
+        "prepareGeneralSettings",
+        "prepareGlobalSetList",
+        "prepareChatSetList",
+        "prepareCharacterSetList",
+        "prepareQrEditor",
+        "onQrSetChange",
+        "prepareDom",
+        "onIsEnabled",
+        "onIsCombined",
+        "onShowPopoutButton",
+        "onGlobalSetListSort",
+        "onChatSetListSort",
+        "updateOrder",
+        "onQrListSort",
+        "deleteQrSet",
+        "doDeleteQrSet",
+        "renameQrSet",
+        "addQrSet",
+        "importQrSet",
+        "importSingleQrSet",
+        "exportQrSet",
+        "duplicateQrSet",
+        "selectQrSet"
+      ],
+      "findings": [
+        "quick-reply-paste-late-owner",
+        "quick-reply-input-error-feedback"
+      ],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 72,
+          "endLine": 72,
+          "registration": "addEventListener",
+          "target": "this.isEnabled",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => this.onIsEnabled()",
+          "reviewed": false
+        },
+        {
+          "line": 76,
+          "endLine": 76,
+          "registration": "addEventListener",
+          "target": "this.isCombined",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => this.onIsCombined()",
+          "reviewed": false
+        },
+        {
+          "line": 80,
+          "endLine": 80,
+          "registration": "addEventListener",
+          "target": "this.showPopoutButton",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => this.onShowPopoutButton()",
+          "reviewed": false
+        },
+        {
+          "line": 127,
+          "endLine": 127,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-rename')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.renameQrSet()",
+          "reviewed": false
+        },
+        {
+          "line": 128,
+          "endLine": 128,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-new')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.addQrSet()",
+          "reviewed": false
+        },
+        {
+          "line": 131,
+          "endLine": 134,
+          "registration": "addEventListener",
+          "target": "importFile",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async () => {\n            await this.importQrSet(importFile.files);\n            importFile.value = null;\n        }",
+          "reviewed": false
+        },
+        {
+          "line": 135,
+          "endLine": 135,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-import')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => importFile.click()",
+          "reviewed": false
+        },
+        {
+          "line": 136,
+          "endLine": 136,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-export')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.exportQrSet()",
+          "reviewed": false
+        },
+        {
+          "line": 137,
+          "endLine": 137,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-duplicate')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.duplicateQrSet()",
+          "reviewed": false
+        },
+        {
+          "line": 138,
+          "endLine": 138,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-delete')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => this.deleteQrSet()",
+          "reviewed": false
+        },
+        {
+          "line": 139,
+          "endLine": 141,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-add')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n            this.currentQrSet.addQuickReply();\n        }",
+          "reviewed": false
+        },
+        {
+          "line": 142,
+          "endLine": 145,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-paste')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n            const text = await navigator.clipboard.readText();\n            this.currentQrSet.addQuickReplyFromText(text);\n        }",
+          "reviewed": false
+        },
+        {
+          "line": 146,
+          "endLine": 160,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--set-importQr')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n            const inp = document.createElement('input'); {\n                inp.type = 'file';\n                inp.accept = '.json';\n                inp.addEventListen",
+          "reviewed": false
+        },
+        {
+          "line": 150,
+          "endLine": 157,
+          "registration": "addEventListener",
+          "target": "inp",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async () => {\n                    if (inp.files.length > 0) {\n                        for (const file of inp.files) {\n                            const text = await file.text();\n  ",
+          "reviewed": false
+        },
+        {
+          "line": 163,
+          "endLine": 163,
+          "registration": "addEventListener",
+          "target": "this.currentSet",
+          "event": "'change'",
+          "selector": null,
+          "callback": "() => this.onQrSetChange()",
+          "reviewed": false
+        },
+        {
+          "line": 172,
+          "endLine": 176,
+          "registration": "addEventListener",
+          "target": "this.disableSend",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n            const qrs = this.currentQrSet;\n            qrs.disableSend = this.disableSend.checked;\n            qrs.save();\n        }",
+          "reviewed": false
+        },
+        {
+          "line": 178,
+          "endLine": 182,
+          "registration": "addEventListener",
+          "target": "this.placeBeforeInput",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n            const qrs = this.currentQrSet;\n            qrs.placeBeforeInput = this.placeBeforeInput.checked;\n            qrs.save();\n        }",
+          "reviewed": false
+        },
+        {
+          "line": 184,
+          "endLine": 188,
+          "registration": "addEventListener",
+          "target": "this.injectInput",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n            const qrs = this.currentQrSet;\n            qrs.injectInput = this.injectInput.checked;\n            qrs.save();\n        }",
+          "reviewed": false
+        },
+        {
+          "line": 193,
+          "endLine": 206,
+          "registration": "addEventListener",
+          "target": "this.color",
+          "event": "'change'",
+          "selector": null,
+          "callback": "(evt) => {\n            if (!this.dom.closest('body')) return;\n            const qrs = this.currentQrSet;\n            if (initialColorChange) {\n                initialColorChange = ",
+          "reviewed": false
+        },
+        {
+          "line": 208,
+          "endLine": 214,
+          "registration": "addEventListener",
+          "target": "this.dom.querySelector('#qr--colorClear')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "(evt) => {\n            const qrs = this.currentQrSet;\n            // @ts-ignore\n            this.color.color = 'transparent';\n            qrs.save();\n            this.currentQrSet.",
+          "reviewed": false
+        },
+        {
+          "line": 216,
+          "endLine": 221,
+          "registration": "addEventListener",
+          "target": "this.onlyBorderColor",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n            const qrs = this.currentQrSet;\n            qrs.onlyBorderColor = this.onlyBorderColor.checked;\n            qrs.save();\n            this.currentQrSet.updateColor",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ctx/ContextMenu.js",
+      "indexedSourceSHA256": "eede2492119fd88363d1bfb313645fbd3e3b53bbac26406afe071f9dfb084cd2",
+      "currentSourceSHA256": "eede2492119fd88363d1bfb313645fbd3e3b53bbac26406afe071f9dfb084cd2",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ctx/MenuHeader.js",
+      "indexedSourceSHA256": "47295cb6ed04438a1b8636d147ede318416641cb40c96c184433ab25ec29c27a",
+      "currentSourceSHA256": "47295cb6ed04438a1b8636d147ede318416641cb40c96c184433ab25ec29c27a",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ctx/MenuItem.js",
+      "indexedSourceSHA256": "8bdf5b03a7fc60aa535625ed6a85927aa55481cae3c222378b310a4296818d35",
+      "currentSourceSHA256": "8bdf5b03a7fc60aa535625ed6a85927aa55481cae3c222378b310a4296818d35",
+      "indexedRegistrationCount": 4,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/quick-reply/src/ui/ctx/SubMenu.js",
+      "indexedSourceSHA256": "c5372b7f48202773a652a3f13e508ed17736763d02fe3c7772a613cf72ee6492",
+      "currentSourceSHA256": "c5372b7f48202773a652a3f13e508ed17736763d02fe3c7772a613cf72ee6492",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/regex/engine.js",
+      "indexedSourceSHA256": "091bb3402a12552cf1754d6e4d2b44df38d3553aa374539896c716e78905d350",
+      "currentSourceSHA256": "091bb3402a12552cf1754d6e4d2b44df38d3553aa374539896c716e78905d350",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/regex/index.js",
+      "indexedSourceSHA256": "7a43b7d6e40a1b6f38a8a7c53a4d552e1aa56c4a13e893224fddf79b663ecb7f",
+      "currentSourceSHA256": "7a43b7d6e40a1b6f38a8a7c53a4d552e1aa56c4a13e893224fddf79b663ecb7f",
+      "indexedRegistrationCount": 51,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/shared.js",
+      "indexedSourceSHA256": "9e02f7ac1b881c2bf8f278ceb262348ae52f240188b77a24d78cee752c936aad",
+      "currentSourceSHA256": "9e02f7ac1b881c2bf8f278ceb262348ae52f240188b77a24d78cee752c936aad",
+      "indexedRegistrationCount": 4,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/stable-diffusion/index.js",
+      "indexedSourceSHA256": "ac397e8a731ef3a18d944ba30e9a85bade74b8890ba633eed39b681fb30fd2a3",
+      "currentSourceSHA256": "ac397e8a731ef3a18d944ba30e9a85bade74b8890ba633eed39b681fb30fd2a3",
+      "indexedRegistrationCount": 105,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/token-counter/index.js",
+      "indexedSourceSHA256": "5bfa108bf5050b80a1baec82f2bbbb52267c36b3875a862a7dae4cc498398ca5",
+      "currentSourceSHA256": "5bfa108bf5050b80a1baec82f2bbbb52267c36b3875a862a7dae4cc498398ca5",
+      "indexedRegistrationCount": 2,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/translate/index.js",
+      "indexedSourceSHA256": "90ef10dff55342287f49397a1f30b3248f50d0751b6e985ad9373abb29b93d82",
+      "currentSourceSHA256": "90ef10dff55342287f49397a1f30b3248f50d0751b6e985ad9373abb29b93d82",
+      "indexedRegistrationCount": 16,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/alltalk.js",
+      "indexedSourceSHA256": "2c934b3179c87534d20e9b1fb4ee75761e8753e2df32ad3fa0359135dd474534",
+      "currentSourceSHA256": "2c934b3179c87534d20e9b1fb4ee75761e8753e2df32ad3fa0359135dd474534",
+      "indexedRegistrationCount": 14,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/azure.js",
+      "indexedSourceSHA256": "5e302eaed29d9d8929269847c843170284a147909ec770f111843acd066824d8",
+      "currentSourceSHA256": "5e302eaed29d9d8929269847c843170284a147909ec770f111843acd066824d8",
+      "indexedRegistrationCount": 2,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/chatterbox.js",
+      "indexedSourceSHA256": "03f1b74783975d507d264bd2ccf5cf6cea8417b022ed95193df7174f47f31c64",
+      "currentSourceSHA256": "03f1b74783975d507d264bd2ccf5cf6cea8417b022ed95193df7174f47f31c64",
+      "indexedRegistrationCount": 11,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/chutes.js",
+      "indexedSourceSHA256": "58f888619658b67df714ef904a0feeb5ae14cd1e837601dc4556bd0b5552f0ef",
+      "currentSourceSHA256": "58f888619658b67df714ef904a0feeb5ae14cd1e837601dc4556bd0b5552f0ef",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/coqui.js",
+      "indexedSourceSHA256": "73c9f75d4694102ab40374126b38e3496005d40934e4204c606d7d2ee3af3ad0",
+      "currentSourceSHA256": "73c9f75d4694102ab40374126b38e3496005d40934e4204c606d7d2ee3af3ad0",
+      "indexedRegistrationCount": 6,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/cosyvoice.js",
+      "indexedSourceSHA256": "3f97d70de970c0232af2c0c9e80fa430bd707075ae6410c21ba190d4720f42aa",
+      "currentSourceSHA256": "3f97d70de970c0232af2c0c9e80fa430bd707075ae6410c21ba190d4720f42aa",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/edge.js",
+      "indexedSourceSHA256": "b16c5fc17892472ea95f3ba726338e1185b880c7fee2b2e03038c8a4de3c0d86",
+      "currentSourceSHA256": "b16c5fc17892472ea95f3ba726338e1185b880c7fee2b2e03038c8a4de3c0d86",
+      "indexedRegistrationCount": 2,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/electronhub.js",
+      "indexedSourceSHA256": "59bd649b16e5cde0deca4f380c73b799803379c55542bba5fccd1e8d3813f131",
+      "currentSourceSHA256": "59bd649b16e5cde0deca4f380c73b799803379c55542bba5fccd1e8d3813f131",
+      "indexedRegistrationCount": 17,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/elevenlabs.js",
+      "indexedSourceSHA256": "db720eb1cc2ebe1ff284fd25845b7be6ce4f68c9e00f26fc0283a12b972d6355",
+      "currentSourceSHA256": "db720eb1cc2ebe1ff284fd25845b7be6ce4f68c9e00f26fc0283a12b972d6355",
+      "indexedRegistrationCount": 10,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/google-native.js",
+      "indexedSourceSHA256": "af330c606c8cac8230edb3a0fae88f671cd0cb95d5448a7d5742c8e0c8a0c9d0",
+      "currentSourceSHA256": "af330c606c8cac8230edb3a0fae88f671cd0cb95d5448a7d5742c8e0c8a0c9d0",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/google-translate.js",
+      "indexedSourceSHA256": "0734ee5f95f553d9f15e6516a8990f1a40283282633102bf2fb8454aa5944457",
+      "currentSourceSHA256": "0734ee5f95f553d9f15e6516a8990f1a40283282633102bf2fb8454aa5944457",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/gpt-sovits-adapter.js",
+      "indexedSourceSHA256": "9549c7ca8d13c75a9069056d80604f7049ca891ac0f6f2b4f50200772e501bac",
+      "currentSourceSHA256": "9549c7ca8d13c75a9069056d80604f7049ca891ac0f6f2b4f50200772e501bac",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/gpt-sovits-v2.js",
+      "indexedSourceSHA256": "4e17627a7563d939b46dfa64a5255601dc8d5d66c1682329b50bc816da14eb8b",
+      "currentSourceSHA256": "4e17627a7563d939b46dfa64a5255601dc8d5d66c1682329b50bc816da14eb8b",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/gsvi.js",
+      "indexedSourceSHA256": "874b4899a5a03a40b0f95016320d508d88d77c351db99d85bf3f832750567fac",
+      "currentSourceSHA256": "874b4899a5a03a40b0f95016320d508d88d77c351db99d85bf3f832750567fac",
+      "indexedRegistrationCount": 9,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/index.js",
+      "indexedSourceSHA256": "20867e705d481ae2ed742cb66c016bda74426f6f1dd4d3cda1cc14d2c9bc9d91",
+      "currentSourceSHA256": "20867e705d481ae2ed742cb66c016bda74426f6f1dd4d3cda1cc14d2c9bc9d91",
+      "indexedRegistrationCount": 32,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/kokoro-worker.js",
+      "indexedSourceSHA256": "f1898c34b17696b66fbdb295dea11910602db7ee61fb06f2eab88c649936c6f3",
+      "currentSourceSHA256": "f1898c34b17696b66fbdb295dea11910602db7ee61fb06f2eab88c649936c6f3",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/kokoro.js",
+      "indexedSourceSHA256": "e4ee992788993ab15bb021c3bf7af589caebcc904ed0deb1010d2e1239ec5c7f",
+      "currentSourceSHA256": "e4ee992788993ab15bb021c3bf7af589caebcc904ed0deb1010d2e1239ec5c7f",
+      "indexedRegistrationCount": 4,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/minimax.js",
+      "indexedSourceSHA256": "aa2cbb0f37bce208b8e2e4671aa603fcda98b8028159723f0510d5e782455e38",
+      "currentSourceSHA256": "aa2cbb0f37bce208b8e2e4671aa603fcda98b8028159723f0510d5e782455e38",
+      "indexedRegistrationCount": 16,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/novel.js",
+      "indexedSourceSHA256": "a9a8da1d5bea23d76a16bb03646853df9779152b23824134260a156311aad8fa",
+      "currentSourceSHA256": "a9a8da1d5bea23d76a16bb03646853df9779152b23824134260a156311aad8fa",
+      "indexedRegistrationCount": 2,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/openai-compatible.js",
+      "indexedSourceSHA256": "030b90e54a6035b4e6f942f642cdde61f1f485e5bb630783e8bb6c9b0efe995c",
+      "currentSourceSHA256": "030b90e54a6035b4e6f942f642cdde61f1f485e5bb630783e8bb6c9b0efe995c",
+      "indexedRegistrationCount": 5,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/openai.js",
+      "indexedSourceSHA256": "4551f156195bb74523bfe8f841143a145d4a0d8cf7e889a89f8fb586f0ce64cd",
+      "currentSourceSHA256": "4551f156195bb74523bfe8f841143a145d4a0d8cf7e889a89f8fb586f0ce64cd",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/pollinations.js",
+      "indexedSourceSHA256": "ea6f5b113dc727a70dff2b0ae3bf0c0b379558f7684c369abcea88bcad8e7268",
+      "currentSourceSHA256": "ea6f5b113dc727a70dff2b0ae3bf0c0b379558f7684c369abcea88bcad8e7268",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/sbvits2.js",
+      "indexedSourceSHA256": "cd2af179f738a9b6290fb0764fdd099f663a27fa1b8d61dc2c34da0cf1d0e43a",
+      "currentSourceSHA256": "cd2af179f738a9b6290fb0764fdd099f663a27fa1b8d61dc2c34da0cf1d0e43a",
+      "indexedRegistrationCount": 12,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/silerotts.js",
+      "indexedSourceSHA256": "e31091aee3eefc85afee91d661462ecab62e52736bafb87a44d13105020328d2",
+      "currentSourceSHA256": "e31091aee3eefc85afee91d661462ecab62e52736bafb87a44d13105020328d2",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/speecht5.js",
+      "indexedSourceSHA256": "974ea8560d390d802af6b33184d831a8d59191bc3576451a5efef86f312799c8",
+      "currentSourceSHA256": "974ea8560d390d802af6b33184d831a8d59191bc3576451a5efef86f312799c8",
+      "indexedRegistrationCount": 4,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/system.js",
+      "indexedSourceSHA256": "8830d15cfb19b59231c9115bf5be93b56d7e3da9b2eb066a7b3526f6bb288983",
+      "currentSourceSHA256": "8830d15cfb19b59231c9115bf5be93b56d7e3da9b2eb066a7b3526f6bb288983",
+      "indexedRegistrationCount": 5,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/tts-webui.js",
+      "indexedSourceSHA256": "05491e5e5787510aff2e5f60a6d62b9984fd3589fd7e1675613732d4d622f9d9",
+      "currentSourceSHA256": "05491e5e5787510aff2e5f60a6d62b9984fd3589fd7e1675613732d4d622f9d9",
+      "indexedRegistrationCount": 21,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/vits.js",
+      "indexedSourceSHA256": "bb415917b91192519b97959f29f1d9c186b575b845e92237d4bc767a97e7d6f1",
+      "currentSourceSHA256": "bb415917b91192519b97959f29f1d9c186b575b845e92237d4bc767a97e7d6f1",
+      "indexedRegistrationCount": 14,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/volcengine.js",
+      "indexedSourceSHA256": "f9b879bb38212e95fbfc045ea0b0ce1943dde55d6d88ed90a9a65b07bfd34906",
+      "currentSourceSHA256": "f9b879bb38212e95fbfc045ea0b0ce1943dde55d6d88ed90a9a65b07bfd34906",
+      "indexedRegistrationCount": 7,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/tts/xtts.js",
+      "indexedSourceSHA256": "780ef92574e4e81da3d57aba92ef76ea7b5edaa1225a657babb57d32ac47194d",
+      "currentSourceSHA256": "780ef92574e4e81da3d57aba92ef76ea7b5edaa1225a657babb57d32ac47194d",
+      "indexedRegistrationCount": 11,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/vectors/index.js",
+      "indexedSourceSHA256": "f107cef68090ac3981a5330cd10db8bb20ca4b9118e5ed5acb2b519e244dba4d",
+      "currentSourceSHA256": "f107cef68090ac3981a5330cd10db8bb20ca4b9118e5ed5acb2b519e244dba4d",
+      "indexedRegistrationCount": 71,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/extensions/vectors/webllm.js",
+      "indexedSourceSHA256": "00fa47437cb21157777e7d122ac681024d504a7a156683761c975eb795e09cd0",
+      "currentSourceSHA256": "00fa47437cb21157777e7d122ac681024d504a7a156683761c975eb795e09cd0",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/f-localStorage.js",
+      "indexedSourceSHA256": "f8308454f85995a4f5f0206975c649a4fc85f60b23f867728eaba995efe0c1f0",
+      "currentSourceSHA256": "f8308454f85995a4f5f0206975c649a4fc85f60b23f867728eaba995efe0c1f0",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/filters.js",
+      "indexedSourceSHA256": "e57044b3f05458b6e21cd93260eb84f7fc12b5117c0e4d0dfdd02a16314d7c59",
+      "currentSourceSHA256": "e57044b3f05458b6e21cd93260eb84f7fc12b5117c0e4d0dfdd02a16314d7c59",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/generation-transport.js",
+      "indexedSourceSHA256": "f12971b6ac06d9599eda3fcb5c500f0827ef32194b0c6103f65b7beb0a762320",
+      "currentSourceSHA256": "f12971b6ac06d9599eda3fcb5c500f0827ef32194b0c6103f65b7beb0a762320",
+      "indexedRegistrationCount": 2,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/group-chats.js",
+      "indexedSourceSHA256": "354c5852d02614b881437c72facb74ca32e4dd024f471d66cef8aef0fb24d44d",
+      "currentSourceSHA256": "354c5852d02614b881437c72facb74ca32e4dd024f471d66cef8aef0fb24d44d",
+      "indexedRegistrationCount": 24,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/horde.js",
+      "indexedSourceSHA256": "f969d1aef5ab653127610e520c6f73ef151869517d6a4642865eab2f93f1254a",
+      "currentSourceSHA256": "f969d1aef5ab653127610e520c6f73ef151869517d6a4642865eab2f93f1254a",
+      "indexedRegistrationCount": 7,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/i18n.js",
+      "indexedSourceSHA256": "ba05c8722f1a67e611f3864398f42ad7791deddf95af41756f6341238023762b",
+      "currentSourceSHA256": "ba05c8722f1a67e611f3864398f42ad7791deddf95af41756f6341238023762b",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/input-md-formatting.js",
+      "indexedSourceSHA256": "a1f9e1bb4055ba48c443fc75f40f41e46c064bcbe9d23db4ec94b89f3636faf8",
+      "currentSourceSHA256": "a1f9e1bb4055ba48c443fc75f40f41e46c064bcbe9d23db4ec94b89f3636faf8",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/instruct-mode.js",
+      "indexedSourceSHA256": "f54feef66a7b9e5b62878ab0189aefa60f8f8e178d2faa338501b4bb3228baae",
+      "currentSourceSHA256": "f54feef66a7b9e5b62878ab0189aefa60f8f8e178d2faa338501b4bb3228baae",
+      "indexedRegistrationCount": 7,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/itemized-captures.js",
+      "indexedSourceSHA256": "7cc3e7e882fbcce85b2fd56386ab6717cf8e92e1e1f64132ffcc05cbed3b524f",
+      "currentSourceSHA256": "7cc3e7e882fbcce85b2fd56386ab6717cf8e92e1e1f64132ffcc05cbed3b524f",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/itemized-prompts.js",
+      "indexedSourceSHA256": "945789e8dedfaa154b5973265e6a37b9e50ce9329b7327c1391f56913f46d257",
+      "currentSourceSHA256": "945789e8dedfaa154b5973265e6a37b9e50ce9329b7327c1391f56913f46d257",
+      "indexedRegistrationCount": 6,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/kai-settings.js",
+      "indexedSourceSHA256": "dccfadb327d70d7be67f4ccfc419f3040d5efc60ba521c4246857a1444b98beb",
+      "currentSourceSHA256": "dccfadb327d70d7be67f4ccfc419f3040d5efc60ba521c4246857a1444b98beb",
+      "indexedRegistrationCount": 6,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/keyboard.js",
+      "indexedSourceSHA256": "03ce223e92685cd03178fc0104bccf36c6477288d488d3375dcfc90f590ae149",
+      "currentSourceSHA256": "03ce223e92685cd03178fc0104bccf36c6477288d488d3375dcfc90f590ae149",
+      "indexedRegistrationCount": 2,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/loader.js",
+      "indexedSourceSHA256": "74f5c655cd04df13976804bfea153fffcd6997c72e7c18437ec692238827680d",
+      "currentSourceSHA256": "74f5c655cd04df13976804bfea153fffcd6997c72e7c18437ec692238827680d",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/login.js",
+      "indexedSourceSHA256": "52fac085246abbf8da42ed2dd5461c019addf4bec189fe1ff48550411fa298e3",
+      "currentSourceSHA256": "52fac085246abbf8da42ed2dd5461c019addf4bec189fe1ff48550411fa298e3",
+      "indexedRegistrationCount": 9,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/logit-bias.js",
+      "indexedSourceSHA256": "8fb0375f35abcd0f5ea64d7253f9092de2a7218d528442ef9f1319abaa66241e",
+      "currentSourceSHA256": "8fb0375f35abcd0f5ea64d7253f9092de2a7218d528442ef9f1319abaa66241e",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/logprobs.js",
+      "indexedSourceSHA256": "970780e6384070ae177dfe13bb8e33f17758a21c8d4bff21a49830987da038d1",
+      "currentSourceSHA256": "970780e6384070ae177dfe13bb8e33f17758a21c8d4bff21a49830987da038d1",
+      "indexedRegistrationCount": 12,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros.js",
+      "indexedSourceSHA256": "1926c394e22a35827f594a4c4bfb044ed4c80dcc911680875991a880f8e53f11",
+      "currentSourceSHA256": "1926c394e22a35827f594a4c4bfb044ed4c80dcc911680875991a880f8e53f11",
+      "indexedRegistrationCount": 2,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/definitions/chat-macros.js",
+      "indexedSourceSHA256": "0e5c005533b64e8a93bc0cff4e58bc33a9710db49b5cb279b2e1451e9d31f4e0",
+      "currentSourceSHA256": "0e5c005533b64e8a93bc0cff4e58bc33a9710db49b5cb279b2e1451e9d31f4e0",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/definitions/core-macros.js",
+      "indexedSourceSHA256": "a45ced11240d0174b75f1cc31a17c4670236e96be92a7d2264cf9a0802c37a7f",
+      "currentSourceSHA256": "a45ced11240d0174b75f1cc31a17c4670236e96be92a7d2264cf9a0802c37a7f",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/definitions/env-macros.js",
+      "indexedSourceSHA256": "14ff92d8ee9fe12d3ded8914b714cea239342d458dbe6f5be32f00c6d2f1da58",
+      "currentSourceSHA256": "14ff92d8ee9fe12d3ded8914b714cea239342d458dbe6f5be32f00c6d2f1da58",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/definitions/instruct-macros.js",
+      "indexedSourceSHA256": "2c2bce3ec27ca24469ee2eb6ea09077e79e98037e3dc42940951f5a81743b75f",
+      "currentSourceSHA256": "2c2bce3ec27ca24469ee2eb6ea09077e79e98037e3dc42940951f5a81743b75f",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/definitions/state-macros.js",
+      "indexedSourceSHA256": "6e21a98c580e4c79e95aafa2ffec048f3296f2a7a5c0ff3a60bcae3a7e5073b8",
+      "currentSourceSHA256": "6e21a98c580e4c79e95aafa2ffec048f3296f2a7a5c0ff3a60bcae3a7e5073b8",
+      "indexedRegistrationCount": 2,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/definitions/time-macros.js",
+      "indexedSourceSHA256": "cee858a3549285f2b4239c8941b54eb02863bea0dbc8ccfc07aec40ba83f3e06",
+      "currentSourceSHA256": "cee858a3549285f2b4239c8941b54eb02863bea0dbc8ccfc07aec40ba83f3e06",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/definitions/variable-macros.js",
+      "indexedSourceSHA256": "ea6ce2cc4595440c55e7921147cff1a17004236241ad5add4a84d82372ed179c",
+      "currentSourceSHA256": "ea6ce2cc4595440c55e7921147cff1a17004236241ad5add4a84d82372ed179c",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroBrowser.js",
+      "indexedSourceSHA256": "ba5e6be53b52641e878bca8204d69e866d85c8ca8890f87db018f3a84ebd960f",
+      "currentSourceSHA256": "ba5e6be53b52641e878bca8204d69e866d85c8ca8890f87db018f3a84ebd960f",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroCstWalker.js",
+      "indexedSourceSHA256": "52e9fd2af42d6b54dfbd7ce9e8dc12390e210d4a4921fed55c8a589292cdb766",
+      "currentSourceSHA256": "52e9fd2af42d6b54dfbd7ce9e8dc12390e210d4a4921fed55c8a589292cdb766",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroDiagnostics.js",
+      "indexedSourceSHA256": "35db082a5f8b44b599118b641088d068de6fc456c477703ea10f28a9396a6c72",
+      "currentSourceSHA256": "35db082a5f8b44b599118b641088d068de6fc456c477703ea10f28a9396a6c72",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroEngine.js",
+      "indexedSourceSHA256": "267a4f8dea81854b825aaf0423d90a0a9d48d3a123ea118bbac11c9ca5121c4b",
+      "currentSourceSHA256": "267a4f8dea81854b825aaf0423d90a0a9d48d3a123ea118bbac11c9ca5121c4b",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroEnv.types.js",
+      "indexedSourceSHA256": "143d10868052c8d773a1d244d5ee6ec4393665022396cae959b0b28a58051738",
+      "currentSourceSHA256": "143d10868052c8d773a1d244d5ee6ec4393665022396cae959b0b28a58051738",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroEnvBuilder.js",
+      "indexedSourceSHA256": "95a3cfef74e2987120dfe124ae876339d99d75c950293106c9a671ef77498506",
+      "currentSourceSHA256": "95a3cfef74e2987120dfe124ae876339d99d75c950293106c9a671ef77498506",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroFlags.js",
+      "indexedSourceSHA256": "dfa56918fdc78648baad8343fba77d98d7bf80aec244d4ac97d4a77952cb767c",
+      "currentSourceSHA256": "dfa56918fdc78648baad8343fba77d98d7bf80aec244d4ac97d4a77952cb767c",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroLexer.js",
+      "indexedSourceSHA256": "b213046d93b21a4a024b97145628f1f7c25d759578e64fbbf1605f30fc636d08",
+      "currentSourceSHA256": "b213046d93b21a4a024b97145628f1f7c25d759578e64fbbf1605f30fc636d08",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroParser.js",
+      "indexedSourceSHA256": "e0f94a641c4fd7ec41e75c363303e56f34f297959413f419f9328058c4221f11",
+      "currentSourceSHA256": "e0f94a641c4fd7ec41e75c363303e56f34f297959413f419f9328058c4221f11",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/engine/MacroRegistry.js",
+      "indexedSourceSHA256": "d02328f1886e896d328a5603b9a135ebaf68fd0746070e2634b697857de283f2",
+      "currentSourceSHA256": "d02328f1886e896d328a5603b9a135ebaf68fd0746070e2634b697857de283f2",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/macros/macro-system.js",
+      "indexedSourceSHA256": "de20c4240785bc6fbb03ffa34506014e287bb65dd2fe41a05a08a029896c3d3e",
+      "currentSourceSHA256": "de20c4240785bc6fbb03ffa34506014e287bb65dd2fe41a05a08a029896c3d3e",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/message-formatter.js",
+      "indexedSourceSHA256": "f09a5f5051b8dab6ce5f3a53889c29334804b0ece04b64b8bfed96b0e480a16d",
+      "currentSourceSHA256": "f09a5f5051b8dab6ce5f3a53889c29334804b0ece04b64b8bfed96b0e480a16d",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/nai-settings.js",
+      "indexedSourceSHA256": "2a056c50fc1743d00e016a65796e4804d065020c837620cb8cb3950c9b2f235e",
+      "currentSourceSHA256": "2a056c50fc1743d00e016a65796e4804d065020c837620cb8cb3950c9b2f235e",
+      "indexedRegistrationCount": 11,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/openai.js",
+      "indexedSourceSHA256": "de777f1372a3dd1343610c93144beda86ef23d44f2861f05391ad6cdb26f8486",
+      "currentSourceSHA256": "af63a6b6ba3d65a1ff8123d7c0fdfa00137ab46361a70554e042a37c422a6768",
+      "indexedRegistrationCount": 149,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/personas.js",
+      "indexedSourceSHA256": "9cef6f9ad424f9c59628b039a65b8e141ffa71aa4519c7108e8c33b5d97f090c",
+      "currentSourceSHA256": "9cef6f9ad424f9c59628b039a65b8e141ffa71aa4519c7108e8c33b5d97f090c",
+      "indexedRegistrationCount": 30,
+      "coverage": "partial source: avatar upload, title/name editing, description change and initialization",
+      "ranges": [
+        [
+          386,
+          462
+        ],
+        [
+          821,
+          880
+        ],
+        [
+          1206,
+          1240
+        ],
+        [
+          2907,
+          3007
+        ]
+      ],
+      "symbols": [
+        "changeUserAvatar",
+        "editPersonaTitle",
+        "renamePersona",
+        "onPersonaDescriptionInput",
+        "initPersonas"
+      ],
+      "findings": [],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 2922,
+          "endLine": 2922,
+          "registration": "on",
+          "target": "$('#persona_delete_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "deleteUserAvatar",
+          "reviewed": false
+        },
+        {
+          "line": 2923,
+          "endLine": 2923,
+          "registration": "on",
+          "target": "$('#lock_persona_default')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => togglePersonaLock('default')",
+          "reviewed": false
+        },
+        {
+          "line": 2924,
+          "endLine": 2924,
+          "registration": "on",
+          "target": "$('#lock_user_name')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => togglePersonaLock('chat')",
+          "reviewed": false
+        },
+        {
+          "line": 2925,
+          "endLine": 2925,
+          "registration": "on",
+          "target": "$('#lock_persona_to_char')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => togglePersonaLock('character')",
+          "reviewed": false
+        },
+        {
+          "line": 2926,
+          "endLine": 2926,
+          "registration": "on",
+          "target": "$('#create_dummy_persona')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "createDummyPersona",
+          "reviewed": false
+        },
+        {
+          "line": 2927,
+          "endLine": 2927,
+          "registration": "on",
+          "target": "$('#persona_description')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onPersonaDescriptionInput",
+          "reviewed": false
+        },
+        {
+          "line": 2928,
+          "endLine": 2928,
+          "registration": "on",
+          "target": "$('#persona_description_position')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onPersonaDescriptionPositionInput",
+          "reviewed": false
+        },
+        {
+          "line": 2929,
+          "endLine": 2929,
+          "registration": "on",
+          "target": "$('#persona_depth_value')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onPersonaDescriptionDepthValueInput",
+          "reviewed": false
+        },
+        {
+          "line": 2930,
+          "endLine": 2930,
+          "registration": "on",
+          "target": "$('#persona_depth_role')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "onPersonaDescriptionDepthRoleInput",
+          "reviewed": false
+        },
+        {
+          "line": 2931,
+          "endLine": 2931,
+          "registration": "on",
+          "target": "$('#persona_lore_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "onPersonaLoreButtonClick",
+          "reviewed": false
+        },
+        {
+          "line": 2935,
+          "endLine": 2943,
+          "registration": "on",
+          "target": "$('#persona-management-dropdown')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async function () {\n        const target = $(this).find(':selected').attr('id');\n        $(this).prop('selectedIndex', 0);\n        switch (target) {\n            case 'persona_loreb",
+          "reviewed": false
+        },
+        {
+          "line": 2944,
+          "endLine": 2944,
+          "registration": "on",
+          "target": "$('#personas_backup')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "onBackupPersonas",
+          "reviewed": false
+        },
+        {
+          "line": 2945,
+          "endLine": 2945,
+          "registration": "on",
+          "target": "$('#personas_restore')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => $('#personas_restore_input').trigger('click')",
+          "reviewed": false
+        },
+        {
+          "line": 2946,
+          "endLine": 2946,
+          "registration": "on",
+          "target": "$('#personas_restore_input')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "onPersonasRestoreInput",
+          "reviewed": false
+        },
+        {
+          "line": 2947,
+          "endLine": 2953,
+          "registration": "on",
+          "target": "$('#persona_sort_order').val(power_user.persona_sort_order)",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        const value = String($(this).val());\n        // Save sort order, but do not save search sorting, as this is a temporary sorting option\n        if (value !== '",
+          "reviewed": false
+        },
+        {
+          "line": 2954,
+          "endLine": 2958,
+          "registration": "on",
+          "target": "$('#persona_grid_toggle')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        const state = accountStorage.getItem(GRID_STORAGE_KEY) === 'true';\n        accountStorage.setItem(GRID_STORAGE_KEY, String(!state));\n        switchPersonaGridView()",
+          "reviewed": false
+        },
+        {
+          "line": 2964,
+          "endLine": 2967,
+          "registration": "on",
+          "target": "$('#persona_search_bar')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        const searchQuery = String($(this).val());\n        debouncedPersonaSearch(searchQuery);\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 2969,
+          "endLine": 2969,
+          "registration": "on",
+          "target": "$('#sync_name_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => await syncUserNameToPersona()",
+          "reviewed": false
+        },
+        {
+          "line": 2970,
+          "endLine": 2970,
+          "registration": "on",
+          "target": "$('#avatar_upload_file')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "changeUserAvatar",
+          "reviewed": false
+        },
+        {
+          "line": 2972,
+          "endLine": 2975,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'click'",
+          "selector": "#user_avatar_block .avatar-container",
+          "callback": "async function () {\n        const imgfile = $(this).attr('data-avatar-id');\n        await setUserAvatar(imgfile);\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 2977,
+          "endLine": 2977,
+          "registration": "on",
+          "target": "$('#persona_rename_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => renamePersona(user_avatar)",
+          "reviewed": false
+        },
+        {
+          "line": 2979,
+          "endLine": 2982,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'click'",
+          "selector": "#user_avatar_block .avatar_upload",
+          "callback": "function () {\n        $('#avatar_upload_overwrite').val('');\n        $('#avatar_upload_file').trigger('click');\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 2984,
+          "endLine": 2984,
+          "registration": "on",
+          "target": "$('#persona_duplicate_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => duplicatePersona(user_avatar)",
+          "reviewed": false
+        },
+        {
+          "line": 2986,
+          "endLine": 2994,
+          "registration": "on",
+          "target": "$('#persona_set_image_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "function () {\n        if (!user_avatar) {\n            console.log('no imgfile');\n            return;\n        }\n\n        $('#avatar_upload_overwrite').val(user_avatar);\n        $('#",
+          "reviewed": false
+        },
+        {
+          "line": 2996,
+          "endLine": 2996,
+          "registration": "on",
+          "target": "$('#char_connections_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "showCharConnections",
+          "reviewed": false
+        },
+        {
+          "line": 2998,
+          "endLine": 3002,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHARACTER_MANAGEMENT_DROPDOWN",
+          "selector": null,
+          "callback": "(target) => {\n        if (target === 'convert_to_persona') {\n            convertCharacterToPersona();\n        }\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 3003,
+          "endLine": 3003,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHAT_CHANGED",
+          "selector": null,
+          "callback": "updatePersonaUIStates",
+          "reviewed": false
+        },
+        {
+          "line": 3004,
+          "endLine": 3004,
+          "registration": "on",
+          "target": "eventSource",
+          "event": "event_types.CHAT_CHANGED",
+          "selector": null,
+          "callback": "loadPersonaForCurrentChat",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/popup.js",
+      "indexedSourceSHA256": "b36f36824c52b9d70d8db078f223e1c5ee4997a050934157e6e405879d6f46fd",
+      "currentSourceSHA256": "a91253ab77f14bfdd82dc65577e03bf58f6f4501c7a8ca660211ad4900a1c723",
+      "indexedRegistrationCount": 7,
+      "coverage": "implementation lifecycle ranges and callback bodies read; controlled completion/wrapper execution",
+      "ranges": [
+        [
+          1,
+          220
+        ],
+        [
+          220,
+          640
+        ],
+        [
+          640,
+          972
+        ]
+      ],
+      "symbols": [
+        "Popup.constructor",
+        "show",
+        "setAutoFocus",
+        "complete",
+        "completeAffirmative",
+        "completeNegative",
+        "completeCancelled",
+        "#hide",
+        "cancelListener",
+        "closeListener",
+        "keyListener",
+        "fixToastrForDialogs"
+      ],
+      "findings": [
+        "popup-force-close-cleanup",
+        "popup-async-close-reentry"
+      ],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 320,
+          "endLine": 320,
+          "registration": "addEventListener",
+          "target": "buttonElement",
+          "event": "'click'",
+          "selector": null,
+          "callback": "button.action",
+          "reviewed": false
+        },
+        {
+          "line": 419,
+          "endLine": 431,
+          "registration": "addEventListener",
+          "target": "inputElement",
+          "event": "'change'",
+          "selector": null,
+          "callback": "() => {\n                    const value = parseFloat(inputElement.value);\n                    if (isNaN(value)) return;\n\n                    const min = Number.isFinite(input.min) ",
+          "reviewed": false
+        },
+        {
+          "line": 543,
+          "endLine": 543,
+          "registration": "addEventListener",
+          "target": "this.dlg",
+          "event": "'focusin'",
+          "selector": null,
+          "callback": "(evt) => { if (evt.target instanceof HTMLElement && evt.target != this.dlg) this.lastFocus = evt.target; }",
+          "reviewed": false
+        },
+        {
+          "line": 557,
+          "endLine": 557,
+          "registration": "addEventListener",
+          "target": "resultControl",
+          "event": "type",
+          "selector": null,
+          "callback": "async () => await this.complete(result)",
+          "reviewed": false
+        },
+        {
+          "line": 613,
+          "endLine": 613,
+          "registration": "addEventListener",
+          "target": "this.dlg",
+          "event": "'cancel'",
+          "selector": null,
+          "callback": "cancelListener.bind(this)",
+          "reviewed": false
+        },
+        {
+          "line": 626,
+          "endLine": 626,
+          "registration": "addEventListener",
+          "target": "this.dlg",
+          "event": "'close'",
+          "selector": null,
+          "callback": "closeListener.bind(this)",
+          "reviewed": false
+        },
+        {
+          "line": 670,
+          "endLine": 670,
+          "registration": "addEventListener",
+          "target": "this.dlg",
+          "event": "'keydown'",
+          "selector": null,
+          "callback": "keyListener.bind(this)",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/power-user.js",
+      "indexedSourceSHA256": "9be29c2ecaca5e86bb98749fe922269ded114da361be53ff7f86fb98af0eb0b0",
+      "currentSourceSHA256": "9be29c2ecaca5e86bb98749fe922269ded114da361be53ff7f86fb98af0eb0b0",
+      "indexedRegistrationCount": 154,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/preset-manager.js",
+      "indexedSourceSHA256": "6a4bf761140e105069f251e8db8f6a68144d6236b5175b452494a725a9a4df4c",
+      "currentSourceSHA256": "6a4bf761140e105069f251e8db8f6a68144d6236b5175b452494a725a9a4df4c",
+      "indexedRegistrationCount": 12,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/reasoning.js",
+      "indexedSourceSHA256": "c489812f2598d1a4879b1a7287abde092741adafdf67f5b15cf18f2dd71d82d1",
+      "currentSourceSHA256": "c489812f2598d1a4879b1a7287abde092741adafdf67f5b15cf18f2dd71d82d1",
+      "indexedRegistrationCount": 24,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/request-compression.js",
+      "indexedSourceSHA256": "0222d3418ab2ac604f7170d924575bc1419c31259c028cf4164c0dc566c4c50f",
+      "currentSourceSHA256": "0222d3418ab2ac604f7170d924575bc1419c31259c028cf4164c0dc566c4c50f",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/samplerSelect.js",
+      "indexedSourceSHA256": "0b01c4c6deb63e69eedcfbbb30ace79a6b02e23fe048ce21fdf34be0749cee53",
+      "currentSourceSHA256": "0b01c4c6deb63e69eedcfbbb30ace79a6b02e23fe048ce21fdf34be0749cee53",
+      "indexedRegistrationCount": 4,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/scrapers.js",
+      "indexedSourceSHA256": "d2d98a6597a00763b06c610e29346412d61a73dbf913bbc69d76808a145f7d4a",
+      "currentSourceSHA256": "d2d98a6597a00763b06c610e29346412d61a73dbf913bbc69d76808a145f7d4a",
+      "indexedRegistrationCount": 9,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/secrets.js",
+      "indexedSourceSHA256": "ae6a701e2e6d5a764963843e5fdb251077118a18c11986105967a86b4da432d5",
+      "currentSourceSHA256": "ae6a701e2e6d5a764963843e5fdb251077118a18c11986105967a86b4da432d5",
+      "indexedRegistrationCount": 13,
+      "coverage": "partial source: key-manager dialog/list action registration bodies only; no secret values or user data read",
+      "ranges": [
+        [
+          650,
+          754
+        ]
+      ],
+      "symbols": [
+        "openKeyManagerDialog",
+        "renderSecretsList",
+        "scrollToActive"
+      ],
+      "findings": [],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 662,
+          "endLine": 689,
+          "registration": "on",
+          "target": "template.find('button[data-action=\"add-secret\"]')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function () {\n        let label = '';\n        let result = POPUP_RESULT.CANCELLED;\n        const value = await Popup.show.input(t`Add Secret`, t`Secret value (can be empty):`",
+          "reviewed": false
+        },
+        {
+          "line": 705,
+          "endLine": 708,
+          "registration": "on",
+          "target": "itemTemplate.find('[data-action=\"copy-id\"]')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function () {\n                await copyText(secret.id);\n                toastr.info(t`Secret ID copied to clipboard.`);\n            }",
+          "reviewed": false
+        },
+        {
+          "line": 709,
+          "endLine": 712,
+          "registration": "on",
+          "target": "itemTemplate.find('button[data-action=\"rotate-secret\"]')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function () {\n                await rotateSecret(key, secret.id);\n                await renderSecretsList();\n            }",
+          "reviewed": false
+        },
+        {
+          "line": 713,
+          "endLine": 721,
+          "registration": "on",
+          "target": "itemTemplate.find('button[data-action=\"copy-secret\"]')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function () {\n                const secretValue = await findSecret(key, secret.id);\n                if (secretValue === null) {\n                    toastr.error(t`The key exp",
+          "reviewed": false
+        },
+        {
+          "line": 722,
+          "endLine": 729,
+          "registration": "on",
+          "target": "itemTemplate.find('button[data-action=\"rename-secret\"]')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function () {\n                const label = await Popup.show.input(t`Rename Secret`, t`Enter new label for the secret:`, secret?.label || getLabel());\n                if (!la",
+          "reviewed": false
+        },
+        {
+          "line": 730,
+          "endLine": 737,
+          "registration": "on",
+          "target": "itemTemplate.find('button[data-action=\"delete-secret\"]')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function () {\n                const confirm = await Popup.show.confirm(t`Delete Secret: ${secret?.label}`, t`Are you sure you want to delete this secret? This action cannot b",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/server-history.js",
+      "indexedSourceSHA256": "16ee92e65c0869f033bf2dd7276c7fef895c5c6600cd269a4a3f060e2d52ad72",
+      "currentSourceSHA256": "16ee92e65c0869f033bf2dd7276c7fef895c5c6600cd269a4a3f060e2d52ad72",
+      "indexedRegistrationCount": 2,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "indexedSourceSHA256": "d78e5f47296b883b5d1e4a2b508557a8d9a84a9d59e744174fc7ad4a38480e4c",
+      "currentSourceSHA256": "d78e5f47296b883b5d1e4a2b508557a8d9a84a9d59e744174fc7ad4a38480e4c",
+      "indexedRegistrationCount": 15,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/setting-search.js",
+      "indexedSourceSHA256": "4007056588f4226b3bb547cd4391a07d5da14e5353446002ffdb0a7e5e77d5f3",
+      "currentSourceSHA256": "4007056588f4226b3bb547cd4391a07d5da14e5353446002ffdb0a7e5e77d5f3",
+      "indexedRegistrationCount": 1,
+      "coverage": "full source file read, no defect identified in this static pass",
+      "ranges": [
+        [
+          1,
+          66
+        ]
+      ],
+      "symbols": [
+        "searchSettings",
+        "isParentHeader",
+        "highlightMatchingElements",
+        "removeHighlighting",
+        "initSettingsSearch"
+      ],
+      "findings": [],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 53,
+          "endLine": 53,
+          "registration": "on",
+          "target": "$('#settingsSearch')",
+          "event": "'input change'",
+          "selector": null,
+          "callback": "searchSettings",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/showdown-exclusion.js",
+      "indexedSourceSHA256": "f861bbf3b97350613e824504907324c48c7fcde22709b267607d6956e90112cb",
+      "currentSourceSHA256": "f861bbf3b97350613e824504907324c48c7fcde22709b267607d6956e90112cb",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/showdown-underscore.js",
+      "indexedSourceSHA256": "ffbb3fd54f7a0d3c973c8bf839188c767ed200948f00393875242bbce01e4835",
+      "currentSourceSHA256": "ffbb3fd54f7a0d3c973c8bf839188c767ed200948f00393875242bbce01e4835",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands.js",
+      "indexedSourceSHA256": "3da6aa888a52d09fd5d54eadee1724b7c3b7dbc208a3d56fe98c7d23d86fcde3",
+      "currentSourceSHA256": "3da6aa888a52d09fd5d54eadee1724b7c3b7dbc208a3d56fe98c7d23d86fcde3",
+      "indexedRegistrationCount": 9,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/AbstractEventTarget.js",
+      "indexedSourceSHA256": "cd1dcd29778d7017d05460c9c69cdd809264a908c315b950d7676a7335382997",
+      "currentSourceSHA256": "cd1dcd29778d7017d05460c9c69cdd809264a908c315b950d7676a7335382997",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommand.js",
+      "indexedSourceSHA256": "013016f70af2e8de7c3dd30dcb8dd8aa9278a2b4229e91dfe5010862a5e95f09",
+      "currentSourceSHA256": "013016f70af2e8de7c3dd30dcb8dd8aa9278a2b4229e91dfe5010862a5e95f09",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandAbortController.js",
+      "indexedSourceSHA256": "7cbf738791df408fc9ff3f7f96e343be6df048e24325c97a177180fad4dfaeb2",
+      "currentSourceSHA256": "7cbf738791df408fc9ff3f7f96e343be6df048e24325c97a177180fad4dfaeb2",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandArgument.js",
+      "indexedSourceSHA256": "5219d4e8153b48783c93c4e01751d412a80743040ff0301a33bfb210a956b3fd",
+      "currentSourceSHA256": "5219d4e8153b48783c93c4e01751d412a80743040ff0301a33bfb210a956b3fd",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandAutoCompleteNameResult.js",
+      "indexedSourceSHA256": "38f2d1be5c0c3cb0528e4bbe64268facf20f5d40ff3a3c8d65eac0d457668d00",
+      "currentSourceSHA256": "38f2d1be5c0c3cb0528e4bbe64268facf20f5d40ff3a3c8d65eac0d457668d00",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandBreak.js",
+      "indexedSourceSHA256": "7cf4a943bf5d2b170ba484bc5c57c6fb3c83e255bacda7d500e44d3c27d517ae",
+      "currentSourceSHA256": "7cf4a943bf5d2b170ba484bc5c57c6fb3c83e255bacda7d500e44d3c27d517ae",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandBreakController.js",
+      "indexedSourceSHA256": "d57b58d2ccd53980437ac82e3a95e31336872c8df7ad64e443391df6c8a267a7",
+      "currentSourceSHA256": "d57b58d2ccd53980437ac82e3a95e31336872c8df7ad64e443391df6c8a267a7",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandBreakPoint.js",
+      "indexedSourceSHA256": "80c43c84ecb319f355b165ed22058c77e7a51bf17b8f311c15b6f0ed0925a5f0",
+      "currentSourceSHA256": "80c43c84ecb319f355b165ed22058c77e7a51bf17b8f311c15b6f0ed0925a5f0",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandBrowser.js",
+      "indexedSourceSHA256": "f2e4a710cdfdc0c140efb0bc7274af032078b083e046f5ba54f0a9c4191240a6",
+      "currentSourceSHA256": "f2e4a710cdfdc0c140efb0bc7274af032078b083e046f5ba54f0a9c4191240a6",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandClosure.js",
+      "indexedSourceSHA256": "a0aab000ed491ca809fb5d33cb2b7a005ea4f97c3d641490f1026fa1e563bbe3",
+      "currentSourceSHA256": "a0aab000ed491ca809fb5d33cb2b7a005ea4f97c3d641490f1026fa1e563bbe3",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandClosureResult.js",
+      "indexedSourceSHA256": "72cc71ab8373fdbe8d529867ac0dd5aa29a7d55fdb705eb6ce0ff386948f9602",
+      "currentSourceSHA256": "72cc71ab8373fdbe8d529867ac0dd5aa29a7d55fdb705eb6ce0ff386948f9602",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandCommandAutoCompleteOption.js",
+      "indexedSourceSHA256": "ecad7fd1009ac1ba652fc53b417e6dbae4157f9b9f2096fb9e6d0e84a9ffd168",
+      "currentSourceSHA256": "ecad7fd1009ac1ba652fc53b417e6dbae4157f9b9f2096fb9e6d0e84a9ffd168",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandCommonEnumsProvider.js",
+      "indexedSourceSHA256": "b0585af8d51c8ae8c6f8d38234069726dbabc2255d60083ca9a809651ed6b890",
+      "currentSourceSHA256": "b0585af8d51c8ae8c6f8d38234069726dbabc2255d60083ca9a809651ed6b890",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandDebugController.js",
+      "indexedSourceSHA256": "64a972a6fab07804e1da94406768391fabac76a4b5486f9f6ce2fef7aceb284d",
+      "currentSourceSHA256": "64a972a6fab07804e1da94406768391fabac76a4b5486f9f6ce2fef7aceb284d",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandEnumAutoCompleteOption.js",
+      "indexedSourceSHA256": "78a9a2d2157882c9dd7eff866c7095c46f464f898293ff1b893e8456b8b1e842",
+      "currentSourceSHA256": "78a9a2d2157882c9dd7eff866c7095c46f464f898293ff1b893e8456b8b1e842",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandEnumValue.js",
+      "indexedSourceSHA256": "df4c88a4efe2e86958c6ca260837ca862747912dce6ae96c2d9b9a1e425b1291",
+      "currentSourceSHA256": "df4c88a4efe2e86958c6ca260837ca862747912dce6ae96c2d9b9a1e425b1291",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandExecutionError.js",
+      "indexedSourceSHA256": "c134cf5fd4634212a08da5ce05261aaa22133f660a6dc3a4b63ae8c07a31733e",
+      "currentSourceSHA256": "c134cf5fd4634212a08da5ce05261aaa22133f660a6dc3a4b63ae8c07a31733e",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandExecutor.js",
+      "indexedSourceSHA256": "ec801ec399c82e99ff35a9d5171490a6a499ad3adb7cb06aa397c371670dc6f7",
+      "currentSourceSHA256": "ec801ec399c82e99ff35a9d5171490a6a499ad3adb7cb06aa397c371670dc6f7",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandNamedArgumentAssignment.js",
+      "indexedSourceSHA256": "6c8122bfe6a0e180785dd20ecbdf3be1c50ac46620f63cb4eb52f5d75c2db13b",
+      "currentSourceSHA256": "6c8122bfe6a0e180785dd20ecbdf3be1c50ac46620f63cb4eb52f5d75c2db13b",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandNamedArgumentAutoCompleteOption.js",
+      "indexedSourceSHA256": "4653519d0d4c13a5f4f35fb8f5d58e2d2e493a63d243fa29646d74d0ee86b49c",
+      "currentSourceSHA256": "4653519d0d4c13a5f4f35fb8f5d58e2d2e493a63d243fa29646d74d0ee86b49c",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandParser.js",
+      "indexedSourceSHA256": "2ed3512bf887be9e944bacc5f29461ad460a87bd876277f5898e9a53766017eb",
+      "currentSourceSHA256": "2ed3512bf887be9e944bacc5f29461ad460a87bd876277f5898e9a53766017eb",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandParserError.js",
+      "indexedSourceSHA256": "3d02b441c7561118fa8b7d269d25eb1cef28ebbd126da06656a7bd13d14bb432",
+      "currentSourceSHA256": "3d02b441c7561118fa8b7d269d25eb1cef28ebbd126da06656a7bd13d14bb432",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandQuickReplyAutoCompleteOption.js",
+      "indexedSourceSHA256": "21a453532d3ab830950ef8e09916eccf910a43f1754271a62a28d8aa6aa1a435",
+      "currentSourceSHA256": "21a453532d3ab830950ef8e09916eccf910a43f1754271a62a28d8aa6aa1a435",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandReturnHelper.js",
+      "indexedSourceSHA256": "fa1f733d000f9774dc7f84c5e372c9e5aca84fdb7b86c0dc90f634ff108c5b24",
+      "currentSourceSHA256": "fa1f733d000f9774dc7f84c5e372c9e5aca84fdb7b86c0dc90f634ff108c5b24",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandScope.js",
+      "indexedSourceSHA256": "669e6912a90f5bbbdd145263b53591d09293588f0127bac47bb0a9c24dea7e36",
+      "currentSourceSHA256": "669e6912a90f5bbbdd145263b53591d09293588f0127bac47bb0a9c24dea7e36",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandUnnamedArgumentAssignment.js",
+      "indexedSourceSHA256": "f6dac2d450db9eed8adbfee841622d7b6a67649c734079d05439b79f457c8acc",
+      "currentSourceSHA256": "f6dac2d450db9eed8adbfee841622d7b6a67649c734079d05439b79f457c8acc",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/slash-commands/SlashCommandVariableAutoCompleteOption.js",
+      "indexedSourceSHA256": "2378d22772dc0d29442c84cf20248bb8610d7a1f2f9fd967600d657729f14945",
+      "currentSourceSHA256": "2378d22772dc0d29442c84cf20248bb8610d7a1f2f9fd967600d657729f14945",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/sse-stream.js",
+      "indexedSourceSHA256": "fd9db678224f981081cb76720b4bbe39af6c2d05d10cb30ca3b51bf760ca98eb",
+      "currentSourceSHA256": "fd9db678224f981081cb76720b4bbe39af6c2d05d10cb30ca3b51bf760ca98eb",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/st-context.js",
+      "indexedSourceSHA256": "5a91ce36a343041c81351953baba10a54a7576f15571c01ef1af8c19bcc0e30d",
+      "currentSourceSHA256": "5a91ce36a343041c81351953baba10a54a7576f15571c01ef1af8c19bcc0e30d",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/stats.js",
+      "indexedSourceSHA256": "92eec99668ba7bff3aafbd058083a9b209b2df4921e77f7ad568b20f1fcb8219",
+      "currentSourceSHA256": "92eec99668ba7bff3aafbd058083a9b209b2df4921e77f7ad568b20f1fcb8219",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/streaming-display.js",
+      "indexedSourceSHA256": "afe8f9cf28cc9731eb1c3937b55ff39c84e76d253cbb35806d705c2b492b2b98",
+      "currentSourceSHA256": "afe8f9cf28cc9731eb1c3937b55ff39c84e76d253cbb35806d705c2b492b2b98",
+      "indexedRegistrationCount": 3,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/swipe-picker.js",
+      "indexedSourceSHA256": "7643e18b6fcff3d7ac782fa9cc22a3d864cf2fa65726f460bfa1761eaf97c065",
+      "currentSourceSHA256": "7643e18b6fcff3d7ac782fa9cc22a3d864cf2fa65726f460bfa1761eaf97c065",
+      "indexedRegistrationCount": 11,
+      "coverage": "full source file read; source-only keyboard-access finding",
+      "ranges": [
+        [
+          1,
+          445
+        ]
+      ],
+      "symbols": [
+        "canOpenSwipePickerForMessage",
+        "canJumpToSwipeForMessage",
+        "openSwipePicker",
+        "renderSwipeList",
+        "canDeleteSwipeFromPicker",
+        "initSwipePicker"
+      ],
+      "findings": [
+        "swipe-picker-pointer-only-children"
+      ],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 160,
+          "endLine": 174,
+          "registration": "on",
+          "target": "branchButton\n                .removeAttr('data-format')\n                .attr({\n                    title: t`Create Branch`,\n                    'data-i18n': '[title]Create Branch',\n                })\n                .removeClass('exportRawChatButton fa-solid fa-file-export')\n                .addClass('swipe_picker_branch mes_button fa-fw fa-regular fa-code-branch')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async (event) => {\n                    event.preventDefault();\n                    event.stopPropagation();\n                    setSelectedSwipe(index);\n                    branchA",
+          "reviewed": false
+        },
+        {
+          "line": 175,
+          "endLine": 233,
+          "registration": "on",
+          "target": "deleteButton\n                .removeAttr('file_name')\n                .attr('aria-disabled', String(!canDeleteSwipe))\n                .removeClass('fa-skull')\n                .addClass('swipe_picker_delete fa-fw fa-trash-can')\n                .toggleClass('hoverglow', canDeleteSwipe)\n                .toggleClass('disabled', !canDeleteSwipe)\n                .each(function () {\n                    if (canDeleteSwipe) {\n                        $(this)\n                            .attr({\n                                title: t`Delete Swipe`,\n                                'data-i18n': '[title]Delete Swipe',\n                            });\n                    } else {\n                        $(this)\n                            .removeAttr('title')\n                            .removeAttr('data-i18n');\n                    }\n                })\n                .off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async (event) => {\n                    event.preventDefault();\n                    event.stopPropagation();\n\n                    if (!canDeleteSwipe) {\n                        retu",
+          "reviewed": false
+        },
+        {
+          "line": 248,
+          "endLine": 248,
+          "registration": "addEventListener",
+          "target": "expandLabel",
+          "event": "'click'",
+          "selector": null,
+          "callback": "(event) => event.stopPropagation()",
+          "reviewed": false
+        },
+        {
+          "line": 255,
+          "endLine": 260,
+          "registration": "addEventListener",
+          "target": "copyButton",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async (event) => {\n                event.preventDefault();\n                event.stopPropagation();\n                await copyText(swipeText);\n                toastr.info(t`Copied!",
+          "reviewed": false
+        },
+        {
+          "line": 271,
+          "endLine": 271,
+          "registration": "on",
+          "target": "block",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => setSelectedSwipe(index)",
+          "reviewed": false
+        },
+        {
+          "line": 272,
+          "endLine": 279,
+          "registration": "on",
+          "target": "block",
+          "event": "'dblclick'",
+          "selector": null,
+          "callback": "async () => {\n                if (!canJumpToSwipe) {\n                    return;\n                }\n\n                setSelectedSwipe(index);\n                await popup.completeAff",
+          "reviewed": false
+        },
+        {
+          "line": 368,
+          "endLine": 376,
+          "registration": "addEventListener",
+          "target": "swipeIdInput",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n            const nextSwipeId = Number.parseInt(this.value, 10);\n            if (!Number.isInteger(nextSwipeId) || nextSwipeId < 1 || nextSwipeId > message.swipes.len",
+          "reviewed": false
+        },
+        {
+          "line": 378,
+          "endLine": 380,
+          "registration": "addEventListener",
+          "target": "swipeIdInput",
+          "event": "'blur'",
+          "selector": null,
+          "callback": "function () {\n            syncSwipeIdInput();\n        }",
+          "reviewed": false
+        },
+        {
+          "line": 428,
+          "endLine": 428,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'click'",
+          "selector": ".swipes-counter.swipe-picker-enabled",
+          "callback": "onSwipeCounterClick",
+          "reviewed": false
+        },
+        {
+          "line": 430,
+          "endLine": 436,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'keydown'",
+          "selector": ".swipes-counter.swipe-picker-enabled",
+          "callback": "async function (e) {\n        if (e.key !== ' ') {\n            return;\n        }\n\n        onSwipeCounterClick.call(this, e);\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 437,
+          "endLine": 443,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'click'",
+          "selector": ".mes_swipe_picker",
+          "callback": "async function (e) {\n        e.preventDefault();\n        e.stopPropagation();\n\n        const mesId = Number($(this).closest('.mes').attr('mesid'));\n        await openSwipePicker(me",
+          "reviewed": false
+        }
+      ]
+    },
+    {
+      "file": "public/scripts/sysprompt.js",
+      "indexedSourceSHA256": "49cb24fc0fc6c224be1fdc157cd91f481cbfc60d5db27b3213a15f53c622f230",
+      "currentSourceSHA256": "49cb24fc0fc6c224be1fdc157cd91f481cbfc60d5db27b3213a15f53c622f230",
+      "indexedRegistrationCount": 4,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/system-messages.js",
+      "indexedSourceSHA256": "20f947763c5aeaf88cfc0ef560b0408b3875dcc64ef7d6798e78f605c72b2422",
+      "currentSourceSHA256": "20f947763c5aeaf88cfc0ef560b0408b3875dcc64ef7d6798e78f605c72b2422",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/tags.js",
+      "indexedSourceSHA256": "e3325b48548003832bab0ad9a6a3d3e0634289eadc7eaeba9f4dc2171f35a3dc",
+      "currentSourceSHA256": "e3325b48548003832bab0ad9a6a3d3e0634289eadc7eaeba9f4dc2171f35a3dc",
+      "indexedRegistrationCount": 26,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/templates.js",
+      "indexedSourceSHA256": "9d5784bdc62b5277e1e95045036a03823126e84244e89757e55be7a8540a37e2",
+      "currentSourceSHA256": "9d5784bdc62b5277e1e95045036a03823126e84244e89757e55be7a8540a37e2",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/textgen-models.js",
+      "indexedSourceSHA256": "93ffc65745993b28e5a708530d33d942114009295777d9fed154b84c59a7ffa0",
+      "currentSourceSHA256": "93ffc65745993b28e5a708530d33d942114009295777d9fed154b84c59a7ffa0",
+      "indexedRegistrationCount": 23,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/textgen-settings.js",
+      "indexedSourceSHA256": "7217bd833020511b167556dcd43d0aead43af730523f44ae07ce10ae730aa29d",
+      "currentSourceSHA256": "7217bd833020511b167556dcd43d0aead43af730523f44ae07ce10ae730aa29d",
+      "indexedRegistrationCount": 16,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/tokenizers.js",
+      "indexedSourceSHA256": "59abb66e4d2ad0ff7171c2ec9f3009d26ed79088e78b87eb0b60638eaae4d6f9",
+      "currentSourceSHA256": "59abb66e4d2ad0ff7171c2ec9f3009d26ed79088e78b87eb0b60638eaae4d6f9",
+      "indexedRegistrationCount": 1,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/tool-calling.js",
+      "indexedSourceSHA256": "934be74f6bd672a821e5f3e5dc34ad4548c1cac60ee41c48feaa630e6e2f7712",
+      "currentSourceSHA256": "934be74f6bd672a821e5f3e5dc34ad4548c1cac60ee41c48feaa630e6e2f7712",
+      "indexedRegistrationCount": 0,
+      "state": "parent-or-stream-team-ownership"
+    },
+    {
+      "file": "public/scripts/user.js",
+      "indexedSourceSHA256": "d4e29b231527dd375034bb36699e308650d5ce16a47c8a8f15dcb5adb3af4b39",
+      "currentSourceSHA256": "d4e29b231527dd375034bb36699e308650d5ce16a47c8a8f15dcb5adb3af4b39",
+      "indexedRegistrationCount": 37,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/util/AbortReason.js",
+      "indexedSourceSHA256": "dd873e375dc04f69968dbef6b2b4b0f64ce25b234b02107fdbf2fef4e3f97282",
+      "currentSourceSHA256": "dd873e375dc04f69968dbef6b2b4b0f64ce25b234b02107fdbf2fef4e3f97282",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/util/AccountStorage.js",
+      "indexedSourceSHA256": "f2f9add1de47c23b8c17b61d9309689620790bfcaf4b4c45251f540be9b44fdd",
+      "currentSourceSHA256": "f2f9add1de47c23b8c17b61d9309689620790bfcaf4b4c45251f540be9b44fdd",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/util/SimpleMutex.js",
+      "indexedSourceSHA256": "1cc9c206647912ee5b05902f2b55995c6d46c4bb373a127193cf1b76dee50cc7",
+      "currentSourceSHA256": "1cc9c206647912ee5b05902f2b55995c6d46c4bb373a127193cf1b76dee50cc7",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/util/StructuredCloneMap.js",
+      "indexedSourceSHA256": "086902fdb5ddd1d34a6c3c93a64ddb240d6b4336b43fbd973c3e372d883a7f10",
+      "currentSourceSHA256": "086902fdb5ddd1d34a6c3c93a64ddb240d6b4336b43fbd973c3e372d883a7f10",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/util/ThemeGenerator.js",
+      "indexedSourceSHA256": "fde2a6280150896ae3e493b8af30629d12ebdd8c28866f008afa3020ae1e43aa",
+      "currentSourceSHA256": "fde2a6280150896ae3e493b8af30629d12ebdd8c28866f008afa3020ae1e43aa",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/util/showdown-patch.js",
+      "indexedSourceSHA256": "d6406f16f8b8ea521d93b3963dee88db736882b9fe67918d48ef32d7f789c5c1",
+      "currentSourceSHA256": "d6406f16f8b8ea521d93b3963dee88db736882b9fe67918d48ef32d7f789c5c1",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/util/stream-fadein.js",
+      "indexedSourceSHA256": "a3dfddb3a69431927b35d68739d29daefb199eae28564d916b083adf6f2bdb33",
+      "currentSourceSHA256": "a3dfddb3a69431927b35d68739d29daefb199eae28564d916b083adf6f2bdb33",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/utils.js",
+      "indexedSourceSHA256": "5ebb9929dac63017f47281ba03e794c5c8195109a69960c1829e79ae946f1580",
+      "currentSourceSHA256": "5ebb9929dac63017f47281ba03e794c5c8195109a69960c1829e79ae946f1580",
+      "indexedRegistrationCount": 12,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/variables.js",
+      "indexedSourceSHA256": "92e1bfa793e6072c2daeecdbb6d7429faf990e251bfc5f8d97c0ba7088a1282a",
+      "currentSourceSHA256": "92e1bfa793e6072c2daeecdbb6d7429faf990e251bfc5f8d97c0ba7088a1282a",
+      "indexedRegistrationCount": 0,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/welcome-screen.js",
+      "indexedSourceSHA256": "68877b37728cd4a37938ff0026a4ff54aae99249ba0e74ff4dd3cc864029cdb9",
+      "currentSourceSHA256": "68877b37728cd4a37938ff0026a4ff54aae99249ba0e74ff4dd3cc864029cdb9",
+      "indexedRegistrationCount": 13,
+      "state": "not-manually-reviewed-in-this-pass"
+    },
+    {
+      "file": "public/scripts/workspace-chats.js",
+      "indexedSourceSHA256": "7659ca1411005b46e27701b08f24daa27e3fd0d652dc0c3b61b30535ece3dc91",
+      "currentSourceSHA256": "7659ca1411005b46e27701b08f24daa27e3fd0d652dc0c3b61b30535ece3dc91",
+      "indexedRegistrationCount": 1,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "indexedSourceSHA256": "2428b5f6d204eb9970e8dbf7d80b6c03b9edbe61e60ae8a3ac5d68cd45aaea18",
+      "currentSourceSHA256": "2428b5f6d204eb9970e8dbf7d80b6c03b9edbe61e60ae8a3ac5d68cd45aaea18",
+      "indexedRegistrationCount": 2,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "indexedSourceSHA256": "b346a4701fc9b65c425a55c9164cc2f6ea2ad69d86720fc5a8bfcccfa7263dc3",
+      "currentSourceSHA256": "b346a4701fc9b65c425a55c9164cc2f6ea2ad69d86720fc5a8bfcccfa7263dc3",
+      "indexedRegistrationCount": 4,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "indexedSourceSHA256": "05a08d480446c308778a19e7c637dd704303331b02b442da269afb0f84781e82",
+      "currentSourceSHA256": "71e9138cc77cbaaee604acb837e3764401200884e0a1b0e0e6c0a3d1739e30ce",
+      "indexedRegistrationCount": 4,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "indexedSourceSHA256": "2c6d48c8779a6556d702b5ed0d4df2ba5a7e05b9c582c1a604709892b4e41d08",
+      "currentSourceSHA256": "2c6d48c8779a6556d702b5ed0d4df2ba5a7e05b9c582c1a604709892b4e41d08",
+      "indexedRegistrationCount": 0,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "indexedSourceSHA256": "c6c49909645bf612abb92b8296a704b26ab7a237ac265eeee898864443291272",
+      "currentSourceSHA256": "c6c49909645bf612abb92b8296a704b26ab7a237ac265eeee898864443291272",
+      "indexedRegistrationCount": 24,
+      "state": "other-agent-source-review",
+      "evidence": "/tmp/st-ui-followup-listeners.json"
+    },
+    {
+      "file": "public/scripts/world-info.js",
+      "indexedSourceSHA256": "2ea8572e008cfe930d966199860b4d88e81aa8a75e8c3912c1156673624a08fb",
+      "currentSourceSHA256": "513376992f58a96a4ec7c439538b993f19ac68603b86b253738778b532a62316",
+      "indexedRegistrationCount": 83,
+      "coverage": "partial source: editor load/render and relevant registration owners, not every entry-field implementation",
+      "ranges": [
+        [
+          2012,
+          2064
+        ],
+        [
+          2080,
+          2165
+        ],
+        [
+          2308,
+          2635
+        ],
+        [
+          6170,
+          6414
+        ]
+      ],
+      "symbols": [
+        "showWorldEditor",
+        "loadWorldInfo",
+        "hideWorldEditor",
+        "displayWorldEntries",
+        "pagination callback",
+        "initWorldInfo"
+      ],
+      "findings": [
+        "lorebook-late-read"
+      ],
+      "state": "reviewed-as-scoped",
+      "registrationsWithinReadRanges": [
+        {
+          "line": 2318,
+          "endLine": 2318,
+          "registration": "on",
+          "target": "$('#world_popup_new').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "nullWorldInfo",
+          "reviewed": false
+        },
+        {
+          "line": 2319,
+          "endLine": 2319,
+          "registration": "on",
+          "target": "$('#world_popup_name_button').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "nullWorldInfo",
+          "reviewed": false
+        },
+        {
+          "line": 2320,
+          "endLine": 2320,
+          "registration": "on",
+          "target": "$('#world_popup_export').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "nullWorldInfo",
+          "reviewed": false
+        },
+        {
+          "line": 2321,
+          "endLine": 2321,
+          "registration": "on",
+          "target": "$('#world_popup_delete').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "nullWorldInfo",
+          "reviewed": false
+        },
+        {
+          "line": 2322,
+          "endLine": 2322,
+          "registration": "on",
+          "target": "$('#world_duplicate').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "nullWorldInfo",
+          "reviewed": false
+        },
+        {
+          "line": 2330,
+          "endLine": 2353,
+          "registration": "on",
+          "target": "$('#world_popup_delete').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n        const confirmation = await Popup.show.confirm(`Delete the World/Lorebook: \"${name}\"?`, 'This action is irreversible!');\n        if (!confirmation) {\n         ",
+          "reviewed": false
+        },
+        {
+          "line": 2470,
+          "endLine": 2473,
+          "registration": "on",
+          "target": "$('#world_popup_new').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        const entry = createWorldInfoEntry(name, data);\n        if (entry) updateEditor(entry.uid);\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 2475,
+          "endLine": 2477,
+          "registration": "on",
+          "target": "$('#world_popup_name_button').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n        await renameWorldInfo(name, data);\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 2479,
+          "endLine": 2494,
+          "registration": "on",
+          "target": "$('#world_backfill_memos').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n        let counter = 0;\n        for (const entry of Object.values(data.entries)) {\n            if (!entry.comment && Array.isArray(entry.key) && entry.key.length > 0",
+          "reviewed": false
+        },
+        {
+          "line": 2496,
+          "endLine": 2618,
+          "registration": "on",
+          "target": "$('#world_apply_current_sorting').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n        const entryCount = Object.keys(data.entries).length;\n\n        const contentEl = document.createElement('div');\n\n        const heading = document.createElement",
+          "reviewed": false
+        },
+        {
+          "line": 2571,
+          "endLine": 2571,
+          "registration": "addEventListener",
+          "target": "startInput",
+          "event": "'input'",
+          "selector": null,
+          "callback": "() => updateWarning(startInput, stepInput, ascendingInput)",
+          "reviewed": false
+        },
+        {
+          "line": 2572,
+          "endLine": 2572,
+          "registration": "addEventListener",
+          "target": "stepInput",
+          "event": "'input'",
+          "selector": null,
+          "callback": "() => updateWarning(startInput, stepInput, ascendingInput)",
+          "reviewed": false
+        },
+        {
+          "line": 2573,
+          "endLine": 2573,
+          "registration": "addEventListener",
+          "target": "ascendingInput",
+          "event": "'change'",
+          "selector": null,
+          "callback": "() => updateWarning(startInput, stepInput, ascendingInput)",
+          "reviewed": false
+        },
+        {
+          "line": 2620,
+          "endLine": 2626,
+          "registration": "on",
+          "target": "$('#world_popup_export').off('click')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        if (name && data) {\n            const jsonValue = JSON.stringify(data);\n            const fileName = `${name}.json`;\n            download(jsonValue, fileName, 'appl",
+          "reviewed": false
+        },
+        {
+          "line": 6181,
+          "endLine": 6189,
+          "registration": "on",
+          "target": "$('#world_info')",
+          "event": "'mousedown change'",
+          "selector": null,
+          "callback": "async function (e) {\n        // If there's no world names, don't do anything\n        if (world_names.length === 0) {\n            e.preventDefault();\n            return;\n        }\n\n",
+          "reviewed": false
+        },
+        {
+          "line": 6192,
+          "endLine": 6194,
+          "registration": "on",
+          "target": "$('#world_import_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "function () {\n        $('#world_import_file').trigger('click');\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6196,
+          "endLine": 6207,
+          "registration": "on",
+          "target": "$('#world_import_file')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async function (e) {\n        if (!(e.target instanceof HTMLInputElement)) {\n            return;\n        }\n\n        const file = e.target.files[0];\n\n        await importWorldInfo(fi",
+          "reviewed": false
+        },
+        {
+          "line": 6209,
+          "endLine": 6216,
+          "registration": "on",
+          "target": "$('#world_create_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async () => {\n        const tempName = getFreeWorldName();\n        const finalName = await Popup.show.input(t`Create a new World Info`, t`Enter a name for the new file:`, tempName)",
+          "reviewed": false
+        },
+        {
+          "line": 6218,
+          "endLine": 6229,
+          "registration": "on",
+          "target": "$('#world_editor_select')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async () => {\n        $('#world_info_search').val('');\n        worldInfoFilter.setFilterData(FILTER_TYPES.WORLD_INFO_SEARCH, '', true);\n        const selectedIndex = String($('#wor",
+          "reviewed": false
+        },
+        {
+          "line": 6236,
+          "endLine": 6240,
+          "registration": "on",
+          "target": "$('#world_info_depth')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_depth = Number($(this).val());\n        $('#world_info_depth_counter').val($(this).val());\n        saveSettings();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6242,
+          "endLine": 6253,
+          "registration": "on",
+          "target": "$('#world_info_min_activations')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_min_activations = Number($(this).val());\n        $('#world_info_min_activations_counter').val(world_info_min_activations);\n\n        if (world_info_",
+          "reviewed": false
+        },
+        {
+          "line": 6255,
+          "endLine": 6259,
+          "registration": "on",
+          "target": "$('#world_info_min_activations_depth_max')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_min_activations_depth_max = Number($(this).val());\n        $('#world_info_min_activations_depth_max_counter').val($(this).val());\n        saveSetti",
+          "reviewed": false
+        },
+        {
+          "line": 6261,
+          "endLine": 6265,
+          "registration": "on",
+          "target": "$('#world_info_budget')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_budget = Number($(this).val());\n        $('#world_info_budget_counter').val($(this).val());\n        saveSettings();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6267,
+          "endLine": 6270,
+          "registration": "on",
+          "target": "$('#world_info_include_names')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_include_names = !!$(this).prop('checked');\n        saveSettings();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6272,
+          "endLine": 6275,
+          "registration": "on",
+          "target": "$('#world_info_recursive')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_recursive = !!$(this).prop('checked');\n        saveSettings();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6277,
+          "endLine": 6280,
+          "registration": "on",
+          "target": "$('#world_info_case_sensitive')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_case_sensitive = !!$(this).prop('checked');\n        saveSettings();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6282,
+          "endLine": 6285,
+          "registration": "on",
+          "target": "$('#world_info_match_whole_words')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_match_whole_words = !!$(this).prop('checked');\n        saveSettings();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6287,
+          "endLine": 6290,
+          "registration": "on",
+          "target": "$('#world_info_character_strategy')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "function () {\n        world_info_character_strategy = Number($(this).val());\n        saveSettings();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6292,
+          "endLine": 6295,
+          "registration": "on",
+          "target": "$('#world_info_overflow_alert')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "function () {\n        world_info_overflow_alert = !!$(this).prop('checked');\n        saveSettingsDebounced();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6297,
+          "endLine": 6300,
+          "registration": "on",
+          "target": "$('#world_info_use_group_scoring')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "function () {\n        world_info_use_group_scoring = !!$(this).prop('checked');\n        saveSettingsDebounced();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6302,
+          "endLine": 6306,
+          "registration": "on",
+          "target": "$('#world_info_budget_cap')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_budget_cap = Number($(this).val());\n        $('#world_info_budget_cap_counter').val(world_info_budget_cap);\n        saveSettings();\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6308,
+          "endLine": 6318,
+          "registration": "on",
+          "target": "$('#world_info_max_recursion_steps')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        world_info_max_recursion_steps = Number($(this).val());\n        $('#world_info_max_recursion_steps_counter').val(world_info_max_recursion_steps);\n        if (",
+          "reviewed": false
+        },
+        {
+          "line": 6320,
+          "endLine": 6339,
+          "registration": "on",
+          "target": "$('#world_button')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "async function (event) {\n        const openSetWorldMenu = () => $('#char-management-dropdown').val($('#set_character_world').val()).trigger('change');\n        const chid = $('#set_",
+          "reviewed": false
+        },
+        {
+          "line": 6347,
+          "endLine": 6350,
+          "registration": "on",
+          "target": "$('#world_info_search')",
+          "event": "'input'",
+          "selector": null,
+          "callback": "function () {\n        const searchQuery = $(this).val();\n        debouncedWorldInfoSearch(searchQuery);\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6352,
+          "endLine": 6354,
+          "registration": "on",
+          "target": "$('#world_refresh')",
+          "event": "'click'",
+          "selector": null,
+          "callback": "() => {\n        updateEditor(navigation_option.previous);\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6356,
+          "endLine": 6361,
+          "registration": "on",
+          "target": "$('#world_info_sort_order')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "function () {\n        const value = String($(this).find(':selected').val());\n        // Save sort order, but do not save search sorting, as this is a temporary sorting option\n     ",
+          "reviewed": false
+        },
+        {
+          "line": 6363,
+          "endLine": 6363,
+          "registration": "on",
+          "target": "$(document)",
+          "event": "'click'",
+          "selector": ".chat_lorebook_button",
+          "callback": "assignLorebookToChat",
+          "reviewed": false
+        },
+        {
+          "line": 6368,
+          "endLine": 6371,
+          "registration": "on",
+          "target": "$('#group-chat-lorebook-dropdown')",
+          "event": "'change'",
+          "selector": null,
+          "callback": "async function () {\n        $(this).prop('selectedIndex', 0);\n        await assignLorebookToChat({ shiftKey: true, altKey: false });\n    }",
+          "reviewed": false
+        },
+        {
+          "line": 6404,
+          "endLine": 6412,
+          "registration": "on",
+          "target": "$('#WorldInfo')",
+          "event": "'scroll'",
+          "selector": null,
+          "callback": "() => {\n        $('.world_entry input[name=\"group\"], .world_entry input[name=\"automationId\"]').each((_, el) => {\n            const instance = $(el).autocomplete('instance');\n\n     ",
+          "reviewed": false
+        }
+      ]
+    }
+  ],
+  "recommendedNextAction": "Finish native async owner and listener cleanup fixes using the controlled negative artifacts, then walk real Data Bank drop/delete, lorebook switching, gallery folder switching, Quick Reply denied/invalid input and swipe-picker keyboard paths before treating this batch as verified."
+}

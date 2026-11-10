@@ -1573,7 +1573,7 @@ export async function deleteExtension(extensionName, shouldClean = false) {
     await callExtensionHook(fullExtensionName, 'delete');
 
     try {
-        await fetch('/api/extensions/delete', {
+        const response = await fetch('/api/extensions/delete', {
             method: 'POST',
             headers: getRequestHeaders(),
             body: JSON.stringify({
@@ -1581,15 +1581,22 @@ export async function deleteExtension(extensionName, shouldClean = false) {
                 global: getExtensionType(extensionName) === 'global',
             }),
         });
+        if (!response.ok) throw new Error(`Extension deletion failed (${response.status}).`);
     } catch (error) {
         console.error('Error:', error);
+        toastr.error(t`Extension could not be deleted. Retry the connection.`);
+        return false;
     }
 
     // Delete or clean might have updated settings, which could race with the page reload, so we'll force save here
-    await saveSettings();
+    if (!await saveSettings()) {
+        toastr.warning(t`Extension deleted, but settings could not be saved. Retry saving before reloading.`);
+        return false;
+    }
 
     toastr.success(t`Extension ${extensionName} deleted`);
     delay(1000).then(() => location.reload());
+    return true;
 }
 
 /**

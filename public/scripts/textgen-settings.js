@@ -1,3 +1,4 @@
+import { fetchGeneration } from './generation-transport.js';
 import {
     abortStatusCheck,
     eventSource,
@@ -1288,8 +1289,9 @@ function setSettingByName(setting, value, trigger) {
  */
 export async function generateTextGenWithStreaming(generate_data, signal) {
     generate_data.stream = true;
+    const apiType = generate_data.api_type || textgenerationwebui_settings.type;
 
-    const response = await fetch('/api/backends/text-completions/generate', {
+    const response = await fetchGeneration('/api/backends/text-completions/generate', {
         headers: {
             ...getRequestHeaders(),
         },
@@ -1303,6 +1305,11 @@ export async function generateTextGenWithStreaming(generate_data, signal) {
         throw new Error(`Got response status ${response.status}`);
     }
 
+    return parseTextGenStream(response, apiType);
+}
+
+/** Parse both live and durably replayed provider bytes. */
+export function parseTextGenStream(response, apiType = textgenerationwebui_settings.type) {
     const eventStream = getEventSourceStream();
     response.body.pipeThrough(eventStream);
     const reader = eventStream.readable.getReader();
@@ -1333,7 +1340,7 @@ export async function generateTextGenWithStreaming(generate_data, signal) {
             } else {
                 const newText = data?.choices?.[0]?.text || data?.content || '';
                 text += newText;
-                logprobs = parseTextgenLogprobs(newText, data.choices?.[0]?.logprobs || data?.completion_probabilities);
+                logprobs = parseTextgenLogprobs(newText, data.choices?.[0]?.logprobs || data?.completion_probabilities, apiType);
                 state.reasoning += data?.choices?.[0]?.reasoning ?? data?.choices?.[0]?.thinking ?? '';
             }
 
@@ -1350,12 +1357,12 @@ export async function generateTextGenWithStreaming(generate_data, signal) {
  * @param {Object} logprobs - logprobs object returned from the API
  * @returns {import('./logprobs.js').TokenLogprobs | null} - converted logprobs
  */
-export function parseTextgenLogprobs(token, logprobs) {
+export function parseTextgenLogprobs(token, logprobs, apiType = textgenerationwebui_settings.type) {
     if (!logprobs) {
         return null;
     }
 
-    switch (textgenerationwebui_settings.type) {
+    switch (apiType) {
         case KOBOLDCPP:
         case TABBY:
         case VLLM:
@@ -1490,10 +1497,6 @@ export function getTextGenModel(settings = null) {
         case APHRODITE:
             return settings.aphrodite_model;
         case OLLAMA:
-            if (!settings.ollama_model) {
-                toastr.error(t`No Ollama model selected.`, 'Text Completion API');
-                throw new Error('No Ollama model selected');
-            }
             return settings.ollama_model;
         case FEATHERLESS:
             return settings.featherless_model;
@@ -1587,6 +1590,13 @@ export function replaceMacrosInList(str) {
 export function createTextGenGenerationData(settings, model, finalPrompt = null, maxTokens = null, isImpersonate = false, isContinue = false, cfgValues = null, type = 'quiet') {
     settings = settings ?? textgenerationwebui_settings;
     model = model ?? getTextGenModel(settings);
+
+    // Model inspection also runs while an unconfigured provider's form is open.
+    // Reject missing Ollama models only when constructing a generation request.
+    if (settings.type === OLLAMA && !model) {
+        toastr.error(t`No Ollama model selected.`, 'Text Completion API');
+        throw new Error('No Ollama model selected');
+    }
 
     const canMultiSwipe = !isContinue && !isImpersonate && type !== 'quiet';
     const dynatemp = isDynamicTemperatureSupported(settings);
@@ -1841,9 +1851,15 @@ export function createTextGenGenerationData(settings, model, finalPrompt = null,
     return params;
 }
 
-export async function getTextGenGenerationData(finalPrompt, maxTokens, isImpersonate, isContinue, cfgValues, type) {
-    const model = getTextGenModel(textgenerationwebui_settings);
-    const params = createTextGenGenerationData(textgenerationwebui_settings, model, finalPrompt, maxTokens, isImpersonate, isContinue, cfgValues, type);
+export async function getTextGenGenerationData(finalPrompt, maxTokens, isImpersonate, isContinue, cfgValues, type, overrides = null) {
+    const settings = overrides && Object.hasOwn(overrides, 'json_schema')
+        ? { ...textgenerationwebui_settings, json_schema: structuredClone(overrides.json_schema) }
+        : textgenerationwebui_settings;
+    const model = getTextGenModel(settings);
+    const params = createTextGenGenerationData(settings, model, finalPrompt, maxTokens, isImpersonate, isContinue, cfgValues, type);
+    for (const key of ['top_k', 'stop', 'stopping_strings', 'custom_token_bans']) {
+        if (overrides && Object.hasOwn(overrides, key)) params[key] = structuredClone(overrides[key]);
+    }
     await eventSource.emit(event_types.TEXT_COMPLETION_SETTINGS_READY, params);
     return params;
 }

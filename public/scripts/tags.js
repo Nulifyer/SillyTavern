@@ -886,8 +886,9 @@ function removeTagFromMap(tagId, characterId = null) {
         return false;
     } else {
         const indexOf = tag_map[key].indexOf(tagId);
+        if (indexOf === -1) return false;
         tag_map[key].splice(indexOf, 1);
-        return indexOf !== -1;
+        return true;
     }
 }
 
@@ -2119,43 +2120,55 @@ async function onTagDeleteClick() {
     const tag = tags.find(x => x.id === id);
     const otherTags = sortTags(tags.filter(x => x.id !== id).map(x => ({ id: x.id, name: x.name })));
 
-    const popupContent = $(await renderTemplateAsync('deleteTag', { otherTags }));
+    const popupContent = $('<div>').append(await renderTemplateAsync('deleteTag', { otherTags }));
 
     appendTagToList(popupContent.find('#tag_to_delete'), tag);
+    const mergeSelect = popupContent.find('#merge_tag_select');
 
     // Make the select control more fancy on not mobile
     if (!isMobile()) {
         // Delete the empty option in the dropdown, and make the select2 be empty by default
-        popupContent.find('#merge_tag_select option[value=""]').remove();
-        popupContent.find('#merge_tag_select').select2({
+        mergeSelect.find('option[value=""]').remove();
+        mergeSelect.select2({
             width: '50%',
             placeholder: 'Select tag to merge into',
             allowClear: true,
+            dropdownParent: popupContent,
         }).val(null).trigger('change');
     }
 
-    const result = await callGenericPopup(popupContent, POPUP_TYPE.CONFIRM);
+    let mergeTagId = null;
+    const result = await callGenericPopup(popupContent, POPUP_TYPE.CONFIRM, '', {
+        onClose: () => {
+            mergeTagId = mergeSelect.val() ? String(mergeSelect.val()) : null;
+            if (mergeSelect.data('select2')) mergeSelect.select2('destroy');
+        },
+    });
     if (result !== POPUP_RESULT.AFFIRMATIVE) {
         return;
     }
 
-    const mergeTagId = $('#merge_tag_select').val() ? String($('#merge_tag_select').val()) : null;
+    const mergeTag = tags.find(tag => tag.id === mergeTagId);
+    const index = tags.indexOf(tag);
+    if (index < 0 || (mergeTagId && !mergeTag)) {
+        toastr.info('The tags changed while this dialog was open. Reopen it to confirm the intended change.');
+        return;
+    }
 
     // Remove the tag from all entities that use it
     // If we have a replacement tag, add that one instead
     for (const key of Object.keys(tag_map)) {
-        if (tag_map[key].includes(id)) {
+        if (Array.isArray(tag_map[key]) && tag_map[key].includes(id)) {
             tag_map[key] = tag_map[key].filter(x => x !== id);
-            if (mergeTagId) tag_map[key].push(mergeTagId);
+            if (mergeTagId && !tag_map[key].includes(mergeTagId)) tag_map[key].push(mergeTagId);
         }
     }
 
-    const index = tags.findIndex(x => x.id === id);
     tags.splice(index, 1);
     $(`.tag[id="${id}"]`).remove();
     $(`.tag_view_item[id="${id}"]`).remove();
 
-    toastr.success(`'${tag.name}' deleted${mergeTagId ? ` and merged into '${tags.find(x => x.id === mergeTagId).name}'` : ''}`, 'Delete Tag');
+    toastr.success(`'${tag.name}' deleted${mergeTagId ? ` and merged into '${mergeTag.name}'` : ''}`, 'Delete Tag');
 
     printCharactersDebounced();
     saveSettingsDebounced();

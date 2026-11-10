@@ -44,11 +44,11 @@ class NovelTtsProvider {
             </div>
             <i>Hint: Save an API key in the NovelAI API settings to use it here.</i>
         </div>
-        <label for="tts-novel-custom-voices-add">Custom Voices</label>
+        <label for="tts-novel-custom-voices-select">Custom Voices</label>
         <div class="tts_custom_voices">
-            <select id="tts-novel-custom-voices-select"><select>
-            <i id="tts-novel-custom-voices-add" class="tts-button fa-solid fa-plus fa-xl success" title="Add"></i>
-            <i id="tts-novel-custom-voices-delete" class="tts-button fa-solid fa-xmark fa-xl failure" title="Delete"></i>
+            <select id="tts-novel-custom-voices-select" aria-label="Custom voice"></select>
+            <button type="button" id="tts-novel-custom-voices-add" class="tts-button menu_button fa-solid fa-plus success" title="Add custom voice" aria-label="Add custom voice"></button>
+            <button type="button" id="tts-novel-custom-voices-delete" class="tts-button menu_button fa-solid fa-xmark failure" title="Delete custom voice" aria-label="Delete custom voice"></button>
         </div>
         `;
         return html;
@@ -58,7 +58,8 @@ class NovelTtsProvider {
     // Add a new Novel custom voice to provider
     async addCustomVoice() {
         const voiceName = await callGenericPopup('Custom Voice name:',  POPUP_TYPE.INPUT);
-        this.settings.customVoices.push(voiceName);
+        if (typeof voiceName !== 'string' || !voiceName.trim()) return;
+        this.settings.customVoices.push(voiceName.trim());
         this.populateCustomVoices();
         initVoiceMap(); // Update TTS extension voiceMap
         saveTtsProviderSettings();

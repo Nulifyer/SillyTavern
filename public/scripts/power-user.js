@@ -1357,13 +1357,13 @@ function applyTheme(name) {
         {
             key: 'enableZenSliders',
             action: () => {
-                switchMessageActions();
+                switchZenSliders();
             },
         },
         {
             key: 'enableLabMode',
             action: () => {
-                switchMessageActions();
+                switchLabMode();
             },
         },
         {
@@ -1652,7 +1652,7 @@ export async function loadPowerUserSettings(settings, data) {
     $('#trim_spaces').prop('checked', power_user.trim_spaces);
     $('#continue_on_send').prop('checked', power_user.continue_on_send);
     $('#quick_continue').prop('checked', power_user.quick_continue);
-    $('#quick_impersonate').prop('checked', power_user.quick_continue);
+    $('#quick_impersonate').prop('checked', power_user.quick_impersonate);
     $('#mes_continue').css('display', power_user.quick_continue ? '' : 'none');
     $('#mes_impersonate').css('display', power_user.quick_impersonate ? '' : 'none');
     $('#gestures-checkbox').prop('checked', power_user.gestures);
@@ -2416,11 +2416,11 @@ async function deleteTheme() {
 
     if (themeIndex !== -1) {
         themes.splice(themeIndex, 1);
-        $(`#themes option[value="${themeName}"]`).remove();
-        power_user.theme = themes[0]?.name;
-        saveSettingsDebounced();
-        if (power_user.theme) {
-            applyTheme(power_user.theme);
+        $('#themes option').filter((_, option) => option.value === themeName).remove();
+        if (power_user.theme === themeName) {
+            power_user.theme = themes[0]?.name;
+            saveSettingsDebounced();
+            if (power_user.theme) applyTheme(power_user.theme);
         }
         toastr.success('Theme deleted.');
     }
@@ -2464,14 +2464,7 @@ async function importTheme(file) {
         }
     }
 
-    themes.push(parsed);
-    await saveTheme(parsed.name, getNewTheme(parsed));
-    const option = document.createElement('option');
-    option.selected = false;
-    option.value = parsed.name;
-    option.innerText = parsed.name;
-    $('#themes').append(option);
-    saveSettingsDebounced();
+    await saveTheme(parsed.name, getNewTheme(parsed), { activate: false });
     toastr.success(parsed.name, 'Theme imported');
 }
 
@@ -2481,7 +2474,7 @@ async function importTheme(file) {
  * @param {object|undefined} theme Theme object. If undefined, the current theme will be saved.
  * @returns {Promise<object>} A promise that resolves when the theme is saved.
  */
-async function saveTheme(name = undefined, theme = undefined) {
+async function saveTheme(name = undefined, theme = undefined, { activate = true } = {}) {
     if (typeof name !== 'string') {
         const newName = await callGenericPopup('Enter a theme preset name:', POPUP_TYPE.INPUT, power_user.theme);
 
@@ -2496,34 +2489,40 @@ async function saveTheme(name = undefined, theme = undefined) {
         theme = getThemeObject(name);
     }
 
-    const response = await fetch('/api/themes/save', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify(theme),
-    });
-
-    if (!response.ok) {
+    const previousTheme = power_user.theme;
+    const previousSelection = $('#themes').val();
+    let response;
+    try {
+        response = await fetch('/api/themes/save', {
+            method: 'POST',
+            headers: getRequestHeaders(),
+            body: JSON.stringify(theme),
+        });
+        if (!response.ok) throw new Error('Theme could not be saved');
+    } catch (error) {
         toastr.error('Check the server connection and reload the page to prevent data loss.', 'Theme could not be saved');
-        console.error('Theme could not be saved', response);
-        throw new Error('Theme could not be saved');
+        throw error;
     }
 
     const themeIndex = themes.findIndex(x => x.name == name);
+    const select = activate && previousTheme === power_user.theme && previousSelection === $('#themes').val();
 
     if (themeIndex == -1) {
         themes.push(theme);
         const option = document.createElement('option');
-        option.selected = true;
+        option.selected = select;
         option.value = name;
         option.innerText = name;
         $('#themes').append(option);
     } else {
         themes[themeIndex] = theme;
-        $(`#themes option[value="${name}"]`).prop('selected', true);
+        if (select) $('#themes option').filter((_, option) => option.value === name).prop('selected', true);
     }
 
-    power_user.theme = name;
-    saveSettingsDebounced();
+    if (select) {
+        power_user.theme = name;
+        saveSettingsDebounced();
+    }
 
     return theme;
 }
@@ -3526,9 +3525,9 @@ jQuery(() => {
         saveSettingsDebounced();
     });
 
-    $('#ui-preset-save-button').on('click', () => saveTheme());
-    $('#ui-preset-update-button').on('click', () => updateTheme());
-    $('#ui-preset-delete-button').on('click', () => deleteTheme());
+    $('#ui-preset-save-button').on('click', () => void saveTheme().catch(error => console.error('Saving theme failed', error)));
+    $('#ui-preset-update-button').on('click', () => void updateTheme().catch(error => console.error('Updating theme failed', error)));
+    $('#ui-preset-delete-button').on('click', () => void deleteTheme().catch(error => { console.error('Deleting theme failed', error); toastr.error('Theme could not be deleted. Retry the connection.'); }));
     $('#movingui-preset-save-button').on('click', saveMovingUI);
 
     $('#never_resize_avatars').on('input', function () {
@@ -4077,7 +4076,7 @@ jQuery(() => {
     });
 
     $('#ui_preset_export_button').on('click', async function () {
-        await exportTheme();
+        try { await exportTheme(); } catch (error) { console.error('Exporting theme failed', error); }
     });
 
     $('#media_display').on('input', async function () {

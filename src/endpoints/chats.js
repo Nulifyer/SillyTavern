@@ -530,8 +530,9 @@ class IntegrityMismatchError extends Error {
  * @param {string} handle The users handle, passed to getBackupFunction.
  * @param {string} cardName Passed to backupChat.
  * @param {string} backupDirectory Passed to backupChat.
+ * @param {string|null} [expectedContentHash] Exact on-disk baseline for a generation commit.
  */
-export async function trySaveChat(chatData, filePath, skipIntegrityCheck = false, handle, cardName, backupDirectory) {
+export async function trySaveChat(chatData, filePath, skipIntegrityCheck = false, handle, cardName, backupDirectory, expectedContentHash = undefined) {
     const jsonlData = chatData?.map(m => JSON.stringify(m)).join('\n');
 
     const doIntegrityCheck = (checkIntegrity && !skipIntegrityCheck);
@@ -539,6 +540,14 @@ export async function trySaveChat(chatData, filePath, skipIntegrityCheck = false
 
     if (doIntegrityCheck && !await checkChatIntegrity(filePath, chatIntegritySlug)) {
         throw new IntegrityMismatchError(`Chat integrity check failed for "${filePath}". The expected integrity slug was "${chatIntegritySlug}".`);
+    }
+    // Generation commits must compare after the asynchronous integrity read.
+    // No event-loop turn separates this comparison from the native atomic write.
+    if (expectedContentHash !== undefined) {
+        const currentHash = fs.existsSync(filePath) ? crypto.createHash('sha256').update(fs.readFileSync(filePath)).digest('hex') : null;
+        if (currentHash !== expectedContentHash) {
+            throw Object.assign(new Error('The story changed while this reply was running. The existing transcript and saved reply are preserved.'), { status: 409 });
+        }
     }
     tryWriteFileSync(filePath, jsonlData);
     getBackupFunction(handle, cardName)(backupDirectory, cardName, jsonlData);

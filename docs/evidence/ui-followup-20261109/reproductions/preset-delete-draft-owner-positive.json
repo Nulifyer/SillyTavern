@@ -1,0 +1,20 @@
+{
+  "file": "public/scripts/preset-manager.js",
+  "sha256": "339cdb1daa416877956d44d4a39f4a06a312121b2416624f440b1d82cff8c596",
+  "observed": {
+    "selected": "A",
+    "editor": {
+      "name": "A",
+      "story_string": "newer unsaved A draft"
+    },
+    "changes": 0,
+    "presetNames": [
+      "A",
+      "B"
+    ],
+    "unsaved": "true",
+    "note": "Delete starts while A selected; user edits A during held acknowledgement. Successful deletion retains A selector and editor together as an explicitly unsaved local draft."
+  },
+  "pageErrors": [],
+  "note": "Actual PresetManager in isolated browser, detached synthetic select and intercepted local fetch. No server writes or provider calls."
+}

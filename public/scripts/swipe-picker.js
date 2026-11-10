@@ -6,7 +6,21 @@ import { power_user } from './power-user.js';
 import { isMobile } from './RossAscends-mods.js';
 import { getTokenCountAsync } from './tokenizers.js';
 import { addLongPressEvent, clamp, copyText, timestampToMoment } from './utils.js';
+import { makeKeyboardInteractable } from './keyboard.js';
 import { chat, deleteSwipe, ensureSwipes, isMessageSwipeable, isSwipingAllowed, swipe, syncMesToSwipe } from '/script.js';
+
+/** Preserve native icon styling while giving each picker action its own keyboard target. */
+function preparePickerAction(control, label) {
+    control.setAttribute('role', 'button');
+    control.setAttribute('aria-label', label);
+    makeKeyboardInteractable(control);
+    control.addEventListener('keydown', event => {
+        if (event.key !== ' ' || event.isComposing || event.altKey || event.ctrlKey || event.metaKey || event.shiftKey) return;
+        event.preventDefault();
+        event.stopPropagation();
+        if (control.getAttribute('aria-disabled') !== 'true') control.click();
+    });
+}
 
 /**
  * Returns whether a swipe picker can be opened for the message.
@@ -172,6 +186,7 @@ async function openSwipePicker(messageId) {
                     branchActionSwipeId = index;
                     await popup.completeCancelled();
                 });
+            preparePickerAction(branchButton[0], t`Branch from swipe ${index + 1}`);
             deleteButton
                 .removeAttr('file_name')
                 .attr('aria-disabled', String(!canDeleteSwipe))
@@ -231,6 +246,7 @@ async function openSwipePicker(messageId) {
 
                     await renderSwipeList();
                 });
+            preparePickerAction(deleteButton[0], t`Delete swipe ${index + 1}`);
 
             // Add expand/collapse toggle
             const expandCheckboxId = `swipe_picker_expand_${messageId}_${index}`;
@@ -246,12 +262,19 @@ async function openSwipePicker(messageId) {
             expandLabel.title = t`Expand/Collapse`;
             expandLabel.setAttribute('data-i18n', '[title]Expand/Collapse');
             expandLabel.addEventListener('click', (event) => event.stopPropagation());
+            preparePickerAction(expandLabel, t`Expand swipe ${index + 1}`);
+            expandLabel.setAttribute('aria-expanded', 'false');
+            expandCheckbox.addEventListener('change', () => {
+                expandLabel.setAttribute('aria-expanded', String(expandCheckbox.checked));
+                expandLabel.setAttribute('aria-label', expandCheckbox.checked ? t`Collapse swipe ${index + 1}` : t`Expand swipe ${index + 1}`);
+            });
 
             // Add copy button
             const copyButton = document.createElement('div');
             copyButton.classList.add('swipe_picker_copy', 'fa-solid', 'fa-fw', 'fa-copy');
             copyButton.title = t`Copy`;
             copyButton.setAttribute('data-i18n', '[title]Copy');
+            preparePickerAction(copyButton, t`Copy swipe ${index + 1}`);
             copyButton.addEventListener('click', async (event) => {
                 event.preventDefault();
                 event.stopPropagation();

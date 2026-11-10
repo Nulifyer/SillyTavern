@@ -229,6 +229,15 @@
     filter: grayscale(0.5);
 }
 
+/* An entry excluded from the prompt still has an active editor. Its native off
+   switch and muted header indicate that state without fading editable text. */
+body.workspace-ui .world_entry.disabledWIEntry {
+    opacity: 1;
+}
+body.workspace-ui .world_entry.disabledWIEntry .killSwitch {
+    color: var(--ws-muted);
+}
+
 .height32px {
     height: 32px;
 }

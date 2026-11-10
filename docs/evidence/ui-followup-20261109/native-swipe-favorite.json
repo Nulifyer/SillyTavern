@@ -1,0 +1,78 @@
+{
+  "scope": "Native swipe picker keyboard actions and character favorite persistence/response ownership only",
+  "fixture": "http://127.0.0.1:8057 (synthetic source fixture)",
+  "result": {
+    "passed": 5,
+    "failed": 0,
+    "duration_seconds": 26.3
+  },
+  "command": "ST_BASE_URL=http://127.0.0.1:8057 npx playwright test tests/native-swipe-favorite.e2e.js --workers=1 --output=/tmp/st-ui-followup-20261109/native-swipe-favorite-final",
+  "source_sha256": {
+    "public/scripts/swipe-picker.js": "1c0882902e724ec6124c4a935ce51c71b4a25dc804a9ac2cb2afb4c41ea9ad8b",
+    "public/scripts/BulkEditOverlay.js": "7039d007adf45e56a8adbe75d743abe9f63a69ed349ecd90cb438d4c2b30a54b",
+    "tests/native-swipe-favorite.e2e.js": "cc36b42da0038d637c6d16dab5d6120e5457abd4b917a9483119279e1cac68b0",
+    "public/scripts/keyboard.js": "03ce223e92685cd03178fc0104bccf36c6477288d488d3375dcfc90f590ae149"
+  },
+  "checks": [
+    "ESLint on both changed source files and new test passed",
+    "git diff --check on owned paths passed",
+    "Served8057 source SHA256 matches both changed source files"
+  ],
+  "coverage": [
+    "At1280x844 and390x844: actual ellipsis\u2192swipe-picker opening, browser Tab navigation, Enter Copy with one clipboard write, Enter Expand and Space Collapse with aria state, Enter Delete and native confirmation followed removal, focus-visible ring, Enter Branch resulting native branch story with selected alternate text",
+    "HTTP503 JSON failure: native bulk Favorite click leaves both fav state fields and is_fav unchanged before held automatic character refresh; native successful retry paints and updates both fields",
+    "Held successful favorite response after real getCharacters: original captured object stays untouched and replacement same-avatar object+DOM unchanged",
+    "Held successful favorite response after real getCharacters with reordered server response: original captured object stays untouched and reused numeric slot/different-avatar object+DOM unchanged"
+  ],
+  "limitations": [
+    "Browser request routing mocks favorite persistence failure/success; tests do not qualify the server merge-attributes endpoint",
+    "Neutral swipe content seeded through existing native source API and saved to synthetic fixture; branch action itself uses actual native persistence/navigation",
+    "Clipboard write boundary intercepted to count exact writes; operating-system clipboard permission behavior not exercised",
+    "Widths1280 and390 only; no whole-UI exhaustive claim",
+    "No production access, no production validation/deployment by this agent"
+  ],
+  "diagnostics": [
+    {
+      "case": "native-swipe-favorite.e2e.-02c05-ugh-Tab-and-Enter-at-1280px",
+      "path": "/tmp/st-ui-followup-20261109/native-swipe-favorite-final/native-swipe-favorite.e2e.-02c05-ugh-Tab-and-Enter-at-1280px/diagnostics.json",
+      "diagnostics": {
+        "pageErrors": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "case": "native-swipe-favorite.e2e.-03d7c-ough-Tab-and-Enter-at-390px",
+      "path": "/tmp/st-ui-followup-20261109/native-swipe-favorite-final/native-swipe-favorite.e2e.-03d7c-ough-Tab-and-Enter-at-390px/diagnostics.json",
+      "diagnostics": {
+        "pageErrors": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "case": "native-swipe-favorite.e2e.-223bb-er-after-numeric-slot-reuse",
+      "path": "/tmp/st-ui-followup-20261109/native-swipe-favorite-final/native-swipe-favorite.e2e.-223bb-er-after-numeric-slot-reuse/diagnostics.json",
+      "diagnostics": {
+        "pageErrors": [],
+        "consoleErrors": []
+      }
+    },
+    {
+      "case": "native-swipe-favorite.e2e.-95873-action-retries-successfully",
+      "path": "/tmp/st-ui-followup-20261109/native-swipe-favorite-final/native-swipe-favorite.e2e.-95873-action-retries-successfully/diagnostics.json",
+      "diagnostics": {
+        "pageErrors": [],
+        "consoleErrors": [
+          "Failed to load resource: the server responded with a status of 503 (Service Unavailable)"
+        ]
+      }
+    },
+    {
+      "case": "native-swipe-favorite.e2e.-c5581-reshed-character-list-owner",
+      "path": "/tmp/st-ui-followup-20261109/native-swipe-favorite-final/native-swipe-favorite.e2e.-c5581-reshed-character-list-owner/diagnostics.json",
+      "diagnostics": {
+        "pageErrors": [],
+        "consoleErrors": []
+      }
+    }
+  ]
+}

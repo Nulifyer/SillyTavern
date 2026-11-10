@@ -1,0 +1,6 @@
+{
+  "file": "public/script.js",
+  "sha256": "d6ba6a88bb3f762460bf4f185fd157d91516db28f090d972878479d45e14e59c",
+  "observed": "Filtered-out text|Visible text",
+  "expected": "Visible text"
+}

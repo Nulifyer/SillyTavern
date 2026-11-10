@@ -104,6 +104,9 @@ export class ActionLoaderHandle {
     /** @type {boolean} Whether this handle has been disposed */
     #disposed = false;
 
+    /** A stop/hide callback owns this handle until its cleanup completes. */
+    #finishing = false;
+
     /**
      * Creates a new ActionLoaderHandle.
      * @param {object} options - Configuration options
@@ -268,7 +271,8 @@ export class ActionLoaderHandle {
      * Then hides this loader.
      */
     async stop() {
-        if (this.#disposed) return;
+        if (this.#disposed || this.#finishing) return;
+        this.#finishing = true;
 
         // Call custom stop handler or default
         if (this.#onStop) {
@@ -290,7 +294,8 @@ export class ActionLoaderHandle {
      * Calls the custom onHide handler if provided.
      */
     async hide() {
-        if (this.#disposed) return;
+        if (this.#disposed || this.#finishing) return;
+        this.#finishing = true;
 
         // Call custom hide handler if provided
         if (this.#onHide) {
@@ -557,9 +562,13 @@ async function hideOverlay() {
         return Promise.resolve();
     }
 
+    // Detach ownership before closing. A new blocking handle can mount its own
+    // popup while this one finishes; this cleanup only touches the old tree.
+    const closingPopup = loaderPopup;
+    loaderPopup = null;
     return new Promise((resolve) => {
-        const loaderElement = $('#loader');
-        const spinner = $('#load-spinner');
+        const loaderElement = $(closingPopup.dlg).find('#loader');
+        const spinner = $(closingPopup.dlg).find('#load-spinner');
 
         if (!loaderElement.length) {
             console.warn('Loader element not found, skipping animation');
@@ -586,10 +595,9 @@ async function hideOverlay() {
             // If it's present, we remove it once and then it's gone.
             yoinkPreloader();
 
-            loaderPopup.complete(POPUP_RESULT.AFFIRMATIVE)
+            closingPopup.complete(POPUP_RESULT.AFFIRMATIVE)
                 .catch((err) => console.error('Error completing loaderPopup:', err))
                 .finally(() => {
-                    loaderPopup = null;
                     resolve();
                 });
         }

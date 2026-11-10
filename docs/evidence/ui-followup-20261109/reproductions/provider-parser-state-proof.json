@@ -1,0 +1,27 @@
+{
+  "file": "public/scripts/nai-settings.js",
+  "sha256": "2a056c50fc1743d00e016a65796e4804d065020c837620cb8cb3950c9b2f235e",
+  "observed": {
+    "novel": [
+      "partial",
+      "partial"
+    ],
+    "novelError": "",
+    "toolsWhenOriginalAPI": [
+      [
+        {
+          "index": 0,
+          "id": "synthetic-tool",
+          "type": "function",
+          "function": {
+            "name": "synthetic",
+            "arguments": "{}"
+          }
+        }
+      ]
+    ],
+    "toolsAfterAPIChange": []
+  },
+  "pageErrors": [],
+  "note": "Actual exported streaming parsers with synthetic SSE frames and current API controls in isolated instance on synthetic browser. No native saves, external providers, or script injection; harmless markup marker only."
+}

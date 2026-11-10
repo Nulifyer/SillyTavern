@@ -1,0 +1,1794 @@
+{
+  "scope": "Source review only. Registration inventory does not prove rendered behavior or test execution.",
+  "files": [
+    {
+      "file": "public/scripts/workspace-chats.js",
+      "lines": 164
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "lines": 210
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "lines": 260
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "lines": 172
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "lines": 310
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "lines": 706
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "lines": 473
+    },
+    {
+      "file": "public/scripts/keyboard.js",
+      "lines": 263
+    },
+    {
+      "file": "public/scripts/composer-surface.js",
+      "lines": 42
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "lines": 221
+    }
+  ],
+  "listeners": [
+    {
+      "file": "public/scripts/workspace-chats.js",
+      "line": 38,
+      "scope": "constructor",
+      "target": "eventSource",
+      "event": "event_types.CHARACTER_RENAMED",
+      "registration": "eventSource.on(event_types.CHARACTER_RENAMED, (oldAvatar, newAvatar) => this.characterRenamed(oldAvatar, newAvatar))",
+      "behaviorAndCleanup": "Migrate archived character identities after native rename; malformed stored keys skipped; no UI feedback for blocked storage.",
+      "existingTestReferences": [
+        "workspace.e2e.js:629 archive persistence",
+        "workspace.e2e.js:651 rename/deletion",
+        "workspace.e2e.js:3349 native character rename archive/draft"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 33,
+      "scope": "constructor",
+      "target": "this.panel",
+      "event": "'click'",
+      "registration": "this.panel.addEventListener('click', event => {\n            const tab = event.target.closest('[data-scene-section]');\n            if (!tab) return;\n            this.section = tab.dataset.sceneSection;\n            this.signature = '';\n            void this.render(this.entity, this.record, this.records);\n        })",
+      "behaviorAndCleanup": "Switch Setup/Reply/Related; clear signature, async render with story/revision guards; rejection is not caught by this listener.",
+      "existingTestReferences": [
+        "workspace.e2e.js:55 summary state/save",
+        "workspace.e2e.js:103 inspector sections/focus/freeze",
+        "workspace.e2e.js:136 overrides",
+        "workspace.e2e.js:242 cast branches",
+        "workspace.e2e.js:269 greeting parent/branch"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 166,
+      "scope": "reply",
+      "target": "select",
+      "event": "'change'",
+      "registration": "select.addEventListener('change', () => { this.selected = Number(select.value); this.signature = ''; void this.render(this.entity, this.record, this.records); })",
+      "behaviorAndCleanup": "Select reply index; async render preserves current story/revision; direct render rejection is not caught.",
+      "existingTestReferences": [
+        "workspace.e2e.js:55 summary state/save",
+        "workspace.e2e.js:103 inspector sections/focus/freeze",
+        "workspace.e2e.js:136 overrides",
+        "workspace.e2e.js:242 cast branches",
+        "workspace.e2e.js:269 greeting parent/branch"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "line": 50,
+      "scope": "init",
+      "target": "this.category",
+      "event": "'change'",
+      "registration": "this.category.addEventListener('change', () => {\n            // Reuse the workspace navigation queue and its captured action identity.\n            rail.querySelector(`[data-workspace-action=\"${this.category.value}\"]`)?.click();\n        })",
+      "behaviorAndCleanup": "Mobile category selection clicks matching desktop destination; shared queued routing/error toast.",
+      "existingTestReferences": [
+        "workspace.e2e.js:688 destinations/Escape/focus",
+        "workspace.e2e.js:727 advanced controls",
+        "workspace.e2e.js:789 one native tree",
+        "workspace.e2e.js:827 section persistence",
+        "workspace.e2e.js:907 late saves",
+        "workspace.e2e.js late extension activation parameterized test",
+        "ui-audit.e2e.js:289 expanded settings geometry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "line": 72,
+      "scope": "init",
+      "target": "mobile",
+      "event": "'change'",
+      "registration": "mobile.addEventListener('change', placeClose)",
+      "behaviorAndCleanup": "Move Done button between mobile header and desktop actions at breakpoint.",
+      "existingTestReferences": [
+        "workspace.e2e.js:688 destinations/Escape/focus",
+        "workspace.e2e.js:727 advanced controls",
+        "workspace.e2e.js:789 one native tree",
+        "workspace.e2e.js:827 section persistence",
+        "workspace.e2e.js:907 late saves",
+        "workspace.e2e.js late extension activation parameterized test",
+        "ui-audit.e2e.js:289 expanded settings geometry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "line": 75,
+      "scope": "init",
+      "target": "this.advancedToggle",
+      "event": "'change'",
+      "registration": "this.advancedToggle.addEventListener('change', () => {\n            accountStorage.setItem('workspaceAdvancedSettings', String(this.advancedToggle.checked));\n            this.applyAdvanced();\n        })",
+      "behaviorAndCleanup": "Persist Advanced controls; update native disclosure/section visibility without remount.",
+      "existingTestReferences": [
+        "workspace.e2e.js:688 destinations/Escape/focus",
+        "workspace.e2e.js:727 advanced controls",
+        "workspace.e2e.js:789 one native tree",
+        "workspace.e2e.js:827 section persistence",
+        "workspace.e2e.js:907 late saves",
+        "workspace.e2e.js late extension activation parameterized test",
+        "ui-audit.e2e.js:289 expanded settings geometry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "line": 107,
+      "scope": "init",
+      "target": "eventSource",
+      "event": "event_types.EXTENSION_ACTIVATED",
+      "registration": "eventSource.on(event_types.EXTENSION_ACTIVATED, () => this.extensionsActivated())",
+      "behaviorAndCleanup": "Recover newly available extension only when placeholder is present; preserve mounted edits otherwise.",
+      "existingTestReferences": [
+        "workspace.e2e.js:688 destinations/Escape/focus",
+        "workspace.e2e.js:727 advanced controls",
+        "workspace.e2e.js:789 one native tree",
+        "workspace.e2e.js:827 section persistence",
+        "workspace.e2e.js:907 late saves",
+        "workspace.e2e.js late extension activation parameterized test",
+        "ui-audit.e2e.js:289 expanded settings geometry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 54,
+      "scope": "init",
+      "target": "more",
+      "event": "'toggle'",
+      "registration": "more.addEventListener('toggle', placeMenu)",
+      "behaviorAndCleanup": "Bound open creative menu height and horizontal position.",
+      "existingTestReferences": [
+        "workspace.e2e.js:2663 custom images",
+        "workspace.e2e.js:2698 scene image single request",
+        "workspace.e2e.js:2760 Read latest System voice",
+        "workspace.e2e.js:2783 opt-in",
+        "workspace.e2e.js transient menus dismiss parameterized test",
+        "ui-audit.e2e.js:446 classic restored native menus"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 55,
+      "scope": "init",
+      "target": "window",
+      "event": "'resize'",
+      "registration": "window.addEventListener('resize', placeMenu)",
+      "behaviorAndCleanup": "Recompute open creative menu placement on viewport resize.",
+      "existingTestReferences": [
+        "workspace.e2e.js:2663 custom images",
+        "workspace.e2e.js:2698 scene image single request",
+        "workspace.e2e.js:2760 Read latest System voice",
+        "workspace.e2e.js:2783 opt-in",
+        "workspace.e2e.js transient menus dismiss parameterized test",
+        "ui-audit.e2e.js:446 classic restored native menus"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 56,
+      "scope": "init",
+      "target": "window.visualViewport",
+      "event": "'resize'",
+      "registration": "window.visualViewport?.addEventListener('resize', placeMenu)",
+      "behaviorAndCleanup": "Recompute on visualViewport resize, including keyboard height.",
+      "existingTestReferences": [
+        "workspace.e2e.js:2663 custom images",
+        "workspace.e2e.js:2698 scene image single request",
+        "workspace.e2e.js:2760 Read latest System voice",
+        "workspace.e2e.js:2783 opt-in",
+        "workspace.e2e.js transient menus dismiss parameterized test",
+        "ui-audit.e2e.js:446 classic restored native menus"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 73,
+      "scope": "init",
+      "target": "control",
+      "event": "'keydown'",
+      "registration": "control.addEventListener('keydown', event => {\n                if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); control.click(); }\n            })",
+      "behaviorAndCleanup": "Native chat/extension menu controls activate with Enter/Space, preventDefault avoids double keyboard activation.",
+      "existingTestReferences": [
+        "workspace.e2e.js:2663 custom images",
+        "workspace.e2e.js:2698 scene image single request",
+        "workspace.e2e.js:2760 Read latest System voice",
+        "workspace.e2e.js:2783 opt-in",
+        "workspace.e2e.js transient menus dismiss parameterized test",
+        "ui-audit.e2e.js:446 classic restored native menus"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 413,
+      "scope": "openCast",
+      "target": "search",
+      "event": "'input'",
+      "registration": "search.addEventListener('input', () => {\n        const query = search.value.toLocaleLowerCase();\n        for (const option of list.children) option.hidden = !option.textContent.toLocaleLowerCase().includes(query);\n    })",
+      "behaviorAndCleanup": "Filter cast picker labels by search; preserve checked hidden members.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 417,
+      "scope": "openCast",
+      "target": "list",
+      "event": "'change'",
+      "registration": "list.addEventListener('change', () => {\n        const selected = list.querySelectorAll('input:checked').length;\n        count.textContent = `${selected} characters selected`;\n        create.disabled = selected < 2;\n    })",
+      "behaviorAndCleanup": "Update cast selection count and Create enabled at >=2.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 610,
+      "scope": "initWorkspace",
+      "target": "layoutToggle",
+      "event": "'change'",
+      "registration": "layoutToggle.addEventListener('change', () => { accountStorage.setItem('workspaceLayout', String(layoutToggle.checked)); applyLayout(layoutToggle.checked); })",
+      "behaviorAndCleanup": "Persist workspace/classic preference; move native nodes through existing origins.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 613,
+      "scope": "initWorkspace",
+      "target": "document",
+      "event": "'click'",
+      "registration": "document.addEventListener('click', dismissOutsideActionMenus, { capture: true })",
+      "behaviorAndCleanup": "Capture trusted outside click; close other action menus including native children.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 617,
+      "scope": "initWorkspace",
+      "target": "document",
+      "event": "'keydown'",
+      "registration": "document.addEventListener('keydown', event => { tabbing = event.key === 'Tab'; }, { capture: true })",
+      "behaviorAndCleanup": "Track intentional Tab focus movement.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 618,
+      "scope": "initWorkspace",
+      "target": "document",
+      "event": "'keyup'",
+      "registration": "document.addEventListener('keyup', () => { tabbing = false; }, { capture: true })",
+      "behaviorAndCleanup": "Clear Tab tracking.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 619,
+      "scope": "initWorkspace",
+      "target": "document",
+      "event": "'focusin'",
+      "registration": "document.addEventListener('focusin', event => { if (tabbing) dismissOutsideActionMenus(event); })",
+      "behaviorAndCleanup": "Only intentional Tab navigation dismisses outside menus.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 620,
+      "scope": "initWorkspace",
+      "target": "document",
+      "event": "'click'",
+      "registration": "document.addEventListener('click', event => {\n        const target = event.target instanceof Element ? event.target.closest('[data-workspace-action], [data-service-destination]') : null;\n        if (!target) return;\n        event.preventDefault();\n        if (target.disabled) return;\n        const action = target.dataset.workspaceAction || target.dataset.serviceDestination;\n        const startsStory = ['start-story', 'start-current-story'].includes(action);\n        if (startsStory) {\n            if (state.starting || event.detail > 1) return;\n            state.starting = true;\n            refreshWorkspace();\n        }\n        const command = document.getElementById('workspace-command');\n        if (command.open && action !== 'close-search') command.close();\n        closeActionMenus();\n        const showError = error => { console.error('Workspace action failed', error); toastr.error(error.message || 'This action could not finish. Try again.'); };\n        if (['generate-scene-image', 'generate-image', 'generate-custom-image'].includes(action)) {\n            if (isGenerating()) { showError(new Error('Wait for the reply to finish before illustrating this scene.')); return; }\n            void creativeTools.generate(action === 'generate-scene-image' ? 'scene' : action === 'generate-image' ? target.dataset.imagePrompt : document.getElementById('workspace-image-prompt').value).catch(showError);\n        } else {\n            // A page may reconcile while this command waits. Capture identity at click time.\n            const request = { dataset: { ...target.dataset }, element: target };\n            navigationQueue = navigationQueue.then(() => handleAction(action, request)).catch(showError).finally(() => {\n                if (startsStory) { state.starting = false; refreshWorkspace(); }\n            });\n        }\n    })",
+      "behaviorAndCleanup": "Delegate workspace/service actions; snapshot datasets; serialize navigation; coalesce story starts; image uses separate busy owner; failures console+toast.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 647,
+      "scope": "initWorkspace",
+      "target": "document",
+      "event": "'input'",
+      "registration": "document.addEventListener('input', event => {\n        if (event.target.id === 'workspace-view-search') { state.query = event.target.value; renderPage(); }\n    })",
+      "behaviorAndCleanup": "Filter current library/history page and restore input selection through morphdom.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 650,
+      "scope": "initWorkspace",
+      "target": "document",
+      "event": "'change'",
+      "registration": "document.addEventListener('change', event => {\n        const target = event.target;\n        if (!(target instanceof HTMLInputElement)) return;\n        if (['tts_enabled', 'sd_enabled'].includes(target.id)) refreshWorkspace();\n    })",
+      "behaviorAndCleanup": "Refresh native TTS/SD enabled state.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 655,
+      "scope": "initWorkspace",
+      "target": "document.getElementById('workspace-search-button')",
+      "event": "'click'",
+      "registration": "document.getElementById('workspace-search-button').addEventListener('click', openSearch)",
+      "behaviorAndCleanup": "Open command dialog unless another native dialog is open.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 656,
+      "scope": "initWorkspace",
+      "target": "document.getElementById('workspace-menu')",
+      "event": "'click'",
+      "registration": "document.getElementById('workspace-menu').addEventListener('click', () => setMobileNavigation(!document.body.classList.contains('workspace-nav-open')))",
+      "behaviorAndCleanup": "Toggle mobile sidebar and inert content.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 657,
+      "scope": "initWorkspace",
+      "target": "document.getElementById('workspace-scrim')",
+      "event": "'click'",
+      "registration": "document.getElementById('workspace-scrim').addEventListener('click', () => { setMobileNavigation(false); document.getElementById('workspace-menu').focus(); })",
+      "behaviorAndCleanup": "Close scrim/navigation and restore menu-trigger focus.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 658,
+      "scope": "initWorkspace",
+      "target": "document.getElementById('workspace-command-input')",
+      "event": "'input'",
+      "registration": "document.getElementById('workspace-command-input').addEventListener('input', renderSearch)",
+      "behaviorAndCleanup": "Rebuild command results from query.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 659,
+      "scope": "initWorkspace",
+      "target": "document.getElementById('workspace-command')",
+      "event": "'keydown'",
+      "registration": "document.getElementById('workspace-command').addEventListener('keydown', event => {\n        const buttons = [...document.querySelectorAll('#workspace-command-results button')];\n        const index = buttons.indexOf(document.activeElement);\n        if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {\n            event.preventDefault();\n            buttons[(index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length]?.focus();\n        } else if (event.key === 'Enter' && event.target.id === 'workspace-command-input') { event.preventDefault(); buttons[0]?.click(); }\n    })",
+      "behaviorAndCleanup": "Arrow keys cycle command results; Enter chooses first. ArrowUp from input incorrectly picks N-2, not last.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 667,
+      "scope": "initWorkspace",
+      "target": "document",
+      "event": "'keydown'",
+      "registration": "document.addEventListener('keydown', event => {\n        if (!document.body.classList.contains('workspace-ui') || event.isComposing) return;\n        if ((event.ctrlKey || event.metaKey) && event.key.toLowerCase() === 'k' && !document.querySelector('dialog[open]')) { event.preventDefault(); openSearch(); } else if (event.key === 'Escape' && !document.querySelector('dialog[open]')) {\n            if (hasNativeEscapeTarget({ includeGeneration: false })) return;\n            const nativeMenu = openNativeActionMenus()[0];\n            if (nativeMenu) {\n                event.preventDefault(); event.stopImmediatePropagation();\n                const trigger = document.getElementById(nativeMenu[1]);\n                trigger.click(); trigger.focus();\n                return;\n            }\n            if (closeActionMenus(null, true)) { event.preventDefault(); event.stopImmediatePropagation(); return; }\n            if (document.body.classList.contains('workspace-nav-open')) {\n                event.preventDefault(); event.stopImmediatePropagation(); setMobileNavigation(false); document.getElementById('workspace-menu').focus();\n            } else if (settingsPanel.active) {\n                event.preventDefault(); event.stopImmediatePropagation(); void closeDrawers().then(() => { refreshWorkspace(); focusContent(); });\n            } else if (!settingsPanel.active && document.body.classList.contains('workspace-inspecting')) {\n                event.preventDefault(); event.stopImmediatePropagation(); document.body.classList.remove('workspace-inspecting'); refreshWorkspace(); document.getElementById('workspace-header-portrait').focus();\n            }\n        } else if (event.key === 'Tab' && (document.body.classList.contains('workspace-nav-open') || (document.body.classList.contains('workspace-inspecting') && matchMedia('(max-width: 900px)').matches))) {\n            const selector = document.body.classList.contains('workspace-nav-open') ? '#workspace-sidebar a, #workspace-sidebar button' : '#workspace-scene-info button:not(:disabled), #workspace-scene-info summary, #workspace-scene-info input:not(:disabled), #workspace-scene-info select:not(:disabled), #workspace-scene-info textarea:not(:disabled), #workspace-scene-info a[href], #workspace-scene-info pre';\n            const controls = [...document.querySelectorAll(selector)].filter(control => control.getClientRects().length && (control.tagName !== 'PRE' || control.scrollHeight > control.clientHeight));\n            if (event.shiftKey && document.activeElement === controls[0]) { event.preventDefault(); controls.at(-1)?.focus(); } else if (!event.shiftKey && document.activeElement === controls.at(-1)) { event.preventDefault(); controls[0]?.focus(); }\n        }\n    }, { capture: true })",
+      "behaviorAndCleanup": "Ctrl/Cmd+K command; Escape native/menus/nav/settings/inspector ownership; Tab wraps sidebar/phone inspector.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 692,
+      "scope": "initWorkspace",
+      "target": "matchMedia('(max-width: 900px)')",
+      "event": "'change'",
+      "registration": "matchMedia('(max-width: 900px)').addEventListener('change', () => { setMobileNavigation(false); refreshWorkspace(); })",
+      "behaviorAndCleanup": "Close mobile navigation and recompute view across breakpoint.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 693,
+      "scope": "initWorkspace",
+      "target": "eventSource",
+      "event": "event_types.CLIENT_CONTEXT_UPDATED",
+      "registration": "eventSource.on(event_types.CLIENT_CONTEXT_UPDATED, () => { if (sceneDetails) sceneDetails.signature = ''; refreshWorkspace(); })",
+      "behaviorAndCleanup": "Invalidate client-context inspector signature, refresh current presentation.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 694,
+      "scope": "initWorkspace",
+      "target": "eventSource",
+      "event": "event_types.CHAT_RENAMED",
+      "registration": "eventSource.on(event_types.CHAT_RENAMED, data => { transcripts.renamed(data); scheduleChats(); })",
+      "behaviorAndCleanup": "Migrate archive title identity and debounce history refresh.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 695,
+      "scope": "initWorkspace",
+      "target": "eventSource",
+      "event": "event",
+      "registration": "eventSource.on(event, scheduleChats)",
+      "behaviorAndCleanup": "Debounce history refresh after six native entity/history/generation events.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 696,
+      "scope": "initWorkspace",
+      "target": "eventSource",
+      "event": "event",
+      "registration": "eventSource.on(event, refreshWorkspace)",
+      "behaviorAndCleanup": "Refresh native story/provider/settings/generation presentation after 15 event types.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 697,
+      "scope": "initWorkspace",
+      "target": "eventSource",
+      "event": "event_types.CHARACTER_PAGE_LOADED",
+      "registration": "eventSource.on(event_types.CHARACTER_PAGE_LOADED, () => { if (state.view !== 'chat') renderPage(); refreshWorkspace(); })",
+      "behaviorAndCleanup": "Reconcile browsed entity collection and active presentation.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 698,
+      "scope": "initWorkspace",
+      "target": "eventSource",
+      "event": "event_types.CHAT_CHANGED",
+      "registration": "eventSource.on(event_types.CHAT_CHANGED, () => {\n        if (state.view === 'chat' && !transcripts.current()) state.view = 'chats';\n        refreshWorkspace(); scheduleChats();\n    })",
+      "behaviorAndCleanup": "Fall back to stories when native chat closes; refresh and debounce index.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 702,
+      "scope": "initWorkspace",
+      "target": "eventSource",
+      "event": "event_types.APP_READY",
+      "registration": "eventSource.on(event_types.APP_READY, () => void refreshChats())",
+      "behaviorAndCleanup": "Initial async recent-stories refresh with request abort, loading/error/retry owner.",
+      "existingTestReferences": [
+        "workspace.e2e.js:461 browsing/profiles",
+        "workspace.e2e.js:478 history load failure",
+        "workspace.e2e.js:580 exact story history",
+        "workspace.e2e.js:601 immediate/coalesced start",
+        "workspace.e2e.js:629 archive",
+        "workspace.e2e.js:651 rename/delete confirmation",
+        "workspace.e2e.js:678 failed delete",
+        "workspace.e2e.js:1697 command search/native generation",
+        "workspace.e2e.js:2807 cast creation",
+        "workspace.e2e.js phone roleplay parameterized test",
+        "workspace.e2e.js:3248 classic restore"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 39,
+      "scope": "init",
+      "target": "this.verify",
+      "event": "'click'",
+      "registration": "this.verify.addEventListener('click', () => void this.discover())",
+      "behaviorAndCleanup": "Start discovery; abort prior fetch; status/busy/result guards.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 40,
+      "scope": "init",
+      "target": "this.url",
+      "event": "'input'",
+      "registration": "this.url.addEventListener('input', () => {\n            this.request?.abort();\n            this.voiceRequest?.abort();\n            this.data = null;\n            this.attempted = false;\n            this.results.replaceChildren();\n            this.clearRows();\n            this.status.textContent = 'Verify this address to refresh its available services.';\n            this.verify.disabled = false;\n        })",
+      "behaviorAndCleanup": "Abort discovery/voices; clear stale data/results/rows; request verification.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 50,
+      "scope": "init",
+      "target": "eventSource",
+      "event": "event_types.ONLINE_STATUS_CHANGED",
+      "registration": "eventSource.on(event_types.ONLINE_STATUS_CHANGED, () => this.updateContext())",
+      "behaviorAndCleanup": "Refresh effective context capacity.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 51,
+      "scope": "init",
+      "target": "eventSource",
+      "event": "event_types.OAI_PRESET_CHANGED_AFTER",
+      "registration": "eventSource.on(event_types.OAI_PRESET_CHANGED_AFTER, () => this.updateContext())",
+      "behaviorAndCleanup": "Refresh context after preset native change.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 52,
+      "scope": "init",
+      "target": "eventSource",
+      "event": "event_types.SETTINGS_UPDATED",
+      "registration": "eventSource.on(event_types.SETTINGS_UPDATED, () => this.syncSelections())",
+      "behaviorAndCleanup": "Sync selectors from applied native configuration.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 53,
+      "scope": "init",
+      "target": "document",
+      "event": "'change'",
+      "registration": "document.addEventListener('change', event => {\n            if (event.target.closest('.service-connection-row')) return;\n            queueMicrotask(() => this.syncSelections());\n        })",
+      "behaviorAndCleanup": "Sync after native changes outside service rows via microtask.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 57,
+      "scope": "init",
+      "target": "document",
+      "event": "'input'",
+      "registration": "document.addEventListener('input', event => {\n            if (['openai_max_context', 'openai_max_context_counter'].includes(event.target.id)) queueMicrotask(() => this.updateContext());\n        })",
+      "behaviorAndCleanup": "Update context after native context slider/counter input.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 89,
+      "scope": "preparePanels",
+      "target": "$('#sd_prompt_writer_profile')",
+      "event": "'change'",
+      "registration": "$('#sd_prompt_writer_profile').on('change', () => this.updateWriter())",
+      "behaviorAndCleanup": "Show current/separate writer instructions after native profile changes.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 142,
+      "scope": "prepareImagePrompts",
+      "target": "select",
+      "event": "'change'",
+      "registration": "select.addEventListener('change', show)",
+      "behaviorAndCleanup": "Show one native image-prompt purpose without copying values.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 304,
+      "scope": "row",
+      "target": "select",
+      "event": "'change'",
+      "registration": "select.addEventListener('change', controls.changed)",
+      "behaviorAndCleanup": "Mark discovered model unapplied; enable appropriate Apply.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 305,
+      "scope": "row",
+      "target": "action",
+      "event": "'click'",
+      "registration": "action.addEventListener('click', async () => {\n            controls.pending = true;\n            action.disabled = true;\n            select.disabled = true;\n            if (controls.voice) controls.voice.disabled = true;\n            status.textContent = 'Applying connection\u2026';\n            try {\n                await apply(select.value);\n                controls.applied = JSON.stringify(this.selection(id));\n                status.textContent = 'Saved. This service uses the selected model. Test it in your story when ready.';\n                this.targets.get(id).native.open = Boolean(this.advanced);\n                this.updateContext();\n                this.updateWriter();\n            } catch (error) {\n                status.textContent = `${error.message} Retry or open the provider settings.`;\n            } finally {\n                controls.pending = false;\n                if (row.isConnected) {\n                    action.disabled = id !== 'writer' && !select.value;\n                    select.disabled = !service?.models?.length;\n                    if (controls.voice) controls.voice.disabled = !controls.voices?.length;\n                }\n            }\n        })",
+      "behaviorAndCleanup": "Disable row during async Apply; status success/failure/finally; no obsolete row/server guard after awaits.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 360,
+      "scope": "render",
+      "target": "this.contextToggle",
+      "event": "'change'",
+      "registration": "this.contextToggle.addEventListener('change', () => {\n                applyCustomModelContext(this.contextToggle.checked);\n                this.updateContext();\n            })",
+      "behaviorAndCleanup": "Apply automatic-context preference through native owner and refresh note.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 398,
+      "scope": "render",
+      "target": "speech.voice",
+      "event": "'change'",
+      "registration": "speech.voice.addEventListener('change', speech.changed)",
+      "behaviorAndCleanup": "Mark selected voice unapplied.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 437,
+      "scope": "render",
+      "target": "retry",
+      "event": "'click'",
+      "registration": "retry.addEventListener('click', () => void voices())",
+      "behaviorAndCleanup": "Abort previous voice discovery; retry current model; request/row guards on settlement.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/service-connections.js",
+      "line": 438,
+      "scope": "render",
+      "target": "speech.select",
+      "event": "'change'",
+      "registration": "speech.select.addEventListener('change', () => void voices())",
+      "behaviorAndCleanup": "Discover voices for changed model; disable Apply until voice availability, abort stale request.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1042 selection/applied distinction",
+        "workspace.e2e.js:1076 vision",
+        "workspace.e2e.js:1104 native configuration reload",
+        "workspace.e2e.js:1176 context",
+        "workspace.e2e.js:1226 prompt values/classic roundtrip",
+        "workspace.e2e.js:1299 failed/stale discovery + voice retry",
+        "workspace.e2e.js:1411 writer failure/retry"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/keyboard.js",
+      "line": 189,
+      "scope": "",
+      "target": "container",
+      "event": "'focusout'",
+      "registration": "container.addEventListener('focusout', (e) => {\n        setTimeout(() => {\n            const focusedElement = document.activeElement;\n            if (!container.contains(focusedElement)) {\n                container.scrollTop = 0;\n                container.scrollLeft = 0;\n            }\n        }, 0);\n    })",
+      "behaviorAndCleanup": "Reset containing scroll after focus leaves. No initialization guard: ancestor class mutations attach duplicate focusout listeners.",
+      "existingTestReferences": [
+        "keyboard-activation.test.js native/custom Enter ownership",
+        "workspace.e2e.js:501 native editor and audio chooser",
+        "ui-audit.e2e.js:536 gallery close keyboard"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/keyboard.js",
+      "line": 262,
+      "scope": "initKeyboard",
+      "target": "document",
+      "event": "'keydown'",
+      "registration": "document.addEventListener('keydown', handleGlobalKeyDown)",
+      "behaviorAndCleanup": "Custom Enter/floating-close Space activation; preserve native controls, defaultPrevented, composition and modifiers.",
+      "existingTestReferences": [
+        "keyboard-activation.test.js native/custom Enter ownership",
+        "workspace.e2e.js:501 native editor and audio chooser",
+        "ui-audit.e2e.js:536 gallery close keyboard"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 50,
+      "scope": "init",
+      "target": "this.uploadButton",
+      "event": "'click'",
+      "registration": "this.uploadButton.addEventListener('click', () => upload.click())",
+      "behaviorAndCleanup": "Forward semantic choose-file button to native input; browser owns picker.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1349 permission failure/retry/story cancel",
+        "workspace.e2e.js:2438 late permission after suspension",
+        "workspace.e2e.js:3413 old recorder error/stop ownership",
+        "workspace-state-ownership.test.js sequence/recorder behavior"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 56,
+      "scope": "init",
+      "target": "upload",
+      "event": "'change'",
+      "registration": "upload.addEventListener('change', async () => {\n            const file = upload.files?.[0];\n            if (!file) return;\n            if (this.active) { this.fileStatus.textContent = 'Finish or cancel the current dictation first.'; upload.value = ''; return; }\n            if (!getCurrentChatId()) { this.show('Open a story before transcribing audio.'); upload.value = ''; return; }\n            const sequence = ++this.sequence;\n            this.active = true;\n            this.update();\n            try {\n                await this.transcribe(file, sequence, storyIdentity());\n            } catch (error) {\n                if (sequence === this.sequence) this.show(error.message);\n            } finally {\n                if (sequence === this.sequence) {\n                    this.active = false;\n                    upload.value = '';\n                    this.update();\n                }\n            }\n        })",
+      "behaviorAndCleanup": "Validate file/active story, sequence ownership, encode/transcribe; feedback catch; active/input reset finally.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1349 permission failure/retry/story cancel",
+        "workspace.e2e.js:2438 late permission after suspension",
+        "workspace.e2e.js:3413 old recorder error/stop ownership",
+        "workspace-state-ownership.test.js sequence/recorder behavior"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 79,
+      "scope": "init",
+      "target": "button",
+      "event": "'click'",
+      "registration": "button.addEventListener('click', () => void this.toggle())",
+      "behaviorAndCleanup": "Start/stop/cancel microphone through toggle with sequence ownership and permission/encoding/provider feedback.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1349 permission failure/retry/story cancel",
+        "workspace.e2e.js:2438 late permission after suspension",
+        "workspace.e2e.js:3413 old recorder error/stop ownership",
+        "workspace-state-ownership.test.js sequence/recorder behavior"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 80,
+      "scope": "init",
+      "target": "eventSource",
+      "event": "event_types.CHAT_CHANGED",
+      "registration": "eventSource.on(event_types.CHAT_CHANGED, () => { if (this.active) this.cancel('Story changed. Dictation cancelled. Retry in the intended story.'); })",
+      "behaviorAndCleanup": "Cancel active dictation after native story change; abort request and stop tracks.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1349 permission failure/retry/story cancel",
+        "workspace.e2e.js:2438 late permission after suspension",
+        "workspace.e2e.js:3413 old recorder error/stop ownership",
+        "workspace-state-ownership.test.js sequence/recorder behavior"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 81,
+      "scope": "init",
+      "target": "window",
+      "event": "'pagehide'",
+      "registration": "window.addEventListener('pagehide', () => this.cancel())",
+      "behaviorAndCleanup": "Cancel dictation on pagehide; abort request/stop tracks.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1349 permission failure/retry/story cancel",
+        "workspace.e2e.js:2438 late permission after suspension",
+        "workspace.e2e.js:3413 old recorder error/stop ownership",
+        "workspace-state-ownership.test.js sequence/recorder behavior"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 82,
+      "scope": "init",
+      "target": "document",
+      "event": "'visibilitychange'",
+      "registration": "document.addEventListener('visibilitychange', () => {\n            if (document.visibilityState === 'hidden' && (this.stream || this.microphonePending)) this.cancel('Recording stopped when the tab was hidden. Retry dictation when ready.');\n        })",
+      "behaviorAndCleanup": "Cancel microphone/pending permission when document becomes hidden; preserve completed upload/transcription.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1349 permission failure/retry/story cancel",
+        "workspace.e2e.js:2438 late permission after suspension",
+        "workspace.e2e.js:3413 old recorder error/stop ownership",
+        "workspace-state-ownership.test.js sequence/recorder behavior"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 85,
+      "scope": "init",
+      "target": "document",
+      "event": "'freeze'",
+      "registration": "document.addEventListener('freeze', () => {\n            if (this.stream || this.microphonePending) this.cancel('Recording stopped when the tab was suspended. Retry dictation when ready.');\n        })",
+      "behaviorAndCleanup": "Cancel microphone/pending permission on freeze.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1349 permission failure/retry/story cancel",
+        "workspace.e2e.js:2438 late permission after suspension",
+        "workspace.e2e.js:3413 old recorder error/stop ownership",
+        "workspace-state-ownership.test.js sequence/recorder behavior"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 97,
+      "scope": "input",
+      "target": "input",
+      "event": "'input'",
+      "registration": "input.addEventListener('input', () => configureDictation(this.endpoint.value.trim(), this.model.value.trim()))",
+      "behaviorAndCleanup": "Persist native endpoint/model and sync input values.",
+      "existingTestReferences": [
+        "workspace.e2e.js:1349 permission failure/retry/story cancel",
+        "workspace.e2e.js:2438 late permission after suspension",
+        "workspace.e2e.js:3413 old recorder error/stop ownership",
+        "workspace-state-ownership.test.js sequence/recorder behavior"
+      ],
+      "coverageMeaning": "References to existing source tests, not a fresh test run or proof every state is tested."
+    }
+  ],
+  "actions": [
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 72,
+      "label": "'Close scene details'",
+      "action": "'close-inspector'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 107,
+      "label": "member.name",
+      "action": "'profile'",
+      "data": "{ entity: member.key }"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 108,
+      "label": "'Cast reply order & members'",
+      "action": "'edit-entity'",
+      "data": "{ entity: entity.key }"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 120,
+      "label": "'Edit this story\u2019s overrides'",
+      "action": "'story-overrides'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 148,
+      "label": "label",
+      "action": "action",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 153,
+      "label": "'Character and stories'",
+      "action": "'history'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 186,
+      "label": "'Branch from this reply'",
+      "action": "'scene-branch'",
+      "data": "{ message: String(this.selected), swipe: message.swipes?.length ? String(message.swipe_id ?? 0) : '' }"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 194,
+      "label": "'Retry story index'",
+      "action": "'refresh-chats'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 200,
+      "label": "`Open parent: ${parent.file_name}${parent.archived ? ' \u00b7 Archived' : ''}`",
+      "action": "'open-chat'",
+      "data": "{ chat: parent.key }"
+    },
+    {
+      "file": "public/scripts/workspace-scene.js",
+      "line": 205,
+      "label": "`${child.file_name}${child.archived ? ' \u00b7 Archived' : ''}`",
+      "action": "'open-chat'",
+      "data": "{ chat: child.key }"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "line": 42,
+      "label": "setting.label",
+      "action": "id",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "line": 60,
+      "label": "'Done'",
+      "action": "'close-panel'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "line": 83,
+      "label": "label",
+      "action": "id",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "line": 246,
+      "label": "label",
+      "action": "'settings-section'",
+      "data": "{ section: label }"
+    },
+    {
+      "file": "public/scripts/workspace-settings.js",
+      "line": 249,
+      "label": "'All controls'",
+      "action": "'settings-section'",
+      "data": "{ section: 'all' }"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 16,
+      "label": "'Illustrate scene'",
+      "action": "'generate-scene-image'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 19,
+      "label": "'Voice off'",
+      "action": "'toggle-voice'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 36,
+      "label": "'Portrait or custom image'",
+      "action": "'image'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 37,
+      "label": "'Read latest reply'",
+      "action": "'read-reply'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 38,
+      "label": "'Play / pause voice'",
+      "action": "'voice-playback'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 39,
+      "label": "'Voice settings'",
+      "action": "'voice-settings'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 40,
+      "label": "'Dictation settings'",
+      "action": "'dictation-settings'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 41,
+      "label": "'Image settings'",
+      "action": "'image-settings'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 42,
+      "label": "'Model settings'",
+      "action": "'connection'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 59,
+      "label": "''",
+      "action": "'connection'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 130,
+      "label": "'Close'",
+      "action": "'close-tools'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 134,
+      "label": "'Character portrait'",
+      "action": "'generate-image'",
+      "data": "{ imagePrompt: 'face' }"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 142,
+      "label": "'Generate custom image'",
+      "action": "'generate-custom-image'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 142,
+      "label": "'Image settings'",
+      "action": "'image-settings'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 165,
+      "label": "'Image settings'",
+      "action": "'image-settings'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 109,
+      "label": "'Try again'",
+      "action": "'refresh-chats'",
+      "data": ""
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 118,
+      "label": "''",
+      "action": "'profile'",
+      "data": "{ entity: entity.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 135,
+      "label": "''",
+      "action": "'open-chat'",
+      "data": "{ chat: record.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 155,
+      "label": "'Restore'",
+      "action": "'restore-chat'",
+      "data": "{ chat: record.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 168,
+      "label": "'Rename'",
+      "action": "'rename-chat'",
+      "data": "{ chat: record.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 169,
+      "label": "record.archived ? 'Restore' : 'Archive'",
+      "action": "record.archived ? 'restore-chat' : 'archive-chat'",
+      "data": "{ chat: record.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 170,
+      "label": "'Delete'",
+      "action": "'delete-chat'",
+      "data": "{ chat: record.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 183,
+      "label": "'Import card'",
+      "action": "'import-character'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 184,
+      "label": "'Create character'",
+      "action": "'create-character'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 190,
+      "label": "label",
+      "action": "'library-filter'",
+      "data": "{ filter: id }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 199,
+      "label": "'Create cast'",
+      "action": "'create-cast'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 203,
+      "label": "'Import a card'",
+      "action": "'import-character'",
+      "data": ""
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 209,
+      "label": "'New story'",
+      "action": "'characters'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 212,
+      "label": "'Active stories'",
+      "action": "'chats'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 213,
+      "label": "'View archive'",
+      "action": "'archive'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 230,
+      "label": "'Choose a character'",
+      "action": "'characters'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 236,
+      "label": "'Characters'",
+      "action": "'characters'",
+      "data": ""
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 238,
+      "label": "'All characters'",
+      "action": "'characters'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 245,
+      "label": "'Start new story'",
+      "action": "'start-story'",
+      "data": "{ entity: entity.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 249,
+      "label": "entity.kind === 'group' ? 'Edit cast' : 'Edit character'",
+      "action": "'edit-entity'",
+      "data": "{ entity: entity.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 255,
+      "label": "member.name",
+      "action": "'profile'",
+      "data": "{ entity: member.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 283,
+      "label": "'Continue latest story'",
+      "action": "'open-chat'",
+      "data": "{ chat: recent.key }"
+    },
+    {
+      "file": "public/scripts/workspace-views.js",
+      "line": 290,
+      "label": "label",
+      "action": "'profile-scope'",
+      "data": "{ scope: id }"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 382,
+      "label": "'Close'",
+      "action": "'close-tools'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 410,
+      "label": "'Create cast'",
+      "action": "'save-cast'",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 529,
+      "label": "item.label",
+      "action": "item.id",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 532,
+      "label": "entity.name",
+      "action": "'profile'",
+      "data": "{ entity: entity.key }"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 537,
+      "label": "record.title",
+      "action": "'open-chat'",
+      "data": "{ chat: record.key }"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 578,
+      "label": "item.label",
+      "action": "item.id",
+      "data": "{}"
+    },
+    {
+      "file": "public/scripts/workspace.js",
+      "line": 594,
+      "label": "'Use workspace layout'",
+      "action": "'restore-workspace'",
+      "data": "{}"
+    }
+  ],
+  "nativeEntryPoints": [
+    {
+      "entry": "Chat actions / Extension tools / SD dropdown",
+      "owner": "public/script.js, scripts/extensions.js, extensions/stable-diffusion/index.js",
+      "remaining": "Every dynamic extension action, slash command and user-installed extension is not qualified by workspace-menu geometry."
+    },
+    {
+      "entry": "Character editor / persona / lore / prompts",
+      "owner": "public/script.js, scripts/personas.js, scripts/world-info.js, scripts/PromptManager.js, scripts/power-user.js",
+      "remaining": "All create/import/export/delete/drag/search/editor dialogs and error paths need explicit native owner review; category visibility does not prove them."
+    },
+    {
+      "entry": "Speech/image providers",
+      "owner": "public/scripts/extensions/tts/*.js and stable-diffusion/index.js",
+      "remaining": "Provider-specific async transitions and every external paid provider operation have no blanket proof."
+    },
+    {
+      "entry": "Installed extensions",
+      "owner": "public/scripts/extensions/* and runtime third-party modules",
+      "remaining": "Each extension has its own menus/portals/styles/listeners; expanded settings inventory covers visibility only."
+    }
+  ],
+  "additionalCallbacks": [
+    {
+      "file": "public/scripts/keyboard.js",
+      "line": 48,
+      "kind": "MutationObserver",
+      "state": "Initialize interactables and scroll resets on added nodes/class changes. No per-container dedup for reset listener."
+    },
+    {
+      "file": "public/scripts/workspace-tools.js",
+      "line": 57,
+      "kind": "ResizeObserver",
+      "state": "Bound open composer menu; observer stays for page lifetime, no disposable lifecycle exists."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 165,
+      "kind": "recorder.ondataavailable",
+      "state": "Collect nonempty chunks local to recorder."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 166,
+      "kind": "recorder.onerror",
+      "state": "Cancel only if recorder sequence still current."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 169,
+      "kind": "recorder.onstop",
+      "state": "Sequence/story-owned encoding+transcription, late results ignored, errors visible, finally active=false."
+    },
+    {
+      "file": "public/scripts/dictation.js",
+      "line": 184,
+      "kind": "60s timer",
+      "state": "Stop only current recorder sequence."
+    }
+  ],
+  "actionDispatcher": {
+    "file": "public/scripts/workspace.js",
+    "lines": "425-522",
+    "queue": "DOM delegated click captures dataset/element, navigationQueue serializes; image generation separate busy owner; every thrown action gets console+toast.",
+    "actions": [
+      "settings-page",
+      "home",
+      "characters",
+      "chats",
+      "archive",
+      "18 workspaceSettings destinations",
+      "profile",
+      "settings-section",
+      "back-chat",
+      "story-overrides",
+      "scene-branch",
+      "history",
+      "current-profile",
+      "close-inspector",
+      "library-filter",
+      "profile-scope",
+      "refresh-chats",
+      "open-chat",
+      "start-story",
+      "start-current-story",
+      "archive-chat",
+      "restore-chat",
+      "rename-chat",
+      "delete-chat",
+      "edit-entity",
+      "create-character",
+      "import-character",
+      "create-cast",
+      "save-cast",
+      "image",
+      "close-tools",
+      "toggle-voice",
+      "read-reply",
+      "voice-playback",
+      "close-panel",
+      "restore-workspace",
+      "close-search",
+      "generate-scene-image",
+      "generate-image",
+      "generate-custom-image"
+    ]
+  },
+  "findings": [
+    {
+      "severity": "minor-maintainability",
+      "file": "public/scripts/keyboard.js",
+      "line": 189,
+      "observed": "Unchanged source VM experiment: one initialization + eight body class mutations registers nine focusout listeners on a single scroll reset node.",
+      "evidence": "/tmp/st-ui-followup-keyboard-duplicate.json",
+      "fix": "WeakSet initialization guard; add listener lifecycle unit test."
+    },
+    {
+      "severity": "minor-keyboard",
+      "file": "public/scripts/workspace.js",
+      "line": 664,
+      "observed": "When command input is focused index=-1. ArrowUp formula yields N-2 for N results, skipping last result.",
+      "evidence": "Source arithmetic; browser reproduction still required.",
+      "fix": "Handle input/no-result start separately; ArrowUp starts last; test first/last wrapping and empty results."
+    },
+    {
+      "severity": "unverified-async-risk",
+      "file": "public/scripts/service-connections.js",
+      "line": 305,
+      "observed": "Async apply closure uses discovered server data, then updates this.targets/native after await without row/current-server ownership. Another URL/discovery can clear/replace rows while pending. configureSdcppConnection also reassigns model after awaited loadSettingOptions.",
+      "evidence": "Source; no controlled concurrent native change experiment performed.",
+      "fix": "Reproduce held image-model-options Apply with URL/native source changed before completion; preserve newest intent or serialize explicitly."
+    }
+  ]
+}

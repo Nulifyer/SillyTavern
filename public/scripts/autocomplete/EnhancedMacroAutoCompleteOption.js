@@ -4,6 +4,7 @@
  */
 
 import { AutoCompleteOption } from './AutoCompleteOption.js';
+import { escapeHtml } from '../utils.js';
 import {
     formatMacroSignature,
     createSourceIndicator,
@@ -344,9 +345,9 @@ export class EnhancedMacroAutoCompleteOption extends AutoCompleteOption {
 
         const text = document.createElement('span');
         const closingHint = this.#context.isScopedContentOptional
-            ? `Can optionally close with <code>{{/${this.#context.scopedMacroName}}}</code>`
-            : `Close with <code>{{/${this.#context.scopedMacroName}}}</code>`;
-        text.innerHTML = `Typing <strong>scoped content</strong> for <code>{{${this.#context.scopedMacroName}}}</code>. ${closingHint}`;
+            ? `Can optionally close with <code>{{/${escapeHtml(String(this.#context.scopedMacroName))}}}</code>`
+            : `Close with <code>{{/${escapeHtml(String(this.#context.scopedMacroName))}}}</code>`;
+        text.innerHTML = `Typing <strong>scoped content</strong> for <code>{{${escapeHtml(String(this.#context.scopedMacroName))}}}</code>. ${closingHint}`;
         info.append(text);
 
         return info;
@@ -399,11 +400,11 @@ export class EnhancedMacroAutoCompleteOption extends AutoCompleteOption {
             let optionalLabel = '';
             if (argDef?.optional) {
                 optionalLabel = argDef.defaultValue !== undefined
-                    ? ` <em>(optional, default: ${argDef.defaultValue === '' ? '<empty string>' : argDef.defaultValue})</em>`
+                    ? ` <em>(optional, default: ${escapeHtml(String(argDef.defaultValue === '' ? '<empty string>' : argDef.defaultValue))})</em>`
                     : ' <em>(optional)</em>';
             }
             const text = document.createElement('span');
-            text.innerHTML = `<strong>${argDef?.name || `Argument ${argIndex + 1}`}</strong>${optionalLabel}`;
+            text.innerHTML = `<strong>${escapeHtml(String(argDef?.name || `Argument ${argIndex + 1}`))}</strong>${optionalLabel}`;
             if (argDef?.type) {
                 const typeSpan = document.createElement('code');
                 typeSpan.classList.add('macro-ac-hint-type');
@@ -494,7 +495,7 @@ export class MacroFlagAutoCompleteOption extends AutoCompleteOption {
         // Header with flag symbol and name
         const header = document.createElement('h3');
         header.classList.add('macro-flag-details-header');
-        header.innerHTML = `<code>${this.#flagDef.type}</code> ${this.#flagDef.name} Flag`;
+        header.innerHTML = `<code>${escapeHtml(String(this.#flagDef.type))}</code> ${escapeHtml(String(this.#flagDef.name))} Flag`;
         details.append(header);
 
         // Description
@@ -641,7 +642,7 @@ export class VariableShorthandAutoCompleteOption extends AutoCompleteOption {
         // Header with prefix symbol and name
         const header = document.createElement('h3');
         header.classList.add('macro-variable-details-header');
-        header.innerHTML = `<code>${this.#varDef.type}</code> ${this.#varDef.name}`;
+        header.innerHTML = `<code>${escapeHtml(String(this.#varDef.type))}</code> ${escapeHtml(String(this.#varDef.name))}`;
         details.append(header);
 
         // Description
@@ -692,7 +693,7 @@ export class VariableShorthandAutoCompleteOption extends AutoCompleteOption {
         ];
         for (const ex of examples) {
             const li = document.createElement('li');
-            li.innerHTML = `<code>${ex.split(' - ')[0]}</code> - ${ex.split(' - ')[1]}`;
+            li.innerHTML = `<code>${escapeHtml(String(ex.split(' - ')[0]))}</code> - ${escapeHtml(String(ex.split(' - ')[1]))}`;
             exampleList.append(li);
         }
         details.append(exampleList);
@@ -815,7 +816,7 @@ export class VariableNameAutoCompleteOption extends AutoCompleteOption {
 
             const warningText = document.createElement('p');
             warningText.style.cssText = 'margin: 0 0 8px 0;';
-            warningText.innerHTML = `The name <code>${this.#varName}</code> cannot be used with variable shorthand syntax.`;
+            warningText.innerHTML = `The name <code>${escapeHtml(String(this.#varName))}</code> cannot be used with variable shorthand syntax.`;
             warningBox.append(warningText);
 
             const rulesText = document.createElement('p');
@@ -831,8 +832,8 @@ export class VariableNameAutoCompleteOption extends AutoCompleteOption {
         // Header
         const header = document.createElement('h3');
         header.innerHTML = this.#isNewVariable
-            ? `<code>${prefix}${this.#varName}</code> (New ${scopeLabel} Variable)`
-            : `<code>${prefix}${this.#varName}</code> ${scopeLabel} Variable`;
+            ? `<code>${prefix}${escapeHtml(String(this.#varName))}</code> (New ${scopeLabel} Variable)`
+            : `<code>${prefix}${escapeHtml(String(this.#varName))}</code> ${scopeLabel} Variable`;
         details.append(header);
 
         // Description
@@ -873,7 +874,7 @@ export class VariableNameAutoCompleteOption extends AutoCompleteOption {
         ];
         for (const ex of examples) {
             const li = document.createElement('li');
-            li.innerHTML = `<code>${ex.split(' - ')[0]}</code> - ${ex.split(' - ')[1]}`;
+            li.innerHTML = `<code>${escapeHtml(String(ex.split(' - ')[0]))}</code> - ${escapeHtml(String(ex.split(' - ')[1]))}`;
             usageList.append(li);
         }
         details.append(usageList);
@@ -1044,7 +1045,7 @@ export class VariableOperatorAutoCompleteOption extends AutoCompleteOption {
 
         // Header
         const header = document.createElement('h3');
-        header.innerHTML = `<code>${this.#operatorDef.symbol}</code> ${this.#operatorDef.name}`;
+        header.innerHTML = `<code>${escapeHtml(String(this.#operatorDef.symbol))}</code> ${escapeHtml(String(this.#operatorDef.name))}`;
         details.append(header);
 
         // Description
@@ -1122,7 +1123,7 @@ export class VariableValueContextAutoCompleteOption extends AutoCompleteOption {
 
         // Header
         const header = document.createElement('h3');
-        header.innerHTML = `Value for <code>${this.#operatorDef.symbol}</code> (${this.#operatorDef.name})`;
+        header.innerHTML = `Value for <code>${escapeHtml(String(this.#operatorDef.symbol))}</code> (${escapeHtml(String(this.#operatorDef.name))})`;
         details.append(header);
 
         // Description of what value is expected
@@ -1133,7 +1134,7 @@ export class VariableValueContextAutoCompleteOption extends AutoCompleteOption {
         // Current value being typed
         if (this.#currentValue) {
             const currentNote = document.createElement('p');
-            currentNote.innerHTML = `<em>Currently typing:</em> <code>${this.#currentValue}</code>`;
+            currentNote.innerHTML = `<em>Currently typing:</em> <code>${escapeHtml(String(this.#currentValue))}</code>`;
             details.append(currentNote);
         }
 
@@ -1299,7 +1300,7 @@ export class MacroClosingTagAutoCompleteOption extends AutoCompleteOption {
 
         // Header
         const header = document.createElement('h3');
-        header.innerHTML = `Close <code>{{${this.#macroName}}}</code>`;
+        header.innerHTML = `Close <code>{{${escapeHtml(String(this.#macroName))}}}</code>`;
         details.append(header);
 
         // Description

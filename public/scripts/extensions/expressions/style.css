@@ -98,9 +98,10 @@ img.expression.default {
 }
 
 .expression_list_item {
+    min-height: 140px;
     position: relative;
     max-width: 20%;
-    min-width: 100px;
+    min-width: 120px;
     max-height: 200px;
     background-color: #515151b0;
     border-radius: 10px;
@@ -135,6 +136,7 @@ img.expression.default {
 }
 
 .expression_list_buttons {
+    z-index: 1;
     position: absolute;
     top: 0;
     left: 0;
@@ -170,11 +172,11 @@ img.expression.default {
 }
 
 #image_list .expression_list_item[data-expression-type="success"] .expression_list_title {
-    color: green;
+    color: var(--ws-success, #82ddb0);
 }
 
 #image_list .expression_list_item[data-expression-type="additional"] .expression_list_title {
-    color: darkolivegreen;
+    color: var(--ws-accent, #bba7f8);
 }
 #image_list .expression_list_item[data-expression-type="additional"] .expression_list_title::before {
     content: '➕';
@@ -183,11 +185,15 @@ img.expression.default {
     left: -9px;
     font-size: 14px;
     color: transparent;
-    text-shadow: 0 0 0 darkolivegreen;
+    text-shadow: 0 0 0 var(--ws-accent, #bba7f8);
 }
 
 #image_list .expression_list_item[data-expression-type="failure"] .expression_list_title {
-    color: red;
+    color: var(--ws-warning, #efc78c);
+}
+
+body.workspace-ui #image_list .expression_list_title {
+    background-color: var(--ws-sidebar);
 }
 
 .expression_settings label {
@@ -217,4 +223,16 @@ img.expression.default {
 #expressions_container:has(#expressions_allow_multiple:not(:checked)) #image_list .expression_list_item[data-expression-type="additional"]:hover,
 #expressions_container:has(#expressions_allow_multiple:not(:checked)) #image_list .expression_list_item[data-expression-type="additional"]:focus {
     opacity: unset;
+}
+
+/* Additional sprites remain editable while automatic multi-image use is off.
+   Dim their preview, retaining readable labels and upload/delete controls. */
+body.workspace-ui #expressions_container:has(#expressions_allow_multiple:not(:checked)) #image_list .expression_list_item[data-expression-type="additional"] {
+    opacity: 1;
+}
+body.workspace-ui #expressions_container:has(#expressions_allow_multiple:not(:checked)) #image_list .expression_list_item[data-expression-type="additional"] .expression_list_image_container {
+    opacity: 0.4;
+}
+body.workspace-ui #expressions_container:has(#expressions_allow_multiple:not(:checked)) #image_list .expression_list_item[data-expression-type="additional"]:is(:hover, :focus) .expression_list_image_container {
+    opacity: 1;
 }

@@ -116,6 +116,12 @@
    ----------------------------------------------------------------------------- */
 
 .macroBrowser .macro-item {
+    width: 100%;
+    border: 0;
+    font: inherit;
+    color: inherit;
+    text-align: start;
+    background: transparent;
     display: flex;
     align-items: center;
     gap: 0.5em;
@@ -131,7 +137,12 @@
 }
 
 .macroBrowser .macro-item.selected {
-    background: var(--SmartThemeQuoteColor);
+    background: var(--black30a);
+    outline: 1px solid var(--SmartThemeQuoteColor);
+}
+
+.macroBrowser .macro-item.selected .macro-signature {
+    color: var(--SmartThemeBodyColor);
 }
 
 .macroBrowser .macro-item.isFiltered {

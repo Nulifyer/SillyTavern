@@ -25,6 +25,7 @@ import { t } from './i18n.js';
  * character context menu override.
  */
 class CharacterContextMenu {
+    static #favoriteRequests = new Map();
     /**
      * Tag one or more characters,
      * opens a popup.
@@ -61,14 +62,18 @@ class CharacterContextMenu {
 
     /**
      * Favorite a character
-     * and highlight it.
+     * and highlight it after persistence succeeds.
      *
      * @param {number} characterId
-     * @returns {Promise<void>}
+     * @returns {Promise<boolean>} Whether the request was saved successfully.
      */
     static favorite = async (characterId) => {
         const character = CharacterContextMenu.#getCharacter(characterId);
-        const newFavState = !character.data.extensions.fav;
+        if (!character?.avatar) return false;
+        const avatar = character.avatar;
+        const operation = Symbol();
+        CharacterContextMenu.#favoriteRequests.set(avatar, operation);
+        const newFavState = !(character.data?.extensions?.fav ?? character.fav);
 
         const data = {
             name: character.name,
@@ -81,18 +86,36 @@ class CharacterContextMenu {
             fav: newFavState,
         };
 
-        const mergeResponse = await fetch('/api/characters/merge-attributes', {
-            method: 'POST',
-            headers: getRequestHeaders(),
-            body: JSON.stringify(data),
-        });
+        try {
+            const mergeResponse = await fetch('/api/characters/merge-attributes', {
+                method: 'POST',
+                headers: getRequestHeaders(),
+                body: JSON.stringify(data),
+            });
 
-        if (!mergeResponse.ok) {
-            mergeResponse.json().then(json => toastr.error(`Character not saved. Error: ${json.message}. Field: ${json.error}`));
+            if (!mergeResponse.ok) {
+                let detail;
+                try { detail = (await mergeResponse.json()).message; } catch { /* Non-JSON failures still leave the favorite unchanged. */ }
+                toastr.error(detail || t`The character favorite could not be saved. Try again.`);
+                return false;
+            }
+
+            // A list refresh can reuse this numeric slot for another card. Its
+            // replacement and any newer favorite request own their own paint.
+            if (CharacterContextMenu.#favoriteRequests.get(avatar) !== operation || characters[characterId] !== character) return true;
+            character.fav = newFavState;
+            character.data ||= {};
+            character.data.extensions ||= {};
+            character.data.extensions.fav = newFavState;
+            document.getElementById(`CharID${characterId}`)?.classList.toggle('is_fav', newFavState);
+            return true;
+        } catch (error) {
+            console.error('Character favorite could not be saved', error);
+            toastr.error(t`The character favorite could not be saved. Check the connection and try again.`);
+            return false;
+        } finally {
+            if (CharacterContextMenu.#favoriteRequests.get(avatar) === operation) CharacterContextMenu.#favoriteRequests.delete(avatar);
         }
-
-        const element = document.getElementById(`CharID${characterId}`);
-        element.classList.toggle('is_fav');
     };
 
     /**

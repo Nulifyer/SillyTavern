@@ -8,7 +8,7 @@ import {
     default_user_avatar,
     eventSource,
     event_types,
-    getCurrentChatId,
+    getCurrentChatIdentity,
     getRequestHeaders,
     getThumbnailUrl,
     groupToEntity,
@@ -23,6 +23,7 @@ import {
     this_chid,
 } from '../script.js';
 import { power_user } from './power-user.js';
+import { getChatLoadToken } from './chat-loader.js';
 import { getTokenCountAsync } from './tokenizers.js';
 import {
     PAGINATION_TEMPLATE,
@@ -46,7 +47,6 @@ import {
     stringToRange,
     sortIgnoreCaseAndAccents,
     equalsIgnoreCaseAndAccents,
-    uuidv4,
     resolveAvatarData,
     findPersona,
     escapeHtml,
@@ -110,8 +110,10 @@ export let user_avatar = '';
 /** @type {FilterHelper} Filter helper for the persona list */
 export const personasFilter = new FilterHelper(debounce(getUserAvatars, debounce_timeout.quick));
 
-/** @type {string} The last loaded chat id to remember for persona loading */
-let personaLastLoadedChatId = null;
+/** The last successful native chat load for persona selection. */
+let personaLastLoadedChat = null;
+let personaLoadRequest = 0;
+let personaSelectionRevision = 0;
 
 /** @type {function(string): void} */
 let navigateToAvatar = () => { };
@@ -154,13 +156,17 @@ export function initUserAvatar(avatar) {
 export async function setUserAvatar(imgfile, { toastPersonaNameChange = true, navigateToCurrent = false } = {}) {
     const currentUserAvatar = user_avatar;
     user_avatar = imgfile && typeof imgfile === 'string' ? imgfile : $(this).attr('data-avatar-id');
+    const selection = ++personaSelectionRevision;
     if (currentUserAvatar === user_avatar) {
         return;
     }
+    const owner = getCurrentChatIdentity();
+    const load = getChatLoadToken();
     reloadUserAvatar();
     updatePersonaUIStates({ navigateToCurrent: navigateToCurrent });
     selectCurrentPersona({ toastPersonaNameChange: toastPersonaNameChange });
     await retriggerFirstMessageOnEmptyChat();
+    if (selection !== personaSelectionRevision || owner !== getCurrentChatIdentity() || load !== getChatLoadToken()) return;
     saveSettingsDebounced();
     $('.zoomed_avatar[forchar]').remove();
     await eventSource.emit(event_types.PERSONA_CHANGED, user_avatar);
@@ -270,84 +276,86 @@ async function addMissingPersonas(avatarsList) {
  * Gets a list of user avatars.
  * @param {boolean} doRender Whether to render the list
  * @param {string} openPageAt Item to be opened at
- * @returns {Promise<string[]>} List of avatar file names
+ * @returns {Promise<string[]|null>} List of avatar file names, or null when loading failed
  */
 export async function getUserAvatars(doRender = true, openPageAt = '') {
-    const response = await fetch('/api/avatars/get', {
-        method: 'POST',
-        headers: getRequestHeaders({ omitContentType: true }),
-    });
-    if (response.ok) {
-        const allEntities = await response.json();
-
-        if (!Array.isArray(allEntities)) {
-            return [];
-        }
-
-        if (!doRender) {
-            return allEntities;
-        }
-
-        // If any persona is missing from the power user settings, we add it
-        await addMissingPersonas(allEntities);
-        // Before printing the personas, we check if we should enable/disable search sorting
-        verifyPersonaSearchSortRule();
-
-        let entities = personasFilter.applyFilters(allEntities);
-        entities = sortPersonas(entities);
-
-        const storageKey = 'Personas_PerPage';
-        const listId = '#user_avatar_block';
-        const perPage = Number(accountStorage.getItem(storageKey)) || 5;
-        const sizeChangerOptions = [5, 10, 25, 50, 100, 250, 500, 1000];
-
-        $('#persona_pagination_container').pagination({
-            dataSource: entities,
-            pageSize: perPage,
-            sizeChangerOptions,
-            pageRange: 1,
-            pageNumber: savePersonasPage || 1,
-            position: 'top',
-            showPageNumbers: false,
-            showSizeChanger: true,
-            formatSizeChanger: renderPaginationDropdown(perPage, sizeChangerOptions),
-            prevText: '<',
-            nextText: '>',
-            formatNavigator: PAGINATION_TEMPLATE,
-            showNavigator: true,
-            callback: function (data) {
-                $(listId).empty();
-                for (const item of data) {
-                    $(listId).append(getUserAvatarBlock(item));
-                }
-                updatePersonaUIStates();
-                localizePagination($('#persona_pagination_container'));
-            },
-            afterSizeSelectorChange: function (e, size) {
-                accountStorage.setItem(storageKey, e.target.value);
-                paginationDropdownChangeHandler(e, size);
-            },
-            afterPaging: function (e) {
-                savePersonasPage = e;
-            },
-            afterRender: function () {
-                $(listId).scrollTop(0);
-            },
+    let allEntities;
+    try {
+        const response = await fetch('/api/avatars/get', {
+            method: 'POST',
+            headers: getRequestHeaders({ omitContentType: true }),
         });
-
-        navigateToAvatar = (avatarId) => {
-            const avatarIndex = entities.indexOf(avatarId);
-            const page = Math.floor(avatarIndex / perPage) + 1;
-
-            if (avatarIndex !== -1) {
-                $('#persona_pagination_container').pagination('go', page);
-            }
-        };
-
-        openPageAt && navigateToAvatar(openPageAt);
-
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        allEntities = await response.json();
+        if (!Array.isArray(allEntities) || allEntities.some(avatar => typeof avatar !== 'string')) throw new Error('Invalid avatar list.');
+    } catch (error) {
+        console.error('Persona avatars could not be loaded', error);
+        toastr.error(t`The persona list could not be loaded. Your current persona was kept. Try again.`, t`Persona Management`);
+        return null;
+    }
+    if (!doRender) {
         return allEntities;
     }
+
+    // If any persona is missing from the power user settings, we add it
+    await addMissingPersonas(allEntities);
+    // Before printing the personas, we check if we should enable/disable search sorting
+    verifyPersonaSearchSortRule();
+
+    let entities = personasFilter.applyFilters(allEntities);
+    entities = sortPersonas(entities);
+
+    const storageKey = 'Personas_PerPage';
+    const listId = '#user_avatar_block';
+    const perPage = Number(accountStorage.getItem(storageKey)) || 5;
+    const sizeChangerOptions = [5, 10, 25, 50, 100, 250, 500, 1000];
+
+    $('#persona_pagination_container').pagination({
+        dataSource: entities,
+        pageSize: perPage,
+        sizeChangerOptions,
+        pageRange: 1,
+        pageNumber: savePersonasPage || 1,
+        position: 'top',
+        showPageNumbers: false,
+        showSizeChanger: true,
+        formatSizeChanger: renderPaginationDropdown(perPage, sizeChangerOptions),
+        prevText: '<',
+        nextText: '>',
+        formatNavigator: PAGINATION_TEMPLATE,
+        showNavigator: true,
+        callback: function (data) {
+            $(listId).empty();
+            for (const item of data) {
+                $(listId).append(getUserAvatarBlock(item));
+            }
+            updatePersonaUIStates();
+            localizePagination($('#persona_pagination_container'));
+        },
+        afterSizeSelectorChange: function (e, size) {
+            accountStorage.setItem(storageKey, e.target.value);
+            paginationDropdownChangeHandler(e, size);
+        },
+        afterPaging: function (e) {
+            savePersonasPage = e;
+        },
+        afterRender: function () {
+            $(listId).scrollTop(0);
+        },
+    });
+
+    navigateToAvatar = (avatarId) => {
+        const avatarIndex = entities.indexOf(avatarId);
+        const page = Math.floor(avatarIndex / perPage) + 1;
+
+        if (avatarIndex !== -1) {
+            $('#persona_pagination_container').pagination('go', page);
+        }
+    };
+
+    openPageAt && navigateToAvatar(openPageAt);
+
+    return allEntities;
 }
 
 /**
@@ -1195,7 +1203,7 @@ async function deletePersona(avatarId, { silent = false } = {}) {
         await eventSource.emit(event_types.PERSONA_DELETED, { avatarId, name });
 
         // Use the existing mechanism to re-render the persona list and choose the next persona here
-        personaLastLoadedChatId = uuidv4(); // Force reload by making a dummy chat id
+        personaLastLoadedChat = null; // Invalidate the successful load after deletion
         await loadPersonaForCurrentChat({ doRender: true });
         return true;
     }
@@ -1541,17 +1549,26 @@ function getPersonaTemporaryLockInfo() {
  * @returns {Promise<boolean>} - A promise that resolves to a boolean indicating whether a persona was selected
  */
 async function loadPersonaForCurrentChat({ doRender = false } = {}) {
-    const currentChatId = getCurrentChatId();
-    if (currentChatId === personaLastLoadedChatId) return;
-    personaLastLoadedChatId = currentChatId;
+    const owner = getCurrentChatIdentity();
+    const load = getChatLoadToken();
+    if (personaLastLoadedChat?.owner === owner && personaLastLoadedChat.load === load) return false;
+    const request = ++personaLoadRequest;
+    let selection = personaSelectionRevision;
+    const current = () => request === personaLoadRequest && owner === getCurrentChatIdentity() && load === getChatLoadToken() && selection === personaSelectionRevision;
+    const select = async avatar => {
+        if (!current()) return false;
+        if (avatar !== user_avatar) selection++;
+        await setUserAvatar(avatar, { toastPersonaNameChange: false, navigateToCurrent: true });
+        return current();
+    };
 
-    // Cache persona list to check if they exist
     const userAvatars = await getUserAvatars(doRender);
+    if (!userAvatars || !current()) return false;
 
     // Check if the user avatar is set and exists in the list of user avatars
     if (userAvatars.length && !userAvatars.includes(user_avatar)) {
         console.log(`User avatar ${user_avatar} not found in user avatars list, pick the first available one`);
-        await setUserAvatar(userAvatars[0], { toastPersonaNameChange: false, navigateToCurrent: true });
+        if (!await select(userAvatars[0])) return false;
     }
 
     // Define a persona for this chat
@@ -1619,6 +1636,7 @@ async function loadPersonaForCurrentChat({ doRender = false } = {}) {
             }
         }
 
+        if (!current()) return false;
         if (chatPersona) connectType = 'character';
     }
 
@@ -1646,7 +1664,7 @@ async function loadPersonaForCurrentChat({ doRender = false } = {}) {
     // Persona avatar found, select it
     if (chatPersona && user_avatar !== chatPersona) {
         const willAutoLock = power_user.persona_auto_lock && user_avatar !== chat_metadata.persona;
-        await setUserAvatar(chatPersona, { toastPersonaNameChange: false, navigateToCurrent: true });
+        if (!await select(chatPersona)) return false;
 
         if (power_user.persona_show_notifications) {
             let message = t`Auto-selected persona based on ${connectType} connection.<br />Your messages will now be sent as ${power_user.personas[chatPersona]}.`;
@@ -1660,6 +1678,8 @@ async function loadPersonaForCurrentChat({ doRender = false } = {}) {
         await lockPersona('chat');
     }
 
+    if (!current()) return false;
+    personaLastLoadedChat = { owner, load };
     updatePersonaUIStates();
 
     return !!chatPersona;
@@ -1674,7 +1694,7 @@ async function loadPersonaForCurrentChat({ doRender = false } = {}) {
 export function getConnectedPersonas(characterKey = undefined) {
     characterKey ??= selected_group || characters[Number(this_chid)]?.avatar;
     const connectedPersonas = Object.entries(power_user.persona_descriptions)
-        .filter(([_, { connections }]) => connections?.some(conn => conn.id === characterKey))
+        .filter(([_, descriptor]) => Array.isArray(descriptor?.connections) && descriptor.connections.some(conn => conn?.id === characterKey))
         .map(([key, _]) => key);
     return connectedPersonas;
 }
@@ -1775,7 +1795,16 @@ async function onPersonasRestoreInput(e) {
         return;
     }
 
+    const record = value => value && typeof value === 'object' && !Array.isArray(value);
+    if (!record(data.personas) || !record(data.persona_descriptions)
+        || Object.values(data.personas).some(name => typeof name !== 'string')
+        || Object.values(data.persona_descriptions).some(value => !record(value) || (value.connections !== undefined && (!Array.isArray(value.connections) || value.connections.some(connection => !record(connection) || !['character', 'group'].includes(connection.type) || !['string', 'number'].includes(typeof connection.id)))))) {
+        toastr.warning(t`Invalid persona data. Your personas were kept.`, t`Persona Management`);
+        return;
+    }
+
     const avatarsList = await getUserAvatars(false);
+    if (!avatarsList) return;
     const warnings = [];
 
     // Merge personas with existing ones
@@ -1840,6 +1869,14 @@ async function onPersonasRestoreInput(e) {
  * @returns {Promise<void>}
  */
 async function syncUserNameToPersona({ start = 0, end = chat.length - 1, quiet = false, nameFilter = '' } = {}) {
+    const owner = getCurrentChatIdentity();
+    const load = getChatLoadToken();
+    const messages = [...chat];
+    const revision = JSON.stringify(chat);
+    const personaName = name1;
+    const avatar = user_avatar;
+    const selection = personaSelectionRevision;
+    const current = () => owner === getCurrentChatIdentity() && load === getChatLoadToken() && selection === personaSelectionRevision && name1 === personaName && user_avatar === avatar && messages.length === chat.length && messages.every((message, index) => chat[index] === message);
     const isRangeAll = start === 0 && end === chat.length - 1;
     const hasNameFilter = nameFilter?.trim();
     const confirmMessage = isRangeAll && !hasNameFilter
@@ -1857,16 +1894,24 @@ async function syncUserNameToPersona({ start = 0, end = chat.length - 1, quiet =
         }
     }
 
+    if (!current() || JSON.stringify(chat) !== revision) {
+        toastr.info(t`The conversation or persona changed. Your messages were kept. Reopen sync to confirm the intended change.`);
+        return false;
+    }
+
     for (let i = start; i <= end; i++) {
         const mes = chat[i];
         if (mes?.is_user && (!hasNameFilter || equalsIgnoreCaseAndAccents(mes.name, nameFilter))) {
-            mes.name = name1;
-            mes.force_avatar = getThumbnailUrl('persona', user_avatar);
+            mes.name = personaName;
+            mes.force_avatar = getThumbnailUrl('persona', avatar);
         }
     }
 
-    await saveChatConditional();
+    const committed = JSON.stringify(chat);
+    if (!await saveChatConditional({ expectedIdentity: owner })) return false;
+    if (!current() || JSON.stringify(chat) !== committed) return false;
     await reloadCurrentChat();
+    return true;
 }
 
 /**

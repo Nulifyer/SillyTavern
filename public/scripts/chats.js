@@ -9,6 +9,7 @@ import {
     eventSource,
     event_types,
     getCurrentChatId,
+    getCurrentChatIdentity,
     getRequestHeaders,
     name2,
     reloadCurrentChat,
@@ -1172,7 +1173,9 @@ async function openFilePopup(attachment) {
  * @param {function} callback Callback function
  */
 async function editAttachment(attachment, source, callback) {
+    const owner = captureAttachmentOwner(source);
     const originalFileText = attachment.text || (await getFileAttachment(attachment.url));
+    if (!attachmentOwnerCurrent(owner)) return;
     const template = $(await renderExtensionTemplateAsync('attachments', 'notepad'));
 
     let editedFileText = originalFileText;
@@ -1194,13 +1197,10 @@ async function editAttachment(attachment, source, callback) {
     if (editedFileText === originalFileText && editedFileName === attachment.name) {
         return;
     }
+    if (!attachmentOwnerCurrent(owner)) { toastr.info('The attachment target changed. Reopen its Data Bank and try again.'); return; }
 
-    const nullCallback = () => { };
-    await deleteAttachment(attachment, source, nullCallback, false);
     const file = new File([editedFileText], editedFileName, { type: 'text/plain' });
-    await uploadFileAttachmentToServer(file, source);
-
-    callback();
+    if (await replaceAttachment(attachment, source, source, file, owner)) callback();
 }
 
 /**
@@ -1250,6 +1250,7 @@ function disableAttachment(attachment, callback) {
  * @returns {Promise<void>} A promise that resolves when the attachment is moved.
  */
 async function moveAttachment(attachment, source, callback) {
+    const owner = captureAttachmentOwner(source);
     let selectedTarget = source;
     const targets = getAvailableTargets();
     const template = $(await renderExtensionTemplateAsync('attachments', 'move-attachment', { name: attachment.name, targets }));
@@ -1270,10 +1271,9 @@ async function moveAttachment(attachment, source, callback) {
     }
 
     const content = await getFileAttachment(attachment.url);
+    if (!attachmentOwnerCurrent(owner)) { toastr.info('The attachment target changed. Reopen its Data Bank and try again.'); return; }
     const file = new File([content], attachment.name, { type: 'text/plain' });
-    await deleteAttachment(attachment, source, () => { }, false);
-    await uploadFileAttachmentToServer(file, selectedTarget);
-    callback();
+    if (await replaceAttachment(attachment, source, selectedTarget, file, owner)) callback();
 }
 
 /**
@@ -1282,30 +1282,55 @@ async function moveAttachment(attachment, source, callback) {
  * @param {string} source Source of the attachment
  * @param {function} callback Callback function
  * @param {boolean} [confirm=true] If true, show a confirmation dialog
- * @returns {Promise<void>} A promise that resolves when the attachment is deleted.
+ * @param {{fileDeleted?: boolean}} [outcome] Records physical deletion for staged replacements.
+ * @returns {Promise<boolean>} Whether deletion and removal from the current owner succeeded.
  */
-export async function deleteAttachment(attachment, source, callback, confirm = true) {
+export async function deleteAttachment(attachment, source, callback, confirm = true, outcome = {}) {
+    const owner = captureAttachmentOwner(source);
     if (confirm) {
         const result = await callGenericPopup('Are you sure you want to delete this attachment?', POPUP_TYPE.CONFIRM);
 
         if (result !== POPUP_RESULT.AFFIRMATIVE) {
-            return;
+            return false;
         }
     }
 
-    ensureAttachmentsExist();
+    if (!attachmentOwnerCurrent(owner)) { toastr.info('The attachment target changed. Reopen its Data Bank and try again.'); return false; }
+    if (!await deleteFileFromServer(attachment.url, false)) return false;
+    outcome.fileDeleted = true;
+    if (!attachmentOwnerCurrent(owner)) {
+        toastr.warning('The file was deleted, but its story or character changed. Reopen the original Data Bank to refresh its attachments.');
+        return false;
+    }
+    removeAttachmentReference(attachment, owner);
+    callback?.();
+    return true;
+}
 
-    switch (source) {
+function captureAttachmentOwner(source) {
+    return { source, avatar: characters[this_chid]?.avatar, metadata: chat_metadata, identity: getCurrentChatIdentity() };
+}
+
+function attachmentOwnerCurrent(owner) {
+    if (owner.source === ATTACHMENT_SOURCE.GLOBAL) return true;
+    if (owner.source === ATTACHMENT_SOURCE.CHARACTER) return Boolean(owner.avatar) && owner.avatar === characters[this_chid]?.avatar;
+    return owner.source === ATTACHMENT_SOURCE.CHAT && owner.metadata === chat_metadata && owner.identity === getCurrentChatIdentity();
+}
+
+function removeAttachmentReference(attachment, owner) {
+    ensureAttachmentsExist();
+    switch (owner.source) {
         case 'global':
             extension_settings.attachments = extension_settings.attachments.filter((a) => a.url !== attachment.url);
             saveSettingsDebounced();
             break;
         case 'chat':
-            chat_metadata.attachments = chat_metadata.attachments.filter((a) => a.url !== attachment.url);
+            owner.metadata.attachments = owner.metadata.attachments.filter((a) => a.url !== attachment.url);
             saveMetadataDebounced();
             break;
         case 'character':
-            extension_settings.character_attachments[characters[this_chid]?.avatar] = extension_settings.character_attachments[characters[this_chid]?.avatar].filter((a) => a.url !== attachment.url);
+            extension_settings.character_attachments[owner.avatar] = extension_settings.character_attachments[owner.avatar].filter((a) => a.url !== attachment.url);
+            saveSettingsDebounced();
             break;
     }
 
@@ -1313,10 +1338,36 @@ export async function deleteAttachment(attachment, source, callback, confirm = t
         extension_settings.disabled_attachments = extension_settings.disabled_attachments.filter(url => url !== attachment.url);
         saveSettingsDebounced();
     }
+}
 
-    const silent = confirm === false;
-    await deleteFileFromServer(attachment.url, silent);
-    callback();
+async function replaceAttachment(attachment, source, target, file, owner) {
+    const targetOwner = captureAttachmentOwner(target);
+    let staged;
+    try {
+        staged = await stageFileAttachment(file);
+        if (!staged) return false;
+        if (!attachmentOwnerCurrent(owner) || !attachmentOwnerCurrent(targetOwner)) {
+            await deleteFileFromServer(staged.url, true);
+            toastr.info('The attachment target changed. Reopen its Data Bank and try again.');
+            return false;
+        }
+        const outcome = {};
+        if (!await deleteAttachment(attachment, source, () => { }, false, outcome)) {
+            // A late owner change can follow a confirmed physical deletion.
+            // Keep the staged content in that case rather than discard both.
+            if (!outcome.fileDeleted) await deleteFileFromServer(staged.url, true);
+            return false;
+        }
+        if (!attachmentOwnerCurrent(targetOwner)) {
+            toastr.warning('The replacement file was uploaded, but the target changed. Reopen the original Data Bank before making further changes.');
+            return false;
+        }
+        registerAttachment(staged, targetOwner);
+        return true;
+    } catch (error) {
+        toastr.error(String(error), t`Could not replace attachment`);
+        return false;
+    }
 }
 
 /**
@@ -1507,7 +1558,8 @@ async function openAttachmentManager() {
         template.find('.chatAttachmentsName').text(chatName);
     }
 
-    const dragDropHandler = new DragAndDropHandler('.popup', async (files, event) => {
+    const template = $(await renderExtensionTemplateAsync('attachments', 'manager', {}));
+    const dragDropHandler = new DragAndDropHandler('.popup:has(.dataBankAttachments)', async (files, event) => {
         let selectedTarget = ATTACHMENT_SOURCE.GLOBAL;
         const targets = getAvailableTargets();
 
@@ -1529,8 +1581,6 @@ async function openAttachmentManager() {
     let sortField = accountStorage.getItem('DataBank_sortField') || 'created';
     let sortOrder = accountStorage.getItem('DataBank_sortOrder') || 'desc';
     let filterString = '';
-
-    const template = $(await renderExtensionTemplateAsync('attachments', 'manager', {}));
 
     template.find('.attachmentSearch').on('input', function () {
         filterString = String($(this).val());
@@ -1565,25 +1615,21 @@ async function openAttachmentManager() {
 
             const includeDisabled = true;
             const attachments = getDataBankAttachments(includeDisabled);
-            selectedAttachments.forEach(async (checkbox) => {
+            for (const checkbox of selectedAttachments) {
                 const listItem = checkbox.closest('.attachmentListItem');
                 if (!(listItem instanceof HTMLElement)) {
-                    return;
+                    continue;
                 }
                 const url = listItem.dataset.attachmentUrl;
                 const source = listItem.dataset.attachmentSource;
                 const attachment = attachments.find(a => a.url === url);
                 if (!attachment) {
-                    return;
+                    continue;
                 }
-                await action.perform(attachment, source);
-            });
-
-            document.querySelectorAll('.attachmentListItemCheckbox, .attachmentsBulkEditCheckbox').forEach(checkbox => {
-                if (checkbox instanceof HTMLInputElement) {
-                    checkbox.checked = false;
-                }
-            });
+                try {
+                    if (await action.perform(attachment, source) !== false) checkbox.checked = false;
+                } catch (error) { toastr.error(String(error), t`Attachment action failed`); }
+            }
 
             await renderAttachments();
         };
@@ -1617,13 +1663,16 @@ async function openAttachmentManager() {
         });
     });
 
-    const cleanupFn = await renderButtons();
-    await verifyAttachments();
-    await renderAttachments();
-    await callGenericPopup(template, POPUP_TYPE.TEXT, '', { wide: true, large: true, okButton: 'Close', allowVerticalScrolling: true });
-
-    cleanupFn();
-    dragDropHandler.destroy();
+    let cleanupFn;
+    try {
+        cleanupFn = await renderButtons();
+        await verifyAttachments();
+        await renderAttachments();
+        await callGenericPopup(template, POPUP_TYPE.TEXT, '', { wide: true, large: true, okButton: 'Close', allowVerticalScrolling: true });
+    } finally {
+        cleanupFn?.();
+        dragDropHandler.destroy();
+    }
 }
 
 /**
@@ -1689,6 +1738,24 @@ async function runScraper(scraperId, target, callback) {
  * @returns {Promise<string>} Path to the uploaded file
  */
 export async function uploadFileAttachmentToServer(file, target) {
+    const owner = captureAttachmentOwner(target);
+    try {
+        const attachment = await stageFileAttachment(file);
+        if (!attachment) return;
+        if (!attachmentOwnerCurrent(owner)) {
+            await deleteFileFromServer(attachment.url, true);
+            toastr.info('The attachment target changed. Reopen its Data Bank and upload the file again.');
+            return;
+        }
+        registerAttachment(attachment, owner);
+        return attachment.url;
+    } catch (error) {
+        toastr.error(String(error), t`Could not upload attachment`);
+        return;
+    }
+}
+
+async function stageFileAttachment(file) {
     const isValid = await validateFile(file);
 
     if (!isValid) {
@@ -1707,6 +1774,7 @@ export async function uploadFileAttachmentToServer(file, target) {
         } catch (error) {
             toastr.error(String(error), t`Could not convert file`);
             console.error('Could not convert file', error);
+            return;
         }
     } else {
         const fileText = await file.text();
@@ -1720,31 +1788,31 @@ export async function uploadFileAttachmentToServer(file, target) {
         return;
     }
 
-    const attachment = {
+    return {
         url: fileUrl,
         size: convertedSize,
         name: file.name,
         created: Date.now(),
     };
+}
 
+function registerAttachment(attachment, owner) {
     ensureAttachmentsExist();
 
-    switch (target) {
+    switch (owner.source) {
         case ATTACHMENT_SOURCE.GLOBAL:
             extension_settings.attachments.push(attachment);
             saveSettingsDebounced();
             break;
         case ATTACHMENT_SOURCE.CHAT:
-            chat_metadata.attachments.push(attachment);
+            owner.metadata.attachments.push(attachment);
             saveMetadataDebounced();
             break;
         case ATTACHMENT_SOURCE.CHARACTER:
-            extension_settings.character_attachments[characters[this_chid]?.avatar].push(attachment);
+            extension_settings.character_attachments[owner.avatar].push(attachment);
             saveSettingsDebounced();
             break;
     }
-
-    return fileUrl;
 }
 
 function ensureAttachmentsExist() {
@@ -1827,6 +1895,7 @@ async function verifyAttachments() {
  */
 async function verifyAttachmentsForSource(source) {
     try {
+        const owner = captureAttachmentOwner(source);
         const attachments = getDataBankAttachmentsForSource(source);
         const urls = attachments.map(a => a.url);
         const response = await fetch('/api/files/verify', {
@@ -1841,10 +1910,11 @@ async function verifyAttachmentsForSource(source) {
         }
 
         const verifiedUrls = await response.json();
+        if (!attachmentOwnerCurrent(owner)) return;
         for (const attachment of attachments) {
             if (verifiedUrls[attachment.url] === false) {
                 console.log('Deleting orphaned attachment', attachment);
-                await deleteAttachment(attachment, source, () => { }, false);
+                removeAttachmentReference(attachment, owner);
             }
         }
     } catch (error) {

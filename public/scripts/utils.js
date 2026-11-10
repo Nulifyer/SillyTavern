@@ -523,7 +523,9 @@ export async function parseJsonFile(file) {
     return new Promise((resolve, reject) => {
         const fileReader = new FileReader();
         fileReader.readAsText(file);
-        fileReader.onload = event => resolve(JSON.parse(String(event.target.result)));
+        fileReader.onload = event => {
+            try { resolve(JSON.parse(String(event.target.result))); } catch (error) { reject(error); }
+        };
         fileReader.onerror = error => reject(error);
     });
 }

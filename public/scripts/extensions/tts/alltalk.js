@@ -294,22 +294,22 @@ class AllTalkTtsProvider {
             const ttsPassAsterisksCheckbox = document.getElementById('tts_pass_asterisks');
             const ttsNarrateQuotedCheckbox = document.getElementById('tts_narrate_quoted');
             const ttsNarrateDialoguesCheckbox = document.getElementById('tts_narrate_dialogues');
-            if (this.settings.narrator_enabled) {
+            if (this.settings.narrator_enabled === true || this.settings.narrator_enabled === 'true') {
                 ttsPassAsterisksCheckbox.checked = false;
-                $('#tts_pass_asterisks').trigger('click');
+                $('#tts_pass_asterisks').triggerHandler('click');
                 $('#tts_pass_asterisks').trigger('change');
             }
-            if (!this.settings.narrator_enabled) {
+            if (this.settings.narrator_enabled === false || this.settings.narrator_enabled === 'false') {
                 ttsPassAsterisksCheckbox.checked = true;
-                $('#tts_pass_asterisks').trigger('click');
+                $('#tts_pass_asterisks').triggerHandler('click');
                 $('#tts_pass_asterisks').trigger('change');
             }
-            if (this.settings.narrator_enabled) {
+            if (this.settings.narrator_enabled === true || this.settings.narrator_enabled === 'true') {
                 ttsNarrateQuotedCheckbox.checked = true;
                 ttsNarrateDialoguesCheckbox.checked = true;
-                $('#tts_narrate_quoted').trigger('click');
+                $('#tts_narrate_quoted').triggerHandler('click');
                 $('#tts_narrate_quoted').trigger('change');
-                $('#tts_narrate_dialogues').trigger('click');
+                $('#tts_narrate_dialogues').triggerHandler('click');
                 $('#tts_narrate_dialogues').trigger('change');
             }
             atNarratorSelect.value = this.settings.narrator_enabled.toString();
@@ -333,8 +333,8 @@ class AllTalkTtsProvider {
             if (narratorVoiceSelect) narratorVoiceSelect.disabled = true;
         } else {
             if (atNarratorSelect) atNarratorSelect.disabled = false;
-            if (textNotInsideSelect) textNotInsideSelect.disabled = !this.settings.narrator_enabled;
-            if (narratorVoiceSelect) narratorVoiceSelect.disabled = !this.settings.narrator_enabled;
+            if (textNotInsideSelect) textNotInsideSelect.disabled = this.settings.narrator_enabled === false || this.settings.narrator_enabled === 'false';
+            if (narratorVoiceSelect) narratorVoiceSelect.disabled = this.settings.narrator_enabled === false || this.settings.narrator_enabled === 'false';
         }
     }
 
@@ -622,6 +622,11 @@ class AllTalkTtsProvider {
     //########################################//
 
     setupEventListeners() {
+        // Reload updates this same form. Bind once per mounted control tree;
+        // replacing the provider form gives the new nodes their own handlers.
+        const settingsRoot = document.getElementById('at_server');
+        if (!settingsRoot || this.settingsListenerRoot === settingsRoot) return;
+        this.settingsListenerRoot = settingsRoot;
         // Define the event handler function
         const onModelSelectChange = async (event) => {
             console.log('Model select change event triggered');
@@ -783,21 +788,21 @@ class AllTalkTtsProvider {
 
                 if (narratorOption === 'true') {
                     ttsPassAsterisksCheckbox.checked = false;
-                    $('#tts_pass_asterisks').trigger('click');
+                    $('#tts_pass_asterisks').triggerHandler('click');
                     $('#tts_pass_asterisks').trigger('change');
                     ttsNarrateQuotedCheckbox.checked = true;
                     ttsNarrateDialoguesCheckbox.checked = true;
-                    $('#tts_narrate_quoted').trigger('click');
+                    $('#tts_narrate_quoted').triggerHandler('click');
                     $('#tts_narrate_quoted').trigger('change');
-                    $('#tts_narrate_dialogues').trigger('click');
+                    $('#tts_narrate_dialogues').triggerHandler('click');
                     $('#tts_narrate_dialogues').trigger('change');
                 } else if (narratorOption === 'silent') {
                     ttsPassAsterisksCheckbox.checked = false;
-                    $('#tts_pass_asterisks').trigger('click');
+                    $('#tts_pass_asterisks').triggerHandler('click');
                     $('#tts_pass_asterisks').trigger('change');
                 } else {
                     ttsPassAsterisksCheckbox.checked = true;
-                    $('#tts_pass_asterisks').trigger('click');
+                    $('#tts_pass_asterisks').triggerHandler('click');
                     $('#tts_pass_asterisks').trigger('change');
                 }
 
@@ -944,9 +949,7 @@ class AllTalkTtsProvider {
         }
         // Find the object where the name matches voiceName
         const match = this.voices.find(voice => voice.name === voiceName);
-        if (!match) {
-            // Error handling
-        }
+        if (!match) throw new Error(`AllTalk voice not found: ${voiceName}`);
         // Generate preview URL only if requested
         if (!match.preview_url && generatePreview) {
             // Generate preview logic
@@ -1060,16 +1063,16 @@ function updateStatus(message) {
         statusElement.textContent = message;
         switch (message) {
             case 'Offline':
-                statusElement.style.color = 'red';
+                statusElement.style.color = 'var(--ws-warning, red)';
                 break;
             case 'Ready':
-                statusElement.style.color = 'lightgreen';
+                statusElement.style.color = 'var(--ws-success, lightgreen)';
                 break;
             case 'Processing':
-                statusElement.style.color = 'blue';
+                statusElement.style.color = 'var(--ws-accent, blue)';
                 break;
             case 'Error':
-                statusElement.style.color = 'red';
+                statusElement.style.color = 'var(--ws-warning, red)';
                 break;
         }
     }

@@ -1,0 +1,24 @@
+npm notice run npx
+npm notice run 'playwright' test native-ui-ownership.e2e.js --workers=1 --output=/tmp/st-ui-followup-20261109/native-ui-final
+(node:1452846) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 10 tests using 1 worker
+
+(node:1452897) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1452897) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1452897) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓   1 native-ui-ownership.e2e.js:103:1 › an empty Ollama selection permits token inspection while generation still requires a model (5.0s)
+  ✓   2 native-ui-ownership.e2e.js:135:1 › a delayed lorebook read cannot replace the newer selection or its save and delete actions (6.8s)
+  ✓   3 native-ui-ownership.e2e.js:213:1 › popup completion runs one asynchronous closing hook and cleanup despite repeated activation (4.5s)
+  ✓   4 native-ui-ownership.e2e.js:249:1 › cancelling a force-close prompt preserves the original cleanup and closing the parent cancels confirmation (4.9s)
+  ✓   5 native-ui-ownership.e2e.js:281:1 › a gallery folder response belongs to its original character and mounted gallery (5.0s)
+  ✓   6 native-ui-ownership.e2e.js:324:1 › force closing a blocking popup runs its cleanup exactly once (4.7s)
+  ✓   7 native-ui-ownership.e2e.js:348:1 › a prevented popup close releases its completion lifetime for a later successful attempt (4.7s)
+  ✓   8 native-ui-ownership.e2e.js:386:1 › lorebook autosaves retain failures for retry and do not cancel another book when selection changes (8.1s)
+  ✓   9 native-ui-ownership.e2e.js:460:1 › a failed lorebook deletion preserves the editor and character links before a successful retry (5.4s)
+  ✓  10 native-ui-ownership.e2e.js:507:1 › failed lorebook overwrite and import preserve the original file and cached entries (7.1s)
+
+  10 passed (56.8s)

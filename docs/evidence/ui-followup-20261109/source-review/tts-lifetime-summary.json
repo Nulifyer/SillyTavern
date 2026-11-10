@@ -1,0 +1,44 @@
+{
+  "browserCases": 4,
+  "passed": 4,
+  "elapsedSeconds": 31.4,
+  "unitCases": 12,
+  "unitPassed": 12,
+  "rows": [
+    {
+      "case": "native-tts-lifetime.e2e.js-e60f6-ious-provider-is-still-held",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "native-tts-lifetime.e2e.js-3b913-fore-the-new-story-can-play",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "native-tts-lifetime.e2e.js-bce22-opt-in-can-narrate-normally",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "case": "native-tts-lifetime.e2e.js-2e20f--job-before-normal-playback",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    }
+  ],
+  "totals": {
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "failedRequests": 0
+  },
+  "limits": "Native UI/event/persistence pipeline; synthetic in-memory TTS providers and simulated HTMLMediaElement decoding/playback; no paid/provider network calls or real audio hardware certification.",
+  "sourceHashes": {
+    "public/scripts/extensions/tts/index.js": "94e983e369e8e4d50d6776d4779170df0157eb3d4ee37cd49bf4bdea194a94a3",
+    "tests/native-tts-lifetime.e2e.js": "a0dfafb6458bfabae33d28b220512325c9c79defd37346226c250df3d011121d",
+    "tests/native-tts-lifetime.test.js": "21b04832caf21542d09d20f7782739987ec4f534fd6aace9995e78a7c0b10fc3"
+  }
+}

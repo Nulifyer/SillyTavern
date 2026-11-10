@@ -1,0 +1,14 @@
+{
+  "file": "public/scripts/PromptManager.js",
+  "sha256": "b0054793b763d92b265f5f487645b68b4eca0867cb5ad6b5deb1034004b2c1cc",
+  "observed": {
+    "markupCreated": true,
+    "textareaValue": "before ",
+    "defaultsAliased": true,
+    "sharedDefaultChanged": true,
+    "invalidArrayAccepted": true,
+    "importThrows": "newPrompts is not iterable"
+  },
+  "pageErrors": [],
+  "note": "Actual exported PromptManager methods in isolated instance on synthetic browser. No native saves, external providers, or script injection; harmless markup marker only."
+}

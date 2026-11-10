@@ -184,6 +184,7 @@ export class Popup {
     /** @type {boolean} */ #isClosingPrevented;
     /** @type {number} */ #lastEscapePress = 0;
     /** @type {boolean} */ #isShowingForceCloseConfirm = false;
+    /** @type {Promise<any>?} */ #completionPending = null;
 
     /**
      * Constructs a new Popup object with the given text content, type, inputValue, and options
@@ -217,8 +218,6 @@ export class Popup {
         cropAspect = null,
         cropImage = null,
     } = {}) {
-        Popup.util.popups.push(this);
-
         // Make this popup uniquely identifiable
         this.id = uuidv4();
         this.type = type;
@@ -291,7 +290,9 @@ export class Popup {
 
             const buttonElement = document.createElement('div');
             buttonElement.classList.add('menu_button', 'popup-button-custom', 'result-control');
-            buttonElement.classList.add(...(button.classes ?? []));
+            const classes = (Array.isArray(button.classes) ? button.classes : [button.classes])
+                .flatMap(value => String(value ?? '').split(/\s+/)).filter(Boolean);
+            buttonElement.classList.add(...classes);
             buttonElement.dataset.result = String(button.result); // This is expected to also write 'null' or 'staging', to indicate cancel and no action respectively
             buttonElement.tabIndex = 0;
 
@@ -588,14 +589,16 @@ export class Popup {
 
                         // If the the main popup closes while the force-close popup is still being displayed, we gracefully cancel that.
                         const originalOnClose = this.onClose;
-                        this.onClose = async (x) => {
-                            if (originalOnClose) await originalOnClose;
-                            await confirmPopup.completeCancelled();
+                        const closeWithConfirmation = async (x) => {
+                            try { if (originalOnClose) await originalOnClose(x); } finally { if (confirmPopup.dlg.open) await confirmPopup.completeCancelled(); }
                         };
-
-
-                        const result = await confirmPopup.show();
-                        this.#isShowingForceCloseConfirm = false;
+                        this.onClose = closeWithConfirmation;
+                        let result;
+                        try { result = await confirmPopup.show(); } finally {
+                            this.#isShowingForceCloseConfirm = false;
+                            this.#lastEscapePress = 0;
+                            if (this.onClose === closeWithConfirmation) this.onClose = originalOnClose;
+                        }
                         if (result === POPUP_RESULT.AFFIRMATIVE) {
                             // Force-close by bypassing the normal close prevention
                             this.#isClosingPrevented = false;
@@ -658,16 +661,18 @@ export class Popup {
 
                     evt.preventDefault();
                     evt.stopPropagation();
-                    const result = Number(document.activeElement.getAttribute('data-result') ?? this.defaultResult);
-
-                    // Call complete on the popup. Make sure that we handle `onClosing` cancels correctly and don't remove the listener then.
-                    await this.complete(result);
+                    // Activate the actual control so custom actions and result
+                    // handlers share the same keyboard and pointer behavior.
+                    if (resultControl instanceof HTMLElement && resultControl.hasAttribute('data-result')) resultControl.click();
+                    else await this.complete(this.defaultResult);
 
                     break;
                 }
             }
         };
         this.dlg.addEventListener('keydown', keyListener.bind(this));
+        // A failed constructor must not leave an uncloseable registry entry.
+        Popup.util.popups.push(this);
     }
 
     /**
@@ -677,6 +682,10 @@ export class Popup {
      * @returns {Promise<string|number|boolean?>} A promise that resolves with the value of the popup when it is completed.
      */
     async show() {
+        if (this.#promise) return this.#promise;
+        this.#promise = new Promise((resolve) => {
+            this.#resolver = resolve;
+        });
         document.body.append(this.dlg);
 
         // Run opening animation
@@ -687,19 +696,18 @@ export class Popup {
         // We need to fix the toastr to be present inside this dialog
         fixToastrForDialogs();
 
-        runAfterAnimation(this.dlg, () => {
+        runAfterAnimation(this.dlg, async () => {
             this.dlg.removeAttribute('opening');
 
             // If we have an onOpen handler, we run it now
-            if (this.onOpen) {
-                this.onOpen(this);
-            }
-        });
-
-        this.#promise = new Promise((resolve) => {
-            this.#resolver = resolve;
+            try { if (this.dlg.open && this.onOpen) await this.onOpen(this); } catch (error) { this.#reportHookError('open', error); }
         });
         return this.#promise;
+    }
+
+    #reportHookError(stage, error) {
+        console.error(`Popup ${stage} handler failed:`, error);
+        toastr.error(t`The dialog action failed. Try again or close the dialog.`);
     }
 
     setAutoFocus({ applyAutoFocus = false } = {}) {
@@ -753,6 +761,20 @@ export class Popup {
      * @returns {Promise<string|number|boolean|undefined?>} A promise that resolves with the value of the popup when it is completed. <b>Returns `undefined` if the closing action was cancelled.</b>
      */
     async complete(result) {
+        if (this.#completionPending) return this.#completionPending;
+        if (this.dlg.hasAttribute('closing')) return this.value;
+        // Install the lifetime before calling a possibly asynchronous hook.
+        // Repeated Enter/click/cancel events share one completion and cleanup.
+        const pending = Promise.resolve().then(() => this.#complete(result));
+        this.#completionPending = pending;
+        this.dlg.setAttribute('aria-busy', 'true');
+        try { return await pending; } finally {
+            if (this.#completionPending === pending) this.#completionPending = null;
+            this.dlg.removeAttribute('aria-busy');
+        }
+    }
+
+    async #complete(result) {
         // In all cases besides INPUT the popup value should be the result
         /** @type {POPUP_RESULT|number|boolean|string?} */
         let value = result;
@@ -784,8 +806,9 @@ export class Popup {
         this.result = result;
 
         if (this.onClosing) {
-            const shouldClose = await this.onClosing(this);
-            if (!shouldClose) {
+            let shouldClose;
+            try { shouldClose = await this.onClosing(this); } catch (error) { this.#reportHookError('closing', error); shouldClose = false; }
+            if (shouldClose === false) {
                 this.#isClosingPrevented = true;
                 // Set values back if we cancel out of closing the popup
                 this.value = undefined;
@@ -823,32 +846,29 @@ export class Popup {
 
         // After the dialog is actually completely closed, remove it from the DOM
         runAfterAnimation(this.dlg, async () => {
-            // Call the close on the dialog
-            this.dlg.close();
-
-            // Run a possible custom handler right before DOM removal
-            if (this.onClose) {
-                await this.onClose(this);
-            }
-
-            // Remove it from the dom
-            this.dlg.remove();
-
-            // Remove it from the popup references
-            removeFromArray(Popup.util.popups, this);
-
-            // If there is any popup below this one, see if we can set the focus
-            if (Popup.util.popups.length > 0) {
-                const activeDialog = document.activeElement?.closest('.popup');
-                const id = activeDialog?.getAttribute('data-id');
-                const popup = Popup.util.popups.find(x => x.id == id);
-                if (popup) {
-                    if (popup.lastFocus) popup.lastFocus.focus();
-                    else popup.setAutoFocus();
+            try {
+                this.dlg.close();
+                if (this.onClose) await this.onClose(this);
+            } catch (error) {
+                this.#reportHookError('close', error);
+            } finally {
+                try {
+                    this.dlg.remove();
+                    removeFromArray(Popup.util.popups, this);
+                    fixToastrForDialogs();
+                    if (Popup.util.popups.length > 0) {
+                        const activeDialog = document.activeElement?.closest('.popup');
+                        const id = activeDialog?.getAttribute('data-id');
+                        const popup = Popup.util.popups.find(x => x.id == id);
+                        if (popup) {
+                            if (popup.lastFocus) popup.lastFocus.focus();
+                            else popup.setAutoFocus();
+                        }
+                    }
+                } finally {
+                    this.#resolver?.(this.value);
                 }
             }
-
-            this.#resolver(this.value);
         });
     }
 

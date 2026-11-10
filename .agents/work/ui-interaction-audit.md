@@ -1,7 +1,7 @@
-# Complete UI interaction audit
+# UI interaction audit
 
-Status: complete — local audit with explicit coverage limits
-Owner: Codex root, solo
+Status: reopened after user screenshot disproved visual completeness
+Owner: Codex root; independent source/visual review and bounded implementation workers
 Repository: /home/nulifyer/Projects/SillyTavern
 Base: e4f5f726019a7e7f9ac1a936663d24d30d98e157
 Project: ../PLAN.md
@@ -10,7 +10,7 @@ Request source: November 9 user asks to actually audit every view/action/control
 ## Goal
 Inspect the rendered application through its interactive states, fix observed UI defects, and leave explicit coverage and evidence rather than treating previous passing suites as an exhaustive audit.
 
-## Acceptance checks
+## Prior v1.19.24 acceptance (bounded; reopened below)
 - [x] Inventory workspace views, native settings destinations, overlays, and actions with explicit tested/unqualified coverage.
 - [x] Reproduce and correct enlarged portrait overlap, keyboard dismissal, and containment with selected backgrounds.
 - [x] Exercise desktop, tablet, phone, landscape/reduced height, and enlarged text with bright/dark backgrounds.
@@ -22,10 +22,33 @@ In: Local synthetic app fixture, workspace/native UI integration, shared layerin
 Out: Production app/data/volumes, deployment/release, paid provider credentials and physical device qualification.
 
 ## Current state
-Phase: Audit complete; subsequent delivery is recorded in ui-audit-production-release.md.
+Phase: Follow-up source, component, listener and rendered-state review in progress. The previous geometry/action suite did not establish visual completeness.
 Dependencies: Independent source servers on localhost:8050, 8051 and 8052, synthetic data/config under /tmp/st-ui-audit-20261109. Previously documented Docker fixtures are not running on this host.
 Integration: Audited source is committed/published as b3675f243f443f494b77a1af272e1b02088a3553, v1.19.24. The later user request “update prod” was completed through the separate release task. Unrelated work and private receipts remain separate.
-Next action: None required for this audit. See the release task for actual-image acceptance and metadata-only production verification.
+Next action: Correct the composer background seam, verified keyboard defects and visual-state gaps; qualify the visible native Continue action. Interrupted-stream recovery is owned by chat-stream-recovery.md. Preserve the prior release evidence as bounded regression evidence.
+
+## November 9 follow-up
+
+The user screenshot shows an opaque composer ancestor over the selected image.
+Remove that painted seam, keep fields and placeholder readable, and expose native
+Continue without consuming an unsent draft. Geometry checks alone did not catch
+this. Current evidence adds real composited-color assertions and settled screenshots.
+
+- [x] Composer paint continuity across selected bright/dark images and window sizes.
+- [x] Continue invokes native continuation and preserves a slash-command draft across reload.
+- [x] Independent listener review found duplicate keyboard registration, tabindex loss and search navigation defects; focused checks pass.
+- [x] Native ownership review found stale lore/gallery windows, repeated popup cleanup, DND listener leaks, failed Data Bank deletes and stale Quick Reply operations; targeted browser checks pass.
+- [x] All source cases qualified across explicitly recorded attempts and corrected followups; no single clean combined source-run claim.
+- [ ] Final actual published image checks and production delivery complete.
+
+The source inventory lists every shipped public JS/CSS/HTML file and static event
+registration candidates. It does not assert that every implementation line or
+listener has been manually reviewed or executed. Per-file review manifests and
+actual browser cases record those narrower scopes separately. Current source
+fixtures are 8056 (UI), 8057 (stream/native) and 8059 (workspace/live), with synthetic
+roots under /tmp/st-ui-followup-20261109. Follow-up evidence belongs in
+../../docs/evidence/ui-followup-20261109/. The original evidence below remains a
+historical v1.19.24 record, not final proof for these uncommitted changes.
 
 ## Decisions
 | Decision | Reason | Evidence |

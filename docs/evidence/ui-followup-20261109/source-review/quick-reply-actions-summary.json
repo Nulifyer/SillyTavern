@@ -1,0 +1,276 @@
+{
+  "status": "assigned_native_quick_reply_behaviors_qualified",
+  "recorded_at_utc": "2026-11-10T04:02:47.087688+00:00",
+  "worker": "/root/quick_reply_actions",
+  "fixture": "http://127.0.0.1:8057 synthetic source server; independent browser contexts; unique Quick Reply set names",
+  "production_accessed": false,
+  "paid_or_external_provider_calls": false,
+  "staged_or_committed_by_worker": false,
+  "source_sha256": {
+    "public/scripts/extensions/quick-reply/src/QuickReplySet.js": "c76f0b8e3069bbcf701771a9f73eba059fc67831a3d6c0af8f18ae7a6ba13219",
+    "public/scripts/extensions/quick-reply/src/QuickReply.js": "1a3f97ef9ea1847ef3e8010e4c9eebe5b0094401a90e156b5906e2dbcb19dd5f",
+    "public/scripts/extensions/quick-reply/src/ui/SettingsUi.js": "761d3df08c0a666b3027dc8e784796591439fc0be18026b21ec092779f071f1e",
+    "public/scripts/extensions/quick-reply/src/ui/ButtonUi.js": "c726a0984d87faef5ae66d5ab539e4dffe8e79c742c09c8253dcf4b75987f037",
+    "public/scripts/extensions/quick-reply/src/ui/ctx/MenuItem.js": "cf68f73e43505869cac323403ae9f6a22bf2f22b6839efdeb5b8fa0759f72636",
+    "public/scripts/extensions/quick-reply/src/ui/ctx/ContextMenu.js": "c2c5b372d2951acef94b864ac8d2eaa6e1dfba860a4512ad41cd9069d9f87b1a",
+    "public/scripts/extensions/quick-reply/src/ui/ctx/SubMenu.js": "c2615937336ef39fc95016c2457ee0089e2bcbacfbd0adeb2d17f0e6e1fd8841",
+    "public/scripts/extensions/quick-reply/style.css": "f3b726eb9ee2e3400110fb38ea6d5f4cee7b4a431336b693acebe7ae8fbfe69a",
+    "tests/native-quick-reply-actions.e2e.js": "b19a948f31adbd9df46975de419e6fd6e86a9e221cfd2f75cfdb89c79a255852",
+    "tests/native-attachment-quick-reply.test.js": "8530d1b1bceec326be686469175bbea848da47a2a28573c86f5922c4fd560ab8"
+  },
+  "tests": [
+    {
+      "command": "ST_NATIVE_UI_AUDIT=1 ST_BASE_URL=http://127.0.0.1:8057 npx playwright test native-quick-reply-actions.e2e.js native-data-bank-quick-reply.e2e.js --workers=1 --output=/tmp/st-ui-followup-20261109/qr-final-qualified",
+      "result": "28 passed (2.9m), 0 skipped; 20 new native Quick Reply cases and 8 existing Data Bank/Quick Reply cases",
+      "log": "/tmp/st-ui-followup-20261109/qr-final-qualified.txt",
+      "artifacts": "/tmp/st-ui-followup-20261109/qr-final-qualified"
+    },
+    {
+      "command": "node --experimental-vm-modules node_modules/jest/bin/jest.js --config jest.config.json --runInBand native-attachment-quick-reply.test.js",
+      "result": "22 passed",
+      "log": "/tmp/st-ui-followup-20261109/qr-existing-unit-final.txt"
+    },
+    {
+      "command": "npx eslint <7 assigned source JS files>",
+      "result": "pass",
+      "log": "/tmp/st-ui-followup-20261109/qr-source-eslint-final.txt"
+    },
+    {
+      "command": "npx eslint native-quick-reply-actions.e2e.js native-attachment-quick-reply.test.js",
+      "result": "pass",
+      "log": "/tmp/st-ui-followup-20261109/qr-tests-eslint.txt"
+    },
+    {
+      "command": "git diff --check -- public/scripts/extensions/quick-reply tests/native-quick-reply-actions.e2e.js tests/native-attachment-quick-reply.test.js",
+      "result": "pass"
+    },
+    {
+      "command": "sha256sum -c /tmp/st-ui-followup-20261109/qr-source-freeze.sha256",
+      "result": "10/10 files match frozen source/test hashes"
+    }
+  ],
+  "qualified_behaviors": [
+    "Destination required; target HTTP503 preserves source and target in memory and on disk, retry transfers including live context links.",
+    "Held target save and source changed while awaiting it preserve newer source and saved target snapshot.",
+    "Failed reply save and set deletion retain rows, files and active config bindings; deletion retry persists.",
+    "Create/import overwrite persists replacement before publishing; HTTP503 retains original file, instance and config links; retry works.",
+    "Replacement locks original controls during held write and never takes selection from a newly selected editor.",
+    "Rename saves new file and referring context sets before deleting original; failed initial write retains original; successful retry preserves disk references.",
+    "Partial rename deletion failure retains both files and original active binding, with explicit recovery notice.",
+    "Delayed duplicate write does not replace a newer selected editor.",
+    "Native icon change updates current rendered class before save completion; obsolete glyph class is removed.",
+    "QR editor draft mirror emits original input event and reaches draft storage.",
+    "Native submenu actions and expanders support keyboard and touch at1280/390; popout Close supports Space.",
+    "Actual bar context entry uses focused anchor for keyboard, clamps root/long/nested menus, survives1280/390\u2192360 resize and preserves focused child; hit-testing, action execution, Escape focus restoration and outside dismissal pass.",
+    "Import validation rejects malformed icon/filename collision; self context links point to the live replacement; imported callback/save fields cannot replace owner methods.",
+    "Inline clipboard invalid payload/save failure/retry, delayed editor selection, changed cut source, and denied read/write access preserve originals.",
+    "Native inline JSON file chooser rejects invalid JSON; failed save rolls back imported reply; retry persists in correct order."
+  ],
+  "native_ownership": {
+    "QuickReplySet": "Owns serialized per-set write acknowledgments, create/replace/rename/delete, name reservation and operation busy state, insertion batch validation and rollback.",
+    "SettingsUi": "Captures operation owner and selection; validates imported set shape; publishes options and bindings only after set-file acknowledgment.",
+    "QuickReply": "Deserializes persisted fields without mutating callers, preserves live context links, emits draft input, and checks row/source ownership after clipboard/file awaits.",
+    "ContextMenu_SubMenu_MenuItem": "Own native action/expander controls, focus, overlay lifecycle, viewport anchoring, submenu portal and resize handling."
+  },
+  "negative_proofs_and_intermediate_runs": [
+    "qr-transfer-failure-proof.json and qr-menu-toggle-proof.json from root reproduction",
+    "partition1-qr-editor-reproductions.json and partition1-macro-qr-reproductions.json from source/browser audit",
+    "qr-context-before.txt: actual keyboard menu top=-111 at1280 and390 before clamp fix",
+    "qr-context-nested.txt: contained fixed submenu failed desktop\u2192mobile bounds because backdrop-filter/scroll created a containing/clipping context",
+    "qr-context-inline-recheck.txt: header intercepted outside click because native blocker z999 was below workspace header",
+    "qr-final.txt:18/19 new cases passed,8existing skipped due missing opt-in flag; desktop resize collapsed focused submenu before pointerleave focus guard",
+    "qr-resize-file-final.txt:3/3 targeted final cases passed; final qualified28-case run supersedes these intermediate runs"
+  ],
+  "diagnostics": {
+    "case_receipts": [
+      {
+        "case_directory": "native-data-bank-quick-rep-30095-s-leave-both-sets-unchanged",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-data-bank-quick-rep-35d0e-d-state-then-retry-persists",
+        "page_errors": 0,
+        "console_errors": 4,
+        "failed_requests": 1
+      },
+      {
+        "case_directory": "native-data-bank-quick-rep-4bf34-ply-drop-dialogs-or-uploads",
+        "page_errors": 0,
+        "console_errors": 8,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-data-bank-quick-rep-5b101-on-failed-save-before-retry",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-data-bank-quick-rep-7695d-block-the-next-queued-write",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-data-bank-quick-rep-903c6--attachment-content-and-row",
+        "page_errors": 0,
+        "console_errors": 4,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-data-bank-quick-rep-b8468-onfirmed-deleted-attachment",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-data-bank-quick-rep-da78f-cking-the-persistence-owner",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-102f3-t-and-bindings-before-retry",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-127b3--a-failed-save-before-retry",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-19ceb-eyboard-and-touch-at-1280px",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-25e4d-and-the-original-active-set",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-2c2e0-t-and-bindings-before-retry",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-33a8e-wport-for-keyboard-at-390px",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-3e080-serves-a-newer-selected-set",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-57c08-ter-a-failed-save-and-retry",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-75176-n-save-failure-before-retry",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-76a0b-nd-editor-drafts-emit-input",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-84335-ctive-bindings-before-retry",
+        "page_errors": 0,
+        "console_errors": 4,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-9ab51-get-save-fails-before-retry",
+        "page_errors": 0,
+        "console_errors": 2,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-a191b--never-replace-the-original",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-a7204--while-preserving-the-reply",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-cce4f-rget-snapshot-was-submitted",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-cfbbc-e-the-newer-selected-editor",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-d0337-keyboard-and-touch-at-390px",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-d68f3-nt-to-the-live-set-instance",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-e2dfc--editor-or-cut-a-newer-edit",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      },
+      {
+        "case_directory": "native-quick-reply-actions-f2f65-port-for-keyboard-at-1280px",
+        "page_errors": 0,
+        "console_errors": 0,
+        "failed_requests": 0
+      }
+    ],
+    "page_errors": [],
+    "console_error_first_line_counts": {
+      "Failed to load resource: the server responded with a status of 404 (Not Found)": 14,
+      "Failed to load resource: the server responded with a status of 503 (Service Unavailable)": 13,
+      "Could not delete file Error: Synthetic unavailable storage": 1,
+      "QR could not be saved Error: HTTP 503": 8,
+      "Error saving settings: Error: Failed to save settings: Service Unavailable": 1,
+      "Could not upload file Error: Synthetic upload failure": 1,
+      "Quick Reply rename could not finish Error: The original set could not be removed.": 1,
+      "Quick Reply set could not be deleted Error: HTTP 503": 1
+    },
+    "baseline_resource_probe": "/tmp/st-ui-followup-20261109/qr-resource-probe.json"
+  },
+  "limits": [
+    "This qualifies assigned native Quick Reply paths on source8057. It is not a full UI or production image acceptance claim.",
+    "Provider generation, paid media, external speech and real user data were not exercised.",
+    "QuickReplySettings.save remains a separate debounced global-settings/chat-metadata writer returningvoid. Tests prove native set-file acknowledgments and in-memory binding preservation on set failures; global binding write failure after successful rename/delete is not transactional or qualified here.",
+    "Rename spans multiple files without a server transaction. On partial failure both files remain; the explicit notice asks for reload to access the saved copy. Referring-file failure and crash-at-every-step recovery were not fully fault-injected.",
+    "Final diagnostics include HTTP404 resource errors in some case receipts. Missing synthetic character PNG fallback entries were observed in stream-server-latest.log, but individual404s were not conclusively attributed. A separate neutral startup probe records0failedHTTP responses/console errors/pageerrors. Fresh final-image fixture qualification remains necessary.",
+    "Workspace-specific QR row contrast was reported to root because native rows inherit global .list-group-item opacity0.5 and SmartThemeBodyColor. Workspace tokens remain root ownership."
+  ]
+}

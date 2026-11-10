@@ -1,0 +1,87 @@
+{
+  "browserPassed": 8,
+  "browserFailed": 0,
+  "browserSkipped": 0,
+  "browserDuration": "41.0s",
+  "unitPassed": 22,
+  "unitFailed": 0,
+  "diagnostics": {
+    "pageErrors": 0,
+    "consoleErrors": 24,
+    "failedRequests": 1
+  },
+  "cases": [
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/native-ui-verified/native-data-bank-quick-rep-30095-s-leave-both-sets-unchanged",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/native-ui-verified/native-data-bank-quick-rep-35d0e-d-state-then-retry-persists",
+      "pageErrors": 0,
+      "consoleErrors": 4,
+      "failedRequests": 1
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/native-ui-verified/native-data-bank-quick-rep-4bf34-ply-drop-dialogs-or-uploads",
+      "pageErrors": 0,
+      "consoleErrors": 8,
+      "failedRequests": 0
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/native-ui-verified/native-data-bank-quick-rep-5b101-on-failed-save-before-retry",
+      "pageErrors": 0,
+      "consoleErrors": 4,
+      "failedRequests": 0
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/native-ui-verified/native-data-bank-quick-rep-7695d-block-the-next-queued-write",
+      "pageErrors": 0,
+      "consoleErrors": 2,
+      "failedRequests": 0
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/native-ui-verified/native-data-bank-quick-rep-903c6--attachment-content-and-row",
+      "pageErrors": 0,
+      "consoleErrors": 4,
+      "failedRequests": 0
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/native-ui-verified/native-data-bank-quick-rep-b8468-onfirmed-deleted-attachment",
+      "pageErrors": 0,
+      "consoleErrors": 2,
+      "failedRequests": 0
+    },
+    {
+      "artifactDirectory": "/tmp/st-ui-followup-20261109/native-ui-verified/native-data-bank-quick-rep-da78f-cking-the-persistence-owner",
+      "pageErrors": 0,
+      "consoleErrors": 0,
+      "failedRequests": 0
+    }
+  ],
+  "sourceHashes": {
+    "public/scripts/dragdrop.js": "f09aa0f4d5500514aa44b8ffabb43a39fed32f0eb8f684b542934d18c2fb449f",
+    "public/scripts/chats.js": "42a3d44d59b13bacdfc17ae53ba06011cfd1d86dee92dd1b4bd28e7e81669443",
+    "public/scripts/extensions/quick-reply/src/ui/SettingsUi.js": "261cf58fbbf583fcdb7f33f7131b8c707469500eab9af90ac10d1a9a4d907fac",
+    "public/scripts/extensions/quick-reply/src/QuickReplySet.js": "6ef756987f47d60882aab046c9187d743f92174f945225c050d22607fc773fe7",
+    "public/script.js": "f03d02f7bbc488b0a0c0db9634fbf468f7db1a04c28b7e6753c051acec1f0bbc",
+    "tests/native-attachment-quick-reply.test.js": "db57faef0a4ba958501e1b33e1ef077fe03d89203e700d5a593fea0ee4d0fc1b",
+    "tests/native-data-bank-quick-reply.e2e.js": "e7833d808c26817948fce51b3bd88637168250985e1583abc0fbadb86f2ced9d"
+  },
+  "fixtureStopped": true,
+  "fixtureData": "/tmp/st-ui-followup-20261109/native-ui-data",
+  "sourceNotImage": true,
+  "attempts": {
+    "native-ui-first": "4/5 pass; deletion reload exposed stale-save possibility",
+    "native-delete-diagnostic": "1/1 pass with exact memory/nativeGET checks",
+    "native-save-order-before": "controlled real older POST completes after newer POST and resurrects deleted URL; negative settings-save-order.json retained",
+    "native-ui-final": "7/8 pass; main held-request assertion passed but late third debounced route callback outlived browser",
+    "native-ui-verified": "8/8 pass after waiting for actual in-flight route callbacks, no suppressed errors"
+  },
+  "limits": [
+    "Source fixture only; image acceptance pending release digest",
+    "Physical file deletion and metadata save are separate native operations; a late owner change shows a refresh warning and never writes the newly active owner",
+    "A staged replacement is retained if original physical deletion completed during an owner change; no automatic cross-story rewrite"
+  ]
+}

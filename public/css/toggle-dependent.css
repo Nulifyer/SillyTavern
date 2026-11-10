@@ -497,7 +497,7 @@ label[for="trim_spaces"]:not(:has(input:checked)) small {
 
 #claude_function_prefill_warning {
     display: none;
-    color: red;
+    color: var(--warning);
     font-weight: bold;
 }
 
@@ -514,6 +514,13 @@ label[for="trim_spaces"]:not(:has(input:checked)) small {
 
 #banned_tokens_block_ooba:not(:has(#send_banned_tokens_textgenerationwebui:checked)) #banned_tokens_controls_ooba {
     filter: brightness(0.5);
+}
+body.workspace-ui #banned_tokens_block_ooba:not(:has(#send_banned_tokens_textgenerationwebui:checked)) #banned_tokens_controls_ooba {
+    filter: none;
+    color: var(--ws-muted);
+}
+body.workspace-ui #banned_tokens_block_ooba:not(:has(#send_banned_tokens_textgenerationwebui:checked)) #banned_tokens_controls_ooba small {
+    opacity: 1;
 }
 
 #bind_preset_to_connection:checked~.toggleOff {
@@ -551,14 +558,25 @@ label[for="bind_preset_to_connection"]:has(input:checked) {
     padding: 5px 10px;
 }
 
-#top-settings-holder:has(#main_api option[value="openai"]:checked) #advanced-formatting-cc-notice {
+body:has(#main_api option[value="openai"]:checked) #advanced-formatting-cc-notice {
     display: flex;
 }
 
-#top-settings-holder:has(#main_api option[value="openai"]:checked) #AdvancedFormatting [data-cc-null] {
+body:has(#main_api option[value="openai"]:checked) #AdvancedFormatting [data-cc-null] {
     opacity: 0.5;
     filter: grayscale(0.5);
     cursor: not-allowed;
+}
+
+/* These templates can still be prepared for a future Text Completion provider.
+   The notice explains their scope; keep the editor readable in the workspace. */
+body.workspace-ui:has(#main_api option[value="openai"]:checked) #AdvancedFormatting [data-cc-null] {
+    opacity: 1;
+    filter: none;
+    color: var(--ws-muted);
+}
+body.workspace-ui:has(#main_api option[value="openai"]:checked) #AdvancedFormatting [data-cc-null] small {
+    opacity: 1;
 }
 
 #request_images_block:has(#openai_request_images:not(:checked)) #request_images_settings {

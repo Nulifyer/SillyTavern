@@ -1,3 +1,5 @@
+import { fetchGeneration } from './generation-transport.js';
+import { tryParseStreamingError } from './openai.js';
 import {
     getRequestHeaders,
     saveSettingsDebounced,
@@ -209,25 +211,9 @@ export function getKoboldGenerationData(finalPrompt, settings, maxLength, maxCon
     return generate_data;
 }
 
-function tryParseStreamingError(response, decoded) {
-    try {
-        const data = JSON.parse(decoded);
-
-        if (!data) {
-            return;
-        }
-
-        if (data.error) {
-            toastr.error(data.error.message || response.statusText, 'KoboldAI API');
-            throw new Error(data);
-        }
-    } catch {
-        // No JSON. Do nothing.
-    }
-}
 
 export async function generateKoboldWithStreaming(generate_data, signal) {
-    const response = await fetch('/api/backends/kobold/generate', {
+    const response = await fetchGeneration('/api/backends/kobold/generate', {
         headers: getRequestHeaders(),
         body: JSON.stringify(generate_data),
         method: 'POST',
@@ -237,6 +223,11 @@ export async function generateKoboldWithStreaming(generate_data, signal) {
         tryParseStreamingError(response, await response.text());
         throw new Error(`Got response status ${response.status}`);
     }
+    return parseKoboldStream(response);
+}
+
+/** Parse both live and durably replayed provider bytes. */
+export function parseKoboldStream(response) {
     const eventStream = getEventSourceStream();
     response.body.pipeThrough(eventStream);
     const reader = eventStream.readable.getReader();
@@ -248,6 +239,7 @@ export async function generateKoboldWithStreaming(generate_data, signal) {
             if (done) return;
 
             const data = JSON.parse(value.data);
+            if (data?.error || data?.detail || typeof data?.message === 'string') tryParseStreamingError(response, value.data, { quiet: true });
             if (data?.token) {
                 text += data.token;
             }

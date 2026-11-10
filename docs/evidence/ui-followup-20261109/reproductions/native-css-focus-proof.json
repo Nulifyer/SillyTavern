@@ -1,0 +1,55 @@
+{
+  "file": "public/style.css",
+  "sha256": "0073a30e9fff584a469e36eabcb57f556cd5e3a74a04cca1ebb386fffb54e3cd",
+  "observed": {
+    "panel": {
+      "left": 961,
+      "right": 1280,
+      "width": 319,
+      "viewport": 1280,
+      "leftValue": "961px"
+    },
+    "portrait": {
+      "opacity": "0",
+      "focused": true,
+      "tabIndex": 0,
+      "display": "block",
+      "control": "<div class=\"fa-fw fa-solid fa-circle-xmark dragClose interactable\" id=\"closeZoom\" tabindex=\"0\"></div>",
+      "ancestors": [
+        [
+          "DIV",
+          "",
+          "panelControlBar flex-container",
+          false,
+          null
+        ],
+        [
+          "DIV",
+          "zoomFor_default_Seraphina",
+          "zoomed_avatar draggable",
+          false,
+          null
+        ],
+        [
+          "BODY",
+          "",
+          "no-blur drop_target no_animation noShadows no-timer no-mesIDDisplay no-tokenCount translate caption sd workspace-browsing",
+          false,
+          null
+        ],
+        [
+          "HTML",
+          "",
+          "",
+          false,
+          null
+        ]
+      ]
+    },
+    "video": {
+      "opacity": "0",
+      "focused": true
+    }
+  },
+  "pageErrors": []
+}

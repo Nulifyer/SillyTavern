@@ -1,0 +1,12 @@
+{
+  "file": "public/scripts/autocomplete/EnhancedMacroAutoCompleteOption.js",
+  "sha256": "5bd98618d64e86a73aa57ef3df20402b3dff4d618aa2da06aa0781fcd9db37ca",
+  "observed": {
+    "valueMarkup": true,
+    "valueText": "Value for = (Set)Set the variable to a new value. Returns nothing.Currently typing: VALUEType your value and close with }} to complete the macro.",
+    "nameMarkup": true,
+    "nameText": "⚠️ Invalid Variable NameThe name NAME cannot be used with variable shorthand syntax.Valid names must:• Start with a letter (a-z, A-Z)• Contain only letters, numbers, underscores, or hyphens• Not end with an underscore or hyphen"
+  },
+  "pageErrors": [],
+  "note": "Actual exported autocomplete renderDetails methods in isolated instance on synthetic browser. No native saves, external providers, or script injection; harmless markup marker only."
+}

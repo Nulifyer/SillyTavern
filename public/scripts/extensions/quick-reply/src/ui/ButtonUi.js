@@ -64,7 +64,10 @@ export class ButtonUi {
                 root.classList.add('flexGap5');
                 if (this.settings.showPopoutButton) {
                     root.classList.add('popoutVisible');
-                    const popout = document.createElement('div'); {
+                    const popout = document.createElement('button'); {
+                        popout.type = 'button';
+                        popout.title = 'Open Quick Replies';
+                        popout.setAttribute('aria-label', 'Open Quick Replies');
                         popout.id = 'qr--popoutTrigger';
                         popout.classList.add('menu_button');
                         popout.classList.add('fa-solid');
@@ -117,15 +120,21 @@ export class ButtonUi {
                             drag.classList.add('hoverglow');
                             controls.append(drag);
                         }
-                        const close = document.createElement('div'); {
+                        const close = document.createElement('button'); {
+                            close.type = 'button';
+                            close.title = 'Close Quick Replies';
+                            close.setAttribute('aria-label', 'Close Quick Replies');
+                            close.classList.add('menu_button');
                             close.classList.add('qr--close');
                             close.classList.add('fa-solid');
                             close.classList.add('fa-circle-xmark');
                             close.classList.add('hoverglow');
-                            close.addEventListener('click', () => {
+                            close.addEventListener('click', event => {
                                 this.settings.isPopout = false;
                                 this.refresh();
                                 this.settings.save();
+                                const trigger = this.dom?.querySelector('#qr--popoutTrigger');
+                                if (event.detail === 0 && trigger?.getClientRects().length) trigger.focus({ preventScroll: true });
                             });
                             controls.append(close);
                         }

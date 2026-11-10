@@ -1,0 +1,49 @@
+{
+  "files": {
+    "public/scripts/backgrounds.js": "a6a3ac3d3f24943e3c083fd7b7c85a672b1ae9fbdcf59d9f3dfb7ba72e5231ce",
+    "tests/background-ownership.e2e.js": "a9942b99fe07fd12bda24e325ece193f76cee7c48580f1ab787f9f83c3a35eb6",
+    "tests/background-folder-lifetime.e2e.js": "20f55b2c97df74396c6cbf2e850746a47b65eb7aa86b32286ee3477ac7f46498"
+  },
+  "negativeSourceHash": "c2800ca52fab709e7a00b6674a0c5d63f1f99219f586f445b5ef22d241428a6b",
+  "negative": {
+    "path": "/tmp/st-ui-followup-20261109/background-owner-negative",
+    "cases": 3,
+    "observed": [
+      "Pending chat upload added result to another story.",
+      "Pending chat upload added result after same-file reload.",
+      "Pending custom copy emptied another story background list via splice(-1)."
+    ],
+    "note": "Earlier background-owner-before attempt had a multipart route-inspection fixture error on copy and is not the accepted copy negative proof."
+  },
+  "verified": {
+    "path": "/tmp/st-ui-followup-20261109/background-owner-final",
+    "log": "/tmp/st-ui-followup-20261109/background-owner-final.txt",
+    "passed": 18,
+    "minutes": 2.5,
+    "newCases": 16,
+    "untouchedRootFocusCases": 2,
+    "uncaughtPageErrors": 0,
+    "coverage": [
+      "Full story identity and native load token after held chat upload, same-file reload and custom copy.",
+      "Captured source tab before held video conversion: zero upload requests after tab changes.",
+      "Newer global selection remains selected after old global upload completes.",
+      "Pending custom deletion cannot save/remove new story metadata; failed delete retains entry and retries.",
+      "Native quiet background result cannot select for new story.",
+      "Held cover response retains captured folder id, preserves newly selected folder, sends one request on repeated clicks.",
+      "Cover/create/rename/delete HTTP503 feedback and successful retry.",
+      "Chat/global upload and copy failure preservation/retry; normal real local global upload outside active folder does not dereference missing tile.",
+      "Native upload input supersession ignores older response; malformed200 upload responses preserve metadata/settings."
+    ]
+  },
+  "checks": [
+    "node --check public/scripts/backgrounds.js",
+    "npx eslint public/scripts/backgrounds.js tests/background-ownership.e2e.js",
+    "git diff --check"
+  ],
+  "limits": [
+    "Synthetic8057 data only; held/mocked responses and local real storage; no production data or paid provider calls.",
+    "Already accepted server storage changes still complete for their original file/folder. Stale completion is prevented from applying to a new foreground story/view; this is not server rollback.",
+    "Whole UI final28 suite remains root-owned after full source review/final freeze."
+  ],
+  "ownership": "Handoff backgrounds.js and new background-ownership.e2e.js to root; background-folder-lifetime.e2e.js was not edited."
+}

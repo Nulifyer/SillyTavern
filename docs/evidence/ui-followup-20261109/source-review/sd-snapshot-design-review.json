@@ -1,0 +1,93 @@
+{
+  "at": "2026-11-10T05:09:00.726155+00:00",
+  "file": "public/scripts/extensions/stable-diffusion/index.js",
+  "observedCurrentSha256": "01761e6325b63779be83b1bd267f4bcf08e3d407347b370cf77eb53959e16891",
+  "scope": "Bounded design/source review during active implementation; not a complete final-file freeze receipt.",
+  "readRanges": [
+    [
+      2928,
+      2965
+    ],
+    [
+      3010,
+      3225
+    ],
+    [
+      3218,
+      3355
+    ],
+    [
+      3370,
+      3490
+    ],
+    [
+      3480,
+      3652
+    ],
+    [
+      3805,
+      3910
+    ],
+    [
+      4135,
+      4267
+    ],
+    [
+      4408,
+      4535
+    ],
+    [
+      5160,
+      5240
+    ],
+    [
+      5380,
+      5560
+    ],
+    [
+      5605,
+      5760
+    ]
+  ],
+  "findings": [
+    {
+      "kind": "source-lead",
+      "mechanism": "getGenerationType and getQuietPrompt consult global settings before request overrides are merged",
+      "impactInference": "Request-local extend/multimodal arguments can be ignored during mode selection.",
+      "status": "Source fix read; worker reports actual helper plus native argument test. Final full18 native run pending."
+    }
+  ],
+  "observations": [
+    "Original input message references/revision remain pinned; owned appended output adopted synchronously before native render/event normalization.",
+    "Provider dispatch and profile writer failure paths do not select an alternate provider after error in the reviewed code.",
+    "Operation settings passed into provider/Novel normalization/dimension helpers; synchronous preflight ensures current model/sampler dropdown defaults before snapshot."
+  ],
+  "limits": [
+    "Source remained active; owner final handoff and final hash delta review remain required.",
+    "Provider network behavior not exercised; no paid provider calls.",
+    "No source edits."
+  ],
+  "finalBoundedDeltaRead": {
+    "at": "2026-11-10T05:15:00.187902+00:00",
+    "sha256": "699bc10d351a6168900eb176a3c5824af5d6a933949b3abf9c2b957a40bf5ca0",
+    "ranges": [
+      [
+        2927,
+        2958
+      ],
+      [
+        3108,
+        3136
+      ],
+      [
+        3152,
+        3167
+      ],
+      [
+        5695,
+        5738
+      ]
+    ],
+    "notes": "Mode and quiet prompt now receive operation snapshot before classification; GenerateImage missing URL now throws, not successful literal undefined. Worker reports40/40 focused units, actual tool503 control exactly1request. Final native18 running; no independent broad runtime claim."
+  }
+}

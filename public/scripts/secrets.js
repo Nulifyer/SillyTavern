@@ -336,6 +336,7 @@ async function viewSecrets() {
  * @type {import('../../src/endpoints/secrets.js').SecretStateMap}
  */
 export let secret_state = {};
+const secretInputRevisions = new WeakMap();
 
 /**
  * Write a secret value to the server.
@@ -347,6 +348,9 @@ export let secret_state = {};
  * @return {Promise<string?>} The ID of the newly created secret key, or null if no value is provided.
  */
 export async function writeSecret(key, value, label, { allowEmpty } = {}) {
+    const input = INPUT_MAP[key] ? document.querySelector(INPUT_MAP[key]) : null;
+    const inputValue = input?.value;
+    const inputRevision = secretInputRevisions.get(input) || 0;
     try {
         if (!value && !allowEmpty) {
             console.warn(`No value provided for ${key} in writeSecret, redirecting to deleteSecret`);
@@ -370,7 +374,7 @@ export async function writeSecret(key, value, label, { allowEmpty } = {}) {
 
         const { id } = await response.json();
         // Clear the input field
-        $(INPUT_MAP[key]).val('').trigger('input');
+        if (input?.isConnected && input.value === inputValue && (secretInputRevisions.get(input) || 0) === inputRevision) $(input).val('').trigger('input');
         await readSecretState();
         await eventSource.emit(event_types.SECRET_WRITTEN, key);
         return id;
@@ -398,10 +402,12 @@ export async function deleteSecret(key, id) {
             // Force reconnection to the API with the new key
             $('#main_api').trigger('change');
             await eventSource.emit(event_types.SECRET_DELETED, key);
+            return true;
         }
     } catch (error) {
         console.error(`Could not delete secret value: ${key}`, error);
     }
+    return false;
 }
 
 /**
@@ -492,10 +498,12 @@ export async function renameSecret(key, id, label) {
         if (response.ok) {
             await readSecretState();
             await eventSource.emit(event_types.SECRET_EDITED, key);
+            return true;
         }
     } catch (error) {
         console.error(`Could not rename secret value: ${key}`, error);
     }
+    return false;
 }
 
 /**
@@ -684,7 +692,7 @@ async function openKeyManagerDialog(key) {
                 return;
             }
         }
-        await writeSecret(key, value, label, { allowEmpty: true });
+        if (!await writeSecret(key, value, label, { allowEmpty: true })) toastr.error(t`Secret could not be saved. Retry the connection.`);
         await renderSecretsList();
     });
 
@@ -724,7 +732,7 @@ async function openKeyManagerDialog(key) {
                 if (!label) {
                     return;
                 }
-                await renameSecret(key, secret.id, label);
+                if (!await renameSecret(key, secret.id, label)) toastr.error(t`Secret could not be renamed. Retry the connection.`);
                 await renderSecretsList();
             });
             itemTemplate.find('button[data-action="delete-secret"]').on('click', async function () {
@@ -732,7 +740,7 @@ async function openKeyManagerDialog(key) {
                 if (!confirm) {
                     return;
                 }
-                await deleteSecret(key, secret.id);
+                if (!await deleteSecret(key, secret.id)) toastr.error(t`Secret could not be deleted. Retry the connection.`);
                 await renderSecretsList();
             });
             itemBlocks.push(itemTemplate);
@@ -889,7 +897,7 @@ function registerSecretSlashCommands() {
                 return '';
             }
 
-            const savedSecret = secrets.find(s => s.id === id) ?? secrets.find(s => s.label === id) ?? secrets.find(s => s.active);
+            const savedSecret = id ? secrets.find(s => s.id === id) ?? secrets.find(s => s.label === id) : secrets.find(s => s.active);
             if (!savedSecret) {
                 if (!quiet) {
                     toastr.error(t`No secret found with ID: ${id} for the key: ${key}`);
@@ -898,7 +906,10 @@ function registerSecretSlashCommands() {
             }
 
             // Delete the secret
-            await deleteSecret(key, savedSecret.id);
+            if (!await deleteSecret(key, savedSecret.id)) {
+                if (!quiet) toastr.error(t`Secret could not be deleted. Retry the connection.`);
+                return '';
+            }
             if (!quiet) {
                 toastr.success(t`Secret with ID: ${id} has been deleted for the key: ${key}`);
             }
@@ -959,14 +970,6 @@ function registerSecretSlashCommands() {
                 return '';
             }
 
-            const secrets = secret_state[key];
-            if (!Array.isArray(secrets) || secrets.length === 0) {
-                if (!quiet) {
-                    toastr.error(t`No saved secrets found for the key: ${key}`);
-                }
-                return '';
-            }
-
             const valueStr = value?.toString()?.trim();
             if (!valueStr && !allowEmpty) {
                 if (!quiet) {
@@ -979,7 +982,8 @@ function registerSecretSlashCommands() {
             const id = await writeSecret(key, valueStr, label, { allowEmpty });
 
             if (!quiet) {
-                toastr.success(t`Secret has been written for the key: ${key}`);
+                if (id) toastr.success(t`Secret has been written for the key: ${key}`);
+                else toastr.error(t`Secret could not be saved. Retry the connection.`);
             }
 
             return id || '';
@@ -1046,7 +1050,7 @@ function registerSecretSlashCommands() {
                 return '';
             }
 
-            const savedSecret = secrets.find(s => s.id === id) ?? secrets.find(s => s.label === id) ?? secrets.find(s => s.active);
+            const savedSecret = id ? secrets.find(s => s.id === id) ?? secrets.find(s => s.label === id) : secrets.find(s => s.active);
             if (!savedSecret) {
                 if (!quiet) {
                     toastr.error(t`No secret found with ID: ${id} for the key: ${key}`);
@@ -1055,7 +1059,10 @@ function registerSecretSlashCommands() {
             }
 
             // Rename the secret
-            await renameSecret(key, savedSecret.id, newLabel);
+            if (!await renameSecret(key, savedSecret.id, newLabel)) {
+                if (!quiet) toastr.error(t`Secret could not be renamed. Retry the connection.`);
+                return '';
+            }
             if (!quiet) {
                 toastr.success(t`Secret with ID: ${id} has been renamed to "${newLabel}" for the key: ${key}`);
             }
@@ -1113,7 +1120,7 @@ function registerSecretSlashCommands() {
                 return '';
             }
 
-            const savedSecret = secrets.find(s => s.id === id) ?? secrets.find(s => s.label === id) ?? secrets.find(s => s.active);
+            const savedSecret = id ? secrets.find(s => s.id === id) ?? secrets.find(s => s.label === id) : secrets.find(s => s.active);
             if (!savedSecret) {
                 if (!quiet) {
                     toastr.error(t`No secret found with ID: ${id} for the key: ${key}`);
@@ -1145,6 +1152,7 @@ export async function initSecrets() {
         await openKeyManagerDialog(key);
     });
     $(document).on('input', Object.values(INPUT_MAP).join(','), function () {
+        secretInputRevisions.set(this, (secretInputRevisions.get(this) || 0) + 1);
         const id = $(this).attr('id');
         const value = $(this).val();
 

@@ -1,0 +1,20 @@
+{
+  "file": "public/scripts/popup.js",
+  "sha256": "c5154e7bdb43f5418a16d0e8b2e0f3fd59cf712d8d92c81b5e0980b93262bf97",
+  "observed": {
+    "onClose": {
+      "resolved": false,
+      "connected": true,
+      "open": false,
+      "registered": true
+    },
+    "classes": {
+      "classesError": "Failed to execute 'add' on 'DOMTokenList': The token provided (' ') contains HTML space characters, which are not valid in tokens.",
+      "registryIncrease": 1
+    }
+  },
+  "pageErrors": [
+    "synthetic onClose failed"
+  ],
+  "note": "Actual exported Popup close lifecycle and constructor in isolated instance on synthetic browser. No native saves, external providers, or script injection; harmless markup marker only."
+}

@@ -7,10 +7,13 @@ body.workspace-ui {
     --ws-sidebar: #121620;
     --ws-surface: #202635;
     --ws-border: #343d50;
+    --ws-input-border: #71809a;
     --ws-text: #e9edf5;
     --ws-muted: #a2aec5;
     --ws-accent: #c0b7ff;
     --ws-accent-text: #232035;
+    --ws-warning: #f3a6b2;
+    --ws-success: #97d5bd;
     --ws-sidebar-width: 232px;
     --ws-header-height: max(4rem, calc(var(--ws-font-ui) * 1.5 + var(--ws-font-meta) * 1.5 + 1rem));
     /* Scale text and controls together, including browser and native font preferences. */
@@ -35,6 +38,9 @@ body.workspace-ui {
     --SmartThemeBotMesBlurTintColor: transparent;
     --SmartThemeBorderColor: var(--ws-border);
     --SmartThemeShadowColor: transparent;
+    /* Workspace checkbox fill is ws-text, independent of classic theme colors. */
+    --SmartThemeCheckboxTickColor: var(--ws-base);
+    --warning: var(--ws-warning);
     --interactable-outline-color: var(--ws-accent);
     background: var(--ws-base);
     color: var(--ws-text);
@@ -60,7 +66,15 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-ui #top-settings-holder > .drawer { position: static; width: 0; }
 .workspace-ui #top-settings-holder > .drawer > .drawer-toggle { display: none; }
 .workspace-ui :is(button, input, select, textarea):not(.fa, .fas, .far, .fab, .fa-solid, .fa-regular, .fa-brands) { font-family: inherit; }
+.workspace-ui :is(.text_pole, input, textarea)::placeholder { opacity: 1; }
 .workspace-ui button { cursor: pointer; }
+.workspace-ui kbd { color: var(--ws-text); background: var(--ws-surface); border-color: var(--ws-border); box-shadow: none; }
+.workspace-ui #toast-container .toast { color: var(--ws-text); background-color: var(--ws-surface); border: 1px solid var(--ws-border); border-inline-start: 4px solid var(--ws-accent); }
+.workspace-ui #toast-container .toast-success { border-inline-start-color: var(--ws-success); }
+.workspace-ui #toast-container :is(.toast-warning, .toast-error) { border-inline-start-color: var(--ws-warning); }
+.workspace-ui #toast-container .toast a { color: var(--ws-accent); text-decoration: underline; }
+.workspace-ui #toast-container .toast-close-button { color: var(--ws-text); text-shadow: none; }
+.workspace-ui #toast-container .toast-close-button:is(:hover, :focus-visible) { color: var(--ws-accent); opacity: 1; }
 /* Control typography belongs to the workspace, rather than inherited native themes. */
 .workspace-ui :is(#workspace-sidebar, #workspace-header, #workspace-view, #workspace-tools, #workspace-command) :is(button, input, summary) { box-sizing: border-box; }
 .workspace-ui :is(select, .select2-dropdown, .select2-selection, .list-group, .inline-drawer-header, .standoutHeader),
@@ -106,7 +120,7 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
     border: 1px solid var(--ws-border); border-radius: var(--ws-radius-control); background: transparent; color: var(--ws-muted); text-align: left;
 }
 .workspace-search span { flex: 1; font-size: var(--ws-font-ui); }
-.workspace-search kbd { font-family: inherit; font-size: var(--ws-font-meta); white-space: nowrap; color: #bac4d7; }
+.workspace-search kbd { font-family: inherit; font-size: var(--ws-font-meta); white-space: nowrap; color: var(--ws-muted); }
 .workspace-nav-heading { font-size: var(--ws-font-meta); color: var(--ws-muted); margin: 24px 12px 9px; }
 .workspace-nav-item {
     display: flex; align-items: center; gap: 12px; width: 100%; padding: 5px 12px; margin: 2px 0; min-height: var(--ws-control-height); line-height: 1.428572;
@@ -130,6 +144,9 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-connected .workspace-status-dot { background: #97d5bd; }
 .workspace-connection > i, .workspace-persona > i { color: var(--ws-muted); font-size: var(--ws-font-meta); }
 .workspace-persona-avatar { background: #2b3348; width: 32px; height: 32px; border-radius: 50%; display: grid; place-items: center; color: #b6c4df; }
+/* The muted text role already supplies metadata contrast. Native small-text
+   opacity must not dim these workspace labels a second time. */
+.workspace-ui :is(.workspace-brand, .workspace-connection, .workspace-persona, .workspace-library-card, .workspace-scene-open, .workspace-active-story, .workspace-scene-identity) small { opacity: 1; }
 
 .workspace-ui #workspace-header {
     position: fixed; top: 0; left: var(--ws-sidebar-width); right: 0; height: var(--ws-header-height);
@@ -164,8 +181,8 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-ui #chat .ch_name { font-size: var(--ws-font-ui); font-weight: 600; gap: 8px; }
 .workspace-ui #chat .mes_edit_buttons { flex-wrap: wrap; min-width: 0; max-width: 100%; gap: 4px; }
 .workspace-ui #chat .mes_edit_buttons .menu_button { flex-shrink: 0; }
-.workspace-ui :is(#options, #extensionsMenu, #sd_dropdown) { max-width: calc(100dvw - 16px); max-height: calc(100dvh - 16px); overflow-y: auto; }
-.workspace-ui #options .options-content { max-height: calc(100dvh - 28px); overflow-y: auto; }
+.workspace-ui :is(#options, #extensionsMenu, #sd_dropdown) { max-width: calc(100dvw - 16px); max-height: min(calc(100dvh - 16px), var(--ws-composer-menu-height, 100dvh)); overflow-y: auto; }
+.workspace-ui #options .options-content { max-height: min(calc(100dvh - 28px), calc(var(--ws-composer-menu-height, 100dvh) - 12px)); overflow-y: auto; }
 .workspace-ui #tts_status { overflow-wrap: anywhere; }
 .workspace-ui .workspace-mounted-panel .toggle-description { width: auto; max-width: 100%; overflow-wrap: anywhere; }
 .workspace-ui #tts_status.tts-status-error { color: #f3a6b2 !important; }
@@ -177,15 +194,15 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-ui #chat :is(.mes_buttons, .extraMesButtons) { flex-wrap: wrap; min-width: 0; max-width: 100%; }
 .workspace-ui #chat .ch_name:has(.extraMesButtons.visible) { flex-wrap: wrap; }
 .workspace-ui #chat .mes_buttons:has(.extraMesButtons.visible) { flex-basis: 100%; }
-.workspace-ui #chat .mes_buttons .mes_button { min-width: 24px; min-height: 24px; text-align: center; }
-.workspace-ui #chat :is(.mes_buttons .mes_button, .mes_edit_buttons .menu_button):not(.disabled) { opacity: 1; filter: none; }
+.workspace-ui #chat :is(.mes_buttons .mes_button, .mes_reasoning_actions .mes_button) { min-width: 24px; min-height: 24px; text-align: center; }
+.workspace-ui #chat :is(.mes_buttons .mes_button, .mes_reasoning_actions .mes_button, .mes_edit_buttons .menu_button, .code-copy):not(.disabled) { opacity: 1; filter: none; }
 .workspace-ui #chat .mes[is_system="true"] { color: var(--ws-muted); }
 .workspace-ui #form_sheld {
     --bottomFormIconSize: var(--ws-icon-size);
     --bottomFormBlockPadding: 0px;
     --bottomFormBlockSize: var(--ws-control-small);
     resize: none;
-    flex-shrink: 0; width: min(850px, calc(100% - 48px)); padding-top: 12px; margin: 0 auto; background: var(--ws-base);
+    flex-shrink: 0; width: min(850px, calc(100% - 48px)); padding-top: 12px; margin: 0 auto; background: transparent;
 }
 .workspace-ui #send_form { border: 0; border-radius: 0; background: transparent; backdrop-filter: none; padding: 0; box-shadow: none; }
 .workspace-ui #nonQRFormItems { align-items: center; line-height: 1; padding: 14px 14px 2px; }
@@ -197,10 +214,10 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-ui #send_but { background: var(--ws-accent); color: #242036; border-radius: 50%; align-self: center; opacity: 1; }
 .workspace-ui #options_button { color: var(--ws-muted); }
 .workspace-ui #workspace-composer-hint { margin: 9px 0 15px; font-size: var(--ws-font-meta); text-align: center; color: var(--ws-muted); white-space: normal; }
-#browser-recovery { display: flex; align-items: center; gap: 8px; white-space: normal; padding-block: 4px; font-size: var(--ws-font-meta, 0.875rem); }
+#browser-recovery { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; white-space: normal; padding-block: 4px; font-size: var(--ws-font-meta, 0.875rem); }
 #browser-recovery[hidden], #browser-recovery [hidden] { display: none; }
-#browser-recovery p { flex: 1; margin: 0; }
-#browser-recovery button { flex-shrink: 0; display: inline-flex; min-height: 32px; align-items: center; justify-content: center; padding: 6px 12px; white-space: normal; }
+#browser-recovery p { flex: 1 1 16rem; min-width: 0; margin: 0; overflow-wrap: anywhere; }
+#browser-recovery button { flex: 0 1 auto; max-width: 100%; display: inline-flex; min-height: 32px; align-items: center; justify-content: center; padding: 6px 12px; white-space: normal; }
 @media (max-width: 900px) { #browser-recovery button { min-height: 44px; } }
 
 /* Settings use a full category workspace, with a single native control tree. */
@@ -242,12 +259,13 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 /* ComposerSurface shell/host/main/context-strip adapted from T3 Code.
    Copyright (c) 2026 T3 Tools Inc. MIT: /licenses/T3-Code.txt. */
 .workspace-composer-surface { position: relative; isolation: isolate; margin-inline: auto; width: 100%; }
-.workspace-composer-host { position: relative; z-index: 1; width: 100%; border: 1px solid #40495c; border-radius: 16px; background: #202635; box-shadow: 0 6px 24px #0002; }
+.workspace-composer-host { position: relative; z-index: 1; width: 100%; border: 1px solid var(--ws-input-border); border-radius: 16px; background: #202635; box-shadow: 0 6px 24px #0002; }
 .workspace-composer-host:focus-within { border-color: #8177b0; }
 .workspace-composer-main { position: relative; min-width: 0; border-radius: inherit; }
 .workspace-composer-context { display: flex; align-items: center; justify-content: center; gap: 8px; padding: 8px 8px 0; color: var(--ws-muted); }
 .workspace-ui .workspace-composer-context #workspace-composer-hint { margin: 0 0 12px; font-size: var(--ws-font-meta); line-height: 1.5; }
-.workspace-ui .workspace-composer-host .workspace-composer-tools { order: 30; flex: 0 0 100%; width: 100%; padding: 4px 10px 10px; flex-wrap: nowrap; }
+.workspace-ui .workspace-composer-host .workspace-composer-tools { position: relative; order: 30; flex: 0 0 100%; width: 100%; padding: 4px 10px 10px; flex-wrap: wrap; }
+.workspace-ui .workspace-composer-tools .workspace-creative-menu { position: static; }
 .workspace-ui .workspace-composer-tools #rightSendForm { display: flex; align-items: center; flex-shrink: 0; width: auto; margin-left: auto; }
 .workspace-ui .workspace-composer-tools #rightSendForm > div { flex-shrink: 0; }
 .workspace-ui #rightSendForm > div, .workspace-ui #rightSendForm :is(.mes_stop, .stscript_btn) > i { font-size: var(--ws-icon-size); }
@@ -306,7 +324,7 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-ui #left-nav-panel.workspace-mounted-panel #clickSlidersTips { position: static; inset: auto; margin-bottom: 16px; text-align: left; font-size: var(--ws-font-meta); color: var(--ws-muted); }
 .workspace-ui #left-nav-panel.workspace-mounted-panel > .topRightInset { position: static; display: inline-flex; margin-bottom: 12px; }
 .workspace-ui .drawer-content > .drag-grabber, .workspace-ui :is(#rm_button_panel_pin_div, #lm_button_panel_pin_div, #WI_panel_pin_div) { display: none !important; }
-.workspace-ui .drawer-content :is(.text_pole, select, textarea), .workspace-ui dialog .text_pole { background-color: var(--ws-sidebar); border: 1px solid var(--ws-border); border-radius: var(--ws-radius-control); color: var(--ws-text); padding: 8px; font-size: var(--ws-font-ui); }
+.workspace-ui .drawer-content :is(.text_pole, select, textarea), .workspace-ui dialog .text_pole { background-color: var(--ws-sidebar); border: 1px solid var(--ws-input-border); border-radius: var(--ws-radius-control); color: var(--ws-text); padding: 8px; font-size: var(--ws-font-ui); }
 .workspace-ui .drawer-content :is(input, select, textarea) { max-width: 100%; }
 .workspace-ui .select2-container .select2-search--inline textarea.select2-search__field {
     height: 24px; min-height: 24px; padding: 2px 4px; margin: 4px 0 0 5px;
@@ -369,6 +387,7 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-ui #workspace-command { width: min(560px, calc(100vw - 32px)); max-height: min(660px, calc(100dvh - 48px)); padding: 20px; box-shadow: 0 16px 80px #00000080; }
 .workspace-command-heading { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
 .workspace-command-heading h2 { font-size: var(--ws-font-body); margin: 0; }
+.workspace-ui #workspace-command-input::placeholder { color: var(--ws-muted); }
 .workspace-search-input { display: flex; align-items: center; gap: 12px; border: 1px solid var(--ws-border); border-radius: var(--ws-radius-control); padding: 12px; color: var(--ws-muted); }
 .workspace-search-input input { flex: 1; min-width: 0; border: 0; background: none; color: var(--ws-text); font-size: var(--ws-font-ui); }
 #workspace-command-results { max-height: 420px; overflow-y: auto; padding-top: 12px; }
@@ -419,7 +438,9 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-back-link { margin-bottom: 16px; }
 .workspace-return-chat { margin-bottom: 16px; }
 .workspace-profile-layout { display: grid; grid-template-columns: 240px minmax(0, 1fr); gap: 48px; align-items: start; }
-.workspace-profile-identity { position: sticky; top: 24px; min-width: 0; }
+/* Portrait, description and actions can exceed a short window. Keep them in
+   the page's scroll flow so every action remains reachable. */
+.workspace-profile-identity { position: static; min-width: 0; }
 .workspace-profile-portrait { width: 100%; max-width: 240px; aspect-ratio: 3 / 4; height: auto; object-fit: cover; object-position: center 25%; border-radius: var(--ws-radius-panel); background: var(--ws-surface); }
 .workspace-profile-intro { padding-top: 20px; min-width: 0; }
 .workspace-profile-intro > p { font-size: var(--ws-font-ui); line-height: 1.65; }
@@ -531,7 +552,7 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 .workspace-scene-identity small { color: var(--ws-muted); }
 .workspace-scene-sections { display: flex; flex-wrap: wrap; gap: 4px; border-bottom: 1px solid var(--ws-border); padding-bottom: 12px; }
 .workspace-scene-sections button { flex: 1 1 90px; min-height: 44px; padding: 8px; border: 1px solid transparent; border-radius: 8px; background: transparent; color: var(--ws-muted); font: inherit; cursor: pointer; }
-.workspace-scene-sections button.active { border-color: var(--ws-border); color: var(--ws-text); background: var(--ws-panel); }
+.workspace-scene-sections button.active { border-color: var(--ws-border); color: var(--ws-text); background: var(--ws-surface); }
 .workspace-scene-content { display: flex; flex-direction: column; gap: 12px; padding-block: 16px; min-width: 0; }
 .workspace-scene-content h3, .workspace-scene-content p { margin: 0; }
 .workspace-scene-content h3 { font-size: var(--ws-font-body); margin-top: 8px; }
@@ -605,7 +626,7 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
     .workspace-ui #chat .mes { gap: 10px; padding-inline: 0; }
     .workspace-ui #chat .mes[is_user="true"] { padding-inline: 10px; }
     .workspace-ui #chat .avatar { width: 30px; height: 38px; }
-    .workspace-ui #chat :is(.mes_buttons .mes_button, .mes_edit_buttons .menu_button) { min-width: 44px; min-height: 44px; }
+    .workspace-ui #chat :is(.mes_buttons .mes_button, .mes_reasoning_actions .mes_button, .mes_edit_buttons .menu_button, .code-copy) { min-width: 44px; min-height: 44px; }
     .workspace-ui #workspace-command { padding: 16px; }
 }
 @media (max-width: 600px) {
@@ -666,6 +687,7 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
     .workspace-ui .workspace-composer-tools .workspace-model-chip { display: inline-flex; margin: 0 auto 0 0; }
     .workspace-composer-tools .workspace-tool-button { justify-content: center; min-width: 44px; min-height: 44px; padding-inline: 8px; }
     .workspace-composer-tools .workspace-tool-button > span { display: none; }
+    .workspace-composer-tools .workspace-continue > span { display: inline; }
     .workspace-composer-tools .workspace-creative-menu { margin-left: 0; }
     .workspace-ui .workspace-composer-tools #rightSendForm { margin-left: auto; }
     .workspace-ui .service-destination { gap: 10px; grid-template-columns: minmax(0, 1fr) auto 12px; }
@@ -726,6 +748,15 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
     .workspace-ui *, .workspace-ui *::before, .workspace-ui *::after { animation-duration: 0s !important; transition-duration: 0s !important; scroll-behavior: auto !important; }
 }
 
+/* A short keyboard-sized viewport still needs room for the composer at larger
+   text sizes. Compact spacing without shrinking text or clipping its menus. */
+@media (max-height: 480px) {
+    .workspace-ui #nonQRFormItems { padding-top: 8px; }
+    .workspace-ui #send_textarea { min-height: 52px; max-height: max(52px, 12dvh); }
+    .workspace-composer-context { padding-top: 4px; }
+    .workspace-ui .workspace-composer-context #workspace-composer-hint { margin-bottom: 6px; }
+}
+
 @media (max-width: 600px) {
     .workspace-ui .service-connections { grid-template-columns: minmax(0, 1fr); }
     .workspace-ui .service-connections #service-discover { width: 100%; }
@@ -740,5 +771,10 @@ body:not(.workspace-ui) .workspace-only { display: none !important; }
 }
 
 .workspace-ui #floatingPrompt.workspace-mounted-panel { display: block !important; }
+
+.workspace-ui .ctx-menu { color: var(--ws-text); background: var(--ws-sidebar); border-color: var(--ws-border); }
+.workspace-ui .ctx-menu :is(.ctx-item, .ctx-header) { opacity: 1; color: var(--ws-muted); }
+.workspace-ui .ctx-menu .ctx-item:is(:hover, :focus-visible, :focus-within) { background: var(--ws-surface); color: var(--ws-text); }
+.workspace-ui .secretKeyManagerItemId { background: transparent; border: 0; color: inherit; font: inherit; padding: 0; text-align: start; }
 
 @media (max-width: 900px) { .workspace-ui .workspace-mounted-panel select { min-height: 44px; } }

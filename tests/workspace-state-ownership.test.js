@@ -61,7 +61,7 @@ async function recoveryFixture({ group = null } = {}) {
         captureChatViewport: () => null, characters: [{ avatar: 'old.png' }], eventSource: events(), event_types,
         getCurrentChatId: () => native.fileName || 'active', isGenerating: () => false, main_api: 'openai', online_status: 'Valid',
         getCurrentChatIdentity: () => native.owner || 'original-owner',
-        refreshChatViewport: async () => {}, refreshServerConnection: async () => true, setOnlineStatus: jest.fn(), this_chid: 0,
+        refreshChatViewport: async () => {}, refreshServerConnection: async () => true, restorePendingGeneration: jest.fn().mockResolvedValue(false), setOnlineStatus: jest.fn(), this_chid: 0,
     };
     const localStorage = storage();
     const refreshChatCompletionStatus = jest.fn().mockResolvedValue(null);
@@ -69,6 +69,7 @@ async function recoveryFixture({ group = null } = {}) {
         '../script.js': native, './group-chats.js': { selected_group: group },
         './openai.js': { getChatCompletionModel: () => 'model', oai_settings: { chat_completion_source: 'claude' }, refreshChatCompletionStatus },
         './power-user.js': { power_user: { restore_user_input: true } }, './user.js': { getCurrentUserHandle: () => 'current-user' },
+        './generation-transport.js': { refreshGenerationSubscriptions: jest.fn() },
     }, { document, window: new Node(), localStorage });
     module.initBrowserRecovery();
     return { input, nodes, document, native, localStorage, refreshChatCompletionStatus };

@@ -80,13 +80,18 @@ export let world_info_use_group_scoring = false;
 export let world_info_character_strategy = world_info_insertion_strategy.character_first;
 export let world_info_budget_cap = 0;
 export let world_info_max_recursion_steps = 0;
-const saveWorldDebounced = debounce(async (name, data) => await _save(name, data), debounce_timeout.relaxed);
+const worldSaveStates = new Map();
+let worldEditorName = null;
+let worldEditorData = null;
+let worldEditorLoading = false;
 const saveSettingsDebounced = debounce(() => {
     Object.assign(world_info, { globalSelect: selected_world_info });
     saveSettings();
 }, debounce_timeout.relaxed);
 const sortFn = (a, b) => b.order - a.order;
 let updateEditor = (navigation, flashOnNav = true) => { console.debug('Triggered WI navigation', navigation, flashOnNav); };
+let worldEditorRequest = 0;
+let worldEntryRender = 0;
 
 // Do not optimize. updateEditor is a function that is updated by the displayWorldEntries with new data.
 export const worldInfoFilter = new FilterHelper(() => updateEditor());
@@ -2021,8 +2026,34 @@ export async function showWorldEditor(name) {
         return;
     }
 
-    const wiData = await loadWorldInfo(name);
-    await displayWorldEntries(name, wiData);
+    const request = ++worldEditorRequest;
+    ++worldEntryRender;
+    setWorldEditorLoading(true);
+    try {
+        const wiData = await loadWorldInfo(name);
+        if (request !== worldEditorRequest) return;
+        if (!wiData) throw new Error(`Could not load lorebook "${name}". Select it again to retry.`);
+        await displayWorldEntries(name, wiData, navigation_option.none, true, request);
+    } catch (error) {
+        if (request !== worldEditorRequest) return;
+        await displayWorldEntries(null, null);
+        toastr.error(error.message || 'The lorebook could not be loaded. Select it again to retry.');
+    } finally {
+        if (request === worldEditorRequest) setWorldEditorLoading(false);
+    }
+}
+
+function setWorldEditorLoading(loading) {
+    worldEditorLoading = loading;
+    renderWorldEditorLoading();
+}
+
+function renderWorldEditorLoading() {
+    const state = worldSaveStates.get(worldEditorName);
+    const loading = worldEditorLoading || Boolean(state?.operation || state?.deleting);
+    $('#world_popup_entries_list').prop('inert', loading).attr('aria-busy', String(loading));
+    $('#world_popup_new, #world_popup_name_button, #world_popup_export, #world_popup_delete, #world_duplicate, #world_backfill_memos, #world_apply_current_sorting').prop('inert', loading);
+    renderWorldSaveState();
 }
 
 /**
@@ -2084,7 +2115,10 @@ export async function updateWorldInfoList() {
 }
 
 async function hideWorldEditor() {
+    ++worldEditorRequest;
+    ++worldEntryRender;
     await displayWorldEntries(null, null);
+    setWorldEditorLoading(false);
 }
 
 function getWIElement(name) {
@@ -2307,8 +2341,14 @@ function clearEntryList($list) {
 }
 
 //MARK: displayWorldEntries
-async function displayWorldEntries(name, data, navigation = navigation_option.none, flashOnNav = true) {
-    updateEditor = async (navigation, flashOnNav = true) => await displayWorldEntries(name, data, navigation, flashOnNav);
+async function displayWorldEntries(name, data, navigation = navigation_option.none, flashOnNav = true, owner = worldEditorRequest) {
+    if (owner !== worldEditorRequest) return;
+    worldEditorName = name;
+    worldEditorData = data;
+    renderWorldSaveState();
+    const rendering = ++worldEntryRender;
+    const isCurrent = () => owner === worldEditorRequest && rendering === worldEntryRender;
+    updateEditor = async (navigation, flashOnNav = true) => await displayWorldEntries(name, data, navigation, flashOnNav, owner);
 
     const worldEntriesList = $('#world_popup_entries_list');
     clearEntryList(worldEntriesList);
@@ -2333,6 +2373,8 @@ async function displayWorldEntries(name, data, navigation = navigation_option.no
             return;
         }
 
+        if (!await deleteWorldInfo(name)) return;
+
         if (world_info.charLore) {
             world_info.charLore.forEach((charLore, index) => {
                 if (charLore.extraBooks?.includes(name)) {
@@ -2347,15 +2389,13 @@ async function displayWorldEntries(name, data, navigation = navigation_option.no
 
             saveSettingsDebounced();
         }
-
-        // Selected world_info automatically refreshes
-        await deleteWorldInfo(name);
     });
 
     // Before printing the WI, we check if we should enable/disable search sorting
     verifyWorldInfoSearchSortRule();
 
     function getDataArray(callback) {
+        if (!isCurrent()) { if (typeof callback === 'function') callback([]); return []; }
         // Convert the data.entries object into an array
         let entriesArray = Object.keys(data.entries).map(uid => {
             const entry = data.entries[uid];
@@ -2395,6 +2435,7 @@ async function displayWorldEntries(name, data, navigation = navigation_option.no
         startPage = Math.floor(uidIndex / perPage) + 1;
     }
 
+    let pageRequest = 0;
     $('#world_info_pagination').pagination({
         dataSource: getDataArray,
         pageSize: Number(accountStorage.getItem(storageKey)) || perPageDefault,
@@ -2409,15 +2450,20 @@ async function displayWorldEntries(name, data, navigation = navigation_option.no
         formatNavigator: PAGINATION_TEMPLATE,
         showNavigator: true,
         callback: async function (/** @type {object[]} */ page) {
+            const request = ++pageRequest;
+            const isPageCurrent = () => isCurrent() && request === pageRequest;
             try {
+                if (!isPageCurrent()) return;
                 clearEntryList(worldEntriesList);
 
                 const keywordHeaders = await renderTemplateAsync('worldInfoKeywordHeaders');
+                if (!isPageCurrent()) return;
                 const blocks = [];
 
                 for (const entry of page) {
                     try {
                         const block = await getWorldEntry(name, data, entry);
+                        if (!isPageCurrent()) return;
                         if (block) {
                             blocks.push(block);
                         }
@@ -2433,6 +2479,7 @@ async function displayWorldEntries(name, data, navigation = navigation_option.no
                     });
                 }
 
+                if (!isPageCurrent()) return;
                 worldEntriesList.append(keywordHeaders);
                 worldEntriesList.append(blocks);
             } catch (error) {
@@ -2452,6 +2499,7 @@ async function displayWorldEntries(name, data, navigation = navigation_option.no
     if (typeof navigation === 'number' && Number(navigation) >= 0) {
         const selector = `#world_popup_entries_list [uid="${navigation}"]`;
         waitUntilCondition(() => document.querySelector(selector) !== null).finally(() => {
+            if (!isCurrent()) return;
             const element = $(selector);
 
             if (element.length === 0) {
@@ -2469,7 +2517,7 @@ async function displayWorldEntries(name, data, navigation = navigation_option.no
 
     $('#world_popup_new').off('click').on('click', () => {
         const entry = createWorldInfoEntry(name, data);
-        if (entry) updateEditor(entry.uid);
+        if (entry) { void saveWorldInfo(name, data); updateEditor(entry.uid); }
     });
 
     $('#world_popup_name_button').off('click').on('click', async () => {
@@ -2609,8 +2657,8 @@ async function displayWorldEntries(name, data, navigation = navigation_option.no
         });
 
         if (updated > 0) {
-            toastr.info(t`Updated ${updated} Order values`, t`Apply Current Sorting`);
-            await saveWorldInfo(name, data, true);
+            const saved = await saveWorldInfo(name, data, true);
+            if (saved) toastr.info(t`Updated ${updated} Order values`, t`Apply Current Sorting`);
             updateEditor(navigation_option.previous);
         } else {
             toastr.info(t`All values up to date`, t`Apply Current Sorting`);
@@ -2632,10 +2680,14 @@ async function displayWorldEntries(name, data, navigation = navigation_option.no
 
         // Use the current name as default input, then ask user for the name
         const tempName = getFreeWorldName(worldName);
-        const finalName = await Popup.show.input('Create a new World Info?', 'Enter a name for the new file:', tempName);
+        let finalName = await Popup.show.input('Create a new World Info?', 'Enter a name for the new file:', tempName);
 
         if (finalName) {
-            await saveWorldInfo(finalName, data, true);
+            finalName = await getSanitizedFilename(finalName);
+            const allowed = await checkOverwriteExistingData('World Info', world_names, finalName, { interactive: true, actionName: 'Duplicate' });
+            if (!allowed) return;
+            finalName = world_names.find(existing => equalsIgnoreCaseAndAccents(existing, finalName)) || finalName;
+            if (!await saveWorldInfo(finalName, data, true)) return;
             await updateWorldInfoList();
 
             const selectedIndex = world_names.indexOf(finalName);
@@ -4148,16 +4200,105 @@ export function createWorldInfoEntry(_name, data) {
     return newEntry;
 }
 
-async function _save(name, data) {
-    // Prevent double saving if both immediate and debounced save are called
-    cancelDebounce(saveWorldDebounced);
+async function _save(name, data, transaction = false) {
+    const state = getWorldSaveState(name);
+    cancelDebounce(state.debounced);
+    const revision = state.revision;
+    const snapshot = structuredClone(data);
+    const save = async () => {
+        try {
+            const response = await fetch('/api/worldinfo/edit', { method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ name, data: snapshot }) });
+            if (!response.ok) throw new Error(`The lorebook could not be saved (${response.status}). Your edits stay in this tab.`);
+            if (transaction) {
+                if (state.revision === revision) {
+                    state.data = snapshot;
+                    state.saved = revision;
+                    state.error = '';
+                    worldInfoCache.set(name, snapshot);
+                }
+            } else {
+                state.saved = Math.max(state.saved, revision);
+                state.error = '';
+            }
+            return true;
+        } catch (error) {
+            const message = error.message || 'The lorebook could not be saved. Your edits stay in this tab.';
+            if (!transaction || state.saved < state.revision) state.error = message;
+            toastr.error(message);
+            return false;
+        } finally { renderWorldSaveState(); }
+    };
+    // One queue per lorebook: typing in B cannot cancel A's debounced save, and
+    // an older response cannot overwrite a newer edit from this editor.
+    state.pending = state.pending.then(save, save);
+    const saved = await state.pending;
+    // Extensions may await another save from this event. Release the write
+    // queue before notifying them so their save can make progress.
+    if (saved) await eventSource.emit(event_types.WORLDINFO_UPDATED, name, snapshot);
+    return saved;
+}
 
-    await fetch('/api/worldinfo/edit', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify({ name: name, data: data }),
-    });
-    await eventSource.emit(event_types.WORLDINFO_UPDATED, name, data);
+function getWorldSaveState(name) {
+    if (!worldSaveStates.has(name)) {
+        const state = { revision: 0, saved: 0, data: null, error: '', pending: Promise.resolve(true), deleting: false };
+        state.debounced = debounce(() => { void _save(name, state.data); }, debounce_timeout.relaxed);
+        worldSaveStates.set(name, state);
+    }
+    return worldSaveStates.get(name);
+}
+
+/** One operation owns all books it replaces until their writes and UI settle. */
+function beginWorldOperation(names) {
+    const books = [...new Set(names)].map(name => ({ name, state: getWorldSaveState(name) }));
+    if (books.some(({ state }) => state.operation || state.deleting)) {
+        toastr.warning(t`This lorebook is busy. Try again when its current operation finishes.`);
+        return null;
+    }
+    const token = Symbol();
+    for (const { state } of books) {
+        state.operation = token;
+        cancelDebounce(state.debounced);
+    }
+    renderWorldEditorLoading();
+    return {
+        token,
+        ready: Promise.all(books.map(({ state }) => state.pending)),
+        release() {
+            for (const { name, state } of books) {
+                if (state.operation !== token) continue;
+                state.operation = null;
+                if (worldSaveStates.get(name) === state && state.saved < state.revision) state.debounced();
+            }
+            renderWorldEditorLoading();
+        },
+    };
+}
+
+function renderWorldSaveState() {
+    let status = document.getElementById('world_info_save_status');
+    if (!status) {
+        status = document.createElement('div');
+        status.id = 'world_info_save_status';
+        status.className = 'flex-container flexWrap alignItemsCenter gap5px';
+        const text = document.createElement('span'); text.setAttribute('role', 'status');
+        const retry = document.createElement('button'); retry.type = 'button'; retry.className = 'menu_button'; retry.textContent = 'Retry save';
+        status.append(text, retry);
+        document.getElementById('world_info_pagination')?.after(status);
+    }
+    const state = worldSaveStates.get(worldEditorName);
+    status.hidden = !state || !state.revision;
+    if (status.hidden) return;
+    status.firstElementChild.textContent = state.error ? 'Not saved. Your edits stay here.' : state.saved >= state.revision ? 'Saved' : 'Saving…';
+    const retry = status.lastElementChild;
+    retry.hidden = !state.error;
+    retry.disabled = worldEditorLoading || Boolean(state.operation || state.deleting);
+    const name = worldEditorName;
+    retry.onclick = () => {
+        if (worldEditorLoading || state.operation || state.deleting) return;
+        state.error = '';
+        renderWorldSaveState();
+        void _save(name, state.data);
+    };
 }
 
 
@@ -4172,54 +4313,72 @@ async function _save(name, data) {
  * @param {string} name - The name of the world info
  * @param {any} data - The data to be saved
  * @param {boolean} [immediately=false] - Whether to save immediately or use debouncing
- * @return {Promise<void>} A promise that resolves when the world info is saved
+ * @return {Promise<boolean>} True when queued or saved, false when an immediate save fails
  */
 export async function saveWorldInfo(name, data, immediately = false) {
     if (!name || !data) {
-        return;
+        return false;
     }
 
     // Update cache immediately, so any future call can pull from this
+    const state = getWorldSaveState(name);
+    if (state.deleting || state.operation) return false;
+    // Create/rename/duplicate must not replace an existing cached book until its
+    // write succeeds. Editor drafts retain their separate visible retry state.
+    if (immediately && !(worldEditorName === name && worldEditorData === data)) return _save(name, data, true);
     worldInfoCache.set(name, data);
+    state.data = data;
+    state.revision++;
+    state.error = '';
+    renderWorldSaveState();
 
     if (immediately) {
         return await _save(name, data);
     }
 
-    saveWorldDebounced(name, data);
+    state.debounced();
+    return true;
 }
 
 async function renameWorldInfo(name, data) {
     const oldName = name;
-    const newName = await Popup.show.input('Rename World Info', 'Enter a new name:', oldName);
+    let newName = await Popup.show.input('Rename World Info', 'Enter a new name:', oldName);
 
     if (oldName === newName || !newName) {
         console.debug('World info rename cancelled');
         return;
     }
+    newName = await getSanitizedFilename(newName);
     if (equalsIgnoreCaseAndAccents(oldName, newName)) {
         toastr.warning(t`Name not accepted, as it is the same as before (ignoring case and accents).`, t`Rename World Info`);
         return;
     }
+    if (!await checkOverwriteExistingData('World Info', world_names, newName, { interactive: true, actionName: 'Rename' })) return;
+    newName = world_names.find(existing => equalsIgnoreCaseAndAccents(existing, newName)) || newName;
 
     const entryPreviouslySelected = selected_world_info.findIndex((e) => e === oldName);
     const retargetPersonaLore = power_user.persona_description_lorebook === oldName;
 
-    await saveWorldInfo(newName, data, true);
-    await deleteWorldInfo(oldName);
+    const operation = beginWorldOperation([oldName, newName]);
+    if (!operation) return;
+    try {
+        await operation.ready;
+        if (!await _save(newName, data, true)) return;
+        if (!await deleteWorldInfo(oldName, { operation: operation.token })) return;
 
-    await updateWorldInfoLinks(oldName, newName, { retargetPersonaLore });
+        await updateWorldInfoLinks(oldName, newName, { retargetPersonaLore });
 
-    if (entryPreviouslySelected !== -1) {
-        const wiElement = getWIElement(newName);
-        wiElement.prop('selected', true);
-        $('#world_info').trigger('change');
-    }
+        if (entryPreviouslySelected !== -1) {
+            const wiElement = getWIElement(newName);
+            wiElement.prop('selected', true);
+            $('#world_info').trigger('change');
+        }
 
-    const selectedIndex = world_names.indexOf(newName);
-    if (selectedIndex !== -1) {
-        $('#world_editor_select').val(selectedIndex).trigger('change');
-    }
+        const selectedIndex = world_names.indexOf(newName);
+        if (selectedIndex !== -1) {
+            $('#world_editor_select').val(selectedIndex).trigger('change');
+        }
+    } finally { operation.release(); }
 }
 
 /**
@@ -4343,20 +4502,32 @@ async function updateWorldInfoLinks(oldName, newName, { retargetPersonaLore } = 
  * @param {string} worldInfoName - The name of the world info to delete
  * @returns {Promise<boolean>} A promise that resolves to true if the world info was successfully deleted, false otherwise
  */
-export async function deleteWorldInfo(worldInfoName) {
+export async function deleteWorldInfo(worldInfoName, { operation = null } = {}) {
     if (!world_names.includes(worldInfoName)) {
         return false;
     }
 
-    const response = await fetch('/api/worldinfo/delete', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify({ name: worldInfoName }),
-    });
-
-    if (!response.ok) {
+    const state = worldSaveStates.get(worldInfoName);
+    if (state?.deleting || (state?.operation && state.operation !== operation)) return false;
+    if (state) {
+        state.deleting = true;
+        renderWorldEditorLoading();
+        cancelDebounce(state.debounced);
+        await state.pending;
+    }
+    try {
+        const response = await fetch('/api/worldinfo/delete', { method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ name: worldInfoName }) });
+        if (!response.ok) throw new Error('The lorebook could not be deleted. Your entries and links have been preserved.');
+    } catch (error) {
+        if (state) {
+            state.deleting = false;
+            if (state.saved < state.revision) state.debounced();
+            renderWorldEditorLoading();
+        }
+        toastr.error(error.message || 'The lorebook could not be deleted. Try again.');
         return false;
     }
+    worldSaveStates.delete(worldInfoName);
 
     if (worldInfoCache.has(worldInfoName)) {
         worldInfoCache.delete(worldInfoName);
@@ -4453,13 +4624,14 @@ export async function createNewWorldInfo(worldName, { interactive = false } = {}
     }
 
     const sanitizedWorldName = await getSanitizedFilename(worldName);
+    worldName = world_names.find(existing => equalsIgnoreCaseAndAccents(existing, sanitizedWorldName)) || sanitizedWorldName;
 
-    const allowed = await checkOverwriteExistingData('World Info', world_names, sanitizedWorldName, { interactive: interactive, actionName: 'Create', deleteAction: (existingName) => deleteWorldInfo(existingName) });
+    const allowed = await checkOverwriteExistingData('World Info', world_names, sanitizedWorldName, { interactive: interactive, actionName: 'Create' });
     if (!allowed) {
         return false;
     }
 
-    await saveWorldInfo(worldName, worldInfoTemplate, true);
+    if (!await saveWorldInfo(worldName, worldInfoTemplate, true)) return false;
     await updateWorldInfoList();
 
     const selectedIndex = world_names.indexOf(worldName);
@@ -5757,7 +5929,7 @@ export async function importEmbeddedWorldInfo(skipPopup = false) {
 
     const convertedBook = convertCharacterBook(characters[chid].data.character_book);
 
-    await saveWorldInfo(bookName, convertedBook, true);
+    if (!await saveWorldInfo(bookName, convertedBook, true)) return;
     await updateWorldInfoList();
     $('#character_world').val(bookName).trigger('change');
 
@@ -5900,11 +6072,16 @@ export async function importWorldInfo(file) {
 
     const worldName = file.name.substr(0, file.name.lastIndexOf('.'));
     const sanitizedWorldName = await getSanitizedFilename(worldName);
-    const allowed = await checkOverwriteExistingData('World Info', world_names, sanitizedWorldName, { interactive: true, actionName: 'Import', deleteAction: (existingName) => deleteWorldInfo(existingName) });
+    const targetName = world_names.find(existing => equalsIgnoreCaseAndAccents(existing, sanitizedWorldName)) || sanitizedWorldName;
+    const allowed = await checkOverwriteExistingData('World Info', world_names, sanitizedWorldName, { interactive: true, actionName: 'Import' });
     if (!allowed) {
         return false;
     }
 
+    const operation = beginWorldOperation([targetName]);
+    if (!operation) return false;
+    await operation.ready;
+    formData.set('avatar', file, `${targetName}.json`);
     try {
         const result = await fetch('/api/worldinfo/import', {
             method: 'POST',
@@ -5920,6 +6097,8 @@ export async function importWorldInfo(file) {
         const data = await result.json();
 
         if (data.name) {
+            worldInfoCache.delete(data.name);
+            worldSaveStates.delete(data.name);
             await updateWorldInfoList();
 
             const newIndex = world_names.indexOf(data.name);
@@ -5932,6 +6111,8 @@ export async function importWorldInfo(file) {
     } catch (error) {
         console.error('Error importing world info:', error);
         toastr.error(t`Failed to import World Info`);
+    } finally {
+        operation.release();
     }
 }
 
@@ -6020,10 +6201,13 @@ export async function moveWorldInfoEntry(sourceName, targetName, uid, { deleteOr
     }
 
     const entryUidString = String(uid);
+    const operation = beginWorldOperation([sourceName, targetName]);
+    if (!operation) return false;
 
     try {
-        const sourceData = await loadWorldInfo(sourceName);
-        const targetData = await loadWorldInfo(targetName);
+        await operation.ready;
+        const sourceData = structuredClone(await loadWorldInfo(sourceName));
+        const targetData = structuredClone(await loadWorldInfo(targetName));
 
         if (!sourceData || !sourceData.entries) {
             toastr.error(t`Failed to load data for source lorebook '${sourceName}'.`);
@@ -6065,9 +6249,9 @@ export async function moveWorldInfoEntry(sourceName, targetName, uid, { deleteOr
             console.debug(`[WI Move] Removed entry UID ${entryUidString} from source '${sourceName}'.`);
         }
 
-        await saveWorldInfo(targetName, targetData, true);
+        if (!await _save(targetName, targetData, true)) return false;
         console.debug(`[WI Move] Saved target lorebook '${targetName}'.`);
-        await saveWorldInfo(sourceName, sourceData, true);
+        if (deleteOriginal && !await _save(sourceName, sourceData, true)) return false;
         console.debug(`[WI Move] Saved source lorebook '${sourceName}'.`);
 
         console.log(`[WI Move] ${entryToMove.comment} ${deleteOriginal ? 'moved' : 'copied'} successfully to '${targetName}'.`);
@@ -6090,7 +6274,7 @@ export async function moveWorldInfoEntry(sourceName, targetName, uid, { deleteOr
         toastr.error(t`An unexpected error occurred while moving the entry: ${error.message}`);
         console.error('[WI Move] Unexpected error:', error);
         return false;
-    }
+    } finally { operation.release(); }
 }
 
 

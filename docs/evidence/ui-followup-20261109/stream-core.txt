@@ -1,0 +1,22 @@
+npm notice run npx
+npm notice run 'playwright' test stream-recovery.e2e.js --workers=1 --output=/tmp/st-ui-followup-20261109/stream-final-r2
+(node:1408474) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 8 tests using 1 worker
+
+(node:1408548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1408548) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1408548) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 stream-recovery.e2e.js:204:3 › one server reply survives reload before-first-token (10.8s)
+  ✓  2 stream-recovery.e2e.js:204:3 › one server reply survives reload after-partial (10.6s)
+  ✓  3 stream-recovery.e2e.js:204:3 › one server reply survives reload completed-while-absent (13.3s)
+  ✓  4 stream-recovery.e2e.js:249:1 › a retained parser resumes its cursor after network loss without another provider call (5.7s)
+  ✓  5 stream-recovery.e2e.js:272:1 › Stop after reload cancels the existing provider and saves its partial native reply (20.5s)
+  ✓  6 stream-recovery.e2e.js:296:1 › native Continue survives reload without duplicate prefix or consuming a slash-command draft (8.0s)
+  ✓  7 stream-recovery.e2e.js:320:1 › a failed final save retains the reply and reload retries persistence without inference (7.9s)
+  ✓  8 stream-recovery.e2e.js:347:1 › a failed provider response preserves the native baseline and leaves no empty assistant reply (7.8s)
+
+  8 passed (1.4m)

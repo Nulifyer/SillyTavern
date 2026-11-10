@@ -1,0 +1,10 @@
+{
+  "file": "public/scripts/reasoning.js",
+  "sha256": "9902754d8724fb92c9c67c947e9a2df21c7d041a0b6cefd9a3f85d5de2a81f27",
+  "observed": {
+    "before": "New canonical reasoning",
+    "after": ""
+  },
+  "pageErrors": [],
+  "note": "Actual native delegated reasoning delete handler with confirmation and canonical message replacement in isolated instance on synthetic browser. No native saves, external providers, or script injection; harmless markup marker only."
+}

@@ -81,3 +81,24 @@ Native status owns response identity and distinguishes unsupported verification
 from failed verification. Recording cleanup and image cancellation belong to
 one operation lifetime. Image prompts, inference, uploads and callbacks retain
 full story identity. Workspace presentation does not duplicate those policies.
+
+## Durable interrupted replies, November 9, 2026
+
+The user reports that layout repair did not solve interrupted streams or reloads
+and requests the server/client behavior demonstrated by T3 Code. This expands
+the earlier layout-only boundary for visible native streaming replies.
+
+Native provider handlers run through a server-owned generation lifetime. Private
+per-user journals record response bytes before publication. Browser subscriptions
+resume by cursor; a reloaded parser replays the same job from byte zero. A reload
+never repeats inference. Explicit Stop remains a server cancellation.
+
+Native chat owns message construction and finalization. Exact transcript revision
+checks protect concurrent edits. Commit intent precedes native save; receipts
+reconcile a successful write after a lost acknowledgement. Reply text remains in
+character messages, separate from unsent user drafts. Replayed output does not
+repeat tools, narration, automatic continuation or remaining cast turns.
+
+The reported composer color seam reopens the previous UI audit. Geometry scans,
+source inventories, listener reviews, actual action checks and painted-state
+checks are separate evidence and must not be called exhaustive interchangeably.

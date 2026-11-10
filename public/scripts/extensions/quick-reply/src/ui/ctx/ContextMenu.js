@@ -2,6 +2,7 @@ import { QuickReply } from '../../QuickReply.js';
 import { QuickReplySet } from '../../QuickReplySet.js';
 import { MenuHeader } from './MenuHeader.js';
 import { MenuItem } from './MenuItem.js';
+import { eventSource, event_types } from '../../../../../../script.js';
 
 export class ContextMenu {
     /**@type {MenuItem[]}*/ itemList = [];
@@ -12,6 +13,8 @@ export class ContextMenu {
 
 
     constructor(/**@type {QuickReply}*/qr) {
+        this.onResize = () => this.position();
+        this.onChatChanged = () => this.hide();
         // this.itemList = items;
         this.itemList = this.build(qr).children;
         this.itemList.forEach(item => {
@@ -69,6 +72,7 @@ export class ContextMenu {
                         subTree.message,
                         (evt) => {
                             evt.stopPropagation();
+                            this.hide();
                             const finalQr = Object.assign(new QuickReply(), subQr);
                             finalQr.message = subTree.message.replace(/%%parent(-\d+)?%%/g, (_, index) => {
                                 return nextLabelHierarchy.slice(parseInt(index ?? '-1'))[0];
@@ -89,6 +93,12 @@ export class ContextMenu {
                 this.root = blocker;
                 blocker.classList.add('ctx-blocker');
                 blocker.addEventListener('click', () => this.hide());
+                blocker.addEventListener('keydown', event => {
+                    if (event.key !== 'Escape') return;
+                    event.preventDefault(); event.stopPropagation();
+                    this.hide();
+                    if (this.anchor?.isConnected) this.anchor.focus({ preventScroll: true });
+                });
                 const menu = document.createElement('ul'); {
                     this.menu = menu;
                     menu.classList.add('list-group');
@@ -102,15 +112,34 @@ export class ContextMenu {
     }
 
 
-    show({ clientX, clientY }) {
+    show(event) {
         if (this.isActive) return;
         this.isActive = true;
         this.render();
-        this.menu.style.bottom = `${window.innerHeight - clientY}px`;
-        this.menu.style.left = `${clientX}px`;
+        this.anchor = event.currentTarget instanceof HTMLElement ? event.currentTarget : event.target instanceof HTMLElement ? event.target : null;
+        this.pointer = event.clientX || event.clientY ? { x: event.clientX, y: event.clientY } : null;
         document.body.append(this.root);
+        this.position();
+        window.addEventListener('resize', this.onResize);
+        eventSource.on(event_types.CHAT_CHANGED, this.onChatChanged);
+        this.anchor?.setAttribute('aria-expanded', 'true');
+        if (!this.pointer) this.menu.querySelector('button')?.focus({ preventScroll: true });
+    }
+    position() {
+        if (!this.isActive) return;
+        const anchor = this.anchor?.getBoundingClientRect();
+        const x = this.pointer?.x ?? anchor?.left ?? 8;
+        const y = this.pointer?.y ?? anchor?.top ?? 8;
+        Object.assign(this.menu.style, { bottom: 'auto', left: '8px', top: '8px', width: 'max-content', maxWidth: `${window.innerWidth - 16}px`, maxHeight: `${window.innerHeight - 16}px`, overflowY: 'auto' });
+        const bounds = this.menu.getBoundingClientRect();
+        this.menu.style.left = `${Math.max(8, Math.min(x, window.innerWidth - bounds.width - 8))}px`;
+        this.menu.style.top = `${Math.max(8, Math.min(y - bounds.height, window.innerHeight - bounds.height - 8))}px`;
     }
     hide() {
+        window.removeEventListener('resize', this.onResize);
+        eventSource.removeListener(event_types.CHAT_CHANGED, this.onChatChanged);
+        this.anchor?.setAttribute('aria-expanded', 'false');
+        this.itemList.forEach(item => item.collapse());
         if (this.root) {
             this.root.remove();
         }

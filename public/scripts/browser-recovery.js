@@ -1,4 +1,5 @@
-import { captureChatViewport, characters, eventSource, event_types, getCurrentChatId, getCurrentChatIdentity, isGenerating, main_api, online_status, refreshChatViewport, refreshServerConnection, setOnlineStatus, this_chid } from '../script.js';
+import { captureChatViewport, characters, eventSource, event_types, getCurrentChatId, getCurrentChatIdentity, isGenerating, main_api, online_status, refreshChatViewport, refreshServerConnection, restorePendingGeneration, setOnlineStatus, this_chid } from '../script.js';
+import { refreshGenerationSubscriptions } from './generation-transport.js';
 import { selected_group } from './group-chats.js';
 import { getChatCompletionModel, oai_settings, refreshChatCompletionStatus } from './openai.js';
 import { power_user } from './power-user.js';
@@ -16,6 +17,10 @@ function providerIdentity() {
 
 export function reportGenerationInterrupted() {
     recovery?.show('Reply interrupted. Continue or regenerate in the chat.', true, recovery.key);
+}
+
+export function reportGenerationRecoveryStatus(message, retry = false, action = null) {
+    recovery?.show(message, retry, recovery.key, action);
 }
 
 export function initBrowserRecovery() {
@@ -39,10 +44,20 @@ class BrowserRecovery {
         this.message = document.createElement('p');
         this.message.setAttribute('role', 'status');
         this.retry = this.button('Retry connection', () => void this.foreground(true));
-        this.root.append(this.message, this.retry);
+        this.discard = this.button('Discard interrupted reply', async () => {
+            const action = this.noticeAction;
+            if (!action || this.discard.disabled) return;
+            this.discard.disabled = true;
+            try { await action(); } finally { this.discard.disabled = false; }
+        });
+        this.discard.hidden = true;
+        this.root.append(this.message, this.retry, this.discard);
         document.getElementById('form_sheld').prepend(this.root);
         this.input.addEventListener('input', () => this.saveDraft());
-        eventSource.on(event_types.CHAT_CHANGED, () => this.changeChat());
+        eventSource.on(event_types.CHAT_CHANGED, () => {
+            this.changeChat();
+            void restorePendingGeneration().catch(error => reportGenerationRecoveryStatus(error.message, true));
+        });
         eventSource.on(event_types.CHARACTER_RENAMED, (oldAvatar, newAvatar) => this.renameCharacter(oldAvatar, newAvatar));
         eventSource.makeFirst(event_types.CHAT_RENAME_ACKNOWLEDGED, data => this.acknowledgeRename(data));
         eventSource.on(event_types.CHAT_RENAMED, data => {
@@ -56,7 +71,11 @@ class BrowserRecovery {
                 if (this.key === newKey) this.changeChat(true);
             }
         });
-        eventSource.on(event_types.APP_READY, () => { this.changeChat(true); if (document.wasDiscarded) void this.foreground(); });
+        eventSource.on(event_types.APP_READY, () => {
+            this.changeChat(true);
+            void restorePendingGeneration().catch(error => reportGenerationRecoveryStatus(error.message, true));
+            if (document.wasDiscarded) void this.foreground();
+        });
         eventSource.on(event_types.GENERATION_STARTED, (_type, _options, dryRun) => {
             if (dryRun) return;
             this.notice = '';
@@ -210,16 +229,19 @@ class BrowserRecovery {
         this.render();
     }
 
-    show(message, retry = false, storyKey = null) {
+    show(message, retry = false, storyKey = null, action = null) {
+        this.noticeRevision = (this.noticeRevision || 0) + 1;
         this.notice = message;
         this.canRetry = retry;
         this.noticeKey = storyKey;
+        this.noticeAction = action;
         this.render();
     }
 
     render() {
         this.message.textContent = this.notice || (this.storageUnavailable ? 'Browser storage is unavailable. Keep this tab open or copy your text before reloading.' : '');
         this.retry.hidden = !this.canRetry;
+        this.discard.hidden = !this.noticeAction;
         this.root.hidden = !this.message.textContent;
     }
 
@@ -237,6 +259,7 @@ class BrowserRecovery {
     async foreground(force = false) {
         if (document.visibilityState !== 'visible') return;
         this.refreshViewport();
+        refreshGenerationSubscriptions();
         if (this.probing && this.controller && !this.controller.signal.aborted) return this.probing;
         if (!force && Date.now() - (this.lastProbe || 0) < 1000) return;
         this.lastProbe = Date.now();
@@ -255,6 +278,9 @@ class BrowserRecovery {
                     this.show('The app server is unavailable. Your draft stays here. Retry when the connection returns.', true);
                     return;
                 }
+                const noticeRevision = this.noticeRevision;
+                const restored = await restorePendingGeneration();
+                if (!isCurrent() || restored || this.noticeRevision !== noticeRevision) return;
                 if (this.connected && this.connectedProvider === provider && main_api === 'openai' && !isGenerating()) {
                     const valid = await refreshChatCompletionStatus(controller.signal);
                     if (!isCurrent()) return;
@@ -264,6 +290,7 @@ class BrowserRecovery {
                 this.notice = '';
                 this.noticeKey = null;
                 this.canRetry = false;
+                this.noticeAction = null;
                 this.render();
             } catch {
                 if (isCurrent()) this.show('Connection check could not finish. Your draft stays here. Retry when ready.', true);

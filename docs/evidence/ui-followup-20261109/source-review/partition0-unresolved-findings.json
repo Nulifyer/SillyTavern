@@ -1,0 +1,75 @@
+{
+  "at": "2026-11-10T05:16:34.579478+00:00",
+  "scope": "Partition0 retained111 plus independent review of current deltas; supplemental12 belong separate reviewer. No claim of exhaustive browser state coverage.",
+  "witnessedHighImpactAwaitingFinalRepairQualification": [
+    {
+      "file": "public/scripts/preset-manager.js",
+      "finding": "Successful Delete A while user edits A implicitly selects B without applying its editor, retaining A draft under B selector.",
+      "artifact": "/tmp/st-ui-followup-20261109/preset-delete-draft-owner-proof.json",
+      "observedSha256": "e8c949ea8f4cbc670579705a5ad6437e1e578bea64ed4c14db154b0b5d342a5f",
+      "status": "Explicit unsaved draft source repair independently passed controlled actual browser; final native owner suite remains root gate.",
+      "riskInference": "Next native Update may persist A draft to B.",
+      "positiveArtifact": "/tmp/st-ui-followup-20261109/preset-delete-draft-owner-positive.json"
+    },
+    {
+      "file": "public/scripts/popup.js",
+      "finding": "Rejected onClose left closed dialog registered/connected and caller promise unresolved.",
+      "artifact": "/tmp/st-ui-followup-20261109/popup-hooks-proof.json",
+      "status": "Cleanup/classes/source fixes read. Owner positive runtime pending in my evidence; no continuing failure claimed."
+    }
+  ],
+  "sourceOnlyLeads": [
+    {
+      "file": "public/scripts/extensions/memory/index.js",
+      "finding": "inApiCall is acquired only after awaited prompt preparation and force path lacks an early lock; overlapping requests could both start. Freeze/source changes do not capture request policy; held response owner now captures story/load/edit/message snapshot.",
+      "qualification": "No overlapping native inference reproduction; do not label witnessed P1."
+    },
+    {
+      "file": "public/scripts/PromptManager.js",
+      "finding": "Migration assumes any nonempty prompt array contains legacy main/nsfw/jailbreak entries before sanitizer; Reset mutates shared prompt before Save; Delete reads selected footer value after confirmation; injection-position listener removal uses fresh callback; debouncePromise coalescing leaves older waiters unresolved.",
+      "qualification": "Source traces only; specific runtime usability outcomes not qualified."
+    },
+    {
+      "file": "public/scripts/tool-calling.js",
+      "finding": "Invocation save pushes live chat then awaits extension events before rendering/saving; sequential tool execution has no owner/abort predicate.",
+      "qualification": "Native enclosing Generate guards may constrain repro; no combined extension-event/chat-switch control yet."
+    },
+    {
+      "file": "public/scripts/autocomplete/AutoComplete.js",
+      "finding": "Tab prevents default before testing nonselectable item; resize listeners and mirror observer have no disposal API; pointerdown selection does not share keyboard selectable gate.",
+      "qualification": "Async stale blur/query fix read; these additional paths source-only."
+    },
+    {
+      "file": "public/scripts/preset-manager.js",
+      "finding": "Restore checks expected record before queued save, allowing preceding queued mutation to replace it after check; writePresetExtensionField ignores false native saveSettings.",
+      "qualification": "Source-only; no current positive/negative controlled queue proof."
+    },
+    {
+      "file": "public/scripts/personas.js",
+      "finding": "Lorebook-button awaits template before callback uses live persona; token-count completion may update newer editor; crop cancel may retain same input selection; upload/create metadata may stage before failure.",
+      "qualification": "Actor/load and avatar-list fixes source reviewed; these narrower leads unqualified."
+    }
+  ],
+  "completionClaimCorrections": [
+    "370/370 retained full-file source reads do not prove current-byte freeze; merged hash receipt still has active drift.",
+    "Every static registration candidate catalogued is not every runtime handler path executed. Dynamic registration wrappers/command callbacks are counted separately.",
+    "All viewport/control interaction combinations were not independently executed by this reviewer.",
+    "107 single final-empty-line count differences are bookkeeping, not evidence of skipped executable source.",
+    "Paid provider behavior, physical audio hardware and arbitrary third-party extension combinations are outside synthetic acceptance."
+  ],
+  "newFinalReviewFinding": {
+    "file": "public/scripts/reasoning.js",
+    "negativeArtifact": "/tmp/st-ui-followup-20261109/reasoning-delete-owner-proof.json",
+    "status": "Root reports source repair read by partition1 reviewer and actual native positive2/2 covering reload and revision. My positive attempt was blocked by unavailable8057 before action; no independent positive claimed."
+  },
+  "nativePositivesReportedByRoot": {
+    "reasoningDelete": "2/2 reload/revision",
+    "writerHeldProfileApply": "1/1 actual writer category",
+    "SpeechT5Persistence": "1/1 initial seeded persist then native Delete, no manual save",
+    "QuickImpersonateAndMacroPaint": "2/2 sampled background and bright native image, reported ratio15.93",
+    "expressionPointerDelete": "3/3",
+    "editorSafety": "8/8",
+    "JSONFailure": "1/1"
+  },
+  "currentWitnessedUnrepairedP1": []
+}

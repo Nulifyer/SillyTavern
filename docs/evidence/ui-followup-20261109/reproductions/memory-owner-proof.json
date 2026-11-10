@@ -1,0 +1,15 @@
+{
+  "file": "public/scripts/extensions/memory/index.js",
+  "sha256": "f205bfb903199631a8671b9d6f51200edfe5c9866f9f7d41f21848fcf5b9601c",
+  "observed": {
+    "writes": [
+      {
+        "value": "old delayed summary",
+        "chat": "same-story reloaded message"
+      }
+    ],
+    "extrasSourceBudget": 8192,
+    "expectedExtrasBudget": 960
+  },
+  "note": "Controlled actual async summary and context-check functions; no inference. Same story IDs, fresh canonical message array. Source budget controlled native helper."
+}

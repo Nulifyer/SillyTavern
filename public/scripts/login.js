@@ -12,7 +12,9 @@ let discreetLogin = false;
  */
 async function getCsrfToken() {
     const response = await fetch('/csrf-token');
+    if (!response.ok) throw new Error('The login connection is unavailable. Retry when connected.');
     const data = await response.json();
+    if (typeof data.token !== 'string' || !data.token) throw new Error('The login connection could not be initialized. Retry when connected.');
     return data.token;
 }
 
@@ -30,8 +32,8 @@ async function getUserList() {
     });
 
     if (!response.ok) {
-        const errorData = await response.json();
-        return displayError(errorData.error || 'An error occurred');
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || `Accounts could not be loaded (${response.status}). Retry when connected.`);
     }
 
     if (response.status === 204) {
@@ -40,6 +42,7 @@ async function getUserList() {
     }
 
     const userListObj = await response.json();
+    if (!Array.isArray(userListObj)) throw new Error('The account list could not be read. Retry when connected.');
     console.log(userListObj);
     return userListObj;
 }
@@ -50,21 +53,23 @@ async function getUserList() {
  * @returns {Promise<void>}
  */
 async function sendRecoveryPart1(handle) {
-    const response = await fetch('/api/users/recover-step1', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-        },
-        body: JSON.stringify({ handle }),
-    });
+    try {
+        const response = await fetch('/api/users/recover-step1', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': csrfToken,
+            },
+            body: JSON.stringify({ handle }),
+        });
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        return displayError(errorData.error || 'An error occurred');
-    }
+        if (!response.ok) {
+            const errorData = await response.json();
+            return displayError(errorData.error || 'An error occurred');
+        }
 
-    showRecoveryBlock();
+        showRecoveryBlock();
+    } catch (error) { displayError(error.message || 'Password recovery could not connect. Try again.'); }
 }
 
 /**
@@ -75,28 +80,30 @@ async function sendRecoveryPart1(handle) {
  * @returns {Promise<void>}
  */
 async function sendRecoveryPart2(handle, code, newPassword) {
-    const recoveryData = {
-        handle,
-        code,
-        newPassword,
-    };
+    try {
+        const recoveryData = {
+            handle,
+            code,
+            newPassword,
+        };
 
-    const response = await fetch('/api/users/recover-step2', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-Token': csrfToken,
-        },
-        body: JSON.stringify(recoveryData),
-    });
+        const response = await fetch('/api/users/recover-step2', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-Token': csrfToken,
+            },
+            body: JSON.stringify(recoveryData),
+        });
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        return displayError(errorData.error || 'An error occurred');
-    }
+        if (!response.ok) {
+            const errorData = await response.json();
+            return displayError(errorData.error || 'An error occurred');
+        }
 
-    console.log(`Successfully recovered password for ${handle}!`);
-    await performLogin(handle, newPassword);
+        console.log(`Successfully recovered password for ${handle}!`);
+        await performLogin(handle, newPassword);
+    } catch (error) { displayError(error.message || 'Password recovery could not connect. Try again.'); }
 }
 
 /**
@@ -225,7 +232,7 @@ function configureNormalLogin(userList) {
     $('#discreetLoginPrompt').hide();
     console.log(userList);
     for (const user of userList) {
-        const userBlock = $('<div></div>').addClass('userSelect');
+        const userBlock = $('<button type="button"></button>').addClass('userSelect');
         const avatarBlock = $('<div></div>').addClass('avatar');
         avatarBlock.append($('<img>').attr('src', user.avatar));
         userBlock.append(avatarBlock);
@@ -269,15 +276,19 @@ function configureDiscreetLogin() {
 (async function () {
     initAccessibility();
 
-    csrfToken = await getCsrfToken();
-    const userList = await getUserList();
+    try {
+        csrfToken = await getCsrfToken();
+        const userList = await getUserList();
 
-    if (discreetLogin) {
-        configureDiscreetLogin();
-    } else {
-        configureNormalLogin(userList);
+        if (discreetLogin) configureDiscreetLogin();
+        else configureNormalLogin(userList);
+    } catch (error) {
+        displayError(error.message || 'Login could not connect. Retry when connected.');
+        $('<button type="button" class="menu_button" id="login_retry">Retry</button>')
+            .on('click', () => window.location.reload()).appendTo('#userList');
+    } finally {
+        document.getElementById('shadow_popup').style.opacity = '';
     }
-    document.getElementById('shadow_popup').style.opacity = '';
     $('#cancelRecovery').on('click', onCancelRecoveryClick);
     $(document).on('keydown', (evt) => {
         if (evt.key === 'Enter' && document.activeElement.tagName === 'INPUT') {

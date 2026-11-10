@@ -189,23 +189,26 @@ class WebScraper {
 
         const files = [];
 
-        for (const link of links) {
-            const result = await fetch('/api/search/visit', {
-                method: 'POST',
-                headers: getRequestHeaders(),
-                body: JSON.stringify({ url: link }),
-            });
+        try {
+            for (const link of links) {
+                const result = await fetch('/api/search/visit', {
+                    method: 'POST',
+                    headers: getRequestHeaders(),
+                    body: JSON.stringify({ url: link }),
+                });
 
-            const blob = await result.blob();
-            const domain = new URL(link).hostname;
-            const timestamp = Date.now();
-            const title = await this.getTitleFromHtmlBlob(blob) || 'webpage';
-            const file = new File([blob], `${title} - ${domain} - ${timestamp}.html`, { type: 'text/html' });
-            files.push(file);
-        }
+                if (!result.ok) throw new Error(`The webpage could not be downloaded (${result.status}). No attachment was created.`);
 
-        toastr.clear(toast);
-        return files;
+                const blob = await result.blob();
+                const domain = new URL(link).hostname;
+                const timestamp = Date.now();
+                const title = await this.getTitleFromHtmlBlob(blob) || 'webpage';
+                const file = new File([blob], `${title} - ${domain} - ${timestamp}.html`, { type: 'text/html' });
+                files.push(file);
+            }
+
+            return files;
+        } finally { toastr.clear(toast); }
     }
 }
 
@@ -526,24 +529,22 @@ class YouTubeScraper {
      * @returns {Promise<File[]>} File attachments scraped from the YouTube video
      */
     async scrape() {
-        let lang = '';
         const template = $(await renderExtensionTemplateAsync('attachments', 'youtube-scrape', {}));
         const videoUrl = await callGenericPopup(template, POPUP_TYPE.INPUT, '', { wide: false, large: false, okButton: 'Scrape', cancelButton: 'Cancel' });
 
-        template.find('input[name="youtubeLanguageCode"]').on('input', function () {
-            lang = String($(this).val()).trim();
-        });
+        const lang = String(template.find('input[name="youtubeLanguageCode"]').val() || '').trim();
 
         if (!videoUrl) {
             return;
         }
 
         const toast = toastr.info('Working, please wait...');
-        const { transcript, id } = await this.getScript(String(videoUrl), lang);
-        toastr.clear(toast);
+        try {
+            const { transcript, id } = await this.getScript(String(videoUrl), lang);
 
-        const file = new File([transcript], `YouTube - ${id} - ${Date.now()}.txt`, { type: 'text/plain' });
-        return [file];
+            const file = new File([transcript], `YouTube - ${id} - ${Date.now()}.txt`, { type: 'text/plain' });
+            return [file];
+        } finally { toastr.clear(toast); }
     }
 
     /**

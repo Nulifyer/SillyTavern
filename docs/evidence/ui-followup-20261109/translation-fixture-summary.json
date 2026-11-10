@@ -1,0 +1,111 @@
+{
+  "completedUtc": "2026-11-10T05:50:39.209329+00:00",
+  "ownership": [
+    "tests/native-translation-ownership.e2e.js",
+    "tests/native-tts-lifetime.e2e.js"
+  ],
+  "sourceRuntimeEdits": false,
+  "productionAccess": false,
+  "stagingOrCommit": false,
+  "sha256": {
+    "tests/native-translation-ownership.e2e.js": "2cb55dfa1bc1b0c56c0e0329cb20a888fcf611b4f56dda29c9f16cc1c3781986",
+    "tests/native-tts-lifetime.e2e.js": "37a216bb872bdc358005e414e20c1b6fb2dc8514c44aa54905d579cf296ea738"
+  },
+  "exactDiffs": [
+    "/tmp/st-ui-followup-20261109/translation-recheck/translation-fixture.diff",
+    "/tmp/st-ui-followup-20261109/translation-recheck/tts-fixture.diff"
+  ],
+  "diagnosis": {
+    "finding": "First library card is not a character contract; sorted library includes earlier native-suite groups.",
+    "failedRun": "/tmp/st-ui-followup-20261109/frozen-source/native.log",
+    "translationErrorContext": "/tmp/st-ui-followup-20261109/frozen-source/native/native-translation-ownersh-eaf8e-nd-same-owner-success-works/error-context.md",
+    "ttsErrorContext": "/tmp/st-ui-followup-20261109/frozen-source/native/native-tts-lifetime.e2e.js-2e20f--job-before-normal-playback/error-context.md",
+    "observedOwner": "Async owner A 1794288392253 \u2022 Cast story",
+    "source": "public/scripts/workspace.js entities(): characters + groups sorted by favorite/name",
+    "oldTranslationContractMismatch": "start() chose first card (group); open() called openCharacterChat and ignored false acknowledgment, so second group story remained loaded.",
+    "oldTtsContractMismatch": "configure() used script.name2 (empty in group) to construct supplied message name and voice map; actual failed diagnostics recorded blank name not in voicemap.",
+    "timingStatus": "Initial timing inference superseded by witnessed wrong entity. Awaiting native completion still prevents setup from reading incomplete native state.",
+    "nonreproduction": "Three original failing cases passed in isolated fresh character-only fixture. fixture-race-proof does not reproduce the original helper because it omitted its composer-visible wait and must not support a completion or causal claim."
+  },
+  "controlledNativeWitness": {
+    "first": "group:1794289999999",
+    "before": {
+      "identity": "[\"default-user\",\"group\",\"1794289999999\",\"2026-11-10@00h50m01s961ms\",\"71b98595-2784-4c83-8d11-1a5261e72973\"]",
+      "file": "2026-11-10@00h50m01s961ms",
+      "name2": ""
+    },
+    "accepted": false,
+    "afterIdentity": "[\"default-user\",\"group\",\"1794289999999\",\"2026-11-10@00h50m01s961ms\",\"71b98595-2784-4c83-8d11-1a5261e72973\"]"
+  },
+  "witnessMeaning": "On the independently seeded first favorite group, native story creation completed; script.name2 is empty; native openCharacterChat returns false and leaves the group identity unchanged. This directly establishes the two old fixture contract errors without translation or TTS provider execution.",
+  "changes": [
+    "Pin native default_Seraphina.png library entity, independent of existing groups/favorites/sort order.",
+    "Await native Start new story completion through aria-busy=false. Translation setup captures identity, checks save acknowledgment and exact reloaded identity/file/text, asserts two distinct files, and checks every character-only open acknowledgment.",
+    "TTS fixture asserts actual actor and native initial save acknowledgment, initializes all text-filter/narration options and unrelated translation/caption automation deterministically, and prevents synthetic voice configuration persistence into other tests.",
+    "Both fixtures write native setup evidence; TTS retains real pipeline/listeners and controlled provider/media adapter."
+  ],
+  "runs": [
+    {
+      "name": "run1",
+      "passed": 17,
+      "failed": 0,
+      "command": "ST_BASE_URL=http://127.0.0.1:8064 npm exec -- playwright test native-translation-ownership.e2e.js --workers=1",
+      "log": "/tmp/st-ui-followup-20261109/translation-recheck/run1.log",
+      "artifacts": "/tmp/st-ui-followup-20261109/translation-recheck/run1"
+    },
+    {
+      "name": "run2",
+      "passed": 17,
+      "failed": 0,
+      "command": "Same command, same userdata, sequential run",
+      "log": "/tmp/st-ui-followup-20261109/translation-recheck/run2.log",
+      "artifacts": "/tmp/st-ui-followup-20261109/translation-recheck/run2"
+    },
+    {
+      "name": "inherited-group",
+      "passed": 7,
+      "failed": 0,
+      "command": "ST_NATIVE_UI_AUDIT=1 ST_BASE_URL=http://127.0.0.1:8064 npm exec -- playwright test native-translation-ownership.e2e.js native-tts-lifetime.e2e.js --workers=1 --grep \"outgoing translation failure|same-owner manual translation|pending incoming translation preserves|Stop rejects|turning Voice off|switching stories discards|changing provider starts\"",
+      "log": "/tmp/st-ui-followup-20261109/translation-recheck/inherited-group.log",
+      "artifacts": "/tmp/st-ui-followup-20261109/translation-recheck/inherited-group"
+    },
+    {
+      "name": "inherited-batch",
+      "passed": 1,
+      "failed": 0,
+      "command": "ST_BASE_URL=http://127.0.0.1:8064 npm exec -- playwright test native-translation-ownership.e2e.js --workers=1 --grep \"Translate Chat completes its same-owner message and reasoning batch and persists\"",
+      "log": "/tmp/st-ui-followup-20261109/translation-recheck/inherited-batch.log",
+      "artifacts": "/tmp/st-ui-followup-20261109/translation-recheck/inherited-batch"
+    }
+  ],
+  "totalPositiveChecks": 42,
+  "sameDataRoot": "/tmp/st-ui-followup-20261109/translation-recheck/data",
+  "fixtureOrigin": "New source server config copied only; data root newly initialized locally. Original three failing tests first passed in this character-only corpus, then final tests ran17 twice without resetting userdata. Added favorite group only after second17 run for8 collision checks. No production data.",
+  "collisionFixture": "/tmp/st-ui-followup-20261109/translation-recheck/inherited-group-fixture.json",
+  "checks": {
+    "pageErrors": 0,
+    "browserDiagnosticFiles": 42,
+    "lintErrors": 0,
+    "lintWarnings": 1,
+    "lintWarning": "Existing opt-in TTS skip guard",
+    "lintLog": "/tmp/st-ui-followup-20261109/translation-recheck/lint.log",
+    "diffCheck": "passed",
+    "ttsConsoleErrors": 0,
+    "ttsFailedRequests": 0
+  },
+  "limits": [
+    "No runtime fix was needed or made; initial timing-only hypothesis was superseded by observed wrong entity.",
+    "The early fixture-race-proof did not retain the original visible-composer precondition and is archived as a nonreproduction, not causal proof. mixed-library-proof is the valid controlled witness.",
+    "These42 positive checks cover the two native suites and exact mixed-library failure. Root owns the full250/21 aggregate source qualification.",
+    "TTS provider responses and media playback remain synthetic; no real hardware or paid/external provider claims."
+  ],
+  "server": {
+    "port": 8064,
+    "pid": 1945622,
+    "stopped": true,
+    "exit": "SIGTERM",
+    "portFreeVerified": true,
+    "otherServersTouched": false
+  },
+  "ownershipReturned": true
+}

@@ -64,6 +64,7 @@ import {
     eventSource,
     event_types,
     getCurrentChatId,
+    getCurrentChatIdentity,
     setCharacterSettingsOverrides,
     system_avatar,
     isChatSaving,
@@ -85,7 +86,7 @@ import { POPUP_TYPE, Popup, callGenericPopup } from './popup.js';
 import { t } from './i18n.js';
 import { accountStorage } from './util/AccountStorage.js';
 import { compressRequest } from './request-compression.js';
-import { beginChatLoad, readChatFile } from './chat-loader.js';
+import { beginChatLoad, getChatLoadToken, readChatFile } from './chat-loader.js';
 
 export {
     selected_group,
@@ -116,6 +117,7 @@ let selected_group = null;
 let group_generation_id = null;
 let fav_grp_checked = false;
 let openGroupId = null;
+let groupEditorRevision = 0;
 let newGroupMembers = [];
 
 export const group_activation_strategy = {
@@ -136,7 +138,26 @@ export const DEFAULT_AUTO_MODE_DELAY = 5;
 export const groupCandidatesFilter = new FilterHelper(debounce(printGroupCandidates, debounce_timeout.quick));
 export const groupMembersFilter = new FilterHelper(debounce(printGroupMembers, debounce_timeout.quick));
 let autoModeWorker = null;
-const saveGroupDebounced = debounce(async (group, reload) => await _save(group, reload), debounce_timeout.relaxed);
+const pendingGroupSaves = new Map();
+function saveGroupDebounced(group, reload) {
+    clearTimeout(pendingGroupSaves.get(group.id));
+    pendingGroupSaves.set(group.id, setTimeout(() => {
+        pendingGroupSaves.delete(group.id);
+        if (groups.some(value => value.id === group.id)) void _save(group, reload);
+    }, debounce_timeout.relaxed));
+}
+
+function captureGroupForeground() {
+    const identity = getCurrentChatIdentity(), load = getChatLoadToken();
+    return () => identity === getCurrentChatIdentity() && load === getChatLoadToken();
+}
+
+function captureGroupEditor() {
+    const id = openGroupId, revision = groupEditorRevision;
+    const group = groups.find(value => value.id === id);
+    const foreground = captureGroupForeground();
+    return { id, group, current: () => foreground() && id === openGroupId && revision === groupEditorRevision && (!id || groups.includes(group)) };
+}
 /** @type {Map<string, number>} */
 let groupChatQueueOrder = new Map();
 
@@ -152,19 +173,25 @@ function setAutoModeWorker() {
  * @param {boolean} reload Whether to reload characters after saving
  */
 async function _save(group, reload = true) {
-    const response = await fetch('/api/groups/edit', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify(group),
-    });
-    if (!response.ok) {
+    try {
+        const response = await fetch('/api/groups/edit', {
+            method: 'POST',
+            headers: getRequestHeaders(),
+            body: JSON.stringify(group),
+        });
+        if (!response.ok) {
+            toastr.error('Group settings could not be saved. Try again.');
+            return false;
+        }
+        if (reload) {
+            await getCharacters();
+        }
+        return true;
+    } catch (error) {
+        console.error('Group settings save failed:', error);
         toastr.error('Group settings could not be saved. Try again.');
         return false;
     }
-    if (reload) {
-        await getCharacters();
-    }
-    return true;
 }
 
 // Group chats
@@ -621,6 +648,8 @@ async function saveGroupChat(groupId, shouldSaveGroup, force = false) {
         return false;
     }
     const chatId = group.chat_id;
+    if (selected_group !== groupId || getCurrentChatId() !== chatId) return false;
+    const ownsForeground = captureGroupForeground();
     group.date_last_chat = Date.now();
     /** @type {ChatHeader} */
     const chatHeader = {
@@ -660,6 +689,10 @@ async function saveGroupChat(groupId, shouldSaveGroup, force = false) {
             return false;
         }
 
+        if (!ownsForeground() || !groups.includes(group) || group.chat_id !== chatId) {
+            toastr.info(t`The conversation changed while the save dialog was open. Reopen the original conversation before saving it.`);
+            return false;
+        }
         return await saveGroupChat(groupId, shouldSaveGroup, true);
     }
 
@@ -1316,31 +1349,44 @@ function activateNaturalOrder(members, input, lastMessage, allowSelfResponses, i
  * @returns {Promise<void>} Promise that resolves when the group is deleted
  */
 async function deleteGroup(id) {
-    const group = groups.find((x) => x.id === id);
-
-    const response = await fetch('/api/groups/delete', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify({ id: id }),
-    });
-
-    if (group && Array.isArray(group.chats)) {
-        for (const chatId of group.chats) {
-            await eventSource.emit(event_types.GROUP_CHAT_DELETED, chatId);
-        }
-    }
-
-    if (response.ok) {
-        await clearChat();
-        selected_group = null;
+    const group = groups.find(value => value.id === id);
+    if (!group) return false;
+    const ownsForeground = captureGroupForeground();
+    const wasSelected = selected_group === id;
+    try {
+        const response = await fetch('/api/groups/delete', {
+            method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ id }),
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        clearTimeout(pendingGroupSaves.get(id));
+        pendingGroupSaves.delete(id);
+        for (const chatId of group.chats || []) await eventSource.emit(event_types.GROUP_CHAT_DELETED, chatId);
         delete tag_map[id];
-        resetChatState();
-        await printMessages();
-        await getCharacters();
-
-        select_rm_info('group_delete', id);
-
-        $('#rm_button_selected_ch').children('h2').text('');
+        if (wasSelected && ownsForeground() && selected_group === id) {
+            if (!await clearChat({ isCurrent: ownsForeground }) || !ownsForeground()) {
+                const index = groups.findIndex(value => value.id === id);
+                if (index >= 0) groups.splice(index, 1);
+                return true;
+            }
+            selected_group = null;
+            resetChatState();
+            const ownsDeletedForeground = captureGroupForeground();
+            await printMessages();
+            if (!ownsDeletedForeground()) return true;
+            await getCharacters();
+            if (ownsDeletedForeground()) {
+                select_rm_info('group_delete', id);
+                $('#rm_button_selected_ch').children('h2').text('');
+            }
+        } else {
+            const index = groups.findIndex(value => value.id === id);
+            if (index >= 0) groups.splice(index, 1);
+        }
+        return true;
+    } catch (error) {
+        console.error('Group deletion failed:', error);
+        toastr.error(t`Group could not be deleted. Try again.`);
+        return false;
     }
 }
 
@@ -1359,6 +1405,8 @@ export async function editGroup(id, immediately, reload = true) {
     }
 
     if (immediately) {
+        clearTimeout(pendingGroupSaves.get(id));
+        pendingGroupSaves.delete(id);
         return await _save(group, reload);
     }
 
@@ -1738,9 +1786,10 @@ async function onDeleteGroupClick() {
         return;
     }
 
+    const id = openGroupId;
     const confirm = await Popup.show.confirm(t`Delete the group?`, '<p>' + t`This will also delete all your chats with that group. If you want to delete a single conversation, select a "View past chats" option in the lower left menu.` + '</p>');
     if (confirm) {
-        deleteGroup(openGroupId);
+        await deleteGroup(id);
     }
 }
 
@@ -1795,6 +1844,7 @@ function toggleHiddenControls(group, generationMode = null) {
  * @param {boolean} skipAnimation If true, skips the animation when selecting the group
  */
 function select_group_chats(groupId, skipAnimation) {
+    groupEditorRevision++;
     openGroupId = groupId;
     newGroupMembers = [];
     const group = openGroupId && groups.find((x) => x.id == openGroupId);
@@ -1888,64 +1938,58 @@ function select_group_chats(groupId, skipAnimation) {
  *
  * @returns {Promise<void>} - A promise that resolves when the processing and upload is complete.
  */
+const groupAvatarUploads = new WeakMap();
 async function uploadGroupAvatar(event) {
-    if (!(event.target instanceof HTMLInputElement) || !event.target.files.length) {
-        return;
-    }
-
-    const file = event.target.files[0];
-
-    if (!file) {
-        return;
-    }
-
-    const result = await getBase64Async(file);
-
-    $('#dialogue_popup').addClass('large_dialogue_popup wide_dialogue_popup');
-
-    const croppedImage = power_user.never_resize_avatars ? result :
-        await callGenericPopup('Set the crop position of the avatar image', POPUP_TYPE.CROP, '', { cropImage: result });
-
-    if (!croppedImage) {
-        return;
-    }
-
-    let thumbnail = await createThumbnail(String(croppedImage), 300, 300);
-    //remove data:image/whatever;base64
-    thumbnail = thumbnail.replace(/^data:image\/[a-z]+;base64,/, '');
-    let _thisGroup = groups.find((x) => x.id == openGroupId);
-    // filename should be group id + human readable timestamp
-    const filename = _thisGroup ? `${_thisGroup.id}_${humanizedDateTime()}` : humanizedDateTime();
-    let thumbnailUrl = await saveBase64AsFile(thumbnail, String(openGroupId ?? ''), filename, 'jpg');
-    if (!openGroupId) {
-        $('#group_avatar_preview img').attr('src', thumbnailUrl);
+    if (!(event.target instanceof HTMLInputElement) || !event.target.files.length) return;
+    const input = event.target, file = input.files[0], owner = captureGroupEditor();
+    const revision = Symbol('group avatar');
+    groupAvatarUploads.set(input, revision);
+    const current = () => owner.current() && groupAvatarUploads.get(input) === revision;
+    try {
+        const result = await getBase64Async(file);
+        if (!current()) return;
+        const croppedImage = power_user.never_resize_avatars ? result :
+            await callGenericPopup('Set the crop position of the avatar image', POPUP_TYPE.CROP, '', { cropImage: result });
+        if (!croppedImage || !current()) return;
+        let thumbnail = await createThumbnail(String(croppedImage), 300, 300);
+        if (!current()) return;
+        thumbnail = thumbnail.replace(/^data:image\/[a-z]+;base64,/, '');
+        const filename = owner.group ? `${owner.id}_${humanizedDateTime()}` : humanizedDateTime();
+        const thumbnailUrl = await saveBase64AsFile(thumbnail, String(owner.id ?? ''), filename, 'jpg');
+        if (!current()) return;
+        if (!owner.id) {
+            $('#group_avatar_preview img').attr('src', thumbnailUrl);
+            $('#rm_group_restore_avatar').show();
+            return;
+        }
+        owner.group.avatar_url = thumbnailUrl;
+        $('#group_avatar_preview').empty().append(getGroupAvatar(owner.group));
         $('#rm_group_restore_avatar').show();
-        return;
+        await editGroup(owner.id, true, true);
+    } catch (error) {
+        console.error('Group avatar upload failed:', error);
+        toastr.error(t`The group avatar could not be saved. Try again.`);
     }
-
-    _thisGroup.avatar_url = thumbnailUrl;
-    $('#group_avatar_preview').empty().append(getGroupAvatar(_thisGroup));
-    $('#rm_group_restore_avatar').show();
-    await editGroup(openGroupId, true, true);
 }
 
 async function restoreGroupAvatar() {
+    const owner = captureGroupEditor();
     const confirm = await Popup.show.confirm('Are you sure you want to restore the group avatar?', 'Your custom image will be deleted, and a collage will be used instead.');
-    if (!confirm) {
+    if (!confirm || !owner.current()) {
         return;
     }
 
-    if (!openGroupId) {
+    if (!owner.id) {
         $('#group_avatar_preview img').attr('src', default_avatar);
         $('#rm_group_restore_avatar').hide();
         return;
     }
 
-    let _thisGroup = groups.find((x) => x.id == openGroupId);
+    let _thisGroup = owner.group;
     _thisGroup.avatar_url = '';
     $('#group_avatar_preview').empty().append(getGroupAvatar(_thisGroup));
     $('#rm_group_restore_avatar').hide();
-    await editGroup(openGroupId, true, true);
+    await editGroup(owner.id, true, true);
 }
 
 async function onGroupActionClick(event) {
@@ -2208,34 +2252,26 @@ export async function renameGroupChat(groupId, oldChatId, newChatId) {
  * @returns {Promise<void>}
  */
 export async function deleteGroupChatByName(groupId, chatName) {
-    const group = groups.find(x => x.id === groupId);
-    if (!group || !group.chats.includes(chatName)) {
+    const originalGroup = groups.find(value => value.id === groupId);
+    if (!originalGroup?.chats.includes(chatName)) return false;
+    try {
+        const response = await fetch('/api/chats/group/delete', {
+            method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ id: chatName }),
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const group = groups.find(value => value.id === groupId);
+        const index = group?.chats.indexOf(chatName) ?? -1;
+        if (index < 0) return true;
+        group.chats.splice(index, 1);
+        if (group.chat_id === chatName) group.chat_id = group.chats.at(-1) || humanizedDateTime();
+        await editGroup(groupId, true, false);
+        await eventSource.emit(event_types.GROUP_CHAT_DELETED, chatName);
+        return true;
+    } catch (error) {
+        console.error('Group chat deletion failed:', error);
+        toastr.error(t`Group chat could not be deleted. Try again.`);
         return false;
     }
-
-    const response = await fetch('/api/chats/group/delete', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify({ id: chatName }),
-    });
-
-    if (!response.ok) {
-        toastr.error(t`Check the server connection and reload the page to prevent data loss.`, t`Group chat could not be deleted`);
-        console.error('Group chat could not be deleted');
-        return false;
-    }
-
-    group.chats.splice(group.chats.indexOf(chatName), 1);
-
-    // If the deleted chat was the current chat, switch to the last chat in the group
-    if (group.chat_id === chatName) {
-        const newChatName = group.chats.length ? group.chats[group.chats.length - 1] : humanizedDateTime();
-        group.chat_id = newChatName;
-    }
-
-    await editGroup(groupId, true, true);
-    await eventSource.emit(event_types.GROUP_CHAT_DELETED, chatName);
-    return true;
 }
 
 /**
@@ -2246,35 +2282,31 @@ export async function deleteGroupChatByName(groupId, chatName) {
  * @param {boolean} [options.jumpToNewChat=true] Whether to jump to a new chat after deletion (existing one, or create a new one if none exists)
  */
 export async function deleteGroupChat(groupId, chatId, { jumpToNewChat = true } = {}) {
-    const group = groups.find(x => x.id === groupId);
-
-    if (!group || !group.chats.includes(chatId)) {
-        return;
-    }
-
-    group.chats.splice(group.chats.indexOf(chatId), 1);
-
-    if (group.chat_id === chatId) {
-        group.chat_id = '';
-        updateChatMetadata({}, true);
-    }
-
-    const response = await fetch('/api/chats/group/delete', {
-        method: 'POST',
-        headers: getRequestHeaders(),
-        body: JSON.stringify({ id: chatId }),
-    });
-
-    if (response.ok) {
-        if (jumpToNewChat) {
-            if (group.chats.length) {
-                await openGroupChat(groupId, group.chats[group.chats.length - 1]);
-            } else {
-                await createNewGroupChat(groupId);
-            }
+    const originalGroup = groups.find(value => value.id === groupId);
+    if (!originalGroup?.chats.includes(chatId)) return false;
+    const ownsForeground = captureGroupForeground();
+    const wasSelected = selected_group === groupId && originalGroup.chat_id === chatId;
+    try {
+        const response = await fetch('/api/chats/group/delete', {
+            method: 'POST', headers: getRequestHeaders(), body: JSON.stringify({ id: chatId }),
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const group = groups.find(value => value.id === groupId);
+        if (!group) return true;
+        const index = group.chats.indexOf(chatId);
+        if (index >= 0) group.chats.splice(index, 1);
+        if (group.chat_id === chatId) group.chat_id = '';
+        await editGroup(groupId, true, false);
+        if (jumpToNewChat && wasSelected && ownsForeground()) {
+            if (group.chats.length) await openGroupChat(groupId, group.chats.at(-1));
+            else await createNewGroupChat(groupId);
         }
-
         await eventSource.emit(event_types.GROUP_CHAT_DELETED, chatId);
+        return true;
+    } catch (error) {
+        console.error('Group chat deletion failed:', error);
+        toastr.error(t`Group chat could not be deleted. Try again.`);
+        return false;
     }
 }
 
@@ -2286,34 +2318,28 @@ export async function deleteGroupChat(groupId, chatId, { jumpToNewChat = true } 
  * @returns {Promise<string[]>} List of imported file names
  */
 export async function importGroupChat(formData, { refresh = true } = {}) {
-    const fetchResult = await fetch('/api/chats/group/import', {
-        method: 'POST',
-        headers: getRequestHeaders({ omitContentType: true }),
-        body: formData,
-        cache: 'no-cache',
-    });
-
-    if (fetchResult.ok) {
-        const data = await fetchResult.json();
-        if (data.res) {
-            const chatId = data.res;
-            const group = groups.find(x => x.id == selected_group);
-
-            if (group) {
-                group.chats.push(chatId);
-                await editGroup(selected_group, true, true);
-                if (refresh) {
-                    await displayPastChats();
-                }
-            }
-
-            return [data.res];
-        }
-
-        return data?.fileNames || [];
+    const groupId = selected_group;
+    const ownsForeground = captureGroupForeground();
+    if (!groups.some(value => value.id === groupId)) return [];
+    try {
+        const response = await fetch('/api/chats/group/import', {
+            method: 'POST', headers: getRequestHeaders({ omitContentType: true }), body: formData, cache: 'no-cache',
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const data = await response.json();
+        const names = data.res ? [data.res] : data.fileNames;
+        if (!Array.isArray(names) || names.some(name => typeof name !== 'string')) throw new Error('Invalid imported chat names');
+        const group = groups.find(value => value.id === groupId);
+        if (!group) return names;
+        for (const name of names) if (!group.chats.includes(name)) group.chats.push(name);
+        if (!await editGroup(groupId, true, false)) return [];
+        if (refresh && ownsForeground()) await displayPastChats();
+        return names;
+    } catch (error) {
+        console.error('Group chat import failed:', error);
+        toastr.error(t`The group chat could not be imported. Try again.`);
+        return [];
     }
-
-    return [];
 }
 
 /**

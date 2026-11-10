@@ -41,6 +41,21 @@
     opacity: 0.5;
 }
 
+/* These scopes can be enabled and edited. Preserve their readable explanation;
+   the existing off toggle and muted heading identify their inactive state. */
+body.workspace-ui #scoped_scripts_block:not(:has(#regex_scoped_toggle:checked)),
+body.workspace-ui #preset_scripts_block:not(:has(#regex_preset_toggle:checked)) {
+    opacity: 1;
+}
+body.workspace-ui #scoped_scripts_block:not(:has(#regex_scoped_toggle:checked)) strong,
+body.workspace-ui #preset_scripts_block:not(:has(#regex_preset_toggle:checked)) strong {
+    color: var(--ws-muted);
+}
+body.workspace-ui :is(#scoped_scripts_block, #preset_scripts_block) > small {
+    color: var(--ws-muted);
+    opacity: 1;
+}
+
 .enable_scoped:checked~.regex-toggle-on,
 .enable_scoped:not(:checked)~.regex-toggle-off {
     display: block;

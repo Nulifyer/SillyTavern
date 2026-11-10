@@ -1,0 +1,12 @@
+{
+  "file": "public/scripts/extensions/expressions/index.js",
+  "sha256": "648b7c7af6cb1df4061d67e238c433028095a6a8ed4389d80e29dc450d939a95",
+  "observed": {
+    "firstAnimating": true,
+    "requested": "grief",
+    "displayed": "/synthetic-expressions/grief.png",
+    "expression": "grief",
+    "fxOff": false
+  },
+  "pageErrors": []
+}

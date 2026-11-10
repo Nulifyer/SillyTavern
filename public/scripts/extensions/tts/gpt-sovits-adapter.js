@@ -112,7 +112,7 @@ class GptSoVITSAdapterProvider {
         }
 
         // Set initial values from the settings
-        $('#tts_endpoint').val(this.settings.provider_endpoint).on('change', this.onSettingsChange.bind(this));
+        $('#gpt_sovits_adapter_tts_endpoint').val(this.settings.provider_endpoint).on('change', this.onSettingsChange.bind(this));
         $('#text_lang').val(this.settings.text_lang).on('change', this.onSettingsChange.bind(this));
         $('#media_type').val(this.settings.media_type).on('change', this.onSettingsChange.bind(this));
         await this.checkReady();

@@ -1,0 +1,49 @@
+{
+  "scope": "Held service image Apply response ownership only",
+  "fixture": "http://127.0.0.1:8057 synthetic",
+  "before": {
+    "artifact": "/tmp/st-ui-followup-20261109/service-apply-before2",
+    "failed": 2,
+    "observed": [
+      "Native source changed to OpenAI and modelgpt-image-1, but late sd.cpp Apply restored held-image",
+      "URL edit plus rediscovery replaced row; late Apply collapsed the new native provider panel"
+    ]
+  },
+  "after": {
+    "artifact": "/tmp/st-ui-followup-20261109/service-apply-final",
+    "passed": 2,
+    "duration_seconds": 9.8,
+    "pageErrors": 0,
+    "consoleErrors": 0,
+    "coverage": [
+      "Actual enabled native source change while image Apply awaits controlled sd.cpp models and Comfy workflow responses",
+      "Newer model source/URL/model/selected options and sampler/scheduler/VAE/workflow state/options preserved after releasing old responses",
+      "Actual Server URL edit, rediscovery, new image row selection and open native controls remain intact after old Apply completes"
+    ]
+  },
+  "source_sha256": {
+    "public/scripts/service-connections.js": "6f6f608f6905bcf67f6700c13d5e4d227373c94c3834298b9c2bd654304e71fa",
+    "public/scripts/extensions/stable-diffusion/index.js": "5e53d1baa5255c3cd75ee1dc0acdbc923c80b3c4b28df46eba98c7d6fb05194e",
+    "tests/service-apply-ownership.e2e.js": "34b8b44b7831d044d7df1b37767e0fc8517f8c1141e993a50add3ed812f0c000"
+  },
+  "checks": [
+    "Both served8057 source files match worktree hashes",
+    "ESLint on three owned paths: zero errors and warnings",
+    "git diff --check on owned paths passed"
+  ],
+  "source_reasoning": {
+    "sd_cpp_samplers": "loadSdcppSamplers returns a local fixed list; settles before another user event",
+    "sd_cpp_schedulers": "loadSdcppSchedulers returns a local fixed list; settles before another user event",
+    "sd_cpp_vae": "loadVaes selects a local N/A list without an await in the sd.cpp branch",
+    "workflow": "loadSettingOptions always calls network loadComfyWorkflows, including for sd.cpp. Added latest-request/settings-object/source/comfy-URL check before replacing workflow options",
+    "models": "Latest-request/settings-object/source/sd.cpp-URL check prevents old model responses from replacing current native options",
+    "configure": "Captured native settings object/source/URL/model check rejects final explicit-model assignment when native owner changed",
+    "service_row": "Captured discovery object/registered row/connected DOM check prevents old Apply from painting or closing new controls; native owner rejection resynchronizes current row"
+  },
+  "limitations": [
+    "1280x800 desktop only for this asynchronous regression suite",
+    "Discovery/model/workflow responses mocked at browser HTTP boundaries; no provider inference performed",
+    "No complete cross-provider async option loader audit claimed; guards cover the actual held sd.cpp Apply work",
+    "No production access/deployment by this agent"
+  ]
+}

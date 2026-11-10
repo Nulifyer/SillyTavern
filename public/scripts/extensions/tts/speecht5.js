@@ -42,7 +42,7 @@ class SpeechT5TtsProvider {
 
     onSettingsChange() {
         // Used when provider settings are updated from UI
-        this.settings.speaker = $('#speecht5_tts_speaker').val();
+        this.settings.speaker = String($('#speecht5_tts_speaker').val() || '');
         saveTtsProviderSettings();
     }
 
@@ -134,6 +134,7 @@ class SpeechT5TtsProvider {
 
             if (this.settings.speakers.length == 0) {
                 console.log('No speakers left');
+                this.onSettingsChange();
                 return;
             }
 

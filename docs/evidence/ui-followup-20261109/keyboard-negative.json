@@ -1,0 +1,44 @@
+{
+  "experiment": "keyboard.js unchanged source through vm.SourceTextModule; DOM mocks preserve class-mutation and listener registration semantics",
+  "initializations": 1,
+  "bodyClassMutations": 8,
+  "focusoutRegistrations": 9,
+  "installs": [
+    {
+      "target": "persona_connections_list",
+      "type": "focusout"
+    },
+    {
+      "target": "persona_connections_list",
+      "type": "focusout"
+    },
+    {
+      "target": "persona_connections_list",
+      "type": "focusout"
+    },
+    {
+      "target": "persona_connections_list",
+      "type": "focusout"
+    },
+    {
+      "target": "persona_connections_list",
+      "type": "focusout"
+    },
+    {
+      "target": "persona_connections_list",
+      "type": "focusout"
+    },
+    {
+      "target": "persona_connections_list",
+      "type": "focusout"
+    },
+    {
+      "target": "persona_connections_list",
+      "type": "focusout"
+    },
+    {
+      "target": "persona_connections_list",
+      "type": "focusout"
+    }
+  ]
+}

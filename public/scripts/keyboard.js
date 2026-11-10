@@ -52,7 +52,7 @@ const observer = new MutationObserver(mutations => {
         }
         if (mutation.type === 'attributes') {
             const target = mutation.target;
-            if (mutation.attributeName === 'class' && target instanceof Element) {
+            if (target instanceof Element) {
                 handleNodeChange(target);
             }
         }
@@ -139,7 +139,7 @@ export function makeKeyboardInteractable(...interactables) {
          */
         const hasDisabledOrNotFocusableAncestor = (el) => {
             while (el) {
-                if (el.classList.contains(NOT_FOCUSABLE_CONTROL_CLASS) || el.classList.contains(DISABLED_CONTROL_CLASS)) {
+                if (el.classList.contains(NOT_FOCUSABLE_CONTROL_CLASS) || isDisabledControl(el)) {
                     return true;
                 }
                 el = el.parentElement;
@@ -154,7 +154,7 @@ export function makeKeyboardInteractable(...interactables) {
                 interactable.setAttribute('tabindex', tabIndex);
             }
         } else {
-            interactable.setAttribute('data-original-tabindex', interactable.getAttribute('tabindex'));
+            if (interactable.hasAttribute('tabindex')) interactable.setAttribute('data-original-tabindex', interactable.getAttribute('tabindex'));
             interactable.removeAttribute('tabindex');
         }
     });
@@ -185,7 +185,10 @@ function getAllInteractables(element) {
  * Function to apply scroll reset behavior to a container
  * @param {Element} container - The container
  */
+const scrollResetContainers = new WeakSet();
 const applyScrollResetBehavior = (container) => {
+    if (scrollResetContainers.has(container)) return;
+    scrollResetContainers.add(container);
     container.addEventListener('focusout', (e) => {
         setTimeout(() => {
             const focusedElement = document.activeElement;
@@ -234,12 +237,23 @@ function handleGlobalKeyDown(event) {
         }
 
         // Trigger click if a valid interactable is found and it's not disabled
-        if (target && !target.classList.contains(DISABLED_CONTROL_CLASS)) {
+        const disabledAncestor = control => {
+            for (let node = control; node; node = node.parentElement) if (isDisabledControl(node)) return true;
+            return false;
+        };
+        if (target && !disabledAncestor(target)) {
             console.debug('Triggering click on keyboard-focused interactable control', event.key, target);
             event.preventDefault();
             target.click();
         }
     }
+}
+
+function isDisabledControl(control) {
+    return control.classList.contains(DISABLED_CONTROL_CLASS)
+        || control.hasAttribute?.('disabled')
+        || control.getAttribute?.('aria-disabled') === 'true'
+        || control.inert;
 }
 
 /**
@@ -251,7 +265,7 @@ export function initKeyboard() {
         childList: true,
         subtree: true,
         attributes: true,
-        attributeFilter: ['class'],
+        attributeFilter: ['class', 'disabled', 'aria-disabled', 'inert'],
     });
 
     // Initialize already existing controls

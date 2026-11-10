@@ -1,7 +1,8 @@
 import {
     moment,
 } from '../lib.js';
-import { chat, closeMessageEditor, event_types, eventSource, main_api, messageFormatting, saveChatConditional, saveChatDebounced, saveSettingsDebounced, substituteParams, syncMesToSwipe, updateMessageBlock } from '../script.js';
+import { chat, closeMessageEditor, event_types, eventSource, getCurrentChatIdentity, main_api, messageFormatting, saveChatConditional, saveChatDebounced, saveSettingsDebounced, substituteParams, syncMesToSwipe, updateMessageBlock } from '../script.js';
+import { getChatLoadToken } from './chat-loader.js';
 import { getRegexedString, regex_placement } from './extensions/regex/engine.js';
 import { getCurrentLocale, t, translate } from './i18n.js';
 import { macros, MacroCategory } from './macros/macro-system.js';
@@ -71,6 +72,12 @@ function getMessageFromJquery(element) {
     const messageId = Number(messageBlock.attr('mesid'));
     const message = chat[messageId];
     return { messageId: messageId, message, messageBlock };
+}
+
+function reasoningMessageOwner(messageId, message, messageBlock) {
+    const story = getCurrentChatIdentity(), load = getChatLoadToken();
+    return () => story === getCurrentChatIdentity() && load === getChatLoadToken()
+        && chat[messageId] === message && Boolean(messageBlock[0]?.isConnected);
 }
 
 /**
@@ -1214,16 +1221,12 @@ function setReasoningEventHandlers() {
     function updateReasoningFromValue(message, value) {
         const reasoning = getRegexedString(value, regex_placement.REASONING, { isEdit: true });
         message.extra.reasoning = reasoning;
+        delete message.extra.reasoning_display_text;
         message.extra.reasoning_type = message.extra.reasoning_type ? ReasoningType.Edited : ReasoningType.Manual;
     }
 
-    $(document).on('click', '.mes_reasoning_details', function (e) {
-        if (!e.target.closest('.mes_reasoning_actions') && !e.target.closest('.mes_reasoning_header')) {
-            e.preventDefault();
-        }
-    });
-
-    $(document).on('click', '.mes_reasoning_header', function (e) {
+    $(document).on('click', '.mes_reasoning_summary', function (e) {
+        if (e.target.closest('.mes_reasoning_actions')) return;
         const details = $(this).closest('.mes_reasoning_details');
         // Keep click behavior aligned with CSS: only blocks with backing content can toggle or enter edit mode.
         if (details.attr('data-has-content') !== 'true') {
@@ -1235,9 +1238,8 @@ function setReasoningEventHandlers() {
         const mes = $(this).closest('.mes');
         const mesEditArea = mes.find('#curEditTextarea');
         if (mesEditArea.length) {
-            const summary = $(mes).find('.mes_reasoning_summary');
-            if (!summary.attr('open')) {
-                summary.find('.mes_reasoning_edit').trigger('click');
+            if (!details.prop('open')) {
+                $(this).find('.mes_reasoning_edit').trigger('click');
             }
         }
     });
@@ -1307,6 +1309,7 @@ function setReasoningEventHandlers() {
         if (!message?.extra) {
             return;
         }
+        const isCurrent = reasoningMessageOwner(messageId, message, messageBlock);
 
         const textarea = messageBlock.find('.reasoning_edit_textarea');
         let newReasoning = String(textarea.val());
@@ -1318,6 +1321,7 @@ function setReasoningEventHandlers() {
         }
         updateReasoningFromValue(message, newReasoning);
         await saveChatConditional();
+        if (!isCurrent()) return;
         updateMessageBlock(messageId, message);
         closeReasoningDetailsWithoutContent(messageBlock);
 
@@ -1373,27 +1377,32 @@ function setReasoningEventHandlers() {
         e.stopPropagation();
         e.preventDefault();
 
+        const { message, messageId, messageBlock } = getMessageFromJquery(this);
+        if (!message?.extra) return;
+        const isCurrent = reasoningMessageOwner(messageId, message, messageBlock);
+        const reasoning = message.extra.reasoning, display = message.extra.reasoning_display_text;
         const confirm = await Popup.show.confirm(t`Remove Reasoning`, t`Are you sure you want to clear the reasoning?<br />Visible message contents will stay intact.`);
 
         if (!confirm) {
             return;
         }
 
-        const { message, messageId, messageBlock } = getMessageFromJquery(this);
-        if (!message?.extra) {
+        if (!isCurrent() || message.extra.reasoning !== reasoning || message.extra.reasoning_display_text !== display) {
             return;
         }
         message.extra.reasoning = '';
+        delete message.extra.reasoning_display_text;
         delete message.extra.reasoning_type;
         delete message.extra.reasoning_duration;
         await saveChatConditional();
+        if (!isCurrent()) return;
         updateMessageBlock(messageId, message);
         const textarea = messageBlock.find('.reasoning_edit_textarea');
         textarea.remove();
         await eventSource.emit(event_types.MESSAGE_REASONING_DELETED, messageId);
     });
 
-    $(document).on('pointerup', '.mes_reasoning_copy', async function () {
+    $(document).on('click', '.mes_reasoning_copy', async function () {
         const { message } = getMessageFromJquery(this);
         const reasoning = String(message?.extra?.reasoning ?? '');
 

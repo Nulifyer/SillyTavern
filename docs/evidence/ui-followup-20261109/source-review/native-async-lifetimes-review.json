@@ -1,0 +1,88 @@
+{
+  "at": "2026-11-10T04:43:03.347591+00:00",
+  "status": "verified_native_batch",
+  "source": {
+    "public/scripts/group-chats.js": "7996c0594d95babc60baea020643304f8a2d602264a3aa9321d5cf0906fff81e",
+    "public/scripts/extensions/gallery/index.js": "cb09e1e0c36158943a0f98b64646c92638c303eb05e086c71550fcd7d08c357a",
+    "public/scripts/action-loader.js": "12ec662865178dd031e8c808056c26dc0eb3c99b3af055d0ba36fa9e9048e4cd",
+    "public/scripts/extensions/connection-manager/index.js": "9e46d201bcc07fd88e9b790b0d1280c1021d8c753c2a124aa5bd1ec3a63f4ce7",
+    "tests/native-async-lifetimes.e2e.js": "b8b6343a94efeca35d5088f5d147ccc31a54b8ef31aebf677b234936baa28bd0"
+  },
+  "negativeWitnesses": {
+    "artifact": "/tmp/st-ui-followup-20261109/native-lifetimes-negative-r2",
+    "result": "7 real behavioral failures after corrected two-member cast fixture; no source edits until those witnesses completed",
+    "mechanisms": [
+      "per-group debounce coalesces A into B",
+      "503 group-chat delete removes membership and wipes metadata",
+      "pending import attaches to new foreground group",
+      "pending gallery folder request appends stale gallery",
+      "old loader close removes new blocking popup",
+      "stop callback executes twice while pending",
+      "profile stream error issues second inference"
+    ]
+  },
+  "additionalNegative": {
+    "artifact": "/tmp/st-ui-followup-20261109/profile-lock-negative",
+    "result": "native is_send_press true->false while native inference held, caused by independent locked profile finally"
+  },
+  "acceptedPriorRuns": [
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-lifetimes-r3",
+      "result": "18/18 passed1.5m; zero page errors"
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/profile-lock-positive",
+      "result": "1/1 passed8.6s"
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/profile-lock-overlap",
+      "result": "1/1 passed5.9s"
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-lifetimes-final-isolated",
+      "result": "22/22 passed2.8m; isolated synthetic user; zero page errors"
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/group-followup-positive-r2",
+      "result": "3/3 passed; source followups for catalog reload/debounce/import and overlapping named deletion"
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-lifetimes-final25",
+      "log": "/tmp/st-ui-followup-20261109/native-lifetimes-final25.txt",
+      "result": "25/25 passed3.1m; isolated sequential synthetic user; each case asserts zero page errors"
+    }
+  ],
+  "failedAttempts": [
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-lifetimes-negative",
+      "result": "7 fixture setup failures: cast needs at least2members; corrected before actual negative witnesses"
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-lifetimes-final",
+      "result": "19passed/1fixture setup failure during parallel shared-user workspace test; no behavior failures"
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/native-lifetimes-existing",
+      "result": "3passed/1fixture duplicate404 before cast action; did not repeat against mixed shared fixture"
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/group-followup-positive",
+      "result": "2 fixture connection failures because source server8056 died; restarted existing synthetic fixture; not behavior result"
+    }
+  ],
+  "validation": [
+    "Four changed JS owners passed node --check",
+    "Focused ESLint on four owners passed",
+    "git diff --check passed on owned paths"
+  ],
+  "limits": [
+    "Local synthetic user/fixtures only; no external/paid/provider/hardware execution.",
+    "Accepted original backend upload/import/delete writes may finish after navigation; stale foreground completions do not roll back backend writes.",
+    "Profile cancellation reaches fetch and cooperative slash command abort controllers; opaque extension callback that ignores cancellation cannot be forcibly undone.",
+    "Browser tests do not establish every possible UI/provider/window state; source review and full UI gate are separate acceptance records."
+  ],
+  "additionalNegativeFollowup": {
+    "artifact": "/tmp/st-ui-followup-20261109/group-followup-negative",
+    "result": "2 real failures: A catalog reload discards B queued edit; overlapping named deletion splice(-1) removes unrelated chat"
+  }
+}

@@ -1,0 +1,15 @@
+npm notice run npx
+npm notice run 'playwright' test stream-recovery-lifecycle.e2e.js --workers=1 --grep same-integrity concurrent --output=/tmp/st-ui-followup-20261109/conflict-responsive
+(node:1450991) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(Use `node --trace-deprecation ...` to show where the warning was created)
+
+Running 1 test using 1 worker
+
+(node:1451055) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+(node:1451055) [DEP0205] DeprecationWarning: `module.register()` is deprecated. Use `module.registerHooks()` instead.
+(node:1451055) Warning: The 'NO_COLOR' env is ignored due to the 'FORCE_COLOR' env being set.
+(Use `node --trace-warnings ...` to show where the warning was created)
+  ✓  1 stream-recovery-lifecycle.e2e.js:574:1 › a same-integrity concurrent disk edit is preserved and prevents a second inference (22.9s)
+
+  1 passed (23.7s)

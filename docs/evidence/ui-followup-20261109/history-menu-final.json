@@ -1,0 +1,109 @@
+{
+  "at": "2026-11-10T05:52:02.475838+00:00",
+  "status": "verified_bounded_followup",
+  "test": "a held history action cannot dismiss a newer reopened Actions menu",
+  "testSha256": "f77c9b0d2d9f8c80934522d84944c4c895cf5a64de252b940adb3db76eda5a52",
+  "testDiff": "/tmp/st-ui-followup-20261109/history-close-probe/history-regression.diff",
+  "existingTestContentsPreserved": true,
+  "addedLines": 52,
+  "runtimeSourceSha256": "6a8daee701c194bea60a8310092d7e481349fd15d7e3706f7b1e289745a86235",
+  "loadedRuntimeSha256": "6a8daee701c194bea60a8310092d7e481349fd15d7e3706f7b1e289745a86235",
+  "nativeRegression": {
+    "artifact": "/tmp/st-ui-followup-20261109/history-close-probe/newer-actions-final",
+    "log": "/tmp/st-ui-followup-20261109/history-close-probe/newer-actions-final.txt",
+    "result": "1/1passed5.7s; reopened Actions aria-expanded/visibility/trigger focus survive held old history response plus native200ms autofocus deadline."
+  },
+  "sixNativeCloseProbes": {
+    "artifact": "/tmp/st-ui-followup-20261109/history-close-probe/followup/result.json",
+    "viewport": {
+      "width": 844,
+      "height": 390
+    },
+    "selectedBackground": "url(\"http://127.0.0.1:8058/backgrounds/_white.jpg\")",
+    "normalSearchFocusSuccesses": 6,
+    "actualPointerCloseSuccesses": 6,
+    "settledCloseCenterHitSuccesses": 6,
+    "selectionRanges": [
+      {
+        "id": "select_chat_search",
+        "tag": "INPUT",
+        "selectionStart": 0,
+        "selectionEnd": 0
+      },
+      {
+        "id": "select_chat_search",
+        "tag": "INPUT",
+        "selectionStart": 0,
+        "selectionEnd": 0
+      },
+      {
+        "id": "select_chat_search",
+        "tag": "INPUT",
+        "selectionStart": 0,
+        "selectionEnd": 0
+      },
+      {
+        "id": "select_chat_search",
+        "tag": "INPUT",
+        "selectionStart": 0,
+        "selectionEnd": 0
+      },
+      {
+        "id": "select_chat_search",
+        "tag": "INPUT",
+        "selectionStart": 0,
+        "selectionEnd": 0
+      },
+      {
+        "id": "select_chat_search",
+        "tag": "INPUT",
+        "selectionStart": 0,
+        "selectionEnd": 0
+      }
+    ],
+    "newerActions": {
+      "reopenedFocus": "options_button",
+      "beforeAndAfterFocus": [
+        "options_button",
+        "options_button"
+      ],
+      "reopenedBeforeOldSearchCompleted": "true",
+      "afterOldSearchCompleted": "true",
+      "menuVisibleAfter": true,
+      "scope": "Actual pointer close/reopen of actions while original local history response held; no generation or provider calls."
+    },
+    "pageErrors": []
+  },
+  "preservedAttempts": [
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/history-close-probe/newer-actions-r1",
+      "result": "Real negative: native200ms synthetic search click dismissed newer menu after early hide correction."
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/history-close-probe/newer-actions-r2",
+      "result": "Core state assertions passed; cleanup tried obscured pointer toggle. Final cleanup uses actual Escape for stacked layers."
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/history-close-probe/newer-actions-r3",
+      "result": "1/1passed7.2s on intermediate runtime, with strict focus assertions."
+    },
+    {
+      "artifact": "/tmp/st-ui-followup-20261109/history-close-probe/followup-e965/receipt.json",
+      "result": "6/6actualClose, but0/6ordinary search autofocus, motivating root natural-blur correction."
+    }
+  ],
+  "checks": [
+    "node --check tests/native-ui-ownership.e2e.js passed",
+    "git diff --check tests/native-ui-ownership.e2e.js passed"
+  ],
+  "sourceEditedByAgent": false,
+  "allowedFileEdited": "tests/native-ui-ownership.e2e.js only,52line append preserving previous bytes",
+  "otherFixturesTouched": false,
+  "server8058Stopped": true,
+  "stopEvidence": "<urlopen error [Errno 111] Connection refused>",
+  "limits": [
+    "Local headless Chromium844x390 and selected white background; no broader browser/device claim.",
+    "Search input was cleared by native history open, so observed selection range[0,0] does not demonstrate selection of nonempty text.",
+    "Original transition obstruction diagnosis and intermediate failures retained; final results cover current loaded runtime6a8daee7 only."
+  ]
+}

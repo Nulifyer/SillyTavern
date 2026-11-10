@@ -22,8 +22,13 @@ export class QuickReply {
      * @param {{ id?: number; contextList?: any; }} props
      */
     static from(props) {
-        props.contextList = (props.contextList ?? []).map((/** @type {any} */ it) => QuickReplyContextLink.from(it));
-        return Object.assign(new this(), props);
+        const instance = new this();
+        const keys = Object.keys(instance.toJSON());
+        const data = Object.fromEntries(Object.entries(props).filter(([key]) => keys.includes(key)));
+        data.contextList = (props.contextList ?? []).map((/** @type {any} */ it) => it.set instanceof QuickReplySet
+            ? Object.assign(new QuickReplyContextLink(), { set: it.set, isChained: it.isChained })
+            : QuickReplyContextLink.from({ ...it }));
+        return Object.assign(instance, data);
     }
 
 
@@ -94,6 +99,8 @@ export class QuickReply {
     updateRender() {
         if (!this.dom) return;
         this.dom.title = this.title || this.message;
+        this.domIcon.className = 'qr--button-icon fa-solid';
+        if (this.icon) this.domIcon.classList.add(this.icon);
         if (this.icon) {
             this.domIcon.classList.remove('qr--hidden');
             if (this.showLabel) this.domLabel.classList.remove('qr--hidden');
@@ -103,6 +110,7 @@ export class QuickReply {
             this.domLabel.classList.remove('qr--hidden');
         }
         this.domLabel.textContent = this.label;
+        this.dom.querySelector('.qr--button-expander')?.setAttribute('aria-label', `Open context menu for ${this.label || this.title || 'Quick Reply'}`);
         this.dom.classList[this.hasContext ? 'add' : 'remove']('qr--hasCtx');
     }
     render() {
@@ -132,6 +140,11 @@ export class QuickReply {
                     }
                     this.execute();
                 });
+                root.addEventListener('keydown', evt => {
+                    if (evt.target !== root || evt.key !== ' ' || evt.altKey || evt.ctrlKey || evt.metaKey || evt.shiftKey) return;
+                    evt.preventDefault();
+                    root.click();
+                });
                 const icon = document.createElement('div'); {
                     this.domIcon = icon;
                     icon.classList.add('qr--button-icon');
@@ -147,7 +160,11 @@ export class QuickReply {
                     lbl.textContent = this.label;
                     root.append(lbl);
                 }
-                const expander = document.createElement('div'); {
+                const expander = document.createElement('button'); {
+                    expander.type = 'button';
+                    expander.setAttribute('aria-label', `Open context menu for ${this.label || this.title || 'Quick Reply'}`);
+                    expander.setAttribute('aria-haspopup', 'true');
+                    expander.setAttribute('aria-expanded', 'false');
                     expander.classList.add('qr--button-expander');
                     expander.textContent = '⋮';
                     expander.title = 'Open context menu';
@@ -196,8 +213,11 @@ export class QuickReply {
                             paste.classList.add('fa-paste');
                             paste.title = 'Add quick reply from clipboard';
                             paste.addEventListener('click', async () => {
-                                const text = await navigator.clipboard.readText();
-                                this.onInsertBefore(text);
+                                try {
+                                    const row = this.settingsDom;
+                                    const text = await navigator.clipboard.readText();
+                                    if (row?.isConnected && this.settingsDom === row) await this.onInsertBefore(text);
+                                } catch { toastr.error('The clipboard could not be pasted. Check clipboard access and try again.'); }
                             });
                             actions.append(paste);
                         }
@@ -210,16 +230,15 @@ export class QuickReply {
                             importFile.classList.add('fa-file-import');
                             importFile.title = 'Add quick reply from JSON file';
                             importFile.addEventListener('click', async () => {
+                                const row = this.settingsDom;
                                 const inp = document.createElement('input'); {
                                     inp.type = 'file';
                                     inp.accept = '.json';
                                     inp.addEventListener('change', async () => {
-                                        if (inp.files.length > 0) {
-                                            for (const file of inp.files) {
-                                                const text = await file.text();
-                                                this.onInsertBefore(text);
-                                            }
-                                        }
+                                        try {
+                                            const texts = await Promise.all([...inp.files].map(file => file.text()));
+                                            if (texts.length && row?.isConnected && this.settingsDom === row) await this.onInsertBefore(texts, true);
+                                        } catch { toastr.error('The Quick Reply files could not be read. Your replies were kept.'); }
                                     });
                                     inp.click();
                                 }
@@ -311,10 +330,12 @@ export class QuickReply {
                         copy.classList.add('fa-copy');
                         copy.title = 'Copy quick reply to clipboard';
                         copy.addEventListener('click', async () => {
-                            await navigator.clipboard.writeText(JSON.stringify(this));
-                            copy.classList.add('qr--success');
-                            await delay(3010);
-                            copy.classList.remove('qr--success');
+                            try {
+                                await navigator.clipboard.writeText(JSON.stringify(this));
+                                copy.classList.add('qr--success');
+                                await delay(3010);
+                                copy.classList.remove('qr--success');
+                            } catch { toastr.error('The Quick Reply could not be copied. Check clipboard access and try again.'); }
                         });
                         actions.append(copy);
                     }
@@ -326,8 +347,12 @@ export class QuickReply {
                         cut.classList.add('fa-cut');
                         cut.title = 'Cut quick reply to clipboard (copy and remove)';
                         cut.addEventListener('click', async () => {
-                            await navigator.clipboard.writeText(JSON.stringify(this));
-                            this.delete();
+                            const row = this.settingsDom;
+                            const snapshot = JSON.stringify(this);
+                            try {
+                                await navigator.clipboard.writeText(snapshot);
+                                if (row?.isConnected && this.settingsDom === row && JSON.stringify(this) === snapshot) await this.delete();
+                            } catch { toastr.error('The Quick Reply could not be cut. Your reply was kept. Check clipboard access and try again.'); }
                         });
                         actions.append(cut);
                     }
@@ -1127,6 +1152,7 @@ export class QuickReply {
             const inputOgMo = new MutationObserver(muts => {
                 if (muts.find(it => [...it.removedNodes].includes(inputMirror) || [...it.removedNodes].find(n => n.contains(inputMirror)))) {
                     inputOg.removeEventListener('input', inputOgListener);
+                    inputOgMo.disconnect();
                 }
             });
             inputOgMo.observe(document.body, { childList: true });
@@ -1138,6 +1164,7 @@ export class QuickReply {
             inputMirror.addEventListener('input', () => {
                 // @ts-ignore
                 inputOg.value = inputMirror.value;
+                inputOg.dispatchEvent(new Event('input', { bubbles: true }));
             });
 
             /**@type {HTMLElement}*/
@@ -1764,9 +1791,7 @@ export class QuickReply {
 
     delete() {
         if (this.onDelete) {
-            this.unrender();
-            this.unrenderSettings();
-            this.onDelete(this);
+            return this.onDelete(this);
         }
     }
 

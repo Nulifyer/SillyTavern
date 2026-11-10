@@ -360,6 +360,14 @@ export class SmoothEventSourceStream extends EventSourceStream {
                         return controller.enqueue(event);
                     }
 
+                    // Smoothing is a presentation effect for one choice. Keep
+                    // coalesced alternatives intact for the native multi-swipe
+                    // parser instead of reducing the packet to choices[0].
+                    if (Array.isArray(json.choices) && json.choices.length > 1) {
+                        lastStr = '';
+                        return controller.enqueue(event);
+                    }
+
                     for await (const parsed of parseStreamData(json)) {
                         !(power_user.smooth_streaming_no_think && parsed.reasoning) && hasFocus && await delay(getDelay(lastStr));
                         controller.enqueue(new MessageEvent(event.type, { data: JSON.stringify(parsed.data) }));

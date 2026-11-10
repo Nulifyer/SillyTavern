@@ -425,9 +425,8 @@ export class ToolManager {
      * @returns {void}
      */
     static parseToolCalls(toolCalls, parsed, toolSignatures = {}) {
-        if (!this.isToolCallingSupported()) {
-            return;
-        }
+        // Parsing belongs to the captured response. Invocation permissions are
+        // checked separately by the generation that submitted the request.
         if (Array.isArray(parsed?.choices)) {
             for (const choice of parsed.choices) {
                 const choiceIndex = (typeof choice.index === 'number') ? choice.index : null;

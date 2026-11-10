@@ -246,7 +246,7 @@ class DataMaidDialog {
                 }
 
                 const hashes = items.map(item => item.hash).filter(hash => hash);
-                await this.delete(hashes);
+                if (!await this.delete(hashes)) return;
 
                 categoryElement.remove();
                 this.displayEmptyPlaceholder();
@@ -342,6 +342,7 @@ class DataMaidDialog {
             return true;
         } catch (error) {
             console.error('Error deleting item:', error);
+            toastr.error(t`Files could not be deleted. Retry the connection.`);
             return false;
         }
     }

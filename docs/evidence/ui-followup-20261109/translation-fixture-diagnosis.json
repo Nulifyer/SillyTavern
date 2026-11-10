@@ -1,0 +1,12 @@
+{
+  "finding": "First library card is not a character contract; sorted library includes earlier native-suite groups.",
+  "failedRun": "/tmp/st-ui-followup-20261109/frozen-source/native.log",
+  "translationErrorContext": "/tmp/st-ui-followup-20261109/frozen-source/native/native-translation-ownersh-eaf8e-nd-same-owner-success-works/error-context.md",
+  "ttsErrorContext": "/tmp/st-ui-followup-20261109/frozen-source/native/native-tts-lifetime.e2e.js-2e20f--job-before-normal-playback/error-context.md",
+  "observedOwner": "Async owner A 1794288392253 \u2022 Cast story",
+  "source": "public/scripts/workspace.js entities(): characters + groups sorted by favorite/name",
+  "oldTranslationContractMismatch": "start() chose first card (group); open() called openCharacterChat and ignored false acknowledgment, so second group story remained loaded.",
+  "oldTtsContractMismatch": "configure() used script.name2 (empty in group) to construct supplied message name and voice map; actual failed diagnostics recorded blank name not in voicemap.",
+  "timingStatus": "Initial timing inference superseded by witnessed wrong entity. Awaiting native completion still prevents setup from reading incomplete native state.",
+  "nonreproduction": "Three original failing cases passed in isolated fresh character-only fixture. fixture-race-proof does not reproduce the original helper because it omitted its composer-visible wait and must not support a completion or causal claim."
+}

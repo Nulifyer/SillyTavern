@@ -23,6 +23,9 @@ export class DragAndDropHandler {
         this.dragLeaveTimeout = null;
 
         this.noAnimation = noAnimation;
+        this.handleDragOver = this.handleDragOver.bind(this);
+        this.handleDragLeave = this.handleDragLeave.bind(this);
+        this.handleDrop = this.handleDrop.bind(this);
 
         this.init();
     }
@@ -31,17 +34,21 @@ export class DragAndDropHandler {
      * Destroy the drag and drop functionality
      */
     destroy() {
+        if (!this.initialized) return;
+        this.initialized = false;
+        clearTimeout(this.dragLeaveTimeout);
+        this.dragLeaveTimeout = null;
         if (this.selector === 'body') {
-            $(document.body).off('dragover', this.handleDragOver.bind(this));
-            $(document.body).off('dragleave', this.handleDragLeave.bind(this));
-            $(document.body).off('drop', this.handleDrop.bind(this));
+            $(document.body).off('dragover', this.handleDragOver);
+            $(document.body).off('dragleave', this.handleDragLeave);
+            $(document.body).off('drop', this.handleDrop);
         } else {
-            $(document.body).off('dragover', this.selector, this.handleDragOver.bind(this));
-            $(document.body).off('dragleave', this.selector, this.handleDragLeave.bind(this));
-            $(document.body).off('drop', this.selector, this.handleDrop.bind(this));
+            $(document.body).off('dragover', this.selector, this.handleDragOver);
+            $(document.body).off('dragleave', this.selector, this.handleDragLeave);
+            $(document.body).off('drop', this.selector, this.handleDrop);
         }
 
-        $(this.selector).remove('drop_target no_animation');
+        $(this.selector).removeClass('drop_target dragover no_animation');
     }
 
     /**
@@ -50,14 +57,16 @@ export class DragAndDropHandler {
      * @private
      */
     init() {
+        if (this.initialized) return;
+        this.initialized = true;
         if (this.selector === 'body') {
-            $(document.body).on('dragover', this.handleDragOver.bind(this));
-            $(document.body).on('dragleave', this.handleDragLeave.bind(this));
-            $(document.body).on('drop', this.handleDrop.bind(this));
+            $(document.body).on('dragover', this.handleDragOver);
+            $(document.body).on('dragleave', this.handleDragLeave);
+            $(document.body).on('drop', this.handleDrop);
         } else {
-            $(document.body).on('dragover', this.selector, this.handleDragOver.bind(this));
-            $(document.body).on('dragleave', this.selector, this.handleDragLeave.bind(this));
-            $(document.body).on('drop', this.selector, this.handleDrop.bind(this));
+            $(document.body).on('dragover', this.selector, this.handleDragOver);
+            $(document.body).on('dragleave', this.selector, this.handleDragLeave);
+            $(document.body).on('drop', this.selector, this.handleDrop);
         }
 
         $(this.selector).addClass('drop_target');

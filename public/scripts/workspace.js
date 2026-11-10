@@ -245,12 +245,12 @@ function refreshSidebar() {
 
 function refreshWorkspace() {
     document.body.classList.toggle('workspace-images-enabled', Boolean(extension_settings.sd?.enabled));
-    creativeTools.update(isGenerating(), Boolean(transcripts.current()?.archived));
     state.entities = entities();
     const current = transcripts.current();
     const entity = currentCharacter();
     const inChat = state.view === 'chat' && !settingsPanel.active;
     const connected = online_status !== 'no_connection' && Boolean(online_status);
+    creativeTools.update(isGenerating(), Boolean(current?.archived), connected);
     document.body.classList.toggle('workspace-connected', connected);
     document.body.classList.toggle('workspace-browsing', state.view !== 'chat');
     const titles = { characters: 'Characters', chats: 'Stories', archive: 'Archive', profile: entity?.name || 'Character profile', 'settings-page': 'Settings' };
@@ -291,8 +291,8 @@ function refreshWorkspace() {
     document.getElementById('workspace-generation-status').hidden = !isGenerating();
     renderInspector(entity, current);
     document.getElementById('workspace-composer-hint').textContent = current?.archived
-        ? 'Archived story. Restore it from the story menu to continue writing.'
-        : connected ? (shouldSendOnEnter() ? 'Enter to send. Shift + Enter for a new line.' : 'Use the send button to send a message.') : 'Connect a model to get replies. Your existing stories stay available.';
+        ? 'Archived. Restore this story to write.'
+        : connected ? (shouldSendOnEnter() ? 'Enter to send. Shift + Enter for a new line.' : 'Use the send button to send a message.') : 'Connect a model to get replies.';
     document.getElementById('form_sheld').inert = document.body.classList.contains('workspace-ui') && Boolean(current?.archived);
     document.getElementById('send_form').inert = document.body.classList.contains('workspace-ui') && creativeTools.busy;
     const phoneInspector = document.body.classList.contains('workspace-ui') && state.view === 'chat'
@@ -507,6 +507,7 @@ async function handleAction(action, target) {
         await showView('profile', { entity: `group:${group.id}` });
     } else if (action === 'image') creativeTools.openImageOptions();
     else if (action === 'close-tools') dialog.close();
+    else if (action === 'continue-story') creativeTools.continueStory();
     else if (action === 'toggle-voice') await creativeTools.toggleVoice();
     else if (action === 'read-reply') creativeTools.readReply();
     else if (action === 'voice-playback') document.getElementById('ttsExtensionMenuItem')?.click();
@@ -661,7 +662,9 @@ export function initWorkspace() {
         const index = buttons.indexOf(document.activeElement);
         if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
             event.preventDefault();
-            buttons[(index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length]?.focus();
+            const next = index === -1 ? (event.key === 'ArrowDown' ? 0 : buttons.length - 1)
+                : (index + (event.key === 'ArrowDown' ? 1 : -1) + buttons.length) % buttons.length;
+            buttons[next]?.focus();
         } else if (event.key === 'Enter' && event.target.id === 'workspace-command-input') { event.preventDefault(); buttons[0]?.click(); }
     });
     document.addEventListener('keydown', event => {

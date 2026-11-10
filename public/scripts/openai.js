@@ -1,3 +1,4 @@
+import { fetchGeneration, setGenerationParser } from './generation-transport.js';
 /*
 * CODE FOR OPENAI SUPPORT
 * By CncAnon (@CncAnon1)
@@ -54,6 +55,7 @@ import {
     createThumbnail,
     delay,
     download,
+    escapeHtml,
     getAudioDurationFromDataURL,
     getBase64Async,
     getFileText,
@@ -1541,6 +1543,7 @@ async function preparePromptsForChatCompletion({ scenario, charPersonality, name
  * @param {object} content.extensionPrompts - An array of additional prompts.
  * @param {object[]} content.messages - An array of messages to be used as chat history.
  * @param {string[]} content.messageExamples - An array of messages to be used as dialogue examples.
+ * @param {number|null} [content.responseLength] Response limit for this request.
  * @param dryRun - Whether this is a live call or not.
  * @returns {Promise<(any[]|boolean)[]>} An array where the first element is the prepared chat and the second element is a boolean flag.
  */
@@ -1561,6 +1564,7 @@ export async function prepareOpenAIMessages({
     jailbreakPromptOverride,
     messages,
     messageExamples,
+    responseLength = null,
 }, dryRun) {
     // Without a character selected, there is no way to accurately calculate tokens
     if (!promptManager.activeCharacter && dryRun) return [null, false];
@@ -1569,7 +1573,7 @@ export async function prepareOpenAIMessages({
     if (power_user.console_log_prompts) chatCompletion.enableLogging();
 
     const userSettings = promptManager.serviceSettings;
-    chatCompletion.setTokenBudget(userSettings.openai_max_context, userSettings.openai_max_tokens);
+    chatCompletion.setTokenBudget(userSettings.openai_max_context, responseLength ?? userSettings.openai_max_tokens);
 
     try {
         // Merge markers and ordered user prompts with system prompts
@@ -1638,8 +1642,8 @@ export async function prepareOpenAIMessages({
  * @returns {string} Error message to display and throw
  */
 function getChatCompletionErrorMessage(data, response) {
-    const error = data?.error ?? data?.detail?.error;
-    const message = typeof error === 'string' ? error : (error?.message || error?.code || error?.type);
+    const error = data?.error ?? (typeof data?.detail === 'string' ? data.detail : data?.detail?.error);
+    const message = (typeof error === 'string' ? error : (error?.message || error?.code || error?.type)) || (typeof data?.message === 'string' ? data.message : '');
     return String(message || (!response.ok && response.statusText) || t`Unknown error`);
 }
 
@@ -1651,35 +1655,22 @@ function getChatCompletionErrorMessage(data, response) {
  * @param {boolean?} [options.quiet=false] Suppress toast messages
  */
 export function tryParseStreamingError(response, decoded, { quiet = false } = {}) {
+    let data;
     try {
-        const data = JSON.parse(decoded);
-
-        if (!data) {
-            return;
-        }
-
-        checkQuotaError(data, { quiet });
-        checkModerationError(data, { quiet });
-
-        // these do not throw correctly (equiv to Error("[object Object]"))
-        // if trying to fix "[object Object]" displayed to users, start here
-
-        if (data.error) {
-            !quiet && toastr.error(getChatCompletionErrorMessage(data, response), 'Chat Completion API');
-            throw new Error(data);
-        }
-
-        if (data.message) {
-            !quiet && toastr.error(data.message, 'Chat Completion API');
-            throw new Error(data);
-        }
-
-        if (data.detail) {
-            !quiet && toastr.error(getChatCompletionErrorMessage(data, response), 'Chat Completion API');
-            throw new Error(data);
-        }
+        data = JSON.parse(decoded);
     } catch {
-        // No JSON. Do nothing.
+        return;
+    }
+    if (!data) return;
+    checkQuotaError(data, { quiet });
+    checkModerationError(data, { quiet });
+
+    // Anthropic message_start packets contain a successful message object.
+    // Only textual message/detail errors or explicit error objects are failures.
+    if (data.error || typeof data.message === 'string' || typeof data.detail === 'string' || data.detail?.error) {
+        const message = getChatCompletionErrorMessage(data, response);
+        !quiet && toastr.error(message, 'Chat Completion API');
+        throw new Error(message);
     }
 }
 
@@ -1699,9 +1690,7 @@ function checkQuotaError(data, { quiet = false } = {}) {
     if (data.quota_error) {
         !quiet && renderTemplateAsync('quotaError').then((html) => Popup.show.text('Quota Error', html));
 
-        // this does not throw correctly (equiv to Error("[object Object]"))
-        // if trying to fix "[object Object]" displayed to users, start here
-        throw new Error(data);
+        throw new Error(typeof data.quota_error === 'string' ? data.quota_error : (data.error?.message || t`The provider quota was exceeded.`));
     }
 }
 
@@ -1711,7 +1700,7 @@ function checkQuotaError(data, { quiet = false } = {}) {
  * @param {boolean?} [options.quiet=false] Suppress toast messages
  */
 function checkModerationError(data, { quiet = false } = {}) {
-    const moderationError = data?.error?.message?.includes('requires moderation');
+    const moderationError = typeof data?.error?.message === 'string' && data.error.message.includes('requires moderation');
     if (moderationError && !quiet) {
         const moderationReason = `Reasons: ${data?.error?.metadata?.reasons?.join(', ') ?? '(N/A)'}`;
         const flaggedText = data?.error?.metadata?.flagged_input ?? '(N/A)';
@@ -1799,8 +1788,8 @@ function getOpenRouterModelTemplate(option) {
     const price = 0 === Number(model.pricing?.prompt) ? 'Free' : `${tokens_rounded}k t/$ `;
 
     return $((`
-        <div class="flex-container flexFlowColumn" title="${DOMPurify.sanitize(model.id)}">
-            <div><strong>${DOMPurify.sanitize(model.name)}</strong> | ${model.context_length} ctx | <small>${price}</small></div>
+        <div class="flex-container flexFlowColumn" title="${escapeHtml(String(model.id))}">
+            <div><strong>${DOMPurify.sanitize(model.name)}</strong> | ${escapeHtml(String(model.context_length))} ctx | <small>${escapeHtml(String(price))}</small></div>
         </div>
     `));
 }
@@ -1857,8 +1846,8 @@ function getElectronHubModelTemplate(option) {
     const capabilities = (iconsContainer.children.length) ? ` | ${iconsContainer.innerHTML}` : '';
 
     return $((`
-        <div class="flex-container alignItemsBaseline" title="${DOMPurify.sanitize(model.id)}">
-            <strong>${DOMPurify.sanitize(model.name)}</strong> | ${model.tokens} ctx | <small>${price}</small>${capabilities}
+        <div class="flex-container alignItemsBaseline" title="${escapeHtml(String(model.id))}">
+            <strong>${DOMPurify.sanitize(model.name)}</strong> | ${escapeHtml(String(model.tokens))} ctx | <small>${escapeHtml(String(price))}</small>${capabilities}
         </div>
     `));
 }
@@ -1918,8 +1907,8 @@ function getChutesModelTemplate(option) {
     const capabilities = (iconsContainer.children.length) ? ` | ${iconsContainer.innerHTML}` : '';
 
     return $((`
-        <div class="flex-container alignItemsBaseline" title="${DOMPurify.sanitize(model.id)}">
-            <strong>${DOMPurify.sanitize(model.id)}</strong> | ${contextLength} ctx | <small>${price}</small>${capabilities}
+        <div class="flex-container alignItemsBaseline" title="${escapeHtml(String(model.id))}">
+            <strong>${DOMPurify.sanitize(model.id)}</strong> | ${escapeHtml(String(contextLength))} ctx | <small>${escapeHtml(String(price))}</small>${capabilities}
         </div>
     `));
 }
@@ -1986,9 +1975,9 @@ function getNanoGptModelTemplate(option) {
                 multiplierText = ` (${sub.inputTokenMultiplier}x)`;
                 titleText += ` - Input Multiplier: ${sub.inputTokenMultiplier}x`;
             }
-            subHtml = ` <small title="${titleText}"><i class="fa-solid fa-crown fa-sm"></i> Sub${multiplierText}</small>`;
+            subHtml = ` <small title="${escapeHtml(titleText)}"><i class="fa-solid fa-crown fa-sm"></i> Sub${escapeHtml(multiplierText)}</small>`;
         } else if (sub.note) {
-            const safeNote = DOMPurify.sanitize(sub.note);
+            const safeNote = escapeHtml(String(sub.note));
             subHtml = ` <small title="${safeNote}"><i class="fa-solid fa-circle-info fa-sm"></i> Not in Sub</small>`;
         }
     }
@@ -2005,8 +1994,8 @@ function getNanoGptModelTemplate(option) {
     const modelName = model.name || model.id;
 
     return $((`
-        <div class="flex-container alignItemsBaseline" title="${DOMPurify.sanitize(model.id)}">
-            <strong>${DOMPurify.sanitize(modelName)}</strong> | ${contextLength} ctx | <small>${price}</small>${capabilities}
+        <div class="flex-container alignItemsBaseline" title="${escapeHtml(String(model.id))}">
+            <strong>${DOMPurify.sanitize(modelName)}</strong> | ${escapeHtml(String(contextLength))} ctx | <small>${escapeHtml(String(price))}</small>${capabilities}
         </div>
     `));
 }
@@ -2021,8 +2010,8 @@ function getAimlapiModelTemplate(option) {
     const vendor = model.id.split('/')[0];
 
     return $((`
-        <div class="flex-container flexFlowColumn" title="${DOMPurify.sanitize(model.id)}">
-            <div><strong>${DOMPurify.sanitize(model.info?.name || model.name || model.id)}</strong> | ${vendor}</div>
+        <div class="flex-container flexFlowColumn" title="${escapeHtml(String(model.id))}">
+            <div><strong>${DOMPurify.sanitize(model.info?.name || model.name || model.id)}</strong> | ${escapeHtml(String(vendor))}</div>
         </div>
     `));
 }
@@ -3142,21 +3131,26 @@ export async function createGenerationParameters(settings, model, type, messages
  * @returns {Promise<unknown>}
  * @throws {Error}
  */
-async function sendOpenAIRequest(type, messages, signal, { jsonSchema = null, recordClientRequest } = {}) {
+async function sendOpenAIRequest(type, messages, signal, { jsonSchema = null, responseLength = null, recordClientRequest } = {}) {
     // Provide default abort signal
     if (!signal) {
         signal = new AbortController().signal;
     }
 
     const model = getChatCompletionModel(oai_settings);
-    const { generate_data, stream, canMultiSwipe } = await createGenerationParameters(oai_settings, model, type, messages, { jsonSchema });
+    const { generate_data, stream, canMultiSwipe } = await createGenerationParameters(
+        Number.isFinite(responseLength) && responseLength > 0 ? { ...oai_settings, openai_max_tokens: responseLength } : oai_settings,
+        model, type, messages, { jsonSchema },
+    );
     await eventSource.emit(event_types.CHAT_COMPLETION_SETTINGS_READY, generate_data);
     recordClientRequest?.(generate_data);
+    const showThoughts = oai_settings.show_thoughts;
+    setGenerationParser(signal, { source: generate_data.chat_completion_source, model, n: Number(generate_data.n) || 1, canMultiSwipe, showThoughts });
 
     const generate_url = '/api/backends/chat-completions/generate';
     let response;
     try {
-        response = await fetch(generate_url, {
+        response = await fetchGeneration(generate_url, {
             method: 'POST',
             body: JSON.stringify(generate_data),
             headers: getRequestHeaders(),
@@ -3172,51 +3166,7 @@ async function sendOpenAIRequest(type, messages, signal, { jsonSchema = null, re
         throw new Error(`Got response status ${response.status}`);
     }
     if (stream) {
-        const eventStream = getEventSourceStream();
-        response.body.pipeThrough(eventStream);
-        const reader = eventStream.readable.getReader();
-        return async function* streamData() {
-            let text = '';
-            const swipes = [];
-            const toolCalls = [];
-            const state = { reasoning: '', images: [], signature: '', toolSignatures: {} };
-            const needsCompletion = [chat_completion_sources.CUSTOM, chat_completion_sources.OPENAI].includes(generate_data.chat_completion_source);
-            const completedChoices = new Set();
-            const expectedChoices = canMultiSwipe ? Number(generate_data.n) : 1;
-            const finished = () => completedChoices.size === expectedChoices;
-            while (true) {
-                let event;
-                try { event = await reader.read(); } catch (error) {
-                    if (needsCompletion && finished() && !signal.aborted) return;
-                    throw error;
-                }
-                const { done, value } = event;
-                if (done) {
-                    if (needsCompletion && !finished()) throw new Error('The reply stream ended before completion.');
-                    return;
-                }
-                const rawData = value.data;
-                if (rawData === '[DONE]') return;
-                tryParseStreamingError(response, rawData);
-                const parsed = JSON.parse(rawData);
-                for (const choice of parsed?.choices || []) {
-                    const index = choice.index ?? 0;
-                    if (choice.finish_reason && Number.isInteger(index) && index >= 0 && index < expectedChoices) completedChoices.add(index);
-                }
-
-                if (canMultiSwipe && Array.isArray(parsed?.choices) && parsed?.choices?.[0]?.index > 0) {
-                    const swipeIndex = parsed.choices[0].index - 1;
-                    // FIXME: state.reasoning should be an array to support multi-swipe
-                    swipes[swipeIndex] = (swipes[swipeIndex] || '') + getStreamingReply(parsed, state, { overrideShowThoughts: false });
-                } else {
-                    text += getStreamingReply(parsed, state);
-                }
-
-                ToolManager.parseToolCalls(toolCalls, parsed, state.toolSignatures);
-
-                yield { text, swipes: swipes, logprobs: parseChatCompletionLogprobs(parsed), toolCalls: toolCalls, state: state };
-            }
-        };
+        return parseOpenAIStream(response, signal, generate_data, canMultiSwipe, showThoughts, model);
     } else {
         const data = await response.json();
 
@@ -3238,6 +3188,59 @@ async function sendOpenAIRequest(type, messages, signal, { jsonSchema = null, re
 
         return data;
     }
+}
+
+/** Native response parser, shared with durable replay after a reload. */
+export function parseOpenAIStream(response, signal, generate_data, canMultiSwipe = false, showThoughts = false, model = getChatCompletionModel()) {
+    const eventStream = getEventSourceStream();
+    response.body.pipeThrough(eventStream);
+    const reader = eventStream.readable.getReader();
+    return async function* streamData() {
+        let text = '';
+        const swipes = [];
+        const toolCalls = [];
+        const state = { reasoning: '', images: [], signature: '', toolSignatures: {} };
+        const needsCompletion = [chat_completion_sources.CUSTOM, chat_completion_sources.OPENAI].includes(generate_data.chat_completion_source);
+        const completedChoices = new Set();
+        const expectedChoices = canMultiSwipe ? Number(generate_data.n) : 1;
+        const finished = () => completedChoices.size === expectedChoices;
+        while (true) {
+            let event;
+            try { event = await reader.read(); } catch (error) {
+                if (needsCompletion && finished() && !signal.aborted) return;
+                throw error;
+            }
+            const { done, value } = event;
+            if (done) {
+                if (needsCompletion && !finished()) throw new Error('The reply stream ended before completion.');
+                return;
+            }
+            const rawData = value.data;
+            if (rawData === '[DONE]') return;
+            tryParseStreamingError(response, rawData);
+            const parsed = JSON.parse(rawData);
+            for (const choice of parsed?.choices || []) {
+                const index = choice.index ?? 0;
+                if (choice.finish_reason && Number.isInteger(index) && index >= 0 && index < expectedChoices) completedChoices.add(index);
+            }
+
+            const replies = canMultiSwipe && parsed?.choices?.length
+                ? parsed.choices.map(choice => ({ ...parsed, choices: [choice] })) : [parsed];
+            for (const reply of replies) {
+                if (canMultiSwipe && reply.choices?.[0]?.index > 0) {
+                    const swipeIndex = reply.choices[0].index - 1;
+                    swipes[swipeIndex] = (swipes[swipeIndex] || '') + getStreamingReply(reply, state, { chatCompletionSource: generate_data.chat_completion_source, overrideShowThoughts: false });
+                } else {
+                    text += getStreamingReply(reply, state, { chatCompletionSource: generate_data.chat_completion_source, overrideShowThoughts: showThoughts });
+                }
+            }
+
+            const primary = canMultiSwipe && parsed?.choices?.length ? parsed.choices.find(choice => (choice.index ?? 0) === 0) : null;
+            if (!canMultiSwipe || primary || !parsed?.choices?.length) ToolManager.parseToolCalls(toolCalls, primary ? { ...parsed, choices: [primary] } : parsed, state.toolSignatures);
+
+            yield { text, swipes: swipes, logprobs: parseChatCompletionLogprobs(parsed, generate_data.chat_completion_source, model), toolCalls: toolCalls, state: state };
+        }
+    };
 }
 
 /**
@@ -3264,7 +3267,7 @@ export function getStreamingReply(data, state, { chatCompletionSource = null, ov
             state.images.push(...inlineData.map(x => `data:${x.mimeType};base64,${x.data}`).filter(isDataURL));
         }
         if (show_thoughts) {
-            state.reasoning += (data?.candidates?.[0]?.content?.parts?.filter(x => x.thought)?.map(x => x.text)?.[0] || '');
+            state.reasoning += (data?.candidates?.[0]?.content?.parts?.filter(x => x.thought && typeof x.text === 'string').map(x => x.text).join('') || '');
         }
         // Extract thought signatures from streaming chunks (typically in final chunk)
         const parts = data?.candidates?.[0]?.content?.parts || [];
@@ -3273,7 +3276,7 @@ export function getStreamingReply(data, state, { chatCompletionSource = null, ov
                 state.signature = part.thoughtSignature;
             }
         });
-        return data?.candidates?.[0]?.content?.parts?.filter(x => !x.thought)?.map(x => x.text)?.[0] || '';
+        return data?.candidates?.[0]?.content?.parts?.filter(x => !x.thought && typeof x.text === 'string').map(x => x.text).join('') || '';
     } else if (chat_completion_source === chat_completion_sources.COHERE) {
         return data?.delta?.message?.content?.text || data?.delta?.message?.tool_plan || '';
     } else if (chat_completion_source === chat_completion_sources.DEEPSEEK) {
@@ -3341,12 +3344,12 @@ export function getStreamingReply(data, state, { chatCompletionSource = null, ov
  * @param {Object} data - response data from a chat completions-like source
  * @returns {import('./logprobs.js').TokenLogprobs[] | null} converted logprobs
  */
-function parseChatCompletionLogprobs(data) {
+function parseChatCompletionLogprobs(data, source = oai_settings.chat_completion_source, model = getChatCompletionModel()) {
     if (!data) {
         return null;
     }
 
-    switch (oai_settings.chat_completion_source) {
+    switch (source) {
         case chat_completion_sources.AIMLAPI:
             return Object.keys(data?.choices?.[0]?.logprobs ?? {}).includes('content')
                 ? parseOpenAIChatLogprobs(data.choices[0]?.logprobs)
@@ -3363,7 +3366,7 @@ function parseChatCompletionLogprobs(data) {
             }
             // OpenAI Text Completion API is treated as a chat completion source
             // by SillyTavern, hence its presence in this function.
-            return textCompletionModels.includes(getChatCompletionModel())
+            return textCompletionModels.includes(model)
                 ? parseOpenAITextLogprobs(data.choices[0]?.logprobs)
                 : parseOpenAIChatLogprobs(data.choices[0]?.logprobs);
         default:
@@ -4694,10 +4697,14 @@ function onLogitBiasPresetChange() {
     const preset = oai_settings.bias_presets[value];
 
     if (!Array.isArray(preset)) {
-        console.error('Preset not found');
+        oai_settings.bias_preset_selected = null;
+        $('.openai_logit_bias_list').empty();
+        $('#openai_logit_bias_new_entry').attr('aria-disabled', 'true');
+        biasCache = undefined;
         return;
     }
 
+    $('#openai_logit_bias_new_entry').removeAttr('aria-disabled');
     oai_settings.bias_preset_selected = value;
     const list = $('.openai_logit_bias_list');
     list.empty();
@@ -4734,6 +4741,10 @@ function onLogitBiasPresetChange() {
 }
 
 function createNewLogitBiasEntry() {
+    if (!Array.isArray(oai_settings.bias_presets[oai_settings.bias_preset_selected])) {
+        toastr.info(t`Create a logit bias preset before adding an entry.`);
+        return;
+    }
     const entry = { id: uuidv4(), text: '', value: 0 };
     oai_settings.bias_presets[oai_settings.bias_preset_selected].push(entry);
     biasCache = undefined;
@@ -5037,21 +5048,22 @@ async function onDeletePresetClick() {
 }
 
 async function onLogitBiasPresetDeleteClick() {
+    const name = oai_settings.bias_preset_selected;
+    const preset = oai_settings.bias_presets[name];
+    if (!Array.isArray(preset)) return;
     const value = await callGenericPopup(t`Delete the preset?`, POPUP_TYPE.CONFIRM);
 
-    if (!value) {
+    if (!value || oai_settings.bias_presets[name] !== preset) {
         return;
     }
 
-    $(`#openai_logit_bias_preset option[value="${oai_settings.bias_preset_selected}"]`).remove();
-    delete oai_settings.bias_presets[oai_settings.bias_preset_selected];
-    oai_settings.bias_preset_selected = null;
-
-    if (Object.keys(oai_settings.bias_presets).length) {
-        oai_settings.bias_preset_selected = Object.keys(oai_settings.bias_presets)[0];
-        $(`#openai_logit_bias_preset option[value="${oai_settings.bias_preset_selected}"]`).prop('selected', true);
-        $('#openai_logit_bias_preset').trigger('change');
+    $('#openai_logit_bias_preset option').filter((_, option) => option.value === name).remove();
+    delete oai_settings.bias_presets[name];
+    if (oai_settings.bias_preset_selected === name) {
+        oai_settings.bias_preset_selected = Object.keys(oai_settings.bias_presets)[0] || null;
+        $('#openai_logit_bias_preset').val(oai_settings.bias_preset_selected);
     }
+    $('#openai_logit_bias_preset').trigger('change');
 
     biasCache = undefined;
     saveSettingsDebounced();
@@ -6368,7 +6380,7 @@ export function isImageInliningSupported() {
                 : oai_settings.openai_model;
             return visionSupportedModels.some(model =>
                 modelToCheck.includes(model)
-                && ['gpt-4-turbo-preview', 'o1-mini', 'o3-mini'].some(x => !modelToCheck.includes(x)),
+                && ['gpt-4-turbo-preview', 'o1-mini', 'o3-mini'].every(x => !modelToCheck.includes(x)),
             );
         }
         case chat_completion_sources.MAKERSUITE:

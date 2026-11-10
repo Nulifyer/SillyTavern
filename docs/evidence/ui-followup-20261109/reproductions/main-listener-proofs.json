@@ -1,0 +1,42 @@
+{
+  "file": "public/script.js",
+  "sha256": "c69558792345f2f5fe8b8f6d563cd06752a5f3bc3ee4d032819f21f31e40a723",
+  "method": "Actual unchanged registration bodies with controlled timers/save/network; no real provider or account calls.",
+  "rows": [
+    {
+      "id": "touch-slider-timeout-after-release",
+      "pendingAfterRelease": 1,
+      "lockedAfterReleasedTimer": false,
+      "backgroundAfterReleasedTimer": "var(--SmartThemeQuoteColor)"
+    },
+    {
+      "id": "character-export-owner-changes-during-save",
+      "clickedAvatar": "Synthetic-A.png",
+      "exportedAvatar": "Synthetic-B.png"
+    },
+    {
+      "id": "numeric-counter-invalid-value-not-restored",
+      "initialValue": "10",
+      "typedValue": "200",
+      "afterBlur": "200",
+      "warnings": [
+        "Invalid value. Must be between 0 and 100"
+      ]
+    },
+    {
+      "id": "classic-portrait-close-removes-other-portrait",
+      "clickedPortrait": "A",
+      "removed": [
+        "A",
+        "B"
+      ],
+      "remaining": []
+    },
+    {
+      "id": "unrendered-message-swipe-leaves-global-lock",
+      "chatMessageExists": true,
+      "renderedMessageExists": false,
+      "stateAfterReturn": "swiping"
+    }
+  ]
+}
